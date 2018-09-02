@@ -1281,7 +1281,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 					fprintf ( file, "  Entity on connection: %s, name: %s  Model: %s", STRING( VARS( pTraceEnt )->classname ), STRING ( VARS( pTraceEnt )->targetname ), STRING ( VARS(tr.pHit)->model ) );
 				}
 				
-				fprintf ( file, "\n", j );
+				fprintf ( file, "\n" );
 			}
 
 			pLinkPool [ cTotalLinks ].m_iDestNode = j;
@@ -1890,17 +1890,17 @@ void CTestHull :: BuildNodeGraph( void )
 						switch ( hull )
 						{
 						case NODE_SMALL_HULL:	// if this hull can't fit, nothing can, so drop the connection
-							fprintf ( file, "NODE_SMALL_HULL step %f\n", step );
+							fprintf ( file, "NODE_SMALL_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_SMALL_HULL | bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
 							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
 							break;
 						case NODE_HUMAN_HULL:
-							fprintf ( file, "NODE_HUMAN_HULL step %f\n", step );
+							fprintf ( file, "NODE_HUMAN_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
 							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
 							break;
 						case NODE_LARGE_HULL:
-							fprintf ( file, "NODE_LARGE_HULL step %f\n", step );
+							fprintf ( file, "NODE_LARGE_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~bits_LINK_LARGE_HULL;
 							break;
 						}
