@@ -65,6 +65,7 @@
     <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\ricochet\dlls\activity.h" />
     <ClInclude Include="..\..\ricochet\dlls\activitymap.h" />
     <ClInclude Include="..\..\ricochet\dlls\animation.h" />

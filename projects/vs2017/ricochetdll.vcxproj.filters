@@ -37,6 +37,9 @@
     <Filter Include="Header Files\ricochet\pm_shared">
       <UniqueIdentifier>{8b020c05-4536-4f4f-82c9-2206caef635a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{c525daac-806f-4c32-9f58-515420026a1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ricochet\dlls\disc_powerups.cpp">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ricochet\dlls\vector.h">
       <Filter>Header Files\ricochet\dlls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\Platform.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

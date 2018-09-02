@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\parsemsg.h" />
+    <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\ricochet\cl_dll\ammo.h" />
     <ClInclude Include="..\..\ricochet\cl_dll\ammohistory.h" />
     <ClInclude Include="..\..\ricochet\cl_dll\camera.h" />

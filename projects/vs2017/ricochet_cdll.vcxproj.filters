@@ -380,5 +380,8 @@
     <ClInclude Include="..\..\ricochet\cl_dll\view.h">
       <Filter>Header Files\ricochet\cl_dll</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\common\Platform.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

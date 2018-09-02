@@ -10,19 +10,9 @@
 #ifdef _WIN32
 
 // Insert your headers here
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-#define WIN32_EXTRA_LEAN
+#include "Platform.h"
 
-#include "winsani_in.h"
-#include <windows.h>
-#include "winsani_out.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdarg.h>
-
-#define snprintf _snprintf
-#define vsnprintf _vsnprintf
 
 #else // _WIN32
 

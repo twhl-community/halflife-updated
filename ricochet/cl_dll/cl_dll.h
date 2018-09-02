@@ -25,6 +25,9 @@
 //		- Drawing the HUD graphics every frame
 //		- Handling the custum HUD-update packets
 //
+
+#include "Platform.h"
+
 typedef unsigned char byte;
 typedef unsigned short word;
 typedef float vec_t;

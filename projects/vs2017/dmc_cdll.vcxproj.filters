@@ -407,5 +407,8 @@
     <ClInclude Include="..\..\dmc\cl_dll\view.h">
       <Filter>Header Files\dmc\cl_dll</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\common\Platform.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

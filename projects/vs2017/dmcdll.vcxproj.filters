@@ -46,6 +46,9 @@
     <Filter Include="Source Files\_Shared Weapons\dmc\dlls">
       <UniqueIdentifier>{f1606514-06e0-4c6e-b751-4c0b6bf1e171}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{1c01598d-3502-4343-a3c1-20f2cfb1e797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dmc\dlls\quake_weapons_all.cpp">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="..\..\game_shared\voice_gamemgr.h">
       <Filter>Header Files\game_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\Platform.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

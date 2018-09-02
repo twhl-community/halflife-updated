@@ -63,6 +63,7 @@
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dmc\dlls\activity.h" />
     <ClInclude Include="..\..\dmc\dlls\activitymap.h" />
     <ClInclude Include="..\..\dmc\dlls\animation.h" />

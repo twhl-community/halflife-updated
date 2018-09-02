@@ -205,6 +205,7 @@
     <ClCompile Include="..\..\pm_shared\pm_shared.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\activity.h" />
     <ClInclude Include="..\..\dlls\activitymap.h" />
     <ClInclude Include="..\..\dlls\animation.h" />

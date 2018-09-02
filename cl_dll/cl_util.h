@@ -18,14 +18,7 @@
 
 #include "cvardef.h"
 
-#ifndef TRUE
-#define TRUE 1
-#define FALSE 0
-#endif
-
-#include <stdio.h> // for safe_sprintf()
-#include <stdarg.h>  // "
-#include <string.h> // for strncpy()
+#include "Platform.h"
 
 // Macros to hook function calls into the HUD object
 #define HOOK_MESSAGE(x) gEngfuncs.pfnHookUserMsg(#x, __MsgFunc_##x );
