@@ -148,7 +148,7 @@ public:
 
 		// Space for buttons
 		height -= YRES(20);
-		height = max( 0, height );
+		height = V_max( 0, height );
 
 		rowcount = height / CELL_HEIGHT;
 

@@ -123,8 +123,8 @@ typedef struct hull_s
 
 // double to float warning
 #pragma warning(disable : 4244)
-#define max(a, b)  (((a) > (b)) ? (a) : (b))
-#define min(a, b)  (((a) < (b)) ? (a) : (b))
+#define V_max(a, b)  (((a) > (b)) ? (a) : (b))
+#define V_min(a, b)  (((a) < (b)) ? (a) : (b))
 // up / down
 #define	PITCH	0
 // left / right
@@ -2278,7 +2278,7 @@ void PM_DropPunchAngle ( vec3_t punchangle )
 	
 	len = VectorNormalize ( punchangle );
 	len -= (10.0 + len * 0.5) * pmove->frametime;
-	len = max( len, 0.0 );
+	len = V_max( len, 0.0 );
 	VectorScale ( punchangle, len, punchangle);
 }
 
@@ -2302,7 +2302,7 @@ void PM_CheckParamters( void )
 	maxspeed = pmove->clientmaxspeed; //atof( pmove->PM_Info_ValueForKey( pmove->physinfo, "maxspd" ) );
 	if ( maxspeed != 0.0 )
 	{
-		pmove->maxspeed = min( maxspeed, pmove->maxspeed );
+		pmove->maxspeed = V_min( maxspeed, pmove->maxspeed );
 	}
 
 	if ( ( spd != 0.0 ) &&

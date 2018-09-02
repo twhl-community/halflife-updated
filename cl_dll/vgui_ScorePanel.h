@@ -62,7 +62,7 @@ public:
 		_image[1]->getTextSize(w2, t2);
 
 		wide = w1 + w2;
-		tall = max(t1, t2);
+		tall = V_max(t1, t2);
 		setSize(wide, tall);
 	}
 

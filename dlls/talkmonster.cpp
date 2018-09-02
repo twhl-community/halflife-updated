@@ -423,11 +423,11 @@ void CTalkMonster :: StartTask( Task_t *pTask )
 
 			if (yaw < 0)
 			{
-				pev->ideal_yaw = min( yaw + 45, 0 ) + pev->angles.y;
+				pev->ideal_yaw = V_min( yaw + 45, 0 ) + pev->angles.y;
 			}
 			else
 			{
-				pev->ideal_yaw = max( yaw - 45, 0 ) + pev->angles.y;
+				pev->ideal_yaw = V_max( yaw - 45, 0 ) + pev->angles.y;
 			}
 		}
 		TaskComplete();

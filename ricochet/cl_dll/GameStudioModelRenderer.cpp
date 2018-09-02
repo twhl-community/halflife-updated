@@ -284,8 +284,8 @@ void CGameStudioModelRenderer::StudioEstimateGait( entity_state_t *pplayer )
 	vec3_t est_velocity;
 
 	dt = (m_clTime - m_clOldTime);
-	dt = max( 0.0, dt );
-	dt = min( 1.0, dt );
+	dt = V_max( 0.0, dt );
+	dt = V_min( 1.0, dt );
 
 	if (dt == 0 || m_pPlayerInfo->renderframe == m_nFrameCount)
 	{
@@ -360,8 +360,8 @@ void CGameStudioModelRenderer::StudioProcessGait( entity_state_t *pplayer )
 	m_pCurrentEntity->latched.prevangles[PITCH] = m_pCurrentEntity->angles[PITCH];
 
 	dt = (m_clTime - m_clOldTime);
-	dt = max( 0.0, dt );
-	dt = min( 1.0, dt );
+	dt = V_max( 0.0, dt );
+	dt = V_min( 1.0, dt );
 
 	StudioEstimateGait( pplayer );
 
@@ -395,8 +395,8 @@ void CGameStudioModelRenderer::StudioProcessGait( entity_state_t *pplayer )
 	}
 
 	float blend_yaw = ( flYaw / 90.0 ) * 128.0 + 127.0;
-	blend_yaw = min( 255.0, blend_yaw );
-	blend_yaw = max( 0.0, blend_yaw );
+	blend_yaw = V_min( 255.0, blend_yaw );
+	blend_yaw = V_max( 0.0, blend_yaw );
 	
 	blend_yaw = 255.0 - blend_yaw;
 
@@ -562,7 +562,7 @@ void CGameStudioModelRenderer::SetupClientAnimation( entity_state_t *pplayer )
 
 	curtime = gEngfuncs.GetClientTime();
 	dt = curtime - oldtime;
-	dt = min( 1.0, max( 0.0, dt ) );
+	dt = V_min( 1.0, V_max( 0.0, dt ) );
 
 	oldtime = curtime;
 	st = &g_clientstate;

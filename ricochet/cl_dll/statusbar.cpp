@@ -188,7 +188,7 @@ int CHudStatusBar :: Draw( float fTime )
 		// let user set status ID bar centering
 		if ( (i == STATUSBAR_ID_LINE) && CVAR_GET_FLOAT("hud_centerid") )
 		{
-			x = max( 0, max(2, (ScreenWidth - TextWidth)) / 2 );
+			x = V_max( 0, V_max(2, (ScreenWidth - TextWidth)) / 2 );
 			y = (ScreenHeight / 2) + (TextHeight*CVAR_GET_FLOAT("hud_centerid"));
 		}
 

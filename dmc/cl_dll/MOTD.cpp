@@ -79,9 +79,9 @@ int CHudMOTD :: Draw( float fTime )
 	fElapsed = gHUD.m_flTime - sfLastTime;
 
 	// Don't let time go negative ( level transition? )
-	fElapsed = max( 0.0, fElapsed );
+	fElapsed = V_max( 0.0, fElapsed );
 	// Don't let time go hugely positive ( first connection to active server ? )
-	fElapsed = min( 1.0, fElapsed );
+	fElapsed = V_min( 1.0, fElapsed );
 
 	// Remember last timestamp
 	sfLastTime = gHUD.m_flTime;
@@ -90,7 +90,7 @@ int CHudMOTD :: Draw( float fTime )
 	m_flActiveRemaining -= fElapsed;
 
 	// find the top of where the MOTD should be drawn,  so the whole thing is centered in the screen
-	int ypos = max(((ScreenHeight - (m_iLines * LINE_HEIGHT)) / 2) - 40, 30 ); // shift it up slightly
+	int ypos = V_max(((ScreenHeight - (m_iLines * LINE_HEIGHT)) / 2) - 40, 30 ); // shift it up slightly
 	char *ch = m_szMOTD;
 	while ( *ch )
 	{
@@ -139,7 +139,7 @@ int CHudMOTD :: MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf )
 	{
 		m_iFlags |= HUD_ACTIVE;
 
-		MOTD_DISPLAY_TIME = max( 10, CVAR_GET_FLOAT( "motd_display_time" ) );
+		MOTD_DISPLAY_TIME = V_max( 10, CVAR_GET_FLOAT( "motd_display_time" ) );
 
 		m_flActiveRemaining = MOTD_DISPLAY_TIME;
 
