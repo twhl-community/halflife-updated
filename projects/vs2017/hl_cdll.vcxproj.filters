@@ -204,15 +204,6 @@
     <ClCompile Include="..\..\common\parsemsg.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_shared.c">
-      <Filter>Source Files\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_debug.c">
-      <Filter>Source Files\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_math.c">
-      <Filter>Source Files\pm_shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\util.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
@@ -305,6 +296,15 @@
     </ClCompile>
     <ClCompile Include="..\..\public\interface.cpp">
       <Filter>Source Files\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
+      <Filter>Source Files\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pm_shared\pm_math.cpp">
+      <Filter>Source Files\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
+      <Filter>Source Files\pm_shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

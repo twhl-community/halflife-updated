@@ -22,7 +22,7 @@
 #define Q_SMALL_PUNCHANGLE_KICK		-2
 #define Q_BIG_PUNCHANGLE_KICK		-4
 
-extern "C" char PM_FindTextureType( char *name );
+char PM_FindTextureType( char *name );
 
 void V_PunchAxis( int axis, float punch );
 extern vec3_t v_origin;

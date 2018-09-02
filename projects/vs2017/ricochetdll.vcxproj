@@ -60,9 +60,9 @@
     <ClCompile Include="..\..\ricochet\dlls\world.cpp" />
     <ClCompile Include="..\..\ricochet\dlls\wpn_shared\disc_weapon_disc.cpp" />
     <ClCompile Include="..\..\ricochet\dlls\xen.cpp" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />

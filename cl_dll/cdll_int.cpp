@@ -25,10 +25,7 @@
 #include "../public/interface.h"
 //#include "vgui_schememanager.h"
 
-extern "C"
-{
 #include "pm_shared.h"
-}
 
 #include <string.h>
 #include "hud_servers.h"

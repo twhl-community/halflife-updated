@@ -141,15 +141,6 @@
     <ClCompile Include="..\..\dmc\dlls\plats.cpp">
       <Filter>Source Files\dmc\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.c">
-      <Filter>Source Files\dmc\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.c">
-      <Filter>Source Files\dmc\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dmc\pm_shared\pm_math.c">
-      <Filter>Source Files\dmc\pm_shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dmc\dlls\util.cpp">
       <Filter>Source Files\dmc\dlls</Filter>
     </ClCompile>
@@ -200,6 +191,15 @@
     </ClCompile>
     <ClCompile Include="..\..\dmc\dlls\world.cpp">
       <Filter>Source Files\dmc\dlls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.cpp">
+      <Filter>Source Files\dmc\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dmc\pm_shared\pm_math.cpp">
+      <Filter>Source Files\dmc\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.cpp">
+      <Filter>Source Files\dmc\pm_shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

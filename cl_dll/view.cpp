@@ -33,14 +33,14 @@
 
 	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
 	int		PM_GetVisEntInfo( int ent );
-	extern "C" int		PM_GetPhysEntInfo( int ent );
+	int		PM_GetPhysEntInfo( int ent );
 	void	InterpolateAngles(  float * start, float * end, float * output, float frac );
-	void	NormalizeAngles( float * angles );
-	extern "C" float	Distance(const float * v1, const float * v2);
+	void	NormalizeAngles( float* angles );
+	float	Distance(const float * v1, const float * v2);
 	float	AngleBetweenVectors(  const float * v1,  const float * v2 );
 
-	float	vJumpOrigin[3];
-	float	vJumpAngles[3];
+	extern float	vJumpOrigin[3];
+	extern float	vJumpAngles[3];
 
 
 void V_DropPunchAngle ( float frametime, float *ev_punchangle );
@@ -104,7 +104,7 @@ float	v_idlescale;  // used by TFC for concussion grenade effect
 
 //=============================================================================
 /*
-void V_NormalizeAngles( float *angles )
+void V_NormalizeAngles( vec3_t angles )
 {
 	int i;
 	// Normalize angles

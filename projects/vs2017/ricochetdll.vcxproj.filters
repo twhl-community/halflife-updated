@@ -150,15 +150,6 @@
     <ClCompile Include="..\..\ricochet\dlls\plats.cpp">
       <Filter>Source Files\ricochet\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.c">
-      <Filter>Source Files\ricochet\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.c">
-      <Filter>Source Files\ricochet\pm_shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.c">
-      <Filter>Source Files\ricochet\pm_shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ricochet\dlls\world.cpp">
       <Filter>Source Files\ricochet\dlls</Filter>
     </ClCompile>
@@ -197,6 +188,15 @@
     </ClCompile>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
       <Filter>Source Files\game_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_debug.cpp">
+      <Filter>Source Files\ricochet\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_math.cpp">
+      <Filter>Source Files\ricochet\pm_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ricochet\pm_shared\pm_shared.cpp">
+      <Filter>Source Files\ricochet\pm_shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

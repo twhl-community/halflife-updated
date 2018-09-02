@@ -30,10 +30,7 @@ cl_enginefunc_t gEngfuncs;
 CHud gHUD	;
 TeamFortressViewport *gViewPort = NULL;
 
-extern "C"
-{
 #include "pm_shared.h"
-}
 
 #include "hud_servers.h"
 #include "vgui_int.h"

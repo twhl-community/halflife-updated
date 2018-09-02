@@ -57,9 +57,9 @@
     <ClCompile Include="..\..\dmc\dlls\util.cpp" />
     <ClCompile Include="..\..\dmc\dlls\weapons.cpp" />
     <ClCompile Include="..\..\dmc\dlls\world.cpp" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp" />
   </ItemGroup>
   <ItemGroup>

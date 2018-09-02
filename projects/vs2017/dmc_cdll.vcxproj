@@ -66,9 +66,9 @@
     <ClCompile Include="..\..\dmc\cl_dll\voice_status.cpp" />
     <ClCompile Include="..\..\dmc\dlls\quake_gun.cpp" />
     <ClCompile Include="..\..\dmc\dlls\quake_weapons_all.cpp" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\dmc\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_checkbutton2.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_grid.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_helpers.cpp" />

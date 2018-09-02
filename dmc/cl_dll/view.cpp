@@ -45,14 +45,15 @@ extern "C"
 
 	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
 	int PM_GetInfo( int ent );
-	void	InterpolateAngles(  float * start, float * end, float * output, float frac );
-	void	NormalizeAngles( float * angles );
-	float	Distance(const float * v1, const float * v2);
-	float	AngleBetweenVectors(  const float * v1,  const float * v2 );
-
-	float	vJumpOrigin[3];
-	float	vJumpAngles[3];
 }
+
+void	InterpolateAngles( float * start, float * end, float * output, float frac );
+void	NormalizeAngles( float * angles );
+float	Distance( const float * v1, const float * v2 );
+float	AngleBetweenVectors( const float * v1, const float * v2 );
+
+extern float	vJumpOrigin[ 3 ];
+extern float	vJumpAngles[ 3 ];
 
 #include "r_studioint.h"
 #include "com_model.h"

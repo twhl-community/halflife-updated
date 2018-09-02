@@ -184,9 +184,9 @@
     <ClCompile Include="..\..\game_shared\vgui_scrollbar2.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_slider2.cpp" />
     <ClCompile Include="..\..\game_shared\voice_banmgr.cpp" />
-    <ClCompile Include="..\..\pm_shared\pm_debug.c" />
-    <ClCompile Include="..\..\pm_shared\pm_math.c" />
-    <ClCompile Include="..\..\pm_shared\pm_shared.c" />
+    <ClCompile Include="..\..\pm_shared\pm_debug.cpp" />
+    <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
+    <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\public\interface.cpp" />
   </ItemGroup>
   <ItemGroup>

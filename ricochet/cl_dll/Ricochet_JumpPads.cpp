@@ -9,7 +9,7 @@
 #include "event_flags.h"
 #include "Ricochet_BSPFile.h"
 
-extern "C" playermove_t *pmove;
+extern playermove_t *pmove;
 extern int g_runfuncs;
 
 // Don't support more than MAX_PADS pads ( map still can load, but we'll just have some pads that don't predict. )

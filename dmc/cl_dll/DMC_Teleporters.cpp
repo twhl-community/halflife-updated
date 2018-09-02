@@ -22,7 +22,7 @@
 
 extern IFileSystem *g_pFileSystem;
 
-extern "C" playermove_t *pmove;
+extern playermove_t *pmove;
 extern int g_runfuncs;
 
 // Don't support more than MAX_TELE teleporters ( map still can load tho )
