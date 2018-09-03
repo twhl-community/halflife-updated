@@ -81,24 +81,16 @@ typedef int BOOL;
 // In case this ever changes
 #define M_PI			3.14159265358979323846
 
-#ifndef UTIL_DLLEXPORT
-#ifdef _WIN32
-#define UTIL_DLLEXPORT _declspec( dllexport )
-#else
-#define UTIL_DLLEXPORT __attribute__ ((visibility("default")))
-#endif
-#endif
-
 // Keeps clutter down a bit, when declaring external entity/global method prototypes
 #define DECLARE_GLOBAL_METHOD(MethodName) \
-		extern void UTIL_DLLEXPORT MethodName( void )
-#define GLOBAL_METHOD(funcname)					void UTIL_DLLEXPORT funcname(void)
+		extern void DLLEXPORT MethodName( void )
+#define GLOBAL_METHOD(funcname)					void DLLEXPORT funcname(void)
 
 // This is the glue that hooks .MAP entity class names to our CPP classes
 // The _declspec forces them to be exported by name so we can do a lookup with GetProcAddress()
 // The function is used to intialize / allocate the object for the entity
 #define LINK_ENTITY_TO_CLASS(mapClassName,DLLClassName) \
-        extern "C" UTIL_DLLEXPORT void mapClassName( entvars_t *pev ); \
+        extern "C" DLLEXPORT void mapClassName( entvars_t *pev ); \
         void mapClassName( entvars_t *pev ) { GetClassPtr( (DLLClassName *)pev ); }
 
 

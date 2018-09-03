@@ -66,7 +66,7 @@ HUD_GetHullBounds
   Engine calls this to enumerate player collision hulls, for prediction.  Return 0 if the hullnumber doesn't exist.
 ================================
 */
-int CL_DLLEXPORT HUD_GetHullBounds( int hullnumber, float *mins, float *maxs )
+int DLLEXPORT HUD_GetHullBounds( int hullnumber, float *mins, float *maxs )
 {
 //	RecClGetHullBounds(hullnumber, mins, maxs);
 
@@ -102,7 +102,7 @@ HUD_ConnectionlessPacket
   size of the response_buffer, so you must zero it out if you choose not to respond.
 ================================
 */
-int	CL_DLLEXPORT HUD_ConnectionlessPacket( const struct netadr_s *net_from, const char *args, char *response_buffer, int *response_buffer_size )
+int	DLLEXPORT HUD_ConnectionlessPacket( const struct netadr_s *net_from, const char *args, char *response_buffer, int *response_buffer_size )
 {
 //	RecClConnectionlessPacket(net_from, args, response_buffer, response_buffer_size);
 
@@ -118,28 +118,28 @@ int	CL_DLLEXPORT HUD_ConnectionlessPacket( const struct netadr_s *net_from, cons
 	return 0;
 }
 
-void CL_DLLEXPORT HUD_PlayerMoveInit( struct playermove_s *ppmove )
+void DLLEXPORT HUD_PlayerMoveInit( struct playermove_s *ppmove )
 {
 //	RecClClientMoveInit(ppmove);
 
 	PM_Init( ppmove );
 }
 
-char CL_DLLEXPORT HUD_PlayerMoveTexture( char *name )
+char DLLEXPORT HUD_PlayerMoveTexture( char *name )
 {
 //	RecClClientTextureType(name);
 
 	return PM_FindTextureType( name );
 }
 
-void CL_DLLEXPORT HUD_PlayerMove( struct playermove_s *ppmove, int server )
+void DLLEXPORT HUD_PlayerMove( struct playermove_s *ppmove, int server )
 {
 //	RecClClientMove(ppmove, server);
 
 	PM_Move( ppmove, server );
 }
 
-int CL_DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
+int DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 {
 	gEngfuncs = *pEnginefuncs;
 
@@ -168,7 +168,7 @@ so the HUD can reinitialize itself.
 ==========================
 */
 
-int CL_DLLEXPORT HUD_VidInit( void )
+int DLLEXPORT HUD_VidInit( void )
 {
 //	RecClHudVidInit();
 	gHUD.VidInit();
@@ -188,7 +188,7 @@ the hud variables.
 ==========================
 */
 
-void CL_DLLEXPORT HUD_Init( void )
+void DLLEXPORT HUD_Init( void )
 {
 //	RecClHudInit();
 	InitInput();
@@ -206,7 +206,7 @@ redraw the HUD.
 ===========================
 */
 
-int CL_DLLEXPORT HUD_Redraw( float time, int intermission )
+int DLLEXPORT HUD_Redraw( float time, int intermission )
 {
 //	RecClHudRedraw(time, intermission);
 
@@ -229,7 +229,7 @@ returns 1 if anything has been changed, 0 otherwise.
 ==========================
 */
 
-int CL_DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
+int DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
 {
 //	RecClHudUpdateClientData(pcldata, flTime);
 
@@ -246,7 +246,7 @@ Called at start and end of demos to restore to "non"HUD state.
 ==========================
 */
 
-void CL_DLLEXPORT HUD_Reset( void )
+void DLLEXPORT HUD_Reset( void )
 {
 //	RecClHudReset();
 
@@ -261,7 +261,7 @@ Called by engine every frame that client .dll is loaded
 ==========================
 */
 
-void CL_DLLEXPORT HUD_Frame( double time )
+void DLLEXPORT HUD_Frame( double time )
 {
 //	RecClHudFrame(time);
 
@@ -279,7 +279,7 @@ Called when a player starts or stops talking.
 ==========================
 */
 
-void CL_DLLEXPORT HUD_VoiceStatus(int entindex, qboolean bTalking)
+void DLLEXPORT HUD_VoiceStatus(int entindex, qboolean bTalking)
 {
 ////	RecClVoiceStatus(entindex, bTalking);
 
@@ -294,7 +294,7 @@ Called when a director event message was received
 ==========================
 */
 
-void CL_DLLEXPORT HUD_DirectorMessage( int iSize, void *pbuf )
+void DLLEXPORT HUD_DirectorMessage( int iSize, void *pbuf )
 {
 //	RecClDirectorMessage(iSize, pbuf);
 
@@ -343,7 +343,7 @@ void CL_LoadParticleMan( void )
 
 cldll_func_dst_t *g_pcldstAddrs;
 
-extern "C" void CL_DLLEXPORT F(void *pv)
+extern "C" void DLLEXPORT F(void *pv)
 {
 	cldll_func_t *pcldll_func = (cldll_func_t *)pv;
 

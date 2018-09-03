@@ -29,7 +29,7 @@ HUD_DrawNormalTriangles
 Non-transparent triangles-- add them here
 =================
 */
-void CL_DLLEXPORT HUD_DrawNormalTriangles( void )
+void DLLEXPORT HUD_DrawNormalTriangles( void )
 {
 //	RecClDrawNormalTriangles();
 
@@ -47,7 +47,7 @@ HUD_DrawTransparentTriangles
 Render any triangles with transparent rendermode needs here
 =================
 */
-void CL_DLLEXPORT HUD_DrawTransparentTriangles( void )
+void DLLEXPORT HUD_DrawTransparentTriangles( void )
 {
 //	RecClDrawTransparentTriangles();
 

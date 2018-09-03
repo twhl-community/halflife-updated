@@ -35,14 +35,14 @@ void Game_AddObjects( void );
 
 extern "C" 
 {
-	int EXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *modelname );
-	void EXPORT HUD_CreateEntities( void );
-	void EXPORT HUD_StudioEvent( const struct mstudioevent_s *event, const struct cl_entity_s *entity );
-	void EXPORT HUD_TxferLocalOverrides( struct entity_state_s *state, const struct clientdata_s *client );
-	void EXPORT HUD_ProcessPlayerState( struct entity_state_s *dst, const struct entity_state_s *src );
-	void EXPORT HUD_TxferPredictionData ( struct entity_state_s *ps, const struct entity_state_s *pps, struct clientdata_s *pcd, const struct clientdata_s *ppcd, struct weapon_data_s *wd, const struct weapon_data_s *pwd );
-	void EXPORT HUD_TempEntUpdate( double frametime, double client_time, double cl_gravity, struct tempent_s **ppTempEntFree, struct tempent_s **ppTempEntActive, int ( *Callback_AddVisibleEntity )( struct cl_entity_s *pEntity ), void ( *Callback_TempEntPlaySound )( struct tempent_s *pTemp, float damp ) );
-	struct cl_entity_s EXPORT *HUD_GetUserEntity( int index );
+	int DLLEXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *modelname );
+	void DLLEXPORT HUD_CreateEntities( void );
+	void DLLEXPORT HUD_StudioEvent( const struct mstudioevent_s *event, const struct cl_entity_s *entity );
+	void DLLEXPORT HUD_TxferLocalOverrides( struct entity_state_s *state, const struct clientdata_s *client );
+	void DLLEXPORT HUD_ProcessPlayerState( struct entity_state_s *dst, const struct entity_state_s *src );
+	void DLLEXPORT HUD_TxferPredictionData ( struct entity_state_s *ps, const struct entity_state_s *pps, struct clientdata_s *pcd, const struct clientdata_s *ppcd, struct weapon_data_s *wd, const struct weapon_data_s *pwd );
+	void DLLEXPORT HUD_TempEntUpdate( double frametime, double client_time, double cl_gravity, struct tempent_s **ppTempEntFree, struct tempent_s **ppTempEntActive, int ( *Callback_AddVisibleEntity )( struct cl_entity_s *pEntity ), void ( *Callback_TempEntPlaySound )( struct tempent_s *pTemp, float damp ) );
+	struct cl_entity_s DLLEXPORT *HUD_GetUserEntity( int index );
 }
 
 /*
@@ -51,7 +51,7 @@ HUD_AddEntity
 	Return 0 to filter entity from visible list for rendering
 ========================
 */
-int EXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *modelname )
+int DLLEXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *modelname )
 {
 	switch ( type )
 	{
@@ -76,7 +76,7 @@ playerstate update in entity_state_t.  In order for these overrides to eventuall
 structure, we need to copy them into the state structure at this point.
 =========================
 */
-void EXPORT HUD_TxferLocalOverrides( struct entity_state_s *state, const struct clientdata_s *client )
+void DLLEXPORT HUD_TxferLocalOverrides( struct entity_state_s *state, const struct clientdata_s *client )
 {
 	VectorCopy( client->origin, state->origin );
 
@@ -93,7 +93,7 @@ We have received entity_state_t for this player over the network.  We need to co
 playerstate structure
 =========================
 */
-void EXPORT HUD_ProcessPlayerState( struct entity_state_s *dst, const struct entity_state_s *src )
+void DLLEXPORT HUD_ProcessPlayerState( struct entity_state_s *dst, const struct entity_state_s *src )
 {
 	cl_entity_t *player = gEngfuncs.GetLocalPlayer();	// Get the local player's index
 
@@ -167,7 +167,7 @@ Because we can predict an arbitrary number of frames before the server responds 
  update is occupying.
 =========================
 */
-void EXPORT HUD_TxferPredictionData ( struct entity_state_s *ps, const struct entity_state_s *pps, struct clientdata_s *pcd, const struct clientdata_s *ppcd, struct weapon_data_s *wd, const struct weapon_data_s *pwd )
+void DLLEXPORT HUD_TxferPredictionData ( struct entity_state_s *ps, const struct entity_state_s *pps, struct clientdata_s *pcd, const struct clientdata_s *ppcd, struct weapon_data_s *wd, const struct weapon_data_s *pwd )
 {
 	ps->oldbuttons				= pps->oldbuttons;
 	ps->flFallVelocity			= pps->flFallVelocity;
@@ -209,7 +209,7 @@ HUD_CreateEntities
 Gives us a chance to add additional entities to the render this frame
 =========================
 */
-void EXPORT HUD_CreateEntities( void )
+void DLLEXPORT HUD_CreateEntities( void )
 {
 	// e.g., create a persistent cl_entity_t somewhere.
 	// Load an appropriate model into it ( gEngfuncs.CL_LoadModel )
@@ -229,7 +229,7 @@ The entity's studio model description indicated an event was
 fired during this frame, handle the event by it's tag ( e.g., muzzleflash, sound )
 =========================
 */
-void EXPORT HUD_StudioEvent( const struct mstudioevent_s *event, const struct cl_entity_s *entity )
+void DLLEXPORT HUD_StudioEvent( const struct mstudioevent_s *event, const struct cl_entity_s *entity )
 {
 	switch( event->event )
 	{
@@ -264,7 +264,7 @@ CL_UpdateTEnts
 Simulation and cleanup of temporary entities
 =================
 */
-void EXPORT HUD_TempEntUpdate (
+void DLLEXPORT HUD_TempEntUpdate (
 	double frametime,   // Simulation time
 	double client_time, // Absolute time on client
 	double cl_gravity,  // True gravity on client
@@ -635,7 +635,7 @@ If you specify negative numbers for beam start and end point entities, then
 Indices must start at 1, not zero.
 =================
 */
-cl_entity_t EXPORT *HUD_GetUserEntity( int index )
+cl_entity_t DLLEXPORT *HUD_GetUserEntity( int index )
 {
 return NULL;
 }

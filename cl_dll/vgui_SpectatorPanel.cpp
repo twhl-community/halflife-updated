@@ -22,7 +22,7 @@ Sets the location of the input for chat text
 ==========================
 */
 
-void CL_DLLEXPORT HUD_ChatInputPosition( int *x, int *y )
+void DLLEXPORT HUD_ChatInputPosition( int *x, int *y )
 {
 //	RecClChatInputPosition( x, y );
 

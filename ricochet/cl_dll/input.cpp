@@ -40,10 +40,10 @@ extern "C"
 
 extern "C" 
 {
-	struct kbutton_s EXPORT *KB_Find( const char *name );
-	void EXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int active );
-	void EXPORT HUD_Shutdown( void );
-	int EXPORT HUD_Key_Event( int eventcode, int keynum, const char *pszCurrentBinding );
+	struct kbutton_s DLLEXPORT *KB_Find( const char *name );
+	void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int active );
+	void DLLEXPORT HUD_Shutdown( void );
+	int DLLEXPORT HUD_Key_Event( int eventcode, int keynum, const char *pszCurrentBinding );
 }
 
 extern int g_weaponselect;
@@ -224,7 +224,7 @@ KB_Find
 Allows the engine to get a kbutton_t directly ( so it can check +mlook state, etc ) for saving out to .cfg files
 ============
 */
-struct kbutton_s EXPORT *KB_Find( const char *name )
+struct kbutton_s DLLEXPORT *KB_Find( const char *name )
 {
 	kblist_t *p;
 	p = g_kbkeys;
@@ -379,7 +379,7 @@ HUD_Key_Event
 Return 1 to allow engine to process the key, otherwise, act on it as needed
 ============
 */
-int EXPORT HUD_Key_Event( int down, int keynum, const char *pszCurrentBinding )
+int DLLEXPORT HUD_Key_Event( int down, int keynum, const char *pszCurrentBinding )
 {
 	if (gViewPort)
 		return gViewPort->KeyInput(down, keynum, pszCurrentBinding);
@@ -615,7 +615,7 @@ if active == 1 then we are 1) not playing back demos ( where our commands are ig
 2 ) we have finished signing on to server
 ================
 */
-void EXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int active )
+void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int active )
 {	
 	float spd;
 	vec3_t viewangles;
@@ -976,7 +976,7 @@ void ShutdownInput (void)
 
 #include "interface.h"
 
-void EXPORT HUD_Shutdown( void )
+void DLLEXPORT HUD_Shutdown( void )
 {
 	ShutdownInput();
 

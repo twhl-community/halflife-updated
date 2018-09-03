@@ -25,9 +25,9 @@
 #include "view.h"
 #include "Exports.h"
 /*#ifdef _WIN32
-#define CL_DLLEXPORT EXPORT
+#define DLLEXPORT EXPORT
 #else
-#define CL_DLLEXPORT __attribute__ ((visibility("default")))
+#define DLLEXPORT __attribute__ ((visibility("default")))
 #endif*/
 
 #define MOUSE_BUTTON_COUNT 5
@@ -169,7 +169,7 @@ void Force_CenterView_f (void)
 IN_ActivateMouse
 ===========
 */
-void CL_DLLEXPORT IN_ActivateMouse (void)
+void DLLEXPORT IN_ActivateMouse (void)
 {
 	if (mouseinitialized)
 	{
@@ -186,7 +186,7 @@ void CL_DLLEXPORT IN_ActivateMouse (void)
 IN_DeactivateMouse
 ===========
 */
-void CL_DLLEXPORT IN_DeactivateMouse (void)
+void DLLEXPORT IN_DeactivateMouse (void)
 {
 	if (mouseinitialized)
 	{
@@ -274,7 +274,7 @@ void IN_ResetMouse( void )
 IN_MouseEvent
 ===========
 */
-void CL_DLLEXPORT IN_MouseEvent (int mstate)
+void DLLEXPORT IN_MouseEvent (int mstate)
 {
 	int		i;
 
@@ -450,7 +450,7 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 IN_Accumulate
 ===========
 */
-void CL_DLLEXPORT IN_Accumulate (void)
+void DLLEXPORT IN_Accumulate (void)
 {
 	//only accumulate mouse if we are not moving the camera with the mouse
 	if ( !iMouseInUse && !g_iVisibleMouse)
@@ -474,7 +474,7 @@ void CL_DLLEXPORT IN_Accumulate (void)
 IN_ClearStates
 ===================
 */
-void CL_DLLEXPORT IN_ClearStates (void)
+void DLLEXPORT IN_ClearStates (void)
 {
 	if ( !mouseactive )
 		return;

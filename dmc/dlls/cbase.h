@@ -50,19 +50,14 @@ CBaseEntity
 #include "monsterevent.h"
 #endif
 
+#include "Platform.h"
+
 // C functions for external declarations that call the appropriate C++ methods
-#ifndef CBASE_DLLEXPORT
-#ifdef _WIN32
-#define CBASE_DLLEXPORT _declspec( dllexport )
-#else
-#define CBASE_DLLEXPORT __attribute__ ((visibility("default")))
-#endif
-#endif
 
-#define EXPORT CBASE_DLLEXPORT
+#define EXPORT DLLEXPORT
 
-extern "C" CBASE_DLLEXPORT int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
-extern "C" CBASE_DLLEXPORT int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
+extern "C" DLLEXPORT int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
+extern "C" DLLEXPORT int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
 
 extern int DispatchSpawn( edict_t *pent );
 extern void DispatchKeyValue( edict_t *pentKeyvalue, KeyValueData *pkvd );

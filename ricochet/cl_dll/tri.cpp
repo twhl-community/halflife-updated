@@ -26,8 +26,8 @@
 
 extern "C"
 {
-	void EXPORT HUD_DrawNormalTriangles( void );
-	void EXPORT HUD_DrawTransparentTriangles( void );
+	void DLLEXPORT HUD_DrawNormalTriangles( void );
+	void DLLEXPORT HUD_DrawTransparentTriangles( void );
 };
 
 //#define TEST_IT
@@ -103,7 +103,7 @@ HUD_DrawNormalTriangles
 Non-transparent triangles-- add them here
 =================
 */
-void EXPORT HUD_DrawNormalTriangles( void )
+void DLLEXPORT HUD_DrawNormalTriangles( void )
 {
 
 #if defined( TEST_IT )
@@ -118,7 +118,7 @@ HUD_DrawTransparentTriangles
 Render any triangles with transparent rendermode needs here
 =================
 */
-void EXPORT HUD_DrawTransparentTriangles( void )
+void DLLEXPORT HUD_DrawTransparentTriangles( void )
 {
 
 #if defined( TEST_IT )

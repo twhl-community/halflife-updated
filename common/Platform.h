@@ -58,6 +58,8 @@
 #define strnicmp _strnicmp
 #define itoa _itoa
 #define strupr _strupr
+
+#define DLLEXPORT __declspec( dllexport )
 #else // _WIN32
 #define FALSE 0
 #define TRUE (!FALSE)
@@ -68,6 +70,8 @@ typedef int BOOL;
 #include <limits.h>
 #include <stdarg.h>
 #define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
+
+#define DLLEXPORT __attribute__ ( ( visibility( "default" ) ) )
 #endif //_WIN32
 
 #define V_min(a,b)  (((a) < (b)) ? (a) : (b))

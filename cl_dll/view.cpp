@@ -29,7 +29,7 @@
 	int CL_IsThirdPerson( void );
 	void CL_CameraOffset( float *ofs );
 
-	void CL_DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams );
+	void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams );
 
 	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
 	int		PM_GetVisEntInfo( int ent );
@@ -1629,7 +1629,7 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 
 
 
-void CL_DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
+void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 {
 //	RecClCalcRefdef(pparams);
 

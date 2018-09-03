@@ -20,7 +20,7 @@
 
 extern "C" 
 {
-	void EXPORT Demo_ReadBuffer( int size, unsigned char *buffer );
+	void DLLEXPORT Demo_ReadBuffer( int size, unsigned char *buffer );
 }
 
 /*
@@ -50,7 +50,7 @@ Demo_ReadBuffer
 Engine wants us to parse some data from the demo stream
 =====================
 */
-void EXPORT Demo_ReadBuffer( int size, unsigned char *buffer )
+void DLLEXPORT Demo_ReadBuffer( int size, unsigned char *buffer )
 {
 	int type;
 	int i = 0;
