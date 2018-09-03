@@ -98,7 +98,7 @@ dmc.$(SHLIBEXT): $(DMCDLL_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS)
 $(DMCDLL_OBJ_DIR)/%.o : $(DMCDLL_SRC_DIR)/%.cpp
 	$(DO_DMCDLL_CC)
 
-$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.c
+$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.cpp
 	$(DO_PM_CC)
 
 $(GAME_SHARED_OBJ_DIR)/%.o : $(GAME_SHARED_SRC_DIR)/%.cpp

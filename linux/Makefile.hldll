@@ -159,7 +159,7 @@ $(HLWPN_OBJ_DIR)/%.o : $(HLWPN_SRC_DIR)/%.cpp
 $(HLDLL_OBJ_DIR)/%.o : $(HLDLL_SRC_DIR)/%.cpp
 	$(DO_HLDLL_CC)
 
-$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.c
+$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.cpp
 	$(DO_PM_CC)
 
 $(GAME_SHARED_OBJ_DIR)/%.o : $(GAME_SHARED_SRC_DIR)/%.cpp
