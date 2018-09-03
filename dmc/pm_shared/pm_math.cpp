@@ -9,7 +9,7 @@
 
 #include "mathlib.h"
 #include "const.h"
-#include <math.h>
+#include <cmath>
 
 // up / down
 #define	PITCH	0
@@ -259,7 +259,7 @@ int VectorCompare (const vec3_t v1, const vec3_t v2)
 	return 1;
 }
 
-void VectorMA (const vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
+void VectorMA (const float* veca, float scale, const float* vecb, float* vecc)
 {
 	vecc[0] = veca[0] + scale*vecb[0];
 	vecc[1] = veca[1] + scale*vecb[1];
@@ -300,9 +300,7 @@ void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 	cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
 }
 
-double sqrt(double x);
-
-float Length(const vec3_t v)
+float Length(const float* v)
 {
 	int		i;
 	float	length = 0.0f;
@@ -321,7 +319,7 @@ float Distance(const float * v1, const float * v2)
 	return Length(d);
 }
 
-float VectorNormalize (vec3_t v)
+float VectorNormalize ( float* v)
 {
 	float	length, ilength;
 
@@ -340,14 +338,14 @@ float VectorNormalize (vec3_t v)
 
 }
 
-void VectorInverse (vec3_t v)
+void VectorInverse ( float* v)
 {
 	v[0] = -v[0];
 	v[1] = -v[1];
 	v[2] = -v[2];
 }
 
-void VectorScale (const vec3_t in, vec_t scale, vec3_t out)
+void VectorScale (const float* in, float scale, float* out)
 {
 	out[0] = in[0]*scale;
 	out[1] = in[1]*scale;
@@ -386,7 +384,7 @@ void VectorMatrix( vec3_t forward, vec3_t right, vec3_t up)
 }
 
 
-void VectorAngles( const vec3_t forward, vec3_t angles )
+void VectorAngles( const float* forward, float* angles )
 {
 	float	tmp, yaw, pitch;
 	

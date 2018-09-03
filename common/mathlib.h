@@ -48,9 +48,9 @@ extern	int nanmask;
 #define VectorSubtract(a,b,c) {(c)[0]=(a)[0]-(b)[0];(c)[1]=(a)[1]-(b)[1];(c)[2]=(a)[2]-(b)[2];}
 #define VectorAdd(a,b,c) {(c)[0]=(a)[0]+(b)[0];(c)[1]=(a)[1]+(b)[1];(c)[2]=(a)[2]+(b)[2];}
 #define VectorCopy(a,b) {(b)[0]=(a)[0];(b)[1]=(a)[1];(b)[2]=(a)[2];}
-#define VectorClear(a) {(a)[0]=0.0;(a)[1]=0.0;(a)[2]=0.0;}
+inline void VectorClear( float *a ) { a[ 0 ] = 0.0; a[ 1 ] = 0.0; a[ 2 ] = 0.0; }
 
-void VectorMA (const vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
+void VectorMA (const float* veca, float scale, const float* vecb, float* vecc);
 
 vec_t _DotProduct (vec3_t v1, vec3_t v2);
 void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out);
@@ -58,11 +58,11 @@ void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out);
 void _VectorCopy (vec3_t in, vec3_t out);
 
 int VectorCompare (const vec3_t v1, const vec3_t v2);
-float Length (const vec3_t v);
+float Length (const float* v);
 void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross);
-float VectorNormalize (vec3_t v);		// returns vector length
-void VectorInverse (vec3_t v);
-void VectorScale (const vec3_t in, vec_t scale, vec3_t out);
+float VectorNormalize (float* v);		// returns vector length
+void VectorInverse (float* v);
+void VectorScale (const float* in, float scale, float* out);
 int Q_log2(int val);
 
 void R_ConcatRotations (float in1[3][3], float in2[3][3], float out[3][3]);
@@ -132,7 +132,7 @@ float AngleBetweenVectors( const float* v1, const float* v2 );
 
 
 void VectorMatrix( vec3_t forward, vec3_t right, vec3_t up);
-void VectorAngles( const vec3_t forward, vec3_t angles );
+void VectorAngles( const float* forward, float* angles );
 
 int InvertMatrix( const float * m, float *out );
 
