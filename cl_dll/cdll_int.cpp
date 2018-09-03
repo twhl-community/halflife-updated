@@ -38,7 +38,7 @@
 #include "winsani_out.h"
 #endif
 #include "Exports.h"
-#
+
 #include "tri.h"
 #include "vgui_TeamFortressViewport.h"
 #include "../public/interface.h"
