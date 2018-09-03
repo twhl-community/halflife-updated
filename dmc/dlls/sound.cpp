@@ -1066,7 +1066,12 @@ int USENTENCEG_PickSequential(int isentenceg, char *szfound, int ipick, int fres
 
 	strcpy(szfound, "!");
 	strcat(szfound, szgroupname);
+	// Shepard - UNTESTED LINUX FIX!!!
+#ifdef WIN32
 	itoa(ipick, sznum, 10);
+#else
+	ipick = atol(sznum);
+#endif
 	strcat(szfound, sznum);
 	
 	if (ipick >= count)
@@ -1128,7 +1133,12 @@ int USENTENCEG_Pick(int isentenceg, char *szfound)
 		{
 			strcpy(szfound, "!");
 			strcat(szfound, szgroupname);
+			// Shepard - UNTESTED LINUX FIX!!!
+#ifdef WIN32
 			itoa(ipick, sznum, 10);
+#else
+			ipick = atol(sznum);
+#endif
 			strcat(szfound, sznum);
 			return ipick;
 		}
@@ -1252,7 +1262,12 @@ void SENTENCEG_Stop(edict_t *entity, int isentenceg, int ipick)
 	
 	strcpy(buffer, "!");
 	strcat(buffer, rgsentenceg[isentenceg].szgroupname);
+	// Shepard - UNTESTED LINUX FIX!!!
+#ifdef WIN32
 	itoa(ipick, sznum, 10);
+#else
+	ipick = atol(sznum);
+#endif
 	strcat(buffer, sznum);
 
 	STOP_SOUND(entity, CHAN_VOICE, buffer);
@@ -1398,7 +1413,12 @@ int SENTENCEG_Lookup(const char *sample, char *sentencenum)
 			if (sentencenum)
 			{
 				strcpy(sentencenum, "!");
+				// Shepard - UNTESTED LINUX FIX!!!
+#ifdef WIN32
 				itoa(i, sznum, 10);
+#else
+				i = atol(sznum);
+#endif
 				strcat(sentencenum, sznum);
 			}
 			return i;
@@ -1588,7 +1608,7 @@ void TEXTURETYPE_Init()
 			continue;
 
 		// null-terminate name and save in sentences array
-		j = min (j, CBTEXTURENAMEMAX-1+i);
+		j = V_min (j, CBTEXTURENAMEMAX-1+i);
 		buffer[j] = 0;
 		strcpy(&(grgszTextureName[gcTextures++][0]), &(buffer[i]));
 	}

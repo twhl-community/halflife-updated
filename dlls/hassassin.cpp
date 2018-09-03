@@ -728,12 +728,12 @@ void CHAssassin :: RunAI( void )
 			EMIT_SOUND (ENT(pev), CHAN_BODY, "debris/beamstart1.wav", 0.2, ATTN_NORM );
 		}
 
-		pev->renderamt = max( pev->renderamt - 50, m_iTargetRanderamt );
+		pev->renderamt = V_max( pev->renderamt - 50, m_iTargetRanderamt );
 		pev->rendermode = kRenderTransTexture;
 	}
 	else if (pev->renderamt < m_iTargetRanderamt)
 	{
-		pev->renderamt = min( pev->renderamt + 50, m_iTargetRanderamt );
+		pev->renderamt = V_min( pev->renderamt + 50, m_iTargetRanderamt );
 		if (pev->renderamt == 255)
 			pev->rendermode = kRenderNormal;
 	}

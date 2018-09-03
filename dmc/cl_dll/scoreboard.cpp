@@ -454,7 +454,7 @@ int CHudScoreboard :: MsgFunc_TeamInfo( const char *pszName, int iSize, void *pb
 				if ( m_TeamInfo[j].name[0] == '\0' )
 					break;
 			}
-			m_iNumTeams = max( j, m_iNumTeams );
+			m_iNumTeams = V_max( j, m_iNumTeams );
 
 			strncpy( m_TeamInfo[j].name, m_PlayerExtraInfo[i].teamname, MAX_TEAM_NAME );
 			m_TeamInfo[j].players = 0;
