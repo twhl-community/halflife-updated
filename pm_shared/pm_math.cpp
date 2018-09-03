@@ -109,7 +109,7 @@ void AngleVectorsTranspose (const vec3_t angles, vec3_t forward, vec3_t right, v
 }
 
 #ifndef DISABLE_VEC_FUNCS
-void AngleMatrix (const vec3_t angles, float (*matrix)[4] )
+void AngleMatrix (const float* angles, float (*matrix)[4] )
 {
 	float		angle;
 	float		sr, sp, sy, cr, cp, cy;
@@ -249,14 +249,14 @@ float AngleBetweenVectors( const vec3_t v1, const vec3_t v2 )
 }
 
 #ifndef DISABLE_VEC_FUNCS
-void VectorTransform (const vec3_t in1, float in2[3][4], vec3_t out)
+void VectorTransform (const float* in1, float in2[3][4], float* out)
 {
 	out[0] = DotProduct(in1, in2[0]) + in2[0][3];
 	out[1] = DotProduct(in1, in2[1]) + in2[1][3];
 	out[2] = DotProduct(in1, in2[2]) + in2[2][3];
 }
 
-int VectorCompare (const vec3_t v1, const vec3_t v2)
+int VectorCompare (const float* v1, const float* v2)
 {
 	int		i;
 	
@@ -303,7 +303,7 @@ void _VectorCopy (vec3_t in, vec3_t out)
 }
 
 #ifndef DISABLE_VEC_FUNCS
-void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
+void CrossProduct (const float* v1, const float* v2, float* cross)
 {
 	cross[0] = v1[1]*v2[2] - v1[2]*v2[1];
 	cross[1] = v1[2]*v2[0] - v1[0]*v2[2];
@@ -429,3 +429,37 @@ void VectorAngles( const float* forward, float* angles )
 	angles[2] = 0;
 }
 #endif
+
+/*
+================
+ConcatTransforms
+
+================
+*/
+void ConcatTransforms( float in1[ 3 ][ 4 ], float in2[ 3 ][ 4 ], float out[ 3 ][ 4 ] )
+{
+	out[ 0 ][ 0 ] = in1[ 0 ][ 0 ] * in2[ 0 ][ 0 ] + in1[ 0 ][ 1 ] * in2[ 1 ][ 0 ] +
+		in1[ 0 ][ 2 ] * in2[ 2 ][ 0 ];
+	out[ 0 ][ 1 ] = in1[ 0 ][ 0 ] * in2[ 0 ][ 1 ] + in1[ 0 ][ 1 ] * in2[ 1 ][ 1 ] +
+		in1[ 0 ][ 2 ] * in2[ 2 ][ 1 ];
+	out[ 0 ][ 2 ] = in1[ 0 ][ 0 ] * in2[ 0 ][ 2 ] + in1[ 0 ][ 1 ] * in2[ 1 ][ 2 ] +
+		in1[ 0 ][ 2 ] * in2[ 2 ][ 2 ];
+	out[ 0 ][ 3 ] = in1[ 0 ][ 0 ] * in2[ 0 ][ 3 ] + in1[ 0 ][ 1 ] * in2[ 1 ][ 3 ] +
+		in1[ 0 ][ 2 ] * in2[ 2 ][ 3 ] + in1[ 0 ][ 3 ];
+	out[ 1 ][ 0 ] = in1[ 1 ][ 0 ] * in2[ 0 ][ 0 ] + in1[ 1 ][ 1 ] * in2[ 1 ][ 0 ] +
+		in1[ 1 ][ 2 ] * in2[ 2 ][ 0 ];
+	out[ 1 ][ 1 ] = in1[ 1 ][ 0 ] * in2[ 0 ][ 1 ] + in1[ 1 ][ 1 ] * in2[ 1 ][ 1 ] +
+		in1[ 1 ][ 2 ] * in2[ 2 ][ 1 ];
+	out[ 1 ][ 2 ] = in1[ 1 ][ 0 ] * in2[ 0 ][ 2 ] + in1[ 1 ][ 1 ] * in2[ 1 ][ 2 ] +
+		in1[ 1 ][ 2 ] * in2[ 2 ][ 2 ];
+	out[ 1 ][ 3 ] = in1[ 1 ][ 0 ] * in2[ 0 ][ 3 ] + in1[ 1 ][ 1 ] * in2[ 1 ][ 3 ] +
+		in1[ 1 ][ 2 ] * in2[ 2 ][ 3 ] + in1[ 1 ][ 3 ];
+	out[ 2 ][ 0 ] = in1[ 2 ][ 0 ] * in2[ 0 ][ 0 ] + in1[ 2 ][ 1 ] * in2[ 1 ][ 0 ] +
+		in1[ 2 ][ 2 ] * in2[ 2 ][ 0 ];
+	out[ 2 ][ 1 ] = in1[ 2 ][ 0 ] * in2[ 0 ][ 1 ] + in1[ 2 ][ 1 ] * in2[ 1 ][ 1 ] +
+		in1[ 2 ][ 2 ] * in2[ 2 ][ 1 ];
+	out[ 2 ][ 2 ] = in1[ 2 ][ 0 ] * in2[ 0 ][ 2 ] + in1[ 2 ][ 1 ] * in2[ 1 ][ 2 ] +
+		in1[ 2 ][ 2 ] * in2[ 2 ][ 2 ];
+	out[ 2 ][ 3 ] = in1[ 2 ][ 0 ] * in2[ 0 ][ 3 ] + in1[ 2 ][ 1 ] * in2[ 1 ][ 3 ] +
+		in1[ 2 ][ 2 ] * in2[ 2 ][ 3 ] + in1[ 2 ][ 3 ];
+}
