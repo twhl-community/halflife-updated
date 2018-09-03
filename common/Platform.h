@@ -67,13 +67,10 @@ typedef int BOOL;
 #define MAX_PATH PATH_MAX
 #include <limits.h>
 #include <stdarg.h>
-#ifndef min
-#define V_min(a,b)  (((a) < (b)) ? (a) : (b))
-#endif
-#ifndef max
-#define V_max(a,b)  (((a) > (b)) ? (a) : (b))
 #define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
-#endif
 #endif //_WIN32
+
+#define V_min(a,b)  (((a) < (b)) ? (a) : (b))
+#define V_max(a,b)  (((a) > (b)) ? (a) : (b))
 
 #endif //PLATFORM_H

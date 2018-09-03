@@ -122,8 +122,6 @@ typedef struct hull_s
 
 // double to float warning
 #pragma warning(disable : 4244)
-#define V_max(a, b)  (((a) > (b)) ? (a) : (b))
-#define V_min(a, b)  (((a) < (b)) ? (a) : (b))
 // up / down
 #define	PITCH	0
 // left / right
