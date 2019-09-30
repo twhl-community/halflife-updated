@@ -434,12 +434,13 @@ void CScientist::DeclineFollowing( void )
 
 void CScientist :: Scream( void )
 {
-	if ( FOkToSpeak() )
-	{
+	// Marphy Fact Files Fix - This speech check always fails during combat, so removing
+	//if ( FOkToSpeak() )
+	//{
 		Talk( 10 );
 		m_hTalkTarget = m_hEnemy;
 		PlaySentence( "SC_SCREAM", RANDOM_FLOAT(3, 6), VOL_NORM, ATTN_NORM );
-	}
+	//}
 }
 
 
@@ -476,15 +477,16 @@ void CScientist :: StartTask( Task_t *pTask )
 		break;
 
 	case TASK_SAY_FEAR:
-		if ( FOkToSpeak() )
-		{
+		// Marphy Fact FIles Fix - This speech check always fails during combat, so removing
+		//if ( FOkToSpeak() )
+		//{
 			Talk( 2 );
 			m_hTalkTarget = m_hEnemy;
 			if ( m_hEnemy->IsPlayer() )
 				PlaySentence( "SC_PLFEAR", 5, VOL_NORM, ATTN_NORM );
 			else
 				PlaySentence( "SC_FEAR", 5, VOL_NORM, ATTN_NORM );
-		}
+		//}
 		TaskComplete();
 		break;
 
@@ -522,7 +524,10 @@ void CScientist :: RunTask( Task_t *pTask )
 	case TASK_RUN_PATH_SCARED:
 		if ( MovementIsComplete() )
 			TaskComplete();
-		if ( RANDOM_LONG(0,31) < 8 )
+		
+		// Marphy Fact Files Fix - Reducing scream (which didn't work before) chance significantly
+		//if ( RANDOM_LONG(0,31) < 8 )
+		if ( RANDOM_LONG(0,63) < 1 )
 			Scream();
 		break;
 
