@@ -774,10 +774,14 @@ int CScientist :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, f
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
+// Marphy Fact Files Fix - Restore scientist's sense of smell
 int CScientist :: ISoundMask ( void )
 {
 	return	bits_SOUND_WORLD	|
 			bits_SOUND_COMBAT	|
+			bits_SOUND_CARCASS	|
+			bits_SOUND_MEAT		|
+			bits_SOUND_GARBAGE	|
 			bits_SOUND_DANGER	|
 			bits_SOUND_PLAYER;
 }
