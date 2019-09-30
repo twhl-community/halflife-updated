@@ -35,7 +35,8 @@ extern CGraph WorldGraph;
 #define	HOUNDEYE_MAX_ATTACK_RADIUS		384
 #define	HOUNDEYE_SQUAD_BONUS			(float)1.1
 
-#define HOUNDEYE_EYE_FRAMES 4 // how many different switchable maps for the eye
+// Marphy Fact Files Fix - Fix various instances of Houndeye not correctly blinking/closing eyes
+#define HOUNDEYE_EYE_FRAMES 3 // how many different switchable maps for the eye
 
 #define HOUNDEYE_SOUND_STARTLE_VOLUME	128 // how loud a sound has to be to badly scare a sleeping houndeye
 
