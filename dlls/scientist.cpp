@@ -533,8 +533,9 @@ void CScientist :: RunTask( Task_t *pTask )
 
 	case TASK_MOVE_TO_TARGET_RANGE_SCARED:
 		{
-			if ( RANDOM_LONG(0,63)< 8 )
-				Scream();
+			// Marphy Fact Files Fix - Removing redundant scream
+			//if ( RANDOM_LONG(0,63)< 8 )
+				//Scream();
 
 			if ( m_hEnemy == NULL )
 			{
