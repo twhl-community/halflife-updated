@@ -889,10 +889,11 @@ void CHoundeye::PrescheduleThink ( void )
 //=========================================================
 // AI Schedules Specific to this monster
 //=========================================================
+// Marphy Fact Files Fix - Fix freeze stutter after leaderlook sequence
 Task_t	tlHoundGuardPack[] =
 {
 	{ TASK_STOP_MOVING,			(float)0		},
-	{ TASK_GUARD,				(float)0		},
+	{ TASK_PLAY_SEQUENCE,			(float)ACT_GUARD	},
 };
 
 Schedule_t	slHoundGuardPack[] =
@@ -1192,6 +1193,11 @@ Schedule_t* CHoundeye :: GetScheduleOfType ( int Type )
 			if ( InSquad() && !IsLeader() && !m_fAsleep && RANDOM_LONG(0,29) < 1 )
 			{
 				return &slHoundSleep[ 0 ];
+			}
+			// Marphy Fact Files Fix - Restore squad leader leaderlook animation
+			if ( InSquad() && IsLeader() && !m_fAsleep && RANDOM_LONG(0,14) < 1 )
+			{
+				return &slHoundGuardPack[ 0 ];
 			}
 			else
 			{
