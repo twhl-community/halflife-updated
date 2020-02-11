@@ -7,3 +7,4 @@ ipch/
 *.user
 *.db
 *.opendb
+*.vs
