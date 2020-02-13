@@ -27,7 +27,7 @@ skilldata_t	gSkillData;
 // take the name of a cvar, tack a digit for the skill level
 // on, and return the value.of that Cvar 
 //=========================================================
-float GetSkillCvar( char *pName )
+float GetSkillCvar( const char *pName )
 {
 	int		iCount;
 	float	flValue;

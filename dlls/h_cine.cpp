@@ -32,7 +32,7 @@
 class CLegacyCineMonster : public CBaseMonster
 {
 public:
-	void CineSpawn( char *szModel );
+	void CineSpawn( const char *szModel );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT CineThink( void );
 	void Pain( void );
@@ -102,7 +102,7 @@ LINK_ENTITY_TO_CLASS( monster_cine3_barney, CCine3Barney );
 // ********** Scientist SPAWN **********
 //
 
-void CLegacyCineMonster :: CineSpawn( char *szModel )
+void CLegacyCineMonster :: CineSpawn( const char *szModel )
 {
 	PRECACHE_MODEL(szModel);
 	SET_MODEL(ENT(pev), szModel);

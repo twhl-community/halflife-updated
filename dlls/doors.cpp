@@ -335,7 +335,7 @@ void CBaseDoor :: SetToggleState( int state )
 
 void CBaseDoor::Precache( void )
 {
-	char *pszSound;
+	const char *pszSound;
 
 // set the door's "in-motion" sound
 	switch (m_bMoveSnd)

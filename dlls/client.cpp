@@ -459,7 +459,7 @@ void Host_Say( edict_t *pEntity, int teamonly )
 	// echo to server console
 	g_engfuncs.pfnServerPrint( text );
 
-	char * temp;
+	const char * temp;
 	if ( teamonly )
 		temp = "say_team";
 	else

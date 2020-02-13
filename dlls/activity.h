@@ -100,7 +100,7 @@ typedef enum {
 
 typedef struct {
 	int	type;
-	char *name;
+	const char *name;
 } activity_map_t;
 
 extern activity_map_t activity_map[];

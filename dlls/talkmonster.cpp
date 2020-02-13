@@ -649,7 +649,7 @@ void CTalkMonster :: Killed( entvars_t *pevAttacker, int iGib )
 CBaseEntity	*CTalkMonster::EnumFriends( CBaseEntity *pPrevious, int listNumber, BOOL bTrace )
 {
 	CBaseEntity *pFriend = pPrevious;
-	char *pszFriend;
+	const char *pszFriend;
 	TraceResult tr;
 	Vector vecCheck;
 

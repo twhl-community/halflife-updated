@@ -358,7 +358,7 @@ void CBreakable::DamageSound( void )
 {
 	int pitch;
 	float fvol;
-	char *rgpsz[6];
+	const char *rgpsz[6];
 	int i;
 	int material = m_Material;
 
@@ -798,7 +798,7 @@ public:
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	static char *m_soundNames[3];
+	static const char *m_soundNames[3];
 	int		m_lastSound;	// no need to save/restore, just keeps the same sound from playing twice in a row
 	float	m_maxSpeed;
 	float	m_soundTime;
@@ -814,7 +814,7 @@ IMPLEMENT_SAVERESTORE( CPushable, CBreakable );
 
 LINK_ENTITY_TO_CLASS( func_pushable, CPushable );
 
-char *CPushable :: m_soundNames[3] = { "debris/pushbox1.wav", "debris/pushbox2.wav", "debris/pushbox3.wav" };
+const char *CPushable :: m_soundNames[3] = { "debris/pushbox1.wav", "debris/pushbox2.wav", "debris/pushbox3.wav" };
 
 
 void CPushable :: Spawn( void )
