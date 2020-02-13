@@ -21,6 +21,7 @@
 #include	"monsters.h"
 #include	"schedule.h"
 #include	"weapons.h"
+#include "soundent.h"
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -109,7 +110,7 @@ void CGMan :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 int CGMan :: ISoundMask ( void )
 {
-	return	NULL;
+	return	bits_SOUND_NONE;
 }
 
 //=========================================================

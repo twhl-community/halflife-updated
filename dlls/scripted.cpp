@@ -1165,7 +1165,7 @@ BOOL CScriptedSentence :: StartSentence( CBaseMonster *pTarget )
 	if ( !pTarget )
 	{
 		ALERT( at_aiconsole, "Not Playing sentence %s\n", STRING(m_iszSentence) );
-		return NULL;
+		return FALSE;
 	}
 
 	BOOL bConcurrent = FALSE;

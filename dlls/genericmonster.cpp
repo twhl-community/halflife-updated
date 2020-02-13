@@ -20,6 +20,7 @@
 #include	"cbase.h"
 #include	"monsters.h"
 #include	"schedule.h"
+#include "soundent.h"
 
 // For holograms, make them not solid so the player can walk through them
 #define	SF_GENERICMONSTER_NOTSOLID					4 
@@ -87,7 +88,7 @@ void CGenericMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 int CGenericMonster :: ISoundMask ( void )
 {
-	return	NULL;
+	return	bits_SOUND_NONE;
 }
 
 //=========================================================
