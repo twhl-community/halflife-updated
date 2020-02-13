@@ -439,7 +439,7 @@ private:
 	ServerBrowserTablePanel *m_pBrowser;
 
 public:
-	CSBLabel( char *name, char *sortkey ) : Label( name )
+	CSBLabel( const char *name, const char *sortkey ) : Label( name )
 	{
 		m_pBrowser = NULL;
 

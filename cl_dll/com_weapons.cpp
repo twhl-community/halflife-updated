@@ -111,7 +111,7 @@ HUD_PlaySound
 Play a sound, if we are seeing this command for the first time
 =====================
 */
-void HUD_PlaySound( char *sound, float volume )
+void HUD_PlaySound( const char *sound, float volume )
 {
 	if ( !g_runfuncs || !g_finalstate )
 		return;

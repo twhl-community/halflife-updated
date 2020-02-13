@@ -1387,7 +1387,7 @@ void V_GetMapChasePosition(int target, float * cl_angles, float * origin, float 
 int V_FindViewModelByWeaponModel(int weaponindex)
 {
 
-	static char * modelmap[][2] =	{
+	static const char * modelmap[][2] =	{
 
 # ifdef _TFC	// TFC models override HL models
 		{ "models/p_mini.mdl",			"models/v_tfac.mdl"			},
