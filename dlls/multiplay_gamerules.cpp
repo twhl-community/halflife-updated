@@ -679,8 +679,8 @@ void CHalfLifeMultiplay::DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, 
 	int killer_index = 0;
 	
 	// Hack to fix name change
-	char *tau = "tau_cannon";
-	char *gluon = "gluon gun";
+	const char *tau = "tau_cannon";
+	const char *gluon = "gluon gun";
 
 	if ( pKiller->flags & FL_CLIENT )
 	{

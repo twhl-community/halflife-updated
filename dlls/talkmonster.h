@@ -155,7 +155,7 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	
-	static char *m_szFriends[TLK_CFRIENDS];		// array of friend names
+	static const char *m_szFriends[TLK_CFRIENDS];		// array of friend names
 	static float g_talkWaitTime;
 	
 	int			m_bitsSaid;						// set bits for sentences we don't want repeated

@@ -611,7 +611,7 @@ void CTentacle :: Cycle( void )
 				if (m_flNextSong < gpGlobals->time)
 				{
 					// play "I hear new something" sound
-					char *sound;	
+					const char *sound;	
 
 					switch( RANDOM_LONG(0,1) )
 					{

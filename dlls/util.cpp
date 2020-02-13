@@ -1079,7 +1079,7 @@ float UTIL_SplineFraction( float value, float scale )
 }
 
 
-char* UTIL_VarArgs( char *format, ... )
+char* UTIL_VarArgs( const char *format, ... )
 {
 	va_list		argptr;
 	static char		string[1024];
@@ -1595,7 +1595,7 @@ void UTIL_PrecacheOther( const char *szClassname )
 // UTIL_LogPrintf - Prints a logged message to console.
 // Preceded by LOG: ( timestamp ) < message >
 //=========================================================
-void UTIL_LogPrintf( char *fmt, ... )
+void UTIL_LogPrintf( const char *fmt, ... )
 {
 	va_list			argptr;
 	static char		string[1024];
