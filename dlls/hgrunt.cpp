@@ -218,7 +218,7 @@ const char *CHGrunt::pGruntSentences[] =
 	"HG_TAUNT", // say rude things
 };
 
-enum
+enum HGRUNT_SENTENCE_TYPES
 {
 	HGRUNT_SENT_NONE = -1,
 	HGRUNT_SENT_GREN = 0,
@@ -228,7 +228,7 @@ enum
 	HGRUNT_SENT_THROW,
 	HGRUNT_SENT_CHARGE,
 	HGRUNT_SENT_TAUNT,
-} HGRUNT_SENTENCE_TYPES;
+};
 
 //=========================================================
 // Speak Sentence - say your cued up sentence.
