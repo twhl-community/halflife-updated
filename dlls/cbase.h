@@ -119,8 +119,6 @@ public:
 	edict_t *Get( void );
 	edict_t *Set( edict_t *pent );
 
-	operator int ();
-
 	operator CBaseEntity *();
 
 	CBaseEntity * operator = (CBaseEntity *pEntity);

@@ -479,11 +479,6 @@ CBaseEntity * EHANDLE :: operator = (CBaseEntity *pEntity)
 	return pEntity;
 }
 
-EHANDLE :: operator int ()
-{
-	return Get() != NULL;
-}
-
 CBaseEntity * EHANDLE :: operator -> ()
 {
 	return (CBaseEntity *)GET_PRIVATE( Get( ) ); 
