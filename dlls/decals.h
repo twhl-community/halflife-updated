@@ -66,8 +66,8 @@ enum decal_e
 
 typedef struct 
 {
-	char	*name;
-	int		index;
+	const char	*name;
+	int			index;
 } DLL_DECALLIST;
 
 extern DLL_DECALLIST gDecals[];

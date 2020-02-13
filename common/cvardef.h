@@ -28,8 +28,9 @@
 
 typedef struct cvar_s
 {
-	char	*name;
-	char	*string;
+	const char	*name;
+	//Technically this should be non-const but that only matters to engine code
+	const char	*string;
 	int		flags;
 	float	value;
 	struct cvar_s *next;
