@@ -506,7 +506,7 @@ int CHudBenchmark::Draw( float flTime )
 		}
 		else
 		{
-			sprintf( sz, g_stage1[0] );
+			sprintf( sz, "%s", g_stage1[0] );
 		}
 		gHUD.DrawHudString( x, y, 320, sz, 255, 255, 255 );
 
@@ -531,7 +531,7 @@ int CHudBenchmark::Draw( float flTime )
 		}
 		else
 		{
-			sprintf( sz, g_stage2[0] );
+			sprintf( sz, "%s", g_stage2[0] );
 		}
 		gHUD.DrawHudString( x, y, 320, sz, 255, 255, 255 );
 		y += 20;
@@ -546,7 +546,7 @@ int CHudBenchmark::Draw( float flTime )
 		}
 		else
 		{
-			sprintf( sz, g_stage3[0] );
+			sprintf( sz, "%s", g_stage3[0] );
 		}
 
 		gHUD.DrawHudString( x, y, 320, sz, 255, 255, 255 );
