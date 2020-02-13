@@ -88,7 +88,7 @@ public:
 		m_nMouseOverRow	= row;
 	}
 
-	void DoSort( char *sortkey )
+	void DoSort( const char *sortkey )
 	{
 		// Request server list and refresh servers...
 		SortServers( sortkey );

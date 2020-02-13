@@ -29,7 +29,7 @@ DECLARE_MESSAGE( m_Message, GameTitle )
 
 // 1 Global client_textmessage_t for custom messages that aren't in the titles.txt
 client_textmessage_t	g_pCustomMessage;
-char *g_pCustomName = "Custom";
+const char *g_pCustomName = "Custom";
 char g_pCustomText[1024];
 
 int CHudMessage::Init(void)

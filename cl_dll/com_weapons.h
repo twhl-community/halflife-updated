@@ -16,7 +16,7 @@
 #include "hud_iface.h"
 #include "Exports.h"
 
-void			COM_Log( char *pszFile, char *fmt, ...);
+void			COM_Log( const char *pszFile, const char *fmt, ...);
 int				CL_IsDead( void );
 
 float			UTIL_SharedRandomFloat( unsigned int seed, float low, float high );

@@ -41,12 +41,12 @@ COM_Log
 Log debug messages to file ( appends )
 ====================
 */
-void COM_Log( char *pszFile, char *fmt, ...)
+void COM_Log( const char *pszFile, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		string[1024];
 	FILE *fp;
-	char *pfilename;
+	const char *pfilename;
 	
 	if ( !pszFile )
 	{

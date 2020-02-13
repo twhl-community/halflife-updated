@@ -98,7 +98,7 @@ char *CHudTextMessage::BufferedLocaliseTextString( const char *msg )
 }
 
 // Simplified version of LocaliseTextString;  assumes string is only one word
-char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
+const char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
 {
 	if ( !msg )
 		return "";
@@ -110,7 +110,7 @@ char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
 		client_textmessage_t *clmsg = TextMessageGet( msg+1 );
 
 		if ( !clmsg || !(clmsg->pMessage) )
-			return (char*)msg; // lookup failed, so return the original string
+			return msg; // lookup failed, so return the original string
 		
 		if ( msg_dest )
 		{
@@ -120,11 +120,11 @@ char *CHudTextMessage::LookupString( const char *msg, int *msg_dest )
 				*msg_dest = -clmsg->effect;
 		}
 
-		return (char*)clmsg->pMessage;
+		return clmsg->pMessage;
 	}
 	else
 	{  // nothing special about this message, so just return the same string
-		return (char*)msg;
+		return msg;
 	}
 }
 
@@ -165,21 +165,21 @@ int CHudTextMessage::MsgFunc_TextMsg( const char *pszName, int iSize, void *pbuf
 
 #define MSG_BUF_SIZE 128
 	static char szBuf[6][MSG_BUF_SIZE];
-	char *msg_text = LookupString( READ_STRING(), &msg_dest );
+	const char *msg_text = LookupString( READ_STRING(), &msg_dest );
 	msg_text = safe_strcpy( szBuf[0], msg_text , MSG_BUF_SIZE);
 
 	// keep reading strings and using C format strings for subsituting the strings into the localised text string
-	char *sstr1 = LookupString( READ_STRING() );
-	sstr1 = safe_strcpy( szBuf[1], sstr1 , MSG_BUF_SIZE);
+	const char *tempsstr1 = LookupString( READ_STRING() );
+	char* sstr1 = safe_strcpy( szBuf[1], tempsstr1 , MSG_BUF_SIZE);
 	StripEndNewlineFromString( sstr1 );  // these strings are meant for subsitution into the main strings, so cull the automatic end newlines
-	char *sstr2 = LookupString( READ_STRING() );
-	sstr2 = safe_strcpy( szBuf[2], sstr2 , MSG_BUF_SIZE);
+	const char * tempsstr2 = LookupString( READ_STRING() );
+	char* sstr2 = safe_strcpy( szBuf[2], tempsstr2 , MSG_BUF_SIZE);
 	StripEndNewlineFromString( sstr2 );
-	char *sstr3 = LookupString( READ_STRING() );
-	sstr3 = safe_strcpy( szBuf[3], sstr3 , MSG_BUF_SIZE);
+	const char * tempsstr3 = LookupString( READ_STRING() );
+	char* sstr3 = safe_strcpy( szBuf[3], tempsstr3 , MSG_BUF_SIZE);
 	StripEndNewlineFromString( sstr3 );
-	char *sstr4 = LookupString( READ_STRING() );
-	sstr4 = safe_strcpy( szBuf[4], sstr4 , MSG_BUF_SIZE);
+	const char * tempsstr4 = LookupString( READ_STRING() );
+	char* sstr4 = safe_strcpy( szBuf[4], tempsstr4 , MSG_BUF_SIZE);
 	StripEndNewlineFromString( sstr4 );
 	char *psz = szBuf[5];
 
