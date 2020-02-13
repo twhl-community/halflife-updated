@@ -71,6 +71,12 @@ typedef int BOOL;
 #include <stdarg.h>
 #define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
 
+#define stricmp strcasecmp
+#define _strnicmp strncasecmp
+#define strnicmp strncasecmp
+#define _snprintf snprintf
+#define _alloca alloca
+
 #define DLLEXPORT __attribute__ ( ( visibility( "default" ) ) )
 #endif //_WIN32
 
