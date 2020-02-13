@@ -3383,8 +3383,8 @@ void CGraph :: TestRoutingTables( void )
 						//
 #if 1
 						float flDistance1 = 0.0;
-						int i;
-						for (i = 0; i < cPathSize1-1; i++)
+
+						for (int i = 0; i < cPathSize1-1; i++)
 						{
 							// Find the link from pMyPath[i] to pMyPath[i+1]
 							//
@@ -3408,7 +3408,7 @@ void CGraph :: TestRoutingTables( void )
 						}
 
 						float flDistance2 = 0.0;
-						for (i = 0; i < cPathSize2-1; i++)
+						for (int i = 0; i < cPathSize2-1; i++)
 						{
 							// Find the link from pMyPath2[i] to pMyPath2[i+1]
 							//
@@ -3443,7 +3443,7 @@ void CGraph :: TestRoutingTables( void )
 								ALERT(at_aiconsole, "%d ", pMyPath[i]);
 							}
 							ALERT(at_aiconsole, "\n(%d to %d |%d/%d)2:", iFrom, iTo, iHull, iCap);
-							for (i = 0; i < cPathSize2; i++)
+							for (int i = 0; i < cPathSize2; i++)
 							{
 								ALERT(at_aiconsole, "%d ", pMyPath2[i]);
 							}
