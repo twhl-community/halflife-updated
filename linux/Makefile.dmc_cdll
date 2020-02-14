@@ -14,7 +14,7 @@ GAME_SHARED_OBJ_DIR=$(DMC_OBJ_DIR)/game_shared
 PM_SHARED_OBJ_DIR=$(DMC_OBJ_DIR)/pm_shared
 
 CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) -DCLIENT_DLL -DDMC_BUILD -I/usr/include/malloc -D_snwprintf=swprintf \
-		 -DDISABLE_JUMP_ORIGIN -DDISABLE_VEC_ORIGIN -D_MAX_PATH=PATH_MAX
+		 -D_MAX_PATH=PATH_MAX
 		 
 INCLUDEDIRS=-I$(PUBLIC_SRC_DIR) -I../utils/vgui/include -I$(DMC_SRC_DIR)/../dlls \
 	-I../engine -I$(COMMON_SRC_DIR) -I../utils/common -I$(DMC_SRC_DIR)/../pm_shared -I$(DMC_SRC_DIR) -I../game_shared  -I../external
