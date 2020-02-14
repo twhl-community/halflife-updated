@@ -386,7 +386,7 @@ void VectorMatrix( vec3_t forward, vec3_t right, vec3_t up)
 
 void VectorAngles( const float* forward, float* angles )
 {
-	float	tmp, yaw, pitch;
+	double	tmp, yaw, pitch;
 	
 	if (forward[1] == 0 && forward[0] == 0)
 	{
