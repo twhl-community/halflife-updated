@@ -17,14 +17,11 @@
 #include "shake.h"
 
 // Spectator Mode
-extern "C" 
-{
-	float	vecNewViewAngles[3];
-	int		iHasNewViewAngles;
-	float	vecNewViewOrigin[3];
-	int		iHasNewViewOrigin;
-	int		iIsSpectator;
-}
+extern float	vecNewViewAngles[3];
+extern int		iHasNewViewAngles;
+extern float	vecNewViewOrigin[3];
+extern int		iHasNewViewOrigin;
+extern int		iIsSpectator;
 
 extern float g_flStartScaleTime;
 extern int iMouseInUse;
