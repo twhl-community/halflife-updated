@@ -1,0 +1,11 @@
+# Don't commit compiled mod libraries
+*.so
+*.so.*
+*.dylib
+
+# Allow Half-Life-specific files that would otherwise be ignored
+!libSDL2-2.0.so.0
+!libSDL2-2.0.so.0.dbg
+!vgui.so
+!release/vgui.dylib
+!release/vgui.so
