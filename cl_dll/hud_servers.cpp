@@ -810,7 +810,7 @@ int CHudServers::LoadMasterAddresses( int maxservers, int *count, netadr_t *padr
 		// Parse addresses until we get to "}"
 		while ( nCount < maxservers )
 		{
-			char base[256];
+			char base[1024];
 
 			// Now parse all addresses between { }
 			pstart = gEngfuncs.COM_ParseFile( pstart, m_szToken );

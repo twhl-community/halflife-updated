@@ -1389,7 +1389,7 @@ void SENTENCEG_Init()
 
 int SENTENCEG_Lookup(const char *sample, char *sentencenum)
 {
-	char sznum[8];
+	char sznum[32];
 
 	int i;
 	// this is a sentence name; lookup sentence number
