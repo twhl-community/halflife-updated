@@ -146,6 +146,8 @@ void CDesertEagle::SecondaryAttack()
 
 void CDesertEagle::PrimaryAttack()
 {
+    Vector vecSrc = m_pPlayer->GetGunPosition();
+        Vector vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
     Vector vecDir = m_pPlayer->FireBulletsPlayer(
         1,                     // Number of bullets to shoot
         vecSrc,                // The source of the bullets (i.e. the gun)
@@ -158,7 +160,7 @@ void CDesertEagle::PrimaryAttack()
         m_pPlayer->pev,        // Attacker entity
         m_pPlayer->random_seed // The random seed
     );
-    m_flNextPrimaryAttack = m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + (m_FSpotActive ? 0.5 : 0.25); // Make the weapon fire slower.
+    m_flNextPrimaryAttack = m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + (m_fSpotActive ? 0.5 : 0.25); // Make the weapon fire slower.
 #ifndef CLIENT_DLL
 // Hide the laser until the player can shoot again
     if (m_pSpot && m_fSpotActive)
