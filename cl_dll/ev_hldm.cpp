@@ -40,6 +40,7 @@ extern engine_studio_api_t IEngineStudio;
 static int tracerCount[ 32 ];
 
 #include "pm_shared.h"
+#include <weapons.cpp>
 
 void V_PunchAxis( int axis, float punch );
 void VectorAngles( const float *forward, float *angles );
@@ -544,6 +545,7 @@ void EV_FireGlock2( event_args_t *args )
 
 // Exactly the same enum from deserteagle.cpp, these
 // values correspond to sequences in the viewmodel file
+/*
 enum desert_eagle_e {
 	DESERT_EAGLE_IDLE1 = 0,
 	DESERT_EAGLE_IDLE2,
@@ -557,8 +559,9 @@ enum desert_eagle_e {
 	DESERT_EAGLE_DRAW,
 	DESERT_EAGLE_HOLSTER,
 };
-
+*/
 void EV_FireDesertEagle(event_args_t* args)
+/*
 {
 	// Just a bunch of variables and boilerplate copy/paste code
 	int idx;
@@ -622,6 +625,7 @@ void CDesertEagle::PrimaryAttack()
 	// Check if the clip is empty
 	if (m_iClip <= 0)
 	{
+		// If I add text after this, hopefully it'll skip?
 		if (!m_fInReload && m_fFireOnEmpty)
 		{
 			// If the player has fired previously, but is still holding the attack button down,
@@ -760,7 +764,7 @@ void CDesertEagle::WeaponIdle()
 //======================
 // DESERT EAGLE END
 //======================
-
+*/
 //======================
 //	  SHOTGUN START
 //======================
