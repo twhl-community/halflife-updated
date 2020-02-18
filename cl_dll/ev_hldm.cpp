@@ -545,7 +545,7 @@ void EV_FireGlock2( event_args_t *args )
 
 // Exactly the same enum from deserteagle.cpp, these
 // values correspond to sequences in the viewmodel file
-/*
+
 enum desert_eagle_e {
 	DESERT_EAGLE_IDLE1 = 0,
 	DESERT_EAGLE_IDLE2,
@@ -559,7 +559,7 @@ enum desert_eagle_e {
 	DESERT_EAGLE_DRAW,
 	DESERT_EAGLE_HOLSTER,
 };
-*/
+
 void EV_FireDesertEagle(event_args_t* args)
 
 {
