@@ -40,7 +40,6 @@ extern engine_studio_api_t IEngineStudio;
 static int tracerCount[ 32 ];
 
 #include "pm_shared.h"
-#include <weapons.cpp>
 
 void V_PunchAxis( int axis, float punch );
 void VectorAngles( const float *forward, float *angles );

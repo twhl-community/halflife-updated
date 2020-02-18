@@ -66,6 +66,7 @@ CHandGrenade g_HandGren;
 CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
+CDesertEagle g_DesertEagle;
 
 
 /*

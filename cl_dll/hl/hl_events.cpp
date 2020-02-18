@@ -37,6 +37,7 @@ void EV_EgonStop( struct event_args_s *args );
 void EV_HornetGunFire( struct event_args_s *args );
 void EV_TripmineFire( struct event_args_s *args );
 void EV_SnarkFire( struct event_args_s *args );
+void EV_FireDesertEagle(struct event_args_s* args);
 
 
 
