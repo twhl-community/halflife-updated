@@ -600,6 +600,7 @@ void HUD_InitClientWeapons(void)
 	HUD_PrepEntity(&g_Satchel, &player);
 	HUD_PrepEntity(&g_Tripmine, &player);
 	HUD_PrepEntity(&g_Snark, &player);
+	HUD_PrepEntity(&g_DesertEagle, &player)
 }
 
 /*
@@ -716,6 +717,10 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 	case WEAPON_SNARK:
 		pWeapon = &g_Snark;
+		break;
+
+	case WEAPON_DESERT_EAGLE:
+		pWeapon = &g_DesertEagle;
 		break;
 	}
 
