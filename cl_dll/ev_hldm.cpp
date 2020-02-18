@@ -561,7 +561,7 @@ enum desert_eagle_e {
 };
 */
 void EV_FireDesertEagle(event_args_t* args)
-/*
+
 {
 	// Just a bunch of variables and boilerplate copy/paste code
 	int idx;
@@ -611,7 +611,7 @@ void EV_FireDesertEagle(event_args_t* args)
 	VectorCopy(forward, vecAiming);
 	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_357, 0, 0, args->fparam1, args->fparam2);
 }
-void CDesertEagle::PrimaryAttack()
+/* void CDesertEagle::PrimaryAttack()
 {
 	// Don't fire underwater - waterlevel 3 indicates that the player's head is underwater
 	if (m_pPlayer->pev->waterlevel == 3)
