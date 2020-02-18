@@ -1024,6 +1024,11 @@ private:
 class CDesertEagle : public CBasePlayerWeapon
 {
 public:
+#ifndef CLIENT_DLL
+	int Save(CSave& save);
+	int Restore(CRestore& restore);
+	static TYPEDESCRIPTION m_SaveData[];
+#endif
 	void Spawn();
 	void Precache();
 	int iItemSlot() { return 2; }
@@ -1036,6 +1041,11 @@ public:
 	void Holster(int skiplocal = 0);
 	void Reload();
 	void WeaponIdle();
+	void UpdateSpot();
+	BOOL ShouldWeaponIdle() { return TRUE; };
+	
+	CLaserSpot* m_pSpot;
+	int m_fSpotActive;
 
 	virtual BOOL UseDecrement()
 	{
@@ -1046,6 +1056,6 @@ public:
 #endif
 	}
 private:
-
+	unsigned short m_usFireDesertEagle;
 };
 #endif // WEAPONS_H

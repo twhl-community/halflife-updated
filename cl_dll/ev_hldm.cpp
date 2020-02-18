@@ -68,6 +68,7 @@ void EV_EgonStop( struct event_args_s *args  );
 void EV_HornetGunFire( struct event_args_s *args  );
 void EV_TripmineFire( struct event_args_s *args  );
 void EV_SnarkFire( struct event_args_s *args  );
+void EV_FireDesertEagle(struct event_args_s* args);
 
 
 void EV_TrainPitchAdjust( struct event_args_s *args );
@@ -535,6 +536,229 @@ void EV_FireGlock2( event_args_t *args )
 }
 //======================
 //	   GLOCK END
+//======================
+
+//======================
+// DESERT EAGLE START
+//======================
+
+// Exactly the same enum from deserteagle.cpp, these
+// values correspond to sequences in the viewmodel file
+enum desert_eagle_e {
+	DESERT_EAGLE_IDLE1 = 0,
+	DESERT_EAGLE_IDLE2,
+	DESERT_EAGLE_IDLE3,
+	DESERT_EAGLE_IDLE4,
+	DESERT_EAGLE_IDLE5,
+	DESERT_EAGLE_SHOOT,
+	DESERT_EAGLE_SHOOT_EMPTY,
+	DESERT_EAGLE_RELOAD,
+	DESERT_EAGLE_RELOAD_NOT_EMPTY,
+	DESERT_EAGLE_DRAW,
+	DESERT_EAGLE_HOLSTER,
+};
+
+void EV_FireDesertEagle(event_args_t* args)
+{
+	// Just a bunch of variables and boilerplate copy/paste code
+	int idx;
+	vec3_t origin;
+	vec3_t angles;
+	vec3_t velocity;
+	int empty;
+
+	vec3_t ShellVelocity;
+	vec3_t ShellOrigin;
+	int shell;
+	vec3_t vecSrc, vecAiming;
+	vec3_t up, right, forward;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+	VectorCopy(args->angles, angles);
+	VectorCopy(args->velocity, velocity);
+
+	empty = args->bparam1;
+	AngleVectors(angles, forward, right, up);
+
+	shell = gEngfuncs.pEventAPI->EV_FindModelIndex("models/shell.mdl");// brass shell
+
+	// If the entity firing this event is the player
+	if (EV_IsLocal(idx))
+	{
+		// Render a muzzleflash
+		EV_MuzzleFlash();
+
+		// Show the weapon animation (a different one if this was the last bullet in the clip)
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(empty ? DESERT_EAGLE_SHOOT_EMPTY : DESERT_EAGLE_SHOOT, 0);
+
+		// Apply some recoil to the player's view
+		V_PunchAxis(0, -4.0);
+	}
+
+	// Eject an empty bullet shell (the numbers here are mostly magic, experiment with them or just use whatever, it's not too important)
+	EV_GetDefaultShellInfo(args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, -9.0, 14.0, 9.0);
+	EV_EjectBrass(ShellOrigin, ShellVelocity, angles[YAW], shell, TE_BOUNCE_SHELL);
+
+	// Play the "shoot" sound
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/desert_eagle_fire.wav", gEngfuncs.pfnRandomFloat(0.92, 1), ATTN_NORM, 0, 98 + gEngfuncs.pfnRandomLong(0, 3));
+
+	// Fire some bullets (this will do some prediction stuff, show a tracer, play texture sound, and render a decal where the bullet hits)
+	EV_GetGunPosition(args, vecSrc, origin);
+	VectorCopy(forward, vecAiming);
+	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_357, 0, 0, args->fparam1, args->fparam2);
+}
+void CDesertEagle::PrimaryAttack()
+{
+	// Don't fire underwater - waterlevel 3 indicates that the player's head is underwater
+	if (m_pPlayer->pev->waterlevel == 3)
+	{
+		// Play a "click" and don't allow another primary attack for a short time
+		PlayEmptySound();
+		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 0.15;
+		return;
+	}
+
+	// Check if the clip is empty
+	if (m_iClip <= 0)
+	{
+		if (!m_fInReload && m_fFireOnEmpty)
+		{
+			// If the player has fired previously, but is still holding the attack button down,
+			// just play the empty "click" sound until the player releases the button.
+			PlayEmptySound();
+			m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 0.2;
+		}
+
+		return;
+	}
+
+	// If we get to this point - we're shooting!
+
+	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
+	m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
+
+	// Decrease the number of bullets in the clip
+	m_iClip--;
+
+	// Add a muzzleflash to the player effects
+	m_pPlayer->pev->effects |= EF_MUZZLEFLASH;
+
+	// Player "shoot" animation
+	m_pPlayer->SetAnimation(PLAYER_ATTACK1);
+
+	// Set global vectors in the engine (don't ask)
+	UTIL_MakeVectors(m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle);
+
+	// Shoot bullets!
+	Vector vecSrc = m_pPlayer->GetGunPosition();
+	Vector vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
+	Vector vecDir = m_pPlayer->FireBulletsPlayer(
+		1,                     // Number of bullets to shoot
+		vecSrc,                // The source of the bullets (i.e. the gun)
+		vecAiming,             // The direction to fire in (i.e. where the player is pointing)
+		VECTOR_CONE_10DEGREES, // The accuracy spread of the weapon
+		8192,                  // The distance the bullet can go (8192 is the limit for the engine)
+		BULLET_PLAYER_357,     // The type of bullet being fired
+		0,                     // Number of tracer bullets to fire (none in this case)
+		0,                     // Set to non-zero to override the amount of damage (usually, leave this as 0)
+		m_pPlayer->pev,        // Attacker entity
+		m_pPlayer->random_seed // The random seed
+	);
+
+	int flags;
+#if defined( CLIENT_WEAPONS )
+	flags = FEV_NOTHOST;
+#else
+	flags = 0;
+#endif
+
+	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFireDesertEagle, 0.0, (float*)&g_vecZero, (float*)&g_vecZero, vecDir.x, vecDir.y, 0, 0, (m_iClip == 0) ? 1 : 0, 0);
+
+	// If the clip is now empty and there's no more ammo available, update the HEV
+	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
+	{
+		// HEV suit - indicate out of ammo condition
+		m_pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
+	}
+
+	// The desert eagle can fire quite quickly with no laser spot, so use a 250ms delay
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.25;
+
+	// Set the time until the weapon should start idling again
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+}
+void CDesertEagle::Reload()
+{
+	// Don't reload if the player doesn't have any ammo
+	if (m_pPlayer->ammo_357 <= 0) return;
+
+	int iResult;
+
+	// The view model has two different animations depending on if there are any bullets in the clip
+	if (m_iClip == 0) iResult = DefaultReload(DESERT_EAGLE_MAX_CLIP, DESERT_EAGLE_RELOAD, 1.5);
+	else iResult = DefaultReload(DESERT_EAGLE_MAX_CLIP, DESERT_EAGLE_RELOAD_NOT_EMPTY, 1.5);
+
+	if (iResult)
+	{
+		// If the reload happened, then reset the weapon's idle time
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	}
+}
+void CDesertEagle::WeaponIdle()
+{
+	// This is used in conjunction with the PlayEmptySound function.
+	// This resets a flag so the "click" for an empty weapon can be replayed after a short delay
+	ResetEmptySound();
+
+	// Despite the name, this will SET the autoaim vector.
+	// 10 degrees is what the magnum uses, so we'll use the same.
+	m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
+
+	// Exit out of the method if the weapon time hasn't passed yet or if the clip is empty
+	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase() || m_iClip <= 0) return;
+
+	// Weapon idle is only called after the weapon hasn't been used (fired or reloaded)
+	// for a while. In this case we want to play one of the idle animations for the weapon.
+	// The desert eagle view model has 5 different idle animations, and we'll give each one
+	// a 20% chance of playing, using the random number util function.
+	int iAnim;
+	float flRand = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 0, 1);
+
+	if (flRand <= 0.2)
+	{
+		// The numbers here (76.0 / 30.0) are a way to represent the time taken by the
+		// animation, so the next idle animation isn't played before the current one has
+		// been completed. This animation is 76 frames long, and runs at 30 frames per second.
+		iAnim = DESERT_EAGLE_IDLE1;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (76.0 / 30.0);
+	}
+	else if (flRand <= 0.4)
+	{
+		iAnim = DESERT_EAGLE_IDLE2;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (61.0 / 24.0);
+	}
+	else if (flRand <= 0.6)
+	{
+		iAnim = DESERT_EAGLE_IDLE3;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (50.0 / 30.0);
+	}
+	else if (flRand <= 0.8)
+	{
+		iAnim = DESERT_EAGLE_IDLE4;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (76.0 / 30.0);
+	}
+	else
+	{
+		iAnim = DESERT_EAGLE_IDLE5;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (61.0 / 30.0);
+	}
+
+	// Play the idle animation
+	SendWeaponAnim(iAnim, UseDecrement(), pev->body);
+}
+//======================
+// DESERT EAGLE END
 //======================
 
 //======================

@@ -600,7 +600,7 @@ void HUD_InitClientWeapons(void)
 	HUD_PrepEntity(&g_Satchel, &player);
 	HUD_PrepEntity(&g_Tripmine, &player);
 	HUD_PrepEntity(&g_Snark, &player);
-	HUD_PrepEntity(&g_DesertEagle, &player)
+	HUD_PrepEntity(&g_DesertEagle, &player);
 }
 
 /*
