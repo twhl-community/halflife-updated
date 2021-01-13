@@ -101,7 +101,22 @@ float CFlyingMonster :: ChangeYaw( int speed )
 			else if ( diff > 20 )
 				target = -90;
 		}
-		pev->angles.z = UTIL_Approach( target, pev->angles.z, 220.0 * gpGlobals->frametime );
+
+		if (m_flLastZYawTime == 0)
+		{
+			m_flLastZYawTime = gpGlobals->time - gpGlobals->frametime;
+		}
+
+		float delta = gpGlobals->time - m_flLastZYawTime;
+
+		m_flLastZYawTime = gpGlobals->time;
+
+		if (delta > 0.25)
+		{
+			delta = 0.25;
+		}
+
+		pev->angles.z = UTIL_Approach( target, pev->angles.z, 220.0 * delta );
 	}
 	return CBaseMonster::ChangeYaw( speed );
 }
