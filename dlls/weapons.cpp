@@ -638,7 +638,7 @@ BOOL CanAttack( float attack_time, float curtime, BOOL isPredicted )
 	}
 	else
 	{
-		return ( attack_time <= 0.0001 ) ? TRUE : FALSE;
+		return ( (static_cast<int>(std::floor(attack_time * 1000.0)) * 1000.0) <= 0.0 ) ? TRUE : FALSE;
 	}
 }
 
@@ -1212,7 +1212,7 @@ float CBasePlayerWeapon::GetNextAttackDelay( float delay )
 	// save the last fire time
 	m_flLastFireTime = gpGlobals->time;		
 
-	float flNextAttack = (std::floor((UTIL_WeaponTimeBase() + delay - flCreep) * 1000) / 1000);
+	float flNextAttack = UTIL_WeaponTimeBase() + delay - flCreep;
 	// we need to remember what the m_flNextPrimaryAttack time is set to for each shot, 
 	// store it as m_flPrevPrimaryAttack.
 	m_flPrevPrimaryAttack = flNextAttack - UTIL_WeaponTimeBase();
