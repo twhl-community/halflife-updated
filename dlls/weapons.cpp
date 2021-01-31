@@ -947,16 +947,38 @@ BOOL CBasePlayerWeapon :: AddSecondaryAmmo( int iCount, char *szName, int iMax )
 //=========================================================
 BOOL CBasePlayerWeapon :: IsUseable( void )
 {
-	if ( m_iClip <= 0 )
+	if (m_iClip > 0)
 	{
-		if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] <= 0 && iMaxAmmo1() != -1 )			
+		return TRUE;
+	}
+
+	//Player has unlimited ammo for this weapon or does not use magazines
+	if (iMaxAmmo1() == WEAPON_NOCLIP)
+	{
+		return TRUE;
+	}
+
+	if (m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0)
+	{
+		return TRUE;
+	}
+
+	if (pszAmmo2())
+	{
+		//Player has unlimited ammo for this weapon or does not use magazines
+		if (iMaxAmmo2() == WEAPON_NOCLIP)
 		{
-			// clip is empty (or nonexistant) and the player has no more ammo of this type. 
-			return FALSE;
+			return TRUE;
+		}
+
+		if (m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()] > 0)
+		{
+			return TRUE;
 		}
 	}
 
-	return TRUE;
+	// clip is empty (or nonexistant) and the player has no more ammo of this type. 
+	return FALSE;
 }
 
 BOOL CBasePlayerWeapon :: CanDeploy( void )
