@@ -1405,6 +1405,12 @@ void EV_EgonFire( event_args_t *args )
 	}
 	else
 	{
+		//If there is any sound playing already, kill it.
+		//This is necessary because multiple sounds can play on the same channel at the same time.
+		//In some cases, more than 1 run sound plays when the egon stops firing, in which case only the earliest entry in the list is stopped.
+		//This ensures no more than 1 of those is ever active at the same time.
+		gEngfuncs.pEventAPI->EV_StopSound(idx, CHAN_STATIC, EGON_SOUND_RUN);
+
 		if ( iFireMode == FIRE_WIDE )
 			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_STATIC, EGON_SOUND_RUN, 0.98, ATTN_NORM, 0, 125 );
 		else
