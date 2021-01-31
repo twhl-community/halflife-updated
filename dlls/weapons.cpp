@@ -1078,7 +1078,7 @@ int CBasePlayerWeapon::PrimaryAmmoIndex( void )
 //=========================================================
 int CBasePlayerWeapon::SecondaryAmmoIndex( void )
 {
-	return -1;
+	return m_iSecondaryAmmoType;
 }
 
 void CBasePlayerWeapon::Holster( int skiplocal /* = 0 */ )

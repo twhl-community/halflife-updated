@@ -570,7 +570,6 @@ public:
 
 	void PrimaryAttack( void );
 	void SecondaryAttack( void );
-	int SecondaryAmmoIndex( void );
 	BOOL Deploy( void );
 	void Reload( void );
 	void WeaponIdle( void );
