@@ -325,6 +325,9 @@ public:
 	
 	float m_flNextChatTime;
 	
+	void SetPrefsFromUserinfo(char* infobuffer);
+
+	int m_iAutoWepSwitch;
 };
 
 #define AUTOAIM_2DEGREES  0.0348994967025

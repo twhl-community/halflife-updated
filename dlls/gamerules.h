@@ -293,6 +293,7 @@ public:
 
 	virtual BOOL AllowAutoTargetCrosshair( void );
 	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd );
+	virtual void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer);
 
 // Client kills/scoring
 	virtual int IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled );
