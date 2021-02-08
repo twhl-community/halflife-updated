@@ -1457,10 +1457,11 @@ void EV_EgonFire( event_args_t *args )
 			float g = 50.0f;
 			float b = 125.0f;
 
-			if ( IEngineStudio.IsHardware() )
+			//if ( IEngineStudio.IsHardware() )
 			{
-				r /= 100.0f;
-				g /= 100.0f;
+				r /= 255.0f;
+				g /= 255.0f;
+				b /= 255.0f;
 			}
 				
 		
