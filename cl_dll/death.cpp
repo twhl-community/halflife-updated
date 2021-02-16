@@ -41,7 +41,7 @@ struct DeathNoticeItem {
 #define MAX_DEATHNOTICES	4
 static int DEATHNOTICE_DISPLAY_TIME = 6;
 
-#define DEATHNOTICE_TOP		32
+#define DEATHNOTICE_TOP		64
 
 DeathNoticeItem rgDeathNoticeList[ MAX_DEATHNOTICES + 1 ];
 
