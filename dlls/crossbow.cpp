@@ -446,14 +446,14 @@ void CCrossbow::FireBolt()
 
 void CCrossbow::SecondaryAttack()
 {
-	if ( m_pPlayer->pev->fov != 0 )
+	if ( m_pPlayer->m_iFOV != 0 )
 	{
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 0; // 0 means reset to default fov
+		m_pPlayer->m_iFOV = 0; // 0 means reset to default fov
 		m_fInZoom = 0;
 	}
-	else if ( m_pPlayer->pev->fov != 20 )
+	else if ( m_pPlayer->m_iFOV != 20 )
 	{
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 20;
+		m_pPlayer->m_iFOV = 20;
 		m_fInZoom = 1;
 	}
 	
@@ -467,7 +467,7 @@ void CCrossbow::Reload( void )
 	if ( m_pPlayer->ammo_bolts <= 0 )
 		return;
 
-	if ( m_pPlayer->pev->fov != 0 )
+	if ( m_pPlayer->m_iFOV != 0 )
 	{
 		SecondaryAttack();
 	}

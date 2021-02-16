@@ -141,15 +141,15 @@ void CPython::SecondaryAttack( void )
 		return;
 	}
 
-	if ( m_pPlayer->pev->fov != 0 )
+	if ( m_pPlayer->m_iFOV != 0 )
 	{
 		m_fInZoom = FALSE;
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 0;  // 0 means reset to default fov
+		m_pPlayer->m_iFOV = 0;  // 0 means reset to default fov
 	}
-	else if ( m_pPlayer->pev->fov != 40 )
+	else if ( m_pPlayer->m_iFOV != 40 )
 	{
 		m_fInZoom = TRUE;
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 40;
+		m_pPlayer->m_iFOV = 40;
 	}
 
 	m_flNextSecondaryAttack = 0.5;
@@ -218,10 +218,10 @@ void CPython::Reload( void )
 	if ( m_pPlayer->ammo_357 <= 0 )
 		return;
 
-	if ( m_pPlayer->pev->fov != 0 )
+	if ( m_pPlayer->m_iFOV != 0 )
 	{
 		m_fInZoom = FALSE;
-		m_pPlayer->pev->fov = m_pPlayer->m_iFOV = 0;  // 0 means reset to default fov
+		m_pPlayer->m_iFOV = 0;  // 0 means reset to default fov
 	}
 
 	int bUseScope = FALSE;

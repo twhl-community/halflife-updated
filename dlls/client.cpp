@@ -1710,7 +1710,7 @@ void UpdateClientData ( const edict_t *ent, int sendweapons, struct clientdata_s
 	strcpy( cd->physinfo, ENGINE_GETPHYSINFO( ent ) );
 
 	cd->maxspeed		= pev->maxspeed;
-	cd->fov				= pev->fov;
+	cd->fov				= pl->m_iFOV;
 	cd->weaponanim		= pev->weaponanim;
 
 	cd->pushmsec		= pev->pushmsec;
