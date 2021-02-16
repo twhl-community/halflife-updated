@@ -544,8 +544,6 @@ public:
 	void Reload( void );
 	void WeaponIdle( void );
 
-	BOOL m_fInZoom;// don't save this. 
-
 	virtual BOOL UseDecrement( void )
 	{ 
 #if defined( CLIENT_WEAPONS )
@@ -607,8 +605,6 @@ public:
 	void Holster( int skiplocal = 0 );
 	void Reload( void );
 	void WeaponIdle( void );
-
-	int m_fInZoom; // don't save this
 
 	virtual BOOL UseDecrement( void )
 	{ 
