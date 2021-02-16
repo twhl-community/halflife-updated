@@ -635,8 +635,11 @@ int CHud::MsgFunc_SetFOV(const char *pszName,  int iSize, void *pbuf)
 	int def_fov = CVAR_GET_FLOAT( "default_fov" );
 
 	//Weapon prediction already takes care of changing the fog. ( g_lastFOV ).
+	//But it doesn't restore correctly so this still needs to be used
+	/*
 	if ( cl_lw && cl_lw->value )
 		return 1;
+		*/
 
 	g_lastFOV = newfov;
 
