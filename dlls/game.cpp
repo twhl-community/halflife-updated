@@ -47,6 +47,7 @@ cvar_t  mp_chattime = {"mp_chattime","10", FCVAR_SERVER };
 cvar_t 	*g_psv_gravity = NULL;
 cvar_t	*g_psv_aim = NULL;
 cvar_t	*g_footsteps = NULL;
+cvar_t* g_psv_cheats = nullptr;
 
 //CVARS FOR SKILL LEVEL SETTINGS
 // Agrunt
@@ -459,6 +460,7 @@ void GameDLLInit( void )
 	g_psv_gravity = CVAR_GET_POINTER( "sv_gravity" );
 	g_psv_aim = CVAR_GET_POINTER( "sv_aim" );
 	g_footsteps = CVAR_GET_POINTER( "mp_footsteps" );
+	g_psv_cheats = CVAR_GET_POINTER("sv_cheats");
 
 	CVAR_REGISTER (&displaysoundlist);
 	CVAR_REGISTER( &allow_spectators );
