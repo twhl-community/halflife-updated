@@ -32,6 +32,7 @@
 #include "soundent.h"
 #include "decals.h"
 #include "gamerules.h"
+#include "UserMessages.h"
 
 extern CGraph	WorldGraph;
 extern int gEvilImpulse101;
@@ -51,8 +52,6 @@ DLL_GLOBAL	short	g_sModelIndexBloodSpray;// holds the sprite index for splattere
 
 ItemInfo CBasePlayerItem::ItemInfoArray[MAX_WEAPONS];
 AmmoInfo CBasePlayerItem::AmmoInfoArray[MAX_AMMO_SLOTS];
-
-extern int gmsgCurWeapon;
 
 MULTIDAMAGE gMultiDamage;
 

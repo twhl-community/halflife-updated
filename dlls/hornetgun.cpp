@@ -23,7 +23,7 @@
 #include "player.h"
 #include "hornet.h"
 #include "gamerules.h"
-
+#include "UserMessages.h"
 
 enum hgun_e {
 	HGUN_IDLE1 = 0,

@@ -27,6 +27,7 @@
 #include	"items.h"
 #include	"voice_gamemgr.h"
 #include	"hltv.h"
+#include "UserMessages.h"
 
 #if !defined ( _WIN32 )
 #include <ctype.h>
@@ -34,10 +35,6 @@
 
 extern DLL_GLOBAL CGameRules	*g_pGameRules;
 extern DLL_GLOBAL BOOL	g_fGameOver;
-extern int gmsgDeathMsg;	// client dll messages
-extern int gmsgScoreInfo;
-extern int gmsgMOTD;
-extern int gmsgServerName;
 
 extern int g_teamplay;
 
@@ -411,9 +408,6 @@ BOOL CHalfLifeMultiplay :: ClientConnected( edict_t *pEntity, const char *pszNam
 	g_VoiceGameMgr.ClientConnected(pEntity);
 	return TRUE;
 }
-
-extern int gmsgSayText;
-extern int gmsgGameMode;
 
 void CHalfLifeMultiplay :: UpdateGameMode( CBasePlayer *pPlayer )
 {

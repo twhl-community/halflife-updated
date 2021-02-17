@@ -21,9 +21,8 @@
 #include	"player.h"
 #include	"weapons.h"
 #include	"pm_shared.h"
+#include "UserMessages.h"
 
-extern int gmsgCurWeapon;
-extern int gmsgSetFOV;
 // Find the next client in the game for this player to spectate
 void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
 {

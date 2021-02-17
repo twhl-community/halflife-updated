@@ -22,6 +22,7 @@
 #include "nodes.h"
 #include "player.h"
 #include "gamerules.h"
+#include "UserMessages.h"
 
 #ifndef CLIENT_DLL
 #define BOLT_AIR_VELOCITY	2000

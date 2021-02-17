@@ -39,6 +39,7 @@
 #include "usercmd.h"
 #include "netadr.h"
 #include "pm_shared.h"
+#include "UserMessages.h"
 
 #if !defined ( _WIN32 )
 #include <ctype.h>
@@ -51,7 +52,6 @@ extern DLL_GLOBAL ULONG		g_ulFrameCount;
 
 extern void CopyToBodyQue(entvars_t* pev);
 extern int giPrecacheGrunt;
-extern int gmsgSayText;
 
 extern cvar_t allow_spectators;
 

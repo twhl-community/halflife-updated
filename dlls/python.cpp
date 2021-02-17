@@ -21,7 +21,7 @@
 #include "monsters.h"
 #include "player.h"
 #include "gamerules.h"
-
+#include "UserMessages.h"
 
 enum python_e {
 	PYTHON_IDLE1 = 0,

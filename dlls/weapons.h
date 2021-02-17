@@ -18,7 +18,6 @@
 #include "effects.h"
 
 class CBasePlayer;
-extern int gmsgWeapPickup;
 
 void DeactivateSatchels( CBasePlayer *pOwner );
 

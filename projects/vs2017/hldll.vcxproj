@@ -195,6 +195,7 @@
     <ClCompile Include="..\..\dlls\triggers.cpp" />
     <ClCompile Include="..\..\dlls\tripmine.cpp" />
     <ClCompile Include="..\..\dlls\turret.cpp" />
+    <ClCompile Include="..\..\dlls\UserMessages.cpp" />
     <ClCompile Include="..\..\dlls\util.cpp" />
     <ClCompile Include="..\..\dlls\weapons.cpp" />
     <ClCompile Include="..\..\dlls\world.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="..\..\dlls\talkmonster.h" />
     <ClInclude Include="..\..\dlls\teamplay_gamerules.h" />
     <ClInclude Include="..\..\dlls\trains.h" />
+    <ClInclude Include="..\..\dlls\UserMessages.h" />
     <ClInclude Include="..\..\dlls\util.h" />
     <ClInclude Include="..\..\dlls\vector.h" />
     <ClInclude Include="..\..\dlls\weapons.h" />

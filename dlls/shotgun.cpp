@@ -21,6 +21,7 @@
 #include "nodes.h"
 #include "player.h"
 #include "gamerules.h"
+#include "UserMessages.h"
 
 // special deathmatch shotgun spreads
 #define VECTOR_CONE_DM_SHOTGUN	Vector( 0.08716, 0.04362, 0.00  )// 10 degrees by 5 degrees

@@ -22,9 +22,7 @@
 #include "nodes.h"
 #include "player.h"
 #include "gamerules.h"
-
-
-
+#include "UserMessages.h"
 
 enum rpg_e {
 	RPG_IDLE = 0,

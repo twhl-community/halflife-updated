@@ -28,8 +28,7 @@
 #include "skill.h"
 #include "items.h"
 #include "gamerules.h"
-
-extern int gmsgItemPickup;
+#include "UserMessages.h"
 
 class CWorldItem : public CBaseEntity
 {

@@ -345,6 +345,9 @@
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
       <Filter>Source Files\pm_shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\UserMessages.cpp">
+      <Filter>Source Files\dlls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
       <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\UserMessages.h">
+      <Filter>Header Files\dlls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
