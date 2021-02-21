@@ -296,6 +296,7 @@ typedef struct enginefuncs_s
 	void (*pfnQueryClientCvarValue)( const edict_t *player, const char *cvarName );
 	void (*pfnQueryClientCvarValue2)( const edict_t *player, const char *cvarName, int requestID );
 	int (*pfnCheckParm)( const char *pchCmdLineToken, char **ppnext );
+	edict_t* (*pfnPEntityOfEntIndexAllEntities)(int iEntIndex);
 } enginefuncs_t;
 
 
