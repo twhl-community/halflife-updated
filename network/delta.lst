@@ -43,6 +43,9 @@ clientdata_t none
 	DEFINE_DELTA( flSwimTime, DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( waterjumptime, DT_INTEGER, 15, 1.0 ),
 	DEFINE_DELTA( waterlevel, DT_INTEGER, 2, 1.0 ),
+	
+	DEFINE_DELTA( iuser1, DT_INTEGER, 3, 1.0 ),
+	DEFINE_DELTA( iuser2, DT_INTEGER, 5, 1.0 ),
 
 	DEFINE_DELTA( vuser1[0], DT_SIGNED | DT_FLOAT, 10, 1.0 ),
 	DEFINE_DELTA( vuser1[1], DT_SIGNED | DT_FLOAT, 10, 1.0 ),
