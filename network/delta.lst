@@ -105,7 +105,7 @@ entity_state_t gamedll Entity_Encode
 	DEFINE_DELTA( angles[2], DT_ANGLE, 16, 1.0 ),
 	DEFINE_DELTA( colormap, DT_INTEGER, 16, 1.0 ),
 	DEFINE_DELTA( framerate, DT_SIGNED | DT_FLOAT, 8, 16.0 ),
-	DEFINE_DELTA( skin, DT_SHORT | DT_SIGNED, 9, 1.0 ),
+	DEFINE_DELTA( skin, DT_SHORT | DT_SIGNED, 12, 1.0 ),
 	DEFINE_DELTA( controller[0], DT_BYTE, 8, 1.0 ),
 	DEFINE_DELTA( controller[1], DT_BYTE, 8, 1.0 ),
 	DEFINE_DELTA( controller[2], DT_BYTE, 8, 1.0 ),
