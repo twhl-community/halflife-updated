@@ -2897,7 +2897,7 @@ void CBasePlayer :: Precache( void )
 
 	m_iClientBattery = -1;
 
-	m_iTrain = TRAIN_NEW;
+	m_iTrain |= TRAIN_NEW;
 
 	// Make sure any necessary user messages have been registered
 	LinkUserMessages();
