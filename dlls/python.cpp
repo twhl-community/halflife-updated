@@ -234,21 +234,6 @@ void CPython::Reload( void )
 
 void CPython::WeaponIdle( void )
 {
-	//Evaluate this here so the client properly sets up its body value (Deploy never runs there)
-#ifdef CLIENT_DLL
-	if (bIsMultiplayer())
-#else
-	if (g_pGameRules->IsMultiplayer())
-#endif
-	{
-		// enable laser sight geometry.
-		pev->body = 1;
-	}
-	else
-	{
-		pev->body = 0;
-	}
-
 	ResetEmptySound( );
 
 	m_pPlayer->GetAutoaimVector( AUTOAIM_10DEGREES );
