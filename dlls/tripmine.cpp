@@ -487,6 +487,9 @@ void CTripmine::PrimaryAttack( void )
 
 void CTripmine::WeaponIdle( void )
 {
+	//If we're here then we're in a player's inventory, and need to use this body
+	pev->body = 0;
+
 	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
 
