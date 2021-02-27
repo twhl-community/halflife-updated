@@ -579,6 +579,7 @@ int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 	if ( iId < 1 )
 	{
 		SetCrosshair(0, nullrc, 0, 0, 0);
+		m_pWeapon = nullptr;
 		return 0;
 	}
 
