@@ -71,7 +71,6 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/gman.o \
 	$(HLDLL_OBJ_DIR)/h_ai.o \
 	$(HLDLL_OBJ_DIR)/h_battery.o \
-	$(HLDLL_OBJ_DIR)/h_cine.o \
 	$(HLDLL_OBJ_DIR)/h_cycler.o \
 	$(HLDLL_OBJ_DIR)/h_export.o \
 	$(HLDLL_OBJ_DIR)/handgrenade.o \
@@ -161,7 +160,7 @@ dirs:
 hl.$(SHLIBEXT): $(HLDLL_OBJS) $(HLWPN_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(COMMON_OBJS)
 	$(CC) $(LDFLAGS) $(SHLIBLDFLAGS) -o $(BUILD_DIR)/$@ $(HLDLL_OBJS) $(HLWPN_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(COMMON_OBJS)
 	./gendbg.sh $(BUILD_DIR)/hl.$(SHLIBEXT)
-	
+
 $(HLWPN_OBJ_DIR)/%.o : $(HLWPN_SRC_DIR)/%.cpp
 	$(DO_HLWPN_CC)
 

@@ -15,14 +15,14 @@ GAME_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/game_shared
 HL1_SERVER_OBJ_DIR=$(HL1_OBJ_DIR)/server
 PM_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/pm_shared
 
-CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) -DCLIENT_DLL -DCLIENT_WEAPONS -DHL_DLL -I/usr/include/malloc -D_snwprintf=swprintf
-		 
-INCLUDEDIRS=-I$(HL_SRC_DIR) -I../dlls -I../tfc -I$(COMMON_SRC_DIR) -I$(PUBLIC_SRC_DIR) -I../pm_shared -I../engine -I../utils/vgui/include -I ../game_shared -I../external
+CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) -DCLIENT_DLL -DCLIENT_WEAPONS -I/usr/include/malloc -D_snwprintf=swprintf
+
+INCLUDEDIRS=-I$(HL_SRC_DIR) -I../dlls -I$(COMMON_SRC_DIR) -I$(PUBLIC_SRC_DIR) -I../pm_shared -I../engine -I../utils/vgui/include -I ../game_shared -I../external
 
 ifeq ($(OS),Darwin)
-LDFLAGS=$(SHLIBLDFLAGS) $(CPP_LIB) -framework Carbon $(CFG)/vgui.dylib -L. -lSDL2-2.0.0
+	LDFLAGS=$(SHLIBLDFLAGS) $(CPP_LIB) -framework Carbon $(CFG)/vgui.dylib -L. -lSDL2-2.0.0
 else
-LDFLAGS=$(SHLIBLDFLAGS) $(CPP_LIB)  -L$(CFG) vgui.so -L. libSDL2-2.0.so.0
+	LDFLAGS=$(SHLIBLDFLAGS) $(CPP_LIB)  -L$(CFG) vgui.so -L. libSDL2-2.0.so.0
 endif
 
 DO_CC=$(CPLUS) $(INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
@@ -56,8 +56,6 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/GameStudioModelRenderer.o \
 	$(HL1_OBJ_DIR)/geiger.o \
 	$(HL1_OBJ_DIR)/health.o \
-	$(HL1_OBJ_DIR)/hud_bench.o \
-	$(HL1_OBJ_DIR)/hud_benchtrace.o \
 	$(HL1_OBJ_DIR)/hud_msg.o \
 	$(HL1_OBJ_DIR)/hud_redraw.o \
 	$(HL1_OBJ_DIR)/hud_update.o \
@@ -78,19 +76,14 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/view.o \
 	$(HL1_OBJ_DIR)/vgui_int.o \
 	$(HL1_OBJ_DIR)/vgui_ClassMenu.o \
-	$(HL1_OBJ_DIR)/vgui_ConsolePanel.o \
-	$(HL1_OBJ_DIR)/vgui_ControlConfigPanel.o \
 	$(HL1_OBJ_DIR)/vgui_CustomObjects.o \
 	$(HL1_OBJ_DIR)/vgui_MOTDWindow.o \
 	$(HL1_OBJ_DIR)/vgui_SchemeManager.o \
 	$(HL1_OBJ_DIR)/vgui_ScorePanel.o \
-	$(HL1_OBJ_DIR)/vgui_ServerBrowser.o \
 	$(HL1_OBJ_DIR)/vgui_TeamFortressViewport.o \
 	$(HL1_OBJ_DIR)/vgui_SpectatorPanel.o \
 	$(HL1_OBJ_DIR)/vgui_teammenu.o \
 	$(HL1_OBJ_DIR)/voice_status.o \
-	$(HL1_OBJ_DIR)/hud_servers.o \
-	
 
 DLL_OBJS = \
 	$(HL1_SERVER_OBJ_DIR)/crossbow.o \
@@ -131,7 +124,6 @@ PM_SHARED_OBJS = \
 	$(PM_SHARED_OBJ_DIR)/pm_debug.o \
 	$(PM_SHARED_OBJ_DIR)/pm_shared.o \
 	$(PM_SHARED_OBJ_DIR)/pm_math.o \
-	
 
 
 all: client.$(SHLIBEXT)
