@@ -152,7 +152,7 @@ void CTripmineGrenade :: Precache()
 }
 
 
-void CTripmineGrenade :: WarningThink( void  )
+void CTripmineGrenade :: WarningThink()
 {
 	// play warning sound
 	// EMIT_SOUND( ENT(pev), CHAN_VOICE, "buttons/Blip2.wav", 1.0, ATTN_NORM );
@@ -163,7 +163,7 @@ void CTripmineGrenade :: WarningThink( void  )
 }
 
 
-void CTripmineGrenade :: PowerupThink( void  )
+void CTripmineGrenade :: PowerupThink()
 {
 	TraceResult tr;
 
@@ -262,7 +262,7 @@ void CTripmineGrenade :: MakeBeam()
 }
 
 
-void CTripmineGrenade :: BeamBreakThink( void  )
+void CTripmineGrenade :: BeamBreakThink()
 {
 	BOOL bBlowup = 0;
 

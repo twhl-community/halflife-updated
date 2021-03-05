@@ -170,7 +170,7 @@ void CRpgRocket :: Precache()
 }
 
 
-void CRpgRocket :: IgniteThink( void  )
+void CRpgRocket :: IgniteThink()
 {
 	// pev->movetype = MOVETYPE_TOSS;
 
@@ -203,7 +203,7 @@ void CRpgRocket :: IgniteThink( void  )
 }
 
 
-void CRpgRocket :: FollowThink( void  )
+void CRpgRocket :: FollowThink()
 {
 	CBaseEntity *pOther = NULL;
 	Vector vecTarget;

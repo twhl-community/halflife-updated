@@ -1190,7 +1190,7 @@ void CControllerHeadBall :: Precache()
 }
 
 
-void CControllerHeadBall :: HuntThink( void  )
+void CControllerHeadBall :: HuntThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
@@ -1265,7 +1265,7 @@ void CControllerHeadBall :: HuntThink( void  )
 }
 
 
-void CControllerHeadBall :: DieThink( void  )
+void CControllerHeadBall :: DieThink()
 {
 	UTIL_Remove( this );
 }
@@ -1291,7 +1291,7 @@ void CControllerHeadBall :: MovetoTarget( Vector vecTarget )
 
 
 
-void CControllerHeadBall :: Crawl( void  )
+void CControllerHeadBall :: Crawl()
 {
 
 	Vector vecAim = Vector( RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ) ).Normalize( );
@@ -1381,7 +1381,7 @@ void CControllerZapBall :: Precache()
 }
 
 
-void CControllerZapBall :: AnimateThink( void  )
+void CControllerZapBall :: AnimateThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 	

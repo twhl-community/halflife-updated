@@ -175,7 +175,7 @@ void CPathTrack :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 }
 
 
-void CPathTrack :: Link( void  )
+void CPathTrack :: Link()
 {
 	edict_t *pentTarget;
 

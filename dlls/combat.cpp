@@ -657,7 +657,7 @@ void CBaseEntity :: SUB_StartFadeOut ()
 	SetThink ( &CBaseEntity::SUB_FadeOut );
 }
 
-void CBaseEntity :: SUB_FadeOut ( void  )
+void CBaseEntity :: SUB_FadeOut ()
 {
 	if ( pev->renderamt > 7 )
 	{

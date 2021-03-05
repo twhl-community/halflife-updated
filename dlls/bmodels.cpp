@@ -275,8 +275,8 @@ class CFuncRotating : public CBaseEntity
 {
 public:
 	// basic functions
-	void Spawn( void  );
-	void Precache( void  );
+	void Spawn();
+	void Precache();
 	void EXPORT SpinUp ();
 	void EXPORT SpinDown ();
 	void KeyValue( KeyValueData* pkvd);

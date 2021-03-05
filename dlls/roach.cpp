@@ -185,7 +185,7 @@ void CRoach :: Killed( entvars_t *pevAttacker, int iGib )
 //=========================================================
 // MonsterThink, overridden for roaches.
 //=========================================================
-void CRoach :: MonsterThink( void  )
+void CRoach :: MonsterThink()
 {
 	if ( FNullEnt( FIND_CLIENT_IN_PVS( edict() ) ) )
 		pev->nextthink = gpGlobals->time + RANDOM_FLOAT(1,1.5);

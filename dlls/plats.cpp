@@ -233,7 +233,7 @@ public:
 	void EXPORT PlatUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 	void	EXPORT CallGoDown() { GoDown(); }
-	void	EXPORT CallHitTop( void  ) { HitTop(); }
+	void	EXPORT CallHitTop() { HitTop(); }
 	void	EXPORT CallHitBottom() { HitBottom(); }
 
 	virtual void GoUp();
