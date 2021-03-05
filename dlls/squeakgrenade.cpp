@@ -44,17 +44,17 @@ enum squeak_e {
 
 class CSqueakGrenade : public CGrenade
 {
-	void Spawn();
-	void Precache();
-	int  Classify();
+	void Spawn() override;
+	void Precache() override;
+	int  Classify() override;
 	void EXPORT SuperBounceTouch( CBaseEntity *pOther );
 	void EXPORT HuntThink();
-	int  BloodColor() { return BLOOD_COLOR_YELLOW; }
-	void Killed( entvars_t *pevAttacker, int iGib );
-	void GibMonster();
+	int  BloodColor() override { return BLOOD_COLOR_YELLOW; }
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
+	void GibMonster() override;
 
-	virtual int		Save( CSave &save ); 
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 

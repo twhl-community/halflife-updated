@@ -35,9 +35,9 @@
 // speed - the ideal magnitude of my velocity
 class CCrossbowBolt : public CBaseEntity
 {
-	void Spawn();
-	void Precache();
-	int  Classify ();
+	void Spawn() override;
+	void Precache() override;
+	int  Classify () override;
 	void EXPORT BubbleThink();
 	void EXPORT BoltTouch( CBaseEntity *pOther );
 	void EXPORT ExplodeThink();
@@ -519,18 +519,18 @@ void CCrossbow::WeaponIdle()
 
 class CCrossbowAmmo : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_crossbow_clip.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_crossbow_clip.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		if (pOther->GiveAmmo( AMMO_CROSSBOWCLIP_GIVE, "bolts", BOLT_MAX_CARRY ) != -1)
 		{

@@ -33,10 +33,10 @@
 class CSprite : public CPointEntity
 {
 public:
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 
-	int		ObjectCaps()
+	int		ObjectCaps() override
 	{ 
 		int flags = 0;
 		if ( pev->spawnflags & SF_SPRITE_TEMPORARY )
@@ -45,7 +45,7 @@ public:
 	}
 	void EXPORT AnimateThink();
 	void EXPORT ExpandThink();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void Animate( float frames );
 	void Expand( float scaleSpeed, float fadeSpeed );
 	void SpriteInit( const char *pSpriteName, const Vector &origin );
@@ -87,8 +87,8 @@ public:
 
 	void EXPORT AnimateUntilDead();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 	static CSprite *SpriteCreate( const char *pSpriteName, const Vector &origin, BOOL animate );
 
@@ -102,9 +102,9 @@ private:
 class CBeam : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	Precache();
-	int		ObjectCaps()
+	void	Spawn() override;
+	void	Precache() override;
+	int		ObjectCaps() override
 	{ 
 		int flags = 0;
 		if ( pev->spawnflags & SF_BEAM_TEMPORARY )
@@ -142,7 +142,7 @@ public:
 	const Vector &GetStartPos();
 	const Vector &GetEndPos();
 
-	Vector Center() { return (GetStartPos() + GetEndPos()) * 0.5; }; // center point of beam
+	Vector Center() override { return (GetStartPos() + GetEndPos()) * 0.5; }; // center point of beam
 
 	inline int  GetTexture() { return pev->modelindex; }
 	inline int  GetWidth() { return pev->scale; }
@@ -185,9 +185,9 @@ public:
 class CLaser : public CBeam
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Precache() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
 	void	TurnOn();
 	void	TurnOff();
@@ -196,9 +196,9 @@ public:
 	void	FireAtPoint( TraceResult &point );
 
 	void	EXPORT StrikeThink();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	CSprite	*m_pSprite;

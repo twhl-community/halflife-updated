@@ -30,23 +30,23 @@
 class CGMan : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	int ISoundMask ();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	int ISoundMask () override;
 
-	int	Save( CSave &save ); 
-	int Restore( CRestore &restore );
+	int	Save( CSave &save ) override;
+	int Restore( CRestore &restore ) override;
 	static TYPEDESCRIPTION m_SaveData[];
 
-	void StartTask( Task_t *pTask );
-	void RunTask( Task_t *pTask );
-	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
+	void StartTask( Task_t *pTask ) override;
+	void RunTask( Task_t *pTask ) override;
+	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
 
-	void PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener );
+	void PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener ) override;
 
 	EHANDLE m_hPlayer;
 	EHANDLE m_hTalkTarget;

@@ -28,24 +28,24 @@
 class CNihilanth : public CBaseMonster
 {
 public:
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void Spawn();
-	void Precache();
-	int  Classify() { return CLASS_ALIEN_MILITARY; };
-	int  BloodColor() { return BLOOD_COLOR_YELLOW; }
-	void Killed( entvars_t *pevAttacker, int iGib );
-	void GibMonster();
+	void Spawn() override;
+	void Precache() override;
+	int  Classify() override { return CLASS_ALIEN_MILITARY; };
+	int  BloodColor() override { return BLOOD_COLOR_YELLOW; }
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
+	void GibMonster() override;
 
-	void SetObjectCollisionBox()
+	void SetObjectCollisionBox() override
 	{
 		pev->absmin = pev->origin + Vector( -16 * N_SCALE, -16 * N_SCALE, -48 * N_SCALE );
 		pev->absmax = pev->origin + Vector( 16 * N_SCALE, 16 * N_SCALE, 28 * N_SCALE );
 	}
 
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 
 	void EXPORT StartupThink();
 	void EXPORT HuntThink();
@@ -67,11 +67,11 @@ public:
 	void ShootBalls();
 	void MakeFriend( Vector vecPos );
 	
-	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
+	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
 
-	void PainSound();
-	void DeathSound();
+	void PainSound() override;
+	void DeathSound() override;
 
 	static const char *pAttackSounds[];	// vocalization: play sometimes when he launches an attack
 	static const char *pBallSounds[];	// the sound of the lightening ball launch
@@ -172,12 +172,12 @@ IMPLEMENT_SAVERESTORE( CNihilanth, CBaseMonster );
 class CNihilanthHVR : public CBaseMonster
 {
 public:
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 
 	void CircleInit( CBaseEntity *pTarget );
 	void AbsorbInit();

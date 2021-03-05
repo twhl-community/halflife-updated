@@ -54,17 +54,17 @@ typedef enum
 class CBaseTurret : public CBaseMonster
 {
 public:
-	void Spawn();
-	virtual void Precache();
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn() override;
+	void Precache() override;
+	void KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	
-	virtual void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	virtual int	 TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-	virtual int	 Classify();
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
+	int	 TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	int	 Classify() override;
 
-	int BloodColor() { return DONT_BLEED; }
-	void GibMonster() {}	// UNDONE: Throw turret gibs?
+	int BloodColor() override { return DONT_BLEED; }
+	void GibMonster() override {}	// UNDONE: Throw turret gibs?
 
 	// Think functions
 
@@ -91,8 +91,8 @@ public:
 	virtual void EyeOn();
 	virtual void EyeOff();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -172,19 +172,19 @@ IMPLEMENT_SAVERESTORE( CBaseTurret, CBaseMonster );
 class CTurret : public CBaseTurret
 {
 public:
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	// Think functions
-	void SpinUpCall();
-	void SpinDownCall();
+	void SpinUpCall() override;
+	void SpinDownCall() override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// other functions
-	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy);
+	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy) override;
 
 private:
 	int m_iStartSpin;
@@ -201,10 +201,10 @@ IMPLEMENT_SAVERESTORE( CTurret, CBaseTurret );
 class CMiniTurret : public CBaseTurret
 {
 public:
-	void Spawn( );
-	void Precache();
+	void Spawn( ) override;
+	void Precache() override;
 	// other functions
-	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy);
+	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy) override;
 };
 
 
@@ -1145,11 +1145,11 @@ int	CBaseTurret::Classify ()
 class CSentry : public CBaseTurret
 {
 public:
-	void Spawn( );
-	void Precache();
+	void Spawn( ) override;
+	void Precache() override;
 	// other functions
-	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy);
-	int TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	void Shoot(Vector &vecSrc, Vector &vecDirToEnemy) override;
+	int TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType) override;
 	void EXPORT SentryTouch( CBaseEntity *pOther );
 	void EXPORT SentryDeath();
 

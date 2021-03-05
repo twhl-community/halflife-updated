@@ -38,18 +38,18 @@ class CTentacle : public CBaseMonster
 public:
 	CTentacle();
 
-	void Spawn( );
-	void Precache( );
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn( ) override;
+	void Precache( ) override;
+	void KeyValue( KeyValueData *pkvd ) override;
 
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// Don't allow the tentacle to go across transitions!!!
-	virtual int	ObjectCaps() { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int	ObjectCaps() override { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	void SetObjectCollisionBox()
+	void SetObjectCollisionBox() override
 	{
 		pev->absmin = pev->origin + Vector(-400, -400, 0);
 		pev->absmax = pev->origin + Vector(400, 400, 850);
@@ -64,16 +64,17 @@ public:
 
 	void EXPORT HitTouch( CBaseEntity *pOther );
 
-	float HearingSensitivity() { return 2.0; };
+	float HearingSensitivity() override { return 2.0; };
 
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void Killed( entvars_t *pevAttacker, int iGib );
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
-	MONSTERSTATE GetIdealState () { return MONSTERSTATE_IDLE; };
+	MONSTERSTATE GetIdealState () override { return MONSTERSTATE_IDLE; };
+	//TODO: should override base, but has different signature
 	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; };
 
-	int Classify();
+	int Classify() override;
 
 	int Level( float dz );
 	int MyLevel();
@@ -1010,8 +1011,8 @@ void CTentacle :: Killed( entvars_t *pevAttacker, int iGib )
 class CTentacleMaw : public CBaseMonster
 {
 public:
-	void Spawn( );
-	void Precache( );
+	void Spawn( ) override;
+	void Precache( ) override;
 };
 
 LINK_ENTITY_TO_CLASS( monster_tentaclemaw, CTentacleMaw );

@@ -20,16 +20,16 @@
 class CFlyingMonster : public CBaseMonster
 {
 public:
-	int 		CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist );// check validity of a straight move through space
-	BOOL		FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex );
-	Activity	GetStoppedActivity();
-	void		Killed( entvars_t *pevAttacker, int iGib );
-	void		Stop();
-	float		ChangeYaw( int speed );
-	void		HandleAnimEvent( MonsterEvent_t *pEvent );
-	void		MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flInterval );
-	void		Move( float flInterval = 0.1 );
-	BOOL		ShouldAdvanceRoute( float flWaypointDist );
+	int 		CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist ) override;// check validity of a straight move through space
+	BOOL		FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex ) override;
+	Activity	GetStoppedActivity() override;
+	void		Killed( entvars_t *pevAttacker, int iGib ) override;
+	void		Stop() override;
+	float		ChangeYaw( int speed ) override;
+	void		HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	void		MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flInterval ) override;
+	void		Move( float flInterval = 0.1 ) override;
+	BOOL		ShouldAdvanceRoute( float flWaypointDist ) override;
 
 	inline void	SetFlyingMomentum( float momentum ) { m_momentum = momentum; }
 	inline void	SetFlyingFlapSound( const char *pFlapSound ) { m_pFlapSound = pFlapSound; }

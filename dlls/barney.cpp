@@ -43,38 +43,38 @@
 class CBarney : public CTalkMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  ISoundMask();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  ISoundMask() override;
 	void BarneyFirePistol();
-	void AlertSound();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
+	void AlertSound() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 	
-	void RunTask( Task_t *pTask );
-	void StartTask( Task_t *pTask );
-	virtual int	ObjectCaps() { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );
+	void RunTask( Task_t *pTask ) override;
+	void StartTask( Task_t *pTask ) override;
+	int	ObjectCaps() override { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
 	
-	void DeclineFollowing();
+	void DeclineFollowing() override;
 
 	// Override these to set behavior
-	Schedule_t *GetScheduleOfType ( int Type );
-	Schedule_t *GetSchedule ();
-	MONSTERSTATE GetIdealState ();
+	Schedule_t *GetScheduleOfType ( int Type ) override;
+	Schedule_t *GetSchedule () override;
+	MONSTERSTATE GetIdealState () override;
 
-	void DeathSound();
-	void PainSound();
+	void DeathSound() override;
+	void PainSound() override;
 	
 	void TalkInit();
 
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	void Killed( entvars_t *pevAttacker, int iGib );
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	BOOL	m_fGunDrawn;
@@ -790,10 +790,10 @@ void CBarney::DeclineFollowing()
 class CDeadBarney : public CBaseMonster
 {
 public:
-	void Spawn();
-	int	Classify () { return	CLASS_PLAYER_ALLY; }
+	void Spawn() override;
+	int	Classify () override { return	CLASS_PLAYER_ALLY; }
 
-	void KeyValue( KeyValueData *pkvd );
+	void KeyValue( KeyValueData *pkvd ) override;
 
 	int	m_iPose;// which sequence to display	-- temporary, don't need to save
 	static const char *m_szPoses[3];

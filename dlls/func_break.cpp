@@ -778,23 +778,23 @@ int	CBreakable :: DamageDecal( int bitsDamageType )
 class CPushable : public CBreakable
 {
 public:
-	void	Spawn ();
-	void	Precache();
-	void	Touch ( CBaseEntity *pOther );
+	void	Spawn () override;
+	void	Precache() override;
+	void	Touch ( CBaseEntity *pOther ) override;
 	void	Move( CBaseEntity *pMover, int push );
-	void	KeyValue( KeyValueData *pkvd );
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	KeyValue( KeyValueData *pkvd ) override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void	EXPORT StopSound();
 //	virtual void	SetActivator( CBaseEntity *pActivator ) { m_pPusher = pActivator; }
 
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	inline float MaxSpeed() { return m_maxSpeed; }
 	
 	// breakables use an overridden takedamage
-	virtual int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )  override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 

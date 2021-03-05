@@ -33,7 +33,7 @@ class CLegacyCineMonster : public CBaseMonster
 {
 public:
 	void CineSpawn( const char *szModel );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void EXPORT CineThink();
 	void Pain();
 	void Die();
@@ -42,47 +42,47 @@ public:
 class CCineScientist : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine-scientist.mdl"); }
+	void Spawn() override { CineSpawn("models/cine-scientist.mdl"); }
 };
 class CCine2Scientist : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine2-scientist.mdl"); }
+	void Spawn() override { CineSpawn("models/cine2-scientist.mdl"); }
 };
 class CCinePanther : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine-panther.mdl"); }
+	void Spawn() override { CineSpawn("models/cine-panther.mdl"); }
 };
 
 class CCineBarney : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine-barney.mdl"); }
+	void Spawn() override { CineSpawn("models/cine-barney.mdl"); }
 };
 
 class CCine2HeavyWeapons : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine2_hvyweapons.mdl"); }
+	void Spawn() override { CineSpawn("models/cine2_hvyweapons.mdl"); }
 };
 
 class CCine2Slave : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine2_slave.mdl"); }
+	void Spawn() override { CineSpawn("models/cine2_slave.mdl"); }
 };
 
 class CCine3Scientist : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine3-scientist.mdl"); }
+	void Spawn() override { CineSpawn("models/cine3-scientist.mdl"); }
 };
 
 class CCine3Barney : public CLegacyCineMonster
 {
 public:
-	void Spawn() { CineSpawn("models/cine3-barney.mdl"); }
+	void Spawn() override { CineSpawn("models/cine3-barney.mdl"); }
 };
 
 //
@@ -185,7 +185,7 @@ void CLegacyCineMonster :: CineThink()
 class CCineBlood : public CBaseEntity
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT BloodStart ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT BloodGush ();
 };

@@ -35,13 +35,13 @@
 class CFlockingFlyerFlock : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn() override;
+	void Precache() override;
+	void KeyValue( KeyValueData *pkvd ) override;
 	void SpawnFlock();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// Sounds are shared by the flock
@@ -64,8 +64,8 @@ IMPLEMENT_SAVERESTORE( CFlockingFlyerFlock, CBaseMonster );
 class CFlockingFlyer : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	void SpawnCommonCode();
 	void EXPORT IdleThink();
 	void BoidAdvanceFrame();
@@ -78,13 +78,13 @@ public:
 	void AlertFlock();
 	void SpreadFlock();
 	void SpreadFlock2();
-	void Killed( entvars_t *pevAttacker, int iGib );
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	void Poop ();
 	BOOL FPathBlocked();
-	//void KeyValue( KeyValueData *pkvd );
+	//void KeyValue( KeyValueData *pkvd ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int IsLeader() { return m_pSquadLeader == this; }

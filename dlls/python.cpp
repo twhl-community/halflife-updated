@@ -277,18 +277,18 @@ void CPython::WeaponIdle()
 
 class CPythonAmmo : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_357ammobox.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_357ammobox.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		if (pOther->GiveAmmo( AMMO_357BOX_GIVE, "357", _357_MAX_CARRY ) != -1)
 		{

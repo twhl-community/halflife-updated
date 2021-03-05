@@ -105,8 +105,8 @@ BODY QUE
 class CDecal : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 	void	EXPORT StaticDecal();
 	void	EXPORT TriggerDecal( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 };
@@ -200,7 +200,7 @@ void CDecal :: KeyValue( KeyValueData *pkvd )
 // Body queue class here.... It's really just CBaseEntity
 class CCorpse : public CBaseEntity
 {
-	virtual int ObjectCaps() { return FCAP_DONT_SAVE; }	
+	int ObjectCaps() override { return FCAP_DONT_SAVE; }
 };
 
 LINK_ENTITY_TO_CLASS( bodyque, CCorpse );

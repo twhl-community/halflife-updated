@@ -76,31 +76,31 @@ enum
 class CHoundeye : public CSquadMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void SetYawSpeed ();
+	void Spawn() override;
+	void Precache() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	void SetYawSpeed () override;
 	void WarmUpSound ();
-	void AlertSound();
-	void DeathSound();
+	void AlertSound() override;
+	void DeathSound() override;
 	void WarnSound();
-	void PainSound();
-	void IdleSound();
-	void StartTask( Task_t *pTask );
-	void RunTask ( Task_t *pTask );
+	void PainSound() override;
+	void IdleSound() override;
+	void StartTask( Task_t *pTask ) override;
+	void RunTask ( Task_t *pTask ) override;
 	void SonicAttack();
-	void PrescheduleThink();
-	void SetActivity ( Activity NewActivity );
+	void PrescheduleThink() override;
+	void SetActivity ( Activity NewActivity ) override;
 	void WriteBeamColor ();
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );
-	BOOL FValidateHintType ( short sHint );
-	BOOL FCanActiveIdle ();
-	Schedule_t *GetScheduleOfType ( int Type );
-	Schedule_t *GetSchedule();
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
+	BOOL FValidateHintType ( short sHint ) override;
+	BOOL FCanActiveIdle () override;
+	Schedule_t *GetScheduleOfType ( int Type ) override;
+	Schedule_t *GetSchedule() override;
 
-	int	Save( CSave &save ); 
-	int Restore( CRestore &restore );
+	int	Save( CSave &save ) override;
+	int Restore( CRestore &restore ) override;
 
 	CUSTOM_SCHEDULES;
 	static TYPEDESCRIPTION m_SaveData[];

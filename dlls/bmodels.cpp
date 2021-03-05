@@ -53,11 +53,11 @@ This is just a solid wall if not inhibited
 class CFuncWall : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	// Bmodels don't go across transitions
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
 
 LINK_ENTITY_TO_CLASS( func_wall, CFuncWall );
@@ -86,8 +86,8 @@ void CFuncWall :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 class CFuncWallToggle : public CFuncWall
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void	TurnOff();
 	void	TurnOn();
 	BOOL	IsOn();
@@ -147,8 +147,8 @@ void CFuncWallToggle :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 class CFuncConveyor : public CFuncWall
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void	UpdateSpeed( float speed );
 };
 
@@ -208,10 +208,10 @@ A simple entity that looks solid but lets you walk through it.
 class CFuncIllusionary : public CBaseToggle 
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT SloshTouch( CBaseEntity *pOther );
-	void KeyValue( KeyValueData *pkvd );
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	void KeyValue( KeyValueData *pkvd ) override;
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
 
 LINK_ENTITY_TO_CLASS( func_illusionary, CFuncIllusionary );
@@ -255,8 +255,8 @@ void CFuncIllusionary :: Spawn()
 class CFuncMonsterClip : public CFuncWall
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) {}		// Clear out func_wall's use function
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override {}		// Clear out func_wall's use function
 };
 
 LINK_ENTITY_TO_CLASS( func_monsterclip, CFuncMonsterClip );
@@ -275,19 +275,19 @@ class CFuncRotating : public CBaseEntity
 {
 public:
 	// basic functions
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	void EXPORT SpinUp ();
 	void EXPORT SpinDown ();
-	void KeyValue( KeyValueData* pkvd);
+	void KeyValue( KeyValueData* pkvd) override;
 	void EXPORT HurtTouch ( CBaseEntity *pOther );
 	void EXPORT RotatingUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT Rotate();
 	void RampPitchVol (int fUp );
-	void Blocked( CBaseEntity *pOther );
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void Blocked( CBaseEntity *pOther ) override;
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -727,17 +727,17 @@ void CFuncRotating :: Blocked( CBaseEntity *pOther )
 class CPendulum : public CBaseEntity
 {
 public:
-	void	Spawn ();
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn () override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 	void	EXPORT Swing();
 	void	EXPORT PendulumUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void	EXPORT Stop();
-	void	Touch( CBaseEntity *pOther );
+	void	Touch( CBaseEntity *pOther ) override;
 	void	EXPORT RopeTouch ( CBaseEntity *pOther );// this touch func makes the pendulum a rope
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	void	Blocked( CBaseEntity *pOther );
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
+	void	Blocked( CBaseEntity *pOther ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 	

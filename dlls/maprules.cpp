@@ -33,10 +33,10 @@
 class CRuleEntity : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	KeyValue( KeyValueData *pkvd );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void	Spawn() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void	SetMaster( int iszMaster ) { m_iszMaster = iszMaster; }
@@ -94,7 +94,7 @@ BOOL CRuleEntity::CanFireForActivator( CBaseEntity *pActivator )
 class CRulePointEntity : public CRuleEntity
 {
 public:
-	void		Spawn();
+	void		Spawn() override;
 };
 
 void CRulePointEntity::Spawn()
@@ -111,7 +111,7 @@ void CRulePointEntity::Spawn()
 class CRuleBrushEntity : public CRuleEntity
 {
 public:
-	void		Spawn();
+	void		Spawn() override;
 
 private:
 };
@@ -134,9 +134,9 @@ void CRuleBrushEntity::Spawn()
 class CGameScore : public CRulePointEntity
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
 	inline	int		Points() { return pev->frags; }
 	inline	BOOL	AllowNegativeScore() { return pev->spawnflags & SF_SCORE_NEGATIVE; }
@@ -194,7 +194,7 @@ void CGameScore::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE us
 class CGameEnd : public CRulePointEntity
 {
 public:
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 private:
 };
 
@@ -222,11 +222,11 @@ void CGameEnd::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 class CGameText : public CRulePointEntity
 {
 public:
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	inline	BOOL	MessageToAll() { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS); }
@@ -351,12 +351,12 @@ void CGameText::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 class CGameTeamMaster : public CRulePointEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd );
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	int			ObjectCaps() { return CRulePointEntity:: ObjectCaps() | FCAP_MASTER; }
+	void		KeyValue( KeyValueData *pkvd ) override;
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	int			ObjectCaps() override { return CRulePointEntity:: ObjectCaps() | FCAP_MASTER; }
 
-	BOOL		IsTriggered( CBaseEntity *pActivator );
-	const char	*TeamID();
+	BOOL		IsTriggered( CBaseEntity *pActivator ) override;
+	const char	*TeamID() override;
 	inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) ? TRUE : FALSE; }
 	inline BOOL AnyTeam() { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) ? TRUE : FALSE; }
 
@@ -463,7 +463,7 @@ BOOL CGameTeamMaster::TeamMatch( CBaseEntity *pActivator )
 class CGameTeamSet : public CRulePointEntity
 {
 public:
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_TEAMSET_FIREONCE) ? TRUE : FALSE; }
 	inline BOOL ShouldClearTeam() { return (pev->spawnflags & SF_TEAMSET_CLEARTEAM) ? TRUE : FALSE; }
 
@@ -501,11 +501,11 @@ void CGameTeamSet::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 class CGamePlayerZone : public CRuleBrushEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd );
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		KeyValue( KeyValueData *pkvd ) override;
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
@@ -618,7 +618,7 @@ void CGamePlayerZone::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 class CGamePlayerHurt : public CRulePointEntity
 {
 public:
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_PKILL_FIREONCE) ? TRUE : FALSE; }
 
 private:
@@ -661,8 +661,8 @@ void CGamePlayerHurt::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 class CGameCounter : public CRulePointEntity
 {
 public:
-	void		Spawn();
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Spawn() override;
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) ? TRUE : FALSE; }
 	inline BOOL ResetOnFire() { return (pev->spawnflags & SF_GAMECOUNT_RESET) ? TRUE : FALSE; }
 
@@ -737,7 +737,7 @@ void CGameCounter::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 class CGameCounterSet : public CRulePointEntity
 {
 public:
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	inline BOOL RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNTSET_FIREONCE) ? TRUE : FALSE; }
 
 private:
@@ -770,9 +770,9 @@ void CGameCounterSet::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 class CGamePlayerEquip : public CRulePointEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd );
-	void		Touch( CBaseEntity *pOther );
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		KeyValue( KeyValueData *pkvd ) override;
+	void		Touch( CBaseEntity *pOther ) override;
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	inline BOOL	UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) ? TRUE : FALSE; }
 
@@ -866,7 +866,7 @@ void CGamePlayerEquip::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 class CGamePlayerTeam : public CRulePointEntity
 {
 public:
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 private:
 

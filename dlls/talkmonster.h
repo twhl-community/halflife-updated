@@ -104,23 +104,23 @@ public:
 	void			StopTalking() { SentenceStop(); }
 	
 	// Base Monster functions
-	void			Precache();
-	int				TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
-	void			Touch(	CBaseEntity *pOther );
-	void			Killed( entvars_t *pevAttacker, int iGib );
-	int				IRelationship ( CBaseEntity *pTarget );
-	virtual int		CanPlaySentence( BOOL fDisregardState );
-	virtual void	PlaySentence( const char *pszSentence, float duration, float volume, float attenuation );
-	void			PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener );
-	void			KeyValue( KeyValueData *pkvd );
+	void			Precache() override;
+	int				TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType) override;
+	void			Touch(	CBaseEntity *pOther ) override;
+	void			Killed( entvars_t *pevAttacker, int iGib ) override;
+	int				IRelationship ( CBaseEntity *pTarget ) override;
+	int		CanPlaySentence( BOOL fDisregardState ) override;
+	void	PlaySentence( const char *pszSentence, float duration, float volume, float attenuation ) override;
+	void			PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener ) override;
+	void			KeyValue( KeyValueData *pkvd ) override;
 
 	// AI functions
-	void			SetActivity ( Activity newActivity );
-	Schedule_t		*GetScheduleOfType ( int Type );
-	void			StartTask( Task_t *pTask );
-	void			RunTask( Task_t *pTask );
-	void			HandleAnimEvent( MonsterEvent_t *pEvent );
-	void			PrescheduleThink();
+	void			SetActivity ( Activity newActivity ) override;
+	Schedule_t		*GetScheduleOfType ( int Type ) override;
+	void			StartTask( Task_t *pTask ) override;
+	void			RunTask( Task_t *pTask ) override;
+	void			HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	void			PrescheduleThink() override;
 	
 
 	// Conversations / communication
@@ -150,8 +150,8 @@ public:
 	virtual void	SetAnswerQuestion( CTalkMonster *pSpeaker );
 	virtual int		FriendNumber( int arrayNumber )	{ return arrayNumber; }
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	

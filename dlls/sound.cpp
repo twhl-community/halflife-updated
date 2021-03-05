@@ -121,17 +121,17 @@ dynpitchvol_t rgdpvpreset[CDPVPRESETMAX] =
 class CAmbientGeneric : public CBaseEntity
 {
 public:
-	void KeyValue( KeyValueData* pkvd);
-	void Spawn();
-	void Precache();
+	void KeyValue( KeyValueData* pkvd) override;
+	void Spawn() override;
+	void Precache() override;
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT RampThink();
 	void InitModulationParms();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 	float m_flAttenuation;		// attenuation value
 	dynpitchvol_t m_dpv;	
@@ -806,13 +806,13 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 class CEnvSound : public CPointEntity
 {
 public:
-	void KeyValue( KeyValueData* pkvd);
-	void Spawn();
+	void KeyValue( KeyValueData* pkvd) override;
+	void Spawn() override;
 
-	void Think();
+	void Think() override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	float m_flRadius;
@@ -1794,17 +1794,17 @@ float TEXTURETYPE_PlaySound(TraceResult *ptr,  Vector vecSrc, Vector vecEnd, int
 class CSpeaker : public CBaseEntity
 {
 public:
-	void KeyValue( KeyValueData* pkvd);
-	void Spawn();
-	void Precache();
+	void KeyValue( KeyValueData* pkvd) override;
+	void Spawn() override;
+	void Precache() override;
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT SpeakerThink();
 	
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	
 	int	m_preset;			// preset number
 };

@@ -24,17 +24,17 @@ class CBreakable : public CBaseDelay
 {
 public:
 	// basic functions
-	void Spawn();
-	void Precache();
-	void KeyValue( KeyValueData* pkvd);
+	void Spawn() override;
+	void Precache() override;
+	void KeyValue( KeyValueData* pkvd) override;
 	void EXPORT BreakTouch( CBaseEntity *pOther );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void DamageSound();
 
 	// breakables use an overridden takedamage
-	virtual int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
 	// To spark when hit
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType ) override;
 
 	BOOL IsBreakable();
 	BOOL SparkWhenHit();
@@ -42,9 +42,9 @@ public:
 	int	 DamageDecal( int bitsDamageType );
 
 	void EXPORT		Die();
-	virtual int		ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	inline BOOL		Explodable() { return ExplosionMagnitude() > 0; }
 	inline int		ExplosionMagnitude() { return pev->impulse; }

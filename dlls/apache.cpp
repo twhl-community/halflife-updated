@@ -29,18 +29,18 @@ extern DLL_GLOBAL int		g_iSkillLevel;
 
 class CApache : public CBaseMonster
 {
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void Spawn();
-	void Precache();
-	int  Classify() { return CLASS_HUMAN_MILITARY; };
-	int  BloodColor() { return DONT_BLEED; }
-	void Killed( entvars_t *pevAttacker, int iGib );
-	void GibMonster();
+	void Spawn() override;
+	void Precache() override;
+	int  Classify() override { return CLASS_HUMAN_MILITARY; };
+	int  BloodColor() override { return DONT_BLEED; }
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
+	void GibMonster() override;
 
-	void SetObjectCollisionBox()
+	void SetObjectCollisionBox() override
 	{
 		pev->absmin = pev->origin + Vector( -300, -300, -172);
 		pev->absmax = pev->origin + Vector(300, 300, 8);
@@ -58,8 +58,8 @@ class CApache : public CBaseMonster
 	void FireRocket();
 	BOOL FireGun();
 	
-	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
+	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
 
 	int m_iRockets;
 	float m_flForce;
@@ -939,13 +939,13 @@ void CApache::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir
 
 class CApacheHVR : public CGrenade
 {
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	void EXPORT IgniteThink();
 	void EXPORT AccelerateThink();
 
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int m_iTrail;

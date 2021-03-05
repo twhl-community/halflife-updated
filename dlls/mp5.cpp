@@ -283,18 +283,18 @@ void CMP5::WeaponIdle()
 
 class CMP5AmmoClip : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_9mmARclip.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_9mmARclip.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		int bResult = (pOther->GiveAmmo( AMMO_MP5CLIP_GIVE, "9mm", _9MM_MAX_CARRY) != -1);
 		if (bResult)
@@ -311,18 +311,18 @@ LINK_ENTITY_TO_CLASS( ammo_9mmAR, CMP5AmmoClip );
 
 class CMP5Chainammo : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_chainammo.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_chainammo.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		int bResult = (pOther->GiveAmmo( AMMO_CHAINBOX_GIVE, "9mm", _9MM_MAX_CARRY) != -1);
 		if (bResult)
@@ -337,18 +337,18 @@ LINK_ENTITY_TO_CLASS( ammo_9mmbox, CMP5Chainammo );
 
 class CMP5AmmoGrenade : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_ARgrenade.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_ARgrenade.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		int bResult = (pOther->GiveAmmo( AMMO_M203BOX_GIVE, "ARgrenades", M203_GRENADE_MAX_CARRY ) != -1);
 

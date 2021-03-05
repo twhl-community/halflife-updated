@@ -22,15 +22,15 @@
 
 class CAirtank : public CGrenade
 {
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	void EXPORT TankThink();
 	void EXPORT TankTouch( CBaseEntity *pOther );
-	int	 BloodColor() { return DONT_BLEED; };
-	void Killed( entvars_t *pevAttacker, int iGib );
+	int	 BloodColor() override { return DONT_BLEED; };
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
-	virtual int		Save( CSave &save ); 
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 

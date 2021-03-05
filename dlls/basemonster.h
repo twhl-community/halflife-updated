@@ -110,12 +110,12 @@ public:
 
 	float m_flLastYawTime;
 
-	virtual int		Save( CSave &save ); 
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void KeyValue( KeyValueData *pkvd );
+	void KeyValue( KeyValueData *pkvd ) override;
 
 // monster use function
 	void EXPORT			MonsterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
@@ -123,14 +123,14 @@ public:
 
 // overrideable Monster member functions
 	
-	virtual int	 BloodColor() { return m_bloodColor; }
+	int	 BloodColor() override { return m_bloodColor; }
 
-	virtual CBaseMonster *MyMonsterPointer() { return this; }
+	CBaseMonster *MyMonsterPointer() override { return this; }
 	virtual void Look ( int iDistance );// basic sight function for monsters
 	virtual void RunAI ();// core ai function!	
 	void Listen ();
 
-	virtual BOOL	IsAlive() { return (pev->deadflag != DEAD_DEAD); }
+	BOOL	IsAlive() override { return (pev->deadflag != DEAD_DEAD); }
 	virtual BOOL	ShouldFadeOnDeath();
 
 // Basic Monster AI functions
@@ -154,7 +154,7 @@ public:
 		virtual CBaseEntity* BestVisibleEnemy ();// finds best visible enemy for attack
 		virtual BOOL FInViewCone ( CBaseEntity *pEntity );// see if pEntity is in monster's view cone
 		virtual BOOL FInViewCone ( Vector *pOrigin );// see if given location is in monster's view cone
-		virtual void HandleAnimEvent( MonsterEvent_t *pEvent );
+		void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 
 		virtual int CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist );// check validity of a straight move through space
 		virtual void Move( float flInterval = 0.1 );
@@ -266,7 +266,7 @@ public:
 		virtual CSound* PBestScent ();
 		virtual float HearingSensitivity() { return 1.0; };
 
-		BOOL FBecomeProne ();
+		BOOL FBecomeProne () override;
 		virtual void BarnacleVictimBitten( entvars_t *pevBarnacle );
 		virtual void BarnacleVictimReleased();
 
@@ -288,13 +288,13 @@ public:
 
 		BOOL GetEnemy ();
 		void MakeDamageBloodDecal ( int cCount, float flNoise, TraceResult *ptr, const Vector &vecDir );
-		void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
+		void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
 
 	// combat functions
 	float UpdateTarget ( entvars_t *pevTarget );
 	virtual Activity GetDeathActivity ();
 	Activity GetSmallFlinchActivity();
-	virtual void Killed( entvars_t *pevAttacker, int iGib );
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	virtual void GibMonster();
 	BOOL		 ShouldGibMonster( int iGib );
 	void		 CallGibMonster();
@@ -303,12 +303,12 @@ public:
 	virtual void	FadeMonster();	// Called instead of GibMonster() when gibs are disabled
 
 	Vector ShootAtEnemy( const Vector &shootOrigin );
-	virtual Vector BodyTarget( const Vector &posSrc ) { return Center( ) * 0.75 + EyePosition() * 0.25; };		// position to shoot at
+	Vector BodyTarget( const Vector &posSrc ) override { return Center( ) * 0.75 + EyePosition() * 0.25; };		// position to shoot at
 
 	virtual	Vector  GetGunPosition();
 
-	virtual int TakeHealth( float flHealth, int bitsDamageType );
-	virtual int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
+	int TakeHealth( float flHealth, int bitsDamageType ) override;
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	int			DeadTakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 
 	void RadiusDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );

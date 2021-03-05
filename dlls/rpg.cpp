@@ -572,18 +572,18 @@ void CRpg::UpdateSpot()
 
 class CRpgAmmo : public CBasePlayerAmmo
 {
-	void Spawn()
+	void Spawn() override
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_rpgammo.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache()
+	void Precache() override
 	{
 		PRECACHE_MODEL ("models/w_rpgammo.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) 
+	BOOL AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		int iGive;
 

@@ -28,10 +28,10 @@
 // Spark Shower
 class CShower : public CBaseEntity
 {
-	void Spawn();
-	void Think();
-	void Touch( CBaseEntity *pOther );
-	int ObjectCaps() { return FCAP_DONT_SAVE; }
+	void Spawn() override;
+	void Think() override;
+	void Touch( CBaseEntity *pOther ) override;
+	int ObjectCaps() override { return FCAP_DONT_SAVE; }
 };
 
 LINK_ENTITY_TO_CLASS( spark_shower, CShower );
@@ -84,13 +84,13 @@ void CShower::Touch( CBaseEntity *pOther )
 class CEnvExplosion : public CBaseMonster
 {
 public:
-	void Spawn( );
+	void Spawn( ) override;
 	void EXPORT Smoke ();
-	void KeyValue( KeyValueData *pkvd );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int m_iMagnitude;// how large is the fireball? how much damage?

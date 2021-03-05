@@ -34,17 +34,17 @@
 class CBarnacle : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 	CBaseEntity *TongueTouchEnt ( float *pflLength );
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 	void EXPORT BarnacleThink ();
 	void EXPORT WaitTillDead ();
-	void Killed( entvars_t *pevAttacker, int iGib );
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
+	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	float m_flAltitude;

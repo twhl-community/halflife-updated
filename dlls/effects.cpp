@@ -35,16 +35,16 @@ LINK_ENTITY_TO_CLASS( info_target, CPointEntity );
 class CBubbling : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Precache() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 	
 	void	EXPORT FizzThink();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	virtual int		ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
+	int		ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int		m_density;
@@ -371,10 +371,10 @@ void CBeam::DoSparks( const Vector &start, const Vector &end )
 class CLightning : public CBeam
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	KeyValue( KeyValueData *pkvd );
-	void	Activate();
+	void	Spawn() override;
+	void	Precache() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
+	void	Activate() override;
 
 	void	EXPORT StrikeThink();
 	void	EXPORT DamageThink();
@@ -391,8 +391,8 @@ public:
 		return FALSE;
 	}
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void	BeamUpdateVars();
@@ -420,7 +420,7 @@ LINK_ENTITY_TO_CLASS( env_beam, CLightning );
 #if _DEBUG
 class CTripBeam : public CLightning
 {
-	void Spawn();
+	void Spawn() override;
 };
 LINK_ENTITY_TO_CLASS( trip_beam, CTripBeam );
 
@@ -1114,11 +1114,11 @@ void CLaser::StrikeThink()
 class CGlow : public CPointEntity
 {
 public:
-	void Spawn();
-	void Think();
+	void Spawn() override;
+	void Think() override;
 	void Animate( float frames );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	float		m_lastTime;
@@ -1347,16 +1347,16 @@ void CSprite::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTy
 class CGibShooter : public CBaseDelay
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Precache() override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT ShootThink();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	virtual CGib *CreateGib();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int	m_iGibs;
@@ -1525,10 +1525,10 @@ void CGibShooter :: ShootThink ()
 
 class CEnvShooter : public CGibShooter
 {
-	void		Precache();
-	void		KeyValue( KeyValueData *pkvd );
+	void		Precache() override;
+	void		KeyValue( KeyValueData *pkvd ) override;
 
-	CGib		*CreateGib();
+	CGib		*CreateGib() override;
 };
 
 LINK_ENTITY_TO_CLASS( env_shooter, CEnvShooter );
@@ -1613,11 +1613,11 @@ CGib *CEnvShooter :: CreateGib ()
 class CTestEffect : public CBaseDelay
 {
 public:
-	void	Spawn();
-	void	Precache();
-	// void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Precache() override;
+	// void	KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT TestThink();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	int		m_iLoop;
 	int		m_iBeam;
@@ -1719,9 +1719,9 @@ void CTestEffect::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 class CBlood : public CPointEntity
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
 	inline	int		Color() { return pev->impulse; }
 	inline	float 	BloodAmount() { return pev->dmg; }
@@ -1835,9 +1835,9 @@ void CBlood::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTyp
 class CShake : public CPointEntity
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
 	inline	float	Amplitude() { return pev->scale; }
 	inline	float	Frequency() { return pev->dmg_save; }
@@ -1913,9 +1913,9 @@ void CShake::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTyp
 class CFade : public CPointEntity
 {
 public:
-	void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 
 	inline	float	Duration() { return pev->dmg_take; }
 	inline	float	HoldTime() { return pev->dmg_save; }
@@ -1987,10 +1987,10 @@ void CFade::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType
 class CMessage : public CPointEntity
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	KeyValue( KeyValueData *pkvd );
+	void	Spawn() override;
+	void	Precache() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void	KeyValue( KeyValueData *pkvd ) override;
 private:
 };
 
@@ -2094,9 +2094,9 @@ void CMessage::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 class CEnvFunnel : public CBaseDelay
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Spawn() override;
+	void	Precache() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	int		m_iSprite;	// Don't save, precache
 };
@@ -2148,9 +2148,9 @@ void CEnvFunnel::Spawn()
 class CEnvBeverage : public CBaseDelay
 {
 public:
-	void	Spawn();
-	void	Precache();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Spawn() override;
+	void	Precache() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 };
 
 void CEnvBeverage :: Precache ()
@@ -2207,8 +2207,8 @@ void CEnvBeverage::Spawn()
 class CItemSoda : public CBaseEntity
 {
 public:
-	void	Spawn();
-	void	Precache();
+	void	Spawn() override;
+	void	Precache() override;
 	void	EXPORT CanThink ();
 	void	EXPORT CanTouch ( CBaseEntity *pOther );
 };

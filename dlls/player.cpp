@@ -3153,9 +3153,9 @@ class CSprayCan : public CBaseEntity
 {
 public:
 	void	Spawn ( entvars_t *pevOwner );
-	void	Think();
+	void	Think() override;
 
-	virtual int	ObjectCaps() { return FCAP_DONT_SAVE; }
+	int	ObjectCaps() override { return FCAP_DONT_SAVE; }
 };
 
 void CSprayCan::Spawn ( entvars_t *pevOwner )
@@ -4640,10 +4640,10 @@ void CBasePlayer::SetPrefsFromUserinfo(char* infobuffer)
 class CDeadHEV : public CBaseMonster
 {
 public:
-	void Spawn();
-	int	Classify () { return	CLASS_HUMAN_MILITARY; }
+	void Spawn() override;
+	int	Classify () override { return	CLASS_HUMAN_MILITARY; }
 
-	void KeyValue( KeyValueData *pkvd );
+	void KeyValue( KeyValueData *pkvd ) override;
 
 	int	m_iPose;// which sequence to display	-- temporary, don't need to save
 	static const char *m_szPoses[4];
@@ -4697,7 +4697,7 @@ void CDeadHEV :: Spawn()
 class CStripWeapons : public CPointEntity
 {
 public:
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 private:
 };
@@ -4725,13 +4725,13 @@ void CStripWeapons :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 class CRevertSaved : public CPointEntity
 {
 public:
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void	EXPORT MessageThink();
 	void	EXPORT LoadThink();
-	void	KeyValue( KeyValueData *pkvd );
+	void	KeyValue( KeyValueData *pkvd ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	inline	float	Duration() { return pev->dmg_take; }
@@ -4821,8 +4821,8 @@ void CRevertSaved :: LoadThink()
 //=========================================================
 class CInfoIntermission:public CPointEntity
 {
-	void Spawn();
-	void Think();
+	void Spawn() override;
+	void Think() override;
 };
 
 void CInfoIntermission::Spawn()

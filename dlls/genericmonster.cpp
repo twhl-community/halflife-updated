@@ -32,12 +32,12 @@
 class CGenericMonster : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	int ISoundMask ();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	int ISoundMask () override;
 };
 LINK_ENTITY_TO_CLASS( monster_generic, CGenericMonster );
 

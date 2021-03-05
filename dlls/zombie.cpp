@@ -37,18 +37,18 @@
 class CZombie : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	int IgnoreConditions ();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	int IgnoreConditions () override;
 
 	float m_flNextFlinch;
 
-	void PainSound();
-	void AlertSound();
-	void IdleSound();
+	void PainSound() override;
+	void AlertSound() override;
+	void IdleSound() override;
 	void AttackSound();
 
 	static const char *pAttackSounds[];
@@ -59,9 +59,9 @@ public:
 	static const char *pAttackMissSounds[];
 
 	// No range attacks
-	BOOL CheckRangeAttack1 ( float flDot, float flDist ) { return FALSE; }
-	BOOL CheckRangeAttack2 ( float flDot, float flDist ) { return FALSE; }
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override { return FALSE; }
+	BOOL CheckRangeAttack2 ( float flDot, float flDist ) override { return FALSE; }
+	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
 };
 
 LINK_ENTITY_TO_CLASS( monster_zombie, CZombie );

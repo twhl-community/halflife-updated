@@ -49,7 +49,7 @@ CVoiceGameMgr	g_VoiceGameMgr;
 class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
 {
 public:
-	virtual bool		CanPlayerHearPlayer(CBasePlayer *pListener, CBasePlayer *pTalker)
+	bool		CanPlayerHearPlayer(CBasePlayer *pListener, CBasePlayer *pTalker) override
 	{
 		if ( g_teamplay )
 		{

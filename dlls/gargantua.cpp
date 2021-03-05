@@ -68,9 +68,9 @@ class CSmoker;
 class CSpiral : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Think();
-	int ObjectCaps() { return FCAP_DONT_SAVE; }
+	void Spawn() override;
+	void Think() override;
+	int ObjectCaps() override { return FCAP_DONT_SAVE; }
 	static CSpiral *Create( const Vector &origin, float height, float radius, float duration );
 };
 LINK_ENTITY_TO_CLASS( streak_spiral, CSpiral );
@@ -79,8 +79,8 @@ LINK_ENTITY_TO_CLASS( streak_spiral, CSpiral );
 class CStomp : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Think();
+	void Spawn() override;
+	void Think() override;
 	static CStomp *StompCreate( const Vector &origin, const Vector &end, float speed );
 
 private:
@@ -200,30 +200,30 @@ void StreakSplash( const Vector &origin, const Vector &direction, int color, int
 class CGargantua : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  Classify ();
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  Classify () override;
+	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType ) override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 
-	BOOL CheckMeleeAttack1( float flDot, float flDist );		// Swipe
-	BOOL CheckMeleeAttack2( float flDot, float flDist );		// Flames
-	BOOL CheckRangeAttack1( float flDot, float flDist );		// Stomp attack
-	void SetObjectCollisionBox()
+	BOOL CheckMeleeAttack1( float flDot, float flDist ) override;		// Swipe
+	BOOL CheckMeleeAttack2( float flDot, float flDist ) override;		// Flames
+	BOOL CheckRangeAttack1( float flDot, float flDist ) override;		// Stomp attack
+	void SetObjectCollisionBox() override
 	{
 		pev->absmin = pev->origin + Vector( -80, -80, 0 );
 		pev->absmax = pev->origin + Vector( 80, 80, 214 );
 	}
 
-	Schedule_t *GetScheduleOfType( int Type );
-	void StartTask( Task_t *pTask );
-	void RunTask( Task_t *pTask );
+	Schedule_t *GetScheduleOfType( int Type ) override;
+	void StartTask( Task_t *pTask ) override;
+	void RunTask( Task_t *pTask ) override;
 
-	void PrescheduleThink();
+	void PrescheduleThink() override;
 
-	void Killed( entvars_t *pevAttacker, int iGib );
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	void DeathEffect();
 
 	void EyeOff();
@@ -239,8 +239,8 @@ public:
 
 	void FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	CUSTOM_SCHEDULES;
@@ -1239,8 +1239,8 @@ void CGargantua::RunTask( Task_t *pTask )
 class CSmoker : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Think();
+	void Spawn() override;
+	void Think() override;
 };
 
 LINK_ENTITY_TO_CLASS( env_smoker, CSmoker );

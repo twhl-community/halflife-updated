@@ -26,25 +26,25 @@ class CHalfLifeTeamplay : public CHalfLifeMultiplay
 public:
 	CHalfLifeTeamplay();
 
-	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd );
-	virtual void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer );
-	virtual BOOL IsTeamplay();
-	virtual BOOL FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker );
-	virtual int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget );
-	virtual const char *GetTeamID( CBaseEntity *pEntity );
-	virtual BOOL ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target );
-	virtual int IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled );
-	virtual void InitHUD( CBasePlayer *pl );
-	virtual void DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pevInflictor );
-	virtual const char *GetGameDescription() { return "HL Teamplay"; }  // this is the game name that gets seen in the server browser
-	virtual void UpdateGameMode( CBasePlayer *pPlayer );  // the client needs to be informed of the current game mode
-	virtual void PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor );
-	virtual void Think ();
-	virtual int GetTeamIndex( const char *pTeamName );
-	virtual const char *GetIndexedTeamName( int teamIndex );
-	virtual BOOL IsValidTeam( const char *pTeamName );
-	const char *SetDefaultPlayerTeam( CBasePlayer *pPlayer );
-	virtual void ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTeamName, BOOL bKill, BOOL bGib );
+	BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd ) override;
+	void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer ) override;
+	BOOL IsTeamplay() override;
+	BOOL FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker ) override;
+	int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget ) override;
+	const char *GetTeamID( CBaseEntity *pEntity ) override;
+	BOOL ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target ) override;
+	int IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled ) override;
+	void InitHUD( CBasePlayer *pl ) override;
+	void DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pevInflictor ) override;
+	const char *GetGameDescription() override { return "HL Teamplay"; }  // this is the game name that gets seen in the server browser
+	void UpdateGameMode( CBasePlayer *pPlayer ) override;  // the client needs to be informed of the current game mode
+	void PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor ) override;
+	void Think () override;
+	int GetTeamIndex( const char *pTeamName ) override;
+	const char *GetIndexedTeamName( int teamIndex ) override;
+	BOOL IsValidTeam( const char *pTeamName ) override;
+	const char *SetDefaultPlayerTeam( CBasePlayer *pPlayer ) override;
+	void ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTeamName, BOOL bKill, BOOL bGib ) override;
 
 private:
 	void RecountTeams( bool bResendInfo = FALSE );

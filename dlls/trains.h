@@ -37,13 +37,13 @@
 class CPathTrack : public CPointEntity
 {
 public:
-	void		Spawn();
-	void		Activate();
-	void		KeyValue( KeyValueData* pkvd);
+	void		Spawn() override;
+	void		Activate() override;
+	void		KeyValue( KeyValueData* pkvd) override;
 	
 	void		SetPrevious( CPathTrack *pprevious );
 	void		Link();
-	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	CPathTrack	*ValidPath( CPathTrack *ppath, int testFlag );		// Returns ppath if enabled, NULL otherwise
 	void		Project( CPathTrack *pstart, CPathTrack *pend, Vector *origin, float dist );
@@ -56,8 +56,8 @@ public:
 	CPathTrack	*GetNext();
 	CPathTrack	*GetPrevious();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 #if PATH_SPARKLE_DEBUG
@@ -75,12 +75,12 @@ public:
 class CFuncTrackTrain : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 
-	void Blocked( CBaseEntity *pOther );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void KeyValue( KeyValueData* pkvd );
+	void Blocked( CBaseEntity *pOther ) override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void KeyValue( KeyValueData* pkvd ) override;
 
 	void EXPORT Next();
 	void EXPORT Find();
@@ -91,20 +91,20 @@ public:
 
 	void SetTrack( CPathTrack *track ) { m_ppath = track->Nearest(pev->origin); }
 	void SetControls( entvars_t *pevControls );
-	BOOL OnControls( entvars_t *pev );
+	BOOL OnControls( entvars_t *pev ) override;
 
 	void StopSound ();
 	void UpdateSound ();
 	
 	static CFuncTrackTrain *Instance( edict_t *pent );
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
 
-	virtual void	OverrideReset();
+	void	OverrideReset() override;
 
 	CPathTrack	*m_ppath;
 	float		m_length;

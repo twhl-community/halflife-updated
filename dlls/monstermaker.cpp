@@ -34,17 +34,17 @@
 class CMonsterMaker : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void KeyValue( KeyValueData* pkvd);
+	void Spawn() override;
+	void Precache() override;
+	void KeyValue( KeyValueData* pkvd) override;
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT CyclicUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT MakerThink ();
-	void DeathNotice ( entvars_t *pevChild );// monster maker children use this to tell the monster maker that they have died.
+	void DeathNotice ( entvars_t *pevChild ) override;// monster maker children use this to tell the monster maker that they have died.
 	void MakeMonster();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 	

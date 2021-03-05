@@ -261,9 +261,9 @@ public:
 //=========================================================
 class CNodeEnt : public CBaseEntity
 {
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	void Spawn() override;
+	void KeyValue( KeyValueData *pkvd ) override;
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	short m_sHintType;
 	short m_sHintActivity;

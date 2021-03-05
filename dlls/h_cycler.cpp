@@ -36,18 +36,18 @@ class CCycler : public CBaseMonster
 {
 public:
 	void GenericCyclerSpawn(const char *szModel, Vector vecMin, Vector vecMax);
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() | FCAP_IMPULSE_USE); }
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void Spawn();
-	void Think();
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() | FCAP_IMPULSE_USE); }
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	void Spawn() override;
+	void Think() override;
 	//void Pain( float flDamage );
-	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	// Don't treat as a live target
-	virtual BOOL IsAlive() { return FALSE; }
+	BOOL IsAlive() override { return FALSE; }
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int			m_animate;
@@ -67,7 +67,7 @@ IMPLEMENT_SAVERESTORE( CCycler, CBaseMonster );
 class CGenericCycler : public CCycler
 {
 public:
-	void Spawn() { GenericCyclerSpawn( STRING(pev->model), Vector(-16, -16, 0), Vector(16, 16, 72) ); }
+	void Spawn() override { GenericCyclerSpawn( STRING(pev->model), Vector(-16, -16, 0), Vector(16, 16, 72) ); }
 };
 LINK_ENTITY_TO_CLASS( cycler, CGenericCycler );
 
@@ -80,7 +80,7 @@ LINK_ENTITY_TO_CLASS( cycler, CGenericCycler );
 class CCyclerProbe : public CCycler
 {
 public:	
-	void Spawn();
+	void Spawn() override;
 };
 LINK_ENTITY_TO_CLASS( cycler_prdroid, CCyclerProbe );
 void CCyclerProbe :: Spawn()
@@ -218,15 +218,15 @@ int CCycler :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 class CCyclerSprite : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Think();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() | FCAP_DONT_SAVE | FCAP_IMPULSE_USE); }
-	virtual int	TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
+	void Spawn() override;
+	void Think() override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() | FCAP_DONT_SAVE | FCAP_IMPULSE_USE); }
+	int	TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
 	void	Animate( float frames );
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	inline int		ShouldAnimate() { return m_animate && m_maxFrame > 1.0; }
@@ -308,14 +308,14 @@ void CCyclerSprite::Animate( float frames )
 class CWeaponCycler : public CBasePlayerWeapon
 {
 public:
-	void Spawn();
-	int iItemSlot() { return 1; }
-	int GetItemInfo(ItemInfo *p) {return 0; }
+	void Spawn() override;
+	int iItemSlot() override { return 1; }
+	int GetItemInfo(ItemInfo *p) override {return 0; }
 
-	void PrimaryAttack();
-	void SecondaryAttack();
-	BOOL Deploy();
-	void Holster( int skiplocal = 0 );
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	BOOL Deploy() override;
+	void Holster( int skiplocal = 0 ) override;
 	int m_iszModel;
 	int m_iModel;
 };
@@ -390,13 +390,13 @@ void CWeaponCycler::SecondaryAttack()
 // Flaming Wreakage
 class CWreckage : public CBaseMonster
 {
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void Spawn();
-	void Precache();
-	void Think();
+	void Spawn() override;
+	void Precache() override;
+	void Think() override;
 
 	int m_flStartTime;
 };

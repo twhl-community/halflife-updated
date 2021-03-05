@@ -42,33 +42,33 @@ extern DLL_GLOBAL int		g_iSkillLevel;
 class CISlave : public CSquadMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int	 ISoundMask();
-	int  Classify ();
-	int  IRelationship( CBaseEntity *pTarget );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );
-	BOOL CheckRangeAttack2 ( float flDot, float flDist );
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int	 ISoundMask() override;
+	int  Classify () override;
+	int  IRelationship( CBaseEntity *pTarget ) override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
+	BOOL CheckRangeAttack2 ( float flDot, float flDist ) override;
 	void CallForHelp( const char *szClassname, float flDist, EHANDLE hEnemy, Vector &vecLocation );
-	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
+	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
+	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
-	void DeathSound();
-	void PainSound();
-	void AlertSound();
-	void IdleSound();
+	void DeathSound() override;
+	void PainSound() override;
+	void AlertSound() override;
+	void IdleSound() override;
 
-	void Killed( entvars_t *pevAttacker, int iGib );
+	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
-    void StartTask ( Task_t *pTask );
-	Schedule_t *GetSchedule();
-	Schedule_t *GetScheduleOfType ( int Type );
+    void StartTask ( Task_t *pTask ) override;
+	Schedule_t *GetSchedule() override;
+	Schedule_t *GetScheduleOfType ( int Type ) override;
 	CUSTOM_SCHEDULES;
 
-	int	Save( CSave &save ); 
-	int Restore( CRestore &restore );
+	int	Save( CSave &save ) override;
+	int Restore( CRestore &restore ) override;
 	static TYPEDESCRIPTION m_SaveData[];
 
 	void ClearBeams( );

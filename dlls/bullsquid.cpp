@@ -59,14 +59,14 @@ enum
 class CSquidSpit : public CBaseEntity
 {
 public:
-	void Spawn();
+	void Spawn() override;
 
 	static void Shoot( entvars_t *pevOwner, Vector vecStart, Vector vecVelocity );
-	void Touch( CBaseEntity *pOther );
+	void Touch( CBaseEntity *pOther ) override;
 	void EXPORT Animate();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int  m_maxFrame;
@@ -189,33 +189,33 @@ void CSquidSpit :: Touch ( CBaseEntity *pOther )
 class CBullsquid : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed();
-	int  ISoundMask();
-	int  Classify ();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void IdleSound();
-	void PainSound();
-	void DeathSound();
-	void AlertSound ();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed() override;
+	int  ISoundMask() override;
+	int  Classify () override;
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	void IdleSound() override;
+	void PainSound() override;
+	void DeathSound() override;
+	void AlertSound () override;
 	void AttackSound();
-	void StartTask ( Task_t *pTask );
-	void RunTask ( Task_t *pTask );
-	BOOL CheckMeleeAttack1 ( float flDot, float flDist );
-	BOOL CheckMeleeAttack2 ( float flDot, float flDist );
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );
-	void RunAI();
-	BOOL FValidateHintType ( short sHint );
-	Schedule_t *GetSchedule();
-	Schedule_t *GetScheduleOfType ( int Type );
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
-	int IRelationship ( CBaseEntity *pTarget );
-	int IgnoreConditions ();
-	MONSTERSTATE GetIdealState ();
+	void StartTask ( Task_t *pTask ) override;
+	void RunTask ( Task_t *pTask ) override;
+	BOOL CheckMeleeAttack1 ( float flDot, float flDist ) override;
+	BOOL CheckMeleeAttack2 ( float flDot, float flDist ) override;
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
+	void RunAI() override;
+	BOOL FValidateHintType ( short sHint ) override;
+	Schedule_t *GetSchedule() override;
+	Schedule_t *GetScheduleOfType ( int Type ) override;
+	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	int IRelationship ( CBaseEntity *pTarget ) override;
+	int IgnoreConditions () override;
+	MONSTERSTATE GetIdealState () override;
 
-	int	Save( CSave &save ); 
-	int Restore( CRestore &restore );
+	int	Save( CSave &save ) override;
+	int Restore( CRestore &restore ) override;
 
 	CUSTOM_SCHEDULES;
 	static TYPEDESCRIPTION m_SaveData[];

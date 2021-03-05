@@ -43,13 +43,13 @@ extern Vector VecBModelOrigin( entvars_t* pevBModel );
 class CFrictionModifier : public CBaseEntity
 {
 public:
-	void		Spawn();
-	void		KeyValue( KeyValueData *pkvd );
+	void		Spawn() override;
+	void		KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT	ChangeFriction( CBaseEntity *pOther );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -107,14 +107,14 @@ void CFrictionModifier :: KeyValue( KeyValueData *pkvd )
 class CAutoTrigger : public CBaseDelay
 {
 public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn();
-	void Precache();
-	void Think();
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Spawn() override;
+	void Precache() override;
+	void Think() override;
 
-	int ObjectCaps() { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -190,13 +190,13 @@ void CAutoTrigger::Think()
 class CTriggerRelay : public CBaseDelay
 {
 public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Spawn() override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	int ObjectCaps() { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -263,8 +263,8 @@ void CTriggerRelay::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 class CMultiManager : public CBaseToggle
 {
 public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn ();
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Spawn () override;
 	void EXPORT ManagerThink ();
 	void EXPORT ManagerUse   ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
@@ -272,12 +272,12 @@ public:
 	void EXPORT ManagerReport();
 #endif
 
-	BOOL		HasTarget( string_t targetname );
+	BOOL		HasTarget( string_t targetname ) override;
 	
-	int ObjectCaps() { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -480,8 +480,8 @@ void CMultiManager :: ManagerReport ()
 class CRenderFxManager : public CBaseEntity
 {
 public:
-	void Spawn();
-	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Spawn() override;
+	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 };
 
 LINK_ENTITY_TO_CLASS( env_render, CRenderFxManager );
@@ -522,7 +522,7 @@ class CBaseTrigger : public CBaseToggle
 {
 public:
 	void EXPORT TeleportTouch ( CBaseEntity *pOther );
-	void KeyValue( KeyValueData *pkvd );
+	void KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT MultiTouch( CBaseEntity *pOther );
 	void EXPORT HurtTouch ( CBaseEntity *pOther );
 	void EXPORT CDAudioTouch ( CBaseEntity *pOther );
@@ -532,7 +532,7 @@ public:
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void InitTrigger();
 
-	virtual int	ObjectCaps() { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int	ObjectCaps() override { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
 
 LINK_ENTITY_TO_CLASS( trigger, CBaseTrigger );
@@ -584,7 +584,7 @@ void CBaseTrigger :: KeyValue( KeyValueData *pkvd )
 class CTriggerHurt : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT RadiationThink();
 };
 
@@ -596,9 +596,9 @@ LINK_ENTITY_TO_CLASS( trigger_hurt, CTriggerHurt );
 class CTriggerMonsterJump : public CBaseTrigger
 {
 public:
-	void Spawn();
-	void Touch( CBaseEntity *pOther );
-	void Think();
+	void Spawn() override;
+	void Touch( CBaseEntity *pOther ) override;
+	void Think() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_monsterjump, CTriggerMonsterJump );
@@ -660,11 +660,11 @@ void CTriggerMonsterJump :: Touch( CBaseEntity *pOther )
 class CTriggerCDAudio : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 
-	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void PlayTrack();
-	void Touch ( CBaseEntity *pOther );
+	void Touch ( CBaseEntity *pOther ) override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_cdaudio, CTriggerCDAudio );
@@ -738,11 +738,11 @@ void CTriggerCDAudio :: PlayTrack()
 class CTargetCDAudio : public CPointEntity
 {
 public:
-	void			Spawn();
-	void			KeyValue( KeyValueData *pkvd );
+	void			Spawn() override;
+	void			KeyValue( KeyValueData *pkvd ) override;
 
-	virtual void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void			Think();
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void			Think() override;
 	void			Play();
 };
 
@@ -1051,7 +1051,7 @@ if a trigger has a NETNAME, that NETNAME will become the TARGET of the triggered
 class CTriggerMultiple : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_multiple, CTriggerMultiple );
@@ -1100,7 +1100,7 @@ sounds
 class CTriggerOnce : public CTriggerMultiple
 {
 public:
-	void Spawn();
+	void Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_once, CTriggerOnce );
@@ -1254,7 +1254,7 @@ times (default 2), it will fire all of it's targets and remove itself.
 class CTriggerCounter : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 };
 LINK_ENTITY_TO_CLASS( trigger_counter, CTriggerCounter );
 
@@ -1274,7 +1274,7 @@ void CTriggerCounter :: Spawn()
 class CTriggerVolume : public CPointEntity	// Derive from point entity so this doesn't move across levels
 {
 public:
-	void		Spawn();
+	void		Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( trigger_transition, CTriggerVolume );
@@ -1294,10 +1294,10 @@ void CTriggerVolume :: Spawn()
 class CFireAndDie : public CBaseDelay
 {
 public:
-	void Spawn();
-	void Precache();
-	void Think();
-	int ObjectCaps() { return CBaseDelay::ObjectCaps() | FCAP_FORCE_TRANSITION; }	// Always go across transitions
+	void Spawn() override;
+	void Precache() override;
+	void Think() override;
+	int ObjectCaps() override { return CBaseDelay::ObjectCaps() | FCAP_FORCE_TRANSITION; }	// Always go across transitions
 };
 LINK_ENTITY_TO_CLASS( fireanddie, CFireAndDie );
 
@@ -1326,8 +1326,8 @@ void CFireAndDie::Think()
 class CChangeLevel : public CBaseTrigger
 {
 public:
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn() override;
+	void KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT UseChangeLevel ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT TriggerChangeLevel();
 	void EXPORT ExecuteChangeLevel();
@@ -1339,8 +1339,8 @@ public:
 	static int AddTransitionToList( LEVELLIST *pLevelList, int listCount, const char *pMapName, const char *pLandmarkName, edict_t *pentLandmark );
 	static int InTransitionVolume( CBaseEntity *pEntity, char *pVolumeName );
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -1743,9 +1743,9 @@ void NextLevel()
 class CLadder : public CBaseTrigger
 {
 public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn();
-	void Precache();
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Spawn() override;
+	void Precache() override;
 };
 LINK_ENTITY_TO_CLASS( func_ladder, CLadder );
 
@@ -1787,9 +1787,9 @@ void CLadder :: Spawn()
 class CTriggerPush : public CBaseTrigger
 {
 public:
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
-	void Touch( CBaseEntity *pOther );
+	void Spawn() override;
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Touch( CBaseEntity *pOther ) override;
 };
 LINK_ENTITY_TO_CLASS( trigger_push, CTriggerPush );
 
@@ -1926,7 +1926,7 @@ void CBaseTrigger :: TeleportTouch( CBaseEntity *pOther )
 class CTriggerTeleport : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 };
 LINK_ENTITY_TO_CLASS( trigger_teleport, CTriggerTeleport );
 
@@ -1945,7 +1945,7 @@ LINK_ENTITY_TO_CLASS( info_teleport_destination, CPointEntity );
 class CTriggerSave : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT SaveTouch( CBaseEntity *pOther );
 };
 LINK_ENTITY_TO_CLASS( trigger_autosave, CTriggerSave );
@@ -1981,9 +1981,9 @@ void CTriggerSave::SaveTouch( CBaseEntity *pOther )
 class CTriggerEndSection : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT EndSectionTouch( CBaseEntity *pOther );
-	void KeyValue( KeyValueData *pkvd );
+	void KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT EndSectionUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 };
 LINK_ENTITY_TO_CLASS( trigger_endsection, CTriggerEndSection );
@@ -2052,7 +2052,7 @@ void CTriggerEndSection :: KeyValue( KeyValueData *pkvd )
 class CTriggerGravity : public CBaseTrigger
 {
 public:
-	void Spawn();
+	void Spawn() override;
 	void EXPORT GravityTouch( CBaseEntity *pOther );
 };
 LINK_ENTITY_TO_CLASS( trigger_gravity, CTriggerGravity );
@@ -2082,13 +2082,13 @@ void CTriggerGravity::GravityTouch( CBaseEntity *pOther )
 class CTriggerChangeTarget : public CBaseDelay
 {
 public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn();
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Spawn() override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	int ObjectCaps() { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int ObjectCaps() override { return CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -2145,15 +2145,15 @@ void CTriggerChangeTarget::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, U
 class CTriggerCamera : public CBaseDelay
 {
 public:
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Spawn() override;
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void EXPORT FollowTarget();
 	void Move();
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
+	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	EHANDLE m_hPlayer;

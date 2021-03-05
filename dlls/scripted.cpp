@@ -922,15 +922,15 @@ BOOL CBaseMonster :: CineCleanup( )
 class CScriptedSentence : public CBaseToggle
 {
 public:
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void Spawn() override;
+	void KeyValue( KeyValueData *pkvd ) override;
+	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void EXPORT FindThink();
 	void EXPORT DelayThink();
-	int	 ObjectCaps() { return (CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int	 ObjectCaps() override { return (CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -1204,10 +1204,10 @@ BOOL CScriptedSentence :: StartSentence( CBaseMonster *pTarget )
 class CFurniture : public CBaseMonster
 {
 public:
-	void Spawn ();
+	void Spawn () override;
 	void Die();
-	int	 Classify ();
-	virtual int	ObjectCaps() { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int	 Classify () override;
+	int	ObjectCaps() override { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 };
 
 

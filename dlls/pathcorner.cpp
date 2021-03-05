@@ -25,12 +25,12 @@
 class CPathCorner : public CPointEntity
 {
 public:
-	void Spawn( );
-	void KeyValue( KeyValueData* pkvd );
-	float GetDelay() { return m_flWait; }
-//	void Touch( CBaseEntity *pOther );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	void Spawn( ) override;
+	void KeyValue( KeyValueData* pkvd ) override;
+	float GetDelay() override { return m_flWait; }
+//	void Touch( CBaseEntity *pOther ) override;
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 

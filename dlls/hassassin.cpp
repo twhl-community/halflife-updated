@@ -64,28 +64,28 @@ enum
 class CHAssassin : public CBaseMonster
 {
 public:
-	void Spawn();
-	void Precache();
-	void SetYawSpeed ();
-	int  Classify ();
-	int  ISoundMask ();
+	void Spawn() override;
+	void Precache() override;
+	void SetYawSpeed () override;
+	int  Classify () override;
+	int  ISoundMask () override;
 	void Shoot();
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	Schedule_t* GetSchedule ();
-	Schedule_t* GetScheduleOfType ( int Type );
-	BOOL CheckMeleeAttack1 ( float flDot, float flDist );	// jump
-	// BOOL CheckMeleeAttack2 ( float flDot, float flDist );
-	BOOL CheckRangeAttack1 ( float flDot, float flDist );	// shoot
-	BOOL CheckRangeAttack2 ( float flDot, float flDist );	// throw grenade
-	void StartTask ( Task_t *pTask );
-	void RunAI();
-	void RunTask ( Task_t *pTask );
-	void DeathSound ();
-	void IdleSound ();
+	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	Schedule_t* GetSchedule () override;
+	Schedule_t* GetScheduleOfType ( int Type ) override;
+	BOOL CheckMeleeAttack1 ( float flDot, float flDist ) override;	// jump
+	// BOOL CheckMeleeAttack2 ( float flDot, float flDist ) override;
+	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;	// shoot
+	BOOL CheckRangeAttack2 ( float flDot, float flDist ) override;	// throw grenade
+	void StartTask ( Task_t *pTask ) override;
+	void RunAI() override;
+	void RunTask ( Task_t *pTask ) override;
+	void DeathSound () override;
+	void IdleSound () override;
 	CUSTOM_SCHEDULES;
 
-	int	Save( CSave &save ); 
-	int Restore( CRestore &restore );
+	int	Save( CSave &save ) override;
+	int Restore( CRestore &restore ) override;
 	static TYPEDESCRIPTION m_SaveData[];
 
 	float m_flLastShot;

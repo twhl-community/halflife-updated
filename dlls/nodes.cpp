@@ -1438,7 +1438,7 @@ class CTestHull : public CBaseMonster
 
 public:
 	void Spawn( entvars_t *pevMasterNode );
-	virtual int	ObjectCaps() { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int	ObjectCaps() override { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	void EXPORT CallBuildNodeGraph ();
 	void BuildNodeGraph ();
 	void EXPORT ShowBadNode ();
@@ -3484,7 +3484,7 @@ EnoughSaid:
 class CNodeViewer : public CBaseEntity
 {
 public:
-	void Spawn();
+	void Spawn() override;
 
 	int m_iBaseNode;
 	int m_iDraw;

@@ -29,12 +29,12 @@
 class CLight : public CPointEntity
 {
 public:
-	virtual void	KeyValue( KeyValueData* pkvd ); 
-	virtual void	Spawn();
-	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void	KeyValue( KeyValueData* pkvd ) override;
+	void	Spawn() override;
+	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+	int		Save( CSave &save ) override;
+	int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -139,8 +139,8 @@ LINK_ENTITY_TO_CLASS( light_spot, CLight );
 class CEnvLight : public CLight
 {
 public:
-	void	KeyValue( KeyValueData* pkvd ); 
-	void	Spawn();
+	void	KeyValue( KeyValueData* pkvd ) override;
+	void	Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( light_environment, CEnvLight );
