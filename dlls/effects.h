@@ -142,7 +142,7 @@ public:
 	const Vector &GetStartPos();
 	const Vector &GetEndPos();
 
-	Vector Center() override { return (GetStartPos() + GetEndPos()) * 0.5; }; // center point of beam
+	Vector Center() override { return (GetStartPos() + GetEndPos()) * 0.5; } // center point of beam
 
 	inline int  GetTexture() { return pev->modelindex; }
 	inline int  GetWidth() { return pev->scale; }

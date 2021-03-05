@@ -375,8 +375,8 @@ int DLLEXPORT HUD_Key_Event( int down, int keynum, const char *pszCurrentBinding
 	return 1;
 }
 
-void IN_BreakDown() { KeyDown( &in_break );};
-void IN_BreakUp() { KeyUp( &in_break ); };
+void IN_BreakDown() { KeyDown( &in_break );}
+void IN_BreakUp() { KeyUp( &in_break ); }
 void IN_KLookDown () {KeyDown(&in_klook);}
 void IN_KLookUp () {KeyUp(&in_klook);}
 void IN_JLookDown () {KeyDown(&in_jlook);}

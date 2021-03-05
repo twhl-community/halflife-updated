@@ -499,7 +499,7 @@ public:
 
 	void CountFrame( float dt );
 
-	int GetObjects() { return m_nObjects; };
+	int GetObjects() { return m_nObjects; }
 
 	void SetCompositeScore();
 

@@ -897,7 +897,7 @@ public:
 	void	PlaySound();
 	void	UpdateTarget( float value );
 
-	static CMomentaryRotButton *Instance( edict_t *pent ) { return (CMomentaryRotButton *)GET_PRIVATE(pent);};
+	static CMomentaryRotButton *Instance( edict_t *pent ) { return (CMomentaryRotButton *)GET_PRIVATE(pent);}
 	int		Save( CSave &save ) override;
 	int		Restore( CRestore &restore ) override;
 

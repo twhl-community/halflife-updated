@@ -64,15 +64,15 @@ public:
 
 	void EXPORT HitTouch( CBaseEntity *pOther );
 
-	float HearingSensitivity() override { return 2.0; };
+	float HearingSensitivity() override { return 2.0; }
 
 	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
 	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
-	MONSTERSTATE GetIdealState () override { return MONSTERSTATE_IDLE; };
+	MONSTERSTATE GetIdealState () override { return MONSTERSTATE_IDLE; }
 	//TODO: should override base, but has different signature
-	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; };
+	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; }
 
 	int Classify() override;
 

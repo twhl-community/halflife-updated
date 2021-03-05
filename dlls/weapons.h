@@ -235,28 +235,28 @@ public:
 	CBaseEntity* Respawn ();// copy a weapon
 	void FallInit();
 	void CheckRespawn();
-	virtual int GetItemInfo(ItemInfo *p) { return 0; };	// returns 0 if struct not filled out
-	virtual BOOL CanDeploy() { return TRUE; };
+	virtual int GetItemInfo(ItemInfo *p) { return 0; }	// returns 0 if struct not filled out
+	virtual BOOL CanDeploy() { return TRUE; }
 	virtual BOOL Deploy( )								// returns is deploy was successful
-		 { return TRUE; };
+		 { return TRUE; }
 
-	virtual BOOL CanHolster() { return TRUE; };// can this weapon be put away right now?
+	virtual BOOL CanHolster() { return TRUE; }// can this weapon be put away right now?
 	virtual void Holster( int skiplocal = 0 );
-	virtual void UpdateItemInfo() { return; };
+	virtual void UpdateItemInfo() {}
 
-	virtual void ItemPreFrame()	{ return; }		// called each frame by the player PreThink
-	virtual void ItemPostFrame() { return; }		// called each frame by the player PostThink
+	virtual void ItemPreFrame()	{}		// called each frame by the player PreThink
+	virtual void ItemPostFrame() {}		// called each frame by the player PostThink
 
 	virtual void Drop();
 	virtual void Kill();
 	virtual void AttachToPlayer ( CBasePlayer *pPlayer );
 
-	virtual int PrimaryAmmoIndex() { return -1; };
-	virtual int SecondaryAmmoIndex() { return -1; };
+	virtual int PrimaryAmmoIndex() { return -1; }
+	virtual int SecondaryAmmoIndex() { return -1; }
 
 	virtual int UpdateClientData( CBasePlayer *pPlayer ) { return 0; }
 
-	virtual CBasePlayerItem *GetWeaponPtr() { return NULL; };
+	virtual CBasePlayerItem *GetWeaponPtr() { return NULL; }
 
 	static ItemInfo ItemInfoArray[ MAX_WEAPONS ];
 	static AmmoInfo AmmoInfoArray[ MAX_AMMO_SLOTS ];
@@ -295,10 +295,10 @@ public:
 	int AddToPlayer( CBasePlayer *pPlayer ) override;
 	int AddDuplicate( CBasePlayerItem *pItem ) override;
 
-	virtual int ExtractAmmo( CBasePlayerWeapon *pWeapon ); //{ return TRUE; };			// Return TRUE if you can add ammo to yourself when picked up
-	virtual int ExtractClipAmmo( CBasePlayerWeapon *pWeapon );// { return TRUE; };			// Return TRUE if you can add ammo to yourself when picked up
+	virtual int ExtractAmmo( CBasePlayerWeapon *pWeapon ); //{ return TRUE; }			// Return TRUE if you can add ammo to yourself when picked up
+	virtual int ExtractClipAmmo( CBasePlayerWeapon *pWeapon );// { return TRUE; }			// Return TRUE if you can add ammo to yourself when picked up
 
-	virtual int AddWeapon() { ExtractAmmo( this ); return TRUE; };	// Return TRUE if you want to add yourself to the player
+	virtual int AddWeapon() { ExtractAmmo( this ); return TRUE; }	// Return TRUE if you want to add yourself to the player
 
 	// generic "shared" ammo handlers
 	BOOL AddPrimaryAmmo( int iCount, char *szName, int iMaxClip, int iMaxCarry );
@@ -321,22 +321,22 @@ public:
 
 	void ItemPostFrame() override;	// called each frame by the player PostThink
 	// called by CBasePlayerWeapons ItemPostFrame()
-	virtual void PrimaryAttack() { return; }				// do "+ATTACK"
-	virtual void SecondaryAttack() { return; }			// do "+ATTACK2"
-	virtual void Reload() { return; }						// do "+RELOAD"
-	virtual void WeaponIdle() { return; }					// called when no buttons pressed
+	virtual void PrimaryAttack() {}				// do "+ATTACK"
+	virtual void SecondaryAttack() {}			// do "+ATTACK2"
+	virtual void Reload() {}						// do "+RELOAD"
+	virtual void WeaponIdle() {}					// called when no buttons pressed
 	int UpdateClientData( CBasePlayer *pPlayer ) override;		// sends hud info to client dll, if things have changed
 	virtual void RetireWeapon();
-	virtual BOOL ShouldWeaponIdle() {return FALSE; };
+	virtual BOOL ShouldWeaponIdle() {return FALSE; }
 	void Holster( int skiplocal = 0 ) override;
-	virtual BOOL UseDecrement() { return FALSE; };
+	virtual BOOL UseDecrement() { return FALSE; }
 	
 	int	PrimaryAmmoIndex() override;
 	int	SecondaryAmmoIndex() override;
 
 	void PrintState();
 
-	CBasePlayerItem *GetWeaponPtr() override { return (CBasePlayerItem *)this; };
+	CBasePlayerItem *GetWeaponPtr() override { return (CBasePlayerItem *)this; }
 	float GetNextAttackDelay( float delay );
 
 	float m_flPumpTime;
@@ -365,7 +365,7 @@ class CBasePlayerAmmo : public CBaseEntity
 public:
 	virtual void Spawn();
 	void EXPORT DefaultTouch( CBaseEntity *pOther ); // default weapon touch
-	virtual BOOL AddAmmo( CBaseEntity *pOther ) { return TRUE; };
+	virtual BOOL AddAmmo( CBaseEntity *pOther ) { return TRUE; }
 
 	CBaseEntity* Respawn();
 	void EXPORT Materialize();
@@ -700,7 +700,7 @@ public:
 	void WeaponIdle() override;
 
 	void UpdateSpot();
-	BOOL ShouldWeaponIdle() override { return TRUE; };
+	BOOL ShouldWeaponIdle() override { return TRUE; }
 
 	CLaserSpot *m_pSpot;
 	int m_fSpotActive;

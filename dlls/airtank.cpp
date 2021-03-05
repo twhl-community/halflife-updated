@@ -26,7 +26,7 @@ class CAirtank : public CGrenade
 	void Precache() override;
 	void EXPORT TankThink();
 	void EXPORT TankTouch( CBaseEntity *pOther );
-	int	 BloodColor() override { return DONT_BLEED; };
+	int	 BloodColor() override { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
 	int		Save( CSave &save ) override;
