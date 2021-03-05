@@ -403,7 +403,7 @@ class CClientExports : public IGameClientExports
 {
 public:
 	// returns the name of the server the user is connected to, if any
-	virtual const char *GetServerHostName()
+	const char *GetServerHostName() override
 	{
 		/*if (gViewPortInterface)
 		{
@@ -413,14 +413,14 @@ public:
 	}
 
 	// ingame voice manipulation
-	virtual bool IsPlayerGameVoiceMuted(int playerIndex)
+	bool IsPlayerGameVoiceMuted(int playerIndex) override
 	{
 		if (GetClientVoiceMgr())
 			return GetClientVoiceMgr()->IsPlayerBlocked(playerIndex);
 		return false;
 	}
 
-	virtual void MutePlayerGameVoice(int playerIndex)
+	void MutePlayerGameVoice(int playerIndex) override
 	{
 		if (GetClientVoiceMgr())
 		{
@@ -428,7 +428,7 @@ public:
 		}
 	}
 
-	virtual void UnmutePlayerGameVoice(int playerIndex)
+	void UnmutePlayerGameVoice(int playerIndex) override
 	{
 		if (GetClientVoiceMgr())
 		{

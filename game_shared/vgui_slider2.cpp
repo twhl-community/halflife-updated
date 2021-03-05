@@ -26,26 +26,26 @@ public:
 		_slider=slider;
 	}
 public:
-	void cursorMoved(int x,int y,Panel* panel)
+	void cursorMoved(int x,int y,Panel* panel) override
 	{
 		_slider->privateCursorMoved(x,y,panel);
 	}
-	void cursorEntered(Panel* panel){}
-	void cursorExited(Panel* panel){}
-	void mouseDoublePressed(MouseCode code,Panel* panel){}
-	void mousePressed(MouseCode code,Panel* panel)
+	void cursorEntered(Panel* panel) override {}
+	void cursorExited(Panel* panel) override {}
+	void mouseDoublePressed(MouseCode code,Panel* panel) override {}
+	void mousePressed(MouseCode code,Panel* panel) override
 	{
 		_slider->privateMousePressed(code,panel);
 	}
-	void mouseReleased(MouseCode code,Panel* panel)
+	void mouseReleased(MouseCode code,Panel* panel) override
 	{
 		_slider->privateMouseReleased(code,panel);
 	}
-	void mouseWheeled(int delta,Panel* panel){}
-	void keyPressed(KeyCode code,Panel* panel){}
-	void keyTyped(KeyCode code,Panel* panel){}
-	void keyReleased(KeyCode code,Panel* panel){}
-	void keyFocusTicked(Panel* panel){}
+	void mouseWheeled(int delta,Panel* panel) override {}
+	void keyPressed(KeyCode code,Panel* panel) override {}
+	void keyTyped(KeyCode code,Panel* panel) override {}
+	void keyReleased(KeyCode code,Panel* panel) override {}
+	void keyFocusTicked(Panel* panel) override {}
 };
 }
 

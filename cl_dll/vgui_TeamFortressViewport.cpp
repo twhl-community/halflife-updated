@@ -512,10 +512,10 @@ public:
 	{
 	}
 
-	virtual void cursorMoved(int x,int y,Panel* panel) {}
-	virtual void cursorEntered(Panel* panel) {}
-	virtual void cursorExited(Panel* panel) {}
-	virtual void mousePressed(MouseCode code,Panel* panel) 
+	void cursorMoved(int x,int y,Panel* panel) override {}
+	void cursorEntered(Panel* panel) override {}
+	void cursorExited(Panel* panel) override {}
+	void mousePressed(MouseCode code,Panel* panel)  override
 	{
 		if ( code != MOUSE_LEFT )
 		{
@@ -524,16 +524,16 @@ public:
 			gEngfuncs.pfnClientCmd( "ForceCloseCommandMenu\n" );
 		}
 	}
-	virtual void mouseReleased(MouseCode code,Panel* panel)
+	void mouseReleased(MouseCode code,Panel* panel) override
 	{
 	}
 
-	virtual void mouseDoublePressed(MouseCode code,Panel* panel) {}
-	virtual void mouseWheeled(int delta,Panel* panel) {}
-	virtual void keyPressed(KeyCode code,Panel* panel) {}
-	virtual void keyTyped(KeyCode code,Panel* panel) {}
-	virtual void keyReleased(KeyCode code,Panel* panel) {}
-	virtual void keyFocusTicked(Panel* panel) {}
+	void mouseDoublePressed(MouseCode code,Panel* panel) override {}
+	void mouseWheeled(int delta,Panel* panel) override {}
+	void keyPressed(KeyCode code,Panel* panel) override {}
+	void keyTyped(KeyCode code,Panel* panel) override {}
+	void keyReleased(KeyCode code,Panel* panel) override {}
+	void keyFocusTicked(Panel* panel) override {}
 };
 
 
