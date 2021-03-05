@@ -174,25 +174,25 @@ public:
 	int		HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, NODEQUERY queryType );
 	entvars_t*	LinkEntForLink ( CLink *pLink, CNode *pNode );
 	void	ShowNodeConnections ( int iNode );
-	void	InitGraph( void );
-	int		AllocNodes ( void );
+	void	InitGraph();
+	int		AllocNodes ();
 	
 	int		CheckNODFile(char *szMapName);
 	int		FLoadGraph(char *szMapName);
 	int		FSaveGraph(char *szMapName);
-	int		FSetGraphPointers(void);
+	int		FSetGraphPointers();
 	void	CheckNode(Vector vecOrigin, int iNode);
 
-	void    BuildRegionTables(void);
-	void    ComputeStaticRoutingTables(void);
-	void    TestRoutingTables(void);
+	void    BuildRegionTables();
+	void    ComputeStaticRoutingTables();
+	void    TestRoutingTables();
 
 	void	HashInsert(int iSrcNode, int iDestNode, int iKey);
 	void    HashSearch(int iSrcNode, int iDestNode, int &iKey);
 	void	HashChoosePrimes(int TableSize);
-	void    BuildLinkLookups(void);
+	void    BuildLinkLookups();
 
-	void    SortNodes(void);
+	void    SortNodes();
 
 	int			HullIndex( const CBaseEntity *pEntity );	// what hull the monster uses
 	int			NodeType( const CBaseEntity *pEntity );		// what node type the monster uses
@@ -261,9 +261,9 @@ public:
 //=========================================================
 class CNodeEnt : public CBaseEntity
 {
-	void Spawn( void );
+	void Spawn();
 	void KeyValue( KeyValueData *pkvd );
-	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps() { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	short m_sHintType;
 	short m_sHintActivity;
@@ -276,12 +276,12 @@ class CNodeEnt : public CBaseEntity
 class CStack 
 {
 public:
-			CStack( void );
+			CStack();
 	void	Push( int value );
-	int		Pop( void );
-	int		Top( void );
-	int		Empty( void ) { return m_level==0; }
-	int		Size( void ) { return m_level; }
+	int		Pop();
+	int		Top();
+	int		Empty() { return m_level==0; }
+	int		Size() { return m_level; }
 	void    CopyToArray ( int *piArray );
 
 private:
@@ -297,11 +297,11 @@ class CQueue
 {
 public:
 
-	CQueue( void );// constructor
-	inline int Full ( void ) { return ( m_cSize == MAX_STACK_NODES ); }
-	inline int Empty ( void ) { return ( m_cSize == 0 ); }
-	//inline int Tail ( void ) { return ( m_queue[ m_tail ] ); }
-	inline int Size ( void ) { return ( m_cSize ); }
+	CQueue();// constructor
+	inline int Full () { return ( m_cSize == MAX_STACK_NODES ); }
+	inline int Empty () { return ( m_cSize == 0 ); }
+	//inline int Tail () { return ( m_queue[ m_tail ] ); }
+	inline int Size () { return ( m_cSize ); }
 	void Insert( int, float );
 	int Remove( float & );
 
@@ -324,11 +324,11 @@ class CQueuePriority
 {
 public:
 
-	CQueuePriority( void );// constructor
-	inline int Full ( void ) { return ( m_cSize == MAX_STACK_NODES ); }
-	inline int Empty ( void ) { return ( m_cSize == 0 ); }
+	CQueuePriority();// constructor
+	inline int Full () { return ( m_cSize == MAX_STACK_NODES ); }
+	inline int Empty () { return ( m_cSize == 0 ); }
 	//inline int Tail ( float & ) { return ( m_queue[ m_tail ].Id ); }
-	inline int Size ( void ) { return ( m_cSize ); }
+	inline int Size () { return ( m_cSize ); }
 	void Insert( int, float );
 	int Remove( float &);
 
@@ -340,7 +340,7 @@ private:
         float Priority;
     } m_heap[ MAX_STACK_NODES ];
 	void Heap_SiftDown(int);
-	void Heap_SiftUp(void);
+	void Heap_SiftUp();
 
 };
 

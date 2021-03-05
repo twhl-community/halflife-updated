@@ -396,7 +396,7 @@ bool CClassMenuPanel::SlotInput( int iSlot )
 
 //======================================
 // Update the Class menu before opening it
-void CClassMenuPanel::Open( void )
+void CClassMenuPanel::Open()
 {
 	Update();
 	CMenuPanel::Open();
@@ -405,7 +405,7 @@ void CClassMenuPanel::Open( void )
 //-----------------------------------------------------------------------------
 // Purpose: Called each time a new level is started.
 //-----------------------------------------------------------------------------
-void CClassMenuPanel::Initialize( void )
+void CClassMenuPanel::Initialize()
 {
 	setVisible( false );
 	m_pScrollPanel->setScrollValue( 0, 0 );

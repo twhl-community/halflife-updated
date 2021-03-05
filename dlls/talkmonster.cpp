@@ -679,7 +679,7 @@ CBaseEntity	*CTalkMonster::EnumFriends( CBaseEntity *pPrevious, int listNumber, 
 }
 
 
-void CTalkMonster::AlertFriends( void )
+void CTalkMonster::AlertFriends()
 {
 	CBaseEntity *pFriend = NULL;
 	int i;
@@ -701,7 +701,7 @@ void CTalkMonster::AlertFriends( void )
 
 
 
-void CTalkMonster::ShutUpFriends( void )
+void CTalkMonster::ShutUpFriends()
 {
 	CBaseEntity *pFriend = NULL;
 	int i;
@@ -749,7 +749,7 @@ void CTalkMonster::LimitFollowers( CBaseEntity *pPlayer, int maxFollowers )
 }
 
 
-float CTalkMonster::TargetDistance( void )
+float CTalkMonster::TargetDistance()
 {
 	// If we lose the player, or he dies, return a really large distance
 	if ( m_hTargetEnt == NULL || !m_hTargetEnt->IsAlive() )
@@ -785,7 +785,7 @@ void CTalkMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
 
 // monsters derived from ctalkmonster should call this in precache()
 
-void CTalkMonster :: TalkInit( void )
+void CTalkMonster :: TalkInit()
 {
 	// every new talking monster must reset this global, otherwise
 	// when a level is loaded, nobody will talk (time is reset to 0)
@@ -867,7 +867,7 @@ CBaseEntity *CTalkMonster :: FindNearestFriend(BOOL fPlayer)
 	return pNearest;
 }
 
-int CTalkMonster :: GetVoicePitch( void )
+int CTalkMonster :: GetVoicePitch()
 {
 	return m_voicePitch + RANDOM_LONG(0,3);
 }
@@ -902,7 +902,7 @@ void CTalkMonster :: Touch( CBaseEntity *pOther )
 // IdleRespond
 // Respond to a previous question
 //=========================================================
-void CTalkMonster :: IdleRespond( void )
+void CTalkMonster :: IdleRespond()
 {
 	int pitch = GetVoicePitch();
 	
@@ -910,7 +910,7 @@ void CTalkMonster :: IdleRespond( void )
 	PlaySentence( m_szGrp[TLK_ANSWER], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE );
 }
 
-int CTalkMonster :: FOkToSpeak( void )
+int CTalkMonster :: FOkToSpeak()
 {
 	// if in the grip of a barnacle, don't speak
 	if ( m_MonsterState == MONSTERSTATE_PRONE || m_IdealMonsterState == MONSTERSTATE_PRONE )
@@ -956,7 +956,7 @@ int CTalkMonster::CanPlaySentence( BOOL fDisregardState )
 //=========================================================
 // FIdleStare
 //=========================================================
-int CTalkMonster :: FIdleStare( void )
+int CTalkMonster :: FIdleStare()
 {
 	if (!FOkToSpeak())
 		return FALSE;
@@ -971,7 +971,7 @@ int CTalkMonster :: FIdleStare( void )
 // IdleHello
 // Try to greet player first time he's seen
 //=========================================================
-int CTalkMonster :: FIdleHello( void )
+int CTalkMonster :: FIdleHello()
 {
 	if (!FOkToSpeak())
 		return FALSE;
@@ -1023,7 +1023,7 @@ void CTalkMonster :: IdleHeadTurn( Vector &vecFriend )
 // FIdleSpeak
 // ask question of nearby friend, or make statement
 //=========================================================
-int CTalkMonster :: FIdleSpeak ( void )
+int CTalkMonster :: FIdleSpeak ()
 { 
 	// try to start a conversation, or make statement
 	int pitch;
@@ -1308,7 +1308,7 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 //=========================================================
 // IsTalking - am I saying a sentence right now?
 //=========================================================
-BOOL CTalkMonster :: IsTalking( void )
+BOOL CTalkMonster :: IsTalking()
 {
 	if ( m_flStopTalkTime > gpGlobals->time )
 	{
@@ -1321,7 +1321,7 @@ BOOL CTalkMonster :: IsTalking( void )
 //=========================================================
 // If there's a player around, watch him.
 //=========================================================
-void CTalkMonster :: PrescheduleThink ( void )
+void CTalkMonster :: PrescheduleThink ()
 {
 	if ( !HasConditions ( bits_COND_SEE_CLIENT ) )
 	{
@@ -1330,7 +1330,7 @@ void CTalkMonster :: PrescheduleThink ( void )
 }
 
 // try to smell something
-void CTalkMonster :: TrySmellTalk( void )
+void CTalkMonster :: TrySmellTalk()
 {
 	if ( !FOkToSpeak() )
 		return;
@@ -1398,7 +1398,7 @@ void CTalkMonster::StartFollowing( CBaseEntity *pLeader )
 }
 
 
-BOOL CTalkMonster::CanFollow( void )
+BOOL CTalkMonster::CanFollow()
 {
 	if ( m_MonsterState == MONSTERSTATE_SCRIPT )
 	{
@@ -1462,7 +1462,7 @@ void CTalkMonster::KeyValue( KeyValueData *pkvd )
 }
 
 
-void CTalkMonster::Precache( void )
+void CTalkMonster::Precache()
 {
 	if ( m_iszUse )
 		m_szGrp[TLK_USE] = STRING( m_iszUse );

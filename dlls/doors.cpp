@@ -32,14 +32,14 @@ extern void SetMovedir(entvars_t* ev);
 class CBaseDoor : public CBaseToggle
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	virtual void KeyValue( KeyValueData *pkvd );
 	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	virtual void Blocked( CBaseEntity *pOther );
 
 
-	virtual int	ObjectCaps( void ) 
+	virtual int	ObjectCaps() 
 	{ 
 		if (pev->spawnflags & SF_ITEM_USE_ONLY)
 			return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE;
@@ -58,10 +58,10 @@ public:
 
 	// local functions
 	int DoorActivate( );
-	void EXPORT DoorGoUp( void );
-	void EXPORT DoorGoDown( void );
-	void EXPORT DoorHitTop( void );
-	void EXPORT DoorHitBottom( void );
+	void EXPORT DoorGoUp();
+	void EXPORT DoorGoDown();
+	void EXPORT DoorHitTop();
+	void EXPORT DoorHitBottom();
 	
 	BYTE	m_bHealthValue;// some doors are medi-kit doors, they give players health
 	
@@ -333,7 +333,7 @@ void CBaseDoor :: SetToggleState( int state )
 }
 
 
-void CBaseDoor::Precache( void )
+void CBaseDoor::Precache()
 {
 	const char *pszSound;
 
@@ -561,7 +561,7 @@ extern Vector VecBModelOrigin( entvars_t* pevBModel );
 //
 // Starts the door going to its "up" position (simply ToggleData->vecPosition2).
 //
-void CBaseDoor::DoorGoUp( void )
+void CBaseDoor::DoorGoUp()
 {
 	entvars_t	*pevActivator;
 
@@ -611,7 +611,7 @@ void CBaseDoor::DoorGoUp( void )
 //
 // The door has reached the "up" position.  Either go back down, or wait for another activation.
 //
-void CBaseDoor::DoorHitTop( void )
+void CBaseDoor::DoorHitTop()
 {
 	if ( !FBitSet( pev->spawnflags, SF_DOOR_SILENT ) )
 	{
@@ -652,7 +652,7 @@ void CBaseDoor::DoorHitTop( void )
 //
 // Starts the door going to its "down" position (simply ToggleData->vecPosition1).
 //
-void CBaseDoor::DoorGoDown( void )
+void CBaseDoor::DoorGoDown()
 {
 	if ( !FBitSet( pev->spawnflags, SF_DOOR_SILENT ) )
 	{
@@ -675,7 +675,7 @@ void CBaseDoor::DoorGoDown( void )
 //
 // The door has reached the "down" position.  Back to quiescence.
 //
-void CBaseDoor::DoorHitBottom( void )
+void CBaseDoor::DoorHitBottom()
 {
 	if ( !FBitSet( pev->spawnflags, SF_DOOR_SILENT ) )
 	{
@@ -816,14 +816,14 @@ button or trigger field activates the door.
 class CRotDoor : public CBaseDoor
 {
 public:
-	void Spawn( void );
+	void Spawn();
 	virtual void SetToggleState( int state );
 };
 
 LINK_ENTITY_TO_CLASS( func_door_rotating, CRotDoor );
 
 
-void CRotDoor::Spawn( void )
+void CRotDoor::Spawn()
 {
 	Precache();
 	// set the axis of rotation
@@ -887,18 +887,18 @@ void CRotDoor :: SetToggleState( int state )
 class CMomentaryDoor : public CBaseToggle
 {
 public:
-	void	Spawn( void );
-	void Precache( void );
+	void	Spawn();
+	void Precache();
 
 	void	KeyValue( KeyValueData *pkvd );
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual int	ObjectCaps( void ) { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps() { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void EXPORT DoorMoveDone( void );
+	void EXPORT DoorMoveDone();
 
 	BYTE	m_bMoveSnd;			// sound a door makes while moving	
 };
@@ -912,7 +912,7 @@ TYPEDESCRIPTION	CMomentaryDoor::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CMomentaryDoor, CBaseToggle );
 
-void CMomentaryDoor::Spawn( void )
+void CMomentaryDoor::Spawn()
 {
 	SetMovedir (pev);
 
@@ -943,7 +943,7 @@ void CMomentaryDoor::Spawn( void )
 	Precache();
 }
 	
-void CMomentaryDoor::Precache( void )
+void CMomentaryDoor::Precache()
 {
 
 // set the door's "in-motion" sound
@@ -1045,7 +1045,7 @@ void CMomentaryDoor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 //
 // The door has reached needed position.
 //
-void CMomentaryDoor::DoorMoveDone( void )
+void CMomentaryDoor::DoorMoveDone()
 {
 	STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving) );
 	EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), 1, ATTN_NORM);

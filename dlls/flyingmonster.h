@@ -22,9 +22,9 @@ class CFlyingMonster : public CBaseMonster
 public:
 	int 		CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist );// check validity of a straight move through space
 	BOOL		FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex );
-	Activity	GetStoppedActivity( void );
+	Activity	GetStoppedActivity();
 	void		Killed( entvars_t *pevAttacker, int iGib );
-	void		Stop( void );
+	void		Stop();
 	float		ChangeYaw( int speed );
 	void		HandleAnimEvent( MonsterEvent_t *pEvent );
 	void		MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flInterval );

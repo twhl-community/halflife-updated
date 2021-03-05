@@ -42,7 +42,7 @@ DLL_GLOBAL edict_t				*g_pBodyQueueHead;
 CGlobalState					gGlobalState;
 extern DLL_GLOBAL	int			gDisplayTitle;
 
-extern void W_Precache(void);
+extern void W_Precache();
 
 //
 // This must match the list in util.h
@@ -105,16 +105,16 @@ BODY QUE
 class CDecal : public CBaseEntity
 {
 public:
-	void	Spawn( void );
+	void	Spawn();
 	void	KeyValue( KeyValueData *pkvd );
-	void	EXPORT StaticDecal( void );
+	void	EXPORT StaticDecal();
 	void	EXPORT TriggerDecal( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 };
 
 LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 
 // UNDONE:  These won't get sent to joining players in multi-player
-void CDecal :: Spawn( void )
+void CDecal :: Spawn()
 {
 	if ( pev->skin < 0 || (gpGlobals->deathmatch && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH )) )
 	{
@@ -162,7 +162,7 @@ void CDecal :: TriggerDecal ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 }
 
 
-void CDecal :: StaticDecal( void )
+void CDecal :: StaticDecal()
 {
 	TraceResult trace;
 	int			entityIndex, modelIndex;
@@ -200,12 +200,12 @@ void CDecal :: KeyValue( KeyValueData *pkvd )
 // Body queue class here.... It's really just CBaseEntity
 class CCorpse : public CBaseEntity
 {
-	virtual int ObjectCaps( void ) { return FCAP_DONT_SAVE; }	
+	virtual int ObjectCaps() { return FCAP_DONT_SAVE; }	
 };
 
 LINK_ENTITY_TO_CLASS( bodyque, CCorpse );
 
-static void InitBodyQue(void)
+static void InitBodyQue()
 {
 	string_t	istrClassname = MAKE_STRING("bodyque");
 
@@ -261,12 +261,12 @@ void CopyToBodyQue(entvars_t *pev)
 }
 
 
-CGlobalState::CGlobalState( void )
+CGlobalState::CGlobalState()
 {
 	Reset();
 }
 
-void CGlobalState::Reset( void )
+void CGlobalState::Reset()
 {
 	m_pList = NULL; 
 	m_listCount = 0;
@@ -296,7 +296,7 @@ globalentity_t *CGlobalState :: Find( string_t globalname )
 
 // This is available all the time now on impulse 104, remove later
 //#ifdef _DEBUG
-void CGlobalState :: DumpGlobals( void )
+void CGlobalState :: DumpGlobals()
 {
 	static const char *estates[] = { "Off", "On", "Dead" };
 	globalentity_t *pTest;
@@ -420,7 +420,7 @@ void CGlobalState::EntityUpdate( string_t globalname, string_t mapname )
 }
 
 
-void CGlobalState::ClearStates( void )
+void CGlobalState::ClearStates()
 {
 	globalentity_t *pFree = m_pList;
 	while ( pFree )
@@ -447,7 +447,7 @@ void RestoreGlobalState( SAVERESTOREDATA *pSaveData )
 }
 
 
-void ResetGlobalState( void )
+void ResetGlobalState()
 {
 	gGlobalState.ClearStates();
 	gInitHUD = TRUE;	// Init the HUD on a new game / load game
@@ -468,13 +468,13 @@ LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
 
 extern DLL_GLOBAL BOOL		g_fGameOver;
 
-void CWorld :: Spawn( void )
+void CWorld :: Spawn()
 {
 	g_fGameOver = FALSE;
 	Precache( );
 }
 
-void CWorld :: Precache( void )
+void CWorld :: Precache()
 {
 	g_pLastSpawn = NULL;
 	

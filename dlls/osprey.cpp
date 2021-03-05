@@ -43,30 +43,30 @@ public:
 	int		Save( CSave &save );
 	int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
-	int		ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int		ObjectCaps() { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	
-	void Spawn( void );
-	void Precache( void );
-	int  Classify( void ) { return CLASS_MACHINE; };
-	int  BloodColor( void ) { return DONT_BLEED; }
+	void Spawn();
+	void Precache();
+	int  Classify() { return CLASS_MACHINE; };
+	int  BloodColor() { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib );
 
-	void UpdateGoal( void );
-	BOOL HasDead( void );
-	void EXPORT FlyThink( void );
-	void EXPORT DeployThink( void );
-	void Flight( void );
+	void UpdateGoal();
+	BOOL HasDead();
+	void EXPORT FlyThink();
+	void EXPORT DeployThink();
+	void Flight();
 	void EXPORT HitTouch( CBaseEntity *pOther );
-	void EXPORT FindAllThink( void );
-	void EXPORT HoverThink( void );
+	void EXPORT FindAllThink();
+	void EXPORT HoverThink();
 	CBaseMonster *MakeGrunt( Vector vecSrc );
 	void EXPORT CrashTouch( CBaseEntity *pOther );
-	void EXPORT DyingThink( void );
+	void EXPORT DyingThink();
 	void EXPORT CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 	// int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	void ShowDamage( void );
+	void ShowDamage();
 
 	CBaseEntity *m_pGoalEnt;
 	Vector m_vel1;
@@ -142,7 +142,7 @@ TYPEDESCRIPTION	COsprey::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( COsprey, CBaseMonster );
 
 
-void COsprey :: Spawn( void )
+void COsprey :: Spawn()
 {
 	Precache( );
 	// motor
@@ -181,7 +181,7 @@ void COsprey :: Spawn( void )
 }
 
 
-void COsprey::Precache( void )
+void COsprey::Precache()
 {
 	UTIL_PrecacheOther( "monster_human_grunt" );
 
@@ -204,7 +204,7 @@ void COsprey::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
-void COsprey :: FindAllThink( void )
+void COsprey :: FindAllThink()
 {
 	CBaseEntity *pEntity = NULL;
 
@@ -231,7 +231,7 @@ void COsprey :: FindAllThink( void )
 }
 
 
-void COsprey :: DeployThink( void )
+void COsprey :: DeployThink()
 {
 	UTIL_MakeAimVectors( pev->angles );
 
@@ -322,7 +322,7 @@ CBaseMonster *COsprey :: MakeGrunt( Vector vecSrc )
 }
 
 
-void COsprey :: HoverThink( void )
+void COsprey :: HoverThink()
 {
 	int i;
 	for (i = 0; i < 4; i++)
@@ -381,7 +381,7 @@ void COsprey::UpdateGoal( )
 }
 
 
-void COsprey::FlyThink( void )
+void COsprey::FlyThink()
 {
 	StudioFrameAdvance( );
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -540,7 +540,7 @@ void COsprey::CrashTouch( CBaseEntity *pOther )
 }
 
 
-void COsprey :: DyingThink( void )
+void COsprey :: DyingThink()
 {
 	StudioFrameAdvance( );
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -729,7 +729,7 @@ void COsprey :: DyingThink( void )
 }
 
 
-void COsprey :: ShowDamage( void )
+void COsprey :: ShowDamage()
 {
 	if (m_iDoLeftSmokePuff > 0 || RANDOM_LONG(0,99) > m_flLeftHealth)
 	{

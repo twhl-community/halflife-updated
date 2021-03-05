@@ -37,10 +37,10 @@
 class CRoach : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	void EXPORT MonsterThink ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	void EXPORT MonsterThink ();
 	void Move ( float flInterval );
 	void PickNewDest ( int iCondition );
 	void EXPORT Touch ( CBaseEntity *pOther );
@@ -48,9 +48,9 @@ public:
 
 	float	m_flLastLightLevel;
 	float	m_flNextSmellTime;
-	int		Classify ( void );
+	int		Classify ();
 	void	Look ( int iDistance );
-	int		ISoundMask ( void );
+	int		ISoundMask ();
 	
 	// UNDONE: These don't necessarily need to be save/restored, but if we add more data, it may
 	BOOL	m_fLightHacked;
@@ -64,7 +64,7 @@ LINK_ENTITY_TO_CLASS( monster_cockroach, CRoach );
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
-int CRoach :: ISoundMask ( void )
+int CRoach :: ISoundMask ()
 {
 	return	bits_SOUND_CARCASS | bits_SOUND_MEAT;
 }
@@ -73,7 +73,7 @@ int CRoach :: ISoundMask ( void )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CRoach :: Classify ( void )
+int	CRoach :: Classify ()
 {
 	return CLASS_INSECT;
 }
@@ -104,7 +104,7 @@ void CRoach :: Touch ( CBaseEntity *pOther )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CRoach :: SetYawSpeed ( void )
+void CRoach :: SetYawSpeed ()
 {
 	int ys;
 

@@ -43,7 +43,7 @@ enum gauss_e {
 
 LINK_ENTITY_TO_CLASS( weapon_gauss, CGauss );
 
-float CGauss::GetFullChargeTime( void )
+float CGauss::GetFullChargeTime()
 {
 #ifdef CLIENT_DLL
 	if ( bIsMultiplayer() )
@@ -73,7 +73,7 @@ void CGauss::Spawn( )
 }
 
 
-void CGauss::Precache( void )
+void CGauss::Precache()
 {
 	PRECACHE_MODEL("models/w_gauss.mdl");
 	PRECACHE_MODEL("models/v_gauss.mdl");
@@ -305,7 +305,7 @@ void CGauss::SecondaryAttack()
 // of weaponidle() and make its own function then to try to
 // merge this into Fire(), which has some identical variable names 
 //=========================================================
-void CGauss::StartFire( void )
+void CGauss::StartFire()
 {
 	float flDamage;
 	
@@ -538,7 +538,7 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 
 
 
-void CGauss::WeaponIdle( void )
+void CGauss::WeaponIdle()
 {
 	ResetEmptySound( );
 
@@ -597,13 +597,13 @@ void CGauss::WeaponIdle( void )
 
 class CGaussAmmo : public CBasePlayerAmmo
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_gaussammo.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_gaussammo.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");

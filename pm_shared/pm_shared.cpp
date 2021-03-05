@@ -169,7 +169,7 @@ void PM_SwapTextures( int i, int j )
 	grgchTextureType[ j ] = chTemp;
 }
 
-void PM_SortTextures( void )
+void PM_SortTextures()
 {
 	// Bubble sort, yuck, but this only occurs at startup and it's only 512 elements...
 	//
@@ -461,7 +461,7 @@ PM_CatagorizeTextureType
 Determine texture info for the texture we are standing on.
 ====================
 */
-void PM_CatagorizeTextureType( void )
+void PM_CatagorizeTextureType()
 {
 	vec3_t start, end;
 	const char *pTextureName;
@@ -495,7 +495,7 @@ void PM_CatagorizeTextureType( void )
 	pmove->chtexturetype = PM_FindTextureType( pmove->sztexturename );	
 }
 
-void PM_UpdateStepSound( void )
+void PM_UpdateStepSound()
 {
 	int	fWalking;
 	float fvol;
@@ -792,7 +792,7 @@ PM_FlyMove
 The basic solid body movement clip that slides along multiple planes
 ============
 */
-int PM_FlyMove (void)
+int PM_FlyMove ()
 {
 	int			bumpcount, numbumps;
 	vec3_t		dir;
@@ -1196,7 +1196,7 @@ PM_Friction
 Handles both ground friction and water friction
 ==================
 */
-void PM_Friction (void)
+void PM_Friction ()
 {
 	float	*vel;
 	float	speed, newspeed, control;
@@ -1315,7 +1315,7 @@ PM_WaterMove
 
 ===================
 */
-void PM_WaterMove (void)
+void PM_WaterMove ()
 {
 	int		i;
 	vec3_t	wishvel;
@@ -1411,7 +1411,7 @@ PM_AirMove
 
 ===================
 */
-void PM_AirMove (void)
+void PM_AirMove ()
 {
 	int			i;
 	vec3_t		wishvel;
@@ -1457,7 +1457,7 @@ void PM_AirMove (void)
 	PM_FlyMove ();
 }
 
-qboolean PM_InWater( void )
+qboolean PM_InWater()
 {
 	return ( pmove->waterlevel > 1 );
 }
@@ -1540,7 +1540,7 @@ qboolean PM_CheckWater ()
 PM_CatagorizePosition
 =============
 */
-void PM_CatagorizePosition (void)
+void PM_CatagorizePosition ()
 {
 	vec3_t		point;
 	pmtrace_t		tr;
@@ -1628,7 +1628,7 @@ allow for the cut precision of the net coordinates
 */
 #define PM_CHECKSTUCK_MINTIME 0.05  // Don't check again too quickly.
 
-int PM_CheckStuck (void)
+int PM_CheckStuck ()
 {
 	vec3_t	base;
 	vec3_t  offset;
@@ -1753,7 +1753,7 @@ int PM_CheckStuck (void)
 PM_SpectatorMove
 ===============
 */
-void PM_SpectatorMove (void)
+void PM_SpectatorMove ()
 {
 	float	speed, drop, friction, control, newspeed;
 	//float   accel;
@@ -1916,7 +1916,7 @@ void PM_FixPlayerCrouchStuck( int direction )
 	VectorCopy( test, pmove->origin ); // Failed
 }
 
-void PM_UnDuck( void )
+void PM_UnDuck()
 {
 	int i;
 	pmtrace_t trace;
@@ -1960,7 +1960,7 @@ void PM_UnDuck( void )
 	}
 }
 
-void PM_Duck( void )
+void PM_Duck()
 {
 	int i;
 	float time;
@@ -2186,7 +2186,7 @@ void PM_LadderMove( physent_t *pLadder )
 	}
 }
 
-physent_t *PM_Ladder( void )
+physent_t *PM_Ladder()
 {
 	int			i;
 	physent_t	*pe;
@@ -2220,7 +2220,7 @@ physent_t *PM_Ladder( void )
 
 
 
-void PM_WaterJump (void)
+void PM_WaterJump ()
 {
 	if ( pmove->waterjumptime > 10000 )
 	{
@@ -2440,7 +2440,7 @@ void PM_NoClip()
 //  running PM_AirMove, which doesn't crop velocity to maxspeed like the ground / other
 //  movement logic does.
 //-----------------------------------------------------------------------------
-void PM_PreventMegaBunnyJumping( void )
+void PM_PreventMegaBunnyJumping()
 {
 	// Current player speed
 	float spd;
@@ -2470,7 +2470,7 @@ void PM_PreventMegaBunnyJumping( void )
 PM_Jump
 =============
 */
-void PM_Jump (void)
+void PM_Jump ()
 {
 	int i;
 	qboolean tfc = false;
@@ -2613,7 +2613,7 @@ PM_CheckWaterJump
 =============
 */
 #define WJ_HEIGHT 8
-void PM_CheckWaterJump (void)
+void PM_CheckWaterJump ()
 {
 	vec3_t	vecStart, vecEnd;
 	vec3_t	flatforward;
@@ -2677,7 +2677,7 @@ void PM_CheckWaterJump (void)
 	pmove->usehull = savehull;
 }
 
-void PM_CheckFalling( void )
+void PM_CheckFalling()
 {
 	if ( pmove->onground != -1 &&
 		 !pmove->dead &&
@@ -2752,7 +2752,7 @@ PM_PlayWaterSounds
 
 =================
 */
-void PM_PlayWaterSounds( void )
+void PM_PlayWaterSounds()
 {
 	// Did we enter or leave water?
 	if  ( ( pmove->oldwaterlevel == 0 && pmove->waterlevel != 0 ) ||
@@ -2833,7 +2833,7 @@ PM_CheckParamters
 
 ==============
 */
-void PM_CheckParamters( void )
+void PM_CheckParamters()
 {
 	float spd;
 	float maxspeed;
@@ -2901,7 +2901,7 @@ void PM_CheckParamters( void )
 
 }
 
-void PM_ReduceTimers( void )
+void PM_ReduceTimers()
 {
 	if ( pmove->flTimeStepSound > 0 )
 	{
@@ -3196,7 +3196,7 @@ void PM_PlayerMove ( qboolean server )
 	}
 }
 
-void PM_CreateStuckTable( void )
+void PM_CreateStuckTable()
 {
 	float x, y, z;
 	int idx;

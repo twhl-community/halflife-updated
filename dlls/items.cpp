@@ -34,7 +34,7 @@ class CWorldItem : public CBaseEntity
 {
 public:
 	void	KeyValue(KeyValueData *pkvd ); 
-	void	Spawn( void );
+	void	Spawn();
 	int		m_iType;
 };
 
@@ -51,7 +51,7 @@ void CWorldItem::KeyValue(KeyValueData *pkvd)
 		CBaseEntity::KeyValue( pkvd );
 }
 
-void CWorldItem::Spawn( void )
+void CWorldItem::Spawn()
 {
 	CBaseEntity *pEntity = NULL;
 
@@ -86,7 +86,7 @@ void CWorldItem::Spawn( void )
 }
 
 
-void CItem::Spawn( void )
+void CItem::Spawn()
 {
 	pev->movetype = MOVETYPE_TOSS;
 	pev->solid = SOLID_TRIGGER;
@@ -143,7 +143,7 @@ void CItem::ItemTouch( CBaseEntity *pOther )
 	}
 }
 
-CBaseEntity* CItem::Respawn( void )
+CBaseEntity* CItem::Respawn()
 {
 	SetTouch( NULL );
 	pev->effects |= EF_NODRAW;
@@ -155,7 +155,7 @@ CBaseEntity* CItem::Respawn( void )
 	return this;
 }
 
-void CItem::Materialize( void )
+void CItem::Materialize()
 {
 	if ( pev->effects & EF_NODRAW )
 	{
@@ -172,13 +172,13 @@ void CItem::Materialize( void )
 
 class CItemSuit : public CItem
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_suit.mdl");
 		CItem::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_suit.mdl");
 	}
@@ -203,13 +203,13 @@ LINK_ENTITY_TO_CLASS(item_suit, CItemSuit);
 
 class CItemBattery : public CItem
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_battery.mdl");
 		CItem::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_battery.mdl");
 		PRECACHE_SOUND( "items/gunpickup2.wav" );
@@ -259,13 +259,13 @@ LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
 
 class CItemAntidote : public CItem
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_antidote.mdl");
 		CItem::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_antidote.mdl");
 	}
@@ -283,13 +283,13 @@ LINK_ENTITY_TO_CLASS(item_antidote, CItemAntidote);
 
 class CItemSecurity : public CItem
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_security.mdl");
 		CItem::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_security.mdl");
 	}
@@ -304,13 +304,13 @@ LINK_ENTITY_TO_CLASS(item_security, CItemSecurity);
 
 class CItemLongJump : public CItem
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_longjump.mdl");
 		CItem::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_longjump.mdl");
 	}

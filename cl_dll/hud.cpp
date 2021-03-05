@@ -87,7 +87,7 @@ cvar_t* cl_rollangle = nullptr;
 cvar_t* cl_rollspeed = nullptr;
 cvar_t* cl_bobtilt = nullptr;
 
-void ShutdownInput (void);
+void ShutdownInput ();
 
 //DECLARE_MESSAGE(m_Logo, Logo)
 int __MsgFunc_Logo(const char *pszName, int iSize, void *pbuf)
@@ -129,7 +129,7 @@ int __MsgFunc_GameMode(const char *pszName, int iSize, void *pbuf )
 }
 
 // TFFree Command Menu
-void __CmdFunc_OpenCommandMenu(void)
+void __CmdFunc_OpenCommandMenu()
 {
 	if ( gViewPort )
 	{
@@ -138,7 +138,7 @@ void __CmdFunc_OpenCommandMenu(void)
 }
 
 // TFC "special" command
-void __CmdFunc_InputPlayerSpecial(void)
+void __CmdFunc_InputPlayerSpecial()
 {
 	if ( gViewPort )
 	{
@@ -146,7 +146,7 @@ void __CmdFunc_InputPlayerSpecial(void)
 	}
 }
 
-void __CmdFunc_CloseCommandMenu(void)
+void __CmdFunc_CloseCommandMenu()
 {
 	if ( gViewPort )
 	{
@@ -154,7 +154,7 @@ void __CmdFunc_CloseCommandMenu(void)
 	}
 }
 
-void __CmdFunc_ForceCloseCommandMenu( void )
+void __CmdFunc_ForceCloseCommandMenu()
 {
 	if ( gViewPort )
 	{
@@ -162,7 +162,7 @@ void __CmdFunc_ForceCloseCommandMenu( void )
 	}
 }
 
-void __CmdFunc_ToggleServerBrowser( void )
+void __CmdFunc_ToggleServerBrowser()
 {
 	if ( gViewPort )
 	{
@@ -284,7 +284,7 @@ int __MsgFunc_AllowSpec(const char *pszName, int iSize, void *pbuf)
 }
 
 // This is called every time the DLL is loaded
-void CHud :: Init( void )
+void CHud :: Init()
 {
 	HOOK_MESSAGE( Logo );
 	HOOK_MESSAGE( ResetHUD );
@@ -419,7 +419,7 @@ int CHud :: GetSpriteIndex( const char *SpriteName )
 	return -1; // invalid sprite
 }
 
-void CHud :: VidInit( void )
+void CHud :: VidInit()
 {
 	m_scrinfo.iSize = sizeof(m_scrinfo);
 	GetScreenInfo(&m_scrinfo);
@@ -605,7 +605,7 @@ HUD_GetFOV
 Returns last FOV
 =====================
 */
-float HUD_GetFOV( void )
+float HUD_GetFOV()
 {
 	if ( gEngfuncs.pDemoAPI->IsRecording() )
 	{
@@ -700,7 +700,7 @@ void CHud::AddHudElem(CHudBase *phudelem)
 	ptemp->pNext = pdl;
 }
 
-float CHud::GetSensitivity( void )
+float CHud::GetSensitivity()
 {
 	return m_flMouseSensitivity;
 }

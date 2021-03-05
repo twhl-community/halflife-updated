@@ -27,7 +27,7 @@
 DECLARE_MESSAGE(m_Train, Train )
 
 
-int CHudTrain::Init(void)
+int CHudTrain::Init()
 {
 	HOOK_MESSAGE( Train );
 
@@ -38,7 +38,7 @@ int CHudTrain::Init(void)
 	return 1;
 };
 
-int CHudTrain::VidInit(void)
+int CHudTrain::VidInit()
 {
 	m_hSprite = 0;
 

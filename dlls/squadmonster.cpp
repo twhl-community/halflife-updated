@@ -114,7 +114,7 @@ void CSquadMonster :: VacateSlot()
 //=========================================================
 // ScheduleChange
 //=========================================================
-void CSquadMonster :: ScheduleChange ( void )
+void CSquadMonster :: ScheduleChange ()
 {
 	VacateSlot();
 }
@@ -213,7 +213,7 @@ BOOL CSquadMonster :: SquadAdd( CSquadMonster *pAdd )
 // members who don't have current info.
 //
 //=========================================================
-void CSquadMonster :: SquadPasteEnemyInfo ( void )
+void CSquadMonster :: SquadPasteEnemyInfo ()
 {
 	CSquadMonster *pSquadLeader = MySquadLeader( );
 	if (pSquadLeader)
@@ -228,7 +228,7 @@ void CSquadMonster :: SquadPasteEnemyInfo ( void )
 // so the most recent data is always available here.
 //
 //=========================================================
-void CSquadMonster :: SquadCopyEnemyInfo ( void )
+void CSquadMonster :: SquadCopyEnemyInfo ()
 {
 	CSquadMonster *pSquadLeader = MySquadLeader( );
 	if (pSquadLeader)
@@ -282,7 +282,7 @@ void CSquadMonster :: SquadMakeEnemy ( CBaseEntity *pEnemy )
 // callable from leaders & followers
 //
 //=========================================================
-int CSquadMonster :: SquadCount( void )
+int CSquadMonster :: SquadCount()
 {
 	if (!InSquad())
 		return 0;
@@ -412,7 +412,7 @@ int CSquadMonster :: CheckEnemy ( CBaseEntity *pEnemy )
 //=========================================================
 // StartMonster
 //=========================================================
-void CSquadMonster :: StartMonster( void )
+void CSquadMonster :: StartMonster()
 {
 	CBaseMonster :: StartMonster();
 
@@ -450,7 +450,7 @@ void CSquadMonster :: StartMonster( void )
 // Builds a large box in front of the grunt and checks to see 
 // if any squad members are in that box. 
 //=========================================================
-BOOL CSquadMonster :: NoFriendlyFire( void )
+BOOL CSquadMonster :: NoFriendlyFire()
 {
 	if ( !InSquad() )
 	{
@@ -517,7 +517,7 @@ BOOL CSquadMonster :: NoFriendlyFire( void )
 // GetIdealState - surveys the Conditions information available
 // and finds the best new state for a monster.
 //=========================================================
-MONSTERSTATE CSquadMonster :: GetIdealState ( void )
+MONSTERSTATE CSquadMonster :: GetIdealState ()
 {
 	int	iConditions;
 
@@ -563,7 +563,7 @@ BOOL CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
 // SquadEnemySplit- returns TRUE if not all squad members
 // are fighting the same enemy. 
 //=========================================================
-BOOL CSquadMonster :: SquadEnemySplit ( void )
+BOOL CSquadMonster :: SquadEnemySplit ()
 {
 	if (!InSquad())
 		return FALSE;

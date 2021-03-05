@@ -33,7 +33,7 @@
 class CInfoBM : public CPointEntity
 {
 public:
-	void Spawn( void );
+	void Spawn();
 	void KeyValue( KeyValueData* pkvd );
 
 	// name in pev->targetname
@@ -60,7 +60,7 @@ TYPEDESCRIPTION	CInfoBM::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CInfoBM, CPointEntity );
 
-void CInfoBM::Spawn( void )
+void CInfoBM::Spawn()
 {
 }
 
@@ -102,11 +102,11 @@ void CInfoBM::KeyValue( KeyValueData* pkvd )
 class CBMortar : public CBaseEntity
 {
 public:
-	void Spawn( void );
+	void Spawn();
 
 	static CBMortar *Shoot( edict_t *pOwner, Vector vecStart, Vector vecVelocity );
 	void Touch( CBaseEntity *pOther );
-	void EXPORT Animate( void );
+	void EXPORT Animate();
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
@@ -175,28 +175,28 @@ void MortarSpray( const Vector &position, const Vector &direction, int spriteMod
 class CBigMomma : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void KeyValue( KeyValueData *pkvd );
-	void Activate( void );
+	void Activate();
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 
 	void		RunTask( Task_t *pTask );
 	void		StartTask( Task_t *pTask );
-	Schedule_t	*GetSchedule( void );
+	Schedule_t	*GetSchedule();
 	Schedule_t	*GetScheduleOfType( int Type );
 	void		TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
 
 	void NodeStart( int iszNextNode );
-	void NodeReach( void );
-	BOOL ShouldGoToNode( void );
+	void NodeReach();
+	BOOL ShouldGoToNode();
 
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void LayHeadcrab( void );
+	void LayHeadcrab();
 
-	int GetNodeSequence( void )
+	int GetNodeSequence()
 	{
 		CBaseEntity *pTarget = m_hTargetEnt;
 		if ( pTarget )
@@ -207,7 +207,7 @@ public:
 	}
 
 
-	int GetNodePresequence( void )
+	int GetNodePresequence()
 	{
 		CInfoBM *pTarget = (CInfoBM *)(CBaseEntity *)m_hTargetEnt;
 		if ( pTarget )
@@ -217,7 +217,7 @@ public:
 		return 0;
 	}
 
-	float GetNodeDelay( void )
+	float GetNodeDelay()
 	{
 		CBaseEntity *pTarget = m_hTargetEnt;
 		if ( pTarget )
@@ -227,7 +227,7 @@ public:
 		return 0;
 	}
 
-	float GetNodeRange( void )
+	float GetNodeRange()
 	{
 		CBaseEntity *pTarget = m_hTargetEnt;
 		if ( pTarget )
@@ -237,7 +237,7 @@ public:
 		return 1e6;
 	}
 
-	float GetNodeYaw( void )
+	float GetNodeYaw()
 	{
 		CBaseEntity *pTarget = m_hTargetEnt;
 		if ( pTarget )
@@ -249,14 +249,14 @@ public:
 	}
 	
 	// Restart the crab count on each new level
-	void OverrideReset( void )
+	void OverrideReset()
 	{
 		m_crabCount = 0;
 	}
 
 	void DeathNotice( entvars_t *pevChild );
 
-	BOOL CanLayCrab( void ) 
+	BOOL CanLayCrab() 
 	{ 
 		if ( m_crabTime < gpGlobals->time && m_crabCount < BIG_MAXCHILDREN )
 		{
@@ -277,9 +277,9 @@ public:
 		return FALSE;
 	}
 
-	void LaunchMortar( void );
+	void LaunchMortar();
 
-	void SetObjectCollisionBox( void )
+	void SetObjectCollisionBox()
 	{
 		pev->absmin = pev->origin + Vector( -95, -95, 0 );
 		pev->absmax = pev->origin + Vector( 95, 95, 190 );
@@ -404,7 +404,7 @@ void CBigMomma :: KeyValue( KeyValueData *pkvd )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CBigMomma :: Classify ( void )
+int	CBigMomma :: Classify ()
 {
 	return	CLASS_ALIEN_MONSTER;
 }
@@ -413,7 +413,7 @@ int	CBigMomma :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBigMomma :: SetYawSpeed ( void )
+void CBigMomma :: SetYawSpeed ()
 {
 	int ys;
 
@@ -599,7 +599,7 @@ int CBigMomma :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, fl
 	return CBaseMonster::TakeDamage( pevInflictor, pevAttacker, flDamage, bitsDamageType );
 }
 
-void CBigMomma :: LayHeadcrab( void )
+void CBigMomma :: LayHeadcrab()
 {
 	CBaseEntity *pChild = CBaseEntity::Create( BIG_CHILDCLASS, pev->origin, pev->angles, edict() );
 
@@ -639,7 +639,7 @@ void CBigMomma::DeathNotice( entvars_t *pevChild )
 }
 
 
-void CBigMomma::LaunchMortar( void )
+void CBigMomma::LaunchMortar()
 {
 	m_mortarTime = gpGlobals->time + RANDOM_FLOAT( 2, 15 );
 	
@@ -703,7 +703,7 @@ void CBigMomma :: Precache()
 }	
 
 
-void CBigMomma::Activate( void )
+void CBigMomma::Activate()
 {
 	if ( m_hTargetEnt == NULL )
 		Remember( bits_MEMORY_ADVANCE_NODE );	// Start 'er up
@@ -736,7 +736,7 @@ void CBigMomma::NodeStart( int iszNextNode )
 }
 
 
-void CBigMomma::NodeReach( void )
+void CBigMomma::NodeReach()
 {
 	CBaseEntity *pTarget = m_hTargetEnt;
 
@@ -895,7 +895,7 @@ Schedule_t *CBigMomma::GetScheduleOfType( int Type )
 }
 
 
-BOOL CBigMomma::ShouldGoToNode( void )
+BOOL CBigMomma::ShouldGoToNode()
 {
 	if ( HasMemory( bits_MEMORY_ADVANCE_NODE ) )
 	{
@@ -907,7 +907,7 @@ BOOL CBigMomma::ShouldGoToNode( void )
 
 
 
-Schedule_t *CBigMomma::GetSchedule( void )
+Schedule_t *CBigMomma::GetSchedule()
 {
 	if ( ShouldGoToNode() )
 	{
@@ -1152,7 +1152,7 @@ void MortarSpray( const Vector &position, const Vector &direction, int spriteMod
 
 
 // UNDONE: right now this is pretty much a copy of the squid spit with minor changes to the way it does damage
-void CBMortar:: Spawn( void )
+void CBMortar:: Spawn()
 {
 	pev->movetype = MOVETYPE_TOSS;
 	pev->classname = MAKE_STRING( "bmortar" );
@@ -1171,7 +1171,7 @@ void CBMortar:: Spawn( void )
 	pev->dmgtime = gpGlobals->time + 0.4;
 }
 
-void CBMortar::Animate( void )
+void CBMortar::Animate()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 

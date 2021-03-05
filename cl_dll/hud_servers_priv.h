@@ -33,19 +33,19 @@ public:
 	~CHudServers();
 
 	void	Think( double time );
-	void	QueryThink( void );
-	int		isQuerying( void );
+	void	QueryThink();
+	int		isQuerying();
 
 	int		LoadMasterAddresses( int maxservers, int *count, netadr_t *padr );
 
-	void	RequestList( void );
+	void	RequestList();
 	void	RequestBroadcastList( int clearpending );
 
 	void	ServerPing( int server );
 	void	ServerRules( int server );
 	void	ServerPlayers( int server );
 
-	void	CancelRequest( void );
+	void	CancelRequest();
 
 	int		CompareServers( server_t *p1, server_t *p2 );
 
@@ -58,9 +58,9 @@ public:
 
 	request_t *FindRequest( int context, request_t *pList );
 
-	int		ServerListSize( void );
+	int		ServerListSize();
 	char	*GetServerInfo( int server );
-	int		GetServerCount( void );
+	int		GetServerCount();
 	void	SortServers( const char *fieldname );
 
 	void	ListResponse( struct net_response_s *response );

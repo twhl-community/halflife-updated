@@ -407,7 +407,7 @@ QueryThink
 
 ===================
 */
-void CHudServers::QueryThink( void )
+void CHudServers::QueryThink()
 {
 	request_t *p;
 
@@ -461,7 +461,7 @@ ServerListSize
 # of servers in active query and in pending to be queried lists
 ==================
 */
-int	CHudServers::ServerListSize( void )
+int	CHudServers::ServerListSize()
 {
 	int c = 0;
 	request_t *p;
@@ -734,7 +734,7 @@ CancelRequest
 Kill all pending requests in engine
 ===================
 */
-void CHudServers::CancelRequest( void )
+void CHudServers::CancelRequest()
 {
 	m_nRequesting = 0;
 	m_nQuerying   = 0;
@@ -883,7 +883,7 @@ RequestList
 Request list of game servers from master
 ===================
 */
-void CHudServers::RequestList( void )
+void CHudServers::RequestList()
 {
 	m_nRequesting	= 1;
 	m_nDone			= 0;
@@ -1013,7 +1013,7 @@ GetServerCount
 Return number of servers in browser list
 ===================
 */
-int CHudServers::GetServerCount( void )
+int CHudServers::GetServerCount()
 {
 	return m_nServerCount;
 }
@@ -1024,7 +1024,7 @@ CHudServers
 
 ===================
 */
-CHudServers::CHudServers( void )
+CHudServers::CHudServers()
 {
 	m_nRequesting		= 0;
 	m_dStarted			= 0.0;
@@ -1049,7 +1049,7 @@ CHudServers::CHudServers( void )
 
 ===================
 */
-CHudServers::~CHudServers( void )
+CHudServers::~CHudServers()
 {
 	ClearRequestList( &m_pActiveList );
 	ClearRequestList( &m_pServerList );
@@ -1089,7 +1089,7 @@ ServersGetCount
 
 ===================
 */
-int	ServersGetCount( void )
+int	ServersGetCount()
 {
 	if ( g_pServers )
 	{
@@ -1098,7 +1098,7 @@ int	ServersGetCount( void )
 	return 0;
 }
 
-int	ServersIsQuerying( void )
+int	ServersIsQuerying()
 {
 	if ( g_pServers )
 	{
@@ -1137,7 +1137,7 @@ ServersShutdown
 
 ===================
 */
-void ServersShutdown( void )
+void ServersShutdown()
 {
 	if ( g_pServers )
 	{
@@ -1152,7 +1152,7 @@ ServersInit
 
 ===================
 */
-void ServersInit( void )
+void ServersInit()
 {
 	// Kill any previous instance
 	ServersShutdown();
@@ -1180,7 +1180,7 @@ ServersCancel
 
 ===================
 */
-void ServersCancel( void )
+void ServersCancel()
 {
 	if ( g_pServers )
 	{
@@ -1195,7 +1195,7 @@ ServersList
 
 ===================
 */
-void ServersList( void )
+void ServersList()
 {
 	if ( g_pServers )
 	{

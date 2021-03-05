@@ -30,10 +30,10 @@
 class CMyMonster : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 };
 LINK_ENTITY_TO_CLASS( my_monster, CMyMonster );
@@ -42,7 +42,7 @@ LINK_ENTITY_TO_CLASS( my_monster, CMyMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CMyMonster :: Classify ( void )
+int	CMyMonster :: Classify ()
 {
 	return	CLASS_MY_MONSTER;
 }
@@ -51,7 +51,7 @@ int	CMyMonster :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CMyMonster :: SetYawSpeed ( void )
+void CMyMonster :: SetYawSpeed ()
 {
 	int ys;
 

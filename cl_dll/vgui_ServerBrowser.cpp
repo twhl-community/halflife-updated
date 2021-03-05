@@ -94,31 +94,31 @@ public:
 		SortServers( sortkey );
 	}
 
-	void DoRefresh( void )
+	void DoRefresh()
 	{
 		// Request server list and refresh servers...
 		ServersList();
 		BroadcastServersList( 0 );
 	}
 	
-	void DoBroadcastRefresh( void )
+	void DoBroadcastRefresh()
 	{
 		// Request server list and refresh servers...
 		BroadcastServersList( 1 );
 	}
 
-	void DoStop( void )
+	void DoStop()
 	{
 		// Stop requesting
 		ServersCancel();
 	}
 
-	void DoCancel( void )
+	void DoCancel()
 	{
 		EngineClientCmd( "togglebrowser\n" );
 	}
 
-	void DoConnect( void )
+	void DoConnect()
 	{
 		const char *info;
 		const char *address;
@@ -138,7 +138,7 @@ public:
 		DoCancel();
 	}
 
-	void DoPing( void )
+	void DoPing()
 	{
 		ServerPing( 0 );
 		ServerRules( 0 );

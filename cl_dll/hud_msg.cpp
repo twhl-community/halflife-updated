@@ -33,7 +33,7 @@ extern TEMPENTITY* pFlare;	// Vit_amiN
 #endif 
 
 #if defined( _TFC )
-void ClearEventList( void );
+void ClearEventList();
 #endif
 
 /// USER-DEFINED SERVER MESSAGE HANDLERS
@@ -61,7 +61,7 @@ int CHud :: MsgFunc_ResetHUD(const char *pszName, int iSize, void *pbuf )
 	return 1;
 }
 
-void CAM_ToFirstPerson(void);
+void CAM_ToFirstPerson();
 
 void CHud :: MsgFunc_ViewMode( const char *pszName, int iSize, void *pbuf )
 {

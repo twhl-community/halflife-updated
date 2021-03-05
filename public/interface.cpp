@@ -241,7 +241,7 @@ CreateInterfaceFn Sys_GetFactory( CSysModule *pModule )
 // Purpose: returns the instance of this module
 // Output : interface_instance_t
 //-----------------------------------------------------------------------------
-CreateInterfaceFn Sys_GetFactoryThis( void )
+CreateInterfaceFn Sys_GetFactoryThis()
 {
 #ifdef LINUX
 	return CreateInterfaceLocal;

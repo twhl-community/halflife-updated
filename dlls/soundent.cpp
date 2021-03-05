@@ -26,7 +26,7 @@ CSoundEnt *pSoundEnt;
 //=========================================================
 // CSound - Clear - zeros all fields for a sound
 //=========================================================
-void CSound :: Clear ( void )
+void CSound :: Clear ()
 {
 	m_vecOrigin		= g_vecZero;
 	m_iType			= 0;
@@ -40,7 +40,7 @@ void CSound :: Clear ( void )
 // Reset - clears the volume, origin, and type for a sound,
 // but doesn't expire or unlink it. 
 //=========================================================
-void CSound :: Reset ( void )
+void CSound :: Reset ()
 {
 	m_vecOrigin		= g_vecZero;
 	m_iType			= 0;
@@ -51,7 +51,7 @@ void CSound :: Reset ( void )
 //=========================================================
 // FIsSound - returns TRUE if the sound is an Audible sound
 //=========================================================
-BOOL CSound :: FIsSound ( void )
+BOOL CSound :: FIsSound ()
 {
 	if ( m_iType & ( bits_SOUND_COMBAT | bits_SOUND_WORLD | bits_SOUND_PLAYER | bits_SOUND_DANGER ) )
 	{
@@ -64,7 +64,7 @@ BOOL CSound :: FIsSound ( void )
 //=========================================================
 // FIsScent - returns TRUE if the sound is actually a scent
 //=========================================================
-BOOL CSound :: FIsScent ( void )
+BOOL CSound :: FIsScent ()
 {
 	if ( m_iType & ( bits_SOUND_CARCASS | bits_SOUND_MEAT | bits_SOUND_GARBAGE ) )
 	{
@@ -77,7 +77,7 @@ BOOL CSound :: FIsScent ( void )
 //=========================================================
 // Spawn 
 //=========================================================
-void CSoundEnt :: Spawn( void )
+void CSoundEnt :: Spawn()
 {
 	pev->solid = SOLID_NOT;
 	Initialize();
@@ -90,7 +90,7 @@ void CSoundEnt :: Spawn( void )
 // for sounds that have ExpireTimes less than or equal
 // to the current world time, and these sounds are deallocated.
 //=========================================================
-void CSoundEnt :: Think ( void )
+void CSoundEnt :: Think ()
 {
 	int iSound;
 	int iPreviousSound;
@@ -129,7 +129,7 @@ void CSoundEnt :: Think ( void )
 //=========================================================
 // Precache - dummy function
 //=========================================================
-void CSoundEnt :: Precache ( void )
+void CSoundEnt :: Precache ()
 {
 }
 
@@ -168,7 +168,7 @@ void CSoundEnt :: FreeSound ( int iSound, int iPrevious )
 // IAllocSound - moves a sound from the Free list to the 
 // Active list returns the index of the alloc'd sound
 //=========================================================
-int CSoundEnt :: IAllocSound( void )
+int CSoundEnt :: IAllocSound()
 {
 	int iNewSound;
 
@@ -225,7 +225,7 @@ void CSoundEnt :: InsertSound ( int iType, const Vector &vecOrigin, int iVolume,
 // Initialize - clears all sounds and moves them into the 
 // free sound list.
 //=========================================================
-void CSoundEnt :: Initialize ( void )
+void CSoundEnt :: Initialize ()
 {
   	int i;
 	int iSound;
@@ -309,7 +309,7 @@ int CSoundEnt :: ISoundsInList ( int iListType )
 //=========================================================
 // ActiveList - returns the head of the active sound list
 //=========================================================
-int CSoundEnt :: ActiveList ( void )
+int CSoundEnt :: ActiveList ()
 {
 	if ( !pSoundEnt )
 	{
@@ -322,7 +322,7 @@ int CSoundEnt :: ActiveList ( void )
 //=========================================================
 // FreeList - returns the head of the free sound list
 //=========================================================
-int CSoundEnt :: FreeList ( void )
+int CSoundEnt :: FreeList ()
 {
 	if ( !pSoundEnt )
 	{

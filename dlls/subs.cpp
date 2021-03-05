@@ -35,7 +35,7 @@ extern DLL_GLOBAL int g_iSkillLevel;
 
 
 // Landmark class
-void CPointEntity :: Spawn( void )
+void CPointEntity :: Spawn()
 {
 	pev->solid = SOLID_NOT;
 //	UTIL_SetSize(pev, g_vecZero, g_vecZero);
@@ -45,12 +45,12 @@ void CPointEntity :: Spawn( void )
 class CNullEntity : public CBaseEntity
 {
 public:
-	void Spawn( void );
+	void Spawn();
 };
 
 
 // Null Entity, remove on startup
-void CNullEntity :: Spawn( void )
+void CNullEntity :: Spawn()
 {
 	REMOVE_ENTITY(ENT(pev));
 }
@@ -89,7 +89,7 @@ BOOL CBaseDMStart::IsTriggered( CBaseEntity *pEntity )
 }
 
 // This updates global tables that need to know about entities being removed
-void CBaseEntity::UpdateOnRemove( void )
+void CBaseEntity::UpdateOnRemove()
 {
 	int	i;
 
@@ -111,7 +111,7 @@ void CBaseEntity::UpdateOnRemove( void )
 }
 
 // Convenient way to delay removing oneself
-void CBaseEntity :: SUB_Remove( void )
+void CBaseEntity :: SUB_Remove()
 {
 	UpdateOnRemove();
 	if (pev->health > 0)
@@ -126,7 +126,7 @@ void CBaseEntity :: SUB_Remove( void )
 
 
 // Convenient way to explicitly do nothing (passed to functions that require a method)
-void CBaseEntity :: SUB_DoNothing( void )
+void CBaseEntity :: SUB_DoNothing()
 {
 }
 
@@ -285,7 +285,7 @@ void CBaseDelay :: SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, fl
 
 
 /*
-void CBaseDelay :: SUB_UseTargetsEntMethod( void )
+void CBaseDelay :: SUB_UseTargetsEntMethod()
 {
 	SUB_UseTargets(pev);
 }
@@ -317,7 +317,7 @@ void SetMovedir( entvars_t *pev )
 
 
 
-void CBaseDelay::DelayThink( void )
+void CBaseDelay::DelayThink()
 {
 	CBaseEntity *pActivator = NULL;
 
@@ -425,7 +425,7 @@ void CBaseToggle ::  LinearMove( Vector	vecDest, float flSpeed )
 After moving, set origin to exact final destination, call "move done" function
 ============
 */
-void CBaseToggle :: LinearMoveDone( void )
+void CBaseToggle :: LinearMoveDone()
 {
 	Vector delta = m_vecFinalDest - pev->origin;
 	float error = delta.Length();
@@ -442,7 +442,7 @@ void CBaseToggle :: LinearMoveDone( void )
 		(this->*m_pfnCallWhenMoveDone)();
 }
 
-BOOL CBaseToggle :: IsLockedByMaster( void )
+BOOL CBaseToggle :: IsLockedByMaster()
 {
 	if (m_sMaster && !UTIL_IsMasterTriggered(m_sMaster, m_hActivator))
 		return TRUE;
@@ -493,7 +493,7 @@ void CBaseToggle :: AngularMove( Vector vecDestAngle, float flSpeed )
 After rotating, set angle to exact final angle, call "move done" function
 ============
 */
-void CBaseToggle :: AngularMoveDone( void )
+void CBaseToggle :: AngularMoveDone()
 {
 	pev->angles = m_vecFinalAngle;
 	pev->avelocity = g_vecZero;

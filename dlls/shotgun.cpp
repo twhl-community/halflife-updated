@@ -54,7 +54,7 @@ void CShotgun::Spawn( )
 }
 
 
-void CShotgun::Precache( void )
+void CShotgun::Precache()
 {
 	PRECACHE_MODEL("models/v_shotgun.mdl");
 	PRECACHE_MODEL("models/w_shotgun.mdl");
@@ -189,7 +189,7 @@ void CShotgun::PrimaryAttack()
 }
 
 
-void CShotgun::SecondaryAttack( void )
+void CShotgun::SecondaryAttack()
 {
 	// don't fire underwater
 	if (m_pPlayer->pev->waterlevel == 3)
@@ -265,7 +265,7 @@ void CShotgun::SecondaryAttack( void )
 }
 
 
-void CShotgun::Reload( void )
+void CShotgun::Reload()
 {
 	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0 || m_iClip == SHOTGUN_MAX_CLIP)
 		return;
@@ -312,7 +312,7 @@ void CShotgun::Reload( void )
 }
 
 
-void CShotgun::WeaponIdle( void )
+void CShotgun::WeaponIdle()
 {
 	ResetEmptySound( );
 
@@ -390,13 +390,13 @@ void CShotgun::ItemPostFrame()
 
 class CShotgunAmmo : public CBasePlayerAmmo
 {
-	void Spawn( void )
+	void Spawn()
 	{ 
 		Precache( );
 		SET_MODEL(ENT(pev), "models/w_shotbox.mdl");
 		CBasePlayerAmmo::Spawn( );
 	}
-	void Precache( void )
+	void Precache()
 	{
 		PRECACHE_MODEL ("models/w_shotbox.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");

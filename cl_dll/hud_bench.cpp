@@ -93,12 +93,12 @@ void Bench_SetStage( int stage )
 	g_currentstage = stage;
 }
 
-int Bench_GetStage( void )
+int Bench_GetStage()
 {
 	return g_currentstage;
 }
 
-float Bench_GetSwitchTime( void )
+float Bench_GetSwitchTime()
 {
 	return g_benchSwitchTimes[ V_min( Bench_GetStage(), LAST_STAGE ) ];
 }
@@ -113,23 +113,23 @@ void Bench_SetPowerPlay( int set )
 	g_isPowerPlay = set ? 1 : 0;
 }
 
-int Bench_GetPowerPlay( void )
+int Bench_GetPowerPlay()
 {
 	return g_isPowerPlay;
 }
 
-int Bench_Active( void )
+int Bench_Active()
 {
 	return g_currentstage != 0 ? 1 : 0;
 }
 
-void __CmdFunc_BenchMark( void )
+void __CmdFunc_BenchMark()
 {
 	gHUD.m_Benchmark.Restart();
 }
 
 
-void CHudBenchmark::Restart( void )
+void CHudBenchmark::Restart()
 {
 	Bench_SetStage( FIRST_STAGE );
 	g_benchSwitchTime = gHUD.m_flTime + g_benchSwitchTimes[ FIRST_STAGE ];
@@ -229,7 +229,7 @@ void CHudBenchmark::CountFrame( float dt )
 
 static int started = 0;
 
-void Bench_CheckStart( void )
+void Bench_CheckStart()
 {
 	const char *level;
 	if ( !started && !Bench_Active() )
@@ -243,7 +243,7 @@ void Bench_CheckStart( void )
 	}
 }
 
-void CHudBenchmark::Think( void )
+void CHudBenchmark::Think()
 {
 	if ( !Bench_Active() )
 		return;
@@ -395,7 +395,7 @@ void CHudBenchmark::Think( void )
 }
 
 
-int CHudBenchmark::Init( void )
+int CHudBenchmark::Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -406,7 +406,7 @@ int CHudBenchmark::Init( void )
 	return 1;
 }
 
-int CHudBenchmark::VidInit( void )
+int CHudBenchmark::VidInit()
 {
 	return 1;
 }
@@ -457,7 +457,7 @@ int CHudBenchmark::Bench_ScoreForValue( int stage, float raw )
 	return score;
 }
 
-void CHudBenchmark::SetCompositeScore( void )
+void CHudBenchmark::SetCompositeScore()
 {
 	int	tracking_score	= Bench_ScoreForValue( THIRD_STAGE, m_fAvgScore );
 	int ping_score		= Bench_ScoreForValue( FIRST_STAGE, m_StoredLatency );
@@ -584,7 +584,7 @@ void Bench_SetDotAdded( int dot )
 	g_renderedBenchmarkDot = dot;
 }
 
-int Bench_GetDotAdded( void )
+int Bench_GetDotAdded()
 {
 	return g_renderedBenchmarkDot;
 }
@@ -1004,7 +1004,7 @@ void HUD_CreateBenchObjects( vec3_t origin )
 	gEngfuncs.pEventAPI->EV_PopPMStates();
 }
 
-void Bench_AddObjects( void )
+void Bench_AddObjects()
 {
 	if ( Bench_GetDotAdded() )
 	{

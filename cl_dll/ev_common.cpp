@@ -45,7 +45,7 @@ GetViewEntity
 Return's the current weapon/view model
 =================
 */
-struct cl_entity_s *GetViewEntity( void )
+struct cl_entity_s *GetViewEntity()
 {
 	return gEngfuncs.GetViewModel();
 }
@@ -191,7 +191,7 @@ EV_MuzzleFlash
 Flag weapon/view model for muzzle flash
 =================
 */
-void EV_MuzzleFlash( void )
+void EV_MuzzleFlash()
 {
 	// Add muzzle flash to current weapon model
 	cl_entity_t *ent = GetViewEntity();

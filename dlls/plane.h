@@ -21,7 +21,7 @@
 class CPlane 
 {
 public:
-	CPlane ( void );
+	CPlane ();
 
 	//=========================================================
 	// InitializePlane - Takes a normal for the plane and a

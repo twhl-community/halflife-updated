@@ -32,7 +32,7 @@ client_textmessage_t	g_pCustomMessage;
 const char *g_pCustomName = "Custom";
 char g_pCustomText[1024];
 
-int CHudMessage::Init(void)
+int CHudMessage::Init()
 {
 	HOOK_MESSAGE( HudText );
 	HOOK_MESSAGE( GameTitle );
@@ -44,7 +44,7 @@ int CHudMessage::Init(void)
 	return 1;
 };
 
-int CHudMessage::VidInit( void )
+int CHudMessage::VidInit()
 {
 	m_HUD_title_half = gHUD.GetSpriteIndex( "title_half" );
 	m_HUD_title_life = gHUD.GetSpriteIndex( "title_life" );
@@ -53,7 +53,7 @@ int CHudMessage::VidInit( void )
 };
 
 
-void CHudMessage::Reset( void )
+void CHudMessage::Reset()
 {
  	memset( m_pMessages, 0, sizeof( m_pMessages[0] ) * maxHUDMessages );
 	memset( m_startTime, 0, sizeof( m_startTime[0] ) * maxHUDMessages );
@@ -138,7 +138,7 @@ int CHudMessage::YPosition( float y, int height )
 }
 
 
-void CHudMessage::MessageScanNextChar( void )
+void CHudMessage::MessageScanNextChar()
 {
 	int srcRed, srcGreen, srcBlue, destRed, destGreen, destBlue;
 	int blend;
@@ -201,7 +201,7 @@ void CHudMessage::MessageScanNextChar( void )
 }
 
 
-void CHudMessage::MessageScanStart( void )
+void CHudMessage::MessageScanStart()
 {
 	switch( m_parms.pMessage->effect )
 	{

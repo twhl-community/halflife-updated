@@ -45,23 +45,23 @@ public:
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 
-	void RunAI( void );
+	void RunAI();
 	BOOL CheckRangeAttack1 ( float flDot, float flDist );	// balls
 	BOOL CheckRangeAttack2 ( float flDot, float flDist );	// head
 	BOOL CheckMeleeAttack1 ( float flDot, float flDist );	// block, throw
-	Schedule_t* GetSchedule ( void );
+	Schedule_t* GetSchedule ();
 	Schedule_t* GetScheduleOfType ( int Type );
 	void StartTask ( Task_t *pTask );
 	void RunTask ( Task_t *pTask );
 	CUSTOM_SCHEDULES;
 
-	void Stop( void );
+	void Stop();
 	void Move ( float flInterval );
 	int  CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist );
 	void MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flInterval );
@@ -74,11 +74,11 @@ public:
 	float m_flShootTime;
 	float m_flShootEnd;
 
-	void PainSound( void );
-	void AlertSound( void );
-	void IdleSound( void );
-	void AttackSound( void );
-	void DeathSound( void );
+	void PainSound();
+	void AlertSound();
+	void IdleSound();
+	void AttackSound();
+	void DeathSound();
 
 	static const char *pAttackSounds[];
 	static const char *pIdleSounds[];
@@ -88,7 +88,7 @@ public:
 
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 	void Killed( entvars_t *pevAttacker, int iGib );
-	void GibMonster( void );
+	void GibMonster();
 
 	CSprite *m_pBall[2];	// hand balls
 	int m_iBall[2];			// how bright it should be
@@ -155,7 +155,7 @@ const char *CController::pDeathSounds[] =
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CController :: Classify ( void )
+int	CController :: Classify ()
 {
 	return	CLASS_ALIEN_MILITARY;
 }
@@ -164,7 +164,7 @@ int	CController :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CController :: SetYawSpeed ( void )
+void CController :: SetYawSpeed ()
 {
 	int ys;
 
@@ -214,7 +214,7 @@ void CController::Killed( entvars_t *pevAttacker, int iGib )
 }
 
 
-void CController::GibMonster( void )
+void CController::GibMonster()
 {
 	// delete balls
 	if (m_pBall[0])
@@ -233,28 +233,28 @@ void CController::GibMonster( void )
 
 
 
-void CController :: PainSound( void )
+void CController :: PainSound()
 {
 	if (RANDOM_LONG(0,5) < 2)
 		EMIT_SOUND_ARRAY_DYN( CHAN_VOICE, pPainSounds ); 
 }	
 
-void CController :: AlertSound( void )
+void CController :: AlertSound()
 {
 	EMIT_SOUND_ARRAY_DYN( CHAN_VOICE, pAlertSounds ); 
 }
 
-void CController :: IdleSound( void )
+void CController :: IdleSound()
 {
 	EMIT_SOUND_ARRAY_DYN( CHAN_VOICE, pIdleSounds ); 
 }
 
-void CController :: AttackSound( void )
+void CController :: AttackSound()
 {
 	EMIT_SOUND_ARRAY_DYN( CHAN_VOICE, pAttackSounds ); 
 }
 
-void CController :: DeathSound( void )
+void CController :: DeathSound()
 {
 	EMIT_SOUND_ARRAY_DYN( CHAN_VOICE, pDeathSounds ); 
 }
@@ -727,7 +727,7 @@ void CController :: RunTask ( Task_t *pTask )
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t *CController :: GetSchedule ( void )
+Schedule_t *CController :: GetSchedule ()
 {
 	switch	( m_MonsterState )
 	{
@@ -836,7 +836,7 @@ void CController :: SetActivity ( Activity NewActivity )
 //=========================================================
 // RunAI
 //=========================================================
-void CController :: RunAI( void )
+void CController :: RunAI()
 {
 	CBaseMonster :: RunAI();
 	Vector vecStart, angleGun;
@@ -886,7 +886,7 @@ void CController :: RunAI( void )
 
 extern void DrawRoute( entvars_t *pev, WayPoint_t *m_Route, int m_iRouteIndex, int r, int g, int b );
 
-void CController::Stop( void ) 
+void CController::Stop() 
 { 
 	m_IdealActivity = GetStoppedActivity(); 
 }
@@ -1136,13 +1136,13 @@ void CController::MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, fl
 //=========================================================
 class CControllerHeadBall : public CBaseMonster
 {
-	void Spawn( void );
-	void Precache( void );
-	void EXPORT HuntThink( void );
-	void EXPORT DieThink( void );
+	void Spawn();
+	void Precache();
+	void EXPORT HuntThink();
+	void EXPORT DieThink();
 	void EXPORT BounceTouch( CBaseEntity *pOther );
 	void MovetoTarget( Vector vecTarget );
-	void Crawl( void );
+	void Crawl();
 	int m_iTrail;
 	int m_flNextAttack;
 	Vector m_vecIdeal;
@@ -1152,7 +1152,7 @@ LINK_ENTITY_TO_CLASS( controller_head_ball, CControllerHeadBall );
 
 
 
-void CControllerHeadBall :: Spawn( void )
+void CControllerHeadBall :: Spawn()
 {
 	Precache( );
 	// motor
@@ -1182,7 +1182,7 @@ void CControllerHeadBall :: Spawn( void )
 }
 
 
-void CControllerHeadBall :: Precache( void )
+void CControllerHeadBall :: Precache()
 {
 	PRECACHE_MODEL("sprites/xspark1.spr");
 	PRECACHE_SOUND("debris/zap4.wav");
@@ -1336,9 +1336,9 @@ void CControllerHeadBall::BounceTouch( CBaseEntity *pOther )
 
 class CControllerZapBall : public CBaseMonster
 {
-	void Spawn( void );
-	void Precache( void );
-	void EXPORT AnimateThink( void );
+	void Spawn();
+	void Precache();
+	void EXPORT AnimateThink();
 	void EXPORT ExplodeTouch( CBaseEntity *pOther );
 
 	EHANDLE m_hOwner;
@@ -1346,7 +1346,7 @@ class CControllerZapBall : public CBaseMonster
 LINK_ENTITY_TO_CLASS( controller_energy_ball, CControllerZapBall );
 
 
-void CControllerZapBall :: Spawn( void )
+void CControllerZapBall :: Spawn()
 {
 	Precache( );
 	// motor
@@ -1373,7 +1373,7 @@ void CControllerZapBall :: Spawn( void )
 }
 
 
-void CControllerZapBall :: Precache( void )
+void CControllerZapBall :: Precache()
 {
 	PRECACHE_MODEL("sprites/xspark4.spr");
 	// PRECACHE_SOUND("debris/zap4.wav");

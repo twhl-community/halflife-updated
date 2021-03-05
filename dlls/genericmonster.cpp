@@ -32,12 +32,12 @@
 class CGenericMonster : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	int ISoundMask ( void );
+	int ISoundMask ();
 };
 LINK_ENTITY_TO_CLASS( monster_generic, CGenericMonster );
 
@@ -45,7 +45,7 @@ LINK_ENTITY_TO_CLASS( monster_generic, CGenericMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CGenericMonster :: Classify ( void )
+int	CGenericMonster :: Classify ()
 {
 	return	CLASS_PLAYER_ALLY;
 }
@@ -54,7 +54,7 @@ int	CGenericMonster :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGenericMonster :: SetYawSpeed ( void )
+void CGenericMonster :: SetYawSpeed ()
 {
 	int ys;
 
@@ -86,7 +86,7 @@ void CGenericMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 // ISoundMask - generic monster can't hear.
 //=========================================================
-int CGenericMonster :: ISoundMask ( void )
+int CGenericMonster :: ISoundMask ()
 {
 	return	bits_SOUND_NONE;
 }

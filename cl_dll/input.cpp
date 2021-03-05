@@ -33,10 +33,10 @@ extern cl_enginefunc_t gEngfuncs;
 // Defined in pm_math.c
 float anglemod( float a );
 
-void IN_Init (void);
+void IN_Init ();
 void IN_Move ( float frametime, usercmd_t *cmd);
-void IN_Shutdown( void );
-void V_Init( void );
+void IN_Shutdown();
+void V_Init();
 void VectorAngles( const float *forward, float *angles );
 int CL_ButtonBits( int );
 
@@ -256,7 +256,7 @@ KB_Init
 Add kbutton_t definitions that the engine can query if needed
 ============
 */
-void KB_Init( void )
+void KB_Init()
 {
 	g_kbkeys = NULL;
 
@@ -272,7 +272,7 @@ KB_Shutdown
 Clear kblist
 ============
 */
-void KB_Shutdown( void )
+void KB_Shutdown()
 {
 	kblist_t *p, *n;
 	p = g_kbkeys;
@@ -375,81 +375,81 @@ int DLLEXPORT HUD_Key_Event( int down, int keynum, const char *pszCurrentBinding
 	return 1;
 }
 
-void IN_BreakDown( void ) { KeyDown( &in_break );};
-void IN_BreakUp( void ) { KeyUp( &in_break ); };
-void IN_KLookDown (void) {KeyDown(&in_klook);}
-void IN_KLookUp (void) {KeyUp(&in_klook);}
-void IN_JLookDown (void) {KeyDown(&in_jlook);}
-void IN_JLookUp (void) {KeyUp(&in_jlook);}
-void IN_MLookDown (void) {KeyDown(&in_mlook);}
-void IN_UpDown(void) {KeyDown(&in_up);}
-void IN_UpUp(void) {KeyUp(&in_up);}
-void IN_DownDown(void) {KeyDown(&in_down);}
-void IN_DownUp(void) {KeyUp(&in_down);}
-void IN_LeftDown(void) {KeyDown(&in_left);}
-void IN_LeftUp(void) {KeyUp(&in_left);}
-void IN_RightDown(void) {KeyDown(&in_right);}
-void IN_RightUp(void) {KeyUp(&in_right);}
+void IN_BreakDown() { KeyDown( &in_break );};
+void IN_BreakUp() { KeyUp( &in_break ); };
+void IN_KLookDown () {KeyDown(&in_klook);}
+void IN_KLookUp () {KeyUp(&in_klook);}
+void IN_JLookDown () {KeyDown(&in_jlook);}
+void IN_JLookUp () {KeyUp(&in_jlook);}
+void IN_MLookDown () {KeyDown(&in_mlook);}
+void IN_UpDown() {KeyDown(&in_up);}
+void IN_UpUp() {KeyUp(&in_up);}
+void IN_DownDown() {KeyDown(&in_down);}
+void IN_DownUp() {KeyUp(&in_down);}
+void IN_LeftDown() {KeyDown(&in_left);}
+void IN_LeftUp() {KeyUp(&in_left);}
+void IN_RightDown() {KeyDown(&in_right);}
+void IN_RightUp() {KeyUp(&in_right);}
 
-void IN_ForwardDown(void)
+void IN_ForwardDown()
 {
 	KeyDown(&in_forward);
 	gHUD.m_Spectator.HandleButtonsDown( IN_FORWARD );
 }
 
-void IN_ForwardUp(void)
+void IN_ForwardUp()
 {
 	KeyUp(&in_forward);
 	gHUD.m_Spectator.HandleButtonsUp( IN_FORWARD );
 }
 
-void IN_BackDown(void)
+void IN_BackDown()
 {
 	KeyDown(&in_back);
 	gHUD.m_Spectator.HandleButtonsDown( IN_BACK );
 }
 
-void IN_BackUp(void)
+void IN_BackUp()
 {
 	KeyUp(&in_back);
 	gHUD.m_Spectator.HandleButtonsUp( IN_BACK );
 }
-void IN_LookupDown(void) {KeyDown(&in_lookup);}
-void IN_LookupUp(void) {KeyUp(&in_lookup);}
-void IN_LookdownDown(void) {KeyDown(&in_lookdown);}
-void IN_LookdownUp(void) {KeyUp(&in_lookdown);}
-void IN_MoveleftDown(void)
+void IN_LookupDown() {KeyDown(&in_lookup);}
+void IN_LookupUp() {KeyUp(&in_lookup);}
+void IN_LookdownDown() {KeyDown(&in_lookdown);}
+void IN_LookdownUp() {KeyUp(&in_lookdown);}
+void IN_MoveleftDown()
 {
 	KeyDown(&in_moveleft);
 	gHUD.m_Spectator.HandleButtonsDown( IN_MOVELEFT );
 }
 
-void IN_MoveleftUp(void)
+void IN_MoveleftUp()
 {
 	KeyUp(&in_moveleft);
 	gHUD.m_Spectator.HandleButtonsUp( IN_MOVELEFT );
 }
 
-void IN_MoverightDown(void)
+void IN_MoverightDown()
 {
 	KeyDown(&in_moveright);
 	gHUD.m_Spectator.HandleButtonsDown( IN_MOVERIGHT );
 }
 
-void IN_MoverightUp(void)
+void IN_MoverightUp()
 {
 	KeyUp(&in_moveright);
 	gHUD.m_Spectator.HandleButtonsUp( IN_MOVERIGHT );
 }
-void IN_SpeedDown(void) {KeyDown(&in_speed);}
-void IN_SpeedUp(void) {KeyUp(&in_speed);}
-void IN_StrafeDown(void) {KeyDown(&in_strafe);}
-void IN_StrafeUp(void) {KeyUp(&in_strafe);}
+void IN_SpeedDown() {KeyDown(&in_speed);}
+void IN_SpeedUp() {KeyUp(&in_speed);}
+void IN_StrafeDown() {KeyDown(&in_strafe);}
+void IN_StrafeUp() {KeyUp(&in_strafe);}
 
 // needs capture by hud/vgui also
-extern void __CmdFunc_InputPlayerSpecial(void);
+extern void __CmdFunc_InputPlayerSpecial();
 
-void IN_Attack2Down(void) 
+void IN_Attack2Down() 
 {
 	KeyDown(&in_attack2);
 
@@ -460,58 +460,58 @@ void IN_Attack2Down(void)
 	gHUD.m_Spectator.HandleButtonsDown( IN_ATTACK2 );
 }
 
-void IN_Attack2Up(void) {KeyUp(&in_attack2);}
-void IN_UseDown (void)
+void IN_Attack2Up() {KeyUp(&in_attack2);}
+void IN_UseDown ()
 {
 	KeyDown(&in_use);
 	gHUD.m_Spectator.HandleButtonsDown( IN_USE );
 }
-void IN_UseUp (void) {KeyUp(&in_use);}
-void IN_JumpDown (void)
+void IN_UseUp () {KeyUp(&in_use);}
+void IN_JumpDown ()
 {
 	KeyDown(&in_jump);
 	gHUD.m_Spectator.HandleButtonsDown( IN_JUMP );
 
 }
-void IN_JumpUp (void) {KeyUp(&in_jump);}
-void IN_DuckDown(void)
+void IN_JumpUp () {KeyUp(&in_jump);}
+void IN_DuckDown()
 {
 	KeyDown(&in_duck);
 	gHUD.m_Spectator.HandleButtonsDown( IN_DUCK );
 
 }
-void IN_DuckUp(void) {KeyUp(&in_duck);}
-void IN_ReloadDown(void) {KeyDown(&in_reload);}
-void IN_ReloadUp(void) {KeyUp(&in_reload);}
-void IN_Alt1Down(void) {KeyDown(&in_alt1);}
-void IN_Alt1Up(void) {KeyUp(&in_alt1);}
-void IN_GraphDown(void) {KeyDown(&in_graph);}
-void IN_GraphUp(void) {KeyUp(&in_graph);}
+void IN_DuckUp() {KeyUp(&in_duck);}
+void IN_ReloadDown() {KeyDown(&in_reload);}
+void IN_ReloadUp() {KeyUp(&in_reload);}
+void IN_Alt1Down() {KeyDown(&in_alt1);}
+void IN_Alt1Up() {KeyUp(&in_alt1);}
+void IN_GraphDown() {KeyDown(&in_graph);}
+void IN_GraphUp() {KeyUp(&in_graph);}
 
-void IN_AttackDown(void)
+void IN_AttackDown()
 {
 	KeyDown( &in_attack );
 	gHUD.m_Spectator.HandleButtonsDown( IN_ATTACK );
 }
 
-void IN_AttackUp(void)
+void IN_AttackUp()
 {
 	KeyUp( &in_attack );
 	in_cancel = 0;
 }
 
 // Special handling
-void IN_Cancel(void)
+void IN_Cancel()
 {
 	in_cancel = 1;
 }
 
-void IN_Impulse (void)
+void IN_Impulse ()
 {
 	in_impulse = atoi( gEngfuncs.Cmd_Argv(1) );
 }
 
-void IN_ScoreDown(void)
+void IN_ScoreDown()
 {
 	KeyDown(&in_score);
 	if ( gViewPort )
@@ -520,7 +520,7 @@ void IN_ScoreDown(void)
 	}
 }
 
-void IN_ScoreUp(void)
+void IN_ScoreUp()
 {
 	KeyUp(&in_score);
 	if ( gViewPort )
@@ -529,7 +529,7 @@ void IN_ScoreUp(void)
 	}
 }
 
-void IN_MLookUp (void)
+void IN_MLookUp ()
 {
 	KeyUp( &in_mlook );
 	if ( !( in_mlook.state & 1 ) && lookspring->value )
@@ -773,7 +773,7 @@ CL_IsDead
 Returns 1 if health is <= 0
 ============
 */
-int	CL_IsDead( void )
+int	CL_IsDead()
 {
 	return ( gHUD.m_Health.m_iHealth <= 0 ) ? 1 : 0;
 }
@@ -923,7 +923,7 @@ void CL_ResetButtonBits( int bits )
 InitInput
 ============
 */
-void InitInput (void)
+void InitInput ()
 {
 	gEngfuncs.pfnAddCommand ("+moveup",IN_UpDown);
 	gEngfuncs.pfnAddCommand ("-moveup",IN_UpUp);
@@ -1014,20 +1014,20 @@ void InitInput (void)
 ShutdownInput
 ============
 */
-void ShutdownInput (void)
+void ShutdownInput ()
 {
 	IN_Shutdown();
 	KB_Shutdown();
 }
 
 #include "interface.h"
-void CL_UnloadParticleMan( void );
+void CL_UnloadParticleMan();
 
 #if defined( _TFC )
-void ClearEventList( void );
+void ClearEventList();
 #endif
 
-void DLLEXPORT HUD_Shutdown( void )
+void DLLEXPORT HUD_Shutdown()
 {
 //	RecClShutdown();
 

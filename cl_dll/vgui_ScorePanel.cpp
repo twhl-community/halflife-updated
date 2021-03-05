@@ -239,7 +239,7 @@ ScorePanel::ScorePanel(int x,int y,int wide,int tall) : Panel(x,y,wide,tall)
 //-----------------------------------------------------------------------------
 // Purpose: Called each time a new level is started.
 //-----------------------------------------------------------------------------
-void ScorePanel::Initialize( void )
+void ScorePanel::Initialize()
 {
 	// Clear out scoreboard data
 	m_iLastKilledBy = 0;
@@ -889,7 +889,7 @@ void ScorePanel::DeathMsg( int killer, int victim )
 }
 
 
-void ScorePanel::Open( void )
+void ScorePanel::Open()
 {
 	RebuildTeams();
 	setVisible(true);

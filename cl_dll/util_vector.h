@@ -33,16 +33,16 @@ typedef float vec_t;				// needed before including progdefs.h
 class Vector2D
 {
 public:
-	inline Vector2D(void)									{ }
+	inline Vector2D()									{ }
 	inline Vector2D(float X, float Y)						{ x = X; y = Y; }
 	inline Vector2D operator+(const Vector2D& v)	const	{ return Vector2D(x+v.x, y+v.y);	}
 	inline Vector2D operator-(const Vector2D& v)	const	{ return Vector2D(x-v.x, y-v.y);	}
 	inline Vector2D operator*(float fl)				const	{ return Vector2D(x*fl, y*fl);	}
 	inline Vector2D operator/(float fl)				const	{ return Vector2D(x/fl, y/fl);	}
 	
-	inline float Length(void)						const	{ return (float)sqrt(x*x + y*y );		}
+	inline float Length()						const	{ return (float)sqrt(x*x + y*y );		}
 
-	inline Vector2D Normalize ( void ) const
+	inline Vector2D Normalize () const
 	{
 		Vector2D vec2;
 
@@ -72,7 +72,7 @@ class Vector						// same data-layout as engine's vec3_t,
 {								//		which is a vec_t[3]
 public:
 	// Construction/destruction
-	inline Vector(void)								{ }
+	inline Vector()								{ }
 	inline Vector(float X, float Y, float Z)		{ x = X; y = Y; z = Z;						}
 	inline Vector(double X, double Y, double Z)		{ x = (float)X; y = (float)Y; z = (float)Z;	}
 	inline Vector(int X, int Y, int Z)				{ x = (float)X; y = (float)Y; z = (float)Z;	}
@@ -80,7 +80,7 @@ public:
 	inline Vector(float rgfl[3])					{ x = rgfl[0]; y = rgfl[1]; z = rgfl[2];	}
 
 	// Operators
-	inline Vector operator-(void) const				{ return Vector(-x,-y,-z);				}
+	inline Vector operator-() const				{ return Vector(-x,-y,-z);				}
 	inline int operator==(const Vector& v) const	{ return x==v.x && y==v.y && z==v.z;	}
 	inline int operator!=(const Vector& v) const	{ return !(*this==v);					}
 	inline Vector operator+(const Vector& v) const	{ return Vector(x+v.x, y+v.y, z+v.z);	}
@@ -90,10 +90,10 @@ public:
 	
 	// Methods
 	inline void CopyToArray(float* rgfl) const		{ rgfl[0] = x, rgfl[1] = y, rgfl[2] = z; }
-	inline float Length(void) const					{ return (float)sqrt(x*x + y*y + z*z); }
+	inline float Length() const					{ return (float)sqrt(x*x + y*y + z*z); }
 	operator float *()								{ return &x; } // Vectors will now automatically convert to float * when needed
 	operator const float *() const					{ return &x; } // Vectors will now automatically convert to float * when needed
-	inline Vector Normalize(void) const
+	inline Vector Normalize() const
 	{
 		float flLen = Length();
 		if (flLen == 0) return Vector(0,0,1); // ????
@@ -101,7 +101,7 @@ public:
 		return Vector(x * flLen, y * flLen, z * flLen);
 	}
 
-	inline Vector2D Make2D ( void ) const
+	inline Vector2D Make2D () const
 	{
 		Vector2D	Vec2;
 
@@ -110,7 +110,7 @@ public:
 
 		return Vec2;
 	}
-	inline float Length2D(void) const					{ return (float)sqrt(x*x + y*y); }
+	inline float Length2D() const					{ return (float)sqrt(x*x + y*y); }
 
 	// Members
 	vec_t x, y, z;

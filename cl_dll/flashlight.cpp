@@ -32,7 +32,7 @@ DECLARE_MESSAGE(m_Flash, Flashlight)
 
 #define BAT_NAME "sprites/%d_Flashlight.spr"
 
-int CHudFlashlight::Init(void)
+int CHudFlashlight::Init()
 {
 	m_fFade = 0;
 	m_fOn = 0;
@@ -47,13 +47,13 @@ int CHudFlashlight::Init(void)
 	return 1;
 };
 
-void CHudFlashlight::Reset(void)
+void CHudFlashlight::Reset()
 {
 	m_fFade = 0;
 	m_fOn = 0;
 }
 
-int CHudFlashlight::VidInit(void)
+int CHudFlashlight::VidInit()
 {
 	int HUD_flash_empty = gHUD.GetSpriteIndex( "flash_empty" );
 	int HUD_flash_full = gHUD.GetSpriteIndex( "flash_full" );

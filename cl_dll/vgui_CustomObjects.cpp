@@ -101,7 +101,7 @@ CommandButton::CommandButton(const char *text, int x, int y, int wide, int tall,
 	setText( text );
 }
 
-void CommandButton::Init( void )
+void CommandButton::Init()
 {
 	m_pSubMenu = NULL;
 	m_pSubLabel = NULL;
@@ -125,7 +125,7 @@ void CommandButton::Init( void )
 // Purpose: Prepends the button text with the current bound key
 //			if no bound key, then a clear space ' ' instead
 //-----------------------------------------------------------------------------
-void CommandButton::RecalculateText( void )
+void CommandButton::RecalculateText()
 {
 	char szBuf[128];
 
@@ -165,7 +165,7 @@ void CommandButton::setBoundKey( char boundKey )
 	RecalculateText();
 }
 
-char CommandButton::getBoundKey( void )
+char CommandButton::getBoundKey()
 {
 	return m_cBoundKey;
 }
@@ -237,7 +237,7 @@ void CommandButton::paintBackground()
 //-----------------------------------------------------------------------------
 // Purpose: Highlights the current button, and all it's parent menus
 //-----------------------------------------------------------------------------
-void CommandButton::cursorEntered( void )
+void CommandButton::cursorEntered()
 {
 	// unarm all the other buttons in this menu
 	CCommandMenu *containingMenu = getParentMenu();
@@ -262,7 +262,7 @@ void CommandButton::cursorEntered( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CommandButton::cursorExited( void )
+void CommandButton::cursorExited()
 {
 	// only clear ourselves if we have do not have a containing menu
 	// only stay armed if we have a sub menu
@@ -277,7 +277,7 @@ void CommandButton::cursorExited( void )
 // Purpose: Returns the command menu that the button is part of, if any
 // Output : CCommandMenu *
 //-----------------------------------------------------------------------------
-CCommandMenu *CommandButton::getParentMenu( void )
+CCommandMenu *CommandButton::getParentMenu()
 { 
 	return m_pParentMenu; 
 }
@@ -344,7 +344,7 @@ CImageLabel::CImageLabel( const char* pImageName,int x,int y,int wide,int tall )
 
 //===========================================================
 // Image size
-int CImageLabel::getImageWide( void )
+int CImageLabel::getImageWide()
 {
 	if( m_pTGA )
 	{
@@ -358,7 +358,7 @@ int CImageLabel::getImageWide( void )
 	}
 }
 
-int CImageLabel::getImageTall( void )
+int CImageLabel::getImageTall()
 {
 	if( m_pTGA )
 	{
@@ -434,7 +434,7 @@ CTFScrollButton::CTFScrollButton(int iArrow, const char* text,int x,int y,int wi
 	addInputSignal(pISignal);
 }
 
-void CTFScrollButton::paint( void )
+void CTFScrollButton::paint()
 {
 	if (!m_pTGA)
 		return;
@@ -452,7 +452,7 @@ void CTFScrollButton::paint( void )
 	m_pTGA->doPaint(this);
 }
 
-void CTFScrollButton::paintBackground( void )
+void CTFScrollButton::paintBackground()
 {
 /*
 	if ( isArmed() )
@@ -468,7 +468,7 @@ void CTFScrollButton::paintBackground( void )
 */
 }
 
-void CTFSlider::paintBackground( void )
+void CTFSlider::paintBackground()
 {
 	int wide,tall,nobx,noby;
 	getPaintSize(wide,tall);

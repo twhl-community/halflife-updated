@@ -34,12 +34,12 @@ int grgLogoFrame[MAX_LOGO_FRAMES] =
 
 extern int g_iVisibleMouse;
 
-float HUD_GetFOV( void );
+float HUD_GetFOV();
 
 extern cvar_t *sensitivity;
 
 // Think
-void CHud::Think(void)
+void CHud::Think()
 {
 	m_scrinfo.iSize = sizeof(m_scrinfo);
 	GetScreenInfo(&m_scrinfo);

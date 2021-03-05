@@ -66,38 +66,38 @@ enum
 class CScientist : public CTalkMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
 	void RunTask( Task_t *pTask );
 	void StartTask( Task_t *pTask );
-	int	ObjectCaps( void ) { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
+	int	ObjectCaps() { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
 	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	virtual int FriendNumber( int arrayNumber );
 	void SetActivity ( Activity newActivity );
-	Activity GetStoppedActivity( void );
-	int ISoundMask( void );
-	void DeclineFollowing( void );
+	Activity GetStoppedActivity();
+	int ISoundMask();
+	void DeclineFollowing();
 
-	float	CoverRadius( void ) { return 1200; }		// Need more room for cover because scientists want to get far away!
+	float	CoverRadius() { return 1200; }		// Need more room for cover because scientists want to get far away!
 	BOOL	DisregardEnemy( CBaseEntity *pEnemy ) { return !pEnemy->IsAlive() || (gpGlobals->time - m_fearTime) > 15; }
 
-	BOOL	CanHeal( void );
-	void	Heal( void );
-	void	Scream( void );
+	BOOL	CanHeal();
+	void	Heal();
+	void	Scream();
 
 	// Override these to set behavior
 	Schedule_t *GetScheduleOfType ( int Type );
-	Schedule_t *GetSchedule ( void );
-	MONSTERSTATE GetIdealState ( void );
+	Schedule_t *GetSchedule ();
+	MONSTERSTATE GetIdealState ();
 
-	void DeathSound( void );
-	void PainSound( void );
+	void DeathSound();
+	void PainSound();
 	
-	void TalkInit( void );
+	void TalkInit();
 
 	void			Killed( entvars_t *pevAttacker, int iGib );
 	
@@ -424,7 +424,7 @@ DEFINE_CUSTOM_SCHEDULES( CScientist )
 IMPLEMENT_CUSTOM_SCHEDULES( CScientist, CTalkMonster );
 
 
-void CScientist::DeclineFollowing( void )
+void CScientist::DeclineFollowing()
 {
 	Talk( 10 );
 	m_hTalkTarget = m_hEnemy;
@@ -432,7 +432,7 @@ void CScientist::DeclineFollowing( void )
 }
 
 
-void CScientist :: Scream( void )
+void CScientist :: Scream()
 {
 	if ( FOkToSpeak() )
 	{
@@ -443,7 +443,7 @@ void CScientist :: Scream( void )
 }
 
 
-Activity CScientist::GetStoppedActivity( void )
+Activity CScientist::GetStoppedActivity()
 { 
 	if ( m_hEnemy != NULL ) 
 		return ACT_EXCITED;
@@ -586,7 +586,7 @@ void CScientist :: RunTask( Task_t *pTask )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CScientist :: Classify ( void )
+int	CScientist :: Classify ()
 {
 	return	CLASS_HUMAN_PASSIVE;
 }
@@ -596,7 +596,7 @@ int	CScientist :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CScientist :: SetYawSpeed ( void )
+void CScientist :: SetYawSpeed ()
 {
 	int ys;
 
@@ -654,7 +654,7 @@ void CScientist :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 // Spawn
 //=========================================================
-void CScientist :: Spawn( void )
+void CScientist :: Spawn()
 {
 	Precache( );
 
@@ -692,7 +692,7 @@ void CScientist :: Spawn( void )
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CScientist :: Precache( void )
+void CScientist :: Precache()
 {
 	PRECACHE_MODEL("models/scientist.mdl");
 	PRECACHE_SOUND("scientist/sci_pain1.wav");
@@ -774,7 +774,7 @@ int CScientist :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, f
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
-int CScientist :: ISoundMask ( void )
+int CScientist :: ISoundMask ()
 {
 	return	bits_SOUND_WORLD	|
 			bits_SOUND_COMBAT	|
@@ -788,7 +788,7 @@ int CScientist :: ISoundMask ( void )
 //=========================================================
 // PainSound
 //=========================================================
-void CScientist :: PainSound ( void )
+void CScientist :: PainSound ()
 {
 	if (gpGlobals->time < m_painTime )
 		return;
@@ -808,7 +808,7 @@ void CScientist :: PainSound ( void )
 //=========================================================
 // DeathSound 
 //=========================================================
-void CScientist :: DeathSound ( void )
+void CScientist :: DeathSound ()
 {
 	PainSound();
 }
@@ -889,7 +889,7 @@ Schedule_t* CScientist :: GetScheduleOfType ( int Type )
 	return CTalkMonster::GetScheduleOfType( Type );
 }
 
-Schedule_t *CScientist :: GetSchedule ( void )
+Schedule_t *CScientist :: GetSchedule ()
 {
 	// so we don't keep calling through the EHANDLE stuff
 	CBaseEntity *pEnemy = m_hEnemy;
@@ -1004,7 +1004,7 @@ Schedule_t *CScientist :: GetSchedule ( void )
 	return CTalkMonster::GetSchedule();
 }
 
-MONSTERSTATE CScientist :: GetIdealState ( void )
+MONSTERSTATE CScientist :: GetIdealState ()
 {
 	switch ( m_MonsterState )
 	{
@@ -1067,7 +1067,7 @@ MONSTERSTATE CScientist :: GetIdealState ( void )
 }
 
 
-BOOL CScientist::CanHeal( void )
+BOOL CScientist::CanHeal()
 { 
 	if ( (m_healTime > gpGlobals->time) || (m_hTargetEnt == NULL) || (m_hTargetEnt->pev->health > (m_hTargetEnt->pev->max_health * 0.5)) )
 		return FALSE;
@@ -1075,7 +1075,7 @@ BOOL CScientist::CanHeal( void )
 	return TRUE;
 }
 
-void CScientist::Heal( void )
+void CScientist::Heal()
 {
 	if ( !CanHeal() )
 		return;
@@ -1104,8 +1104,8 @@ int CScientist::FriendNumber( int arrayNumber )
 class CDeadScientist : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	int	Classify ( void ) { return	CLASS_HUMAN_PASSIVE; }
+	void Spawn();
+	int	Classify () { return	CLASS_HUMAN_PASSIVE; }
 
 	void KeyValue( KeyValueData *pkvd );
 	int	m_iPose;// which sequence to display
@@ -1168,11 +1168,11 @@ void CDeadScientist :: Spawn( )
 class CSittingScientist : public CScientist // kdb: changed from public CBaseMonster so he can speak
 {
 public:
-	void Spawn( void );
-	void  Precache( void );
+	void Spawn();
+	void  Precache();
 
-	void EXPORT SittingThink( void );
-	int	Classify ( void );
+	void EXPORT SittingThink();
+	int	Classify ();
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
@@ -1180,7 +1180,7 @@ public:
 	virtual void SetAnswerQuestion( CTalkMonster *pSpeaker );
 	int FriendNumber( int arrayNumber );
 
-	int FIdleSpeak ( void );
+	int FIdleSpeak ();
 	int		m_baseSequence;	
 	int		m_headTurn;
 	float	m_flResponseDelay;
@@ -1249,7 +1249,7 @@ void CSittingScientist :: Spawn( )
 	DROP_TO_FLOOR ( ENT(pev) );
 }
 
-void CSittingScientist :: Precache( void )
+void CSittingScientist :: Precache()
 {
 	m_baseSequence = LookupSequence( "sitlookleft" );
 	TalkInit();
@@ -1258,7 +1258,7 @@ void CSittingScientist :: Precache( void )
 //=========================================================
 // ID as a passive human
 //=========================================================
-int	CSittingScientist :: Classify ( void )
+int	CSittingScientist :: Classify ()
 {
 	return	CLASS_HUMAN_PASSIVE;
 }
@@ -1277,7 +1277,7 @@ int CSittingScientist::FriendNumber( int arrayNumber )
 //=========================================================
 // sit, do stuff
 //=========================================================
-void CSittingScientist :: SittingThink( void )
+void CSittingScientist :: SittingThink()
 {
 	CBaseEntity *pent;	
 
@@ -1386,7 +1386,7 @@ void CSittingScientist :: SetAnswerQuestion( CTalkMonster *pSpeaker )
 // FIdleSpeak
 // ask question of nearby friend, or make statement
 //=========================================================
-int CSittingScientist :: FIdleSpeak ( void )
+int CSittingScientist :: FIdleSpeak ()
 { 
 	// try to start a conversation, or make statement
 	int pitch;

@@ -41,7 +41,7 @@
 class CEnvGlobal : public CPointEntity
 {
 public:
-	void	Spawn( void );
+	void	Spawn();
 	void	KeyValue( KeyValueData *pkvd );
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
@@ -80,7 +80,7 @@ void CEnvGlobal::KeyValue( KeyValueData *pkvd )
 		CPointEntity::KeyValue( pkvd );
 }
 
-void CEnvGlobal::Spawn( void )
+void CEnvGlobal::Spawn()
 {
 	if ( !m_globalstate )
 	{
@@ -236,7 +236,7 @@ BOOL CMultiSource::IsTriggered( CBaseEntity * )
 	return 0;
 }
 
-void CMultiSource::Register(void)
+void CMultiSource::Register()
 { 
 	edict_t *pentTarget	= NULL;
 
@@ -289,7 +289,7 @@ TYPEDESCRIPTION CBaseButton::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CBaseButton, CBaseToggle );
 
-void CBaseButton::Precache( void )
+void CBaseButton::Precache()
 {
 	const char *pszSound;
 
@@ -568,7 +568,7 @@ void DoSpark(entvars_t *pev, const Vector &location )
 	}
 }
 
-void CBaseButton::ButtonSpark ( void )
+void CBaseButton::ButtonSpark ()
 {
 	SetThink ( &CBaseButton::ButtonSpark );
 	pev->nextthink = gpGlobals->time + ( 0.1 + RANDOM_FLOAT ( 0, 1.5 ) );// spark again at random interval
@@ -603,7 +603,7 @@ void CBaseButton::ButtonUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 }
 
 
-CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch( void )
+CBaseButton::BUTTON_CODE CBaseButton::ButtonResponseToTouch()
 {
 	// Ignore touches if button is moving, or pushed-in and waiting to auto-come-out.
 	if (m_toggle_state == TS_GOING_UP ||
@@ -693,7 +693,7 @@ void CBaseButton::ButtonActivate( )
 //
 // Button has reached the "in/up" position.  Activate its "targets", and pause before "popping out".
 //
-void CBaseButton::TriggerAndWait( void )
+void CBaseButton::TriggerAndWait()
 {
 	ASSERT(m_toggle_state == TS_GOING_UP);
 
@@ -730,7 +730,7 @@ void CBaseButton::TriggerAndWait( void )
 //
 // Starts the button moving "out/down".
 //
-void CBaseButton::ButtonReturn( void )
+void CBaseButton::ButtonReturn()
 {
 	ASSERT(m_toggle_state == TS_AT_TOP);
 	m_toggle_state = TS_GOING_DOWN;
@@ -748,7 +748,7 @@ void CBaseButton::ButtonReturn( void )
 //
 // Button has returned to start state.  Quiesce it.
 //
-void CBaseButton::ButtonBackHome( void )
+void CBaseButton::ButtonBackHome()
 {
 	ASSERT(m_toggle_state == TS_GOING_DOWN);
 	m_toggle_state = TS_AT_BOTTOM;
@@ -805,12 +805,12 @@ void CBaseButton::ButtonBackHome( void )
 class CRotButton : public CBaseButton
 {
 public:
-	void Spawn( void );
+	void Spawn();
 };
 
 LINK_ENTITY_TO_CLASS( func_rot_button, CRotButton );
 
-void CRotButton::Spawn( void )
+void CRotButton::Spawn()
 {
 	const char *pszSound;
 	//----------------------------------------------------
@@ -878,9 +878,9 @@ void CRotButton::Spawn( void )
 class CMomentaryRotButton : public CBaseToggle
 {
 public:
-	void	Spawn ( void );
+	void	Spawn ();
 	void	KeyValue( KeyValueData *pkvd );
-	virtual int	ObjectCaps( void ) 
+	virtual int	ObjectCaps() 
 	{ 
 		int flags = CBaseToggle :: ObjectCaps() & (~FCAP_ACROSS_TRANSITION); 
 		if ( pev->spawnflags & SF_MOMENTARY_DOOR )
@@ -888,13 +888,13 @@ public:
 		return flags | FCAP_CONTINUOUS_USE;
 	}
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void	EXPORT Off( void );
-	void	EXPORT Return( void );
+	void	EXPORT Off();
+	void	EXPORT Return();
 	void	UpdateSelf( float value );
 	void	UpdateSelfReturn( float value );
 	void	UpdateAllButtons( float value, int start );
 
-	void	PlaySound( void );
+	void	PlaySound();
 	void	UpdateTarget( float value );
 
 	static CMomentaryRotButton *Instance( edict_t *pent ) { return (CMomentaryRotButton *)GET_PRIVATE(pent);};
@@ -924,7 +924,7 @@ IMPLEMENT_SAVERESTORE( CMomentaryRotButton, CBaseToggle );
 
 LINK_ENTITY_TO_CLASS( momentary_rot_button, CMomentaryRotButton );
 
-void CMomentaryRotButton::Spawn( void )
+void CMomentaryRotButton::Spawn()
 {
 	CBaseToggle::AxisDir( pev );
 
@@ -976,7 +976,7 @@ void CMomentaryRotButton::KeyValue( KeyValueData *pkvd )
 		CBaseToggle::KeyValue( pkvd );
 }
 
-void CMomentaryRotButton::PlaySound( void )
+void CMomentaryRotButton::PlaySound()
 {
 	EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noise), 1, ATTN_NORM);
 }
@@ -1079,7 +1079,7 @@ void CMomentaryRotButton::UpdateTarget( float value )
 	}
 }
 
-void CMomentaryRotButton::Off( void )
+void CMomentaryRotButton::Off()
 {
 	pev->avelocity = g_vecZero;
 	m_lastUsed = 0;
@@ -1093,7 +1093,7 @@ void CMomentaryRotButton::Off( void )
 		SetThink( NULL );
 }
 
-void CMomentaryRotButton::Return( void )
+void CMomentaryRotButton::Return()
 {
 	float value = CBaseToggle::AxisDelta( pev->spawnflags, pev->angles, m_start ) / m_flMoveDistance;
 
@@ -1127,9 +1127,9 @@ void CMomentaryRotButton::UpdateSelfReturn( float value )
 class CEnvSpark : public CBaseEntity
 {
 public:
-	void	Spawn(void);
-	void	Precache(void);
-	void	EXPORT SparkThink(void);
+	void	Spawn();
+	void	Precache();
+	void	EXPORT SparkThink();
 	void	EXPORT SparkStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void	EXPORT SparkStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void	KeyValue(KeyValueData *pkvd);
@@ -1153,7 +1153,7 @@ IMPLEMENT_SAVERESTORE( CEnvSpark, CBaseEntity );
 LINK_ENTITY_TO_CLASS(env_spark, CEnvSpark);
 LINK_ENTITY_TO_CLASS(env_debris, CEnvSpark);
 
-void CEnvSpark::Spawn(void)
+void CEnvSpark::Spawn()
 {
 	SetThink( NULL );
 	SetUse( NULL );
@@ -1180,7 +1180,7 @@ void CEnvSpark::Spawn(void)
 }
 
 
-void CEnvSpark::Precache(void)
+void CEnvSpark::Precache()
 {
 	PRECACHE_SOUND( "buttons/spark1.wav" );
 	PRECACHE_SOUND( "buttons/spark2.wav" );
@@ -1208,7 +1208,7 @@ void CEnvSpark::KeyValue( KeyValueData *pkvd )
 		CBaseEntity::KeyValue( pkvd );
 }
 
-void EXPORT CEnvSpark::SparkThink(void)
+void EXPORT CEnvSpark::SparkThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1 + RANDOM_FLOAT (0, m_flDelay);
 	DoSpark( pev, pev->origin );
@@ -1233,16 +1233,16 @@ void EXPORT CEnvSpark::SparkStop(CBaseEntity *pActivator, CBaseEntity *pCaller, 
 class CButtonTarget : public CBaseEntity
 {
 public:
-	void Spawn( void );
+	void Spawn();
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	int	ObjectCaps( void );
+	int	ObjectCaps();
 	
 };
 
 LINK_ENTITY_TO_CLASS( button_target, CButtonTarget );
 
-void CButtonTarget::Spawn( void )
+void CButtonTarget::Spawn()
 {
 	pev->movetype	= MOVETYPE_PUSH;
 	pev->solid		= SOLID_BSP;
@@ -1265,7 +1265,7 @@ void CButtonTarget::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 }
 
 
-int	CButtonTarget :: ObjectCaps( void )
+int	CButtonTarget :: ObjectCaps()
 {
 	int caps = CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 

@@ -147,10 +147,10 @@ public:
 	void Spawn( const char *szGibModel );
 	void EXPORT BounceGibTouch ( CBaseEntity *pOther );
 	void EXPORT StickyGibTouch ( CBaseEntity *pOther );
-	void EXPORT WaitTillLand( void );
-	void		LimitVelocity( void );
+	void EXPORT WaitTillLand();
+	void		LimitVelocity();
 
-	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
+	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
 	static	void SpawnHeadGib( entvars_t *pevVictim );
 	static	void SpawnRandomGibs( entvars_t *pevVictim, int cGibs, int human );
 	static  void SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs );

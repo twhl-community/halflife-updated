@@ -63,13 +63,13 @@ int Trace_GetHopCount( char *pServer, int nMaxHops )
 	int						c;				// Hop counter
 
 	// Prototypes
-	HANDLE ( WINAPI *pfnICMPCreateFile ) ( VOID );
+	HANDLE ( WINAPI *pfnICMPCreateFile ) ();
 	BOOL ( WINAPI *pfnICMPCloseFile ) ( HANDLE );
 	DWORD (WINAPI *pfnICMPSendEcho) ( HANDLE, DWORD, LPVOID, WORD, LPVOID, LPVOID, DWORD, DWORD );
 
 	hICMP = ::LoadLibrary( "ICMP.DLL" );
 	
-	pfnICMPCreateFile	= ( HANDLE ( WINAPI *)(VOID ) )::GetProcAddress( hICMP,"IcmpCreateFile");
+	pfnICMPCreateFile	= ( HANDLE ( WINAPI *)() )::GetProcAddress( hICMP,"IcmpCreateFile");
 	pfnICMPCloseFile	= ( BOOL ( WINAPI *) ( HANDLE ) )::GetProcAddress( hICMP,"IcmpCloseHandle");
 	pfnICMPSendEcho		= ( DWORD ( WINAPI * ) ( HANDLE, DWORD, LPVOID, WORD, LPVOID, LPVOID, DWORD,DWORD ) )::GetProcAddress( hICMP,"IcmpSendEcho" );
 	
@@ -144,7 +144,7 @@ Trace_Cleanup
 Destroys thread and event handle when trace is done, or when restarting a new trace
 ==============
 */
-void Trace_Cleanup( void )
+void Trace_Cleanup()
 {
 #ifdef _WIN32
 	if ( tp.hThread )
@@ -221,7 +221,7 @@ Trace_Think
 Invoked by general frame loop on client to periodically check if the traceroute thread has completed.
 ==============
 */
-void Trace_Think( void )
+void Trace_Think()
 {
 #ifdef _WIN32
 	if ( !tp.hEventDone )

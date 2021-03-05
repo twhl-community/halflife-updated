@@ -26,7 +26,7 @@
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
-	int CL_IsThirdPerson( void );
+	int CL_IsThirdPerson();
 	void CL_CameraOffset( float *ofs );
 
 	void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams );
@@ -249,7 +249,7 @@ typedef struct pitchdrift_s
 
 static pitchdrift_t pd;
 
-void V_StartPitchDrift( void )
+void V_StartPitchDrift()
 {
 	if ( pd.laststop == gEngfuncs.GetClientTime() )
 	{
@@ -264,7 +264,7 @@ void V_StartPitchDrift( void )
 	}
 }
 
-void V_StopPitchDrift ( void )
+void V_StopPitchDrift ()
 {
 	pd.laststop = gEngfuncs.GetClientTime();
 	pd.nodrift = 1;
@@ -1708,7 +1708,7 @@ void V_PunchAxis( int axis, float punch )
 V_Init
 =============
 */
-void V_Init (void)
+void V_Init ()
 {
 	gEngfuncs.pfnAddCommand ("centerview", V_StartPitchDrift );
 

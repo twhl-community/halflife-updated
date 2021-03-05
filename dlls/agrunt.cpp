@@ -71,33 +71,33 @@ int iAgruntMuzzleFlash;
 class CAGrunt : public CSquadMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed ( void );
-	int  Classify ( void );
-	int  ISoundMask ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed ();
+	int  Classify ();
+	int  ISoundMask ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void SetObjectCollisionBox( void )
+	void SetObjectCollisionBox()
 	{
 		pev->absmin = pev->origin + Vector( -32, -32, 0 );
 		pev->absmax = pev->origin + Vector( 32, 32, 85 );
 	}
 
-	Schedule_t* GetSchedule ( void );
+	Schedule_t* GetSchedule ();
 	Schedule_t* GetScheduleOfType ( int Type );
-	BOOL FCanCheckAttacks ( void );
+	BOOL FCanCheckAttacks ();
 	BOOL CheckMeleeAttack1 ( float flDot, float flDist );
 	BOOL CheckRangeAttack1 ( float flDot, float flDist );
 	void StartTask ( Task_t *pTask );
-	void AlertSound( void );
-	void DeathSound ( void );
-	void PainSound ( void );
-	void AttackSound ( void );
-	void PrescheduleThink ( void );
+	void AlertSound();
+	void DeathSound ();
+	void PainSound ();
+	void AttackSound ();
+	void PrescheduleThink ();
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
 	int IRelationship( CBaseEntity *pTarget );
-	void StopTalking ( void );
-	BOOL ShouldSpeak( void );
+	void StopTalking ();
+	BOOL ShouldSpeak();
 	CUSTOM_SCHEDULES;
 
 	virtual int		Save( CSave &save );
@@ -205,7 +205,7 @@ int CAGrunt::IRelationship ( CBaseEntity *pTarget )
 //=========================================================
 // ISoundMask 
 //=========================================================
-int CAGrunt :: ISoundMask ( void )
+int CAGrunt :: ISoundMask ()
 {
 	return	bits_SOUND_WORLD	|
 			bits_SOUND_COMBAT	|
@@ -265,7 +265,7 @@ void CAGrunt :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecD
 //=========================================================
 // StopTalking - won't speak again for 10-20 seconds.
 //=========================================================
-void CAGrunt::StopTalking( void )
+void CAGrunt::StopTalking()
 {
 	m_flNextWordTime = m_flNextSpeakTime = gpGlobals->time + 10 + RANDOM_LONG(0, 10);
 }
@@ -273,7 +273,7 @@ void CAGrunt::StopTalking( void )
 //=========================================================
 // ShouldSpeak - Should this agrunt be talking?
 //=========================================================
-BOOL CAGrunt::ShouldSpeak( void )
+BOOL CAGrunt::ShouldSpeak()
 {
 	if ( m_flNextSpeakTime > gpGlobals->time )
 	{
@@ -300,7 +300,7 @@ BOOL CAGrunt::ShouldSpeak( void )
 //=========================================================
 // PrescheduleThink 
 //=========================================================
-void CAGrunt :: PrescheduleThink ( void )
+void CAGrunt :: PrescheduleThink ()
 {
 	if ( ShouldSpeak() )
 	{
@@ -335,7 +335,7 @@ void CAGrunt :: PrescheduleThink ( void )
 //=========================================================
 // DieSound
 //=========================================================
-void CAGrunt :: DeathSound ( void )
+void CAGrunt :: DeathSound ()
 {
 	StopTalking();
 
@@ -345,7 +345,7 @@ void CAGrunt :: DeathSound ( void )
 //=========================================================
 // AlertSound
 //=========================================================
-void CAGrunt :: AlertSound ( void )
+void CAGrunt :: AlertSound ()
 {
 	StopTalking();
 
@@ -355,7 +355,7 @@ void CAGrunt :: AlertSound ( void )
 //=========================================================
 // AttackSound
 //=========================================================
-void CAGrunt :: AttackSound ( void )
+void CAGrunt :: AttackSound ()
 {
 	StopTalking();
 
@@ -365,7 +365,7 @@ void CAGrunt :: AttackSound ( void )
 //=========================================================
 // PainSound
 //=========================================================
-void CAGrunt :: PainSound ( void )
+void CAGrunt :: PainSound ()
 {
 	if ( m_flNextPainTime > gpGlobals->time )
 	{
@@ -383,7 +383,7 @@ void CAGrunt :: PainSound ( void )
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CAGrunt :: Classify ( void )
+int	CAGrunt :: Classify ()
 {
 	return	CLASS_ALIEN_MILITARY;
 }
@@ -392,7 +392,7 @@ int	CAGrunt :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CAGrunt :: SetYawSpeed ( void )
+void CAGrunt :: SetYawSpeed ()
 {
 	int ys;
 
@@ -891,7 +891,7 @@ IMPLEMENT_CUSTOM_SCHEDULES( CAGrunt, CSquadMonster );
 // because they can use their smart weapons against unseen
 // enemies. Base class doesn't attack anyone it can't see.
 //=========================================================
-BOOL CAGrunt :: FCanCheckAttacks ( void )
+BOOL CAGrunt :: FCanCheckAttacks ()
 {
 	if ( !HasConditions( bits_COND_ENEMY_TOOFAR ) )
 	{
@@ -1062,7 +1062,7 @@ void CAGrunt :: StartTask ( Task_t *pTask )
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t *CAGrunt :: GetSchedule ( void )
+Schedule_t *CAGrunt :: GetSchedule ()
 {
 	if ( HasConditions(bits_COND_HEAR_SOUND) )
 	{

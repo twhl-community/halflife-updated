@@ -31,12 +31,12 @@ class CRecharge : public CBaseToggle
 {
 public:
 	void Spawn( );
-	void Precache( void );
-	void EXPORT Off(void);
-	void EXPORT Recharge(void);
+	void Precache();
+	void EXPORT Off();
+	void EXPORT Recharge();
 	void KeyValue( KeyValueData *pkvd );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	virtual int	ObjectCaps( void ) { return (CBaseToggle :: ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps() { return (CBaseToggle :: ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
@@ -175,14 +175,14 @@ void CRecharge::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 	m_flNextCharge = gpGlobals->time + 0.1;
 }
 
-void CRecharge::Recharge(void)
+void CRecharge::Recharge()
 {
 	m_iJuice = gSkillData.suitchargerCapacity;
 	pev->frame = 0;			
 	SetThink( &CRecharge::SUB_DoNothing );
 }
 
-void CRecharge::Off(void)
+void CRecharge::Off()
 {
 	// Stop looping sound.
 	if (m_iOn > 1)

@@ -38,7 +38,7 @@ DECLARE_MESSAGE( m_StatusBar, StatusValue );
 float *GetClientColor( int clientIndex );
 extern float g_ColorYellow[3];
 
-int CHudStatusBar :: Init( void )
+int CHudStatusBar :: Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -52,14 +52,14 @@ int CHudStatusBar :: Init( void )
 	return 1;
 }
 
-int CHudStatusBar :: VidInit( void )
+int CHudStatusBar :: VidInit()
 {
 	// Load sprites here
 
 	return 1;
 }
 
-void CHudStatusBar :: Reset( void )
+void CHudStatusBar :: Reset()
 {
 	int i = 0;
 

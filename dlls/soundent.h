@@ -45,8 +45,8 @@ class CSound
 {
 public:
 
-	void	Clear ( void );
-	void	Reset ( void );
+	void	Clear ();
+	void	Reset ();
 
 	Vector	m_vecOrigin;	// sound's location in space
 	int		m_iType;		// what type of sound this is
@@ -55,8 +55,8 @@ public:
 	int		m_iNext;		// index of next sound in this list ( Active or Free )
 	int		m_iNextAudible;	// temporary link that monsters use to build a list of audible sounds
 
-	BOOL	FIsSound( void );
-	BOOL	FIsScent( void );
+	BOOL	FIsSound();
+	BOOL	FIsScent();
 };
 
 //=========================================================
@@ -68,22 +68,22 @@ class CSoundEnt : public CBaseEntity
 {
 public:
 
-	void Precache ( void );
-	void Spawn( void );
-	void Think( void );
-	void Initialize ( void );
+	void Precache ();
+	void Spawn();
+	void Think();
+	void Initialize ();
 	
 	static void		InsertSound ( int iType, const Vector &vecOrigin, int iVolume, float flDuration );
 	static void		FreeSound ( int iSound, int iPrevious );
-	static int		ActiveList( void );// return the head of the active list
-	static int		FreeList( void );// return the head of the free list
+	static int		ActiveList();// return the head of the active list
+	static int		FreeList();// return the head of the free list
 	static CSound*	SoundPointerForIndex( int iIndex );// return a pointer for this index in the sound list
 	static int		ClientSoundIndex ( edict_t *pClient );
 
-	BOOL	IsEmpty( void ) { return m_iActiveSound == SOUNDLIST_EMPTY; }
+	BOOL	IsEmpty() { return m_iActiveSound == SOUNDLIST_EMPTY; }
 	int		ISoundsInList ( int iListType );
-	int		IAllocSound ( void );
-	virtual int		ObjectCaps( void ) { return FCAP_DONT_SAVE; }
+	int		IAllocSound ();
+	virtual int		ObjectCaps() { return FCAP_DONT_SAVE; }
 	
 	int		m_iFreeSound;	// index of the first sound in the free sound list
 	int		m_iActiveSound; // indes of the first sound in the active sound list

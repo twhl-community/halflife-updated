@@ -33,18 +33,18 @@ extern int iHornetPuff;
 class CHornet : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	int	 Classify ( void );
+	void Spawn();
+	void Precache();
+	int	 Classify ();
 	int  IRelationship ( CBaseEntity *pTarget );
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void IgniteTrail( void );
-	void EXPORT StartTrack ( void );
-	void EXPORT StartDart ( void );
-	void EXPORT TrackTarget ( void );
+	void IgniteTrail();
+	void EXPORT StartTrack ();
+	void EXPORT StartDart ();
+	void EXPORT TrackTarget ();
 	void EXPORT TrackTouch ( CBaseEntity *pOther );
 	void EXPORT DartTouch( CBaseEntity *pOther );
 	void EXPORT DieTouch ( CBaseEntity *pOther );

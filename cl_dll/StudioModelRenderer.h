@@ -21,11 +21,11 @@ class CStudioModelRenderer
 {
 public:
 	// Construction/Destruction
-	CStudioModelRenderer( void );
-	virtual ~CStudioModelRenderer( void );
+	CStudioModelRenderer();
+	virtual ~CStudioModelRenderer();
 
 	// Initialization
-	virtual void Init( void );
+	virtual void Init();
 
 public:  
 	// Public Interfaces
@@ -43,19 +43,19 @@ public:
 	virtual void StudioSetUpTransform (int trivial_accept);
 
 	// Set up model bone positions
-	virtual void StudioSetupBones ( void );	
+	virtual void StudioSetupBones ();	
 
 	// Find final attachment points
-	virtual void StudioCalcAttachments ( void );
+	virtual void StudioCalcAttachments ();
 	
 	// Save bone matrices and names
-	virtual void StudioSaveBones( void );
+	virtual void StudioSaveBones();
 
 	// Merge cached bones with current bones for model
 	virtual void StudioMergeBones ( model_t *m_pSubModel );
 
 	// Determine interpolation fraction
-	virtual float StudioEstimateInterpolant( void );
+	virtual float StudioEstimateInterpolant();
 
 	// Determine current frame for rendering
 	virtual float StudioEstimateFrame ( mstudioseqdesc_t *pseqdesc );
@@ -79,14 +79,14 @@ public:
 	virtual void StudioCalcRotations ( float pos[][3], vec4_t *q, mstudioseqdesc_t *pseqdesc, mstudioanim_t *panim, float f );
 
 	// Send bones and verts to renderer
-	virtual void StudioRenderModel ( void );
+	virtual void StudioRenderModel ();
 
 	// Finalize rendering
-	virtual void StudioRenderFinal (void);
+	virtual void StudioRenderFinal ();
 	
 	// GL&D3D vs. Software renderer finishing functions
-	virtual void StudioRenderFinal_Software ( void );
-	virtual void StudioRenderFinal_Hardware ( void );
+	virtual void StudioRenderFinal_Software ();
+	virtual void StudioRenderFinal_Hardware ();
 
 	// Player specific data
 	// Determine pitch and blending amounts for players

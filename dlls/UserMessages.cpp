@@ -58,7 +58,7 @@ int gmsgTeamNames = 0;
 int gmsgStatusText = 0;
 int gmsgStatusValue = 0;
 
-void LinkUserMessages(void)
+void LinkUserMessages()
 {
 	// Already taken care of?
 	if (gmsgSelAmmo)

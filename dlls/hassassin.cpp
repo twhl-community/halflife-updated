@@ -64,24 +64,24 @@ enum
 class CHAssassin : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed ( void );
-	int  Classify ( void );
-	int  ISoundMask ( void);
-	void Shoot( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed ();
+	int  Classify ();
+	int  ISoundMask ();
+	void Shoot();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	Schedule_t* GetSchedule ( void );
+	Schedule_t* GetSchedule ();
 	Schedule_t* GetScheduleOfType ( int Type );
 	BOOL CheckMeleeAttack1 ( float flDot, float flDist );	// jump
 	// BOOL CheckMeleeAttack2 ( float flDot, float flDist );
 	BOOL CheckRangeAttack1 ( float flDot, float flDist );	// shoot
 	BOOL CheckRangeAttack2 ( float flDot, float flDist );	// throw grenade
 	void StartTask ( Task_t *pTask );
-	void RunAI( void );
+	void RunAI();
 	void RunTask ( Task_t *pTask );
-	void DeathSound ( void );
-	void IdleSound ( void );
+	void DeathSound ();
+	void IdleSound ();
 	CUSTOM_SCHEDULES;
 
 	int	Save( CSave &save ); 
@@ -129,14 +129,14 @@ IMPLEMENT_SAVERESTORE( CHAssassin, CBaseMonster );
 //=========================================================
 // DieSound
 //=========================================================
-void CHAssassin :: DeathSound ( void )
+void CHAssassin :: DeathSound ()
 {
 }
 
 //=========================================================
 // IdleSound
 //=========================================================
-void CHAssassin :: IdleSound ( void )
+void CHAssassin :: IdleSound ()
 {
 }
 
@@ -144,7 +144,7 @@ void CHAssassin :: IdleSound ( void )
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards. 
 //=========================================================
-int CHAssassin :: ISoundMask ( void) 
+int CHAssassin :: ISoundMask () 
 {
 	return	bits_SOUND_WORLD	|
 			bits_SOUND_COMBAT	|
@@ -157,7 +157,7 @@ int CHAssassin :: ISoundMask ( void)
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CHAssassin :: Classify ( void )
+int	CHAssassin :: Classify ()
 {
 	return	CLASS_HUMAN_MILITARY;
 }
@@ -166,7 +166,7 @@ int	CHAssassin :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHAssassin :: SetYawSpeed ( void )
+void CHAssassin :: SetYawSpeed ()
 {
 	int ys;
 
@@ -188,7 +188,7 @@ void CHAssassin :: SetYawSpeed ( void )
 //=========================================================
 // Shoot
 //=========================================================
-void CHAssassin :: Shoot ( void )
+void CHAssassin :: Shoot ()
 {
 	if (m_hEnemy == NULL)
 	{
@@ -710,7 +710,7 @@ BOOL CHAssassin :: CheckRangeAttack2 ( float flDot, float flDist )
 //=========================================================
 // RunAI
 //=========================================================
-void CHAssassin :: RunAI( void )
+void CHAssassin :: RunAI()
 {
 	CBaseMonster :: RunAI();
 
@@ -831,7 +831,7 @@ void CHAssassin :: RunTask ( Task_t *pTask )
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t *CHAssassin :: GetSchedule ( void )
+Schedule_t *CHAssassin :: GetSchedule ()
 {
 	switch	( m_MonsterState )
 	{

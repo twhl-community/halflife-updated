@@ -24,30 +24,30 @@ class CBreakable : public CBaseDelay
 {
 public:
 	// basic functions
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void KeyValue( KeyValueData* pkvd);
 	void EXPORT BreakTouch( CBaseEntity *pOther );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void DamageSound( void );
+	void DamageSound();
 
 	// breakables use an overridden takedamage
 	virtual int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	// To spark when hit
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
 
-	BOOL IsBreakable( void );
-	BOOL SparkWhenHit( void );
+	BOOL IsBreakable();
+	BOOL SparkWhenHit();
 
 	int	 DamageDecal( int bitsDamageType );
 
-	void EXPORT		Die( void );
-	virtual int		ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	void EXPORT		Die();
+	virtual int		ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 
-	inline BOOL		Explodable( void ) { return ExplosionMagnitude() > 0; }
-	inline int		ExplosionMagnitude( void ) { return pev->impulse; }
+	inline BOOL		Explodable() { return ExplosionMagnitude() > 0; }
+	inline int		ExplosionMagnitude() { return pev->impulse; }
 	inline void		ExplosionSetMagnitude( int magnitude ) { pev->impulse = magnitude; }
 
 	static void MaterialSoundPrecache( Materials precacheMaterial );

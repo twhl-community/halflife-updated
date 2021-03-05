@@ -18,13 +18,13 @@ void NET_CALLBACK PingResponse( struct net_response_s *response );
 void NET_CALLBACK RulesResponse( struct net_response_s *response );
 void NET_CALLBACK PlayersResponse( struct net_response_s *response );
 
-void ServersInit( void );
-void ServersShutdown( void );
+void ServersInit();
+void ServersShutdown();
 void ServersThink( double time );
-void ServersCancel( void );
+void ServersCancel();
 
 // Get list and get server info from each
-void ServersList( void );
+void ServersList();
 
 // Query for IP / IPX LAN servers
 void BroadcastServersList( int clearpending );
@@ -33,9 +33,9 @@ void ServerPing( int server );
 void ServerRules( int server );
 void ServerPlayers( int server );
 
-int	ServersGetCount( void );
+int	ServersGetCount();
 const char *ServersGetInfo( int server );
-int	ServersIsQuerying( void );
+int	ServersIsQuerying();
 void SortServers( const char *fieldname );
 
 #endif // HUD_SERVERSH

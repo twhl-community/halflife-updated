@@ -122,16 +122,16 @@ class CAmbientGeneric : public CBaseEntity
 {
 public:
 	void KeyValue( KeyValueData* pkvd);
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT RampThink( void );
-	void InitModulationParms(void);
+	void EXPORT RampThink();
+	void InitModulationParms();
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
-	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 	float m_flAttenuation;		// attenuation value
 	dynpitchvol_t m_dpv;	
@@ -160,7 +160,7 @@ IMPLEMENT_SAVERESTORE( CAmbientGeneric, CBaseEntity );
 //
 // ambient_generic - general-purpose user-defined static sound
 //
-void CAmbientGeneric :: Spawn( void )
+void CAmbientGeneric :: Spawn()
 {
 /*
 		-1 : "Default"
@@ -224,7 +224,7 @@ void CAmbientGeneric :: Spawn( void )
 }
 
 
-void CAmbientGeneric :: Precache( void )
+void CAmbientGeneric :: Precache()
 {
 	char* szSoundFile = (char*) STRING(pev->message);
 
@@ -256,7 +256,7 @@ void CAmbientGeneric :: Precache( void )
 // ramp pitch and/or volume up or down, modify pitch/volume
 // with lfo if active.
 
-void CAmbientGeneric :: RampThink( void )
+void CAmbientGeneric :: RampThink()
 {
 	char* szSoundFile = (char*) STRING(pev->message);
 	int pitch = m_dpv.pitch; 
@@ -449,7 +449,7 @@ void CAmbientGeneric :: RampThink( void )
 // Init all ramp params in preparation to 
 // play a new sound
 
-void CAmbientGeneric :: InitModulationParms(void)
+void CAmbientGeneric :: InitModulationParms()
 {
 	int pitchinc;
 
@@ -807,9 +807,9 @@ class CEnvSound : public CPointEntity
 {
 public:
 	void KeyValue( KeyValueData* pkvd);
-	void Spawn( void );
+	void Spawn();
 
-	void Think( void );
+	void Think();
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
@@ -888,7 +888,7 @@ BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange)
 
 // CONSIDER: if player in water state, autoset roomtype to 14,15 or 16. 
 
-void CEnvSound :: Think( void )
+void CEnvSound :: Think()
 {
 	// get pointer to client if visible; FIND_CLIENT_IN_PVS will
 	// cycle through visible clients on consecutive calls.
@@ -1795,16 +1795,16 @@ class CSpeaker : public CBaseEntity
 {
 public:
 	void KeyValue( KeyValueData* pkvd);
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT SpeakerThink( void );
+	void EXPORT SpeakerThink();
 	
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	
 	int	m_preset;			// preset number
 };
@@ -1820,7 +1820,7 @@ IMPLEMENT_SAVERESTORE( CSpeaker, CBaseEntity );
 //
 // ambient_generic - general-purpose user-defined static sound
 //
-void CSpeaker :: Spawn( void )
+void CSpeaker :: Spawn()
 {
 	char* szSoundFile = (char*) STRING(pev->message);
 
@@ -1848,13 +1848,13 @@ void CSpeaker :: Spawn( void )
 #define ANNOUNCE_MINUTES_MIN	0.25	 
 #define ANNOUNCE_MINUTES_MAX	2.25
 
-void CSpeaker :: Precache( void )
+void CSpeaker :: Precache()
 {
 	if ( !FBitSet (pev->spawnflags, SPEAKER_START_SILENT ) )
 		// set first announcement time for random n second
 		pev->nextthink = gpGlobals->time + RANDOM_FLOAT(5.0, 15.0);
 }
-void CSpeaker :: SpeakerThink( void )
+void CSpeaker :: SpeakerThink()
 {
 	const char* szSoundFile;
 	float flvolume = pev->health * 0.1;

@@ -453,7 +453,7 @@ cvar_t	sk_player_leg3	= { "sk_player_leg3","1" };
 
 // Register your console variables here
 // This gets called one time when the game is initialied
-void GameDLLInit( void )
+void GameDLLInit()
 {
 	// Register cvars here:
 

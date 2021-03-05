@@ -461,7 +461,7 @@ void SaveReadFields( SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseD
 }
 
 
-edict_t * EHANDLE::Get( void ) 
+edict_t * EHANDLE::Get() 
 { 
 	if (m_pent)
 	{
@@ -589,7 +589,7 @@ void CBaseEntity :: Killed( entvars_t *pevAttacker, int iGib )
 }
 
 
-CBaseEntity *CBaseEntity::GetNextTarget( void )
+CBaseEntity *CBaseEntity::GetNextTarget()
 {
 	if ( FStringNull( pev->target ) )
 		return NULL;
@@ -684,7 +684,7 @@ void SetObjectCollisionBox( entvars_t *pev )
 }
 
 
-void CBaseEntity::SetObjectCollisionBox( void )
+void CBaseEntity::SetObjectCollisionBox()
 {
 	::SetObjectCollisionBox( pev );
 }
@@ -702,7 +702,7 @@ int	CBaseEntity :: Intersects( CBaseEntity *pOther )
 	return 1;
 }
 
-void CBaseEntity :: MakeDormant( void )
+void CBaseEntity :: MakeDormant()
 {
 	SetBits( pev->flags, FL_DORMANT );
 	
@@ -718,12 +718,12 @@ void CBaseEntity :: MakeDormant( void )
 	UTIL_SetOrigin( pev, pev->origin );
 }
 
-int CBaseEntity :: IsDormant( void )
+int CBaseEntity :: IsDormant()
 {
 	return FBitSet( pev->flags, FL_DORMANT );
 }
 
-BOOL CBaseEntity :: IsInWorld( void )
+BOOL CBaseEntity :: IsInWorld()
 {
 	// position 
 	if (pev->origin.x >= 4096) return FALSE;

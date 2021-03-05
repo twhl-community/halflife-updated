@@ -30,7 +30,7 @@
 
 
 #define HOOK_COMMAND(x, y) gEngfuncs.pfnAddCommand( x, __CmdFunc_##y );
-#define DECLARE_COMMAND(y, x) void __CmdFunc_##x( void ) \
+#define DECLARE_COMMAND(y, x) void __CmdFunc_##x() \
 							{ \
 								gHUD.y.UserCmd_##x( ); \
 							}

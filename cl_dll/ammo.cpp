@@ -39,7 +39,7 @@ WeaponsResource gWR;
 
 int g_weaponselect = 0;
 
-void WeaponsResource :: LoadAllWeaponSprites( void )
+void WeaponsResource :: LoadAllWeaponSprites()
 {
 	for (int i = 0; i < MAX_WEAPONS; i++)
 	{
@@ -259,7 +259,7 @@ DECLARE_COMMAND(m_Ammo, PrevWeapon);
 
 #define HISTORY_DRAW_TIME	"5"
 
-int CHudAmmo::Init(void)
+int CHudAmmo::Init()
 {
 	gHUD.AddHudElem(this);
 
@@ -298,7 +298,7 @@ int CHudAmmo::Init(void)
 	return 1;
 };
 
-void CHudAmmo::Reset(void)
+void CHudAmmo::Reset()
 {
 	m_fFade = 0;
 	m_iFlags |= HUD_ACTIVE; //!!!
@@ -310,7 +310,7 @@ void CHudAmmo::Reset(void)
 	gHR.Reset();
 }
 
-int CHudAmmo::VidInit(void)
+int CHudAmmo::VidInit()
 {
 	// Load sprites for buckets (top row of weapon menu)
 	m_HUD_bucket0 = gHUD.GetSpriteIndex( "bucket1" );
@@ -343,7 +343,7 @@ int CHudAmmo::VidInit(void)
 // Think:
 //  Used for selection of weapon menu item.
 //
-void CHudAmmo::Think(void)
+void CHudAmmo::Think()
 {
 	if ( gHUD.m_fPlayerDead )
 		return;
@@ -678,57 +678,57 @@ void CHudAmmo::SlotInput( int iSlot )
 	gWR.SelectSlot(iSlot, FALSE, 1);
 }
 
-void CHudAmmo::UserCmd_Slot1(void)
+void CHudAmmo::UserCmd_Slot1()
 {
 	SlotInput( 0 );
 }
 
-void CHudAmmo::UserCmd_Slot2(void)
+void CHudAmmo::UserCmd_Slot2()
 {
 	SlotInput( 1 );
 }
 
-void CHudAmmo::UserCmd_Slot3(void)
+void CHudAmmo::UserCmd_Slot3()
 {
 	SlotInput( 2 );
 }
 
-void CHudAmmo::UserCmd_Slot4(void)
+void CHudAmmo::UserCmd_Slot4()
 {
 	SlotInput( 3 );
 }
 
-void CHudAmmo::UserCmd_Slot5(void)
+void CHudAmmo::UserCmd_Slot5()
 {
 	SlotInput( 4 );
 }
 
-void CHudAmmo::UserCmd_Slot6(void)
+void CHudAmmo::UserCmd_Slot6()
 {
 	SlotInput( 5 );
 }
 
-void CHudAmmo::UserCmd_Slot7(void)
+void CHudAmmo::UserCmd_Slot7()
 {
 	SlotInput( 6 );
 }
 
-void CHudAmmo::UserCmd_Slot8(void)
+void CHudAmmo::UserCmd_Slot8()
 {
 	SlotInput( 7 );
 }
 
-void CHudAmmo::UserCmd_Slot9(void)
+void CHudAmmo::UserCmd_Slot9()
 {
 	SlotInput( 8 );
 }
 
-void CHudAmmo::UserCmd_Slot10(void)
+void CHudAmmo::UserCmd_Slot10()
 {
 	SlotInput( 9 );
 }
 
-void CHudAmmo::UserCmd_Close(void)
+void CHudAmmo::UserCmd_Close()
 {
 	if (gpActiveSel)
 	{
@@ -742,7 +742,7 @@ void CHudAmmo::UserCmd_Close(void)
 
 
 // Selects the next item in the weapon menu
-void CHudAmmo::UserCmd_NextWeapon(void)
+void CHudAmmo::UserCmd_NextWeapon()
 {
 	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;
@@ -783,7 +783,7 @@ void CHudAmmo::UserCmd_NextWeapon(void)
 }
 
 // Selects the previous item in the menu
-void CHudAmmo::UserCmd_PrevWeapon(void)
+void CHudAmmo::UserCmd_PrevWeapon()
 {
 	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;

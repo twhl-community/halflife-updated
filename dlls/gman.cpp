@@ -30,12 +30,12 @@
 class CGMan : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	int  Classify ();
 	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	int ISoundMask ( void );
+	int ISoundMask ();
 
 	int	Save( CSave &save ); 
 	int Restore( CRestore &restore );
@@ -67,7 +67,7 @@ IMPLEMENT_SAVERESTORE( CGMan, CBaseMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CGMan :: Classify ( void )
+int	CGMan :: Classify ()
 {
 	return	CLASS_NONE;
 }
@@ -76,7 +76,7 @@ int	CGMan :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGMan :: SetYawSpeed ( void )
+void CGMan :: SetYawSpeed ()
 {
 	int ys;
 
@@ -108,7 +108,7 @@ void CGMan :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 // ISoundMask - generic monster can't hear.
 //=========================================================
-int CGMan :: ISoundMask ( void )
+int CGMan :: ISoundMask ()
 {
 	return	bits_SOUND_NONE;
 }

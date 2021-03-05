@@ -48,7 +48,7 @@ static int line_height = 0;
 
 DECLARE_MESSAGE( m_SayText, SayText );
 
-int CHudSayText :: Init( void )
+int CHudSayText :: Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -65,20 +65,20 @@ int CHudSayText :: Init( void )
 }
 
 
-void CHudSayText :: InitHUDData( void )
+void CHudSayText :: InitHUDData()
 {
 	memset( g_szLineBuffer, 0, sizeof g_szLineBuffer );
 	memset( g_pflNameColors, 0, sizeof g_pflNameColors );
 	memset( g_iNameLengths, 0, sizeof g_iNameLengths );
 }
 
-int CHudSayText :: VidInit( void )
+int CHudSayText :: VidInit()
 {
 	return 1;
 }
 
 
-int ScrollTextUp( void )
+int ScrollTextUp()
 {
 	ConsolePrint( g_szLineBuffer[0] ); // move the first line into the console buffer
 	g_szLineBuffer[MAX_LINES][0] = 0;

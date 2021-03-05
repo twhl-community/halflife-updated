@@ -101,10 +101,10 @@ typedef struct
 class CHudHealth: public CHudBase
 {
 public:
-	virtual int Init( void );
-	virtual int VidInit( void );
+	virtual int Init();
+	virtual int VidInit();
 	virtual int Draw(float fTime);
-	virtual void Reset( void );
+	virtual void Reset();
 	int MsgFunc_Health(const char *pszName,  int iSize, void *pbuf);
 	int MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf);
 	int m_iHealth;

@@ -98,13 +98,13 @@ enum
 class CTalkMonster : public CBaseMonster
 {
 public:
-	void			TalkInit( void );				
+	void			TalkInit();				
 	CBaseEntity		*FindNearestFriend(BOOL fPlayer);
-	float			TargetDistance( void );
-	void			StopTalking( void ) { SentenceStop(); }
+	float			TargetDistance();
+	void			StopTalking() { SentenceStop(); }
 	
 	// Base Monster functions
-	void			Precache( void );
+	void			Precache();
 	int				TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
 	void			Touch(	CBaseEntity *pOther );
 	void			Killed( entvars_t *pevAttacker, int iGib );
@@ -120,29 +120,29 @@ public:
 	void			StartTask( Task_t *pTask );
 	void			RunTask( Task_t *pTask );
 	void			HandleAnimEvent( MonsterEvent_t *pEvent );
-	void			PrescheduleThink( void );
+	void			PrescheduleThink();
 	
 
 	// Conversations / communication
-	int				GetVoicePitch( void );
-	void			IdleRespond( void );
-	int				FIdleSpeak( void );
-	int				FIdleStare( void );
-	int				FIdleHello( void );
+	int				GetVoicePitch();
+	void			IdleRespond();
+	int				FIdleSpeak();
+	int				FIdleStare();
+	int				FIdleHello();
 	void			IdleHeadTurn( Vector &vecFriend );
-	int				FOkToSpeak( void );
-	void			TrySmellTalk( void );
+	int				FOkToSpeak();
+	void			TrySmellTalk();
 	CBaseEntity		*EnumFriends( CBaseEntity *pentPrevious, int listNumber, BOOL bTrace );
-	void			AlertFriends( void );
-	void			ShutUpFriends( void );
-	BOOL			IsTalking( void );
+	void			AlertFriends();
+	void			ShutUpFriends();
+	BOOL			IsTalking();
 	void			Talk( float flDuration );	
 	// For following
-	BOOL			CanFollow( void );
-	BOOL			IsFollowing( void ) { return m_hTargetEnt != NULL && m_hTargetEnt->IsPlayer(); }
+	BOOL			CanFollow();
+	BOOL			IsFollowing() { return m_hTargetEnt != NULL && m_hTargetEnt->IsPlayer(); }
 	void			StopFollowing( BOOL clearSchedule );
 	void			StartFollowing( CBaseEntity *pLeader );
-	virtual void	DeclineFollowing( void ) {}
+	virtual void	DeclineFollowing() {}
 	void			LimitFollowers( CBaseEntity *pPlayer, int maxFollowers );
 
 	void EXPORT		FollowerUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );

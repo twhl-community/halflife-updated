@@ -190,7 +190,7 @@ typedef struct playermove_s
 	void			(*Con_NPrintf)( int idx, const char *fmt, ... );
 	void			(*Con_DPrintf)(const char *fmt, ... );
 	void			(*Con_Printf)(const char *fmt, ... );
-	double			(*Sys_FloatTime)( void );
+	double			(*Sys_FloatTime)();
 	void			(*PM_StuckTouch)( int hitent, pmtrace_t *ptraceresult );
 	int				(*PM_PointContents) (float *p, int *truecontents /*filled in if this is non-null*/ );
 	int				(*PM_TruePointContents) (float *p);

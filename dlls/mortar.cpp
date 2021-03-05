@@ -31,12 +31,12 @@
 class CFuncMortarField : public CBaseToggle
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void KeyValue( KeyValueData *pkvd );
 
 	// Bmodels don't go across transitions
-	virtual int	ObjectCaps( void ) { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps() { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	virtual int	Save( CSave &save );
 	virtual int	Restore( CRestore &restore );
@@ -99,7 +99,7 @@ void CFuncMortarField :: KeyValue( KeyValueData *pkvd )
 
 
 // Drop bombs from above
-void CFuncMortarField :: Spawn( void )
+void CFuncMortarField :: Spawn()
 {
 	pev->solid = SOLID_NOT;
 	SET_MODEL(ENT(pev), STRING(pev->model));    // set size and link into world
@@ -110,7 +110,7 @@ void CFuncMortarField :: Spawn( void )
 }
 
 
-void CFuncMortarField :: Precache( void )
+void CFuncMortarField :: Precache()
 {
 	PRECACHE_SOUND ("weapons/mortar.wav");
 	PRECACHE_SOUND ("weapons/mortarhit.wav");
@@ -192,10 +192,10 @@ void CFuncMortarField :: FieldUse( CBaseEntity *pActivator, CBaseEntity *pCaller
 class CMortar : public CGrenade
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 
-	void EXPORT MortarExplode( void );
+	void EXPORT MortarExplode();
 
 	int m_spriteTexture;
 };
@@ -223,7 +223,7 @@ void CMortar::Precache( )
 	m_spriteTexture = PRECACHE_MODEL( "sprites/lgtning.spr" );
 }
 
-void CMortar::MortarExplode( void )
+void CMortar::MortarExplode()
 {
 #if 1
 	// mortar beam

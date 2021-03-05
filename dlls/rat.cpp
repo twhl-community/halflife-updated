@@ -29,10 +29,10 @@
 class CRat : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
-	void SetYawSpeed( void );
-	int  Classify ( void );
+	void Spawn();
+	void Precache();
+	void SetYawSpeed();
+	int  Classify ();
 };
 LINK_ENTITY_TO_CLASS( monster_rat, CRat );
 
@@ -40,7 +40,7 @@ LINK_ENTITY_TO_CLASS( monster_rat, CRat );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CRat :: Classify ( void )
+int	CRat :: Classify ()
 {
 	return	CLASS_INSECT;
 }
@@ -49,7 +49,7 @@ int	CRat :: Classify ( void )
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CRat :: SetYawSpeed ( void )
+void CRat :: SetYawSpeed ()
 {
 	int ys;
 

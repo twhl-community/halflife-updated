@@ -30,13 +30,13 @@ private:
 	int			riAmmo[MAX_AMMO_TYPES];							// count of each ammo type
 
 public:
-	void Init( void )
+	void Init()
 	{
 		memset( rgWeapons, 0, sizeof rgWeapons );
 		Reset();
 	}
 
-	void Reset( void )
+	void Reset()
 	{
 		iOldWeaponBits = 0;
 		memset( rgSlots, 0, sizeof rgSlots );
@@ -63,7 +63,7 @@ public:
 		rgSlots[ wp->iSlot ][ wp->iSlotPos ] = NULL;
 	}
 
-	void DropAllWeapons( void )
+	void DropAllWeapons()
 	{
 		for ( int i = 0; i < MAX_WEAPONS; i++ )
 		{
@@ -75,7 +75,7 @@ public:
 	WEAPON* GetWeaponSlot( int slot, int pos ) { return rgSlots[slot][pos]; }
 
 	void LoadWeaponSprites( WEAPON* wp );
-	void LoadAllWeaponSprites( void );
+	void LoadAllWeaponSprites();
 	WEAPON* GetFirstPos( int iSlot );
 	void SelectSlot( int iSlot, int fAdvance, int iDirection );
 	WEAPON* GetNextActivePos( int iSlot, int iSlotPos );
@@ -117,12 +117,12 @@ private:
 
 public:
 
-	void Init( void )
+	void Init()
 	{
 		Reset();
 	}
 
-	void Reset( void )
+	void Reset()
 	{
 		memset( rgAmmoHistory, 0, sizeof rgAmmoHistory );
 	}
@@ -133,7 +133,7 @@ public:
 	void AddToHistory( int iType, int iId, int iCount = 0 );
 	void AddToHistory( int iType, const char *szName, int iCount = 0 );
 
-	void CheckClearHistory( void );
+	void CheckClearHistory();
 	int DrawAmmoHistory( float flTime );
 };
 

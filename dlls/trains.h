@@ -37,12 +37,12 @@
 class CPathTrack : public CPointEntity
 {
 public:
-	void		Spawn( void );
-	void		Activate( void );
+	void		Spawn();
+	void		Activate();
 	void		KeyValue( KeyValueData* pkvd);
 	
 	void		SetPrevious( CPathTrack *pprevious );
-	void		Link( void );
+	void		Link();
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 	CPathTrack	*ValidPath( CPathTrack *ppath, int testFlag );		// Returns ppath if enabled, NULL otherwise
@@ -53,15 +53,15 @@ public:
 	CPathTrack	*LookAhead( Vector *origin, float dist, int move );
 	CPathTrack	*Nearest( Vector origin );
 
-	CPathTrack	*GetNext( void );
-	CPathTrack	*GetPrevious( void );
+	CPathTrack	*GetNext();
+	CPathTrack	*GetPrevious();
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 #if PATH_SPARKLE_DEBUG
-	void EXPORT Sparkle(void);
+	void EXPORT Sparkle();
 #endif
 
 	float		m_length;
@@ -75,17 +75,17 @@ public:
 class CFuncTrackTrain : public CBaseEntity
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 
 	void Blocked( CBaseEntity *pOther );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void KeyValue( KeyValueData* pkvd );
 
-	void EXPORT Next( void );
-	void EXPORT Find( void );
-	void EXPORT NearestPath( void );
-	void EXPORT DeadEnd( void );
+	void EXPORT Next();
+	void EXPORT Find();
+	void EXPORT NearestPath();
+	void EXPORT DeadEnd();
 
 	void		NextThink( float thinkTime, BOOL alwaysThink );
 
@@ -93,8 +93,8 @@ public:
 	void SetControls( entvars_t *pevControls );
 	BOOL OnControls( entvars_t *pev );
 
-	void StopSound ( void );
-	void UpdateSound ( void );
+	void StopSound ();
+	void UpdateSound ();
 	
 	static CFuncTrackTrain *Instance( edict_t *pent );
 
@@ -102,9 +102,9 @@ public:
 	virtual int		Restore( CRestore &restore );
 	
 	static	TYPEDESCRIPTION m_SaveData[];
-	virtual int	ObjectCaps( void ) { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
+	virtual int	ObjectCaps() { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
 
-	virtual void	OverrideReset( void );
+	virtual void	OverrideReset();
 
 	CPathTrack	*m_ppath;
 	float		m_length;

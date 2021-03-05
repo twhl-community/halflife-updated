@@ -19,10 +19,10 @@
 class CItem : public CBaseEntity
 {
 public:
-	void	Spawn( void );
-	CBaseEntity*	Respawn( void );
+	void	Spawn();
+	CBaseEntity*	Respawn();
 	void	EXPORT ItemTouch( CBaseEntity *pOther );
-	void	EXPORT Materialize( void );
+	void	EXPORT Materialize();
 	virtual BOOL MyTouch( CBasePlayer *pPlayer ) { return FALSE; };
 };
 

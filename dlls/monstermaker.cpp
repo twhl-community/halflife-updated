@@ -34,14 +34,14 @@
 class CMonsterMaker : public CBaseMonster
 {
 public:
-	void Spawn( void );
-	void Precache( void );
+	void Spawn();
+	void Precache();
 	void KeyValue( KeyValueData* pkvd);
 	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void EXPORT CyclicUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT MakerThink ( void );
+	void EXPORT MakerThink ();
 	void DeathNotice ( entvars_t *pevChild );// monster maker children use this to tell the monster maker that they have died.
-	void MakeMonster( void );
+	void MakeMonster();
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
@@ -148,7 +148,7 @@ void CMonsterMaker :: Spawn( )
 	m_flGround = 0;
 }
 
-void CMonsterMaker :: Precache( void )
+void CMonsterMaker :: Precache()
 {
 	CBaseMonster::Precache();
 
@@ -158,7 +158,7 @@ void CMonsterMaker :: Precache( void )
 //=========================================================
 // MakeMonster-  this is the code that drops the monster
 //=========================================================
-void CMonsterMaker::MakeMonster( void )
+void CMonsterMaker::MakeMonster()
 {
 	edict_t	*pent;
 	entvars_t		*pevCreate;
@@ -268,7 +268,7 @@ void CMonsterMaker :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller,
 //=========================================================
 // MakerThink - creates a new monster every so often
 //=========================================================
-void CMonsterMaker :: MakerThink ( void )
+void CMonsterMaker :: MakerThink ()
 {
 	pev->nextthink = gpGlobals->time + m_flDelay;
 

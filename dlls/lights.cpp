@@ -30,7 +30,7 @@ class CLight : public CPointEntity
 {
 public:
 	virtual void	KeyValue( KeyValueData* pkvd ); 
-	virtual void	Spawn( void );
+	virtual void	Spawn();
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
 	virtual int		Save( CSave &save );
@@ -86,7 +86,7 @@ Default style is 0
 If targeted, it will toggle between on or off.
 */
 
-void CLight :: Spawn( void )
+void CLight :: Spawn()
 {
 	if (FStringNull(pev->targetname))
 	{       // inert light
@@ -140,7 +140,7 @@ class CEnvLight : public CLight
 {
 public:
 	void	KeyValue( KeyValueData* pkvd ); 
-	void	Spawn( void );
+	void	Spawn();
 };
 
 LINK_ENTITY_TO_CLASS( light_environment, CEnvLight );
@@ -183,7 +183,7 @@ void CEnvLight::KeyValue( KeyValueData* pkvd )
 }
 
 
-void CEnvLight :: Spawn( void )
+void CEnvLight :: Spawn()
 {
 	char szVector[64];
 	UTIL_MakeAimVectors( pev->angles );

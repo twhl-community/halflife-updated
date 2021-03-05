@@ -67,7 +67,7 @@ float *GetClientColor( int clientIndex )
 	return NULL;
 }
 
-int CHudDeathNotice :: Init( void )
+int CHudDeathNotice :: Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -79,13 +79,13 @@ int CHudDeathNotice :: Init( void )
 }
 
 
-void CHudDeathNotice :: InitHUDData( void )
+void CHudDeathNotice :: InitHUDData()
 {
 	memset( rgDeathNoticeList, 0, sizeof(rgDeathNoticeList) );
 }
 
 
-int CHudDeathNotice :: VidInit( void )
+int CHudDeathNotice :: VidInit()
 {
 	m_HUD_d_skull = gHUD.GetSpriteIndex( "d_skull" );
 

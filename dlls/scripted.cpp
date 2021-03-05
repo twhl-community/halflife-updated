@@ -126,7 +126,7 @@ LINK_ENTITY_TO_CLASS( scripted_sequence, CCineMonster );
 LINK_ENTITY_TO_CLASS( aiscripted_sequence, CCineAI );
 
 
-void CCineMonster :: Spawn( void )
+void CCineMonster :: Spawn()
 {
 	// pev->solid = SOLID_TRIGGER;
 	// UTIL_SetSize(pev, Vector(-8, -8, -8), Vector(8, 8, 8));
@@ -158,7 +158,7 @@ void CCineMonster :: Spawn( void )
 // FCanOverrideState - returns FALSE, scripted sequences 
 // cannot possess entities regardless of state.
 //=========================================================
-BOOL CCineMonster :: FCanOverrideState( void )
+BOOL CCineMonster :: FCanOverrideState()
 {
 	if ( pev->spawnflags & SF_SCRIPT_OVERRIDESTATE )
 		return TRUE;
@@ -169,7 +169,7 @@ BOOL CCineMonster :: FCanOverrideState( void )
 // FCanOverrideState - returns true because scripted AI can
 // possess entities regardless of their state.
 //=========================================================
-BOOL CCineAI :: FCanOverrideState( void )
+BOOL CCineAI :: FCanOverrideState()
 {
 	return TRUE;
 }
@@ -251,7 +251,7 @@ void CCineMonster :: Touch( CBaseEntity *pOther )
 //
 // ********** Cinematic DIE **********
 //
-void CCineMonster :: Die( void )
+void CCineMonster :: Die()
 {
 	SetThink( &CCineMonster::SUB_Remove );
 }
@@ -259,7 +259,7 @@ void CCineMonster :: Die( void )
 //
 // ********** Cinematic PAIN **********
 //
-void CCineMonster :: Pain( void )
+void CCineMonster :: Pain()
 {
 
 }
@@ -269,7 +269,7 @@ void CCineMonster :: Pain( void )
 //
 
 // find a viable entity
-int CCineMonster :: FindEntity( void )
+int CCineMonster :: FindEntity()
 {
 	edict_t *pentTarget;
 
@@ -318,7 +318,7 @@ int CCineMonster :: FindEntity( void )
 }
 
 // make the entity enter a scripted sequence
-void CCineMonster :: PossessEntity( void )
+void CCineMonster :: PossessEntity()
 {
 	CBaseEntity		*pEntity = m_hTargetEnt;
 	CBaseMonster	*pTarget = NULL;
@@ -391,7 +391,7 @@ void CCineMonster :: PossessEntity( void )
 
 // make the entity carry out the scripted sequence instructions, but without 
 // destroying the monster's state.
-void CCineAI :: PossessEntity( void )
+void CCineAI :: PossessEntity()
 {
 	Schedule_t *pNewSchedule;
 
@@ -473,7 +473,7 @@ void CCineAI :: PossessEntity( void )
 	}
 }
 
-void CCineMonster :: CineThink( void )
+void CCineMonster :: CineThink()
 {
 	if (FindEntity())
 	{
@@ -651,7 +651,7 @@ void CCineMonster::AllowInterrupt( BOOL fAllow )
 }
 
 
-BOOL CCineMonster::CanInterrupt( void )
+BOOL CCineMonster::CanInterrupt()
 {
 	if ( !m_interruptable )
 		return FALSE;
@@ -665,7 +665,7 @@ BOOL CCineMonster::CanInterrupt( void )
 }
 
 
-int	CCineMonster::IgnoreConditions( void )
+int	CCineMonster::IgnoreConditions()
 {
 	if ( CanInterrupt() )
 		return 0;
@@ -701,7 +701,7 @@ void ScriptEntityCancel( edict_t *pentCine )
 
 
 // find all the cinematic entities with my targetname and stop them from playing
-void CCineMonster :: CancelScript( void )
+void CCineMonster :: CancelScript()
 {
 	ALERT( at_aiconsole, "Cancelling script: %s\n", STRING(m_iszPlay) );
 	
@@ -749,7 +749,7 @@ void CCineMonster :: DelayStart( int state )
 
 
 // Find an entity that I'm interested in and precache the sounds he'll need in the sequence.
-void CCineMonster :: Activate( void )
+void CCineMonster :: Activate()
 {
 	edict_t			*pentTarget;
 	CBaseMonster	*pTarget;
@@ -922,19 +922,19 @@ BOOL CBaseMonster :: CineCleanup( )
 class CScriptedSentence : public CBaseToggle
 {
 public:
-	void Spawn( void );
+	void Spawn();
 	void KeyValue( KeyValueData *pkvd );
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT FindThink( void );
-	void EXPORT DelayThink( void );
-	int	 ObjectCaps( void ) { return (CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	void EXPORT FindThink();
+	void EXPORT DelayThink();
+	int	 ObjectCaps() { return (CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	CBaseMonster *FindEntity( void );
+	CBaseMonster *FindEntity();
 	BOOL AcceptableSpeaker( CBaseMonster *pMonster );
 	BOOL StartSentence( CBaseMonster *pTarget );
 
@@ -1031,7 +1031,7 @@ void CScriptedSentence :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 }
 
 
-void CScriptedSentence :: Spawn( void )
+void CScriptedSentence :: Spawn()
 {
 	pev->solid = SOLID_NOT;
 	
@@ -1070,7 +1070,7 @@ void CScriptedSentence :: Spawn( void )
 }
 
 
-void CScriptedSentence :: FindThink( void )
+void CScriptedSentence :: FindThink()
 {
 	CBaseMonster *pMonster = FindEntity();
 	if ( pMonster )
@@ -1091,7 +1091,7 @@ void CScriptedSentence :: FindThink( void )
 }
 
 
-void CScriptedSentence :: DelayThink( void )
+void CScriptedSentence :: DelayThink()
 {
 	m_active = TRUE;
 	if ( !pev->targetname )
@@ -1121,7 +1121,7 @@ BOOL CScriptedSentence :: AcceptableSpeaker( CBaseMonster *pMonster )
 }
 
 
-CBaseMonster *CScriptedSentence :: FindEntity( void )
+CBaseMonster *CScriptedSentence :: FindEntity()
 {
 	edict_t *pentTarget;
 	CBaseMonster *pMonster;
@@ -1204,10 +1204,10 @@ BOOL CScriptedSentence :: StartSentence( CBaseMonster *pTarget )
 class CFurniture : public CBaseMonster
 {
 public:
-	void Spawn ( void );
-	void Die( void );
-	int	 Classify ( void );
-	virtual int	ObjectCaps( void ) { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	void Spawn ();
+	void Die();
+	int	 Classify ();
+	virtual int	ObjectCaps() { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 };
 
 
@@ -1217,7 +1217,7 @@ LINK_ENTITY_TO_CLASS( monster_furniture, CFurniture );
 //=========================================================
 // Furniture is killed
 //=========================================================
-void CFurniture :: Die ( void )
+void CFurniture :: Die ()
 {
 	SetThink ( &CFurniture::SUB_Remove );
 	pev->nextthink = gpGlobals->time;
@@ -1252,7 +1252,7 @@ void CFurniture :: Spawn( )
 //=========================================================
 // ID's Furniture as neutral (noone will attack it)
 //=========================================================
-int CFurniture::Classify ( void )
+int CFurniture::Classify ()
 {
 	return	CLASS_NONE;
 }
