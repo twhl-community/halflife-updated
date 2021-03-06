@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1401
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dmc_cdll", "dmc_cdll.vcxproj", "{50BD4CD5-4043-4457-BA51-7CF8FFC43767}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dmcdll", "dmcdll.vcxproj", "{6C5EBEF4-40AE-4167-B3D5-26F0AB47E382}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50BD4CD5-4043-4457-BA51-7CF8FFC43767}.Debug|Win32.ActiveCfg = Debug|Win32
+		{50BD4CD5-4043-4457-BA51-7CF8FFC43767}.Debug|Win32.Build.0 = Debug|Win32
+		{50BD4CD5-4043-4457-BA51-7CF8FFC43767}.Release|Win32.ActiveCfg = Release|Win32
+		{50BD4CD5-4043-4457-BA51-7CF8FFC43767}.Release|Win32.Build.0 = Release|Win32
+		{6C5EBEF4-40AE-4167-B3D5-26F0AB47E382}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6C5EBEF4-40AE-4167-B3D5-26F0AB47E382}.Debug|Win32.Build.0 = Debug|Win32
+		{6C5EBEF4-40AE-4167-B3D5-26F0AB47E382}.Release|Win32.ActiveCfg = Release|Win32
+		{6C5EBEF4-40AE-4167-B3D5-26F0AB47E382}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56617AD4-5D67-4089-9FC4-44FD7EDA46E7}
+	EndGlobalSection
+EndGlobal
