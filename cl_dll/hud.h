@@ -73,8 +73,8 @@ public:
 	virtual int Init() {return 0;}
 	virtual int VidInit() {return 0;}
 	virtual int Draw(float flTime) {return 0;}
-	virtual void Think() {return;}
-	virtual void Reset() {return;}
+	virtual void Think() {}
+	virtual void Reset() {}
 	virtual void InitHUDData() {}		// called every time a server is connected to
 
 };
