@@ -136,7 +136,11 @@ int CHud :: MsgFunc_Concuss( const char *pszName, int iSize, void *pbuf )
 	BEGIN_READ( pbuf, iSize );
 	m_iConcussionEffect = READ_BYTE();
 	if (m_iConcussionEffect)
-		this->m_StatusIcons.EnableIcon("dmg_concuss",255,160,0);
+	{
+		int r, g, b;
+		UnpackRGB(r, g, b, RGB_YELLOWISH);
+		this->m_StatusIcons.EnableIcon("dmg_concuss", r, g, b);
+	}
 	else
 		this->m_StatusIcons.DisableIcon("dmg_concuss");
 	return 1;
