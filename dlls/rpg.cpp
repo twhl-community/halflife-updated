@@ -531,7 +531,7 @@ void CRpg::WeaponIdle()
 			else
 				iAnim = RPG_FIDGET;
 
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3.0;
+			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 6.1;
 		}
 
 		ResetEmptySound();
