@@ -49,6 +49,7 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
+#define NOMINMAX
 #include "winsani_in.h"
 #include <Windows.h>
 #include "winsani_out.h"
