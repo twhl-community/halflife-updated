@@ -20,6 +20,8 @@
 
 */
 
+#include <limits>
+
 #include "extdll.h"
 #include "util.h"
 
@@ -815,7 +817,7 @@ void CBasePlayer::Killed( entvars_t *pevAttacker, int iGib )
 	// send "health" update message to zero
 	m_iClientHealth = 0;
 	MESSAGE_BEGIN( MSG_ONE, gmsgHealth, NULL, pev );
-		WRITE_BYTE( m_iClientHealth );
+		WRITE_SHORT( m_iClientHealth );
 	MESSAGE_END();
 
 	// Tell Ammo Hud that the player is dead
@@ -2768,7 +2770,7 @@ ReturnSpot:
 void CBasePlayer::Spawn()
 {
 	pev->classname		= MAKE_STRING("player");
-	pev->health			= 100;
+	pev->health			= 1000;
 	pev->armorvalue		= 0;
 	pev->takedamage		= DAMAGE_AIM;
 	pev->solid			= SOLID_SLIDEBOX;
@@ -3931,14 +3933,15 @@ void CBasePlayer :: UpdateClientData()
 
 	if (pev->health != m_iClientHealth)
 	{
+		//TODO: clean up this macro
 #define clamp( val, min, max ) ( ((val) > (max)) ? (max) : ( ((val) < (min)) ? (min) : (val) ) )
-		int iHealth = clamp( pev->health, 0, 255 );  // make sure that no negative health values are sent
+		int iHealth = clamp( pev->health, 0, std::numeric_limits<short>::max() );  // make sure that no negative health values are sent
 		if ( pev->health > 0.0f && pev->health <= 1.0f )
 			iHealth = 1;
 
 		// send "health" update message
 		MESSAGE_BEGIN( MSG_ONE, gmsgHealth, NULL, pev );
-			WRITE_BYTE( iHealth );
+		WRITE_SHORT( iHealth );
 		MESSAGE_END();
 
 		m_iClientHealth = pev->health;
