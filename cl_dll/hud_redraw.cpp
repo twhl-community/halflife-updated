@@ -347,7 +347,16 @@ int CHud::GetHudNumberWidth(int number, int width, int flags)
 {
 	const int digitWidth = GetSpriteRect(m_HUD_number_0).right - GetSpriteRect(m_HUD_number_0).left;
 
-	int totalDigits = number > 0 ? static_cast<int>(log10(number)) + 1 : 1;
+	int totalDigits = 0;
+
+	if (number > 0)
+	{
+		totalDigits = static_cast<int>(log10(number)) + 1;
+	}
+	else if (flags & DHN_DRAWZERO)
+	{
+		totalDigits = 1;
+	}
 
 	totalDigits = V_max(totalDigits, width);
 
