@@ -134,7 +134,7 @@ int CHudBattery::Draw(float flTime)
 	int iOffset = (m_prc1->bottom - m_prc1->top)/6;
 
 	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
-	x = static_cast<int>(ScreenWidth/4);
+	x = ScreenWidth/4;
 
 	// make sure we have the right sprite handles
 	if ( !m_hSprite1 )
