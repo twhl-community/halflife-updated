@@ -100,6 +100,32 @@ void LoadVModel ( const char *szViewModel, CBasePlayer *m_pPlayer )
 	gEngfuncs.CL_LoadModel( szViewModel, &m_pPlayer->pev->viewmodel );
 }
 
+//TODO: this is duplicated from weapons.cpp
+int giAmmoIndex = 0;
+
+// Precaches the ammo and queues the ammo info for sending to clients
+void AddAmmoNameToAmmoRegistry(const char* szAmmoname)
+{
+	// make sure it's not already in the registry
+	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		if (!CBasePlayerItem::AmmoInfoArray[i].pszName)
+			continue;
+
+		if (stricmp(CBasePlayerItem::AmmoInfoArray[i].pszName, szAmmoname) == 0)
+			return; // ammo already in registry, just quite
+	}
+
+
+	giAmmoIndex++;
+	ASSERT(giAmmoIndex < MAX_AMMO_SLOTS);
+	if (giAmmoIndex >= MAX_AMMO_SLOTS)
+		giAmmoIndex = 0;
+
+	CBasePlayerItem::AmmoInfoArray[giAmmoIndex].pszName = szAmmoname;
+	CBasePlayerItem::AmmoInfoArray[giAmmoIndex].iId = giAmmoIndex;   // yes, this info is redundant
+}
+
 /*
 =====================
 HUD_PrepEntity
@@ -119,10 +145,24 @@ void HUD_PrepEntity( CBaseEntity *pEntity, CBasePlayer *pWeaponOwner )
 	if ( pWeaponOwner )
 	{
 		ItemInfo info;
+
+		memset(&info, 0, sizeof(info));
 		
 		((CBasePlayerWeapon *)pEntity)->m_pPlayer = pWeaponOwner;
 		
 		((CBasePlayerWeapon *)pEntity)->GetItemInfo( &info );
+
+		CBasePlayerItem::ItemInfoArray[info.iId] = info;
+
+		if (info.pszAmmo1 && *info.pszAmmo1)
+		{
+			AddAmmoNameToAmmoRegistry(info.pszAmmo1);
+		}
+
+		if (info.pszAmmo2 && *info.pszAmmo2)
+		{
+			AddAmmoNameToAmmoRegistry(info.pszAmmo2);
+		}
 
 		g_pWpns[ info.iId ] = (CBasePlayerWeapon *)pEntity;
 	}
@@ -328,13 +368,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 	{
 #if 1
 		// complete the reload. 
-		ItemInfo ii;
-
-		memset(&ii, 0, sizeof(ii));
-
-		GetItemInfo(&ii);
-
-		int j = V_min(ii.iMaxClip - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
+		int j = V_min(iMaxClip() - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
 
 		// Add them to the clip
 		m_iClip += j;
