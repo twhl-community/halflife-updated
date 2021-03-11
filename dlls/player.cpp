@@ -3995,6 +3995,11 @@ void CBasePlayer :: UpdateClientData()
 
 	if (m_bRestored)
 	{
+		//Always tell client about battery state
+		MESSAGE_BEGIN(MSG_ONE, gmsgFlashBattery, NULL, pev);
+		WRITE_BYTE(m_iFlashBattery);
+		MESSAGE_END();
+
 		//Tell client the flashlight is on
 		if (FlashlightIsOn())
 		{
