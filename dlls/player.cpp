@@ -2770,7 +2770,7 @@ ReturnSpot:
 void CBasePlayer::Spawn()
 {
 	pev->classname		= MAKE_STRING("player");
-	pev->health			= 1000;
+	pev->health			= 100;
 	pev->armorvalue		= 0;
 	pev->takedamage		= DAMAGE_AIM;
 	pev->solid			= SOLID_SLIDEBOX;
