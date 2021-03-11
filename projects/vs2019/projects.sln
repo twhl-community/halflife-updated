@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hldll", "hldll.vcxproj", "{69DDADC0-97F4-419E-86EB-C91781A0D2E0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hl_cdll", "hl_cdll.vcxproj", "{DC1DD765-CFEB-47DA-A2EA-9F1E20A24272}"
+	ProjectSection(ProjectDependencies) = postProject
+		{69DDADC0-97F4-419E-86EB-C91781A0D2E0} = {69DDADC0-97F4-419E-86EB-C91781A0D2E0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
