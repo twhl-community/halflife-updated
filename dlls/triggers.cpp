@@ -2156,16 +2156,6 @@ public:
 	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	float GetMoveDeltaTime()
-	{
-		if (m_flLastMoveTime == 0)
-		{
-			m_flLastMoveTime = gpGlobals->time - gpGlobals->frametime;
-		}
-
-		return gpGlobals->time - m_flLastMoveTime;
-	}
-
 	EHANDLE m_hPlayer;
 	EHANDLE m_hTarget;
 	CBaseEntity *m_pentPath;
@@ -2389,10 +2379,8 @@ void CTriggerCamera::FollowTarget( )
 	if (dy > 180) 
 		dy = dy - 360;
 
-	const float deltaTime = GetMoveDeltaTime();
-
-	pev->avelocity.x = dx * 40 * deltaTime;
-	pev->avelocity.y = dy * 40 * deltaTime;
+	pev->avelocity.x = dx * 40 * 0.01;
+	pev->avelocity.y = dy * 40 * 0.01;
 
 
 	if (!(FBitSet (pev->spawnflags, SF_CAMERA_PLAYER_TAKECONTROL)))	
@@ -2409,7 +2397,12 @@ void CTriggerCamera::FollowTarget( )
 
 void CTriggerCamera::Move()
 {
-	const float deltaTime = GetMoveDeltaTime();
+	if (m_flLastMoveTime == 0)
+	{
+		m_flLastMoveTime = gpGlobals->time - gpGlobals->frametime;
+	}
+
+	const float deltaTime = gpGlobals->time - m_flLastMoveTime;
 
 	m_flLastMoveTime = gpGlobals->time;
 
