@@ -266,6 +266,8 @@ void DispatchBlocked( edict_t *pentBlocked, edict_t *pentOther )
 
 void DispatchSave( edict_t *pent, SAVERESTOREDATA *pSaveData )
 {
+	gpGlobals->time = pSaveData->time;
+
 	CBaseEntity *pEntity = (CBaseEntity *)GET_PRIVATE(pent);
 	
 	if ( pEntity && pSaveData )
@@ -325,6 +327,8 @@ CBaseEntity *FindGlobalEntity( string_t classname, string_t globalname )
 
 int DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity )
 {
+	gpGlobals->time = pSaveData->time;
+
 	CBaseEntity *pEntity = (CBaseEntity *)GET_PRIVATE(pent);
 
 	if ( pEntity && pSaveData )
