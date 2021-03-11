@@ -2337,6 +2337,8 @@ void CTriggerCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	pev->nextthink = gpGlobals->time;
 
 	m_moveDistance = 0;
+	//Ensure we don't get enormous delta times if we're reused
+	m_flLastMoveTime = 0;
 	Move();
 }
 
