@@ -2169,8 +2169,6 @@ public:
 	float m_acceleration;
 	float m_deceleration;
 	int	  m_state;
-	float m_flLastMoveTime;
-	
 };
 LINK_ENTITY_TO_CLASS( trigger_camera, CTriggerCamera );
 
@@ -2190,7 +2188,6 @@ TYPEDESCRIPTION	CTriggerCamera::m_SaveData[] =
 	DEFINE_FIELD( CTriggerCamera, m_acceleration, FIELD_FLOAT ),
 	DEFINE_FIELD( CTriggerCamera, m_deceleration, FIELD_FLOAT ),
 	DEFINE_FIELD( CTriggerCamera, m_state, FIELD_INTEGER ),
-	DEFINE_FIELD(CTriggerCamera, m_flLastMoveTime, FIELD_TIME),
 };
 
 IMPLEMENT_SAVERESTORE(CTriggerCamera,CBaseDelay);
@@ -2327,8 +2324,6 @@ void CTriggerCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	pev->nextthink = gpGlobals->time;
 
 	m_moveDistance = 0;
-	//Ensure we don't get enormous delta times if we're reused
-	m_flLastMoveTime = 0;
 	Move();
 }
 
@@ -2397,21 +2392,12 @@ void CTriggerCamera::FollowTarget( )
 
 void CTriggerCamera::Move()
 {
-	if (m_flLastMoveTime == 0)
-	{
-		m_flLastMoveTime = gpGlobals->time - gpGlobals->frametime;
-	}
-
-	const float deltaTime = gpGlobals->time - m_flLastMoveTime;
-
-	m_flLastMoveTime = gpGlobals->time;
-
 	// Not moving on a path, return
 	if (!m_pentPath)
 		return;
 
 	// Subtract movement from the previous frame
-	m_moveDistance -= pev->speed * deltaTime;
+	m_moveDistance -= pev->speed * gpGlobals->frametime;
 
 	// Have we moved enough to reach the target?
 	if ( m_moveDistance <= 0 )
@@ -2444,10 +2430,10 @@ void CTriggerCamera::Move()
 	}
 
 	if ( m_flStopTime > gpGlobals->time )
-		pev->speed = UTIL_Approach( 0, pev->speed, m_deceleration * deltaTime);
+		pev->speed = UTIL_Approach( 0, pev->speed, m_deceleration * gpGlobals->frametime);
 	else
-		pev->speed = UTIL_Approach( m_targetSpeed, pev->speed, m_acceleration * deltaTime);
+		pev->speed = UTIL_Approach( m_targetSpeed, pev->speed, m_acceleration * gpGlobals->frametime);
 
-	float fraction = 2 * deltaTime;
+	float fraction = 2 * gpGlobals->frametime;
 	pev->velocity = ((pev->movedir * pev->speed) * fraction) + (pev->velocity * (1-fraction));
 }
