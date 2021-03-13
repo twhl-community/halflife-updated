@@ -79,6 +79,7 @@ float		v_cameraFocusAngle	= 35.0f;
 int			v_cameraMode = CAM_MODE_FOCUS;
 qboolean	v_resetCamera = 1;
 
+vec3_t v_client_aimangles;
 vec3_t ev_punchangle;
 
 cvar_t	*scr_ofsx;
@@ -797,6 +798,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 
 	// Store off v_angles before munging for third person
 	v_angles = pparams->viewangles;
+	v_client_aimangles = pparams->cl_viewangles;
 	v_lastAngles = pparams->viewangles;
 //	v_cl_angles = pparams->cl_viewangles;	// keep old user mouse angles !
 	if ( CL_IsThirdPerson() )

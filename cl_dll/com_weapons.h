@@ -38,6 +38,7 @@ extern cvar_t *cl_lw;
 
 extern int g_runfuncs;
 extern vec3_t v_angles;
+extern vec3_t v_client_aimangles;
 extern float g_lastFOV;
 extern struct local_state_s *g_finalstate;
 
