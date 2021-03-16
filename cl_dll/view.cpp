@@ -1280,7 +1280,7 @@ void V_GetChasePos(int target, float * cl_angles, float * origin, float * angles
 
 		VectorCopy ( ent->origin, origin);
 		
-		origin[2]+= 28; // DEFAULT_VIEWHEIGHT - some offset
+		VectorAdd(origin, VEC_VIEW, origin); // some offset
 
 		V_GetChaseOrigin( angles, origin, cl_chasedist->value, origin );
 	}
@@ -1318,14 +1318,16 @@ void V_GetInEyePos(int target, float * origin, float * angles )
 	if ( ent->curstate.solid == SOLID_NOT )
 	{
 		angles[ROLL] = 80;	// dead view angle
-		origin[2]+= -8 ; // PM_DEAD_VIEWHEIGHT
+		VectorAdd(origin, VEC_DEAD_VIEW, origin);
 	}
-	else if (ent->curstate.usehull == 1 )
-		origin[2]+= 12; // VEC_DUCK_VIEW;
+	else if (ent->curstate.usehull == 1)
+	{
+		VectorAdd(origin, VEC_DUCK_VIEW, origin);
+	}
 	else
 		// exacty eye position can't be caluculated since it depends on
 		// client values like cl_bobcycle, this offset matches the default values
-		origin[2]+= 28; // DEFAULT_VIEWHEIGHT
+		VectorAdd(origin, VEC_VIEW, origin);
 }
 
 void V_GetMapFreePosition( float * cl_angles, float * origin, float * angles )

@@ -17,6 +17,7 @@
 
 #include <assert.h>
 #include "mathlib.h"
+#include "cdll_dll.h"
 #include "const.h"
 #include "usercmd.h"
 #include "pm_defs.h"
@@ -70,16 +71,9 @@ typedef struct hull_s
 
 // Ducking time
 #define TIME_TO_DUCK		0.4
-#define VEC_DUCK_HULL_MIN	-18
-#define VEC_DUCK_HULL_MAX	18
-#define VEC_DUCK_VIEW		12
-#define PM_DEAD_VIEWHEIGHT	-8
 #define MAX_CLIMB_SPEED		200
 #define STUCK_MOVEUP		1
 #define STUCK_MOVEDOWN		-1
-#define VEC_HULL_MIN		-36
-#define VEC_HULL_MAX		36
-#define VEC_VIEW			28
 #define	STOP_EPSILON		0.1
 
 #define CTEXTURESMAX		512			// max number of textures loaded
@@ -1943,7 +1937,7 @@ void PM_UnDuck()
 
 		pmove->flags &= ~FL_DUCKING;
 		pmove->bInDuck  = false;
-		pmove->view_ofs[2] = VEC_VIEW;
+		pmove->view_ofs = VEC_VIEW;
 		pmove->flDuckTime = 0;
 		
 		VectorCopy( newOrigin, pmove->origin );
@@ -2012,7 +2006,7 @@ void PM_Duck()
 					 ( pmove->onground == -1 ) )
 				{
 					pmove->usehull = 1;
-					pmove->view_ofs[2] = VEC_DUCK_VIEW;
+					pmove->view_ofs = VEC_DUCK_VIEW;
 					pmove->flags |= FL_DUCKING;
 					pmove->bInDuck = false;
 
@@ -2032,11 +2026,11 @@ void PM_Duck()
 				}
 				else
 				{
-					float fMore = (VEC_DUCK_HULL_MIN - VEC_HULL_MIN);
+					float fMore = (VEC_DUCK_HULL_MIN[2] - VEC_HULL_MIN[2]);
 
 					// Calc parametric time
 					duckFraction = PM_SplineFraction( time, (1.0/TIME_TO_DUCK) );
-					pmove->view_ofs[2] = ((VEC_DUCK_VIEW - fMore ) * duckFraction) + (VEC_VIEW * (1-duckFraction));
+					pmove->view_ofs[2] = ((VEC_DUCK_VIEW[2] - fMore ) * duckFraction) + (VEC_VIEW[2] * (1-duckFraction));
 				}
 			}
 		}
@@ -2883,7 +2877,7 @@ void PM_CheckParamters()
 	// Set dead player view_offset
 	if ( pmove->dead )
 	{
-		pmove->view_ofs[2] = PM_DEAD_VIEWHEIGHT;
+		pmove->view_ofs = VEC_DEAD_VIEW;
 	}
 
 	// Adjust client view angles to match values used on server.

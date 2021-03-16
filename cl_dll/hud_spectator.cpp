@@ -469,15 +469,15 @@ bool CHudSpectator::GetDirectorCamera(Vector&position, Vector&angle)
 			{			
 				if ( ent->curstate.solid == SOLID_NOT )
 				{
-					vt[2]+= -8 ; // PM_DEAD_VIEWHEIGHT
+					vt = vt + VEC_DEAD_VIEW;
 				}
 				else if (ent->curstate.usehull == 1 )
 				{
-					vt[2]+= 12; // VEC_DUCK_VIEW;
+					vt = vt + VEC_DUCK_VIEW;
 				}
 				else
 				{
-					vt[2]+= 28; // DEFAULT_VIEWHEIGHT
+					vt = vt + VEC_VIEW;
 				}
 			}
 			

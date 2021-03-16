@@ -1276,9 +1276,6 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 	return 1;
 }
 
-// defaults for clientinfo messages
-#define	DEFAULT_VIEWHEIGHT	28
-
 /*
 ===================
 CreateBaseline

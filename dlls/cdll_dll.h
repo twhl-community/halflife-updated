@@ -55,4 +55,6 @@ constexpr Vector VEC_DUCK_HULL_MIN(-16, -16, -18);
 constexpr Vector VEC_DUCK_HULL_MAX(16, 16, 18);
 constexpr Vector VEC_DUCK_VIEW(0, 0, 12);
 
+constexpr Vector VEC_DEAD_VIEW(0, 0, -8);
+
 #endif
