@@ -14,6 +14,8 @@
 ****/
 // mathlib.h
 
+#pragma once
+
 #include <cmath>
 
 typedef float vec_t;
