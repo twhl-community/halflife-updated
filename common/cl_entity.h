@@ -39,8 +39,8 @@ typedef struct
 	float					prevanimtime;  
 	float					sequencetime;
 	byte					prevseqblending[2];
-	vec3_t					prevorigin;
-	vec3_t					prevangles;
+	Vector					prevorigin;
+	Vector					prevangles;
 
 	int						prevsequence;
 	float					prevframe;
@@ -54,8 +54,8 @@ typedef struct
 	// Time stamp for this movement
 	float					animtime;
 
-	vec3_t					origin;
-	vec3_t					angles;
+	Vector					origin;
+	Vector					angles;
 } position_history_t;
 
 typedef struct cl_entity_s cl_entity_t;
@@ -94,11 +94,11 @@ struct cl_entity_s
 	float					lastmove;
 
 	// Actual render position and angles
-	vec3_t					origin;
-	vec3_t					angles;
+	Vector					origin;
+	Vector					angles;
 
 	// Attachment points
-	vec3_t					attachment[4];
+	Vector					attachment[4];
 
 	// Other entity local information
 	int						trivial_accept;

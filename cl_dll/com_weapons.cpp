@@ -129,8 +129,8 @@ Directly queue up an event on the client
 void HUD_PlaybackEvent( int flags, const edict_t *pInvoker, unsigned short eventindex, float delay,
 	float *origin, float *angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 )
 {
-	vec3_t org;
-	vec3_t ang;
+	Vector org;
+	Vector ang;
 
 	if ( !g_runfuncs || !g_finalstate )
 	     return;

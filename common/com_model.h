@@ -72,7 +72,7 @@ typedef struct
 // plane_t structure
 typedef struct mplane_s
 {
-	vec3_t	normal;			// surface normal
+	Vector	normal;			// surface normal
 	float	dist;			// closest appoach to origin
 	byte	type;			// for texture axis selection and fast side tests
 	byte	signbits;		// signx + signy<<1 + signz<<1
@@ -81,7 +81,7 @@ typedef struct mplane_s
 
 typedef struct
 {
-	vec3_t		position;
+	Vector		position;
 } mvertex_t;
 
 typedef struct
@@ -210,8 +210,8 @@ typedef struct hull_s
 	mplane_t	*planes;
 	int			firstclipnode;
 	int			lastclipnode;
-	vec3_t		clip_mins;
-	vec3_t		clip_maxs;
+	Vector		clip_mins;
+	Vector		clip_maxs;
 } hull_t;
 
 #if !defined( CACHE_USER ) && !defined( QUAKEDEF_H )
@@ -236,7 +236,7 @@ typedef struct model_s
 //
 // volume occupied by the model
 //		
-	vec3_t		mins, maxs;
+	Vector		mins, maxs;
 	float		radius;
 
 //
@@ -301,7 +301,7 @@ typedef struct alight_s
 {
 	int			ambientlight;	// clip at 128
 	int			shadelight;		// clip at 192 - ambientlight
-	vec3_t		color;
+	Vector		color;
 	float		*plightvec;
 } alight_t;
 
@@ -343,7 +343,7 @@ typedef struct player_info_s
 	int		gaitsequence;
 	float	gaitframe;
 	float	gaityaw;
-	vec3_t	prevgaitorigin;
+	Vector	prevgaitorigin;
 
 	customization_t customdata;
 } player_info_t;

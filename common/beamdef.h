@@ -37,9 +37,9 @@ struct beam_s
 	BEAM		*next;
 	int			type;
 	int			flags;
-	vec3_t		source;
-	vec3_t		target;
-	vec3_t		delta;
+	Vector		source;
+	Vector		target;
+	Vector		delta;
 	float		t;		// 0 .. 1 over lifetime of beam
 	float		freq;
 	float		die;

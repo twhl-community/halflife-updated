@@ -54,10 +54,10 @@ typedef struct SCREENINFO_s
 typedef struct client_data_s
 {
 	// fields that cannot be modified  (ie. have no effect if changed)
-	vec3_t origin;
+	Vector origin;
 
 	// fields that can be changed by the cldll
-	vec3_t viewangles;
+	Vector viewangles;
 	int		iWeaponBits;
 //	int		iAccessoryBits;
 	float	fov;	// field of view

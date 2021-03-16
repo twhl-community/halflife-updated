@@ -44,7 +44,7 @@ extern void Sys_Error( const char *error_string );
 extern void SetupVisibility( edict_t *pViewEntity, edict_t *pClient, unsigned char **pvs, unsigned char **pas );
 extern void	UpdateClientData ( const struct edict_s *ent, int sendweapons, struct clientdata_s *cd );
 extern int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *host, int hostflags, int player, unsigned char *pSet );
-extern void CreateBaseline( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, vec3_t player_mins, vec3_t player_maxs );
+extern void CreateBaseline( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, Vector player_mins, Vector player_maxs );
 extern void RegisterEncoders();
 
 extern int GetWeaponData( struct edict_s *player, struct weapon_data_s *info );

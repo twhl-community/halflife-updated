@@ -74,7 +74,7 @@ const char *g_stage3[2] =
 };
 const char *g_stage4 = "  Composite Score:  %i";
 
-extern vec3_t v_origin;
+extern Vector v_origin;
 
 static int g_isPowerPlay = 0;
 static int g_currentstage = 0;
@@ -589,10 +589,10 @@ int Bench_GetDotAdded()
 	return g_renderedBenchmarkDot;
 }
 
-void Bench_SpotPosition( vec3_t dot, vec3_t target )
+void Bench_SpotPosition(Vector dot, Vector target )
 {
 	// Compute new score
-	vec3_t delta;
+	Vector delta;
 
 	VectorSubtract( target, dot, delta );
 
@@ -613,11 +613,11 @@ typedef struct model_s
 //
 // volume occupied by the model
 //		
-	vec3_t		mins, maxs;
+	Vector		mins, maxs;
 } model_t;
 
-static vec3_t g_dotorg;
-vec3_t g_aimorg;
+static Vector g_dotorg;
+Vector g_aimorg;
 float g_fZAdjust = 0.0;
 
 void Bench_CheckEntity( int type, struct cl_entity_s *ent, const char *modelname )
@@ -625,7 +625,7 @@ void Bench_CheckEntity( int type, struct cl_entity_s *ent, const char *modelname
 	if ( Bench_InStage( THIRD_STAGE ) && !stricmp( modelname, "*3" ) )
 	{
 		model_t *pmod;
-		vec3_t v;
+		Vector v;
 		pmod = (model_t *)( ent->model );
 
 		VectorAdd( pmod->mins, pmod->maxs, v );
@@ -664,8 +664,8 @@ void Bench_CheckEntity( int type, struct cl_entity_s *ent, const char *modelname
 	}
 }
 
-
-void NormalizeVector( vec3_t v )
+//TODO: since vec3_t was aliased to Vector this does nothing (vec3_t decays to pointer, Vector does not)
+void NormalizeVector(Vector v )
 {
 	int i;
 	for ( i = 0; i < 3; i++ )
@@ -683,16 +683,16 @@ void NormalizeVector( vec3_t v )
 }
 
 float g_flStartTime;
-int HUD_SetupBenchObjects( cl_entity_t *bench, int plindex, vec3_t origin )
+int HUD_SetupBenchObjects( cl_entity_t *bench, int plindex, Vector origin )
 {
 	int i, j;
-	vec3_t ang;
+	Vector ang;
 	float offset;
 	struct model_s *mdl;
 	int index;
-	vec3_t forward, right, up;
-	vec3_t farpoint;
-	vec3_t centerspot;
+	Vector forward, right, up;
+	Vector farpoint;
+	Vector centerspot;
 	pmtrace_t tr;
 	
 	ang = vec3_origin;
@@ -791,13 +791,13 @@ int HUD_SetupBenchObjects( cl_entity_t *bench, int plindex, vec3_t origin )
 	return 1;
 }
 
-void HUD_CreateBenchObjects( vec3_t origin )
+void HUD_CreateBenchObjects(Vector origin )
 {
 	static cl_entity_t bench[ NUM_BENCH_OBJ ];
 	cl_entity_t *player;
-	vec3_t forward, right, up;
-	vec3_t farpoint;
-	vec3_t centerspot;
+	Vector forward, right, up;
+	Vector farpoint;
+	Vector centerspot;
 	static int first = true;
 	static int failed = false;
 	static float last_time;
@@ -887,7 +887,7 @@ void HUD_CreateBenchObjects( vec3_t origin )
 		float offset;
 		float ofs_radius = 5.0;
 
-		vec3_t ang;
+		Vector ang;
 		offset = ( float ) i / (float) ( NUM_BENCH_OBJ - 1 );
 
 		ang[ 0 ] = 0;
@@ -921,7 +921,7 @@ void HUD_CreateBenchObjects( vec3_t origin )
 		{
 			float damp;
 			float proj;
-			vec3_t traceNormal;
+			Vector traceNormal;
 			int j;
 
 			traceNormal = tr.plane.normal;
@@ -1019,7 +1019,7 @@ void Bench_AddObjects()
 }
 
 
-static vec3_t v_stochastic;
+static Vector v_stochastic;
 
 void Bench_SetViewAngles( int recalc_wander, float *viewangles, float frametime, struct usercmd_s *cmd )
 {
@@ -1027,7 +1027,7 @@ void Bench_SetViewAngles( int recalc_wander, float *viewangles, float frametime,
 		return;
 
 	int i;
-	vec3_t lookdir;
+	Vector lookdir;
 
 	// Clear stochastic offset between runs
 	if ( Bench_InStage( FIRST_STAGE ) )
@@ -1102,8 +1102,8 @@ void Bench_SetViewOrigin( float *vieworigin, float frametime )
 	float frac;
 	float offset_amt = BENCH_BALL_VIEWDRIFT;
 	float drift;
-	vec3_t ang, right;
-	vec3_t move;
+	Vector ang, right;
+	Vector move;
 
 	if ( !Bench_InStage( SECOND_STAGE ) )
 		return;

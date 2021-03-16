@@ -17,8 +17,8 @@
 #pragma once
 
 void PM_ViewEntity();
-void PM_DrawBBox(vec3_t mins, vec3_t maxs, vec3_t origin, int pcolor, float life);
-void PM_ParticleLine(vec3_t start, vec3_t end, int pcolor, float life, float vert);
+void PM_DrawBBox(Vector mins, Vector maxs, Vector origin, int pcolor, float life);
+void PM_ParticleLine(Vector start, Vector end, int pcolor, float life, float vert);
 void PM_ShowClipBox();
 
 #endif // PMOVEDBG_H

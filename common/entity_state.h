@@ -38,8 +38,8 @@ struct entity_state_s
 	int			messagenum;		
 
 	// Fields which can be transitted and reconstructed over the network stream
-	vec3_t		origin;
-	vec3_t		angles;
+	Vector		origin;
+	Vector		angles;
 
 	int			modelindex;
 	int			sequence;
@@ -64,11 +64,11 @@ struct entity_state_s
 	int			body;
 	byte		controller[4];
 	byte		blending[4];
-	vec3_t		velocity;
+	Vector		velocity;
 
 	// Send bbox down to client for use during prediction.
-	vec3_t		mins;    
-	vec3_t		maxs;
+	Vector		mins;
+	Vector		maxs;
 
 	int			aiment;
 	// If owned by a player, the index of that player ( for projectiles ).
@@ -87,7 +87,7 @@ struct entity_state_s
 	int         weaponmodel;
 	int			gaitsequence;
 	// If standing on conveyor, e.g.
-	vec3_t		basevelocity;   
+	Vector		basevelocity;
 	// Use the crouched hull, or the regular player hull.
 	int			usehull;		
 	// Latched buttons last time state updated.
@@ -102,8 +102,8 @@ struct entity_state_s
 	int			weaponanim;
 
 	// Parametric movement overrides
-	vec3_t				startpos;
-	vec3_t				endpos;
+	Vector				startpos;
+	Vector				endpos;
 	float				impacttime;
 	float				starttime;
 
@@ -116,25 +116,25 @@ struct entity_state_s
 	float		fuser2;
 	float		fuser3;
 	float		fuser4;
-	vec3_t		vuser1;
-	vec3_t		vuser2;
-	vec3_t		vuser3;
-	vec3_t		vuser4;
+	Vector		vuser1;
+	Vector		vuser2;
+	Vector		vuser3;
+	Vector		vuser4;
 };
 
 #include "pm_info.h"
 
 typedef struct clientdata_s
 {
-	vec3_t				origin;
-	vec3_t				velocity;
+	Vector				origin;
+	Vector				velocity;
 
 	int					viewmodel;
-	vec3_t				punchangle;
+	Vector				punchangle;
 	int					flags;
 	int					waterlevel;
 	int					watertype;
-	vec3_t				view_ofs;
+	Vector				view_ofs;
 	float				health;
 
 	int					bInDuck;
@@ -175,10 +175,10 @@ typedef struct clientdata_s
 	float				fuser2;
 	float				fuser3;
 	float				fuser4;
-	vec3_t				vuser1;
-	vec3_t				vuser2;
-	vec3_t				vuser3;
-	vec3_t				vuser4;
+	Vector				vuser1;
+	Vector				vuser2;
+	Vector				vuser3;
+	Vector				vuser4;
 } clientdata_t;
 
 #include "weaponinfo.h"

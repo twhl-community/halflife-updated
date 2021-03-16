@@ -28,24 +28,24 @@ public:
 	CInterpolation();
 	virtual ~CInterpolation();
 
-	void SetWaypoints(vec3_t * prev, vec3_t start, vec3_t end, vec3_t * next);
-	void SetViewAngles( vec3_t start, vec3_t end );
+	void SetWaypoints(Vector* prev, Vector start, Vector end, Vector* next);
+	void SetViewAngles(Vector start, Vector end );
 	void SetFOVs(float start, float end);
 	void SetSmoothing(bool start, bool end);
 	
 	// get interpolated point 0 =< t =< 1, 0 = start, 1 = end
-	void Interpolate(float t, vec3_t &point, vec3_t &angle, float * fov);
+	void Interpolate(float t, Vector& point, Vector& angle, float * fov);
 	
 protected:
 
-	void BezierInterpolatePoint( float t, vec3_t &point );
-	void InterpolateAngle( float t, vec3_t &angle );
+	void BezierInterpolatePoint( float t, Vector& point );
+	void InterpolateAngle( float t, Vector& angle );
 
-	vec3_t	m_StartPoint;
-	vec3_t	m_EndPoint;
-	vec3_t	m_StartAngle;
-	vec3_t	m_EndAngle;
-	vec3_t	m_Center;
+	Vector	m_StartPoint;
+	Vector	m_EndPoint;
+	Vector	m_StartAngle;
+	Vector	m_EndAngle;
+	Vector	m_Center;
 	float	m_StartFov;
 	float	m_EndFov;
 		
