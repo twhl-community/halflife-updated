@@ -518,6 +518,8 @@ void ClientCommand( edict_t *pEntity )
 
 	entvars_t *pev = &pEntity->v;
 
+	auto player = reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity));
+
 	if ( FStrEq(pcmd, "say" ) )
 	{
 		Host_Say( pEntity, 0 );
@@ -528,54 +530,52 @@ void ClientCommand( edict_t *pEntity )
 	}
 	else if ( FStrEq(pcmd, "fullupdate" ) )
 	{
-		GetClassPtr((CBasePlayer *)pev)->ForceClientDllUpdate(); 
+		player->ForceClientDllUpdate();
 	}
 	else if ( FStrEq(pcmd, "give" ) )
 	{
 		if (g_psv_cheats->value)
 		{
 			int iszItem = ALLOC_STRING( CMD_ARGV(1) );	// Make a copy of the classname
-			GetClassPtr((CBasePlayer *)pev)->GiveNamedItem( STRING(iszItem) );
+			player->GiveNamedItem( STRING(iszItem) );
 		}
 	}
 
 	else if ( FStrEq(pcmd, "drop" ) )
 	{
 		// player is dropping an item. 
-		GetClassPtr((CBasePlayer *)pev)->DropPlayerItem((char *)CMD_ARGV(1));
+		player->DropPlayerItem((char *)CMD_ARGV(1));
 	}
 	else if ( FStrEq(pcmd, "fov" ) )
 	{
 		if (g_psv_cheats->value && CMD_ARGC() > 1)
 		{
-			GetClassPtr((CBasePlayer *)pev)->m_iFOV = atoi( CMD_ARGV(1) );
+			player->m_iFOV = atoi( CMD_ARGV(1) );
 		}
 		else
 		{
-			CLIENT_PRINTF( pEntity, print_console, UTIL_VarArgs( "\"fov\" is \"%d\"\n", (int)GetClassPtr((CBasePlayer *)pev)->m_iFOV ) );
+			CLIENT_PRINTF( pEntity, print_console, UTIL_VarArgs( "\"fov\" is \"%d\"\n", (int)player->m_iFOV ) );
 		}
 	}
 	else if ( FStrEq(pcmd, "use" ) )
 	{
-		GetClassPtr((CBasePlayer *)pev)->SelectItem((char *)CMD_ARGV(1));
+		player->SelectItem((char *)CMD_ARGV(1));
 	}
 	else if (((pstr = strstr(pcmd, "weapon_")) != NULL)  && (pstr == pcmd))
 	{
-		GetClassPtr((CBasePlayer *)pev)->SelectItem(pcmd);
+		player->SelectItem(pcmd);
 	}
 	else if (FStrEq(pcmd, "lastinv" ))
 	{
-		GetClassPtr((CBasePlayer *)pev)->SelectLastItem();
+		player->SelectLastItem();
 	}
 	else if ( FStrEq( pcmd, "spectate" ) )	// clients wants to become a spectator
 	{
 			// always allow proxies to become a spectator
 		if ( (pev->flags & FL_PROXY) || allow_spectators.value  )
 		{
-			CBasePlayer * pPlayer = GetClassPtr((CBasePlayer *)pev);
-
-			edict_t *pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot( pPlayer );
-			pPlayer->StartObserver( pev->origin, VARS(pentSpawnSpot)->angles);
+			edict_t *pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(player);
+			player->StartObserver( pev->origin, VARS(pentSpawnSpot)->angles);
 
 			// notify other clients of player switching to spectator mode
 			UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs( "%s switched to spectator mode\n", 
@@ -587,10 +587,8 @@ void ClientCommand( edict_t *pEntity )
 	}	
 	else if ( FStrEq( pcmd, "specmode" )  )	// new spectator mode
 	{
-		CBasePlayer * pPlayer = GetClassPtr((CBasePlayer *)pev);
-
-		if ( pPlayer->IsObserver() )
-			pPlayer->Observer_SetMode( atoi( CMD_ARGV(1) ) );
+		if (player->IsObserver() )
+			player->Observer_SetMode( atoi( CMD_ARGV(1) ) );
 	}
 	else if ( FStrEq(pcmd, "closemenus" ) )
 	{
@@ -598,12 +596,10 @@ void ClientCommand( edict_t *pEntity )
 	}
 	else if ( FStrEq( pcmd, "follownext" )  )	// follow next player
 	{
-		CBasePlayer * pPlayer = GetClassPtr((CBasePlayer *)pev);
-
-		if ( pPlayer->IsObserver() )
-			pPlayer->Observer_FindNextPlayer( atoi( CMD_ARGV(1) )?true:false );
+		if (player->IsObserver() )
+			player->Observer_FindNextPlayer( atoi( CMD_ARGV(1) )?true:false );
 	}
-	else if ( g_pGameRules->ClientCommand( GetClassPtr((CBasePlayer *)pev), pcmd ) )
+	else if ( g_pGameRules->ClientCommand(player, pcmd ) )
 	{
 		// MenuSelect returns true only if the command is properly handled,  so don't print a warning
 	}
