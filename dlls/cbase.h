@@ -363,6 +363,7 @@ public:
 	int m_fireState;
 };
 
+inline bool FNullEnt(CBaseEntity* ent) { return (ent == NULL) || FNullEnt(ent->edict()); }
 
 
 // Ugly technique to override base member functions
