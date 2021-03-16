@@ -466,6 +466,20 @@ bool bIsMultiplayer ();
 void LoadVModel ( const char *szViewModel, CBasePlayer *m_pPlayer );
 #endif
 
+enum glock_e
+{
+	GLOCK_IDLE1 = 0,
+	GLOCK_IDLE2,
+	GLOCK_IDLE3,
+	GLOCK_SHOOT,
+	GLOCK_SHOOT_EMPTY,
+	GLOCK_RELOAD,
+	GLOCK_RELOAD_NOT_EMPTY,
+	GLOCK_DRAW,
+	GLOCK_HOLSTER,
+	GLOCK_ADD_SILENCER
+};
+
 class CGlock : public CBasePlayerWeapon
 {
 public:
@@ -498,6 +512,18 @@ private:
 	unsigned short m_usFireGlock2;
 };
 
+enum crowbar_e
+{
+	CROWBAR_IDLE = 0,
+	CROWBAR_DRAW,
+	CROWBAR_HOLSTER,
+	CROWBAR_ATTACK1HIT,
+	CROWBAR_ATTACK1MISS,
+	CROWBAR_ATTACK2MISS,
+	CROWBAR_ATTACK2HIT,
+	CROWBAR_ATTACK3MISS,
+	CROWBAR_ATTACK3HIT
+};
 
 class CCrowbar : public CBasePlayerWeapon
 {
@@ -528,6 +554,18 @@ private:
 	unsigned short m_usCrowbar;
 };
 
+enum python_e
+{
+	PYTHON_IDLE1 = 0,
+	PYTHON_FIDGET,
+	PYTHON_FIRE1,
+	PYTHON_RELOAD,
+	PYTHON_HOLSTER,
+	PYTHON_DRAW,
+	PYTHON_IDLE2,
+	PYTHON_IDLE3
+};
+
 class CPython : public CBasePlayerWeapon
 {
 public:
@@ -554,6 +592,18 @@ public:
 
 private:
 	unsigned short m_usFirePython;
+};
+
+enum mp5_e
+{
+	MP5_LONGIDLE = 0,
+	MP5_IDLE1,
+	MP5_LAUNCH,
+	MP5_RELOAD,
+	MP5_DEPLOY,
+	MP5_FIRE1,
+	MP5_FIRE2,
+	MP5_FIRE3,
 };
 
 class CMP5 : public CBasePlayerWeapon
@@ -587,6 +637,22 @@ private:
 	unsigned short m_usMP52;
 };
 
+enum crossbow_e
+{
+	CROSSBOW_IDLE1 = 0,	// full
+	CROSSBOW_IDLE2,		// empty
+	CROSSBOW_FIDGET1,	// full
+	CROSSBOW_FIDGET2,	// empty
+	CROSSBOW_FIRE1,		// full
+	CROSSBOW_FIRE2,		// reload
+	CROSSBOW_FIRE3,		// empty
+	CROSSBOW_RELOAD,	// from empty
+	CROSSBOW_DRAW1,		// full
+	CROSSBOW_DRAW2,		// empty
+	CROSSBOW_HOLSTER1,	// full
+	CROSSBOW_HOLSTER2,	// empty
+};
+
 class CCrossbow : public CBasePlayerWeapon
 {
 public:
@@ -617,6 +683,20 @@ public:
 private:
 	unsigned short m_usCrossbow;
 	unsigned short m_usCrossbow2;
+};
+
+enum shotgun_e
+{
+	SHOTGUN_IDLE = 0,
+	SHOTGUN_FIRE,
+	SHOTGUN_FIRE2,
+	SHOTGUN_RELOAD,
+	SHOTGUN_PUMP,
+	SHOTGUN_START_RELOAD,
+	SHOTGUN_DRAW,
+	SHOTGUN_HOLSTER,
+	SHOTGUN_IDLE4,
+	SHOTGUN_IDLE_DEEP
 };
 
 class CShotgun : public CBasePlayerWeapon
@@ -672,6 +752,20 @@ public:
 	void EXPORT Revive();
 	
 	static CLaserSpot *CreateSpot();
+};
+
+enum rpg_e
+{
+	RPG_IDLE = 0,
+	RPG_FIDGET,
+	RPG_RELOAD,		// to reload
+	RPG_FIRE2,		// to empty
+	RPG_HOLSTER1,	// loaded
+	RPG_DRAW1,		// loaded
+	RPG_HOLSTER2,	// unloaded
+	RPG_DRAW_UL,	// unloaded
+	RPG_IDLE_UL,	// unloaded idle
+	RPG_FIDGET_UL,	// unloaded fidget
 };
 
 class CRpg : public CBasePlayerWeapon
@@ -738,6 +832,22 @@ public:
 	EHANDLE m_pLauncher;// handle back to the launcher that fired me. 
 };
 
+#define	GAUSS_PRIMARY_CHARGE_VOLUME	256// how loud gauss is while charging
+#define GAUSS_PRIMARY_FIRE_VOLUME	450// how loud gauss is when discharged
+
+enum gauss_e
+{
+	GAUSS_IDLE = 0,
+	GAUSS_IDLE2,
+	GAUSS_FIDGET,
+	GAUSS_SPINUP,
+	GAUSS_SPIN,
+	GAUSS_FIRE,
+	GAUSS_FIRE2,
+	GAUSS_HOLSTER,
+	GAUSS_DRAW
+};
+
 class CGauss : public CBasePlayerWeapon
 {
 public:
@@ -785,6 +895,21 @@ public:
 private:
 	unsigned short m_usGaussFire;
 	unsigned short m_usGaussSpin;
+};
+
+enum egon_e
+{
+	EGON_IDLE1 = 0,
+	EGON_FIDGET1,
+	EGON_ALTFIREON,
+	EGON_ALTFIRECYCLE,
+	EGON_ALTFIREOFF,
+	EGON_FIRE1,
+	EGON_FIRE2,
+	EGON_FIRE3,
+	EGON_FIRE4,
+	EGON_DRAW,
+	EGON_HOLSTER
 };
 
 class CEgon : public CBasePlayerWeapon
@@ -853,6 +978,16 @@ private:
 	unsigned short m_usEgonFire;
 };
 
+enum hgun_e
+{
+	HGUN_IDLE1 = 0,
+	HGUN_FIDGETSWAY,
+	HGUN_FIDGETSHAKE,
+	HGUN_DOWN,
+	HGUN_UP,
+	HGUN_SHOOT
+};
+
 class CHgun : public CBasePlayerWeapon
 {
 public:
@@ -887,7 +1022,17 @@ private:
 	unsigned short m_usHornetFire;
 };
 
-
+enum handgrenade_e
+{
+	HANDGRENADE_IDLE = 0,
+	HANDGRENADE_FIDGET,
+	HANDGRENADE_PINPULL,
+	HANDGRENADE_THROW1,	// toss
+	HANDGRENADE_THROW2,	// medium
+	HANDGRENADE_THROW3,	// hard
+	HANDGRENADE_HOLSTER,
+	HANDGRENADE_DRAW
+};
 
 class CHandGrenade : public CBasePlayerWeapon
 {
@@ -911,6 +1056,23 @@ public:
 		return FALSE;
 #endif
 	}
+};
+
+enum satchel_e
+{
+	SATCHEL_IDLE1 = 0,
+	SATCHEL_FIDGET1,
+	SATCHEL_DRAW,
+	SATCHEL_DROP
+};
+
+enum satchel_radio_e
+{
+	SATCHEL_RADIO_IDLE1 = 0,
+	SATCHEL_RADIO_FIDGET1,
+	SATCHEL_RADIO_DRAW,
+	SATCHEL_RADIO_FIRE,
+	SATCHEL_RADIO_HOLSTER
 };
 
 class CSatchel : public CBasePlayerWeapon
@@ -949,6 +1111,18 @@ public:
 	}
 };
 
+enum tripmine_e
+{
+	TRIPMINE_IDLE1 = 0,
+	TRIPMINE_IDLE2,
+	TRIPMINE_ARM1,
+	TRIPMINE_ARM2,
+	TRIPMINE_FIDGET,
+	TRIPMINE_HOLSTER,
+	TRIPMINE_DRAW,
+	TRIPMINE_WORLD,
+	TRIPMINE_GROUND,
+};
 
 class CTripmine : public CBasePlayerWeapon
 {
@@ -981,6 +1155,16 @@ public:
 private:
 	unsigned short m_usTripFire;
 
+};
+
+enum squeak_e
+{
+	SQUEAK_IDLE1 = 0,
+	SQUEAK_FIDGETFIT,
+	SQUEAK_FIDGETNIP,
+	SQUEAK_DOWN,
+	SQUEAK_UP,
+	SQUEAK_THROW
 };
 
 class CSqueak : public CBasePlayerWeapon

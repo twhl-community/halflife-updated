@@ -25,15 +25,6 @@
 #include "gamerules.h"
 #include "UserMessages.h"
 
-enum hgun_e {
-	HGUN_IDLE1 = 0,
-	HGUN_FIDGETSWAY,
-	HGUN_FIDGETSHAKE,
-	HGUN_DOWN,
-	HGUN_UP,
-	HGUN_SHOOT
-};
-
 enum firemode_e
 {
 	FIREMODE_TRACK = 0,
