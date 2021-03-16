@@ -214,6 +214,10 @@ typedef struct
 	int iId;
 } AmmoInfo;
 
+extern int giAmmoIndex;
+
+void AddAmmoNameToAmmoRegistry(const char* szAmmoname);
+
 // Items that the player has in their inventory that they can use
 class CBasePlayerItem : public CBaseAnimating
 {
