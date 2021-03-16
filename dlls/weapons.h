@@ -912,6 +912,23 @@ enum egon_e
 	EGON_HOLSTER
 };
 
+enum EGON_FIRESTATE
+{
+	FIRE_OFF, FIRE_CHARGE
+};
+
+enum EGON_FIREMODE
+{
+	FIRE_NARROW, FIRE_WIDE
+};
+
+#define	EGON_PRIMARY_VOLUME		450
+#define EGON_BEAM_SPRITE		"sprites/xbeam1.spr"
+#define EGON_FLARE_SPRITE		"sprites/XSpark1.spr"
+#define EGON_SOUND_OFF			"weapons/egon_off1.wav"
+#define EGON_SOUND_RUN			"weapons/egon_run3.wav"
+#define EGON_SOUND_STARTUP		"weapons/egon_windup2.wav"
+
 class CEgon : public CBasePlayerWeapon
 {
 public:
@@ -951,8 +968,6 @@ public:
 	BOOL HasAmmo();
 
 	void UseAmmo( int count );
-	
-	enum EGON_FIREMODE { FIRE_NARROW, FIRE_WIDE};
 
 	CBeam				*m_pBeam;
 	CBeam				*m_pNoise;

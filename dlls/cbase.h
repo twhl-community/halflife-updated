@@ -360,7 +360,6 @@ public:
 	int m_chargeReady;
 	int m_fInAttack;
 
-	enum EGON_FIRESTATE { FIRE_OFF, FIRE_CHARGE };
 	int m_fireState;
 };
 
