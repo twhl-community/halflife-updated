@@ -41,6 +41,20 @@ float UTIL_WeaponTimeBase()
 #endif
 }
 
+CBaseEntity* UTIL_FindEntityForward(CBaseEntity* pMe)
+{
+	TraceResult tr;
+
+	UTIL_MakeVectors(pMe->pev->v_angle);
+	UTIL_TraceLine(pMe->pev->origin + pMe->pev->view_ofs, pMe->pev->origin + pMe->pev->view_ofs + gpGlobals->v_forward * 8192, dont_ignore_monsters, pMe->edict(), &tr);
+	if (tr.flFraction != 1.0 && !FNullEnt(tr.pHit))
+	{
+		CBaseEntity* pHit = CBaseEntity::Instance(tr.pHit);
+		return pHit;
+	}
+	return NULL;
+}
+
 static unsigned int glSeed = 0; 
 
 unsigned int seed_table[ 256 ] =

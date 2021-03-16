@@ -269,7 +269,6 @@ int CBasePlayer::Restore( CRestore &restore ) { return 0; }
 void CBasePlayer::SelectNextItem( int iItem ) { }
 BOOL CBasePlayer::HasWeapons() { return FALSE; }
 void CBasePlayer::SelectPrevItem( int iItem ) { }
-CBaseEntity *FindEntityForward( CBaseEntity *pMe ) { return NULL; }
 BOOL CBasePlayer :: FlashlightIsOn() { return FALSE; }
 void CBasePlayer :: FlashlightTurnOn() { }
 void CBasePlayer :: FlashlightTurnOff() { }
