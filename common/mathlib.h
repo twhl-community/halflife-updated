@@ -14,6 +14,8 @@
 ****/
 // mathlib.h
 
+#include <cmath>
+
 typedef float vec_t;
 
 #include "vector.h"

@@ -16,7 +16,6 @@
 
 #include "mathlib.h"
 #include "const.h"
-#include <cmath>
 
 // up / down
 #define	PITCH	0
