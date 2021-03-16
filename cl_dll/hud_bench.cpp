@@ -28,10 +28,6 @@
 
 #include "entity_types.h"
 
-#ifndef M_PI
-#define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
-#endif
-
 #define NUM_BENCH_OBJ 12
 #define BENCH_CYCLE_TIME 10.0
 #define BENCH_INNER_CYCLE_TIME 4.0
