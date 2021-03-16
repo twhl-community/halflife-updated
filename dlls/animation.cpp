@@ -13,17 +13,8 @@
 *
 ****/
 
-#include "Platform.h"
-
-//TODO: get rid of this mess
-// hack into header files that we can ship
-typedef int qboolean;
-typedef unsigned char byte;
-#include "mathlib.h"
-#include "const.h"
-#include "progdefs.h"
-#include "edict.h"
-#include "eiface.h"
+#include "extdll.h"
+#include "util.h"
 
 #include "studio.h"
 
@@ -39,10 +30,6 @@ typedef unsigned char byte;
 
 #ifndef SCRIPTEVENT_H
 #include "scriptevent.h"
-#endif
-
-#ifndef ENGINECALLBACK_H
-#include "enginecallback.h"
 #endif
 
 extern globalvars_t				*gpGlobals;
