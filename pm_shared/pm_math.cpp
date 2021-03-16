@@ -14,6 +14,7 @@
 ****/
 // pm_math.c -- math primitives
 
+#include "Platform.h"
 #include "mathlib.h"
 #include "const.h"
 

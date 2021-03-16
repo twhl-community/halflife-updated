@@ -28,8 +28,6 @@
 
 #include "Platform.h"
 
-typedef unsigned char byte;
-typedef unsigned short word;
 typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 
 #include "mathlib.h"

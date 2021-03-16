@@ -16,10 +16,10 @@
 //  parsemsg.cpp
 //
 //--------------------------------------------------------------------------------------------------------------
+#include "extdll.h"
 #include "parsemsg.h"
 #include <port.h>
 
-typedef unsigned char byte;
 #define true 1
 
 static byte *gpBuf;

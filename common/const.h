@@ -715,22 +715,7 @@ enum
 	kRenderFxLightMultiplier,   //CTM !!!CZERO added to tell the studiorender that the value in iuser2 is a lightmultiplier
 };
 
-
-typedef unsigned int	func_t;
-typedef unsigned int	string_t;
-
-typedef unsigned char 		byte;
-typedef unsigned short 		word;
 #define _DEF_BYTE_
-
-#undef true
-#undef false
-
-#ifndef __cplusplus
-typedef enum {false, true}	qboolean;
-#else 
-typedef int qboolean;
-#endif
 
 typedef struct
 {

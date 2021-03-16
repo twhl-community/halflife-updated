@@ -42,6 +42,12 @@
 #include <cstdlib>
 #include <cstring>
 
+using byte = unsigned char;
+using word = unsigned short;
+using func_t = unsigned int;
+using string_t = unsigned int;
+using qboolean = int;
+
 // Prevent tons of unused windows definitions
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
