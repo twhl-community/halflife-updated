@@ -48,6 +48,8 @@ using func_t = unsigned int;
 using string_t = unsigned int;
 using qboolean = int;
 
+#define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
+
 // Prevent tons of unused windows definitions
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN

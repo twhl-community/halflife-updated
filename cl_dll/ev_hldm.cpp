@@ -792,8 +792,6 @@ void EV_FirePython( event_args_t *args )
 //======================
 //	   GAUSS START 
 //======================
-#define SND_CHANGE_PITCH	(1<<7)		// duplicated in protocol.h change sound pitch
-
 void EV_SpinGauss( event_args_t *args )
 {
 	int idx;
@@ -1305,8 +1303,6 @@ void EV_FireRpg( event_args_t *args )
 //======================
 int g_fireAnims1[] = { EGON_FIRE1, EGON_FIRE2, EGON_FIRE3, EGON_FIRE4 };
 int g_fireAnims2[] = { EGON_ALTFIRECYCLE };
-
-#define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
 
 BEAM *pBeam;
 BEAM *pBeam2;
