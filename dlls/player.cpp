@@ -39,6 +39,7 @@
 #include "pm_shared.h"
 #include "hltv.h"
 #include "UserMessages.h"
+#include "client.h"
 
 // #define DUCKFIX
 
@@ -52,8 +53,6 @@ extern DLL_GLOBAL int		g_iSkillLevel, gDisplayTitle;
 BOOL gInitHUD = TRUE;
 
 extern void CopyToBodyQue(entvars_t* pev);
-extern void respawn(entvars_t *pev, BOOL fCopyCorpse);
-extern Vector VecBModelOrigin(entvars_t *pevBModel );
 extern edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer );
 
 // the world node graph
