@@ -43,4 +43,16 @@
 
 #define WEAPON_SUIT			31
 
+constexpr Vector VEC_HULL_MIN(-16, -16, -36);
+constexpr Vector VEC_HULL_MAX(16, 16, 36);
+constexpr Vector VEC_HUMAN_HULL_MIN(-16, -16, 0);
+constexpr Vector VEC_HUMAN_HULL_MAX(16, 16, 72);
+constexpr Vector VEC_HUMAN_HULL_DUCK(16, 16, 36);
+
+constexpr Vector VEC_VIEW(0, 0, 28);
+
+constexpr Vector VEC_DUCK_HULL_MIN(-16, -16, -18);
+constexpr Vector VEC_DUCK_HULL_MAX(16, 16, 18);
+constexpr Vector VEC_DUCK_VIEW(0, 0, 12);
+
 #endif

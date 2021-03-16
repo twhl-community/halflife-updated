@@ -98,11 +98,11 @@ void CCrowbar::Holster( int skiplocal /* = 0 */ )
 }
 
 
-void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, float *mins, float *maxs, edict_t *pEntity )
+void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, const Vector& mins, const Vector& maxs, edict_t *pEntity )
 {
 	int			i, j, k;
 	float		distance;
-	float		*minmaxs[2] = {mins, maxs};
+	const Vector* minmaxs[2] = {&mins, &maxs};
 	TraceResult tmpTrace;
 	Vector		vecHullEnd = tr.vecEndPos;
 	Vector		vecEnd;
@@ -123,9 +123,9 @@ void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, float *mins, f
 		{
 			for ( k = 0; k < 2; k++ )
 			{
-				vecEnd.x = vecHullEnd.x + minmaxs[i][0];
-				vecEnd.y = vecHullEnd.y + minmaxs[j][1];
-				vecEnd.z = vecHullEnd.z + minmaxs[k][2];
+				vecEnd.x = vecHullEnd.x + minmaxs[i]->x;
+				vecEnd.y = vecHullEnd.y + minmaxs[j]->y;
+				vecEnd.z = vecHullEnd.z + minmaxs[k]->z;
 
 				UTIL_TraceLine( vecSrc, vecEnd, dont_ignore_monsters, pEntity, &tmpTrace );
 				if ( tmpTrace.flFraction < 1.0 )
