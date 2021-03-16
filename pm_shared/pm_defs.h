@@ -42,14 +42,16 @@
 #include "usercmd.h"
 #endif
 
+typedef struct model_s model_t;
+
 // physent_t
 typedef struct physent_s
 {
 	char			name[32];             // Name of model, or "player" or "world".
 	int				player;
 	Vector			origin;               // Model's origin in world coordinates.
-	struct model_s	*model;		          // only for bsp models
-	struct model_s	*studiomodel;         // SOLID_BBOX, but studio clip intersections.
+	model_t*		model;		          // only for bsp models
+	model_t*		studiomodel;         // SOLID_BBOX, but studio clip intersections.
 	Vector			mins, maxs;	          // only for non-bsp models
 	int				info;		          // For client or server to use to identify (index into edicts or cl_entities)
 	Vector			angles;               // rotated entities need this info for hull testing to work.
@@ -199,8 +201,8 @@ typedef struct playermove_s
 	struct pmtrace_s *(*PM_TraceLine)( float *start, float *end, int flags, int usehulll, int ignore_pe );
 	int32			(*RandomLong)( int32 lLow, int32 lHigh );
 	float			(*RandomFloat)( float flLow, float flHigh );
-	int				(*PM_GetModelType)( struct model_s *mod );
-	void			(*PM_GetModelBounds)( struct model_s *mod, float *mins, float *maxs );
+	int				(*PM_GetModelType)(model_t* mod );
+	void			(*PM_GetModelBounds)(model_t* mod, float *mins, float *maxs );
 	void			*(*PM_HullForBsp)( physent_t *pe, float *offset );
 	float			(*PM_TraceModel)( physent_t *pEnt, float *start, float *end, trace_t *trace );
 	int				(*COM_FileSize)(const char *filename);
