@@ -166,7 +166,7 @@ struct efx_api_s
 	void		( *R_TempSphereModel )			( float *pos, float speed, float life, int count, int modelIndex );
 	TEMPENTITY	*( *R_TempModel )				( float *pos, float *dir, float *angles, float life, int modelIndex, int soundtype );
 	TEMPENTITY	*( *R_DefaultSprite )			( float *pos, int spriteIndex, float framerate );
-	TEMPENTITY	*( *R_TempSprite )				( float *pos, float *dir, float scale, int modelIndex, int rendermode, int renderfx, float a, float life, int flags );
+	TEMPENTITY	*( *R_TempSprite )				( float *pos, const float *dir, float scale, int modelIndex, int rendermode, int renderfx, float a, float life, int flags );
 	int			( *Draw_DecalIndex )			( int id );
 	int			( *Draw_DecalIndexFromName )	( char *name );
 	void		( *R_DecalShoot )				( int textureIndex, int entity, int modelIndex, float * position, int flags );

@@ -60,12 +60,35 @@ class Vector						// same data-layout as engine's vec3_t,
 {								//		which is a vec_t[3]
 public:
 	// Construction/destruction
-	inline Vector()								{ }
-	inline Vector(float X, float Y, float Z)		{ x = X; y = Y; z = Z;						}
+	inline constexpr Vector()
+		: x{}
+		, y{}
+		, z{}
+	{
+	}
+
+	inline constexpr Vector(float X, float Y, float Z)
+		: x(X)
+		, y(Y)
+		, z(Z)
+	{
+	}
+
 	//inline Vector(double X, double Y, double Z)		{ x = (float)X; y = (float)Y; z = (float)Z;	}
 	//inline Vector(int X, int Y, int Z)				{ x = (float)X; y = (float)Y; z = (float)Z;	}
-	inline Vector(const Vector& v)					{ x = v.x; y = v.y; z = v.z;				} 
-	inline Vector(float rgfl[3])					{ x = rgfl[0]; y = rgfl[1]; z = rgfl[2];	}
+	inline constexpr Vector(const Vector& v)
+		: x(v.x)
+		, y(v.y)
+		, z(v.z)
+	{
+	}
+
+	inline constexpr Vector(float rgfl[3])
+		: x(rgfl[0])
+		, y(rgfl[1])
+		, z(rgfl[2])
+	{
+	}
 
 	// Operators
 	inline Vector operator-() const				{ return Vector(-x,-y,-z);				}

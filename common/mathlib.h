@@ -39,7 +39,8 @@ typedef	int	fixed16_t;
 
 struct mplane_s;
 
-extern Vector vec3_origin;
+constexpr Vector vec3_origin(0, 0, 0);
+constexpr Vector g_vecZero(0, 0, 0);
 extern	int nanmask;
 
 #define	IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
