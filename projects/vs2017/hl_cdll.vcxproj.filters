@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\cl_dll\vgui_ClassMenu.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\vgui_ControlConfigPanel.cpp">
-      <Filter>Source Files\cl_dll</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_grid.cpp">
       <Filter>Source Files\game_shared</Filter>
     </ClCompile>
@@ -384,9 +381,6 @@
       <Filter>Header Files\cl_dll</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\tri.h">
-      <Filter>Header Files\cl_dll</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cl_dll\vgui_ControlConfigPanel.h">
       <Filter>Header Files\cl_dll</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\vgui_int.h">

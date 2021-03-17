@@ -23,7 +23,6 @@
 #include "camera.h"
 #include "in_defs.h"
 #include "vgui_TeamFortressViewport.h"
-#include "vgui_ControlConfigPanel.h"
 
 namespace
 {

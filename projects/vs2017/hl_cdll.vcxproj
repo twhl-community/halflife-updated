@@ -150,7 +150,6 @@
     <ClCompile Include="..\..\cl_dll\tri.cpp" />
     <ClCompile Include="..\..\cl_dll\util.cpp" />
     <ClCompile Include="..\..\cl_dll\vgui_ClassMenu.cpp" />
-    <ClCompile Include="..\..\cl_dll\vgui_ControlConfigPanel.cpp" />
     <ClCompile Include="..\..\cl_dll\vgui_CustomObjects.cpp" />
     <ClCompile Include="..\..\cl_dll\vgui_int.cpp" />
     <ClCompile Include="..\..\cl_dll\vgui_MOTDWindow.cpp" />
@@ -210,7 +209,6 @@
     <ClInclude Include="..\..\cl_dll\kbutton.h" />
     <ClInclude Include="..\..\cl_dll\StudioModelRenderer.h" />
     <ClInclude Include="..\..\cl_dll\tri.h" />
-    <ClInclude Include="..\..\cl_dll\vgui_ControlConfigPanel.h" />
     <ClInclude Include="..\..\cl_dll\vgui_int.h" />
     <ClInclude Include="..\..\cl_dll\vgui_SchemeManager.h" />
     <ClInclude Include="..\..\cl_dll\vgui_ScorePanel.h" />
