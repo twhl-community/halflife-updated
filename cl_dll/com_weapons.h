@@ -13,7 +13,6 @@
 #pragma once
 #endif
 
-#include "hud_iface.h"
 #include "Exports.h"
 
 void			COM_Log( const char *pszFile, const char *fmt, ...);
