@@ -518,7 +518,7 @@ void ClientCommand( edict_t *pEntity )
 
 	entvars_t *pev = &pEntity->v;
 
-	auto player = reinterpret_cast<CBasePlayer*>(GET_PRIVATE(pEntity));
+	auto player = GetClassPtr<CBasePlayer>(reinterpret_cast<CBasePlayer*>(&pEntity->v));
 
 	if ( FStrEq(pcmd, "say" ) )
 	{
