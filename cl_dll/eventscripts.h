@@ -9,9 +9,6 @@
 #if !defined ( EVENTSCRIPTSH )
 #define EVENTSCRIPTSH
 
-// defaults for clientinfo messages
-#define FTENT_FADEOUT			0x00000080
-
 // Some of these are HL/TFC specific?
 void EV_EjectBrass( float *origin, float *velocity, float rotation, int model, int soundtype );
 void EV_GetGunPosition( struct event_args_s *args, float *pos, float *origin );
