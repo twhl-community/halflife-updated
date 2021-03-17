@@ -52,7 +52,6 @@ class CommandButton;
 class BuildButton;
 class ClassButton;
 class CMenuPanel;
-class ServerBrowser;
 class DragNDropPanel;
 class CTransparentPanel;
 class CClassMenuPanel;
@@ -527,9 +526,6 @@ private:
 	BuildButton   *m_pBuildButtons[3];
 	BuildButton   *m_pBuildActiveButtons[3];
 
-	// Server Browser
-	ServerBrowser *m_pServerBrowser;
-
 	int					m_iAllowSpectators;
 
 	// Data for specific sections of the Command Menu
@@ -555,7 +551,6 @@ public:
 
 	int		CreateCommandMenu( const char * menuFile, int direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset );
 	void	CreateScoreBoard( void );
-	void	CreateServerBrowser( void );
 	CommandButton * CreateCustomButton( char *pButtonText, char * pButtonName, int  iYOffset );
 	CCommandMenu *	CreateDisguiseSubmenu( CommandButton *pButton, CCommandMenu *pParentMenu, const char *commandText, int iYOffset, int iXOffset = 0 );
 
@@ -585,8 +580,6 @@ public:
 	void ShowVGUIMenu( int iMenu );
 	void HideVGUIMenu( void );
 	void HideTopMenu( void );
-
-	void ToggleServerBrowser( void );
 
 	CMenuPanel* CreateTextWindow( int iTextToShow );
 

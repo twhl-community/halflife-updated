@@ -32,7 +32,6 @@
 
 #include "vgui_int.h"
 #include "vgui_TeamFortressViewport.h"
-#include "vgui_ServerBrowser.h"
 
 // Class Menu Dimensions
 #define CLASSMENU_TITLE_X				XRES(40)

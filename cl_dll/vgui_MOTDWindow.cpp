@@ -30,7 +30,6 @@
 
 #include "vgui_int.h"
 #include "vgui_TeamFortressViewport.h"
-#include "vgui_ServerBrowser.h"
 
 #define MOTD_TITLE_X		XRES(16)
 #define MOTD_TITLE_Y		YRES(16)

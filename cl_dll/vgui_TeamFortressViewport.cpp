@@ -51,7 +51,6 @@
 
 #include "vgui_int.h"
 #include "vgui_TeamFortressViewport.h"
-#include "vgui_ServerBrowser.h"
 #include "vgui_ScorePanel.h"
 #include "vgui_SpectatorPanel.h"
 
@@ -627,10 +626,6 @@ TeamFortressViewport::TeamFortressViewport(int x,int y,int wide,int tall) : Pane
 	m_pCommandMenus[m_PlayerMenu]->m_iSpectCmdMenu = 1;
 
 	UpdatePlayerMenu(m_PlayerMenu);
-
-	CreateServerBrowser();
-
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1276,26 +1271,6 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	return pButton;
 }
 
-void TeamFortressViewport::ToggleServerBrowser()
-{
-	if (!m_iInitialized)
-		return;
-
-	if ( !m_pServerBrowser )
-		return;
-
-	if ( m_pServerBrowser->isVisible() )
-	{
-		m_pServerBrowser->setVisible( false );
-	}
-	else
-	{
-		m_pServerBrowser->setVisible( true );
-	}
-
-	UpdateCursorState();
-}
-
 //=======================================================================
 void TeamFortressViewport::ShowCommandMenu(int menuIndex)
 {
@@ -1693,14 +1668,6 @@ void TeamFortressViewport::CreateScoreBoard()
 	m_pScoreBoard->setVisible(false);
 }
 
-void TeamFortressViewport::CreateServerBrowser()
-{
-	m_pServerBrowser = new ServerBrowser( 0, 0, ScreenWidth, ScreenHeight );
-	m_pServerBrowser->setParent(this);
-	m_pServerBrowser->setVisible(false);
-}
-
-
 //======================================================================
 // Set the VGUI Menu
 void TeamFortressViewport::SetCurrentMenu( CMenuPanel *pMenu )
@@ -2058,7 +2025,7 @@ void TeamFortressViewport::UpdateOnPlayerInfo()
 void TeamFortressViewport::UpdateCursorState()
 {
 	// Need cursor if any VGUI window is up
-	if ( m_pSpectatorPanel->m_menuVisible || m_pCurrentMenu || m_pTeamMenu->isVisible() || m_pServerBrowser->isVisible() || GetClientVoiceMgr()->IsInSquelchMode() )
+	if ( m_pSpectatorPanel->m_menuVisible || m_pCurrentMenu || m_pTeamMenu->isVisible() || GetClientVoiceMgr()->IsInSquelchMode() )
 	{
 		g_iVisibleMouse = true;
 		App::getInstance()->setCursorOveride( App::getInstance()->getScheme()->getCursor(Scheme::scu_arrow) );

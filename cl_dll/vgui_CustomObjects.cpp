@@ -31,7 +31,6 @@
 
 #include "vgui_int.h"
 #include "vgui_TeamFortressViewport.h"
-#include "vgui_ServerBrowser.h"
 #include "vgui_loadtga.h"
 
 // Arrow filenames

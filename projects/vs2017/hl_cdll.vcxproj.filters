@@ -177,9 +177,6 @@
     <ClCompile Include="..\..\cl_dll\hud_redraw.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\hud_servers.cpp">
-      <Filter>Source Files\cl_dll</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\hud_spectator.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
@@ -279,9 +276,6 @@
     <ClCompile Include="..\..\cl_dll\view.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\vgui_ServerBrowser.cpp">
-      <Filter>Source Files\cl_dll</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\vgui_SpectatorPanel.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
@@ -353,12 +347,6 @@
     <ClInclude Include="..\..\cl_dll\hud.h">
       <Filter>Header Files\cl_dll</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cl_dll\hud_servers.h">
-      <Filter>Header Files\cl_dll</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cl_dll\hud_servers_priv.h">
-      <Filter>Header Files\cl_dll</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cl_dll\hud_spectator.h">
       <Filter>Header Files\cl_dll</Filter>
     </ClInclude>
@@ -420,9 +408,6 @@
       <Filter>Header Files\game_shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\wrect.h">
-      <Filter>Header Files\cl_dll</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cl_dll\vgui_ServerBrowser.h">
       <Filter>Header Files\cl_dll</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\vgui_SpectatorPanel.h">
