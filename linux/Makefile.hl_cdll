@@ -106,6 +106,7 @@ DLL_OBJS = \
 	$(HL1_SERVER_OBJ_DIR)/shotgun.o \
 	$(HL1_SERVER_OBJ_DIR)/squeakgrenade.o \
 	$(HL1_SERVER_OBJ_DIR)/tripmine.o \
+	$(HL1_SERVER_OBJ_DIR)/weapons_shared.o \
 	$(HL1_SERVER_OBJ_DIR)/wpn_shared/hl_wpn_glock.o \
 
 
@@ -113,6 +114,7 @@ PUBLIC_OBJS = \
 	$(PUBLIC_OBJ_DIR)/interface.o \
 
 COMMON_OBJS = \
+	$(COMMON_OBJ_DIR)/mathlib.o \
 	$(COMMON_OBJ_DIR)/parsemsg.o \
 
 GAME_SHARED_OBJS = \
