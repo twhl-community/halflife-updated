@@ -217,8 +217,8 @@ int CHudHealth::Draw(float flTime)
 
 		x = CrossWidth + HealthWidth / 2;
 
-		//Reserve space for 5 digits
-		x += gHUD.GetHudNumberWidth(m_iHealth, 5, DHN_DRAWZERO);
+		//Reserve space for 3 digits by default, but allow it to expand
+		x += gHUD.GetHudNumberWidth(m_iHealth, 3, DHN_DRAWZERO);
 
 		gHUD.DrawHudNumberReverse(x, y, m_iHealth, DHN_DRAWZERO, r, g, b);
 
