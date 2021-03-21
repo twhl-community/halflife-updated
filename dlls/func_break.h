@@ -39,7 +39,7 @@ public:
 	BOOL IsBreakable();
 	BOOL SparkWhenHit();
 
-	int	 DamageDecal( int bitsDamageType );
+	int	 DamageDecal( int bitsDamageType ) override;
 
 	void EXPORT		Die();
 	int		ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }

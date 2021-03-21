@@ -48,7 +48,7 @@ public:
 	void EXPORT TumbleThink();
 
 	virtual void BounceSound();
-	virtual int	BloodColor() { return DONT_BLEED; }
+    int	BloodColor() override { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
 	BOOL m_fRegisteredSound;// whether or not this grenade has issued its DANGER sound to the world sound list yet.
@@ -222,10 +222,10 @@ void AddAmmoNameToAmmoRegistry(const char* szAmmoname);
 class CBasePlayerItem : public CBaseAnimating
 {
 public:
-	virtual void SetObjectCollisionBox();
+    void SetObjectCollisionBox() override;
 
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+    int		Save( CSave &save ) override;
+    int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -236,7 +236,7 @@ public:
 	void EXPORT FallThink ();// when an item is first spawned, this think is run to determine when the object has hit the ground.
 	void EXPORT Materialize();// make a weapon visible and tangible
 	void EXPORT AttemptToMaterialize();  // the weapon desires to become visible and tangible, if the game rules allow for it
-	CBaseEntity* Respawn ();// copy a weapon
+	CBaseEntity* Respawn () override;// copy a weapon
 	void FallInit();
 	void CheckRespawn();
 	virtual int GetItemInfo(ItemInfo *p) { return 0; }	// returns 0 if struct not filled out
@@ -290,8 +290,8 @@ public:
 class CBasePlayerWeapon : public CBasePlayerItem
 {
 public:
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
+    int		Save( CSave &save ) override;
+    int		Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -318,7 +318,7 @@ public:
 
 	virtual void SendWeaponAnim( int iAnim, int skiplocal = 1, int body = 0 );  // skiplocal is 1 if client is predicting weapon animations
 
-	virtual BOOL CanDeploy();
+    BOOL CanDeploy() override;
 	virtual BOOL IsUseable();
 	BOOL DefaultDeploy(const char *szViewModel, const char *szWeaponModel, int iAnim, const char *szAnimExt, int skiplocal = 0, int body = 0 );
 	int DefaultReload( int iClipSize, int iAnim, float fDelay, int body = 0 );
@@ -367,11 +367,11 @@ public:
 class CBasePlayerAmmo : public CBaseEntity
 {
 public:
-	virtual void Spawn();
+    void Spawn() override;
 	void EXPORT DefaultTouch( CBaseEntity *pOther ); // default weapon touch
 	virtual BOOL AddAmmo( CBaseEntity *pOther ) { return TRUE; }
 
-	CBaseEntity* Respawn();
+	CBaseEntity* Respawn() override;
 	void EXPORT Materialize();
 };
 
@@ -495,7 +495,7 @@ public:
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	void GlockFire( float flSpread, float flCycleTime, BOOL fUseAutoAim );
-	BOOL Deploy();
+	BOOL Deploy() override;
 	void Reload() override;
 	void WeaponIdle() override;
 
@@ -546,8 +546,8 @@ public:
 	int m_iSwing;
 	TraceResult m_trHit;
 
-	virtual BOOL UseDecrement()
-	{ 
+    BOOL UseDecrement() override
+    { 
 #if defined( CLIENT_WEAPONS )
 		return TRUE;
 #else
@@ -746,10 +746,10 @@ private:
 
 class CLaserSpot : public CBaseEntity
 {
-	void Spawn();
-	void Precache();
+	void Spawn() override;
+	void Precache() override;
 
-	int	ObjectCaps() { return FCAP_DONT_SAVE; }
+	int	ObjectCaps() override { return FCAP_DONT_SAVE; }
 
 public:
 	void Suspend( float flSuspendTime );

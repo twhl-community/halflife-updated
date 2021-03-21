@@ -46,7 +46,7 @@ public:
 	virtual void getRange(int& min,int& max);
 	virtual void setRangeWindow(int rangeWindow);
 	virtual void setRangeWindowEnabled(bool state);
-	virtual void setSize(int wide,int tall);
+    void setSize(int wide,int tall) override;
 	virtual void getNobPos(int& min, int& max);
 	virtual bool hasFullRange();
 	virtual void setButtonOffset(int buttonOffset);
@@ -59,7 +59,7 @@ public: //bullshit public
 	virtual void privateMouseReleased(MouseCode code,Panel* panel);
 protected:
     virtual void fireIntChangeSignal();
-	virtual void paintBackground();
+    void paintBackground() override;
 };
 
 }

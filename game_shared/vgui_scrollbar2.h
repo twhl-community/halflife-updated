@@ -36,7 +36,7 @@ public:
 	virtual void    setRange(int min,int max);
 	virtual void    setRangeWindow(int rangeWindow);
 	virtual void    setRangeWindowEnabled(bool state);
-	virtual void    setSize(int wide,int tall);
+    void    setSize(int wide,int tall) override;
 	virtual bool    isVertical();
 	virtual bool    hasFullRange();
 	virtual void    setButton(Button *button,int index);
@@ -49,7 +49,7 @@ public:
 public: //bullshit public 
 	virtual void fireIntChangeSignal();
 protected:
-	virtual void performLayout();
+    void performLayout() override;
 protected:
 	Button* _button[2];
 	Slider2 *_slider;
