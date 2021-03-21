@@ -294,7 +294,7 @@ public:
 	void BarnacleVictimReleased () override;
 	static int GetAmmoIndex(const char *psz);
 	int AmmoInventory( int iAmmoIndex );
-	int Illumination();
+	int Illumination() override;
 
 	void ResetAutoaim();
 	Vector GetAutoaimVector( float flDelta  );

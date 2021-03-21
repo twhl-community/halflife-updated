@@ -140,7 +140,7 @@ public:
 	// For following
 	BOOL			CanFollow();
 	BOOL			IsFollowing() { return m_hTargetEnt != NULL && m_hTargetEnt->IsPlayer(); }
-	void			StopFollowing( BOOL clearSchedule );
+	void			StopFollowing( BOOL clearSchedule ) override;
 	void			StartFollowing( CBaseEntity *pLeader );
 	virtual void	DeclineFollowing() {}
 	void			LimitFollowers( CBaseEntity *pPlayer, int maxFollowers );

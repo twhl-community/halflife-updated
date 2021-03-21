@@ -87,7 +87,7 @@ public:
 	void	UpdateSpeakerStatus(int entindex, bool bTalking);
 
 	// returns the state of this player using the enum above
-	int GetSpeakerStatus(int iPlayer);
+	int GetSpeakerStatus(int iPlayer) override;
 
 
 		// Called when the server registers a change to who this client can hear.
@@ -116,28 +116,28 @@ public:
 
 	void			UpdateServerState(bool bForce);
 
-	virtual bool CanShowSpeakerLabels()
-	{
+    bool CanShowSpeakerLabels() override
+    {
 		return m_pHelper->CanShowSpeakerLabels();
 	}
 
-	virtual void GetPlayerTextColor(int entindex, int color[3])
-	{
+    void GetPlayerTextColor(int entindex, int color[3]) override
+    {
 		m_pHelper->GetPlayerTextColor(entindex,color);
 	}
 
-	virtual int	GetAckIconHeight()
-	{
+    int	GetAckIconHeight() override
+    {
 		return m_pHelper->GetAckIconHeight();	
 	}
 
-	bool IsTalking()
-	{
+	bool IsTalking() override
+    {
 		return m_bTalking;
 	}
 
-	bool ServerAcked()
-	{
+	bool ServerAcked() override
+    {
 		return m_bServerAcked;
 	}
 

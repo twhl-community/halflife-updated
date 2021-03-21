@@ -55,8 +55,8 @@ public:
 		return _image[image];
 	}
 
-	void getSize(int &wide, int &tall)
-	{
+	void getSize(int &wide, int &tall) override
+    {
 		int w1, w2, t1, t2;
 		_image[0]->getTextSize(w1, t1);
 		_image[1]->getTextSize(w2, t2);
@@ -66,14 +66,14 @@ public:
 		setSize(wide, tall);
 	}
 
-	void doPaint(Panel *panel)
-	{
+	void doPaint(Panel *panel) override
+    {
 		_image[0]->doPaint(panel);
 		_image[1]->doPaint(panel);
 	}
 
-	void setPos(int x, int y)
-	{
+	void setPos(int x, int y) override
+    {
 		_image[0]->setPos(x, y);
 		
 		int swide, stall;
@@ -84,8 +84,8 @@ public:
 		_image[1]->setPos(x + wide, y + (stall * 0.9) - tall);
 	}
 
-	void setColor(Color color)
-	{
+	void setColor(Color color) override
+    {
 		_image[0]->setColor(color);
 	}
 
@@ -130,8 +130,8 @@ public:
 		_useFgColorAsImageColor = state;
 	}
 
-	virtual void setText(int textBufferLen, const char* text)
-	{
+    void setText(int textBufferLen, const char* text) override
+    {
 		_dualImage->GetImage(0)->setText(text);
 
 		// calculate the text size
@@ -167,13 +167,13 @@ public:
 		_dualImage->GetImage(1)->setText(text);
 	}
 
-	void getTextSize(int &wide, int &tall)
-	{
+	void getTextSize(int &wide, int &tall) override
+    {
 		_dualImage->getSize(wide, tall);
 	}
 
-	void setFgColor(int r,int g,int b,int a)
-	{
+	void setFgColor(int r,int g,int b,int a) override
+    {
 		Label::setFgColor(r,g,b,a);
 		Color color(r,g,b,a);
 		_dualImage->setColor(color);
@@ -181,8 +181,8 @@ public:
 		repaint();
 	}
 
-	void setFgColor(Scheme::SchemeColor sc)
-	{
+	void setFgColor(Scheme::SchemeColor sc) override
+    {
 		int r, g, b, a;
 		Label::setFgColor(sc);
 		Label::getFgColor( r, g, b, a );
@@ -191,8 +191,8 @@ public:
 		setFgColor( r, g, b, a );
 	}
 
-	void setFont(Font *font)
-	{
+	void setFont(Font *font) override
+    {
 		_dualImage->GetImage(0)->setFont(font);
 	}
 
@@ -208,8 +208,8 @@ public:
 		_offset[1] = y;
 	}
 
-	void paint();
-	void paintBackground();
+	void paint() override;
+	void paintBackground() override;
 	void calcAlignment(int iwide, int itall, int &x, int &y);
 
 private:
@@ -235,7 +235,7 @@ private:
 	class HitTestPanel : public Panel
 	{
 	public:
-		virtual void	internalMousePressed(MouseCode code);
+        void	internalMousePressed(MouseCode code) override;
 	};
 
 
@@ -301,8 +301,8 @@ public:
 // InputSignal overrides.
 public:
 
-	virtual void mousePressed(MouseCode code, Panel* panel);
-	virtual void cursorMoved(int x, int y, Panel *panel);
+    void mousePressed(MouseCode code, Panel* panel) override;
+    void cursorMoved(int x, int y, Panel *panel) override;
 
 	friend class CLabelHeader;
 };

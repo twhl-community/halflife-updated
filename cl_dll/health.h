@@ -44,10 +44,10 @@ typedef struct
 class CHudHealth: public CHudBase
 {
 public:
-	virtual int Init();
-	virtual int VidInit();
-	virtual int Draw(float fTime);
-	virtual void Reset();
+    int Init() override;
+    int VidInit() override;
+    int Draw(float fTime) override;
+    void Reset() override;
 	int MsgFunc_Health(const char *pszName,  int iSize, void *pbuf);
 	int MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf);
 	int m_iHealth;
