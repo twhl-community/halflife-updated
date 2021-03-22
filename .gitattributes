@@ -5,3 +5,8 @@
 *.sln text eol=crlf
 *.vcxproj text eol=crlf
 *.vcxproj.filters text eol=crlf
+
+# Force LF for Linux files:
+Makefile text eol=lf
+Makefile.* text eol=lf
+*.sh text eol=lf
