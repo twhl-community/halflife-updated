@@ -78,18 +78,14 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/view.o \
 	$(HL1_OBJ_DIR)/vgui_int.o \
 	$(HL1_OBJ_DIR)/vgui_ClassMenu.o \
-	$(HL1_OBJ_DIR)/vgui_ConsolePanel.o \
-	$(HL1_OBJ_DIR)/vgui_ControlConfigPanel.o \
 	$(HL1_OBJ_DIR)/vgui_CustomObjects.o \
 	$(HL1_OBJ_DIR)/vgui_MOTDWindow.o \
 	$(HL1_OBJ_DIR)/vgui_SchemeManager.o \
 	$(HL1_OBJ_DIR)/vgui_ScorePanel.o \
-	$(HL1_OBJ_DIR)/vgui_ServerBrowser.o \
 	$(HL1_OBJ_DIR)/vgui_TeamFortressViewport.o \
 	$(HL1_OBJ_DIR)/vgui_SpectatorPanel.o \
 	$(HL1_OBJ_DIR)/vgui_teammenu.o \
 	$(HL1_OBJ_DIR)/voice_status.o \
-	$(HL1_OBJ_DIR)/hud_servers.o \
 	
 
 DLL_OBJS = \

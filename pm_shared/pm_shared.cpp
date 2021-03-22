@@ -17,7 +17,7 @@
 
 #include <assert.h>
 #include "mathlib.h"
-#include "cdll_dll.h"
+#include "../dlls/cdll_dll.h"
 #include "const.h"
 #include "usercmd.h"
 #include "pm_defs.h"
