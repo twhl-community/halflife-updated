@@ -71,6 +71,7 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/gman.o \
 	$(HLDLL_OBJ_DIR)/h_ai.o \
 	$(HLDLL_OBJ_DIR)/h_battery.o \
+	$(HLDLL_OBJ_DIR)/h_cine.o \
 	$(HLDLL_OBJ_DIR)/h_cycler.o \
 	$(HLDLL_OBJ_DIR)/h_export.o \
 	$(HLDLL_OBJ_DIR)/handgrenade.o \
