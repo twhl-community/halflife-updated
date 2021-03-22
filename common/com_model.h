@@ -346,6 +346,9 @@ typedef struct player_info_s
 	Vector	prevgaitorigin;
 
 	customization_t customdata;
+
+	char hashedcdkey[16];
+	uint64 m_nSteamID;
 } player_info_t;
 
 #endif // #define COM_MODEL_H
