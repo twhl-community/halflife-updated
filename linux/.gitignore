@@ -2,6 +2,8 @@
 *.so
 *.so.*
 *.dylib
+*.o
+*_map.txt
 
 # Allow Half-Life-specific files that would otherwise be ignored
 !libSDL2.dylib
