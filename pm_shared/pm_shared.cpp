@@ -2059,7 +2059,9 @@ void PM_LadderMove( physent_t *pLadder )
 		return;
 #endif
 
+#ifndef __INTELLISENSE__
 	pmove->PM_GetModelBounds( pLadder->model, modelmins, modelmaxs );
+#endif
 
 	VectorAdd( modelmins, modelmaxs, ladderCenter );
 	VectorScale( ladderCenter, 0.5, ladderCenter );
@@ -2185,7 +2187,11 @@ physent_t *PM_Ladder()
 	{
 		pe = &pmove->moveents[i];
 		
-		if ( pe->model && (modtype_t)pmove->PM_GetModelType( pe->model ) == mod_brush && pe->skin == CONTENTS_LADDER )
+		if ( pe->model 
+#ifndef __INTELLISENSE__
+			&& (modtype_t)pmove->PM_GetModelType( pe->model ) == mod_brush 
+#endif		
+			&& pe->skin == CONTENTS_LADDER )
 		{
 
 			hull = (hull_t *)pmove->PM_HullForBsp( pe, test );

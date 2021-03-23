@@ -162,8 +162,10 @@ void PM_DrawPhysEntBBox(int num, int pcolor, float life)
 	if (pe->model)
 	{
 		VectorCopy(pe->origin, org);
-
+		
+#ifndef __INTELLISENSE__
 		pmove->PM_GetModelBounds( pe->model, modelmins, modelmaxs );
+#endif
 		for (j = 0; j < 8; j++)
 		{
 			tmp[0] = (j & 1) ? modelmins[0] - gap : modelmaxs[0] + gap;
