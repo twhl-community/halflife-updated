@@ -137,9 +137,9 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 			return NULL;
 
 		resNum--;
-	};
+	}
 
-	return pFile;
+    return pFile;
 }
 
 static void ParseRGBAFromString( byte colorArray[4], const char *colorVector )
