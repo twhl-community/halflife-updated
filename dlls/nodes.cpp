@@ -2445,9 +2445,9 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		if (length < 0) goto ShortFile;
 		memcpy(m_pRouteInfo, pMemFile, sizeof(char)*m_nRouteInfo);
 		pMemFile += sizeof(char)*m_nRouteInfo;
-		m_fRoutingComplete = TRUE;;
+		m_fRoutingComplete = TRUE;
 
-		// malloc for the hash links
+        // malloc for the hash links
 		//
 		m_pHashLinks = (short *)calloc(sizeof(short), m_nHashLinks);
 		if (!m_pHashLinks)
@@ -2740,7 +2740,7 @@ void CGraph::HashChoosePrimes(int TableSize)
     // We divide this interval into 16 equal sized zones. We want to find
     // one prime number that best represents that zone.
     //
-    int iPrime,iZone;;
+    int iPrime,iZone;
     for (iZone = 1, iPrime = 0; iPrime < 16; iZone += Spacing)
     {
         // Search for a prime number that is less than the target zone

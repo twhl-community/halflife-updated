@@ -902,7 +902,7 @@ int CHudAmmo::Draw(float flTime)
 			// draw the | bar
 			FillRGBA(x, y, iBarWidth, gHUD.m_iFontHeight, r, g, b, a);
 
-			x += iBarWidth + AmmoWidth/2;;
+			x += iBarWidth + AmmoWidth/2;
 
 			// GL Seems to need this
 			ScaleColors(r, g, b, a );
