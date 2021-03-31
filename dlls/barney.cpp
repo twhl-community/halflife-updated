@@ -488,7 +488,7 @@ void CBarney :: TalkInit()
 }
 
 
-static BOOL IsFacing( entvars_t *pevTest, const Vector &reference )
+BOOL IsFacing( entvars_t *pevTest, const Vector &reference )
 {
 	Vector vecDir = (reference - pevTest->origin);
 	vecDir.z = 0;
