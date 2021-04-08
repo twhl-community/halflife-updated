@@ -1588,7 +1588,7 @@ When a player is stuck, it's costly to try and unstick them
 Grab a test offset for the player based on a passed in index
 =================
 */
-int PM_GetRandomStuckOffsets(int nIndex, int server, Vector offset)
+int PM_GetRandomStuckOffsets(int nIndex, int server, Vector& offset)
 {
  // Last time we did a full
 	int idx;
