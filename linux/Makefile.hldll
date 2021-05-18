@@ -56,6 +56,7 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/defaultai.o \
 	$(HLDLL_OBJ_DIR)/doors.o \
 	$(HLDLL_OBJ_DIR)/effects.o \
+	$(HLDLL_OBJ_DIR)/ehandle.o \
 	$(HLDLL_OBJ_DIR)/egon.o \
 	$(HLDLL_OBJ_DIR)/explode.o \
 	$(HLDLL_OBJ_DIR)/flyingmonster.o \
