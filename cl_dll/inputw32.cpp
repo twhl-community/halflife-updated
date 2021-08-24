@@ -380,18 +380,24 @@ void IN_ResetMouse()
 {
 	// no work to do in SDL
 #ifdef _WIN32
+	if ( gpGlobals && ( gpGlobals->time - s_flRawInputUpdateTime > 1.0f || s_flRawInputUpdateTime == 0.0f ) )
+	{
+		s_flRawInputUpdateTime = gpGlobals->time;
+		m_bRawInput = CVAR_GET_FLOAT( "m_rawinput" ) != 0;
+
+		if ( m_bRawInput )
+		{
+			mouseRelative = SDL_TRUE;
+			SDL_SetRelativeMouseMode( SDL_TRUE );
+		}
+	}
+
 	if ( !m_bRawInput && mouseactive && gEngfuncs.GetWindowCenterX && gEngfuncs.GetWindowCenterY )
 	{
 
 		SetCursorPos ( gEngfuncs.GetWindowCenterX(), gEngfuncs.GetWindowCenterY() );
 		ThreadInterlockedExchange( &old_mouse_pos.x, gEngfuncs.GetWindowCenterX() );
 		ThreadInterlockedExchange( &old_mouse_pos.y, gEngfuncs.GetWindowCenterY() );
-	}
-
-	if ( gpGlobals && gpGlobals->time - s_flRawInputUpdateTime > 1.0f )
-	{
-		s_flRawInputUpdateTime = gpGlobals->time;
-		m_bRawInput = CVAR_GET_FLOAT( "m_rawinput" ) != 0;
 	}
 #endif
 }
