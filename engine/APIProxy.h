@@ -286,7 +286,7 @@ typedef int							(*pfnEngSrc_CL_CreateVisibleEntity_t )	( int type, struct cl_e
 typedef const struct model_s *		(*pfnEngSrc_GetSpritePointer_t )		( HSPRITE hSprite );
 typedef void						(*pfnEngSrc_pfnPlaySoundByNameAtLocation_t )	( const char *szSound, float volume, float *origin );
 typedef unsigned short				(*pfnEngSrc_pfnPrecacheEvent_t )		( int type, const char* psz );
-typedef void						(*pfnEngSrc_pfnPlaybackEvent_t )		( int flags, const struct edict_s *pInvoker, unsigned short eventindex, float delay, float *origin, float *angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
+typedef void						(*pfnEngSrc_pfnPlaybackEvent_t )		( int flags, const struct edict_s *pInvoker, unsigned short eventindex, float delay, const float *origin, const float *angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2 );
 typedef void						(*pfnEngSrc_pfnWeaponAnim_t )			( int iAnim, int body );
 typedef float						(*pfnEngSrc_pfnRandomFloat_t )			( float flLow, float flHigh );
 typedef int32						(*pfnEngSrc_pfnRandomLong_t )			( int32 lLow, int32 lHigh );
