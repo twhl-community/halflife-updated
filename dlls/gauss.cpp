@@ -115,7 +115,7 @@ BOOL CGauss::Deploy( )
 	return DefaultDeploy( "models/v_gauss.mdl", "models/p_gauss.mdl", GAUSS_DRAW, "gauss" );
 }
 
-void CGauss::Holster( int skiplocal /* = 0 */ )
+void CGauss::Holster()
 {
 	PLAYBACK_EVENT_FULL( FEV_RELIABLE | FEV_GLOBAL, m_pPlayer->edict(), m_usGaussFire, 0.01, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0, 0, 0, 0, 1 );
 	

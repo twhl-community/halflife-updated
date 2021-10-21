@@ -286,7 +286,7 @@ BOOL CCrossbow::Deploy( )
 	return DefaultDeploy( "models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW2, "bow" );
 }
 
-void CCrossbow::Holster( int skiplocal /* = 0 */ )
+void CCrossbow::Holster()
 {
 	m_fInReload = FALSE;// cancel any reload in progress.
 

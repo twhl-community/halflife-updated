@@ -397,7 +397,7 @@ BOOL CTripmine::Deploy( )
 }
 
 
-void CTripmine::Holster( int skiplocal /* = 0 */ )
+void CTripmine::Holster()
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 

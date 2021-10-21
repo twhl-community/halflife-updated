@@ -101,11 +101,11 @@ BOOL CPython::Deploy( )
 		pev->body = 0;
 	}
 
-	return DefaultDeploy( "models/v_357.mdl", "models/p_357.mdl", PYTHON_DRAW, "python", UseDecrement(), pev->body );
+	return DefaultDeploy( "models/v_357.mdl", "models/p_357.mdl", PYTHON_DRAW, "python", pev->body );
 }
 
 
-void CPython::Holster( int skiplocal /* = 0 */ )
+void CPython::Holster()
 {
 	m_fInReload = FALSE;// cancel any reload in progress.
 
@@ -260,7 +260,7 @@ void CPython::WeaponIdle()
 	bUseScope = g_pGameRules->IsMultiplayer();
 #endif
 	
-	SendWeaponAnim( iAnim, UseDecrement() ? 1 : 0, bUseScope );
+	SendWeaponAnim( iAnim, bUseScope );
 }
 
 

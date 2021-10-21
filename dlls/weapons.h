@@ -245,7 +245,7 @@ public:
 		 { return TRUE; }
 
 	virtual BOOL CanHolster() { return TRUE; }// can this weapon be put away right now?
-	virtual void Holster( int skiplocal = 0 );
+	virtual void Holster();
 	virtual void UpdateItemInfo() {}
 
 	virtual void ItemPreFrame()	{}		// called each frame by the player PreThink
@@ -316,11 +316,11 @@ public:
 	virtual BOOL PlayEmptySound();
 	virtual void ResetEmptySound();
 
-	virtual void SendWeaponAnim( int iAnim, int skiplocal = 1, int body = 0 );  // skiplocal is 1 if client is predicting weapon animations
+	virtual void SendWeaponAnim( int iAnim, int body = 0 );
 
     BOOL CanDeploy() override;
 	virtual BOOL IsUseable();
-	BOOL DefaultDeploy(const char *szViewModel, const char *szWeaponModel, int iAnim, const char *szAnimExt, int skiplocal = 0, int body = 0 );
+	BOOL DefaultDeploy(const char *szViewModel, const char *szWeaponModel, int iAnim, const char *szAnimExt, int body = 0 );
 	int DefaultReload( int iClipSize, int iAnim, float fDelay, int body = 0 );
 
 	void ItemPostFrame() override;	// called each frame by the player PostThink
@@ -332,7 +332,7 @@ public:
 	int UpdateClientData( CBasePlayer *pPlayer ) override;		// sends hud info to client dll, if things have changed
 	virtual void RetireWeapon();
 	virtual BOOL ShouldWeaponIdle() {return FALSE; }
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	virtual BOOL UseDecrement() { return FALSE; }
 	
 	int	PrimaryAmmoIndex() override;
@@ -542,7 +542,7 @@ public:
 	void PrimaryAttack() override;
 	int Swing( int fFirst );
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	int m_iSwing;
 	TraceResult m_trHit;
 
@@ -581,7 +581,7 @@ public:
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void Reload() override;
 	void WeaponIdle() override;
 
@@ -671,7 +671,7 @@ public:
 	void SecondaryAttack() override;
 	int AddToPlayer( CBasePlayer *pPlayer ) override;
 	BOOL Deploy( ) override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void Reload() override;
 	void WeaponIdle() override;
 
@@ -791,7 +791,7 @@ public:
 
 	BOOL Deploy() override;
 	BOOL CanHolster() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -869,7 +869,7 @@ public:
 	int AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0  ) override;
+	void Holster() override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -949,7 +949,7 @@ public:
 	int AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 
 	void UpdateEffect( const Vector &startPoint, const Vector &endPoint, float timeBlend );
 
@@ -1020,7 +1020,7 @@ public:
 	void SecondaryAttack() override;
 	BOOL Deploy() override;
 	BOOL IsUseable() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void Reload() override;
 	void WeaponIdle() override;
 	float m_flNextAnimTime;
@@ -1064,7 +1064,7 @@ public:
 	void PrimaryAttack() override;
 	BOOL Deploy() override;
 	BOOL CanHolster() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void WeaponIdle() override;
 	
 	BOOL UseDecrement() override
@@ -1116,7 +1116,7 @@ public:
 	BOOL Deploy() override;
 	BOOL IsUseable() override;
 	
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void WeaponIdle() override;
 	void Throw();
 	
@@ -1159,7 +1159,7 @@ public:
 
 	void PrimaryAttack() override;
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void WeaponIdle() override;
 
 	BOOL UseDecrement() override
@@ -1197,7 +1197,7 @@ public:
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	BOOL Deploy() override;
-	void Holster( int skiplocal = 0 ) override;
+	void Holster() override;
 	void WeaponIdle() override;
 	int m_fJustThrown;
 

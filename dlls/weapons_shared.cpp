@@ -87,7 +87,7 @@ BOOL CBasePlayerWeapon::DefaultReload(int iClipSize, int iAnim, float fDelay, in
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + fDelay;
 
 	//!!UNDONE -- reload sound goes here !!!
-	SendWeaponAnim(iAnim, UseDecrement(), body);
+	SendWeaponAnim(iAnim, body);
 
 	m_fInReload = TRUE;
 
