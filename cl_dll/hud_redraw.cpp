@@ -229,7 +229,7 @@ void ScaleColors( int &r, int &g, int &b, int a )
 	b = (int)(b * x);
 }
 
-int CHud :: DrawHudString(int xpos, int ypos, int iMaxX, char *szIt, int r, int g, int b )
+int CHud :: DrawHudString(int xpos, int ypos, int iMaxX, const char *szIt, int r, int g, int b )
 {
 	return xpos + gEngfuncs.pfnDrawString( xpos, ypos, szIt, r, g, b);
 }
@@ -243,7 +243,7 @@ int CHud :: DrawHudNumberString( int xpos, int ypos, int iMinX, int iNumber, int
 }
 
 // draws a string from right to left (right-aligned)
-int CHud :: DrawHudStringReverse( int xpos, int ypos, int iMinX, char *szString, int r, int g, int b )
+int CHud :: DrawHudStringReverse( int xpos, int ypos, int iMinX, const char *szString, int r, int g, int b )
 {
 	return xpos - gEngfuncs.pfnDrawStringReverse( xpos, ypos, szString, r, g, b);
 }
