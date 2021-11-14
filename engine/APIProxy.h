@@ -343,7 +343,7 @@ typedef int							(*pfnEngSrc_pfnVGUI2DrawCharacter_t )		( int x, int y, int ch,
 typedef int							(*pfnEngSrc_pfnVGUI2DrawCharacterAdd_t )	( int x, int y, int ch, int r, int g, int b, unsigned int font);
 typedef unsigned int		(*pfnEngSrc_COM_GetApproxWavePlayLength ) ( const char * filename);
 typedef void *						(*pfnEngSrc_pfnGetCareerUI_t)();
-typedef void						(*pfnEngSrc_Cvar_Set_t )			( char *cvar, char *value );
+typedef void						(*pfnEngSrc_Cvar_Set_t )			( const char *cvar, const char *value );
 typedef int							(*pfnEngSrc_pfnIsPlayingCareerMatch_t)();
 typedef double						(*pfnEngSrc_GetAbsoluteTime_t) ( void );
 typedef void						(*pfnEngSrc_pfnProcessTutorMessageDecayBuffer_t)(int *buffer, int bufferLength);
