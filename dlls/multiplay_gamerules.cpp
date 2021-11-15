@@ -676,12 +676,11 @@ void CHalfLifeMultiplay :: PlayerKilled( CBasePlayer *pVictim, entvars_t *pKille
 		// let the killer paint another decal as soon as he'd like.
 		PK->m_flNextDecalTime = gpGlobals->time;
 	}
-#ifndef HLDEMO_BUILD
+
 	if ( pVictim->HasNamedPlayerItem("weapon_satchel") )
 	{
 		DeactivateSatchels( pVictim );
 	}
-#endif
 }
 
 //=========================================================

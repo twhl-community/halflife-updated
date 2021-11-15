@@ -306,63 +306,44 @@ void W_Precache()
 	UTIL_PrecacheOther( "ammo_9mmAR" );
 	UTIL_PrecacheOther( "ammo_ARgrenades" );
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// python
 	UTIL_PrecacheOtherWeapon( "weapon_357" );
 	UTIL_PrecacheOther( "ammo_357" );
-#endif
 	
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// gauss
 	UTIL_PrecacheOtherWeapon( "weapon_gauss" );
 	UTIL_PrecacheOther( "ammo_gaussclip" );
-#endif
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// rpg
 	UTIL_PrecacheOtherWeapon( "weapon_rpg" );
 	UTIL_PrecacheOther( "ammo_rpgclip" );
-#endif
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// crossbow
 	UTIL_PrecacheOtherWeapon( "weapon_crossbow" );
 	UTIL_PrecacheOther( "ammo_crossbow" );
-#endif
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// egon
 	UTIL_PrecacheOtherWeapon( "weapon_egon" );
-#endif
 
 	// tripmine
 	UTIL_PrecacheOtherWeapon( "weapon_tripmine" );
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// satchel charge
 	UTIL_PrecacheOtherWeapon( "weapon_satchel" );
-#endif
 
 	// hand grenade
 	UTIL_PrecacheOtherWeapon("weapon_handgrenade");
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// squeak grenade
 	UTIL_PrecacheOtherWeapon( "weapon_snark" );
-#endif
 
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	// hornetgun
 	UTIL_PrecacheOtherWeapon( "weapon_hornetgun" );
-#endif
 
-
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 	if ( g_pGameRules->IsDeathmatch() )
 	{
 		UTIL_PrecacheOther( "weaponbox" );// container for dropped deathmatch weapons
 	}
-#endif
 
 	g_sModelIndexFireball = PRECACHE_MODEL ("sprites/zerogxplode.spr");// fireball
 	g_sModelIndexWExplosion = PRECACHE_MODEL ("sprites/WXplo1.spr");// underwater fireball

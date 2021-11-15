@@ -262,9 +262,6 @@ void PM_DrawBBox(Vector mins, Vector maxs, Vector origin, int pcolor, float life
 	}
 }
 
-
-#ifndef DEDICATED
-
 /*
 ================
 PM_ViewEntity
@@ -317,5 +314,3 @@ void PM_ViewEntity()
 		PM_DrawPhysEntBBox(trace.ent, pcolor, 0.3f);
 	}
 }
-
-#endif

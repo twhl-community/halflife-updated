@@ -105,7 +105,6 @@ void AngleVectorsTranspose (const Vector& angles, Vector* forward, Vector* right
 	}
 }
 
-#ifndef DISABLE_VEC_FUNCS
 void AngleMatrix (const float* angles, float (*matrix)[4] )
 {
 	float		angle;
@@ -165,7 +164,6 @@ void AngleIMatrix (const Vector& angles, float matrix[3][4] )
 	matrix[1][3] = 0.0;
 	matrix[2][3] = 0.0;
 }
-#endif
 
 void NormalizeAngles( float* angles )
 {
@@ -245,7 +243,6 @@ float AngleBetweenVectors( const Vector& v1, const Vector& v2 )
 	return angle;
 }
 
-#ifndef DISABLE_VEC_FUNCS
 void VectorTransform (const float* in1, float in2[3][4], float* out)
 {
 	out[0] = DotProduct(*reinterpret_cast<const Vector*>(in1), *reinterpret_cast<const Vector*>(in2[0])) + in2[0][3];
@@ -270,18 +267,14 @@ void VectorMA (const float* veca, float scale, const float* vecb, float* vecc)
 	vecc[1] = veca[1] + scale*vecb[1];
 	vecc[2] = veca[2] + scale*vecb[2];
 }
-#endif
 
-#ifndef DISABLE_VEC_FUNCS
 void CrossProduct (const float* v1, const float* v2, float* cross)
 {
 	cross[0] = v1[1]*v2[2] - v1[2]*v2[1];
 	cross[1] = v1[2]*v2[0] - v1[0]*v2[2];
 	cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
 }
-#endif
 
-#ifndef DISABLE_VEC_FUNCS
 float Length(const float* v)
 {
 	int		i;
@@ -293,7 +286,6 @@ float Length(const float* v)
 
 	return length;
 }
-#endif
 
 float Distance(const float* v1, const float* v2)
 {
@@ -302,7 +294,6 @@ float Distance(const float* v1, const float* v2)
 	return Length(d);
 }
 
-#ifndef DISABLE_VEC_FUNCS
 float VectorNormalize (float* v)
 {
 	float	length, ilength;
@@ -335,8 +326,6 @@ void VectorScale (const float* in, float scale, float* out)
 	out[1] = in[1]*scale;
 	out[2] = in[2]*scale;
 }
-#endif
-
 
 int Q_log2(int val)
 {
@@ -368,8 +357,6 @@ void VectorMatrix( const Vector& forward, Vector& right, Vector& up)
 	VectorNormalize( up );
 }
 
-
-#ifndef DISABLE_VEC_FUNCS
 void VectorAngles( const float* forward, float* angles )
 {
 	double	tmp, yaw, pitch;
@@ -398,7 +385,6 @@ void VectorAngles( const float* forward, float* angles )
 	angles[1] = yaw;
 	angles[2] = 0;
 }
-#endif
 
 /*
 ================

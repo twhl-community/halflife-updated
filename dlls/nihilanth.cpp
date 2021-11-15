@@ -12,7 +12,6 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
 #include "extdll.h"
 #include "util.h"
@@ -1846,7 +1845,3 @@ void CNihilanthHVR::BounceTouch( CBaseEntity *pOther )
 
 	m_vecIdeal = vecDir * m_vecIdeal.Length();
 }
-
-
-
-#endif
