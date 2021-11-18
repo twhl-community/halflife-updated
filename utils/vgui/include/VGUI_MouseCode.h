@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_MOUSECODE_H
-#define VGUI_MOUSECODE_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -20,5 +19,3 @@ enum VGUIAPI MouseCode
 	MOUSE_LAST,
 };
 }
-
-#endif

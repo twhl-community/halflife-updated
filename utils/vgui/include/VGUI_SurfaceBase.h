@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_SURFACEBASE_H
-#define VGUI_SURFACEBASE_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Dar.h>
@@ -77,6 +76,3 @@ friend class Panel;
 };
 
 }
-
-#endif
-

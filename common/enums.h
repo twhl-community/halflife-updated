@@ -13,8 +13,7 @@
  *
  ****/
 
-#ifndef ENUMS_H
-#define ENUMS_H
+#pragma once
 
 typedef enum netsrc_s
 	{
@@ -22,6 +21,3 @@ typedef enum netsrc_s
 		NS_SERVER,
 		NS_MULTICAST	// xxxMO
 	} netsrc_t;
-	
-#endif
-

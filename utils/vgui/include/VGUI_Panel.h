@@ -5,9 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_PANEL_H
-#define VGUI_PANEL_H
-
+#pragma once
 
 /*
 
@@ -224,5 +222,3 @@ friend class SurfaceBase;
 friend class Image;
 };
 }
-
-#endif

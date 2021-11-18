@@ -1,5 +1,4 @@
-#ifndef __APIPROXY__
-#define __APIPROXY__
+#pragma once
 
 #include "archtypes.h"     // DAL
 #include "netadr.h"
@@ -401,5 +400,3 @@ typedef struct cl_enginefuncs_s
 	pfnEngSrc_pfnVguiWrap2_GetMouseDelta_t pfnVguiWrap2_GetMouseDelta;
 	pfnEngSrc_pfnFilteredClientCmd_t pfnFilteredClientCmd;
 } cl_enginefunc_t;
-
-#endif // __APIPROXY__

@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_BITMAPTGA_H
-#define VGUI_BITMAPTGA_H
+#pragma once
 
 #include<VGUI_Bitmap.h>
 
@@ -25,5 +24,3 @@ private:
 };
 
 }
-
-#endif

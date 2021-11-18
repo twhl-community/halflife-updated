@@ -5,13 +5,11 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_TEXTIMAGE_H
-#define VGUI_TEXTIMAGE_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Image.h>
 #include<VGUI_Scheme.h>
-
 
 //TODO: need to add wrapping flag instead of being arbitrary about when wrapping and auto-resizing actually happens
 //		This is probably why you are having problems if you had text in a constructor and then changed the font
@@ -51,8 +49,3 @@ protected:
 };
 
 }
-
-#endif
-
-
-

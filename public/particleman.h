@@ -1,5 +1,4 @@
-#ifndef PARTICLEMAN_H
-#define PARTICLEMAN_H
+#pragma once
 
 #include "interface.h"
 #include "pman_triangleffect.h"
@@ -96,6 +95,3 @@ public:
 	}
 #endif
 };
-
-
-#endif //PARTICLEMAN_H

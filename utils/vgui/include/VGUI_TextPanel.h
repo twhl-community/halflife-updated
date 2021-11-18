@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_TEXTPANEL_H
-#define VGUI_TEXTPANEL_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -39,8 +38,3 @@ protected:
 };
 
 }
-
-#endif
-
-
-

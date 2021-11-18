@@ -5,11 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef IGAMECLIENTEXPORTS_H
-#define IGAMECLIENTEXPORTS_H
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "interface.h"
 
@@ -29,6 +25,3 @@ public:
 };
 
 #define GAMECLIENTEXPORTS_INTERFACE_VERSION "GameClientExports001"
-
-
-#endif // IGAMECLIENTEXPORTS_H

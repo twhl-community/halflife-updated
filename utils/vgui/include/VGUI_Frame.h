@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_FRAME_H
-#define VGUI_FRAME_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -69,5 +68,3 @@ class VGUIAPI Frame : public Panel
  };
 
 }
-
-#endif

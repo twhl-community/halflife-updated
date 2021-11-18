@@ -21,7 +21,6 @@
 #include "hud.h"
 #include "cl_util.h"
 #include "netadr.h"
-#undef INTERFACE_H
 #include "../public/interface.h"
 //#include "vgui_schememanager.h"
 

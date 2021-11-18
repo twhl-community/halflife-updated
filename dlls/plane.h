@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef PLANE_H
-#define PLANE_H
+
+#pragma once
 
 //=========================================================
 // Plane
@@ -39,5 +39,3 @@ public:
 	float	m_flDist;
 	BOOL	m_fInitialized;
 };
-
-#endif // PLANE_H

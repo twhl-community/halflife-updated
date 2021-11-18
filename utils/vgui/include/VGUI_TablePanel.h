@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_TABLEPANEL_H
-#define VGUI_TABLEPANEL_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -67,5 +66,3 @@ private:
 };
 
 }
-
-#endif

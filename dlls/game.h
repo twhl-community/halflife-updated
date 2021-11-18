@@ -13,8 +13,7 @@
 *
 ****/
 
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 extern void GameDLLInit( void );
 
@@ -42,5 +41,3 @@ extern cvar_t	*g_psv_gravity;
 extern cvar_t	*g_psv_aim;
 extern cvar_t	*g_footsteps;
 extern cvar_t* g_psv_cheats;
-
-#endif		// GAME_H

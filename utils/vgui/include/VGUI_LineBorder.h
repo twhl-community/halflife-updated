@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_LINEBORDER_H
-#define VGUI_LINEBORDER_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Border.h>
@@ -35,5 +34,3 @@ protected:
 };
 
 }
-
-#endif

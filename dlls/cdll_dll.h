@@ -17,8 +17,7 @@
 
 // this file is included by both the game-dll and the client-dll,
 
-#ifndef CDLL_DLL_H
-#define CDLL_DLL_H
+#pragma once
 
 #define MAX_WEAPONS		32		// ???
 
@@ -153,5 +152,3 @@ constexpr Vector VEC_DUCK_HULL_MAX(16, 16, 18);
 constexpr Vector VEC_DUCK_VIEW(0, 0, 12);
 
 constexpr Vector VEC_DEAD_VIEW(0, 0, -8);
-
-#endif

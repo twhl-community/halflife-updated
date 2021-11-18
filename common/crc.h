@@ -13,11 +13,8 @@
 *
 ****/
 /* crc.h */
-#ifndef CRC_H
-#define CRC_H
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 #include "archtypes.h"     // DAL
 
@@ -55,5 +52,3 @@ char *MD5_Print(unsigned char hash[16]);
 int MD5_Hash_CachedFile(unsigned char digest[16], unsigned char *pCache, int nFileSize, int bSeed, unsigned int seed[4]);
 
 int CRC_MapFile(CRC32_t *crcvalue, char *pszFileName);
-
-#endif

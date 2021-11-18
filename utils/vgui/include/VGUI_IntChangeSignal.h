@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_INTCHANGESIGNAL_H
-#define VGUI_INTCHANGESIGNAL_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -22,5 +21,3 @@ public:
 };
 
 }
-
-#endif

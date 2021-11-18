@@ -5,17 +5,11 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_CHECKBUTTON2_H
-#define VGUI_CHECKBUTTON2_H
-#ifdef _WIN32
 #pragma once
-#endif
-
 
 #include "VGUI_Label.h"
 #include "VGUI_ImagePanel.h"
 #include "vgui_defaultinputsignal.h"
-
 
 namespace vgui
 {
@@ -96,6 +90,3 @@ public:
 
 
 }
-
-
-#endif // VGUI_CHECKBUTTON2_H

@@ -8,8 +8,7 @@
 // Camera.h  --  defines and such for a 3rd person camera
 // NOTE: must include quakedef.h first
 
-#ifndef _CAMERA_H_
-#define _CAMERA_H_
+#pragma once
 
 // pitch, yaw, dist
 extern Vector cam_ofs;
@@ -20,5 +19,3 @@ void CAM_Init();
 void CAM_ClearStates();
 void CAM_StartMouseMove();
 void CAM_EndMouseMove();
-
-#endif		// _CAMERA_H_

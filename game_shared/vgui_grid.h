@@ -5,15 +5,9 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_GRID_H
-#define VGUI_GRID_H
-#ifdef _WIN32
 #pragma once
-#endif
-
 
 #include "VGUI_Panel.h"
-
 
 namespace vgui
 {
@@ -117,6 +111,3 @@ protected:
 };
 
 };
-
-
-#endif // VGUI_GRID_H

@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef SHAKE_H
-#define SHAKE_H
+
+#pragma once
 
 // Screen / View effects
 
@@ -49,6 +49,3 @@ typedef struct
 	short			fadeFlags;		// flags
 	byte			r, g, b, a;		// fade to color ( max alpha )
 } ScreenFade;
-
-#endif		// SHAKE_H
-

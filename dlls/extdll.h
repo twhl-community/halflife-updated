@@ -12,9 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef EXTDLL_H
-#define EXTDLL_H
 
+#pragma once
 
 //
 // Global header file for extension DLLs
@@ -39,5 +38,3 @@ typedef unsigned int string_t;				// from engine's pr_comp.h;
 
 // Shared header between the client DLL and the game DLLs
 #include "cdll_dll.h"
-
-#endif //EXTDLL_H

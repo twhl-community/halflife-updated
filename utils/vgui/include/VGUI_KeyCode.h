@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_KEYCODE_H
-#define VGUI_KEYCODE_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -120,7 +119,3 @@ enum VGUIAPI KeyCode
 	KEY_LAST,
 };
 }
-
-
-#endif
-

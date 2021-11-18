@@ -19,8 +19,7 @@
 // JOHN:  client dll interface declarations
 //
 
-#ifndef CDLL_INT_H
-#define CDLL_INT_H
+#pragma once
 
 #include "const.h"
 #include "steam/steamtypes.h"
@@ -93,6 +92,3 @@ typedef struct hud_player_info_s
 
 //#include "server.h" // server_static_t define for apiproxy
 #include "APIProxy.h"
-
-#endif // CDLL_INT_H
-	

@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_ACTIONSIGNAL_H
-#define VGUI_ACTIONSIGNAL_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -78,7 +77,3 @@ public:
 };
 
 }
-
-#endif
-
-

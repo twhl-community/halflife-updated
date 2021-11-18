@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_BORDERLAYOUT_H
-#define VGUI_BORDERLAYOUT_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Layout.h>
@@ -37,10 +36,3 @@ public:
 };
 
 }
-
-#endif
-
-
-
-
-

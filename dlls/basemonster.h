@@ -13,8 +13,7 @@
 *
 ****/
 
-#ifndef BASEMONSTER_H
-#define BASEMONSTER_H
+#pragma once
 
 //
 // generic Monster
@@ -335,7 +334,3 @@ public:
 
 	CBaseEntity* DropItem ( const char *pszItemName, const Vector &vecPos, const Vector &vecAng );// drop an item.
 };
-
-
-
-#endif // BASEMONSTER_H

@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_LABEL_H
-#define VGUI_LABEL_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -77,5 +76,3 @@ protected:
 };
 
 }
-
-#endif

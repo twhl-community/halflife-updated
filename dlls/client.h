@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef CLIENT_H
-#define CLIENT_H
+
+#pragma once
 
 extern void respawn( entvars_t* pev, BOOL fCopyCorpse );
 extern BOOL ClientConnect( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] );
@@ -61,5 +61,3 @@ extern void	CreateInstancedBaselines ();
 extern int	InconsistentFile( const edict_t *player, const char *filename, char *disconnect_message );
 
 extern int AllowLagCompensation();
-
-#endif		// CLIENT_H

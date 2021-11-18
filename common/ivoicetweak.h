@@ -5,11 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef IVOICETWEAK_H
-#define IVOICETWEAK_H
-#ifdef _WIN32
 #pragma once
-#endif
 
 // These provide access to the voice controls.
 typedef enum
@@ -33,6 +29,3 @@ typedef struct IVoiceTweak_s
 
     int             (*GetSpeakingVolume)();
 } IVoiceTweak;
-
-
-#endif // IVOICETWEAK_H

@@ -5,13 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VOICE_GAMEMGR_H
-#define VOICE_GAMEMGR_H
-
-#ifdef _WIN32
 #pragma once
-#endif
-
 
 #include "voice_common.h"
 
@@ -77,6 +71,3 @@ private:
 	int					m_nMaxPlayers;
 	double				m_UpdateInterval;						// How long since the last update.
 };
-
-
-#endif // VOICE_GAMEMGR_H

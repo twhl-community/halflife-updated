@@ -5,8 +5,6 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef SPECTATOR_H
-#define SPECTATOR_H
 #pragma once
 
 #include "cl_entity.h"
@@ -152,5 +150,3 @@ private:
 
 	cameraWayPoint_t	m_CamPath[MAX_CAM_WAYPOINTS];
 };
-
-#endif // SPECTATOR_H

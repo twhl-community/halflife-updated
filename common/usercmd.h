@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef USERCMD_H
-#define USERCMD_H
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 typedef struct usercmd_s
 {
@@ -37,5 +34,3 @@ typedef struct usercmd_s
 	int		impact_index;
 	Vector	impact_position;
 } usercmd_t;
-
-#endif // USERCMD_H

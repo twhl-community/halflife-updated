@@ -14,8 +14,7 @@
 ****/
 // Base class for flying monsters.  This overrides the movement test & execution code from CBaseMonster
 
-#ifndef FLYINGMONSTER_H
-#define FLYINGMONSTER_H
+#pragma once
 
 class CFlyingMonster : public CBaseMonster
 {
@@ -48,7 +47,3 @@ protected:
 	const char	*m_pFlapSound;
 	float m_flLastZYawTime;
 };
-
-
-#endif		//FLYINGMONSTER_H
-

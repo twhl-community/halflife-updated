@@ -20,8 +20,7 @@
 //    for legacy code). In this case, you need to make a new version name for your new interface, and make a wrapper interface and 
 //    expose it for the old interface.
 
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#pragma once
 
 // All interfaces derive from this.
 class IBaseInterface
@@ -118,8 +117,3 @@ extern void					Sys_FreeModule(HINTERFACEMODULE hModule);
 // Use these to get the factory function from either a loaded module or the current module.
 extern CreateInterfaceFn	Sys_GetFactory( HINTERFACEMODULE hModule );
 extern CreateInterfaceFn	Sys_GetFactoryThis( void );
-
-#endif
-
-
-

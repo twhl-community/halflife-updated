@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_APP_H
-#define VGUI_APP_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_MouseCode.h>
@@ -123,8 +122,3 @@ private:
 	friend class SurfaceBase;
 };
 }
-
-#endif
-
-
-

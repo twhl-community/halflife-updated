@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef DECALS_H
-#define DECALS_H
+
+#pragma once
 
 //
 // Dynamic Decals
@@ -71,5 +71,3 @@ typedef struct
 } DLL_DECALLIST;
 
 extern DLL_DECALLIST gDecals[];
-
-#endif	// DECALS_H

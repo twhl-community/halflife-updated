@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef CVARDEF_H
-#define CVARDEF_H
+
+#pragma once
 
 #define	FCVAR_ARCHIVE		(1<<0)	// set to cause it to be saved to vars.rc
 #define	FCVAR_USERINFO		(1<<1)	// changes the client's info string
@@ -37,4 +37,3 @@ typedef struct cvar_s
 	float	value;
 	struct cvar_s *next;
 } cvar_t;
-#endif

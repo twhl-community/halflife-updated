@@ -1,9 +1,4 @@
-#ifndef PARTICLEMEM_H__
-#define PARTICLEMEM_H__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include <vector>
 
@@ -192,6 +187,3 @@ public:
 	
 	visibleparticles_t *m_pVisibleParticles;
 };
-
-
-#endif//PARTICLEMEM_H__

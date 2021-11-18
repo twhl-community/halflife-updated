@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_COLOR_H
-#define VGUI_COLOR_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Scheme.h>
@@ -39,6 +38,3 @@ public:
 };
 
 }
-
-
-#endif

@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef SCOREPANEL_H
-#define SCOREPANEL_H
+#pragma once
 
 #include<VGUI_Panel.h>
 #include<VGUI_TablePanel.h>
@@ -306,5 +305,3 @@ public:
 
 	friend class CLabelHeader;
 };
-
-#endif

@@ -13,8 +13,7 @@
 *
 ****/
 
-#ifndef __AMMO_H__
-#define __AMMO_H__
+#pragma once
 
 #define MAX_WEAPON_NAME 128
 
@@ -57,6 +56,3 @@ struct WEAPON
 };
 
 typedef int AMMO;
-
-
-#endif

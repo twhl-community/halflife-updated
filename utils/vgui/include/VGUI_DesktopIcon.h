@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_DESKTOPICON_H
-#define VGUI_DESKTOPICON_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -37,5 +36,3 @@ protected:
 };
 
 }
-
-#endif

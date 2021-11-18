@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_FONT_H
-#define VGUI_FONT_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -47,5 +46,3 @@ class VGUIAPI Font
 void Font_Reset();
 
 }
-
-#endif

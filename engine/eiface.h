@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef EIFACE_H
-#define EIFACE_H
+
+#pragma once
 
 #include "archtypes.h"     // DAL
 
@@ -523,5 +523,3 @@ extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
 
 typedef int	(*APIFUNCTION)( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
 typedef int	(*APIFUNCTION2)( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
-
-#endif //EIFACE_H

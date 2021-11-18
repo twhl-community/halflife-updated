@@ -5,14 +5,10 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VOICE_STATUS_H
-#define VOICE_STATUS_H
 #pragma once
 
 #include "voice_common.h"
 #include "voice_banmgr.h"
-
-
 
 // This is provided by each mod to access data that may not be the same across mods.
 class IVoiceStatusHelper
@@ -197,9 +193,3 @@ CVoiceStatus* GetClientVoice();
 
 // Get the (global) voice manager. 
 IVoiceHud* GetClientVoiceHud();
-
-
-
-
-
-#endif // VOICE_STATUS_H

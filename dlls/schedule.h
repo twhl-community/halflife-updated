@@ -16,8 +16,7 @@
 // Scheduling 
 //=========================================================
 
-#ifndef	SCHEDULE_H
-#define	SCHEDULE_H
+#pragma once
 
 #define	TASKSTATUS_NEW				0			// Just started
 #define TASKSTATUS_RUNNING			1			// Running task & movement
@@ -286,5 +285,3 @@ struct WayPoint_t
 #define bits_COND_ALL_SPECIAL			(bits_COND_SPECIAL1 | bits_COND_SPECIAL2)
 
 #define bits_COND_CAN_ATTACK			(bits_COND_CAN_RANGE_ATTACK1 | bits_COND_CAN_MELEE_ATTACK1 | bits_COND_CAN_RANGE_ATTACK2 | bits_COND_CAN_MELEE_ATTACK2)
-
-#endif	// SCHEDULE_H

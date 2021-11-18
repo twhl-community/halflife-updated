@@ -12,8 +12,7 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef ENGINECALLBACK_H
-#define ENGINECALLBACK_H
+
 #pragma once
 
 #include "event_flags.h"
@@ -154,5 +153,3 @@ inline void *GET_PRIVATE( edict_t *pent )
 #define ENGINE_FORCE_UNMODIFIED	( *g_engfuncs.pfnForceUnmodified )
 
 #define PLAYER_CNX_STATS		( *g_engfuncs.pfnGetPlayerStats )
-
-#endif		//ENGINECALLBACK_H

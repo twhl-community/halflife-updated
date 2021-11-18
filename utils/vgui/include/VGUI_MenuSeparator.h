@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_MENUSEPARATOR_H
-#define VGUI_MENUSEPARATOR_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Label.h>
@@ -23,5 +22,3 @@ protected:
 };
 
 }
-
-#endif

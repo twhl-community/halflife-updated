@@ -5,10 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_REPAINTSIGNAL_H
-#define VGUI_REPAINTSIGNAL_H
-
-
+#pragma once
 
 namespace vgui
 {
@@ -21,6 +18,3 @@ public:
 };
 
 }
-
-
-#endif

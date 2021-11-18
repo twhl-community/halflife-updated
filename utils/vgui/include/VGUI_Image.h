@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_IMAGE_H
-#define VGUI_IMAGE_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Scheme.h>
@@ -58,5 +57,3 @@ public:
 	virtual void doPaint(Panel* panel);
 };
 }
-
-#endif

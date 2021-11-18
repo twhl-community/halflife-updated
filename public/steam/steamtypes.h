@@ -4,11 +4,7 @@
 //
 //=============================================================================
 
-#ifndef STEAMTYPES_H
-#define STEAMTYPES_H
-#ifdef _WIN32
 #pragma once
-#endif
 
 // Steam-specific types. Defined here so this header file can be included in other code bases.
 #if defined( __GNUC__ ) && !defined(POSIX)
@@ -173,5 +169,3 @@ const PartnerId_t k_uPartnerIdInvalid = 0;
 #else
 #define k_uPartnerIdInvalid 0x0;
 #endif
-
-#endif // STEAMTYPES_H

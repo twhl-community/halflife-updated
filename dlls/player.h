@@ -12,9 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef PLAYER_H
-#define PLAYER_H
 
+#pragma once
 
 #include "pm_materials.h"
 
@@ -339,5 +338,3 @@ public:
 
 
 extern BOOL gInitHUD;
-
-#endif // PLAYER_H

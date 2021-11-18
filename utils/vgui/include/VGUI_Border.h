@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_BORDER_H
-#define VGUI_BORDER_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Image.h>
@@ -41,5 +40,3 @@ friend class BorderPair;
 };
 
 }
-
-#endif

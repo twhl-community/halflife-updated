@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_MINIAPP_H
-#define VGUI_MINIAPP_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -29,5 +28,3 @@ protected:
 };
 
 }
-
-#endif

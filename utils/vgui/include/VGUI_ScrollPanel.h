@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_SCROLLPANEL_H
-#define VGUI_SCROLLPANEL_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -46,10 +45,3 @@ public: //bullshit public
 };
 
 }
-
-
-
-
-
-
-#endif

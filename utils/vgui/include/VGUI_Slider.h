@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_SLIDER_H
-#define VGUI_SLIDER_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Panel.h>
@@ -60,10 +59,3 @@ protected:
 };
 
 }
-
-#endif
-
-
-
-
-

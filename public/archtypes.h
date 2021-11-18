@@ -2,8 +2,8 @@
 // Word size dependent definitions
 // DAL 1/03
 //
-#ifndef ARCHTYPES_H
-#define ARCHTYPES_H
+
+#pragma once
 
 #include "steam/steamtypes.h"
 
@@ -17,5 +17,3 @@
 #define _S_IWRITE S_IWRITE
 typedef long unsigned int ulong;
 #endif
-
-#endif // ARCHTYPES_H

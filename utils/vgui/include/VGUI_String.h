@@ -5,11 +5,9 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_STRING_H
-#define VGUI_STRING_H
+#pragma once
 
 #include<VGUI.h>
-
 
 namespace vgui
 {
@@ -55,7 +53,3 @@ public:
 
 
 }
-
-
-#endif
-

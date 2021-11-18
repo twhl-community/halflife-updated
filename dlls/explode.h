@@ -12,9 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef EXPLODE_H
-#define EXPLODE_H
 
+#pragma once
 
 #define	SF_ENVEXPLOSION_NODAMAGE	( 1 << 0 ) // when set, ENV_EXPLOSION will not actually inflict damage
 #define	SF_ENVEXPLOSION_REPEATABLE	( 1 << 1 ) // can this entity be refired?
@@ -28,5 +27,3 @@ extern DLL_GLOBAL	short	g_sModelIndexSmoke;
 
 
 extern void ExplosionCreate( const Vector &center, const Vector &angles, edict_t *pOwner, int magnitude, BOOL doDamage );
-
-#endif			//EXPLODE_H

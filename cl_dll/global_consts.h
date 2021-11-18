@@ -4,13 +4,8 @@
 //
 // $NoKeywords: $
 //=============================================================================
-#ifndef GLOBALCONSTS_H
-#define GLOBALCONSTS_H
-#ifdef _WIN32
+
 #pragma once
-#endif
-
-
 
 enum 
 { 
@@ -26,5 +21,3 @@ enum
 
 #define MAX_SERVERNAME_LENGTH	64
 #define MAX_TEAMNAME_SIZE 32
-
-#endif // GLOBALCONSTS_H

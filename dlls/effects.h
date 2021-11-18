@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef EFFECTS_H
-#define EFFECTS_H
+
+#pragma once
 
 #define SF_BEAM_STARTON			0x0001
 #define SF_BEAM_TOGGLE			0x0002
@@ -205,5 +205,3 @@ public:
 	int		m_iszSpriteName;
 	Vector  m_firePosition;
 };
-
-#endif		//EFFECTS_H

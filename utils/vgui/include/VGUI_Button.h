@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_BUTTON_H
-#define VGUI_BUTTON_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Label.h>
@@ -57,5 +56,3 @@ protected:
 };
 
 }
-
-#endif

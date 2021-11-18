@@ -1,8 +1,7 @@
 // hltv.h
 // all shared consts between server, clients and proxy
 
-#ifndef HLTV_H
-#define HLTV_H
+#pragma once
 
 #define TYPE_CLIENT				0	// client is a normal HL client (default)
 #define TYPE_PROXY				1	// client is another proxy
@@ -50,5 +49,3 @@
 #define DRC_FLAG_STARTPATH		1	// end with speed 0.0
 #define DRC_FLAG_SLOWSTART		2	// start with speed 0.0
 #define DRC_FLAG_SLOWEND		4	// end with speed 0.0
-
-#endif // HLTV_H

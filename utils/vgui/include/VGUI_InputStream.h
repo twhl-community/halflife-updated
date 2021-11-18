@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_FILE_H
-#define VGUI_FILE_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -26,5 +25,3 @@ public:
 };
 
 }
-
-#endif

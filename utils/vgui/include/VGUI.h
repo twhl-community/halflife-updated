@@ -5,8 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_H
-#define VGUI_H
+#pragma once
 
 //If you are going to add stuff to the vgui core...
 //
@@ -103,6 +102,3 @@ VGUIAPI int   vgui_dprintf(const char* format,...);
 VGUIAPI int   vgui_dprintf2(const char* format,...);
 
 }
-
-#endif
-
