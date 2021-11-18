@@ -36,18 +36,12 @@ typedef uint32 CRC32_t;
 typedef uint32 CRC32_t;
 #endif
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 void CRC32_Init(CRC32_t *pulCRC);
 CRC32_t CRC32_Final(CRC32_t pulCRC);
 void CRC32_ProcessBuffer(CRC32_t *pulCRC, void *p, int len);
 void CRC32_ProcessByte(CRC32_t *pulCRC, unsigned char ch);
 int CRC_File(CRC32_t *crcvalue, char *pszFileName);
-#ifdef __cplusplus
-}
-#endif
+
 unsigned char COM_BlockSequenceCRCByte (unsigned char *base, int length, int sequence);
 
 void MD5Init(MD5Context_t *context);

@@ -54,7 +54,6 @@ typedef void *HGLRC;
 #endif
 
 
-#ifdef __cplusplus
 
 //#undef FALSE
 //#undef TRUE
@@ -64,24 +63,17 @@ typedef void *HGLRC;
 //const bool	FALSE		= false;
 //const bool	TRUE		= true;
 #endif
-#endif
 
 #ifndef NULL
-	#ifdef __cplusplus
-		#define NULL    0
-	#else
-		#define NULL    ((void *)0)
-	#endif
+	#define NULL    0
 #endif
 
-#ifdef __cplusplus
 inline int		ioctlsocket( int d, int cmd, uint32 *argp )	{ return ioctl( d, cmd, argp ); }
 inline int		closesocket( int fd )								{ return close( fd ); }
 inline char *	GetCurrentDirectory( size_t size, char * buf )		{ return getcwd( buf, size ); }
 inline int		WSAGetLastError()									{ return errno; }
 
 inline void		DebugBreak( void ) { exit( 1 ); }
-#endif
 
 extern char g_szEXEName[ 4096 ];
 

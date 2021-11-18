@@ -7,10 +7,7 @@
 #include "hud.h"
 #include "cl_util.h"
 #include "camera.h"
-extern "C"
-{
 #include "kbutton.h"
-}
 #include "cvardef.h"
 #include "usercmd.h"
 #include "const.h"

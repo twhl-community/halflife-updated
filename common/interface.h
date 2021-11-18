@@ -23,8 +23,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#ifdef __cplusplus
-
 // All interfaces derive from this.
 class IBaseInterface
 {
@@ -120,8 +118,6 @@ extern void					Sys_FreeModule(HINTERFACEMODULE hModule);
 // Use these to get the factory function from either a loaded module or the current module.
 extern CreateInterfaceFn	Sys_GetFactory( HINTERFACEMODULE hModule );
 extern CreateInterfaceFn	Sys_GetFactoryThis( void );
-
-#endif // __cplusplus
 
 #endif
 
