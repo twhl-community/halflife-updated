@@ -4,6 +4,7 @@
 #include "archtypes.h"     // DAL
 #include "netadr.h"
 #include "Sequence.h"
+#include "common_types.h"
 
 #ifndef _WIN32
 #include "enums.h"
@@ -223,15 +224,15 @@ typedef int							(*pfnEngSrc_pfnSPR_Frames_t )			( HSPRITE hPic );
 typedef int							(*pfnEngSrc_pfnSPR_Height_t )			( HSPRITE hPic, int frame );
 typedef int							(*pfnEngSrc_pfnSPR_Width_t )			( HSPRITE hPic, int frame );
 typedef void						(*pfnEngSrc_pfnSPR_Set_t )				( HSPRITE hPic, int r, int g, int b );
-typedef void						(*pfnEngSrc_pfnSPR_Draw_t )			( int frame, int x, int y, const struct rect_s *prc );
-typedef void						(*pfnEngSrc_pfnSPR_DrawHoles_t )		( int frame, int x, int y, const struct rect_s *prc );
-typedef void						(*pfnEngSrc_pfnSPR_DrawAdditive_t )	( int frame, int x, int y, const struct rect_s *prc );
+typedef void						(*pfnEngSrc_pfnSPR_Draw_t )			( int frame, int x, int y, const Rect *prc );
+typedef void						(*pfnEngSrc_pfnSPR_DrawHoles_t )		( int frame, int x, int y, const Rect *prc );
+typedef void						(*pfnEngSrc_pfnSPR_DrawAdditive_t )	( int frame, int x, int y, const Rect *prc );
 typedef void						(*pfnEngSrc_pfnSPR_EnableScissor_t )	( int x, int y, int width, int height );
 typedef void						(*pfnEngSrc_pfnSPR_DisableScissor_t )	( void );
 typedef struct client_sprite_s	*	(*pfnEngSrc_pfnSPR_GetList_t )			(const char *psz, int *piCount );
 typedef void						(*pfnEngSrc_pfnFillRGBA_t )			( int x, int y, int width, int height, int r, int g, int b, int a );
 typedef int							(*pfnEngSrc_pfnGetScreenInfo_t ) 		( struct SCREENINFO_s *pscrinfo );
-typedef void						(*pfnEngSrc_pfnSetCrosshair_t )		( HSPRITE hspr, wrect_t rc, int r, int g, int b );
+typedef void						(*pfnEngSrc_pfnSetCrosshair_t )		( HSPRITE hspr, Rect rc, int r, int g, int b );
 typedef struct cvar_s *				(*pfnEngSrc_pfnRegisterVariable_t )	( const char *szName, const char *szValue, int flags );
 typedef float						(*pfnEngSrc_pfnGetCvarFloat_t )		( const char *szName );
 typedef const char*						(*pfnEngSrc_pfnGetCvarString_t )	( const char *szName );
@@ -319,7 +320,7 @@ typedef qboolean					(*pfnEngSrc_GetPlayerUniqueID_t)(int iPlayer, char playerID
 typedef int							(*pfnEngSrc_GetTrackerIDForPlayer_t)(int playerSlot);
 typedef int							(*pfnEngSrc_GetPlayerForTrackerID_t)(int trackerID);
 typedef int							(*pfnEngSrc_pfnServerCmdUnreliable_t )( char *szCmdString );
-typedef void						(*pfnEngSrc_GetMousePos_t )(struct tagPOINT *ppt);
+typedef void						(*pfnEngSrc_GetMousePos_t )(Point *ppt);
 typedef void						(*pfnEngSrc_SetMousePos_t )(int x, int y);
 typedef void						(*pfnEngSrc_SetMouseEnable_t)(qboolean fEnable);
 typedef struct cvar_s *				(*pfnEngSrc_GetFirstCVarPtr_t)();
@@ -333,7 +334,7 @@ typedef void						(*pfnEngSrc_pfnSetFilterMode_t )( int mode );
 typedef void						(*pfnEngSrc_pfnSetFilterColor_t )( float r, float g, float b );
 typedef void						(*pfnEngSrc_pfnSetFilterBrightness_t )( float brightness );
 typedef sequenceEntry_s*			(*pfnEngSrc_pfnSequenceGet_t )( const char *fileName, const char* entryName );
-typedef void						(*pfnEngSrc_pfnSPR_DrawGeneric_t )( int frame, int x, int y, const struct rect_s *prc, int src, int dest, int w, int h );
+typedef void						(*pfnEngSrc_pfnSPR_DrawGeneric_t )( int frame, int x, int y, const Rect *prc, int src, int dest, int w, int h );
 typedef sentenceEntry_s*			(*pfnEngSrc_pfnSequencePickSentence_t )( const char *sentenceName, int pickMethod, int* entryPicked );
 // draw a complete string
 typedef int							(*pfnEngSrc_pfnDrawString_t )		( int x, int y, const char *str, int r, int g, int b );
@@ -501,15 +502,15 @@ typedef void	(*pfnEngDst_pfnSPR_Frames_t )			( HSPRITE * );
 typedef void	(*pfnEngDst_pfnSPR_Height_t )			( HSPRITE *, int * );
 typedef void	(*pfnEngDst_pfnSPR_Width_t )			( HSPRITE *, int * );
 typedef void	(*pfnEngDst_pfnSPR_Set_t )				( HSPRITE *, int *, int *, int * );
-typedef void	(*pfnEngDst_pfnSPR_Draw_t )				( int *, int *, int *, const struct rect_s ** );
-typedef void	(*pfnEngDst_pfnSPR_DrawHoles_t )		( int *, int *, int *, const struct rect_s ** );
-typedef void	(*pfnEngDst_pfnSPR_DrawAdditive_t )		( int *, int *, int *, const struct rect_s ** );
+typedef void	(*pfnEngDst_pfnSPR_Draw_t )				( int *, int *, int *, const Rect ** );
+typedef void	(*pfnEngDst_pfnSPR_DrawHoles_t )		( int *, int *, int *, const Rect ** );
+typedef void	(*pfnEngDst_pfnSPR_DrawAdditive_t )		( int *, int *, int *, const Rect ** );
 typedef void	(*pfnEngDst_pfnSPR_EnableScissor_t )	( int *, int *, int *, int * );
 typedef void	(*pfnEngDst_pfnSPR_DisableScissor_t )	( void );
 typedef void	(*pfnEngDst_pfnSPR_GetList_t )			( char **, int ** );
 typedef void	(*pfnEngDst_pfnFillRGBA_t )				( int *, int *, int *, int *, int *, int *, int *, int * );
 typedef void	(*pfnEngDst_pfnGetScreenInfo_t ) 		( struct SCREENINFO_s ** );
-typedef void	(*pfnEngDst_pfnSetCrosshair_t )			( HSPRITE *, struct rect_s *, int *, int *, int * );
+typedef void	(*pfnEngDst_pfnSetCrosshair_t )			( HSPRITE *, Rect *, int *, int *, int * );
 typedef void	(*pfnEngDst_pfnRegisterVariable_t )		( char **, char **, int * );
 typedef void	(*pfnEngDst_pfnGetCvarFloat_t )			( char ** );
 typedef void	(*pfnEngDst_pfnGetCvarString_t )		( char ** );
@@ -591,14 +592,14 @@ typedef void	(*pfnEngDst_GetPlayerUniqueID_t)		(int *, char **);
 typedef void	(*pfnEngDst_GetTrackerIDForPlayer_t)	(int *);
 typedef void	(*pfnEngDst_GetPlayerForTrackerID_t)	(int *);
 typedef void	(*pfnEngDst_pfnServerCmdUnreliable_t )	( char ** );
-typedef void	(*pfnEngDst_GetMousePos_t )				(struct tagPOINT **);
+typedef void	(*pfnEngDst_GetMousePos_t )				(Point **);
 typedef void	(*pfnEngDst_SetMousePos_t )				(int *, int *);
 typedef void	(*pfnEngDst_SetMouseEnable_t )			(qboolean *);
 typedef void	(*pfnEngDst_pfnSetFilterMode_t)			( int * );
 typedef void	(*pfnEngDst_pfnSetFilterColor_t)		( float *, float *, float * );
 typedef void	(*pfnEngDst_pfnSetFilterBrightness_t)	( float * );
 typedef void	(*pfnEngDst_pfnSequenceGet_t )			( const char**, const char** );
-typedef void	(*pfnEngDst_pfnSPR_DrawGeneric_t )		( int *, int *, int *, const struct rect_s **, int *, int *, int *, int * );
+typedef void	(*pfnEngDst_pfnSPR_DrawGeneric_t )		( int *, int *, int *, const Rect **, int *, int *, int *, int * );
 typedef void	(*pfnEngDst_pfnSequencePickSentence_t )	( const char**, int *, int ** );
 typedef void	(*pfnEngDst_pfnDrawString_t )			( int *, int *, const char *, int *, int *, int * );
 typedef void	(*pfnEngDst_pfnDrawStringReverse_t )			( int *, int *, const char *, int *, int *, int * );

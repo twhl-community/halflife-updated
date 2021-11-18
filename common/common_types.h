@@ -5,12 +5,24 @@
 // $NoKeywords: $
 //=============================================================================
 
-#if !defined( WRECTH )
-#define WRECTH
+#pragma once
 
-typedef struct rect_s
+/**
+*	@file
+*
+*	Common data types
+*/
+
+struct Point
 {
-	int				left, right, top, bottom;
-} wrect_t;
+	int x = 0;
+	int y = 0;
+};
 
-#endif
+struct Rect
+{
+	int left = 0;
+	int right = 0;
+	int top = 0;
+	int bottom = 0;
+};

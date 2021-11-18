@@ -214,9 +214,9 @@
     <ClInclude Include="..\..\cl_dll\vgui_ScorePanel.h" />
     <ClInclude Include="..\..\cl_dll\vgui_SpectatorPanel.h" />
     <ClInclude Include="..\..\cl_dll\view.h" />
-    <ClInclude Include="..\..\cl_dll\wrect.h" />
     <ClInclude Include="..\..\common\beamdef.h" />
     <ClInclude Include="..\..\common\cl_entity.h" />
+    <ClInclude Include="..\..\common\common_types.h" />
     <ClInclude Include="..\..\common\com_model.h" />
     <ClInclude Include="..\..\common\const.h" />
     <ClInclude Include="..\..\common\con_nprint.h" />

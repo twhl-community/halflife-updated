@@ -70,7 +70,7 @@ int iMouseInUse=0;
 int cam_distancemove;
 extern int mouse_x, mouse_y;  //used to determine what the current x and y values are
 int cam_old_mouse_x, cam_old_mouse_y; //holds the last ticks mouse movement
-POINT		cam_mouse;
+Point		cam_mouse;
 //-------------------------------------------------- Local Variables
 
 static kbutton_t cam_pitchup, cam_pitchdown, cam_yawleft, cam_yawright;
@@ -83,10 +83,10 @@ void CAM_ToFirstPerson();
 void CAM_StartDistance();
 void CAM_EndDistance();
 
-void SDL_GetCursorPos( POINT *p )
+void SDL_GetCursorPos( Point *p )
 {
-	gEngfuncs.GetMousePosition( (int *)&p->x, (int *)&p->y );
-//	SDL_GetMouseState( (int *)&p->x, (int *)&p->y );
+	gEngfuncs.GetMousePosition( &p->x, &p->y );
+//	SDL_GetMouseState( &p->x, &p->y );
 }
 
 void SDL_SetCursorPos( const int x, const int y )

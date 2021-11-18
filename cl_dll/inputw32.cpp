@@ -80,7 +80,6 @@ static cvar_t *m_mousethread_sleep;
 
 int			mouse_buttons;
 int			mouse_oldbuttonstate;
-POINT		current_pos;
 int			old_mouse_x, old_mouse_y, mx_accum, my_accum;
 float		mouse_x, mouse_y;
 
@@ -179,6 +178,7 @@ void Force_CenterView_f ()
 #ifdef _WIN32
 long s_mouseDeltaX = 0;
 long s_mouseDeltaY = 0;
+POINT		current_pos;
 POINT		old_mouse_pos;
 
 long ThreadInterlockedExchange( long *pDest, long value )

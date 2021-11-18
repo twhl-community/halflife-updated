@@ -47,23 +47,10 @@ typedef char * LPSTR;
 #define MAX_PATH PATH_MAX
 
 #ifdef LINUX
-typedef struct POINT_s
-{
-	int x;
-	int y;
-} POINT;
 typedef void *HINSTANCE;
 typedef void *HWND;
 typedef void *HDC;
 typedef void *HGLRC;
-
-typedef struct RECT_s
-{
-	int left;
-	int right;
-	int top;
-	int bottom;
-} RECT;
 #endif
 
 

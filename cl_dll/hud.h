@@ -29,7 +29,7 @@
 #define _cdecl 
 #endif
 
-#include "wrect.h"
+#include "common_types.h"
 #include "cl_dll.h"
 #include "ammo.h"
 
@@ -333,8 +333,8 @@ public:
 private:
 	HSPRITE m_hSprite1;
 	HSPRITE m_hSprite2;
-	wrect_t *m_prc1;
-	wrect_t *m_prc2;
+	Rect *m_prc1;
+	Rect *m_prc2;
 	int	  m_iBat;	
 	int	  m_iBatMax;
 	float m_fFade;
@@ -359,9 +359,9 @@ private:
 	HSPRITE m_hSprite1;
 	HSPRITE m_hSprite2;
 	HSPRITE m_hBeam;
-	wrect_t *m_prc1;
-	wrect_t *m_prc2;
-	wrect_t *m_prcBeam;
+	Rect *m_prc1;
+	Rect *m_prc2;
+	Rect *m_prcBeam;
 	float m_flBat;	
 	int	  m_iBat;	
 	int	  m_fOn;
@@ -471,7 +471,7 @@ private:
 	{
 		char szSpriteName[MAX_ICONSPRITENAME_LENGTH];
 		HSPRITE spr;
-		wrect_t rc;
+		Rect rc;
 		unsigned char r, g, b;
 	} icon_sprite_t;
 
@@ -526,7 +526,7 @@ private:
 	// the memory for these arrays are allocated in the first call to CHud::VidInit(), when the hud.txt and associated sprites are loaded.
 	// freed in ~CHud()
 	HSPRITE *m_rghSprites;	/*[HUD_SPRITE_COUNT]*/			// the sprites loaded from hud.txt
-	wrect_t *m_rgrcRects;	/*[HUD_SPRITE_COUNT]*/
+	Rect *m_rgrcRects;	/*[HUD_SPRITE_COUNT]*/
 	char *m_rgszSpriteNames; /*[HUD_SPRITE_COUNT][MAX_SPRITE_NAME_LENGTH]*/
 
 	struct cvar_s *default_fov;
@@ -536,7 +536,7 @@ public:
 		return (index < 0) ? 0 : m_rghSprites[index];
 	}
 
-	wrect_t& GetSpriteRect( int index )
+	Rect& GetSpriteRect( int index )
 	{
 		return m_rgrcRects[index];
 	}

@@ -84,10 +84,10 @@ void WeaponsResource :: LoadWeaponSprites( WEAPON *pWeapon )
 	if ( !pWeapon )
 		return;
 
-	memset( &pWeapon->rcActive, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcInactive, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcAmmo, 0, sizeof(wrect_t) );
-	memset( &pWeapon->rcAmmo2, 0, sizeof(wrect_t) );
+	memset( &pWeapon->rcActive, 0, sizeof(Rect) );
+	memset( &pWeapon->rcInactive, 0, sizeof(Rect) );
+	memset( &pWeapon->rcAmmo, 0, sizeof(Rect) );
+	memset( &pWeapon->rcAmmo2, 0, sizeof(Rect) );
 	pWeapon->hInactive = 0;
 	pWeapon->hActive = 0;
 	pWeapon->hAmmo = 0;
@@ -391,7 +391,7 @@ void CHudAmmo::Think()
 // Helper function to return a Ammo pointer from id
 //
 
-HSPRITE* WeaponsResource :: GetAmmoPicFromWeapon( int iAmmoId, wrect_t& rect )
+HSPRITE* WeaponsResource :: GetAmmoPicFromWeapon( int iAmmoId, Rect& rect )
 {
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
@@ -541,7 +541,7 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 
 	if ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
 	{
-		static wrect_t nullrc;
+		static Rect nullrc;
 		gpActiveSel = NULL;
 		SetCrosshair( 0, nullrc, 0, 0, 0 );
 	}
@@ -561,7 +561,7 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 //
 int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 {
-	static wrect_t nullrc;
+	static Rect nullrc;
 	int fOnTarget = FALSE;
 
 	BEGIN_READ( pbuf, iSize );
@@ -887,7 +887,7 @@ int CHudAmmo::Draw(float flTime)
 			x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
-			wrect_t rc;
+			Rect rc;
 			rc.top = 0;
 			rc.left = 0;
 			rc.right = AmmoWidth;

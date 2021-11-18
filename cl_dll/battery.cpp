@@ -88,7 +88,7 @@ int CHudBattery::Draw(float flTime)
 		return 1;
 
 	int r, g, b, x, y, a;
-	wrect_t rc;
+	Rect rc;
 
 	rc = *m_prc2;
 
