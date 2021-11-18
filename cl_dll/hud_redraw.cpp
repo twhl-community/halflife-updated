@@ -17,7 +17,6 @@
 //
 #include "hud.h"
 #include "cl_util.h"
-#include "bench.h"
 
 #include "vgui_TeamFortressViewport.h"
 
@@ -87,8 +86,6 @@ void CHud::Think()
 	{
 		m_iFOV = gHUD.m_Spectator.GetFOV();	// default_fov->value;
 	}
-
-	Bench_CheckStart();
 }
 
 // Redraw
@@ -148,27 +145,15 @@ int CHud :: Redraw( float flTime, int intermission )
 
 		while (pList)
 		{
-			if ( !Bench_Active() )
+			if ( !intermission )
 			{
-				if ( !intermission )
-				{
-					if ( (pList->p->m_iFlags & HUD_ACTIVE) && !(m_iHideHUDDisplay & HIDEHUD_ALL) )
-						pList->p->Draw(flTime);
-				}
-				else
-				{  // it's an intermission,  so only draw hud elements that are set to draw during intermissions
-					if ( pList->p->m_iFlags & HUD_INTERMISSION )
-						pList->p->Draw( flTime );
-				}
+				if ( (pList->p->m_iFlags & HUD_ACTIVE) && !(m_iHideHUDDisplay & HIDEHUD_ALL) )
+					pList->p->Draw(flTime);
 			}
 			else
-			{
-				if ( ( pList->p == &m_Benchmark ) &&
-					 ( pList->p->m_iFlags & HUD_ACTIVE ) &&
-					 !( m_iHideHUDDisplay & HIDEHUD_ALL ) )
-				{
-					pList->p->Draw(flTime);
-				}
+			{  // it's an intermission,  so only draw hud elements that are set to draw during intermissions
+				if ( pList->p->m_iFlags & HUD_INTERMISSION )
+					pList->p->Draw( flTime );
 			}
 
 			pList = pList->pNext;

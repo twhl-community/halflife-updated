@@ -15,7 +15,6 @@
 #include "pm_defs.h"
 #include "event_api.h"
 #include "pmtrace.h"
-#include "bench.h"
 #include "screenfade.h"
 #include "shake.h"
 #include "hltv.h"

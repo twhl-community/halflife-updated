@@ -12,7 +12,6 @@
 #include "pm_defs.h"
 #include "pmtrace.h"	
 #include "pm_shared.h"
-#include "bench.h"
 #include "Exports.h"
 
 #include "particleman.h"
@@ -37,7 +36,6 @@ int DLLEXPORT HUD_AddEntity( int type, struct cl_entity_s *ent, const char *mode
 	switch ( type )
 	{
 	case ET_NORMAL:
-		Bench_CheckEntity( type, ent, modelname );
 		break;
 	case ET_PLAYER:
 	case ET_BEAM:
@@ -311,8 +309,6 @@ void DLLEXPORT HUD_CreateEntities()
 #if defined( BEAM_TEST )
 	Beams();
 #endif
-
-	Bench_AddObjects();
 
 	// Add in any game specific objects
 	Game_AddObjects();

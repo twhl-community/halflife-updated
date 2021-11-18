@@ -17,7 +17,6 @@ extern "C"
 #include "camera.h"
 #include "in_defs.h"
 #include "view.h"
-#include "bench.h"
 #include <string.h>
 #include <ctype.h>
 #include "Exports.h"
@@ -665,7 +664,7 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 	Vector viewangles;
 	static Vector oldangles;
 
-	if ( active && !Bench_Active() )
+	if ( active )
 	{
 		//memset( viewangles, 0, sizeof( Vector ) );
 		//viewangles[ 0 ] = viewangles[ 1 ] = viewangles[ 2 ] = 0.0;
@@ -762,8 +761,6 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 	{
 		VectorCopy( oldangles, cmd->viewangles );
 	}
-
-	Bench_SetViewAngles( 1, (float *)&cmd->viewangles, frametime, cmd );
 }
 
 /*
