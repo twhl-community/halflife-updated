@@ -1,8 +1,4 @@
-#if !defined( R_STUDIOINT_H )
-#define R_STUDIOINT_H
-#if defined( _WIN32 )
 #pragma once
-#endif
 
 #define STUDIO_INTERFACE_VERSION 1
 
@@ -140,5 +136,3 @@ typedef struct sv_blending_interface_s
 													  int				iBone,
 													  const edict_t		*pEdict );
 } sv_blending_interface_t;
-
-#endif // R_STUDIOINT_H

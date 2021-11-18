@@ -13,11 +13,8 @@
 *
 ****/
 // cl_entity.h
-#if !defined( CL_ENTITYH )
-#define CL_ENTITYH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 typedef struct efrag_s
 {
@@ -111,5 +108,3 @@ struct cl_entity_s
 	int						visframe;		// last frame this entity was found in an active leaf
 	colorVec				cvFloorColor;
 };
-
-#endif // !CL_ENTITYH

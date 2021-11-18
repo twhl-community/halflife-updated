@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined( PARTICLEDEFH )
-#define PARTICLEDEFH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 typedef enum {
 	pt_static, 
@@ -53,5 +50,3 @@ typedef struct particle_s
 	// For deathfunc, etc.
 	unsigned char context;
 } particle_t;
-
-#endif

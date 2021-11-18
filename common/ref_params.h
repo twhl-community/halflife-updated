@@ -12,8 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined( REF_PARAMSH )
-#define REF_PARAMSH
+
+#pragma once
 
 typedef struct ref_params_s
 {
@@ -71,5 +71,3 @@ typedef struct ref_params_s
 								// so long in cycles until this value is 0 (multiple views)
 	int		onlyClientDraw;		// if !=0 nothing is drawn by the engine except clientDraw functions
 } ref_params_t;
-
-#endif // !REF_PARAMSH

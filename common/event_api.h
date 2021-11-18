@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined ( EVENT_APIH )
-#define EVENT_APIH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 #define EVENT_API_VERSION 1
 
@@ -47,5 +44,3 @@ typedef struct event_api_s
 } event_api_t;
 
 extern event_api_t eventapi;
-
-#endif

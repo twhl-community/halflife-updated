@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined( EVENT_FLAGSH )
-#define EVENT_FLAGSH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 // Skip local host for event send.
 #define FEV_NOTHOST		(1<<0)    
@@ -43,5 +40,3 @@
 
 // Only issue event client side ( from shared code )
 #define FEV_CLIENT		(1<<6)
-
-#endif

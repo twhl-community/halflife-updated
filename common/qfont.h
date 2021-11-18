@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined( QFONTH )
-#define QFONTH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 // Font stuff
 
@@ -37,5 +34,3 @@ typedef struct qfont_s
 	charinfo	fontinfo[ NUM_GLYPHS ];
 	unsigned char data[4];
 } qfont_t;
-
-#endif // qfont.h

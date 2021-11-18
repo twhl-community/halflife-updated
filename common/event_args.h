@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined( EVENT_ARGSH )
-#define EVENT_ARGSH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 // Event was invoked with stated origin
 #define FEVENT_ORIGIN	( 1<<0 )
@@ -46,5 +43,3 @@ typedef struct event_args_s
 	int		bparam1;
 	int		bparam2;
 } event_args_t;
-
-#endif

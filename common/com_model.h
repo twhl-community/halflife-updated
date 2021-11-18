@@ -6,11 +6,8 @@
 //=============================================================================
 
 // com_model.h
-#if !defined( COM_MODEL_H )
-#define COM_MODEL_H
-#if defined( _WIN32 )
+
 #pragma once
-#endif
 
 #define STUDIO_RENDER 1
 #define STUDIO_EVENTS 2
@@ -350,5 +347,3 @@ typedef struct player_info_s
 	char hashedcdkey[16];
 	uint64 m_nSteamID;
 } player_info_t;
-
-#endif // #define COM_MODEL_H

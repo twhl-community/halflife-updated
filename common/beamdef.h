@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined ( BEAMDEFH )
-#define BEAMDEFH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 #define FBEAM_STARTENTITY		0x00000001
 #define FBEAM_ENDENTITY			0x00000002
@@ -58,5 +55,3 @@ struct beam_s
 	struct model_s		*pFollowModel;
 	struct particle_s	*particles;
 };
-
-#endif

@@ -13,8 +13,8 @@
 *
 ****/
 // entity_types.h
-#if !defined( ENTITY_TYPESH )
-#define ENTITY_TYPESH
+
+#pragma once
 
 #define ET_NORMAL		0
 #define ET_PLAYER		1
@@ -22,5 +22,3 @@
 #define ET_BEAM			3
 // BMODEL or SPRITE that was split across BSP nodes
 #define ET_FRAGMENTED	4
-
-#endif // !ENTITY_TYPESH

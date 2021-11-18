@@ -6,8 +6,8 @@
 //=============================================================================
 
 // eventscripts.h
-#if !defined ( EVENTSCRIPTSH )
-#define EVENTSCRIPTSH
+
+#pragma once
 
 // Some of these are HL/TFC specific?
 void EV_EjectBrass( float *origin, float *velocity, float rotation, int model, int soundtype );
@@ -20,5 +20,3 @@ void EV_CreateTracer( float *start, float *end );
 struct cl_entity_s *GetEntity( int idx );
 struct cl_entity_s *GetViewEntity();
 void EV_MuzzleFlash();
-
-#endif // EVENTSCRIPTSH

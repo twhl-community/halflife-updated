@@ -5,11 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
-#if !defined EDICT_H
-#define EDICT_H
-#ifdef _WIN32
 #pragma once
-#endif
+
 #define	MAX_ENT_LEAFS	48
 
 #include "progdefs.h"
@@ -32,5 +29,3 @@ struct edict_s
 
 	// other fields from progs come immediately after
 };
-
-#endif

@@ -12,11 +12,8 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#if !defined ( WEAPONINFOH )
-#define WEAPONINFOH
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 // Info about weapons player might have in his/her possession
 typedef struct weapon_data_s
@@ -48,5 +45,3 @@ typedef struct weapon_data_s
 	float		fuser3;
 	float		fuser4;
 } weapon_data_t;
-
-#endif

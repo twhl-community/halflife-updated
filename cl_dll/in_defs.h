@@ -5,8 +5,6 @@
 // $NoKeywords: $
 //=============================================================================
 
-#if !defined( IN_DEFSH )
-#define IN_DEFSH
 #pragma once
 
 // up / down
@@ -15,6 +13,3 @@
 #define	YAW		1
 // fall over
 #define	ROLL	2 
-
-
-#endif
