@@ -233,7 +233,6 @@
     <ClInclude Include="..\..\common\event_args.h" />
     <ClInclude Include="..\..\common\event_flags.h" />
     <ClInclude Include="..\..\common\hltv.h" />
-    <ClInclude Include="..\..\common\interface.h" />
     <ClInclude Include="..\..\common\in_buttons.h" />
     <ClInclude Include="..\..\common\ivoicetweak.h" />
     <ClInclude Include="..\..\common\mathlib.h" />

@@ -575,9 +575,6 @@
     <ClInclude Include="..\..\common\in_buttons.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\interface.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\common\netadr.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>

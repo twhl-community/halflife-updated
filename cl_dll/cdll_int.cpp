@@ -21,21 +21,19 @@
 #include "hud.h"
 #include "cl_util.h"
 #include "netadr.h"
-#include "../public/interface.h"
+#include "interface.h"
 //#include "vgui_schememanager.h"
 
 #include "pm_shared.h"
 
 #include <string.h>
 #include "vgui_int.h"
-#include "interface.h"
 
 #include "Platform.h"
 #include "Exports.h"
 
 #include "tri.h"
 #include "vgui_TeamFortressViewport.h"
-#include "../public/interface.h"
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
