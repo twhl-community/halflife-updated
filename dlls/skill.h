@@ -16,6 +16,8 @@
 // skill.h - skill level concerns
 //=========================================================
 
+#pragma once
+
 struct skilldata_t
 {
 

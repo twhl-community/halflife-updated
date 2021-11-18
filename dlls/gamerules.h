@@ -16,6 +16,8 @@
 // GameRules
 //=========================================================
 
+#pragma once
+
 //#include "weapons.h"
 //#include "items.h"
 class CBasePlayerItem;

@@ -13,6 +13,8 @@
 *
 ****/
 
+#pragma once
+
 #define DMG_IMAGE_LIFE		2	// seconds that image is up
 
 #define DMG_IMAGE_POISON	0

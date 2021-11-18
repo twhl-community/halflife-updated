@@ -12,6 +12,9 @@
 *   without written permission from Valve LLC.
 *
 ****/
+
+#pragma once
+
 /*
 
 Class Hierachy

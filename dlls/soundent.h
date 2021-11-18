@@ -12,6 +12,9 @@
 *   without written permission from Valve LLC.
 *
 ****/
+
+#pragma once
+
 //=========================================================
 // Soundent.h - the entity that spawns when the world 
 // spawns, and handles the world's active and free sound

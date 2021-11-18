@@ -5,6 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
+#pragma once
+
 #include "bitvec.h"
 
 #define VOICE_MAX_PLAYERS		32	// (todo: this should just be set to MAX_CLIENTS).

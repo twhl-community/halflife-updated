@@ -5,6 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
+#pragma once
+
 //DLL State Flags
 
 #define DLL_INACTIVE 0		// no dll

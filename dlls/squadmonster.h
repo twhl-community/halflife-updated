@@ -12,6 +12,9 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
+
+#pragma once
+
 //=========================================================
 // CSquadMonster - all the extra data for monsters that
 // form squads.

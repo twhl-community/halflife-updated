@@ -6,6 +6,9 @@
 //=============================================================================
 
 // director_cmds.h
+
+#pragma once
+
 // sub commands for svc_director
 
 #define DRC_ACTIVE				0	// tells client that he's an spectator and will get director command

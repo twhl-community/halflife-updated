@@ -16,6 +16,8 @@
 //  cl_dll.h
 //
 
+#pragma once
+
 // 4-23-98  JOHN
 
 //
