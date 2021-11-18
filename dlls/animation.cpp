@@ -17,20 +17,10 @@
 #include "util.h"
 
 #include "studio.h"
-
-#ifndef ACTIVITY_H
 #include "activity.h"
-#endif
-
 #include "activitymap.h"
-
-#ifndef ANIMATION_H
 #include "animation.h"
-#endif
-
-#ifndef SCRIPTEVENT_H
 #include "scriptevent.h"
-#endif
 
 extern globalvars_t				*gpGlobals;
 

@@ -645,9 +645,7 @@
 #define SF_TRAIN_PASSABLE		8		// Train is not solid -- used to make water trains
 
 // buttons
-#ifndef IN_BUTTONS_H
 #include "in_buttons.h"
-#endif
 
 // Break Model Defines
 

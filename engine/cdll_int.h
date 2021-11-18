@@ -87,9 +87,7 @@ typedef struct hud_player_info_s
 	uint64 m_nSteamID;
 } hud_player_info_t;
 
-#ifndef IN_BUTTONS_H
 #include "in_buttons.h"
-#endif
 
 #define CLDLL_INTERFACE_VERSION		7
 
