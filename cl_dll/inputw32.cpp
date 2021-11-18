@@ -523,8 +523,10 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 #endif
 		{
 			SDL_GetRelativeMouseState( &deltaX, &deltaY );
+#ifdef _WIN32
 			current_pos.x = deltaX;
-			current_pos.y = deltaY;	
+			current_pos.y = deltaY;
+#endif
 		}
 		
 #ifdef _WIN32
