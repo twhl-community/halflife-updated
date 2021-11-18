@@ -82,7 +82,7 @@ typedef struct
 	int	fEnabled;
 	int	fPlayLooping;
 	float	cdvolume;
-	//BYTE 	remap[100];
+	//byte 	remap[100];
 	int	fCDRom;
 	int	fPlayTrack;
 } CDStatus;

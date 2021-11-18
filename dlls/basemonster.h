@@ -85,7 +85,7 @@ public:
 	float				m_flNextAttack;		// cannot attack again until this time
 
 	int					m_bitsDamageType;	// what types of damage has monster (player) taken
-	BYTE				m_rgbTimeBasedDamage[CDMG_TIMEBASED];
+	byte				m_rgbTimeBasedDamage[CDMG_TIMEBASED];
 
 	int					m_lastDamageAmount;// how much damage did monster (player) last take
 											// time based damage counters, decr. 1 per 2 seconds

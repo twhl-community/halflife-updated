@@ -38,7 +38,7 @@ class CNode
 public:
 	Vector	m_vecOrigin;// location of this node in space
 	Vector  m_vecOriginPeek; // location of this node (LAND nodes are NODE_HEIGHT higher).
-	BYTE    m_Region[3]; // Which of 256 regions do each of the coordinate belong?
+	byte    m_Region[3]; // Which of 256 regions do each of the coordinate belong?
 	int		m_afNodeInfo;// bits that tell us more about this location
 	
 	int		m_cNumLinks; // how many links this node has

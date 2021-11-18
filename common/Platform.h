@@ -119,7 +119,6 @@ using qboolean = int;
 #else // WIN32
 #define FALSE 0
 #define TRUE (!FALSE)
-typedef unsigned char BYTE;
 typedef int BOOL;
 #define MAX_PATH PATH_MAX
 

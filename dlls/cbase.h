@@ -406,8 +406,8 @@ typedef struct locksounds			// sounds that doors and buttons make when locked/un
 
 	float	flwaitSound;			// time delay between playing consecutive 'locked/unlocked' sounds
 	float	flwaitSentence;			// time delay between playing consecutive sentences
-	BYTE	bEOFLocked;				// true if hit end of list of locked sentences
-	BYTE	bEOFUnlocked;			// true if hit end of list of unlocked sentences
+	byte	bEOFLocked;				// true if hit end of list of locked sentences
+	byte	bEOFUnlocked;			// true if hit end of list of unlocked sentences
 } locksound_t;
 
 void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton);
@@ -643,10 +643,10 @@ public:
 
 	locksound_t m_ls;			// door lock sounds
 	
-	BYTE	m_bLockedSound;		// ordinals from entity selection
-	BYTE	m_bLockedSentence;	
-	BYTE	m_bUnlockedSound;	
-	BYTE	m_bUnlockedSentence;
+	byte	m_bLockedSound;		// ordinals from entity selection
+	byte	m_bLockedSentence;	
+	byte	m_bUnlockedSound;	
+	byte	m_bUnlockedSentence;
 	int		m_sounds;
 };
 
@@ -708,10 +708,10 @@ push_trigger_data
 
 typedef struct _SelAmmo
 {
-	BYTE	Ammo1Type;
-	BYTE	Ammo1;
-	BYTE	Ammo2Type;
-	BYTE	Ammo2;
+	byte	Ammo1Type;
+	byte	Ammo1;
+	byte	Ammo2Type;
+	byte	Ammo2;
 } SelAmmo;
 
 
