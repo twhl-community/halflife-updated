@@ -55,9 +55,6 @@ BOOL gInitHUD = TRUE;
 extern void CopyToBodyQue(entvars_t* pev);
 extern edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer );
 
-// the world node graph
-extern CGraph	WorldGraph;
-
 #define TRAIN_ACTIVE	0x80 
 #define TRAIN_NEW		0xc0
 #define TRAIN_OFF		0x00

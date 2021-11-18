@@ -26,8 +26,6 @@
 #include "defaultai.h"
 #include "soundent.h"
 
-extern CGraph WorldGraph;
-
 //=========================================================
 // FHaveSchedule - Returns TRUE if monster's m_pSchedule
 // is anything other than NULL.

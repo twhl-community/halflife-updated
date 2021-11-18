@@ -23,7 +23,6 @@
 #include "cbase.h"
 #include "monsters.h"
 #include "weapons.h"
-#include "nodes.h"
 #include "soundent.h"
 #include "decals.h"
 

@@ -27,8 +27,6 @@
 #include	"soundent.h"
 #include	"game.h"
 
-extern CGraph WorldGraph;
-
 // houndeye does 20 points of damage spread over a sphere 384 units in diameter, and each additional 
 // squad member increases the BASE damage by 110%, per the spec.
 #define HOUNDEYE_MAX_SQUAD_SIZE			4

@@ -27,8 +27,6 @@
 #include "nodes.h"
 #include "doors.h"
 
-extern CGraph WorldGraph;
-
 extern BOOL FEntIsVisible(entvars_t* pev, entvars_t* pevTarget);
 
 extern DLL_GLOBAL int g_iSkillLevel;

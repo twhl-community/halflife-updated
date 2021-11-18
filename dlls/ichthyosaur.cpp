@@ -33,8 +33,6 @@
 
 #define ICHTHYOSAUR_SPEED 150
 
-extern CGraph WorldGraph;
-
 #define EYE_MAD		0
 #define EYE_BASE	1
 #define EYE_CLOSED	2

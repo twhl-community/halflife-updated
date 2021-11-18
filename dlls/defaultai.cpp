@@ -22,7 +22,6 @@
 #include	"schedule.h"
 #include	"defaultai.h"
 #include	"soundent.h"
-#include	"nodes.h"
 #include	"scripted.h"
 
 //=========================================================
