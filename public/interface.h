@@ -28,8 +28,6 @@
 #define HMODULE void *
 #define GetProcAddress dlsym
 
-#define _snprintf snprintf
-
 #endif
 
 void *Sys_GetProcAddress( void *pModuleHandle, const char *pName );

@@ -1534,7 +1534,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			m_pSpectatorPanel->setVisible( true );	// show spectator panel, but
 			m_pSpectatorPanel->ShowMenu( false );	// dsiable all menus/buttons
 			
-			_snprintf( tempString, sizeof( tempString ) - 1, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( "#Spec_Duck" ) );
+			snprintf( tempString, sizeof( tempString ) - 1, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( "#Spec_Duck" ) );
 			tempString[ sizeof( tempString ) - 1 ] = '\0';
 
 			gHUD.m_TextMessage.MsgFunc_TextMsg( NULL, strlen( tempString ) + 1, tempString );
@@ -1606,7 +1606,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		if ( gEngfuncs.IsSpectateOnly() )
 		{
 			// in HLTV mode show number of spectators
-			_snprintf( szText, 63, "%s: %d", CHudTextMessage::BufferedLocaliseTextString( "#Spectators" ), gHUD.m_Spectator.m_iSpectatorNumber );
+			snprintf( szText, 63, "%s: %d", CHudTextMessage::BufferedLocaliseTextString( "#Spectators" ), gHUD.m_Spectator.m_iSpectatorNumber );
 		}
 		else
 		{
@@ -1614,7 +1614,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 			char szMapName[64];
 			COM_FileBase( gEngfuncs.pfnGetLevelName(), szMapName );
 
-			_snprintf ( szText, 63, "%s: %s",CHudTextMessage::BufferedLocaliseTextString( "#Spec_Map" ), szMapName );
+			snprintf( szText, 63, "%s: %s",CHudTextMessage::BufferedLocaliseTextString( "#Spec_Map" ), szMapName );
 		}
 
 		szText[63] = 0;
@@ -1627,7 +1627,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		if ( timer < 0 )
 			 timer	= 0;
 
-		_snprintf ( szText, 63, "%d:%02d\n", (timer / 60), (timer % 60) );
+		snprintf ( szText, 63, "%d:%02d\n", (timer / 60), (timer % 60) );
 		
 		szText[63] = 0;
 				
