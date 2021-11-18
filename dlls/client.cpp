@@ -41,10 +41,6 @@
 #include "pm_shared.h"
 #include "UserMessages.h"
 
-#if !defined ( WIN32 )
-#include <ctype.h>
-#endif
-
 extern DLL_GLOBAL ULONG		g_ulModelIndexPlayer;
 extern DLL_GLOBAL BOOL		g_fGameOver;
 extern DLL_GLOBAL int		g_iSkillLevel;

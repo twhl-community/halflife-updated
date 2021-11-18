@@ -37,6 +37,7 @@
 #include "common_types.h"
 
 // Misc C-runtime library headers
+#include <cctype>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>

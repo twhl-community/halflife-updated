@@ -4,10 +4,7 @@
 #include "netadr.h"
 #include "Sequence.h"
 #include "common_types.h"
-
-#ifndef WIN32
 #include "enums.h"
-#endif
 
 #define	MAX_ALIAS_NAME	32
 

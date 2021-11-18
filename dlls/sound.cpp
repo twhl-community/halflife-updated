@@ -24,11 +24,6 @@
 #include "talkmonster.h"
 #include "gamerules.h"
 
-#if !defined ( WIN32 )
-#include <ctype.h>
-#endif
-
-
 static char *memfgets( byte *pMemFile, int fileSize, int &filePos, char *pBuffer, int bufferSize );
 
 
