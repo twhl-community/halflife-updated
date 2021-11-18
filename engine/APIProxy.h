@@ -1,6 +1,6 @@
 #pragma once
 
-#include "archtypes.h"     // DAL
+#include "Platform.h"
 #include "netadr.h"
 #include "Sequence.h"
 #include "common_types.h"

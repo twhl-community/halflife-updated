@@ -45,12 +45,10 @@ CBaseEntity
 // UNDONE: This will ignore transition volumes (trigger_transition), but not the PVS!!!
 #define		FCAP_FORCE_TRANSITION		0x00000080		// ALWAYS goes across transitions
 
-#include "archtypes.h"     // DAL
+#include "Platform.h"
 #include "saverestore.h"
 #include "schedule.h"
 #include "monsterevent.h"
-
-#include "Platform.h"
 
 // C functions for external declarations that call the appropriate C++ methods
 

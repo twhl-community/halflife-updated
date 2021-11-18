@@ -33,7 +33,7 @@
 #pragma warning(disable : 4514)		// unreferenced inline function removed
 #pragma warning(disable : 4100)		// unreferenced formal parameter
 
-#include "archtypes.h"     // DAL
+#include "steam/steamtypes.h"     // DAL
 #include "common_types.h"
 
 // Misc C-runtime library headers

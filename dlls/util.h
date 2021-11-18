@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include "archtypes.h"     // DAL
+#include "Platform.h"
 
 //
 // Misc utility code

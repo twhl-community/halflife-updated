@@ -7,9 +7,8 @@
 
 #pragma once
 
-#include "archtypes.h"     // DAL
+#include "Platform.h"
 #include <assert.h>
-#include <string.h>
 
 
 class CBitVecAccessor
