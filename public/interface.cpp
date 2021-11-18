@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "interface.h"
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 // Linux doesn't have this function so this emulates its functionality
 //
 //
@@ -101,7 +101,7 @@ static IBaseInterface *CreateInterfaceLocal( const char *pName, int *pReturnCode
 }
 #endif
 
-#ifdef _WIN32
+#ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 #endif
@@ -125,7 +125,7 @@ static void *Sys_GetProcAddress( const char *pModuleName, const char *pName )
 // hlds_run wants to use this function 
 void *Sys_GetProcAddress( void *pModuleHandle, const char *pName )
 {
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 	return GetProcAddress( (HINSTANCE)pModuleHandle, pName );
 #else
 	return GetProcAddress( pModuleHandle, pName );
@@ -139,7 +139,7 @@ void *Sys_GetProcAddress( void *pModuleHandle, const char *pName )
 //-----------------------------------------------------------------------------
 CSysModule	*Sys_LoadModule( const char *pModuleName )
 {
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 	HMODULE hDLL = LoadLibrary( pModuleName );
 #else
 	HMODULE hDLL  = NULL;
@@ -173,7 +173,7 @@ CSysModule	*Sys_LoadModule( const char *pModuleName )
 	if( !hDLL )
 	{
 		char str[512];
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 		snprintf( str, sizeof(str), "%s.dll", pModuleName );
 		hDLL = LoadLibrary( str );
 #elif defined(OSX)
@@ -201,7 +201,7 @@ void Sys_UnloadModule( CSysModule *pModule )
 		return;
 
 	HMODULE	hDLL = reinterpret_cast<HMODULE>(pModule);
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 	FreeLibrary( hDLL );
 #else
 	dlclose((void *)hDLL);
@@ -221,7 +221,7 @@ CreateInterfaceFn Sys_GetFactory( CSysModule *pModule )
 		return NULL;
 
 	HMODULE	hDLL = reinterpret_cast<HMODULE>(pModule);
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 	return reinterpret_cast<CreateInterfaceFn>(GetProcAddress( hDLL, CREATEINTERFACE_PROCNAME ));
 #else
 // Linux gives this error:
@@ -257,7 +257,7 @@ CreateInterfaceFn Sys_GetFactoryThis()
 //-----------------------------------------------------------------------------
 CreateInterfaceFn Sys_GetFactory( const char *pModuleName )
 {
-#if defined ( _WIN32 )
+#if defined ( WIN32 )
 	return static_cast<CreateInterfaceFn>( Sys_GetProcAddress( pModuleName, CREATEINTERFACE_PROCNAME ) );
 #else
 // Linux gives this error:

@@ -40,7 +40,7 @@ public:
 	{
 		// Requested size should match size of class.
         if ( size != sizeof( CCoreTriangleEffect ) )
-#ifdef _WIN32
+#ifdef WIN32
              throw "Error in requested size of new particle class instance.";
 #else
 			return NULL;
@@ -190,7 +190,7 @@ protected:
         //  from being successfully allocated.
         if ((unsigned)size > (unsigned long) CMiniMem::Instance()->MaxBlockSize())
 		{
-#ifdef _WIN32
+#ifdef WIN32
             throw "New particle class is larger than memory pool max size, update lMaxParticleClassSize() function.";
 #endif
 			return(false);

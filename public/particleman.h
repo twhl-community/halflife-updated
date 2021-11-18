@@ -5,7 +5,7 @@
 
 #define PARTICLEMAN_INTERFACE "create_particleman"
 
-#ifdef _WIN32
+#ifdef WIN32
 #define PARTICLEMAN_DLLNAME "cl_dlls/particleman.dll"
 #elif defined(OSX)
 #define PARTICLEMAN_DLLNAME "cl_dlls/particleman.dylib"

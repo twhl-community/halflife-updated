@@ -26,7 +26,7 @@
 #include "saverestore.h"
 #include "doors.h"
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 #include <string.h> // memset())))
 #endif
 

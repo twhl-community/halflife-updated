@@ -24,7 +24,7 @@
 #include	"animation.h"
 #include	"doors.h"
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>

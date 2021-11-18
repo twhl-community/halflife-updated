@@ -31,7 +31,7 @@ class VGUIAPI Font
   virtual void getCharABCwide(int ch,int& a,int& b,int& c);
   virtual void getTextSize(const char* text,int& wide,int& tall);
   virtual int  getTall();
-#ifndef _WIN32
+#ifndef WIN32
   virtual int getWide();
 #endif
   virtual int  getId();

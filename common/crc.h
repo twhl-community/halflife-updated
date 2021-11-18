@@ -27,7 +27,7 @@ typedef struct
 } MD5Context_t;
 
 
-#ifdef _WIN32
+#ifdef WIN32
 typedef uint32 CRC32_t;
 #else
 typedef uint32 CRC32_t;

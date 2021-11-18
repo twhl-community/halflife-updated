@@ -41,7 +41,7 @@
 #include "pm_shared.h"
 #include "UserMessages.h"
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 #include <ctype.h>
 #endif
 

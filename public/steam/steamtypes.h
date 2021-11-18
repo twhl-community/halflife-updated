@@ -26,7 +26,7 @@
 typedef unsigned char uint8;
 typedef signed char int8;
 
-#if defined( _WIN32 )
+#if defined( WIN32 )
 
 typedef __int16 int16;
 typedef unsigned __int16 uint16;
@@ -43,7 +43,7 @@ typedef __int32 intp;
 typedef unsigned __int32 uintp;
 #endif
 
-#else // _WIN32
+#else // WIN32
 
 typedef short int16;
 typedef unsigned short uint16;
@@ -59,7 +59,7 @@ typedef int intp;
 typedef unsigned int uintp;
 #endif
 
-#endif // else _WIN32
+#endif // else WIN32
 
 #ifdef __cplusplus
 const int k_cubSaltSize   = 8;

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 
 #include <dlfcn.h> // dlopen,dlclose, et al
 #include <unistd.h>

@@ -24,7 +24,7 @@
 #include "talkmonster.h"
 #include "gamerules.h"
 
-#if !defined ( _WIN32 )
+#if !defined ( WIN32 )
 #include <ctype.h>
 #endif
 

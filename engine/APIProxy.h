@@ -5,7 +5,7 @@
 #include "Sequence.h"
 #include "common_types.h"
 
-#ifndef _WIN32
+#ifndef WIN32
 #include "enums.h"
 #endif
 

@@ -33,7 +33,7 @@
 //
 
 /*
-#ifdef _WIN32
+#ifdef WIN32
 #define DLLEXPORT __stdcall
 #else
 #define DLLEXPORT  __attribute__ ((visibility("default")))
@@ -336,7 +336,7 @@ typedef struct
 
 typedef struct saverestore_s SAVERESTOREDATA;
 
-#ifdef _WIN32
+#ifdef WIN32
 typedef 
 #endif
 struct saverestore_s
@@ -362,7 +362,7 @@ struct saverestore_s
 	char		szCurrentMapName[32];	// To check global entities
 
 } 
-#ifdef _WIN32
+#ifdef WIN32
 SAVERESTOREDATA 
 #endif
 ;

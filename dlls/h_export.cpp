@@ -30,13 +30,13 @@ enginefuncs_t g_engfuncs;
 globalvars_t  *gpGlobals;
 
 #undef DLLEXPORT
-#ifdef _WIN32
+#ifdef WIN32
 #define DLLEXPORT __stdcall
 #else
 #define DLLEXPORT __attribute__ ((visibility("default")))
 #endif
 
-#ifdef _WIN32
+#ifdef WIN32
 
 // Required DLL entry point
 BOOL WINAPI DllMain(
