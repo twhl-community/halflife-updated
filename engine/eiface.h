@@ -32,14 +32,6 @@
 // This is conveniently done for them in extdll.h
 //
 
-/*
-#ifdef WIN32
-#define DLLEXPORT __stdcall
-#else
-#define DLLEXPORT  __attribute__ ((visibility("default")))
-#endif
-*/
-
 typedef enum
 	{
 	at_notice,
@@ -334,12 +326,7 @@ typedef struct
 #define FENTTABLE_MOVEABLE		0x20000000
 #define FENTTABLE_GLOBAL		0x10000000
 
-typedef struct saverestore_s SAVERESTOREDATA;
-
-#ifdef WIN32
-typedef 
-#endif
-struct saverestore_s
+typedef struct saverestore_s
 {
 	char		*pBaseData;		// Start of all entity save data
 	char		*pCurrentData;	// Current buffer pointer for sequential access
@@ -361,11 +348,7 @@ struct saverestore_s
 	float		time;
 	char		szCurrentMapName[32];	// To check global entities
 
-} 
-#ifdef WIN32
-SAVERESTOREDATA 
-#endif
-;
+} SAVERESTOREDATA;
 
 typedef enum _fieldtypes
 {
