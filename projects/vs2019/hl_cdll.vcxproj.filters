@@ -564,7 +564,4 @@
       <Filter>Header Files\engine</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\..\lib\public\game_controls.lib" />
-  </ItemGroup>
 </Project>
