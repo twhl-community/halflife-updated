@@ -113,6 +113,7 @@ using qboolean = int;
 #define strupr _strupr
 
 #define DLLEXPORT __declspec( dllexport )
+#define DLLHIDDEN
 #else // WIN32
 #define FALSE 0
 #define TRUE (!FALSE)
@@ -130,6 +131,7 @@ typedef int BOOL;
 #define _alloca alloca
 
 #define DLLEXPORT __attribute__ ( ( visibility( "default" ) ) )
+#define DLLHIDDEN __attribute__ ( ( visibility( "hidden" ) ) )
 #endif //WIN32
 
 #define V_min(a,b)  (((a) < (b)) ? (a) : (b))

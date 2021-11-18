@@ -20,15 +20,7 @@
 
 #pragma once
 
-#if !defined ( WIN32 )
-
-#include <dlfcn.h> // dlopen,dlclose, et al
-#include <unistd.h>
-
-#define HMODULE void *
-#define GetProcAddress dlsym
-
-#endif
+#include "Platform.h"
 
 void *Sys_GetProcAddress( void *pModuleHandle, const char *pName );
 
@@ -93,14 +85,6 @@ public:
 	static className __g_##className##_singleton;\
 	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(className, interfaceName, versionName, __g_##className##_singleton)
 
-
-#ifdef WIN32
-	#define EXPORT_FUNCTION __declspec(dllexport)
-#else
-	#define EXPORT_FUNCTION __attribute__ ((visibility("default")))
-#endif
-
-
 // This function is automatically exported and allows you to access any interfaces exposed with the above macros.
 // if pReturnCode is set, it will return one of the following values
 // extend this for other error conditions/code
@@ -113,7 +97,7 @@ enum
 
 extern "C"
 {
-	EXPORT_FUNCTION IBaseInterface* CreateInterface(const char *pName, int *pReturnCode);
+	DLLEXPORT IBaseInterface* CreateInterface(const char *pName, int *pReturnCode);
 };
 
 
