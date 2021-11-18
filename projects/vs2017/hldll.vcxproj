@@ -232,10 +232,8 @@
     <ClInclude Include="..\..\common\in_buttons.h" />
     <ClInclude Include="..\..\common\mathlib.h" />
     <ClInclude Include="..\..\common\netadr.h" />
-    <ClInclude Include="..\..\common\nowin.h" />
     <ClInclude Include="..\..\common\particledef.h" />
     <ClInclude Include="..\..\common\Platform.h" />
-    <ClInclude Include="..\..\common\port.h" />
     <ClInclude Include="..\..\common\r_efx.h" />
     <ClInclude Include="..\..\common\r_studioint.h" />
     <ClInclude Include="..\..\common\screenfade.h" />

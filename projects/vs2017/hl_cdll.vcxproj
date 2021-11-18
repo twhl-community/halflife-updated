@@ -239,12 +239,10 @@
     <ClInclude Include="..\..\common\mathlib.h" />
     <ClInclude Include="..\..\common\netadr.h" />
     <ClInclude Include="..\..\common\net_api.h" />
-    <ClInclude Include="..\..\common\nowin.h" />
     <ClInclude Include="..\..\common\parsemsg.h" />
     <ClInclude Include="..\..\common\particledef.h" />
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\common\pmtrace.h" />
-    <ClInclude Include="..\..\common\port.h" />
     <ClInclude Include="..\..\common\qfont.h" />
     <ClInclude Include="..\..\common\ref_params.h" />
     <ClInclude Include="..\..\common\r_efx.h" />
