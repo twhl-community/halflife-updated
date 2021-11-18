@@ -125,7 +125,6 @@ typedef int BOOL;
 #define MAX_PATH PATH_MAX
 
 #define stricmp strcasecmp
-#define _strnicmp strncasecmp
 #define strnicmp strncasecmp
 #define _alloca alloca
 
