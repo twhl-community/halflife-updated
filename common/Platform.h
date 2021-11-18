@@ -123,7 +123,6 @@ typedef int BOOL;
 #define MAX_PATH PATH_MAX
 #include <limits.h>
 #include <stdarg.h>
-#define _vsnprintf(a,b,c,d) vsnprintf(a,b,c,d)
 
 #define stricmp strcasecmp
 #define _strnicmp strncasecmp
