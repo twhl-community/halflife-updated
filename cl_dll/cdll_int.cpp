@@ -334,14 +334,9 @@ void CL_LoadParticleMan()
 	}
 }
 
-cldll_func_dst_t *g_pcldstAddrs;
-
 extern "C" void DLLEXPORT F(void *pv)
 {
 	cldll_func_t *pcldll_func = (cldll_func_t *)pv;
-
-	// Hack!
-	g_pcldstAddrs = ((cldll_func_dst_t *)pcldll_func->pHudVidInitFunc);
 
 	cldll_func_t cldll_func = 
 	{
