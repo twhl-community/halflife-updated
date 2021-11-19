@@ -44,13 +44,13 @@
 // #define DUCKFIX
 
 extern DLL_GLOBAL unsigned int g_ulModelIndexPlayer;
-extern DLL_GLOBAL BOOL		g_fGameOver;
-extern DLL_GLOBAL	BOOL	g_fDrawLines;
+extern DLL_GLOBAL bool		g_fGameOver;
+extern DLL_GLOBAL	bool	g_fDrawLines;
 int gEvilImpulse101;
 extern DLL_GLOBAL int		g_iSkillLevel, gDisplayTitle;
 
 
-BOOL gInitHUD = true;
+bool gInitHUD = true;
 
 extern void CopyToBodyQue(entvars_t* pev);
 extern edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer );
@@ -1219,7 +1219,7 @@ void CBasePlayer::PlayerDeathThink()
 	pev->effects |= EF_NOINTERP;
 	pev->framerate = 0.0;
 
-	BOOL fAnyButtonDown = (pev->button & ~IN_SCORE );
+	bool fAnyButtonDown = (pev->button & ~IN_SCORE );
 	
 	// wait for all buttons released
 	if (pev->deadflag == DEAD_DEAD)
@@ -1697,7 +1697,7 @@ void CBasePlayer::UpdateStatusBar()
 		}
 	}
 
-	BOOL bForceResend = false;
+	bool bForceResend = false;
 
 	if ( strcmp( sbuf0, m_SbarString0 ) )
 	{
@@ -4182,7 +4182,7 @@ Vector CBasePlayer :: GetAutoaimVector( float flDelta )
 		// flDelta *= 0.5;
 	}
 
-	BOOL m_fOldTargeting = m_fOnTarget;
+	bool m_fOldTargeting = m_fOnTarget;
 	Vector angles = AutoaimDeflection(vecSrc, flDist, flDelta );
 
 	// update ontarget if changed

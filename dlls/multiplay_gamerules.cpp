@@ -30,7 +30,7 @@
 #include "UserMessages.h"
 
 extern DLL_GLOBAL CGameRules	*g_pGameRules;
-extern DLL_GLOBAL BOOL	g_fGameOver;
+extern DLL_GLOBAL bool	g_fGameOver;
 
 extern int g_teamplay;
 
@@ -557,7 +557,7 @@ void CHalfLifeMultiplay :: PlayerThink( CBasePlayer *pPlayer )
 //=========================================================
 void CHalfLifeMultiplay :: PlayerSpawn( CBasePlayer *pPlayer )
 {
-	BOOL		addDefault;
+	bool		addDefault;
 	CBaseEntity	*pWeaponEntity = NULL;
 
 	//Ensure the player switches to the Glock on spawn regardless of setting
@@ -1540,7 +1540,7 @@ void CHalfLifeMultiplay :: ChangeLevel()
 	strcpy( szFirstMapInList, "hldm1" );  // the absolute default level is hldm1
 
 	int	curplayers;
-	BOOL do_cycle = true;
+	bool do_cycle = true;
 
 	// find the map to change to
 	char *mapcfile = (char*)CVAR_GET_STRING( "mapcyclefile" );
@@ -1567,8 +1567,8 @@ void CHalfLifeMultiplay :: ChangeLevel()
 
 	if ( do_cycle && mapcycle.items )
 	{
-		BOOL keeplooking = false;
-		BOOL found = false;
+		bool keeplooking = false;
+		bool found = false;
 		mapcycle_item_s *item;
 
 		// Assume current map

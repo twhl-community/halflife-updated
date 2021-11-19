@@ -1020,7 +1020,7 @@ void CMomentaryRotButton::UpdateAllButtons( float value, int start )
 
 void CMomentaryRotButton::UpdateSelf( float value )
 {
-	BOOL fplaysound = false;
+	bool fplaysound = false;
 
 	if ( !m_lastUsed )
 	{

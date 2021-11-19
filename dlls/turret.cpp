@@ -919,7 +919,7 @@ void CBaseTurret::AutoSearchThink()
 
 void CBaseTurret ::	TurretDeath()
 {
-	BOOL iActive = false;
+	bool iActive = false;
 
 	StudioFrameAdvance( );
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -1241,7 +1241,7 @@ void CSentry::SentryTouch( CBaseEntity *pOther )
 
 void CSentry ::	SentryDeath()
 {
-	BOOL iActive = false;
+	bool iActive = false;
 
 	StudioFrameAdvance( );
 	pev->nextthink = gpGlobals->time + 0.1;

@@ -112,9 +112,9 @@ class CGraph
 public:
 
 // the graph has two flags, and should not be accessed unless both flags are true!
-	BOOL	m_fGraphPresent;// is the graph in memory?
-	BOOL	m_fGraphPointersSet;// are the entity pointers for the graph all set?
-	BOOL    m_fRoutingComplete; // are the optimal routes computed, yet?
+	qboolean	m_fGraphPresent;// is the graph in memory?
+	qboolean	m_fGraphPointersSet;// are the entity pointers for the graph all set?
+	qboolean    m_fRoutingComplete; // are the optimal routes computed, yet?
 
 	CNode	*m_pNodes;// pointer to the memory block that contains all node info
 	CLink	*m_pLinkPool;// big list of all node connections

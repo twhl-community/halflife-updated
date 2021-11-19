@@ -39,7 +39,7 @@
 
 Vector VecBModelOrigin( entvars_t* pevBModel );
 
-extern DLL_GLOBAL	BOOL	g_fDrawLines;
+extern DLL_GLOBAL	bool	g_fDrawLines;
 extern DLL_GLOBAL	short	g_sModelIndexLaser;// holds the index for the laser beam
 extern DLL_GLOBAL	short	g_sModelIndexLaserDot;// holds the index for the laser beam dot
 
@@ -638,7 +638,7 @@ bool CBaseMonster :: FRefreshRoute ()
 {
 	CBaseEntity	*pPathCorner;
 	int			i;
-	BOOL		returnCode;
+	bool		returnCode;
 
 	RouteNew();
 
@@ -2800,7 +2800,7 @@ bool CBaseMonster :: FGetNodeRoute ( Vector vecDest )
 		ALERT ( at_aiconsole, "No Path from %d to %d!\n", iSrcNode, iDestNode );
 		return false;
 #else
-		BOOL bRoutingSave = WorldGraph.m_fRoutingComplete;
+		bool bRoutingSave = WorldGraph.m_fRoutingComplete;
 		WorldGraph.m_fRoutingComplete = false;
 		iResult = WorldGraph.FindShortestPath(iPath, iSrcNode, iDestNode, iNodeHull, m_afCapability);
 		WorldGraph.m_fRoutingComplete = bRoutingSave;
@@ -3002,7 +3002,7 @@ void CBaseMonster :: KeyValue( KeyValueData *pkvd )
 //=========================================================
 bool CBaseMonster :: FCheckAITrigger ()
 {
-	BOOL fFireTarget;
+	bool fFireTarget;
 
 	if ( m_iTriggerCondition == AITRIGGER_NONE )
 	{

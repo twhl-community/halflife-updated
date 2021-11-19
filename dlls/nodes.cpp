@@ -292,8 +292,8 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 // FindNearestLink - finds the connection (line) nearest
 // the given point. Returns false if fails, or true if it
 // has stuffed the index into the nearest link pool connection
-// into the passed int pointer, and a BOOL telling whether or 
-// not the point is along the line into the passed BOOL pointer.
+// into the passed int pointer, and a bool telling whether or 
+// not the point is along the line into the passed bool pointer.
 //=========================================================
 int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, bool *pfAlongLine )
 {
@@ -303,8 +303,8 @@ int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, 
 	float		flMinDist;// the distance of of the nearest case so far
 	float		flDistToLine;// the distance of the current test case
 
-	BOOL		fCurrentAlongLine;
-	BOOL		fSuccess;
+	bool		fCurrentAlongLine;
+	bool		fSuccess;
 
 	//float		flConstant;// line constant
 	Vector		vecSpot1, vecSpot2;
@@ -1345,7 +1345,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 	int		cRejectedLinks;
 
-	BOOL	fRestartLoop;// have to restart the J loop if we eliminate a link.
+	bool	fRestartLoop;// have to restart the J loop if we eliminate a link.
 
 	CNode	*pSrcNode;
 	CNode	*pCheckNode;// the node we are testing for (one of pSrcNode's connections)
@@ -1580,7 +1580,7 @@ void CTestHull :: ShowBadNode()
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
-extern BOOL gTouchDisabled;
+extern bool gTouchDisabled;
 void CTestHull::CallBuildNodeGraph()
 {
 	// TOUCH HACK -- Don't allow this entity to call anyone's "touch" function
@@ -1610,8 +1610,8 @@ void CTestHull :: BuildNodeGraph()
 	CNode	*pSrcNode;// node we're currently working with
 	CNode	*pDestNode;// the other node in comparison operations
 
-	BOOL	fSkipRemainingHulls;//if smallest hull can't fit, don't check any others
-	BOOL	fPairsValid;// are all links in the graph evenly paired?
+	bool	fSkipRemainingHulls;//if smallest hull can't fit, don't check any others
+	bool	fPairsValid;// are all links in the graph evenly paired?
 
 	int		i, j, hull;
 
@@ -3146,8 +3146,8 @@ void CGraph :: ComputeStaticRoutingTables()
 					char *p = pRoute;
 					for (int i = 0; i < m_cNodes; i++)
 					{
-						BOOL CanRepeat = ((BestNextNodes[i] == iLastNode) && cRepeats < 127);
-						BOOL CanSequence = (BestNextNodes[i] == i && cSequence < 128);
+						bool CanRepeat = ((BestNextNodes[i] == iLastNode) && cRepeats < 127);
+						bool CanSequence = (BestNextNodes[i] == i && cSequence < 128);
 
 						if (cRepeats)
 						{
@@ -3390,7 +3390,7 @@ void CGraph :: TestRoutingTables()
 							//
 							if (pMyPath[i] == pMyPath[i+1]) continue;
 							int iVisitNode;
-							BOOL bFound = false;
+							bool bFound = false;
 							for (int iLink = 0; iLink < m_pNodes[pMyPath[i]].m_cNumLinks; iLink++)
 							{
 								iVisitNode = INodeLink ( pMyPath[i], iLink );
@@ -3414,7 +3414,7 @@ void CGraph :: TestRoutingTables()
 							//
 							if (pMyPath2[i] == pMyPath2[i+1]) continue;
 							int iVisitNode;
-							BOOL bFound = false;
+							bool bFound = false;
 							for (int iLink = 0; iLink < m_pNodes[pMyPath2[i]].m_cNumLinks; iLink++)
 							{
 								iVisitNode = INodeLink ( pMyPath2[i], iLink );

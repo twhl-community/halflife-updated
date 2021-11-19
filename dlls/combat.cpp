@@ -303,7 +303,7 @@ void CBaseMonster::FadeMonster()
 void CBaseMonster :: GibMonster()
 {
 	TraceResult	tr;
-	BOOL		gibbed = false;
+	bool		gibbed = false;
 
 	EMIT_SOUND(ENT(pev), CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);		
 
@@ -348,7 +348,7 @@ void CBaseMonster :: GibMonster()
 Activity CBaseMonster :: GetDeathActivity ()
 {
 	Activity	deathActivity;
-	BOOL		fTriedDirection;
+	bool		fTriedDirection;
 	float		flDot;
 	TraceResult	tr;
 	Vector		vecSrc;
@@ -469,7 +469,7 @@ Activity CBaseMonster :: GetDeathActivity ()
 Activity CBaseMonster :: GetSmallFlinchActivity ()
 {
 	Activity	flinchActivity;
-	BOOL		fTriedDirection;
+	bool		fTriedDirection;
 	float		flDot;
 
 	fTriedDirection = false;
@@ -543,7 +543,7 @@ bool CBaseMonster::ShouldGibMonster( int iGib )
 
 void CBaseMonster::CallGibMonster()
 {
-	BOOL fade = false;
+	bool fade = false;
 
 	if ( HasHumanGibs() )
 	{
@@ -591,7 +591,7 @@ Killed
 void CBaseMonster :: Killed( entvars_t *pevAttacker, int iGib )
 {
 	unsigned int	cCount = 0;
-	BOOL			fDone = false;
+	bool			fDone = false;
 
 	if ( HasMemory( bits_MEMORY_KILLED ) )
 	{

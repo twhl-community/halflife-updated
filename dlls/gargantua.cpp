@@ -577,7 +577,7 @@ void CGargantua :: FlameUpdate()
 	static float	offset[2] = { 60, -60 };
 	TraceResult		trace;
 	Vector			vecStart, angleGun;
-	BOOL			streaks = false;
+	bool			streaks = false;
 
 	for ( i = 0; i < 2; i++ )
 	{
@@ -1221,7 +1221,7 @@ void CGargantua::RunTask( Task_t *pTask )
 		}
 		else
 		{
-			BOOL cancel = false;
+			bool cancel = false;
 
 			Vector angles = g_vecZero;
 

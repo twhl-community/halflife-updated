@@ -363,7 +363,7 @@ void CXenTree :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		case TREE_AE_ATTACK:
 		{
 			CBaseEntity *pList[8];
-			BOOL sound = false;
+			bool sound = false;
 			int count = UTIL_EntitiesInBox( pList, 8, m_pTrigger->pev->absmin, m_pTrigger->pev->absmax, FL_MONSTER|FL_CLIENT );
 			Vector forward;
 

@@ -990,7 +990,7 @@ void CAGrunt :: StartTask ( Task_t *pTask )
 		{
 			Vector		vecCenter;
 			TraceResult	tr;
-			BOOL		fSkip;
+			bool		fSkip;
 
 			fSkip = false;
 			vecCenter = Center();

@@ -37,5 +37,5 @@ public:
 
 	Vector	m_vecNormal;
 	float	m_flDist;
-	BOOL	m_fInitialized;
+	bool	m_fInitialized;
 };

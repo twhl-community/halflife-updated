@@ -248,7 +248,7 @@ void CTripmineGrenade :: MakeBeam()
 
 void CTripmineGrenade :: BeamBreakThink()
 {
-	BOOL bBlowup = 0;
+	bool bBlowup = 0;
 
 	TraceResult tr;
 
