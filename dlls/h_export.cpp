@@ -36,24 +36,6 @@ globalvars_t  *gpGlobals;
 #define DLLEXPORT __attribute__ ((visibility("default")))
 #endif
 
-#ifdef WIN32
-
-// Required DLL entry point
-BOOL WINAPI DllMain(
-   HINSTANCE hinstDLL,
-   DWORD fdwReason,
-   LPVOID lpvReserved)
-{
-	if      (fdwReason == DLL_PROCESS_ATTACH)
-    {
-    }
-	else if (fdwReason == DLL_PROCESS_DETACH)
-    {
-    }
-	return true;
-}
-#endif
-
 extern "C" void DLLEXPORT GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
 {
 	memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));
