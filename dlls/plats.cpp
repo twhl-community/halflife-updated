@@ -655,7 +655,7 @@ public:
 
 	entvars_t	*m_pevCurrentTarget;
 	int			m_sounds;
-	BOOL		m_activated;
+	bool		m_activated;
 };
 
 LINK_ENTITY_TO_CLASS( func_train, CFuncTrain );
@@ -2135,7 +2135,7 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
-	BOOL			m_on;
+	bool			m_on;
 };
 
 

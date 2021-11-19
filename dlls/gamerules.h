@@ -356,7 +356,7 @@ protected:
 	virtual void ChangeLevel();
 	virtual void GoToIntermission();
 	float m_flIntermissionEndTime;
-	BOOL m_iEndIntermissionButtonHit;
+	bool m_iEndIntermissionButtonHit;
 	void SendMOTDToClient( edict_t *client );
 };
 

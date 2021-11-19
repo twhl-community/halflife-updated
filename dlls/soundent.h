@@ -91,7 +91,7 @@ public:
 	int		m_iFreeSound;	// index of the first sound in the free sound list
 	int		m_iActiveSound; // indes of the first sound in the active sound list
 	int		m_cLastActiveSounds; // keeps track of the number of active sounds at the last update. (for diagnostic work)
-	BOOL	m_fShowReport; // if true, dump information about free/active sounds.
+	bool	m_fShowReport; // if true, dump information about free/active sounds.
 
 private:
 	CSound		m_SoundPool[ MAX_WORLD_SOUNDS ];

@@ -53,7 +53,7 @@ public:
 	int		ISoundMask () override;
 	
 	// UNDONE: These don't necessarily need to be save/restored, but if we add more data, it may
-	BOOL	m_fLightHacked;
+	bool	m_fLightHacked;
 	int		m_iMode;
 	// -----------------------------
 };

@@ -131,8 +131,8 @@ public:
 	float m_flAttenuation;		// attenuation value
 	dynpitchvol_t m_dpv;	
 
-	BOOL	m_fActive;	// only true when the entity is playing a looping sound
-	BOOL	m_fLooping;	// true when the sound played will loop
+	bool	m_fActive;	// only true when the entity is playing a looping sound
+	bool	m_fLooping;	// true when the sound played will loop
 };
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );

@@ -123,7 +123,7 @@ public:
 private:
 	// UNDONE: Remove unused boid vars, do group behavior
 	float	m_flTurning;// is this boid turning?
-	BOOL	m_fPathBlocked;// true if there is an obstacle ahead
+	bool	m_fPathBlocked;// true if there is an obstacle ahead
 	float	m_flAccelerate;
 	float	m_obstacle;
 	float	m_top;

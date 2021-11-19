@@ -494,8 +494,8 @@ public:
 	float				m_flFrameRate;		// computed FPS for current sequence
 	float				m_flGroundSpeed;	// computed linear movement rate for current sequence
 	float				m_flLastEventCheck;	// last time the event list was checked
-	BOOL				m_fSequenceFinished;// flag set when StudioAdvanceFrame moves across a frame boundry
-	BOOL				m_fSequenceLoops;	// true if the sequence loops
+	bool				m_fSequenceFinished;// flag set when StudioAdvanceFrame moves across a frame boundry
+	bool				m_fSequenceLoops;	// true if the sequence loops
 };
 
 

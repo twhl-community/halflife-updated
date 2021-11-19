@@ -50,8 +50,8 @@ public:
 	float m_flAltitude;
 	float m_flKillVictimTime;
 	int	  m_cGibs;// barnacle loads up on gibs each time it kills something.
-	BOOL  m_fTongueExtended;
-	BOOL  m_fLiftingPrey;
+	bool  m_fTongueExtended;
+	bool  m_fLiftingPrey;
 	float m_flTongueAdj;
 };
 LINK_ENTITY_TO_CLASS( monster_barnacle, CBarnacle );

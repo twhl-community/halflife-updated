@@ -58,8 +58,8 @@ public:
 
 	float m_flGround; // z coord of the ground under me, used to make sure no monsters are under the maker when it drops a new child
 
-	BOOL m_fActive;
-	BOOL m_fFadeChildren;// should we make the children fadeout?
+	bool m_fActive;
+	bool m_fFadeChildren;// should we make the children fadeout?
 };
 
 LINK_ENTITY_TO_CLASS( monstermaker, CMonsterMaker );

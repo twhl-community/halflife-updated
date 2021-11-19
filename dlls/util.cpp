@@ -2141,7 +2141,7 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 			//Convert booleans to bytes
 			for (j = 0; j < pTest->fieldSize; j++)
 			{
-				boolArray[j] = ((BOOL*)pOutputData)[j] ? 1 : 0;
+				boolArray[j] = ((bool*)pOutputData)[j] ? 1 : 0;
 			}
 
 			WriteData(pTest->fieldName, pTest->fieldSize, (char*)boolArray);
@@ -2367,9 +2367,9 @@ int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCou
 					{
 						// Input and Output sizes are different!
 						pOutputData = (char*)pOutputData + j * (sizeof(bool) - gSizes[pTest->fieldType]);
-						const BOOL value = *((byte*)pInputData) != 0;
+						const bool value = *((byte*)pInputData) != 0;
 
-						*((BOOL*)pOutputData) = value;
+						*((bool*)pOutputData) = value;
 					}
 					break;
 

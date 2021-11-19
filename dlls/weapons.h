@@ -51,7 +51,7 @@ public:
     int	BloodColor() override { return DONT_BLEED; }
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 
-	BOOL m_fRegisteredSound;// whether or not this grenade has issued its DANGER sound to the world sound list yet.
+	bool m_fRegisteredSound;// whether or not this grenade has issued its DANGER sound to the world sound list yet.
 };
 
 
@@ -885,7 +885,7 @@ public:
 
 	// was this weapon just fired primary or secondary?
 	// we need to know so we can pick the right set of effects. 
-	BOOL m_fPrimaryFire;
+	bool m_fPrimaryFire;
 
 	bool UseDecrement() override
 	{ 
@@ -992,7 +992,7 @@ private:
 	float				m_shootTime;
 	EGON_FIREMODE		m_fireMode;
 	float				m_shakeTime;
-	BOOL				m_deployed;
+	bool				m_deployed;
 
 	unsigned short m_usEgonFire;
 };

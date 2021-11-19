@@ -112,7 +112,7 @@ public:
 	static const char *pIdleSounds[];
 	static const char *pAlertSounds[];
 
-	BOOL	m_fCanHornetAttack;
+	bool	m_fCanHornetAttack;
 	float	m_flNextHornetAttackCheck;
 
 	float m_flNextPainTime;
