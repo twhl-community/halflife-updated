@@ -167,7 +167,7 @@ public:
 	virtual void	Killed( entvars_t *pevAttacker, int iGib );
 	virtual int		BloodColor() { return DONT_BLEED; }
 	virtual void	TraceBleed( float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType );
-	virtual BOOL    IsTriggered( CBaseEntity *pActivator ) {return TRUE;}
+	virtual BOOL    IsTriggered( CBaseEntity *pActivator ) {return true;}
 	virtual CBaseMonster *MyMonsterPointer() { return NULL;}
 	virtual CSquadMonster *MySquadMonsterPointer() { return NULL;}
 	virtual	int		GetToggleState() { return TS_AT_TOP; }

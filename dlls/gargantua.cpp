@@ -175,7 +175,7 @@ void CStomp::Think()
 		pev->origin = pev->origin + pev->movedir * pev->speed * STOMP_INTERVAL;
 		for ( int i = 0; i < 2; i++ )
 		{
-			CSprite *pSprite = CSprite::SpriteCreate( GARG_STOMP_SPRITE_NAME, pev->origin, TRUE );
+			CSprite *pSprite = CSprite::SpriteCreate( GARG_STOMP_SPRITE_NAME, pev->origin, true );
 			if ( pSprite )
 			{
 				UTIL_TraceLine( pev->origin, pev->origin - Vector(0,0,500), ignore_monsters, edict(), &tr );
@@ -600,7 +600,7 @@ void CGargantua :: FlameUpdate()
 			if ( trace.flFraction != 1.0 && gpGlobals->time > m_streakTime )
 			{
 				StreakSplash( trace.vecEndPos, trace.vecPlaneNormal, 6, 20, 50, 400 );
-				streaks = TRUE;
+				streaks = true;
 				UTIL_DecalTrace( &trace, DECAL_SMALLSCORCH1 + RANDOM_LONG(0,2) );
 			}
 			// RadiusDamage( trace.vecEndPos, pev, pev, gSkillData.gargantuaDmgFire, CLASS_ALIEN_MONSTER, DMG_BURN );
@@ -946,7 +946,7 @@ BOOL CGargantua::CheckMeleeAttack1( float flDot, float flDist )
 	if (flDot >= 0.7)
 	{
 		if (flDist <= GARG_ATTACKDIST)
-			return TRUE;
+			return true;
 	}
 	return false;
 }
@@ -962,7 +962,7 @@ BOOL CGargantua::CheckMeleeAttack2( float flDot, float flDist )
 		if (flDot >= 0.8 && flDist > GARG_ATTACKDIST)
 		{
 			if ( flDist <= GARG_FLAME_LENGTH )
-				return TRUE;
+				return true;
 		}
 	}
 	return false;
@@ -984,7 +984,7 @@ BOOL CGargantua::CheckRangeAttack1( float flDot, float flDist )
 	{
 		if (flDot >= 0.7 && flDist > GARG_ATTACKDIST)
 		{
-				return TRUE;
+				return true;
 		}
 	}
 	return false;
@@ -1236,10 +1236,10 @@ void CGargantua::RunTask( Task_t *pTask )
 				angles.x = -angles.x;
 				angles.y -= pev->angles.y;
 				if ( dir.Length() > 400 )
-					cancel = TRUE;
+					cancel = true;
 			}
 			if ( fabs(angles.y) > 60 )
-				cancel = TRUE;
+				cancel = true;
 			
 			if ( cancel )
 			{

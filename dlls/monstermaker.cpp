@@ -84,17 +84,17 @@ void CMonsterMaker :: KeyValue( KeyValueData *pkvd )
 	if ( FStrEq(pkvd->szKeyName, "monstercount") )
 	{
 		m_cNumMonsters = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "m_imaxlivechildren") )
 	{
 		m_iMaxLiveChildren = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "monstertype") )
 	{
 		m_iszMonsterClassname = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseMonster::KeyValue( pkvd );
@@ -120,7 +120,7 @@ void CMonsterMaker :: Spawn( )
 
 		if ( FBitSet ( pev->spawnflags, SF_MONSTERMAKER_START_ON ) )
 		{// start making monsters as soon as monstermaker spawns
-			m_fActive = TRUE;
+			m_fActive = true;
 			SetThink ( &CMonsterMaker::MakerThink );
 		}
 		else
@@ -132,7 +132,7 @@ void CMonsterMaker :: Spawn( )
 	else
 	{// no targetname, just start.
 			pev->nextthink = gpGlobals->time + m_flDelay;
-			m_fActive = TRUE;
+			m_fActive = true;
 			SetThink ( &CMonsterMaker::MakerThink );
 	}
 
@@ -142,7 +142,7 @@ void CMonsterMaker :: Spawn( )
 	}
 	else
 	{
-		m_fFadeChildren = TRUE;
+		m_fFadeChildren = true;
 	}
 
 	m_flGround = 0;
@@ -258,7 +258,7 @@ void CMonsterMaker :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller,
 	}
 	else
 	{
-		m_fActive = TRUE;
+		m_fActive = true;
 		SetThink ( &CMonsterMaker::MakerThink );
 	}
 

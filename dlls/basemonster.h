@@ -234,7 +234,7 @@ public:
 		
 		BOOL FindLateralCover ( const Vector &vecThreat, const Vector &vecViewOffset );
 		virtual BOOL FindCover ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist );
-		virtual BOOL FValidateCover ( const Vector &vecCoverLocation ) { return TRUE; }
+		virtual BOOL FValidateCover ( const Vector &vecCoverLocation ) { return true; }
 		virtual float CoverRadius() { return 784; } // Default cover radius
 
 		virtual BOOL FCanCheckAttacks ();
@@ -243,8 +243,8 @@ public:
 		
 		inline void	SetConditions( int iConditions ) { m_afConditions |= iConditions; }
 		inline void	ClearConditions( int iConditions ) { m_afConditions &= ~iConditions; }
-		inline BOOL HasConditions( int iConditions ) { if ( m_afConditions & iConditions ) return TRUE; return false; }
-		inline BOOL HasAllConditions( int iConditions ) { if ( (m_afConditions & iConditions) == iConditions ) return TRUE; return false; }
+		inline BOOL HasConditions( int iConditions ) { if ( m_afConditions & iConditions ) return true; return false; }
+		inline BOOL HasAllConditions( int iConditions ) { if ( (m_afConditions & iConditions) == iConditions ) return true; return false; }
 
 		virtual BOOL FValidateHintType( short sHint );
 		int FindHintNode ();
@@ -326,8 +326,8 @@ public:
 
 	inline void	Remember( int iMemory ) { m_afMemory |= iMemory; }
 	inline void	Forget( int iMemory ) { m_afMemory &= ~iMemory; }
-	inline BOOL HasMemory( int iMemory ) { if ( m_afMemory & iMemory ) return TRUE; return false; }
-	inline BOOL HasAllMemories( int iMemory ) { if ( (m_afMemory & iMemory) == iMemory ) return TRUE; return false; }
+	inline BOOL HasMemory( int iMemory ) { if ( m_afMemory & iMemory ) return true; return false; }
+	inline BOOL HasAllMemories( int iMemory ) { if ( (m_afMemory & iMemory) == iMemory ) return true; return false; }
 
 	BOOL ExitScriptedSequence( );
 	BOOL CineCleanup( );

@@ -963,19 +963,19 @@ void UTIL_ShowMessageAll( const char *pString )
 // Overloaded to add IGNORE_GLASS
 void UTIL_TraceLine( const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t *pentIgnore, TraceResult *ptr )
 {
-	TRACE_LINE( vecStart, vecEnd, (igmon == ignore_monsters ? TRUE : false) | (ignoreGlass?0x100:0), pentIgnore, ptr );
+	TRACE_LINE( vecStart, vecEnd, (igmon == ignore_monsters ? true : false) | (ignoreGlass?0x100:0), pentIgnore, ptr );
 }
 
 
 void UTIL_TraceLine( const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, edict_t *pentIgnore, TraceResult *ptr )
 {
-	TRACE_LINE( vecStart, vecEnd, (igmon == ignore_monsters ? TRUE : false), pentIgnore, ptr );
+	TRACE_LINE( vecStart, vecEnd, (igmon == ignore_monsters ? true : false), pentIgnore, ptr );
 }
 
 
 void UTIL_TraceHull( const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t *pentIgnore, TraceResult *ptr )
 {
-	TRACE_HULL( vecStart, vecEnd, (igmon == ignore_monsters ? TRUE : false), hullNumber, pentIgnore, ptr );
+	TRACE_HULL( vecStart, vecEnd, (igmon == ignore_monsters ? true : false), hullNumber, pentIgnore, ptr );
 }
 
 void UTIL_TraceModel( const Vector &vecStart, const Vector &vecEnd, int hullNumber, edict_t *pentModel, TraceResult *ptr )
@@ -1138,12 +1138,12 @@ BOOL UTIL_ShouldShowBlood( int color )
 		if ( color == BLOOD_COLOR_RED )
 		{
 			if ( CVAR_GET_FLOAT("violence_hblood") != 0 )
-				return TRUE;
+				return true;
 		}
 		else
 		{
 			if ( CVAR_GET_FLOAT("violence_ablood") != 0 )
-				return TRUE;
+				return true;
 		}
 	}
 	return false;
@@ -1379,13 +1379,13 @@ BOOL UTIL_TeamsMatch( const char *pTeamName1, const char *pTeamName2 )
 {
 	// Everyone matches unless it's teamplay
 	if ( !g_pGameRules->IsTeamplay() )
-		return TRUE;
+		return true;
 
 	// Both on a team?
 	if ( *pTeamName1 != 0 && *pTeamName2 != 0 )
 	{
 		if ( !stricmp( pTeamName1, pTeamName2 ) )	// Same Team?
-			return TRUE;
+			return true;
 	}
 
 	return false;
@@ -1583,7 +1583,7 @@ BOOL UTIL_IsValidEntity( edict_t *pent )
 {
 	if ( !pent || pent->free || (pent->v.flags & FL_KILLME) )
 		return false;
-	return TRUE;
+	return true;
 }
 
 
@@ -1832,7 +1832,7 @@ unsigned short CSaveRestoreBuffer :: TokenHash( const char *pszToken )
 		static qboolean beentheredonethat = false;
 		if ( i > 50 && !beentheredonethat )
 		{
-			beentheredonethat = TRUE;
+			beentheredonethat = true;
 			ALERT( at_error, "CSaveRestoreBuffer :: TokenHash() is getting too full!" );
 		}
 #endif
@@ -2038,7 +2038,7 @@ void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd )
 				ALERT( at_error, "Bad field in entity!!\n" );
 				break;
 			}
-			pkvd->fHandled = TRUE;
+			pkvd->fHandled = true;
 			return;
 		}
 	}

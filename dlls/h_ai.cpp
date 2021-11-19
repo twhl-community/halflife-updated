@@ -66,7 +66,7 @@ BOOL FBoxVisible ( entvars_t *pevLooker, entvars_t *pevTarget, Vector &vecTarget
 		if (tr.flFraction == 1.0)
 		{
 			vecTargetOrigin = vecTarget;
-			return TRUE;// line of sight is valid.
+			return true;// line of sight is valid.
 		}
 	}
 	return false;// Line of sight is not established

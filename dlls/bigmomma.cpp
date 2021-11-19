@@ -69,27 +69,27 @@ void CInfoBM::KeyValue( KeyValueData* pkvd )
 	if (FStrEq(pkvd->szKeyName, "radius"))
 	{
 		pev->scale = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "reachdelay"))
 	{
 		pev->speed = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "reachtarget"))
 	{
 		pev->message = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "reachsequence"))
 	{
 		pev->netname = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "presequence"))
 	{
 		m_preSequence = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CPointEntity::KeyValue( pkvd );
@@ -270,7 +270,7 @@ public:
 				if ( pList[i] != this )	// Don't hurt yourself!
 					return false;
 			}
-			return TRUE;
+			return true;
 		}
 
 		return false;
@@ -392,7 +392,7 @@ void CBigMomma :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "volume"))
 	{
 		m_volume = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 #endif
@@ -766,7 +766,7 @@ BOOL CBigMomma::CheckMeleeAttack1( float flDot, float flDist )
 	if (flDot >= 0.7)
 	{
 		if ( flDist <= BIG_ATTACKDIST )
-			return TRUE;
+			return true;
 	}
 	return false;
 }
@@ -792,7 +792,7 @@ BOOL CBigMomma::CheckRangeAttack1( float flDot, float flDist )
 			startPos.z += 180;
 			pev->movedir = VecCheckSplatToss( pev, startPos, pEnemy->BodyTarget( pev->origin ), RANDOM_FLOAT( 150, 500 ) );
 			if ( pev->movedir != g_vecZero )
-				return TRUE;
+				return true;
 		}
 	}
 	return false;
@@ -899,7 +899,7 @@ BOOL CBigMomma::ShouldGoToNode()
 	if ( HasMemory( bits_MEMORY_ADVANCE_NODE ) )
 	{
 		if ( m_nodeTime < gpGlobals->time )
-			return TRUE;
+			return true;
 	}
 	return false;
 }

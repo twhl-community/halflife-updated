@@ -692,14 +692,14 @@ void CController :: RunTask ( Task_t *pTask )
 				pev->sequence = LookupActivity( ACT_RANGE_ATTACK1 );
 				pev->frame = 0;
 				ResetSequenceInfo( );
-				m_fInCombat = TRUE;
+				m_fInCombat = true;
 			}
 			else if (HasConditions ( bits_COND_CAN_RANGE_ATTACK2 ))
 			{
 				pev->sequence = LookupActivity( ACT_RANGE_ATTACK2 );
 				pev->frame = 0;
 				ResetSequenceInfo( );
-				m_fInCombat = TRUE;
+				m_fInCombat = true;
 			}
 			else
 			{
@@ -793,7 +793,7 @@ BOOL CController :: CheckRangeAttack1 ( float flDot, float flDist )
 {
 	if ( flDot > 0.5 && flDist > 256 && flDist <= 2048 )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -803,7 +803,7 @@ BOOL CController :: CheckRangeAttack2 ( float flDot, float flDist )
 {
 	if ( flDot > 0.5 && flDist > 64 && flDist <= 2048 )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -847,7 +847,7 @@ void CController :: RunAI()
 	{
 		if (m_pBall[i] == NULL)
 		{
-			m_pBall[i] = CSprite::SpriteCreate( "sprites/xspark4.spr", pev->origin, TRUE );
+			m_pBall[i] = CSprite::SpriteCreate( "sprites/xspark4.spr", pev->origin, true );
 			m_pBall[i]->SetTransparency( kRenderGlow, 255, 255, 255, 255, kRenderFxNoDissipation );
 			m_pBall[i]->SetAttachment( edict(), (i + 3) );
 			m_pBall[i]->SetScale( 1.0 );
@@ -1078,7 +1078,7 @@ BOOL CController:: ShouldAdvanceRoute( float flWaypointDist )
 {
 	if ( flWaypointDist <= 32  )
 	{
-		return TRUE;
+		return true;
 	}
 
 	return false;

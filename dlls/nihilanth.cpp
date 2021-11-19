@@ -681,7 +681,7 @@ void CNihilanth :: NextActivity( )
 	{
 		if (m_pBall == NULL)
 		{
-			m_pBall = CSprite::SpriteCreate( "sprites/tele1.spr", pev->origin, TRUE );
+			m_pBall = CSprite::SpriteCreate( "sprites/tele1.spr", pev->origin, true );
 			if (m_pBall)
 			{
 				m_pBall->SetTransparency( kRenderTransAdd, 255, 255, 255, 255, kRenderFxNoDissipation );
@@ -846,7 +846,7 @@ void CNihilanth :: HuntThink()
 	if (pev->health <= 0)
 	{
 		SetThink( &CNihilanth::DyingThink );
-		m_fSequenceFinished = TRUE;
+		m_fSequenceFinished = true;
 		return;
 	}
 
@@ -978,7 +978,7 @@ BOOL CNihilanth :: AbsorbSphere()
 			pSphere->AbsorbInit( );
 			m_hSphere[i] = NULL;
 			m_iActiveSpheres--;
-			return TRUE;
+			return true;
 		}
 	}
 	return false;
@@ -1011,7 +1011,7 @@ BOOL CNihilanth :: EmitSphere()
 	pEntity->CircleInit( this );
 
 	m_hSphere[empty] = pEntity;
-	return TRUE;
+	return true;
 }
 
 
@@ -1757,7 +1757,7 @@ BOOL CNihilanthHVR :: CircleTarget( Vector vecTarget )
 
 	if (d1 < 32)
 	{
-		fClose = TRUE;
+		fClose = true;
 	}
 
 	m_vecIdeal = m_vecIdeal + Vector( RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ));

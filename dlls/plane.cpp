@@ -31,7 +31,7 @@ void CPlane :: InitializePlane ( const Vector &vecNormal, const Vector &vecPoint
 {
 	m_vecNormal = vecNormal;
 	m_flDist = DotProduct ( m_vecNormal, vecPoint );
-	m_fInitialized = TRUE;
+	m_fInitialized = true;
 }
 
 
@@ -52,7 +52,7 @@ BOOL CPlane :: PointInFront ( const Vector &vecPoint )
 
 	if ( flFace >= 0 )
 	{
-		return TRUE;
+		return true;
 	}
 
 	return false;

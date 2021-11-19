@@ -128,7 +128,7 @@ int CGraph :: AllocNodes ()
 		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -228,7 +228,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 	if ( FNullEnt ( pevLinkEnt ) )
 	{
 		ALERT ( at_aiconsole, "dead path ent!\n" );
-		return TRUE;
+		return true;
 	}
 	pentWorld = NULL;
 
@@ -243,14 +243,14 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 
 			if  ( ( afCapMask & bits_CAP_OPEN_DOORS ) )
 			{// let monster right through if he can open doors
-				return TRUE;
+				return true;
 			}
 			else 
 			{
 				// monster should try for it if the door is open and looks as if it will stay that way
 				if ( pDoor->GetToggleState()== TS_AT_TOP && ( pevLinkEnt->spawnflags & SF_DOOR_NO_AUTO_RETURN ) )
 				{
-					return TRUE;
+					return true;
 				}
 
 				return false;
@@ -262,12 +262,12 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 			// monster should try for it if the door is open and looks as if it will stay that way
 			if ( pDoor->GetToggleState() == TS_AT_TOP && ( pevLinkEnt->spawnflags & SF_DOOR_NO_AUTO_RETURN ) )
 			{
-				return TRUE;
+				return true;
 			}
 			if  ( ( afCapMask & bits_CAP_OPEN_DOORS ) )
 			{
 				if ( !( pevLinkEnt->spawnflags & SF_DOOR_NOMONSTERS ) || queryType == NODEGRAPH_STATIC )
-					return TRUE;
+					return true;
 			}
 
 			return false;
@@ -276,7 +276,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 // func_breakable	
 	else if ( FClassnameIs( pevLinkEnt, "func_breakable" ) && queryType == NODEGRAPH_STATIC )
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{
@@ -290,7 +290,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 #if 0
 //=========================================================
 // FindNearestLink - finds the connection (line) nearest
-// the given point. Returns false if fails, or TRUE if it
+// the given point. Returns false if fails, or true if it
 // has stuffed the index into the nearest link pool connection
 // into the passed int pointer, and a BOOL telling whether or 
 // not the point is along the line into the passed BOOL pointer.
@@ -389,7 +389,7 @@ int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, 
 			else
 			{// point inside line
 				flDistToLine = fabs( DotProduct ( vec2TestPoint - vec2Spot2, vec2Normal ) );
-				fCurrentAlongLine = TRUE;
+				fCurrentAlongLine = true;
 			}
 
 			if ( flDistToLine < flMinDist )
@@ -408,7 +408,7 @@ int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, 
 
 				}
 				
-				fSuccess = TRUE;// we know there will be something to return.
+				fSuccess = true;// we know there will be something to return.
 				flMinDist = flDistToLine;
 				iNearestLink = m_pNodes [ i ].m_iFirstLink + j;
 				*piNearestLink = m_pNodes[ i ].m_iFirstLink + j;
@@ -1414,7 +1414,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 						cRejectedLinks++;// keeping track of how many links are cut, so that we can return that value.
 
-						fRestartLoop = TRUE;
+						fRestartLoop = true;
 					}
 				}
 			}
@@ -1505,13 +1505,13 @@ void CNodeEnt :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "hinttype"))
 	{
 		m_sHintType = (short)atoi( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	if (FStrEq(pkvd->szKeyName, "activity"))
 	{
 		m_sHintActivity = (short)atoi( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
@@ -1584,7 +1584,7 @@ extern BOOL gTouchDisabled;
 void CTestHull::CallBuildNodeGraph()
 {
 	// TOUCH HACK -- Don't allow this entity to call anyone's "touch" function
-	gTouchDisabled = TRUE;
+	gTouchDisabled = true;
 	BuildNodeGraph();
 	gTouchDisabled = false;
 	// Undo TOUCH HACK
@@ -1869,7 +1869,7 @@ void CTestHull :: BuildNodeGraph()
 						if ( !WALK_MOVE( ENT(pev), flYaw, stepSize, MoveMode ) )
 						{// can't take the next step
 
-							fWalkFailed = TRUE;
+							fWalkFailed = true;
 							break;
 						}
 					}
@@ -1878,7 +1878,7 @@ void CTestHull :: BuildNodeGraph()
 					{
 						// ALERT( at_console, "bogus walk\n");
 						// we thought we 
-						fWalkFailed = TRUE;
+						fWalkFailed = true;
 					}
 
 					if (fWalkFailed)
@@ -1892,12 +1892,12 @@ void CTestHull :: BuildNodeGraph()
 						case NODE_SMALL_HULL:	// if this hull can't fit, nothing can, so drop the connection
 							fprintf ( file, "NODE_SMALL_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_SMALL_HULL | bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
-							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
+							fSkipRemainingHulls = true;// don't bother checking larger hulls
 							break;
 						case NODE_HUMAN_HULL:
 							fprintf ( file, "NODE_HUMAN_HULL step %d\n", step );
 							pTempPool[ pSrcNode->m_iFirstLink + j ].m_afLinkInfo &= ~(bits_LINK_HUMAN_HULL | bits_LINK_LARGE_HULL);
-							fSkipRemainingHulls = TRUE;// don't bother checking larger hulls
+							fSkipRemainingHulls = true;// don't bother checking larger hulls
 							break;
 						case NODE_LARGE_HULL:
 							fprintf ( file, "NODE_LARGE_HULL step %d\n", step );
@@ -1980,7 +1980,7 @@ void CTestHull :: BuildNodeGraph()
 	//
 	WorldGraph.BuildLinkLookups();
 
-	fPairsValid = TRUE; // assume that the connection pairs are all valid to start
+	fPairsValid = true; // assume that the connection pairs are all valid to start
 
 	fprintf ( file, "\n\n-------------------------------------------------------------------------------\n");
 	fprintf ( file, "Link Pairings:\n");
@@ -2047,8 +2047,8 @@ void CTestHull :: BuildNodeGraph()
 
 	// We now have some graphing capabilities.
 	//
-	WorldGraph.m_fGraphPresent = TRUE;//graph is in memory.
-	WorldGraph.m_fGraphPointersSet = TRUE;// since the graph was generated, the pointers are ready
+	WorldGraph.m_fGraphPresent = true;//graph is in memory.
+	WorldGraph.m_fGraphPointersSet = true;// since the graph was generated, the pointers are ready
 	WorldGraph.m_fRoutingComplete = false; // Optimal routes aren't computed, yet.
 
 	// Compute and compress the routing information.
@@ -2445,7 +2445,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		if (length < 0) goto ShortFile;
 		memcpy(m_pRouteInfo, pMemFile, sizeof(char)*m_nRouteInfo);
 		pMemFile += sizeof(char)*m_nRouteInfo;
-		m_fRoutingComplete = TRUE;
+		m_fRoutingComplete = true;
 
         // malloc for the hash links
 		//
@@ -2465,7 +2465,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 		// Set the graph present flag, clear the pointers set flag
 		//
-		m_fGraphPresent = TRUE;
+		m_fGraphPresent = true;
 		m_fGraphPointersSet = false;
 		
 		FREE_FILE(aMemFile);
@@ -2475,7 +2475,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 			ALERT ( at_aiconsole, "***WARNING***:Node graph was longer than expected by %d bytes.!\n", length);
 		}
 
-		return TRUE;
+		return true;
 	}
 
 ShortFile:
@@ -2549,7 +2549,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 			fwrite(m_pHashLinks, sizeof(short), m_nHashLinks, file);
 		}
 		fclose ( file );
-		return TRUE;
+		return true;
 	}
 }
 
@@ -2600,8 +2600,8 @@ int CGraph :: FSetGraphPointers ()
 	}
 
 	// the pointers are now set.
-	m_fGraphPointersSet = TRUE;
-	return TRUE;
+	m_fGraphPointersSet = true;
+	return true;
 }
 
 //=========================================================
@@ -2635,7 +2635,7 @@ int CGraph :: CheckNODFile ( char *szMapName )
 	strcat ( szGraphFilename, szMapName );
 	strcat ( szGraphFilename, ".nod" );
 	
-	retValue = TRUE;
+	retValue = true;
 
 	int iCompare;
 	if (COMPARE_FILE_TIME(szBspFilename, szGraphFilename, &iCompare))
@@ -3339,7 +3339,7 @@ void CGraph :: ComputeStaticRoutingTables()
 #if 0
 	TestRoutingTables();
 #endif
-	m_fRoutingComplete = TRUE;
+	m_fRoutingComplete = true;
 }
 
 // Test those routing tables. Doesn't really work, yet.
@@ -3372,7 +3372,7 @@ void CGraph :: TestRoutingTables()
 					{
 						m_fRoutingComplete = false;
 						int cPathSize1 = FindShortestPath(pMyPath, iFrom, iTo, iHull, iCapMask);
-						m_fRoutingComplete = TRUE;
+						m_fRoutingComplete = true;
 						int cPathSize2 = FindShortestPath(pMyPath2, iFrom, iTo, iHull, iCapMask);
 
 						// Unless we can look at the entire path, we can verify that it's correct.
@@ -3397,7 +3397,7 @@ void CGraph :: TestRoutingTables()
 								if (iVisitNode == pMyPath[i+1])
 								{
 									flDistance1 += m_pLinkPool[ m_pNodes[ pMyPath[i] ].m_iFirstLink + iLink].m_flWeight;
-									bFound = TRUE;
+									bFound = true;
 									break;
 								}
 							}
@@ -3421,7 +3421,7 @@ void CGraph :: TestRoutingTables()
 								if (iVisitNode == pMyPath2[i+1])
 								{
 									flDistance2 += m_pLinkPool[ m_pNodes[ pMyPath2[i] ].m_iFirstLink + iLink].m_flWeight;
-									bFound = TRUE;
+									bFound = true;
 									break;
 								}
 							}
@@ -3450,7 +3450,7 @@ void CGraph :: TestRoutingTables()
 							ALERT(at_aiconsole, "\n");
 							m_fRoutingComplete = false;
 							cPathSize1 = FindShortestPath(pMyPath, iFrom, iTo, iHull, iCapMask);
-							m_fRoutingComplete = TRUE;
+							m_fRoutingComplete = true;
 							cPathSize2 = FindShortestPath(pMyPath2, iFrom, iTo, iHull, iCapMask);
 							goto EnoughSaid;
 						}

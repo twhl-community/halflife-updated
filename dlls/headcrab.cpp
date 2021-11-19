@@ -403,7 +403,7 @@ BOOL CHeadCrab :: CheckRangeAttack1 ( float flDot, float flDist )
 {
 	if ( FBitSet( pev->flags, FL_ONGROUND ) && flDist <= 256 && flDot >= 0.65 )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -418,7 +418,7 @@ BOOL CHeadCrab :: CheckRangeAttack2 ( float flDot, float flDist )
 #if 0
 	if ( FBitSet( pev->flags, FL_ONGROUND ) && flDist > 64 && flDist <= 256 && flDot >= 0.5 )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 #endif
@@ -524,11 +524,11 @@ BOOL CBabyCrab :: CheckRangeAttack1( float flDot, float flDist )
 	if ( pev->flags & FL_ONGROUND )
 	{
 		if ( pev->groundentity && (pev->groundentity->v.flags & (FL_CLIENT|FL_MONSTER)) )
-			return TRUE;
+			return true;
 
 		// A little less accurate, but jump from closer
 		if ( flDist <= 180 && flDot >= 0.55 )
-			return TRUE;
+			return true;
 	}
 
 	return false;

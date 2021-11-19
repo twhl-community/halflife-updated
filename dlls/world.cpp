@@ -449,7 +449,7 @@ void RestoreGlobalState( SAVERESTOREDATA *pSaveData )
 void ResetGlobalState()
 {
 	gGlobalState.ClearStates();
-	gInitHUD = TRUE;	// Init the HUD on a new game / load game
+	gInitHUD = true;	// Init the HUD on a new game / load game
 }
 
 // moved CWorld class definition to cbase.h
@@ -650,7 +650,7 @@ void CWorld :: Precache()
 		CVAR_SET_FLOAT( "v_dark", 0.0 );
 
 	if ( pev->spawnflags & SF_WORLD_TITLE )
-		gDisplayTitle = TRUE;		// display the game title if this key is set
+		gDisplayTitle = true;		// display the game title if this key is set
 	else
 		gDisplayTitle = false;
 
@@ -674,36 +674,36 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	{
 		// Sent over net now.
 		CVAR_SET_STRING( "sv_skyname", pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "sounds") )
 	{
 		gpGlobals->cdAudioTrack = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "WaveHeight") )
 	{
 		// Sent over net now.
 		pev->scale = atof(pkvd->szValue) * (1.0/8.0);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 		CVAR_SET_FLOAT( "sv_wateramp", pev->scale );
 	}
 	else if ( FStrEq(pkvd->szKeyName, "MaxRange") )
 	{
 		pev->speed = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "chaptertitle") )
 	{
 		pev->netname = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "startdark") )
 	{
 		// UNDONE: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
 		// but it will work for single player
 		int flag = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 		if ( flag )
 			pev->spawnflags |= SF_WORLD_DARK;
 	}
@@ -712,19 +712,19 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 		// Single player only.  Clear save directory if set
 		if ( atoi(pkvd->szValue) )
 			CVAR_SET_FLOAT( "sv_newunit", 1 );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "gametitle") )
 	{
 		if ( atoi(pkvd->szValue) )
 			pev->spawnflags |= SF_WORLD_TITLE;
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "mapteams") )
 	{
 		pev->team = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "defaultteam") )
 	{
@@ -732,7 +732,7 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 		{
 			pev->spawnflags |= SF_WORLD_FORCETEAM;
 		}
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );

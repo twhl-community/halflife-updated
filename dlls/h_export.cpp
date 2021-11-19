@@ -50,7 +50,7 @@ BOOL WINAPI DllMain(
 	else if (fdwReason == DLL_PROCESS_DETACH)
     {
     }
-	return TRUE;
+	return true;
 }
 #endif
 

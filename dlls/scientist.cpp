@@ -761,7 +761,7 @@ int CScientist :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, f
 	if ( pevInflictor && pevInflictor->flags & FL_CLIENT )
 	{
 		Remember( bits_MEMORY_PROVOKED );
-		StopFollowing( TRUE );
+		StopFollowing( true );
 	}
 
 	// make sure friends talk about it if player hurts scientist...
@@ -1021,14 +1021,14 @@ MONSTERSTATE CScientist :: GetIdealState ()
 					m_IdealMonsterState = MONSTERSTATE_ALERT;
 					return m_IdealMonsterState;
 				}
-				StopFollowing( TRUE );
+				StopFollowing( true );
 			}
 		}
 		else if ( HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) )
 		{
 			// Stop following if you take damage
 			if ( IsFollowing() )
-				StopFollowing( TRUE );
+				StopFollowing( true );
 		}
 		break;
 
@@ -1072,7 +1072,7 @@ BOOL CScientist::CanHeal()
 	if ( (m_healTime > gpGlobals->time) || (m_hTargetEnt == NULL) || (m_hTargetEnt->pev->health > (m_hTargetEnt->pev->max_health * 0.5)) )
 		return false;
 
-	return TRUE;
+	return true;
 }
 
 void CScientist::Heal()
@@ -1118,7 +1118,7 @@ void CDeadScientist::KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "pose"))
 	{
 		m_iPose = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseMonster::KeyValue( pkvd );
@@ -1286,7 +1286,7 @@ void CSittingScientist :: SittingThink()
 	// try to greet player
 	if (FIdleHello())
 	{
-		pent = FindNearestFriend(TRUE);
+		pent = FindNearestFriend(true);
 		if (pent)
 		{
 			float yaw = VecToYaw(pent->pev->origin - pev->origin) - pev->angles.y;
@@ -1323,7 +1323,7 @@ void CSittingScientist :: SittingThink()
 			// turn towards player or nearest friend and speak
 
 			if (!FBitSet(m_bitsSaid, bit_saidHelloPlayer))
-				pent = FindNearestFriend(TRUE);
+				pent = FindNearestFriend(true);
 			else
 				pent = FindNearestFriend(false);
 
@@ -1413,7 +1413,7 @@ int CSittingScientist :: FIdleSpeak ()
 		SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_PQUESTION], 1.0, ATTN_IDLE, 0, pitch );
 		// set global min delay for next conversation
 		CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(4.8, 5.2);
-		return TRUE;
+		return true;
 	}
 
 	// otherwise, play an idle statement
@@ -1422,7 +1422,7 @@ int CSittingScientist :: FIdleSpeak ()
 		SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_PIDLE], 1.0, ATTN_IDLE, 0, pitch );
 		// set global min delay for next conversation
 		CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(4.8, 5.2);
-		return TRUE;
+		return true;
 	}
 
 	// never spoke

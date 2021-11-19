@@ -253,7 +253,7 @@ void CGrenade::BounceTouch( CBaseEntity *pOther )
 		
 		// register a radius louder than the explosion, so we make sure everyone gets out of the way
 		CSoundEnt::InsertSound ( bits_SOUND_DANGER, pev->origin, pev->dmg / 0.4, 0.3 );
-		m_fRegisteredSound = TRUE;
+		m_fRegisteredSound = true;
 	}
 
 	if (pev->flags & FL_ONGROUND)

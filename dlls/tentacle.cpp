@@ -71,7 +71,7 @@ public:
 
 	MONSTERSTATE GetIdealState () override { return MONSTERSTATE_IDLE; }
 	//TODO: should override base, but has different signature
-	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; }
+	int CanPlaySequence( BOOL fDisregardState ) { return true; }
 
 	int Classify() override;
 
@@ -333,12 +333,12 @@ void CTentacle::KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "sweeparc"))
 	{
 		m_flMaxYaw = atof(pkvd->szValue) / 2.0;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sound"))
 	{
 		m_iTapSound = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 
 	}
 	else
@@ -931,13 +931,13 @@ void CTentacle :: Start()
 	if ( !g_fFlySound )
 	{
 		EMIT_SOUND (ENT(pev), CHAN_BODY, "ambience/flies.wav", 1, ATTN_NORM );
-		g_fFlySound = TRUE;
+		g_fFlySound = true;
 //		pev->nextthink = gpGlobals-> time + 0.1;
 	}
 	else if ( !g_fSquirmSound )
 	{
 		EMIT_SOUND (ENT(pev), CHAN_BODY, "ambience/squirm2.wav", 1, ATTN_NORM );
-		g_fSquirmSound = TRUE;
+		g_fSquirmSound = true;
 	}
 	
 	pev->nextthink = gpGlobals->time + 0.1;

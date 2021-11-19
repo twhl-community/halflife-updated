@@ -123,7 +123,7 @@ public:
 private:
 	// UNDONE: Remove unused boid vars, do group behavior
 	float	m_flTurning;// is this boid turning?
-	BOOL	m_fPathBlocked;// TRUE if there is an obstacle ahead
+	BOOL	m_fPathBlocked;// true if there is an obstacle ahead
 	float	m_flAccelerate;
 	float	m_obstacle;
 	float	m_top;
@@ -658,7 +658,7 @@ void CLeech::SwimThink()
 	{
 		m_obstacle = 1.0 / m_obstacle;
 		// IF we get this far in the function, the leader's path is blocked!
-		m_fPathBlocked = TRUE;
+		m_fPathBlocked = true;
 
 		if ( m_flTurning == 0 )// something in the way and leech is not already turning to avoid
 		{

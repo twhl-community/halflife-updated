@@ -216,31 +216,31 @@ void CBaseTurret::KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "maxsleep"))
 	{
 		m_flMaxWait = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "orientation"))
 	{
 		m_iOrientation = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 
 	}
 	else if (FStrEq(pkvd->szKeyName, "searchspeed"))
 	{
 		m_iSearchSpeed = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 
 	}
 	else if (FStrEq(pkvd->szKeyName, "turnrate"))
 	{
 		m_iBaseTurnRate = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "style") ||
 			 FStrEq(pkvd->szKeyName, "height") ||
 			 FStrEq(pkvd->szKeyName, "value1") ||
 			 FStrEq(pkvd->szKeyName, "value2") ||
 			 FStrEq(pkvd->szKeyName, "value3"))
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	else
 		CBaseMonster::KeyValue( pkvd );
 }
@@ -262,7 +262,7 @@ void CBaseTurret::Spawn()
 	if (( pev->spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE ) 
 		 && !( pev->spawnflags & SF_MONSTER_TURRET_STARTINACTIVE ))
 	{
-		m_iAutoStart = TRUE;
+		m_iAutoStart = true;
 	}
 
 	ResetSequenceInfo( );
@@ -408,7 +408,7 @@ void CBaseTurret::TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 		// if the turret is flagged as an autoactivate turret, re-enable it's ability open self.
 		if ( pev->spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE )
 		{
-			m_iAutoStart = TRUE;
+			m_iAutoStart = true;
 		}
 		
 		SetThink(&CBaseTurret::Deploy);
@@ -544,7 +544,7 @@ void CBaseTurret::ActiveThink()
 	if (DotProduct(vecLOS, gpGlobals->v_forward) <= 0.866) // 30 degree slop
 		fAttack = false;
 	else
-		fAttack = TRUE;
+		fAttack = true;
 
 	// fire the gun
 	if (m_iSpin && ((fAttack) || (m_fBeserk)))

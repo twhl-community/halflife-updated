@@ -348,7 +348,7 @@ void ScorePanel::SortTeams()
 		g_TeamInfo[j].packetloss += g_PlayerInfoList[i].packetloss;
 
 		if ( g_PlayerInfoList[i].thisplayer )
-			g_TeamInfo[j].ownteam = TRUE;
+			g_TeamInfo[j].ownteam = true;
 		else
 			g_TeamInfo[j].ownteam = false;
 
@@ -397,7 +397,7 @@ void ScorePanel::SortTeams()
 		// Put this team in the sorted list
 		m_iSortedRows[ m_iRows ] = best_team;
 		m_iIsATeam[ m_iRows ] = TEAM_YES;
-		g_TeamInfo[best_team].already_drawn = TRUE;  // set the already_drawn to be TRUE, so this team won't get sorted again
+		g_TeamInfo[best_team].already_drawn = true;  // set the already_drawn to be true, so this team won't get sorted again
 		m_iRows++;
 
 		// Now sort all the players on this team

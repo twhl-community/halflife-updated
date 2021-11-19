@@ -45,7 +45,7 @@ void CWorldItem::KeyValue(KeyValueData *pkvd)
 	if (FStrEq(pkvd->szKeyName, "type"))
 	{
 		m_iType = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
@@ -193,7 +193,7 @@ class CItemSuit : public CItem
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
 
 		pPlayer->pev->weapons |= (1<<WEAPON_SUIT);
-		return TRUE;
+		return true;
 	}
 };
 
@@ -248,7 +248,7 @@ class CItemBattery : public CItem
 			
 			//EMIT_SOUND_SUIT(ENT(pev), szcharge);
 			pPlayer->SetSuitUpdate(szcharge, false, SUIT_NEXT_IN_30SEC);
-			return TRUE;		
+			return true;		
 		}
 		return false;
 	}
@@ -274,7 +274,7 @@ class CItemAntidote : public CItem
 		pPlayer->SetSuitUpdate("!HEV_DET4", false, SUIT_NEXT_IN_1MIN);
 		
 		pPlayer->m_rgItems[ITEM_ANTIDOTE] += 1;
-		return TRUE;
+		return true;
 	}
 };
 
@@ -296,7 +296,7 @@ class CItemSecurity : public CItem
 	BOOL MyTouch( CBasePlayer *pPlayer ) override
 	{
 		pPlayer->m_rgItems[ITEM_SECURITY] += 1;
-		return TRUE;
+		return true;
 	}
 };
 
@@ -323,7 +323,7 @@ class CItemLongJump : public CItem
 
 		if ( ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) ) )
 		{
-			pPlayer->m_fLongJump = TRUE;// player now has longjump module
+			pPlayer->m_fLongJump = true;// player now has longjump module
 
 			g_engfuncs.pfnSetPhysicsKeyValue( pPlayer->edict(), "slj", "1" );
 
@@ -332,7 +332,7 @@ class CItemLongJump : public CItem
 			MESSAGE_END();
 
 			EMIT_SOUND_SUIT( pPlayer->edict(), "!HEV_A1" );	// Play the longjump sound UNDONE: Kelly? correct sound?
-			return TRUE;		
+			return true;		
 		}
 		return false;
 	}

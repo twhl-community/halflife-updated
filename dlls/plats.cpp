@@ -38,7 +38,7 @@ public:
 	void Precache() override;
 
 	// This is done to fix spawn flag collisions between this class and a derived class
-	virtual BOOL IsTogglePlat() { return (pev->spawnflags & SF_PLAT_TOGGLE) ? TRUE : false; }
+	virtual BOOL IsTogglePlat() { return (pev->spawnflags & SF_PLAT_TOGGLE) ? true : false; }
 
 	int	Save( CSave &save ) override;
 	int	Restore( CRestore &restore ) override;
@@ -63,37 +63,37 @@ void CBasePlatTrain :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "lip"))
 	{
 		m_flLip = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "wait"))
 	{
 		m_flWait = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "height"))
 	{
 		m_flHeight = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "rotation"))
 	{
 		m_vecFinalAngle.x = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "movesnd"))
 	{
 		m_bMoveSnd = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "stopsnd"))
 	{
 		m_bStopSnd = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "volume"))
 	{
 		m_volume = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseToggle::KeyValue( pkvd );
@@ -414,7 +414,7 @@ void CFuncPlat :: PlatUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	if ( IsTogglePlat() )
 	{
 		// Top is off, bottom is on
-		BOOL on = (m_toggle_state == TS_AT_BOTTOM) ? TRUE : false;
+		BOOL on = (m_toggle_state == TS_AT_BOTTOM) ? true : false;
 
 		if ( !ShouldToggle( useType, on ) )
 			return;
@@ -674,7 +674,7 @@ void CFuncTrain :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
 		m_sounds = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBasePlatTrain::KeyValue( pkvd );
@@ -822,7 +822,7 @@ void CFuncTrain :: Activate()
 	// Not yet active, so teleport to first target
 	if ( !m_activated )
 	{
-		m_activated = TRUE;
+		m_activated = true;
 		entvars_t	*pevTarg = VARS( FIND_ENTITY_BY_TARGETNAME (NULL, STRING(pev->target) ) );
 		
 		pev->target = pevTarg->target;
@@ -968,33 +968,33 @@ void CFuncTrackTrain :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "wheels"))
 	{
 		m_length = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "height"))
 	{
 		m_height = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "startspeed"))
 	{
 		m_startSpeed = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
 		m_sounds = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "volume"))
 	{
 		m_flVolume = (float) (atoi(pkvd->szValue));
 		m_flVolume *= 0.1;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "bank"))
 	{
 		m_flBank = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
@@ -1272,7 +1272,7 @@ void CFuncTrackTrain :: Next()
 
 		}
 		SetThink( &CFuncTrackTrain::Next );
-		NextThink( pev->ltime + time, TRUE );
+		NextThink( pev->ltime + time, true );
 	}
 	else	// end of path, stop
 	{
@@ -1321,7 +1321,7 @@ void CFuncTrackTrain::DeadEnd()
 		{
 			do
 			{
-				pNext = pTrack->ValidPath( pTrack->GetPrevious(), TRUE );
+				pNext = pTrack->ValidPath( pTrack->GetPrevious(), true );
 				if ( pNext )
 					pTrack = pNext;
 			} while ( pNext );
@@ -1330,7 +1330,7 @@ void CFuncTrackTrain::DeadEnd()
 		{
 			do
 			{
-				pNext = pTrack->ValidPath( pTrack->GetNext(), TRUE );
+				pNext = pTrack->ValidPath( pTrack->GetNext(), true );
 				if ( pNext )
 					pTrack = pNext;
 			} while ( pNext );
@@ -1375,7 +1375,7 @@ BOOL CFuncTrackTrain :: OnControls( entvars_t *pevTest )
 
 	if ( local.x >= m_controlMins.x && local.y >= m_controlMins.y && local.z >= m_controlMins.z &&
 		 local.x <= m_controlMaxs.x && local.y <= m_controlMaxs.y && local.z <= m_controlMaxs.z )
-		 return TRUE;
+		 return true;
 
 	return false;
 }
@@ -1643,7 +1643,7 @@ public:
 	void	HitTop() override;
 	void			Touch( CBaseEntity *pOther ) override;
 	virtual void	UpdateAutoTargets( int toggleState );
-	BOOL	IsTogglePlat() override { return TRUE; }
+	BOOL	IsTogglePlat() override { return true; }
 
 	void			DisableUse() { m_use = 0; }
 	void			EnableUse() { m_use = 1; }
@@ -1739,17 +1739,17 @@ void CFuncTrackChange :: KeyValue( KeyValueData *pkvd )
 	if ( FStrEq(pkvd->szKeyName, "train") )
 	{
 		m_trainName = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "toptrack") )
 	{
 		m_trackTopName = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "bottomtrack") )
 	{
 		m_trackBottomName = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 	{

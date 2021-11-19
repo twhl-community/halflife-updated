@@ -118,7 +118,7 @@ static inline const char* ParseEscapeToken( const char* token )
 
 	case 'R':
 		menu_x = ScreenWidth/2;
-		menu_ralign = TRUE;
+		menu_ralign = true;
 		break;
 	}
 
@@ -226,7 +226,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 // takes four values:
 //		short: a bitfield of keys that are valid input
 //		char : the duration, in seconds, the menu should stay up. -1 means is stays until something is chosen.
-//		byte : a boolean, TRUE if there is more string yet to be received before displaying the menu, false if it's the last string
+//		byte : a boolean, true if there is more string yet to be received before displaying the menu, false if it's the last string
 //		string: menu string to display
 // if this message is never received, then scores will simply be the combined totals of the players.
 int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )

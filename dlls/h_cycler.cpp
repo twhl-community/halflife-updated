@@ -338,7 +338,7 @@ BOOL CWeaponCycler::Deploy( )
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
 	SendWeaponAnim( 0 );
 	m_iClip = 0;
-	return TRUE;
+	return true;
 }
 
 

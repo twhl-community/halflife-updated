@@ -84,8 +84,8 @@ public:
 
 // Client damage rules
 	virtual float FlPlayerFallDamage( CBasePlayer *pPlayer ) = 0;// this client just hit the ground after a fall. How much damage?
-	virtual BOOL  FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker ) {return TRUE;}// can this player take damage from this attacker?
-	virtual BOOL ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target ) { return TRUE; }
+	virtual BOOL  FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker ) {return true;}// can this player take damage from this attacker?
+	virtual BOOL ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target ) { return true; }
 
 // Client spawn/respawn control
 	virtual void PlayerSpawn( CBasePlayer *pPlayer ) = 0;// called by CBasePlayer::Spawn just before releasing player into the game
@@ -94,8 +94,8 @@ public:
 	virtual float FlPlayerSpawnTime( CBasePlayer *pPlayer ) = 0;// When in the future will this player be able to spawn?
 	virtual edict_t *GetPlayerSpawnSpot( CBasePlayer *pPlayer );// Place this player on their spawnspot and face them the proper direction.
 
-	virtual BOOL AllowAutoTargetCrosshair() { return TRUE; }
-	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd ) { return false; }  // handles the user commands;  returns TRUE if command handled properly
+	virtual BOOL AllowAutoTargetCrosshair() { return true; }
+	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd ) { return false; }  // handles the user commands;  returns true if command handled properly
 	virtual void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer ) {}		// the player has changed userinfo;  can change it now
 
 // Client kills/scoring
@@ -146,13 +146,13 @@ public:
 	virtual int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget ) = 0;// What is the player's relationship with this entity?
 	virtual int GetTeamIndex( const char *pTeamName ) { return -1; }
 	virtual const char *GetIndexedTeamName( int teamIndex ) { return ""; }
-	virtual BOOL IsValidTeam( const char *pTeamName ) { return TRUE; }
+	virtual BOOL IsValidTeam( const char *pTeamName ) { return true; }
 	virtual void ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTeamName, BOOL bKill, BOOL bGib ) {}
 	virtual const char *SetDefaultPlayerTeam( CBasePlayer *pPlayer ) { return ""; }
 
 // Sounds
-	virtual BOOL PlayTextureSounds() { return TRUE; }
-	virtual BOOL PlayFootstepSounds( CBasePlayer *pl, float fvol ) { return TRUE; }
+	virtual BOOL PlayTextureSounds() { return true; }
+	virtual BOOL PlayFootstepSounds( CBasePlayer *pl, float fvol ) { return true; }
 
 // Monsters
 	virtual BOOL FAllowMonsters() = 0;//are monsters allowed
@@ -176,7 +176,7 @@ public:
 // GR_Think
 	void Think() override;
 	BOOL IsAllowedToSpawn( CBaseEntity *pEntity ) override;
-	BOOL FAllowFlashlight() override { return TRUE; }
+	BOOL FAllowFlashlight() override { return true; }
 
 	BOOL FShouldSwitchWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pWeapon ) override;
 	BOOL GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon ) override;

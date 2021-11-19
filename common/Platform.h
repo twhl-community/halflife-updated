@@ -118,7 +118,7 @@ using qboolean = int;
 #define DLLHIDDEN
 #else // WIN32
 #define false 0
-#define TRUE (!false)
+#define true (!false)
 typedef int BOOL;
 #define MAX_PATH PATH_MAX
 

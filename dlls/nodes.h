@@ -111,7 +111,7 @@ class CGraph
 {
 public:
 
-// the graph has two flags, and should not be accessed unless both flags are TRUE!
+// the graph has two flags, and should not be accessed unless both flags are true!
 	BOOL	m_fGraphPresent;// is the graph in memory?
 	BOOL	m_fGraphPointersSet;// are the entity pointers for the graph all set?
 	BOOL    m_fRoutingComplete; // are the optimal routes computed, yet?

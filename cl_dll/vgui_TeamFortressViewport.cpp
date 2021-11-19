@@ -1067,7 +1067,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	// Stop Feigning
 	else if ( !strcmp( pButtonName, "!FEIGNSTOP" ) )
 	{
-		pButton = new FeignButton(TRUE, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
+		pButton = new FeignButton(true, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "feign" ));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
@@ -1919,7 +1919,7 @@ void TeamFortressViewport::HideTopMenu()
 	UpdateCursorState();
 }
 
-// Return TRUE if the HUD's allowed to print text messages
+// Return true if the HUD's allowed to print text messages
 bool TeamFortressViewport::AllowedToPrintText()
 {
 	// Prevent text messages when fullscreen menus are up
@@ -1930,7 +1930,7 @@ bool TeamFortressViewport::AllowedToPrintText()
 			return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 //======================================================================================
@@ -2431,7 +2431,7 @@ int TeamFortressViewport::MsgFunc_TeamScore( const char *pszName, int iSize, voi
 		return 1;
 
 	// use this new score data instead of combined player scoresw
-	g_TeamInfo[i].scores_overriden = TRUE;
+	g_TeamInfo[i].scores_overriden = true;
 	g_TeamInfo[i].frags = READ_SHORT();
 	g_TeamInfo[i].deaths = READ_SHORT();
 

@@ -89,7 +89,7 @@ void CBaseSpectator::SpectatorImpulseCommand()
 			// Found a non-world entity, set success, otherwise, look for the next one.
 			if (!FNullEnt(pCurrentGoal))
 			{
-				bFound = TRUE;
+				bFound = true;
 				break;
 			}
 		}

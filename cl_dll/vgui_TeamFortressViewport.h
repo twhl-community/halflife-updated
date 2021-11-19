@@ -1436,7 +1436,7 @@ private:
 public:
 
 	SpectToggleButton( const char* cvarname, const char* text,int x,int y,int wide,int tall, bool flat ) : 
-	  ToggleCommandButton( cvarname, text, x, y, wide, tall, flat, TRUE )
+	  ToggleCommandButton( cvarname, text, x, y, wide, tall, flat, true )
 	 {
 		m_cvar = gEngfuncs.pfnGetCvarPointer( cvarname );
 

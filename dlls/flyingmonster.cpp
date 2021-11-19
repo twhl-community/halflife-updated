@@ -167,7 +167,7 @@ BOOL CFlyingMonster:: ShouldAdvanceRoute( float flWaypointDist )
 		flWaypointDist = ( m_Route[ m_iRouteIndex ].vecLocation - pev->origin ).Length();
 
 	if ( flWaypointDist <= 64 + (m_flGroundSpeed * gpGlobals->frametime) )
-		return TRUE;
+		return true;
 
 	return false;
 }
@@ -242,7 +242,7 @@ BOOL CFlyingMonster::ProbeZ( const Vector &position, const Vector &probe, float 
 		// or FLYING  & WATER
 		//
 		*pFraction = 0.0;
-		return TRUE; // We hit a water boundary because we are where we don't belong.
+		return true; // We hit a water boundary because we are where we don't belong.
 	}
 	int conProbe = UTIL_PointContents(probe);
 	if (conProbe == conPosition)
@@ -276,7 +276,7 @@ BOOL CFlyingMonster::ProbeZ( const Vector &position, const Vector &probe, float 
 	}
 	*pFraction = minProbeLength/ProbeLength;
 
-	return TRUE;
+	return true;
 }
 
 float CFlyingMonster::FloorZ( const Vector &position )

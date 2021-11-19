@@ -73,27 +73,27 @@ void CFuncMortarField :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "m_iszXController"))
 	{
 		m_iszXController = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_iszYController"))
 	{
 		m_iszYController = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_flSpread"))
 	{
 		m_flSpread = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_fControl"))
 	{
 		m_fControl = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "m_iCount"))
 	{
 		m_iCount = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 }
 

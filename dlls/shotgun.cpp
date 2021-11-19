@@ -73,7 +73,7 @@ int CShotgun::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_BEGIN( MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev );
 			WRITE_BYTE( m_iId );
 		MESSAGE_END();
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -392,7 +392,7 @@ class CShotgunAmmo : public CBasePlayerAmmo
 		if (pOther->GiveAmmo( AMMO_BUCKSHOTBOX_GIVE, "buckshot", BUCKSHOT_MAX_CARRY ) != -1)
 		{
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
-			return TRUE;
+			return true;
 		}
 		return false;
 	}

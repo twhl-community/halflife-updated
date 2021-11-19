@@ -148,7 +148,7 @@ BOOL CHoundeye :: FValidateHintType ( short sHint )
 	{
 		if ( sHoundHints[ i ] == sHint )
 		{
-			return TRUE;
+			return true;
 		}
 	}
 
@@ -177,10 +177,10 @@ BOOL CHoundeye :: FCanActiveIdle ()
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 
-	return TRUE;
+	return true;
 }
 
 
@@ -193,7 +193,7 @@ BOOL CHoundeye :: CheckRangeAttack1 ( float flDot, float flDist )
 {
 	if ( flDist <= ( HOUNDEYE_MAX_ATTACK_RADIUS * 0.5 ) && flDot >= 0.3 )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -676,7 +676,7 @@ void CHoundeye :: StartTask ( Task_t *pTask )
 	{
 	case TASK_HOUND_FALL_ASLEEP:
 		{
-			m_fAsleep = TRUE; // signal that hound is lying down (must stand again before doing anything else!)
+			m_fAsleep = true; // signal that hound is lying down (must stand again before doing anything else!)
 			m_iTaskStatus = TASKSTATUS_COMPLETE;
 			break;
 		}
@@ -695,7 +695,7 @@ void CHoundeye :: StartTask ( Task_t *pTask )
 	case TASK_HOUND_CLOSE_EYE:
 		{
 			pev->skin = 0;
-			m_fDontBlink = TRUE; // tell blink code to leave the eye alone.
+			m_fDontBlink = true; // tell blink code to leave the eye alone.
 			break;
 		}
 	case TASK_HOUND_THREAT_DISPLAY:

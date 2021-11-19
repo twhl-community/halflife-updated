@@ -199,7 +199,7 @@ void CRoach :: MonsterThink()
 		// if light value hasn't been collection for the first time yet, 
 		// suspend the creature for a second so the world finishes spawning, then we'll collect the light level.
 		pev->nextthink = gpGlobals->time + 1;
-		m_fLightHacked = TRUE;
+		m_fLightHacked = true;
 		return;
 	}
 	else if ( m_flLastLightLevel < 0 )

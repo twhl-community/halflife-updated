@@ -43,7 +43,7 @@
 //-----------------------------------------------------
 #define CSUITPLAYLIST	4		// max of 4 suit sentences queued up at any time
 
-#define SUIT_GROUP			TRUE
+#define SUIT_GROUP			true
 #define	SUIT_SENTENCE		false
 
 #define	SUIT_REPEAT_OK		0
@@ -218,10 +218,10 @@ public:
 	BOOL IsSneaking() override { return m_tSneaking <= gpGlobals->time; }
 	BOOL IsAlive() override { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
 	BOOL ShouldFadeOnDeath() override { return false; }
-	BOOL IsPlayer() override { return TRUE; }			// Spectators should return false for this, they aren't "players" as far as game logic is concerned
+	BOOL IsPlayer() override { return true; }			// Spectators should return false for this, they aren't "players" as far as game logic is concerned
 
-	BOOL IsNetClient() override { return TRUE; }		// Bots should return false for this, they can't receive NET messages
-															// Spectators should return TRUE for this
+	BOOL IsNetClient() override { return true; }		// Bots should return false for this, they can't receive NET messages
+															// Spectators should return true for this
 	const char *TeamID() override;
 
 	int		Save( CSave &save ) override;

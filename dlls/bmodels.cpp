@@ -123,7 +123,7 @@ BOOL CFuncWallToggle :: IsOn()
 {
 	if ( pev->solid == SOLID_NOT )
 		return false;
-	return TRUE;
+	return true;
 }
 
 
@@ -221,7 +221,7 @@ void CFuncIllusionary :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "skin"))//skin is used for content type
 	{
 		pev->skin = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseToggle::KeyValue( pkvd );
@@ -317,7 +317,7 @@ void CFuncRotating :: KeyValue( KeyValueData* pkvd)
 	if (FStrEq(pkvd->szKeyName, "fanfriction"))
 	{
 		m_flFanFriction = atof(pkvd->szValue)/100;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "Volume"))
 	{
@@ -327,7 +327,7 @@ void CFuncRotating :: KeyValue( KeyValueData* pkvd)
 			m_flVolume = 1.0;
 		if (m_flVolume < 0.0)
 			m_flVolume = 0.0;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "spawnorigin"))
 	{
@@ -339,7 +339,7 @@ void CFuncRotating :: KeyValue( KeyValueData* pkvd)
 	else if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
 		m_sounds = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else 
 		CBaseEntity::KeyValue( pkvd );
@@ -605,7 +605,7 @@ void CFuncRotating :: SpinUp()
 	} 
 	else
 	{
-		RampPitchVol(TRUE);
+		RampPitchVol(true);
 	}
 }
 
@@ -774,12 +774,12 @@ void CPendulum :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "distance"))
 	{
 		m_distance = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "damp"))
 	{
 		m_damp = atof(pkvd->szValue) * 0.001;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else 
 		CBaseEntity::KeyValue( pkvd );

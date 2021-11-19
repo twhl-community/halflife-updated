@@ -241,13 +241,13 @@ BOOL CSatchel::IsUseable()
 	if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] > 0 ) 
 	{
 		// player is carrying some satchels
-		return TRUE;
+		return true;
 	}
 
 	if ( m_chargeReady != 0 )
 	{
 		// player isn't carrying any satchels, but has some out
-		return TRUE;
+		return true;
 	}
 
 	return false;
@@ -258,13 +258,13 @@ BOOL CSatchel::CanDeploy()
 	if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] > 0 ) 
 	{
 		// player is carrying some satchels
-		return TRUE;
+		return true;
 	}
 
 	if ( m_chargeReady != 0 )
 	{
 		// player isn't carrying any satchels, but has some out
-		return TRUE;
+		return true;
 	}
 
 	return false;

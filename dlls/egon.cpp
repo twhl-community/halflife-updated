@@ -78,7 +78,7 @@ int CEgon::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_BEGIN( MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev );
 			WRITE_BYTE( m_iId );
 		MESSAGE_END();
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -128,7 +128,7 @@ BOOL CEgon::HasAmmo()
 	if ( m_pPlayer->ammo_uranium <= 0 )
 		return false;
 
-	return TRUE;
+	return true;
 }
 
 void CEgon::UseAmmo( int count )
@@ -499,7 +499,7 @@ void CEgon::WeaponIdle()
 	}
 
 	SendWeaponAnim( iAnim );
-	m_deployed = TRUE;
+	m_deployed = true;
 }
 
 
@@ -541,7 +541,7 @@ class CEgonAmmo : public CBasePlayerAmmo
 		if (pOther->GiveAmmo( AMMO_URANIUMBOX_GIVE, "uranium", URANIUM_MAX_CARRY ) != -1)
 		{
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
-			return TRUE;
+			return true;
 		}
 		return false;
 	}

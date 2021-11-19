@@ -218,7 +218,7 @@ int CGMan :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float 
 	{
 		SetConditions(bits_COND_HEAVY_DAMAGE);
 	}
-	return TRUE;
+	return true;
 }
 
 

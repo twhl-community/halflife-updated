@@ -268,7 +268,7 @@ BOOL COsprey :: HasDead( )
 	{
 		if (m_hGrunt[i] == NULL || !m_hGrunt[i]->IsAlive())
 		{
-			return TRUE;
+			return true;
 		}
 		else
 		{

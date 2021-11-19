@@ -222,7 +222,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 	// Is it a non-player object kill?
 	if ( ((char)victim) == -1 )
 	{
-		rgDeathNoticeList[i].iNonPlayerKill = TRUE;
+		rgDeathNoticeList[i].iNonPlayerKill = true;
 
 		// Store the object's name in the Victim slot (skip the d_ bit)
 		strcpy( rgDeathNoticeList[i].szVictim, killedwith+2 );
@@ -230,10 +230,10 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 	else
 	{
 		if ( killer == victim || killer == 0 )
-			rgDeathNoticeList[i].iSuicide = TRUE;
+			rgDeathNoticeList[i].iSuicide = true;
 
 		if ( !strcmp( killedwith, "d_teammate" ) )
-			rgDeathNoticeList[i].iTeamKill = TRUE;
+			rgDeathNoticeList[i].iTeamKill = true;
 	}
 
 	// Find the sprite in the list

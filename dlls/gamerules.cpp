@@ -49,7 +49,7 @@ BOOL CGameRules::CanHaveAmmo( CBasePlayer *pPlayer, const char *pszAmmoName, int
 			if ( pPlayer->AmmoInventory( iAmmoIndex ) < iMaxCarry )
 			{
 				// player has room for more of this type of ammo
-				return TRUE;
+				return true;
 			}
 		}
 	}
@@ -68,7 +68,7 @@ edict_t *CGameRules :: GetPlayerSpawnSpot( CBasePlayer *pPlayer )
 	pPlayer->pev->velocity = g_vecZero;
 	pPlayer->pev->angles = VARS(pentSpawnSpot)->angles;
 	pPlayer->pev->punchangle = g_vecZero;
-	pPlayer->pev->fixangle = TRUE;
+	pPlayer->pev->fixangle = true;
 	
 	return pentSpawnSpot;
 }
@@ -103,7 +103,7 @@ BOOL CGameRules::CanHavePlayerItem( CBasePlayer *pPlayer, CBasePlayerItem *pWeap
 	}
 
 	// note: will fall through to here if GetItemInfo doesn't fill the struct!
-	return TRUE;
+	return true;
 }
 
 //=========================================================

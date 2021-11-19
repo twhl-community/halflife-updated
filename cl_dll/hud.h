@@ -225,7 +225,7 @@ protected:
 	char m_szStatusBar[MAX_STATUSBAR_LINES][MAX_STATUSTEXT_LENGTH];	// the constructed bar that is drawn
 	int m_iStatusValues[MAX_STATUSBAR_VALUES];  // an array of values for use in the status bar
 
-	int m_bReparseString; // set to TRUE whenever the m_szStatusBar needs to be recalculated
+	int m_bReparseString; // set to true whenever the m_szStatusBar needs to be recalculated
 
 	// an array of colors...one color for each line
 	float *m_pflNameColors[MAX_STATUSBAR_LINES];

@@ -347,7 +347,7 @@ BOOL CHGrunt :: FOkToSpeak()
 //	if (FNullEnt(FIND_CLIENT_IN_PVS(edict())))
 //		return false;
 	
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -376,7 +376,7 @@ void CHGrunt :: PrescheduleThink ()
 			if ( gpGlobals->time - MySquadLeader()->m_flLastEnemySightTime > 5 )
 			{
 				// been a while since we've seen the enemy
-				MySquadLeader()->m_fEnemyEluded = TRUE;
+				MySquadLeader()->m_fEnemyEluded = true;
 			}
 		}
 	}
@@ -398,7 +398,7 @@ BOOL CHGrunt :: FCanCheckAttacks ()
 {
 	if ( !HasConditions( bits_COND_ENEMY_TOOFAR ) )
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{
@@ -428,7 +428,7 @@ BOOL CHGrunt :: CheckMeleeAttack1 ( float flDot, float flDist )
 		 pEnemy->Classify() != CLASS_ALIEN_BIOWEAPON &&
 		 pEnemy->Classify() != CLASS_PLAYER_BIOWEAPON )
 	{
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -460,7 +460,7 @@ BOOL CHGrunt :: CheckRangeAttack1 ( float flDot, float flDist )
 
 		if ( tr.flFraction == 1.0 )
 		{
-			return TRUE;
+			return true;
 		}
 	}
 
@@ -558,7 +558,7 @@ BOOL CHGrunt :: CheckRangeAttack2 ( float flDot, float flDist )
 			m_vecTossVelocity = vecToss;
 
 			// throw a hand grenade
-			m_fThrowGrenade = TRUE;
+			m_fThrowGrenade = true;
 			// don't check again for a while.
 			m_flNextGrenadeCheck = gpGlobals->time; // 1/3 second.
 		}
@@ -579,7 +579,7 @@ BOOL CHGrunt :: CheckRangeAttack2 ( float flDot, float flDist )
 			m_vecTossVelocity = vecToss;
 
 			// throw a hand grenade
-			m_fThrowGrenade = TRUE;
+			m_fThrowGrenade = true;
 			// don't check again for a while.
 			m_flNextGrenadeCheck = gpGlobals->time + 0.3; // 1/3 second.
 		}
@@ -997,7 +997,7 @@ void CHGrunt :: Spawn()
 	m_afCapability		= bits_CAP_SQUAD | bits_CAP_TURN_HEAD | bits_CAP_DOORS_GROUP;
 
 	m_fEnemyEluded		= false;
-	m_fFirstEncounter	= TRUE;// this is true when the grunt spawns, because he hasn't encountered an enemy yet.
+	m_fFirstEncounter	= true;// this is true when the grunt spawns, because he hasn't encountered an enemy yet.
 
 	m_HackedGunPos = Vector ( 0, 0, 55 );
 
@@ -2453,7 +2453,7 @@ void CDeadHGrunt::KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "pose"))
 	{
 		m_iPose = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else 
 		CBaseMonster::KeyValue( pkvd );

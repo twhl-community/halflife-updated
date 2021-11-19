@@ -381,7 +381,7 @@ int CRpg::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_BEGIN( MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev );
 			WRITE_BYTE( m_iId );
 		MESSAGE_END();
-		return TRUE;
+		return true;
 	}
 	return false;
 }
@@ -405,7 +405,7 @@ BOOL CRpg::CanHolster()
 		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 void CRpg::Holster()
@@ -589,7 +589,7 @@ class CRpgAmmo : public CBasePlayerAmmo
 		if (pOther->GiveAmmo( iGive, "rockets", ROCKET_MAX_CARRY ) != -1)
 		{
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
-			return TRUE;
+			return true;
 		}
 		return false;
 	}

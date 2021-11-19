@@ -375,7 +375,7 @@ void CXenTree :: HandleAnimEvent( MonsterEvent_t *pEvent )
 				{
 					if ( pList[i]->pev->owner != edict() )
 					{
-						sound = TRUE;
+						sound = true;
 						pList[i]->TakeDamage( pev, pev, 25, DMG_CRUSH | DMG_SLASH );
 						pList[i]->pev->punchangle.x = 15;
 						pList[i]->pev->velocity = pList[i]->pev->velocity + forward * 100;

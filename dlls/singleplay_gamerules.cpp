@@ -70,7 +70,7 @@ BOOL CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBasePlayerItem 
 	if ( !pPlayer->m_pActiveItem )
 	{
 		// player doesn't have an active item!
-		return TRUE;
+		return true;
 	}
 
 	if ( !pPlayer->m_pActiveItem->CanHolster() )
@@ -78,7 +78,7 @@ BOOL CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBasePlayerItem 
 		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -92,7 +92,7 @@ BOOL CHalfLifeRules :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem 
 //=========================================================
 BOOL CHalfLifeRules :: ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] )
 {
-	return TRUE;
+	return true;
 }
 
 void CHalfLifeRules :: InitHUD( CBasePlayer *pl )
@@ -139,7 +139,7 @@ void CHalfLifeRules :: PlayerThink( CBasePlayer *pPlayer )
 //=========================================================
 BOOL CHalfLifeRules :: FPlayerCanRespawn( CBasePlayer *pPlayer )
 {
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -221,7 +221,7 @@ int CHalfLifeRules :: WeaponShouldRespawn( CBasePlayerItem *pWeapon )
 //=========================================================
 BOOL CHalfLifeRules::CanHaveItem( CBasePlayer *pPlayer, CItem *pItem )
 {
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -259,7 +259,7 @@ Vector CHalfLifeRules::VecItemRespawnSpot( CItem *pItem )
 //=========================================================
 BOOL CHalfLifeRules::IsAllowedToSpawn( CBaseEntity *pEntity )
 {
-	return TRUE;
+	return true;
 }
 
 //=========================================================
@@ -322,5 +322,5 @@ int CHalfLifeRules::PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarg
 //=========================================================
 BOOL CHalfLifeRules :: FAllowMonsters()
 {
-	return TRUE;
+	return true;
 }

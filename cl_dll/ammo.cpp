@@ -63,7 +63,7 @@ int WeaponsResource :: HasAmmo( WEAPON *p )
 
 	// weapons with no max ammo can always be selected
 	if ( p->iMax1 == -1 )
-		return TRUE;
+		return true;
 
 	return (p->iAmmoType == -1) || p->iClip > 0 || CountAmmo(p->iAmmoType) 
 		|| CountAmmo(p->iAmmo2Type) || ( p->iFlags & WEAPON_FLAGS_SELECTONEMPTY );
@@ -573,7 +573,7 @@ int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 	// detect if we're also on target
 	if ( iState > 1 )
 	{
-		fOnTarget = TRUE;
+		fOnTarget = true;
 	}
 
 	if ( iId < 1 )
@@ -588,7 +588,7 @@ int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 		// Is player dead???
 		if ((iId == -1) && (iClip == -1))
 		{
-			gHUD.m_fPlayerDead = TRUE;
+			gHUD.m_fPlayerDead = true;
 			gpActiveSel = NULL;
 			return 1;
 		}

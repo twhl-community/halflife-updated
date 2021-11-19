@@ -131,8 +131,8 @@ public:
 	float m_flAttenuation;		// attenuation value
 	dynpitchvol_t m_dpv;	
 
-	BOOL	m_fActive;	// only TRUE when the entity is playing a looping sound
-	BOOL	m_fLooping;	// TRUE when the sound played will loop
+	BOOL	m_fActive;	// only true when the entity is playing a looping sound
+	BOOL	m_fLooping;	// true when the sound played will loop
 };
 
 LINK_ENTITY_TO_CLASS( ambient_generic, CAmbientGeneric );
@@ -214,7 +214,7 @@ void CAmbientGeneric :: Spawn()
 	if ( FBitSet ( pev->spawnflags, AMBIENT_SOUND_NOT_LOOPING ) )
 		m_fLooping = false;
 	else
-		m_fLooping = TRUE;
+		m_fLooping = true;
 	Precache( );
 }
 
@@ -235,7 +235,7 @@ void CAmbientGeneric :: Precache()
 	{
 		// start the sound ASAP
 		if (m_fLooping)
-			m_fActive = TRUE;
+			m_fActive = true;
 	}
 	if ( m_fActive )
 	{
@@ -560,7 +560,7 @@ void CAmbientGeneric :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCalle
 
 	// Toggle
 
-	// m_fActive is TRUE only if a looping sound is playing.
+	// m_fActive is true only if a looping sound is playing.
 	
 	if ( m_fActive )
 	{// turn sound off
@@ -620,7 +620,7 @@ void CAmbientGeneric :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCalle
 		// and then restarted.
 
 		if (m_fLooping)
-			m_fActive = TRUE;
+			m_fActive = true;
 		else
 			// shut sound off now - may be interrupting a long non-looping sound
 			UTIL_EmitAmbientSound(ENT(pev), pev->origin, szSoundFile, 
@@ -649,14 +649,14 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "preset"))
 	{
 		m_dpv.preset = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// pitchrun
 	else if (FStrEq(pkvd->szKeyName, "pitch"))
 	{
 		m_dpv.pitchrun = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 		
 		if (m_dpv.pitchrun > 255) m_dpv.pitchrun = 255;
 		if (m_dpv.pitchrun < 0) m_dpv.pitchrun = 0;
@@ -666,7 +666,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 	else if (FStrEq(pkvd->szKeyName, "pitchstart"))
 	{
 		m_dpv.pitchstart = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;		
+		pkvd->fHandled = true;		
 		
 		if (m_dpv.pitchstart > 255) m_dpv.pitchstart = 255;
 		if (m_dpv.pitchstart < 0) m_dpv.pitchstart = 0;
@@ -683,7 +683,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.spinup > 0)
 			m_dpv.spinup = (101 - m_dpv.spinup) * 64;
 		m_dpv.spinupsav = m_dpv.spinup;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}		
 
 	// spindown
@@ -697,7 +697,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.spindown > 0)
 			m_dpv.spindown = (101 - m_dpv.spindown) * 64;
 		m_dpv.spindownsav = m_dpv.spindown;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// volstart
@@ -710,7 +710,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		
 		m_dpv.volstart *= 10;	// 0 - 100
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// fadein
@@ -724,7 +724,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.fadein > 0)
 			m_dpv.fadein = (101 - m_dpv.fadein) * 64;
 		m_dpv.fadeinsav = m_dpv.fadein;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// fadeout
@@ -738,7 +738,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.fadeout > 0)
 			m_dpv.fadeout = (101 - m_dpv.fadeout) * 64;
 		m_dpv.fadeoutsav = m_dpv.fadeout;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// lfotype
@@ -746,7 +746,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 	{
 		m_dpv.lfotype = atoi(pkvd->szValue);
 		if (m_dpv.lfotype > 4) m_dpv.lfotype = LFO_TRIANGLE;
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// lforate
@@ -759,7 +759,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 
 		m_dpv.lforate *= 256;
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	// lfomodpitch
 	else if (FStrEq(pkvd->szKeyName, "lfomodpitch"))
@@ -769,7 +769,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.lfomodpitch < 0) m_dpv.lfomodpitch = 0;
 		
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// lfomodvol
@@ -779,7 +779,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.lfomodvol > 100) m_dpv.lfomodvol = 100;
 		if (m_dpv.lfomodvol < 0) m_dpv.lfomodvol = 0;
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 
 	// cspinup
@@ -789,7 +789,7 @@ void CAmbientGeneric :: KeyValue( KeyValueData *pkvd )
 		if (m_dpv.cspinup > 100) m_dpv.cspinup = 100;
 		if (m_dpv.cspinup < 0) m_dpv.cspinup = 0;
 
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
@@ -830,16 +830,16 @@ void CEnvSound :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "radius"))
 	{
 		m_flRadius = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	if (FStrEq(pkvd->szKeyName, "roomtype"))
 	{
 		m_flRoomtype = atof(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 }
 
-// returns TRUE if the given sound entity (pev) is in range 
+// returns true if the given sound entity (pev) is in range 
 // and can see the given player entity (pevTarget)
 
 BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange) 
@@ -869,7 +869,7 @@ BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange)
 	if (pflRange)
 		*pflRange = flRange;
 
-	return TRUE;
+	return true;
 }
 
 //
@@ -1115,7 +1115,7 @@ int USENTENCEG_Pick(int isentenceg, char *szfound)
 			{
 				ipick = plru[i];
 				plru[i] = 0xFF;
-				ffound = TRUE;
+				ffound = true;
 				break;
 			}
 
@@ -1366,7 +1366,7 @@ void SENTENCEG_Init()
 
 	g_engfuncs.pfnFreeFile( pMemFile );
 	
-	fSentencesInit = TRUE;
+	fSentencesInit = true;
 
 	// init lru lists
 
@@ -1592,7 +1592,7 @@ void TEXTURETYPE_Init()
 
 	g_engfuncs.pfnFreeFile( pMemFile );
 	
-	fTextureTypeInit = TRUE;
+	fTextureTypeInit = true;
 }
 
 // given texture name, find texture type
@@ -1920,7 +1920,7 @@ void CSpeaker :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 {
 	int fActive = (pev->nextthink > 0.0);
 
-	// fActive is TRUE only if an announcement is pending
+	// fActive is true only if an announcement is pending
 	
 	if ( useType != USE_TOGGLE )
 	{
@@ -1970,7 +1970,7 @@ void CSpeaker :: KeyValue( KeyValueData *pkvd )
 	if (FStrEq(pkvd->szKeyName, "preset"))
 	{
 		m_preset = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
