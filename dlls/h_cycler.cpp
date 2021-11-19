@@ -40,7 +40,7 @@ public:
 	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	// Don't treat as a live target
-	BOOL IsAlive() override { return FALSE; }
+	BOOL IsAlive() override { return false; }
 
 	int		Save( CSave &save ) override;
 	int		Restore( CRestore &restore ) override;
@@ -158,7 +158,7 @@ void CCycler :: Think()
 		// hack to avoid reloading model every frame
 		pev->animtime = gpGlobals->time;
 		pev->framerate = 1.0;
-		m_fSequenceFinished = FALSE;
+		m_fSequenceFinished = false;
 		m_flLastEventCheck = gpGlobals->time;
 		pev->frame = 0;
 		if (!m_animate)

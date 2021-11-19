@@ -151,7 +151,7 @@ void CCrowbar::SwingAgain()
 
 int CCrowbar::Swing( int fFirst )
 {
-	int fDidHit = FALSE;
+	int fDidHit = false;
 
 	TraceResult tr;
 
@@ -257,7 +257,7 @@ int CCrowbar::Swing( int fFirst )
 				else
 					  flVol = 0.1;
 
-				fHitWorld = FALSE;
+				fHitWorld = false;
 			}
 		}
 

@@ -153,7 +153,7 @@ BOOL CHoundeye :: FValidateHintType ( short sHint )
 	}
 
 	ALERT ( at_aiconsole, "Couldn't validate hint type" );
-	return FALSE;
+	return false;
 }
 
 
@@ -173,7 +173,7 @@ BOOL CHoundeye :: FCanActiveIdle ()
 			if ( pMember != NULL && pMember != this && pMember->m_iHintNode != NO_NODE )
 			{
 				// someone else in the group is active idling right now!
-				return FALSE;
+				return false;
 			}
 		}
 
@@ -195,7 +195,7 @@ BOOL CHoundeye :: CheckRangeAttack1 ( float flDot, float flDist )
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -339,8 +339,8 @@ void CHoundeye :: Spawn()
 	pev->yaw_speed		= 5;//!!! should we put this in the monster's changeanim function since turn rates may vary with state/anim?
 	m_flFieldOfView		= 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
 	m_MonsterState		= MONSTERSTATE_NONE;
-	m_fAsleep			= FALSE; // everyone spawns awake
-	m_fDontBlink		= FALSE;
+	m_fAsleep			= false; // everyone spawns awake
+	m_fDontBlink		= false;
 	m_afCapability		|= bits_CAP_SQUAD;
 
 	MonsterInit();
@@ -682,13 +682,13 @@ void CHoundeye :: StartTask ( Task_t *pTask )
 		}
 	case TASK_HOUND_WAKE_UP:
 		{
-			m_fAsleep = FALSE; // signal that hound is standing again
+			m_fAsleep = false; // signal that hound is standing again
 			m_iTaskStatus = TASKSTATUS_COMPLETE;
 			break;
 		}
 	case TASK_HOUND_OPEN_EYE:
 		{
-			m_fDontBlink = FALSE; // turn blinking back on and that code will automatically open the eye
+			m_fDontBlink = false; // turn blinking back on and that code will automatically open the eye
 			m_iTaskStatus = TASKSTATUS_COMPLETE;
 			break;
 		}

@@ -79,7 +79,7 @@ int CHgun::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_END();
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 int CHgun::GetItemInfo(ItemInfo *p)

@@ -31,7 +31,7 @@ int CFlyingMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vec
 	if (FBitSet(pev->flags, FL_SWIM) && (UTIL_PointContents(vecEnd) != CONTENTS_WATER))
 	{
 		// ALERT(at_aiconsole, "can't swim out of water\n");
-		return FALSE;
+		return false;
 	}
 
 	TraceResult tr;
@@ -169,7 +169,7 @@ BOOL CFlyingMonster:: ShouldAdvanceRoute( float flWaypointDist )
 	if ( flWaypointDist <= 64 + (m_flGroundSpeed * gpGlobals->frametime) )
 		return TRUE;
 
-	return FALSE;
+	return false;
 }
 
 
@@ -251,7 +251,7 @@ BOOL CFlyingMonster::ProbeZ( const Vector &position, const Vector &probe, float 
 		// outside the water (for birds).
 		//
 		*pFraction = 1.0;
-		return FALSE;
+		return false;
 	}
 
 	Vector ProbeUnit = (probe-position).Normalize();

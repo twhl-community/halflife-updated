@@ -325,7 +325,7 @@ void CFlockingFlyer :: SpawnCommonCode( )
 	pev->takedamage	= DAMAGE_NO;
 	pev->health		= 1;
 
-	m_fPathBlocked	= FALSE;// obstacles will be detected
+	m_fPathBlocked	= false;// obstacles will be detected
 	m_flFieldOfView	= 0.2;
 
 	//SET_MODEL(ENT(pev), "models/aflock.mdl");
@@ -516,7 +516,7 @@ BOOL CFlockingFlyer :: FPathBlocked( )
 	//vecDir = UTIL_VecToAngles( pevBoid->velocity );
 	UTIL_MakeVectors ( pev->angles );
 
-	fBlocked = FALSE;// assume the way ahead is clear
+	fBlocked = false;// assume the way ahead is clear
 
 	// check for obstacle ahead
 	UTIL_TraceLine(pev->origin, pev->origin + gpGlobals->v_forward * AFLOCK_CHECK_DIST, ignore_monsters, ENT(pev), &tr);
@@ -574,11 +574,11 @@ void CFlockingFlyer :: FlockLeaderThink()
 		// if the boid is turning, stop the trend.
 		if ( m_fTurning )
 		{
-			m_fTurning = FALSE;
+			m_fTurning = false;
 			pev->avelocity.y = 0;
 		}
 
-		m_fPathBlocked = FALSE;
+		m_fPathBlocked = false;
 
 		if (pev->speed <= AFLOCK_FLY_SPEED )
 			pev->speed+= 5;
@@ -784,7 +784,7 @@ void CFlockingFlyer :: FlockFollowerThink()
 	}
 
 	// if we make it this far, boids path is CLEAR!
-	m_fCourseAdjust = FALSE;
+	m_fCourseAdjust = false;
 */
 	
 

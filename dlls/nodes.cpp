@@ -61,9 +61,9 @@ void CGraph :: InitGraph()
 
 	// Make the graph unavailable
 	//
-	m_fGraphPresent = FALSE;
-	m_fGraphPointersSet = FALSE;
-	m_fRoutingComplete = FALSE;
+	m_fGraphPresent = false;
+	m_fGraphPointersSet = false;
+	m_fRoutingComplete = false;
 
 	// Free the link pool
 	//
@@ -125,7 +125,7 @@ int CGraph :: AllocNodes ()
 	if ( !m_pNodes )
 	{
 		ALERT ( at_aiconsole, "**ERROR**\nCouldn't malloc %d nodes!\n", m_cNodes );
-		return FALSE;
+		return false;
 	}
 
 	return TRUE;
@@ -222,7 +222,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 	if ( !m_fGraphPresent || !m_fGraphPointersSet )
 	{// protect us in the case that the node graph isn't available
 		ALERT ( at_aiconsole, "Graph not ready!\n" );
-		return FALSE;
+		return false;
 	}
 
 	if ( FNullEnt ( pevLinkEnt ) )
@@ -253,7 +253,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 					return TRUE;
 				}
 
-				return FALSE;
+				return false;
 			}
 		}
 		else 
@@ -270,7 +270,7 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 					return TRUE;
 			}
 
-			return FALSE;
+			return false;
 		}
 	}
 // func_breakable	
@@ -281,16 +281,16 @@ int	CGraph :: HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, N
 	else
 	{
 		ALERT ( at_aiconsole, "Unhandled Ent in Path %s\n", STRING( pevLinkEnt->classname ) );
-		return FALSE;
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
 #if 0
 //=========================================================
 // FindNearestLink - finds the connection (line) nearest
-// the given point. Returns FALSE if fails, or TRUE if it
+// the given point. Returns false if fails, or TRUE if it
 // has stuffed the index into the nearest link pool connection
 // into the passed int pointer, and a BOOL telling whether or 
 // not the point is along the line into the passed BOOL pointer.
@@ -315,7 +315,7 @@ int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, 
 	TraceResult	tr;
 
 	iNearestLink = -1;// prepare for failure
-	fSuccess = FALSE;
+	fSuccess = false;
 
 	flMinDist = 9999;// anything will be closer than this
 
@@ -379,12 +379,12 @@ int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, 
 			if ( DotProduct ( vec2Line, ( vec2TestPoint - vec2Spot1 ) ) > 0 )
 			{// point outside of line
 				flDistToLine = ( vec2TestPoint - vec2Spot1 ).Length();
-				fCurrentAlongLine = FALSE;
+				fCurrentAlongLine = false;
 			}
 			else if ( DotProduct ( vec2Line, ( vec2TestPoint - vec2Spot2 ) ) < 0 )
 			{// point outside of line
 				flDistToLine = ( vec2TestPoint - vec2Spot2 ).Length();
-				fCurrentAlongLine = FALSE;
+				fCurrentAlongLine = false;
 			}
 			else
 			{// point inside line
@@ -590,13 +590,13 @@ int CGraph :: FindShortestPath ( int *piPath, int iStart, int iDest, int iHull, 
 	if ( !m_fGraphPresent || !m_fGraphPointersSet )
 	{// protect us in the case that the node graph isn't available or built
 		ALERT ( at_aiconsole, "Graph not ready!\n" );
-		return FALSE;
+		return false;
 	}
 	
 	if ( iStart < 0 || iStart > m_cNodes )
 	{// The start node is bad?
 		ALERT ( at_aiconsole, "Can't build a path, iStart is %d!\n", iStart );
-		return FALSE;
+		return false;
 	}
 
 	if (iStart == iDest)
@@ -1157,7 +1157,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 	if ( m_cNodes <= 0 )
 	{
 		ALERT ( at_aiconsole, "No Nodes!\n" );
-		return FALSE;
+		return false;
 	}
 
 	// if the file pointer is bad, don't blow up, just don't write the
@@ -1295,13 +1295,13 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 				ALERT ( at_aiconsole, "**LinkVisibleNodes:\nNode %d has NodeLinks > MAX_NODE_INITIAL_LINKS", i );
 				fprintf ( file, "** NODE %d HAS NodeLinks > MAX_NODE_INITIAL_LINKS **\n", i );
 				*piBadNode = i;
-				return	FALSE;
+				return	false;
 			}
 			else if ( cTotalLinks > MAX_NODE_INITIAL_LINKS * m_cNodes )
 			{// this is paranoia
 				ALERT ( at_aiconsole, "**LinkVisibleNodes:\nTotalLinks > MAX_NODE_INITIAL_LINKS * NUMNODES" );
 				*piBadNode = i;
-				return	FALSE;
+				return	false;
 			}
 
 			if ( cLinksThisNode == 0 )
@@ -1383,7 +1383,7 @@ int	CGraph :: RejectInlineLinks ( CLink *pLinkPool, FILE *file )
 
 			pLinkPool[ pSrcNode->m_iFirstLink + j ].m_flWeight = flDistToCheckNode;
 
-			fRestartLoop = FALSE;
+			fRestartLoop = false;
 			for ( k = 0 ; k < pSrcNode->m_cNumLinks && !fRestartLoop ; k++ )
 			{
 				if ( k == j )
@@ -1586,7 +1586,7 @@ void CTestHull::CallBuildNodeGraph()
 	// TOUCH HACK -- Don't allow this entity to call anyone's "touch" function
 	gTouchDisabled = TRUE;
 	BuildNodeGraph();
-	gTouchDisabled = FALSE;
+	gTouchDisabled = false;
 	// Undo TOUCH HACK
 }
 
@@ -1790,7 +1790,7 @@ void CTestHull :: BuildNodeGraph()
 			
 			// if we can't fit a tiny hull through a connection, no other hulls with fit either, so we 
 			// should just fall out of the loop. Do so by setting the SkipRemainingHulls flag.
-			fSkipRemainingHulls = FALSE;
+			fSkipRemainingHulls = false;
 			for ( hull = 0 ; hull < MAX_NODE_HULLS; hull++ )
 			{
 				if (fSkipRemainingHulls && (hull == NODE_HUMAN_HULL || hull == NODE_LARGE_HULL)) // skip the remaining walk hulls
@@ -1855,7 +1855,7 @@ void CTestHull :: BuildNodeGraph()
 
 					flDist = ( vecSpot - pev->origin ).Length2D();
 
-					int fWalkFailed = FALSE;
+					int fWalkFailed = false;
 
 					// in this loop we take tiny steps from the current node to the nodes that it links to, one at a time.
 					// pev->angles.y = flYaw;
@@ -1996,7 +1996,7 @@ void CTestHull :: BuildNodeGraph()
 			WorldGraph.HashSearch(WorldGraph.INodeLink(i,j), i, iLink);
 			if (iLink < 0)
 			{
-				fPairsValid = FALSE;// unmatched link pair.
+				fPairsValid = false;// unmatched link pair.
 				fprintf ( file, "WARNING: Node %3d does not connect back to Node %3d\n", WorldGraph.INodeLink(i, j), i);
 			}
 		}
@@ -2049,7 +2049,7 @@ void CTestHull :: BuildNodeGraph()
 	//
 	WorldGraph.m_fGraphPresent = TRUE;//graph is in memory.
 	WorldGraph.m_fGraphPointersSet = TRUE;// since the graph was generated, the pointers are ready
-	WorldGraph.m_fRoutingComplete = FALSE; // Optimal routes aren't computed, yet.
+	WorldGraph.m_fRoutingComplete = false; // Optimal routes aren't computed, yet.
 
 	// Compute and compress the routing information.
 	//
@@ -2338,7 +2338,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 	if ( !aMemFile )
 	{
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -2426,7 +2426,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 
 		// Malloc for the routing info.
 		//
-		m_fRoutingComplete = FALSE;
+		m_fRoutingComplete = false;
 		m_pRouteInfo = (char *)calloc( sizeof(char), m_nRouteInfo );
 		if ( !m_pRouteInfo )
 		{
@@ -2466,7 +2466,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		// Set the graph present flag, clear the pointers set flag
 		//
 		m_fGraphPresent = TRUE;
-		m_fGraphPointersSet = FALSE;
+		m_fGraphPointersSet = false;
 		
 		FREE_FILE(aMemFile);
 
@@ -2481,7 +2481,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 ShortFile:
 NoMemory:
 	FREE_FILE(aMemFile);
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -2498,7 +2498,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 	if ( !m_fGraphPresent || !m_fGraphPointersSet )
 	{// protect us in the case that the node graph isn't available or built
 		ALERT ( at_aiconsole, "Graph not ready!\n" );
-		return FALSE;
+		return false;
 	}
 
 	// make sure directories have been made
@@ -2519,7 +2519,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 	if ( !file )
 	{// couldn't create
 		ALERT ( at_aiconsole, "Couldn't Create: %s\n", szFilename );
-		return FALSE;
+		return false;
 	}
 	else
 	{
@@ -2610,7 +2610,7 @@ int CGraph :: FSetGraphPointers ()
 // ssociated .NOD file. If the NOD file is not present, or 
 // is older than the BSP file, we rebuild it.
 //
-// returns FALSE if the .NOD file doesn't qualify and needs
+// returns false if the .NOD file doesn't qualify and needs
 // to be rebuilt.
 //
 // !!!BUGBUG - the file times we get back are 20 hours ahead!
@@ -2643,12 +2643,12 @@ int CGraph :: CheckNODFile ( char *szMapName )
 		if ( iCompare > 0 )
 		{// BSP file is newer.
 			ALERT ( at_aiconsole, ".NOD File will be updated\n\n" );
-			retValue = FALSE;
+			retValue = false;
 		}
 	}
 	else
 	{
-		retValue = FALSE;
+		retValue = false;
 	}
 
 	return retValue;
@@ -3370,7 +3370,7 @@ void CGraph :: TestRoutingTables()
 				{
 					for (int iTo = 0; iTo < m_cNodes; iTo++)
 					{
-						m_fRoutingComplete = FALSE;
+						m_fRoutingComplete = false;
 						int cPathSize1 = FindShortestPath(pMyPath, iFrom, iTo, iHull, iCapMask);
 						m_fRoutingComplete = TRUE;
 						int cPathSize2 = FindShortestPath(pMyPath2, iFrom, iTo, iHull, iCapMask);
@@ -3390,7 +3390,7 @@ void CGraph :: TestRoutingTables()
 							//
 							if (pMyPath[i] == pMyPath[i+1]) continue;
 							int iVisitNode;
-							BOOL bFound = FALSE;
+							BOOL bFound = false;
 							for (int iLink = 0; iLink < m_pNodes[pMyPath[i]].m_cNumLinks; iLink++)
 							{
 								iVisitNode = INodeLink ( pMyPath[i], iLink );
@@ -3414,7 +3414,7 @@ void CGraph :: TestRoutingTables()
 							//
 							if (pMyPath2[i] == pMyPath2[i+1]) continue;
 							int iVisitNode;
-							BOOL bFound = FALSE;
+							BOOL bFound = false;
 							for (int iLink = 0; iLink < m_pNodes[pMyPath2[i]].m_cNumLinks; iLink++)
 							{
 								iVisitNode = INodeLink ( pMyPath2[i], iLink );
@@ -3448,7 +3448,7 @@ void CGraph :: TestRoutingTables()
 								ALERT(at_aiconsole, "%d ", pMyPath2[i]);
 							}
 							ALERT(at_aiconsole, "\n");
-							m_fRoutingComplete = FALSE;
+							m_fRoutingComplete = false;
 							cPathSize1 = FindShortestPath(pMyPath, iFrom, iTo, iHull, iCapMask);
 							m_fRoutingComplete = TRUE;
 							cPathSize2 = FindShortestPath(pMyPath2, iFrom, iTo, iHull, iCapMask);

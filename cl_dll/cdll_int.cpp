@@ -303,7 +303,7 @@ void CL_LoadParticleMan()
 {
 	char szPDir[512];
 
-	if ( gEngfuncs.COM_ExpandFilename( PARTICLEMAN_DLLNAME, szPDir, sizeof( szPDir ) ) == FALSE )
+	if ( gEngfuncs.COM_ExpandFilename( PARTICLEMAN_DLLNAME, szPDir, sizeof( szPDir ) ) == false )
 	{
 		g_pParticleMan = NULL;
 		g_hParticleManModule = NULL;

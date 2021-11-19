@@ -87,7 +87,7 @@ int CGauss::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_END();
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 int CGauss::GetItemInfo(ItemInfo *p)
@@ -181,7 +181,7 @@ void CGauss::SecondaryAttack()
 			return;
 		}
 
-		m_fPrimaryFire = FALSE;
+		m_fPrimaryFire = false;
 
 		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;// take one ammo just to start the spin
 		m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase();
@@ -598,7 +598,7 @@ class CGaussAmmo : public CBasePlayerAmmo
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 			return TRUE;
 		}
-		return FALSE;
+		return false;
 	}
 };
 LINK_ENTITY_TO_CLASS( ammo_gaussclip, CGaussAmmo );

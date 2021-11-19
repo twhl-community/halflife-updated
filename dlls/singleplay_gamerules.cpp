@@ -45,21 +45,21 @@ void CHalfLifeRules::Think ()
 //=========================================================
 BOOL CHalfLifeRules::IsMultiplayer()
 {
-	return FALSE;
+	return false;
 }
 
 //=========================================================
 //=========================================================
 BOOL CHalfLifeRules::IsDeathmatch ()
 {
-	return FALSE;
+	return false;
 }
 
 //=========================================================
 //=========================================================
 BOOL CHalfLifeRules::IsCoOp()
 {
-	return FALSE;
+	return false;
 }
 
 
@@ -75,7 +75,7 @@ BOOL CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBasePlayerItem 
 
 	if ( !pPlayer->m_pActiveItem->CanHolster() )
 	{
-		return FALSE;
+		return false;
 	}
 
 	return TRUE;
@@ -85,7 +85,7 @@ BOOL CHalfLifeRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBasePlayerItem 
 //=========================================================
 BOOL CHalfLifeRules :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon )
 {
-	return FALSE;
+	return false;
 }
 
 //=========================================================

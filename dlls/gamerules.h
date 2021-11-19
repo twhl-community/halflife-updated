@@ -72,7 +72,7 @@ public:
 // Functions to verify the single/multiplayer status of a game
 	virtual BOOL IsMultiplayer() = 0;// is this a multiplayer game? (either coop or deathmatch)
 	virtual BOOL IsDeathmatch() = 0;//is this a deathmatch game?
-	virtual BOOL IsTeamplay() { return FALSE; }// is this deathmatch game being played with team rules?
+	virtual BOOL IsTeamplay() { return false; }// is this deathmatch game being played with team rules?
 	virtual BOOL IsCoOp() = 0;// is this a coop game?
 	virtual const char *GetGameDescription() { return "Half-Life"; }  // this is the game name that gets seen in the server browser
 	
@@ -95,7 +95,7 @@ public:
 	virtual edict_t *GetPlayerSpawnSpot( CBasePlayer *pPlayer );// Place this player on their spawnspot and face them the proper direction.
 
 	virtual BOOL AllowAutoTargetCrosshair() { return TRUE; }
-	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd ) { return FALSE; }  // handles the user commands;  returns TRUE if command handled properly
+	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd ) { return false; }  // handles the user commands;  returns TRUE if command handled properly
 	virtual void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer ) {}		// the player has changed userinfo;  can change it now
 
 // Client kills/scoring
@@ -274,7 +274,7 @@ public:
 	BOOL IsCoOp() override;
 
 // Client connection/disconnection
-	// If ClientConnected returns FALSE, the connection is rejected and the user is provided the reason specified in
+	// If ClientConnected returns false, the connection is rejected and the user is provided the reason specified in
 	//  svRejectReason
 	// Only the client's name and remote address are provided to the dll for verification.
 	BOOL ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] ) override;
@@ -343,7 +343,7 @@ public:
 	const char *GetTeamID( CBaseEntity *pEntity ) override {return "";}
 	int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget ) override;
 
-	BOOL PlayTextureSounds() override { return FALSE; }
+	BOOL PlayTextureSounds() override { return false; }
 	BOOL PlayFootstepSounds( CBasePlayer *pl, float fvol ) override;
 
 // Monsters

@@ -117,7 +117,7 @@ void CBarnacle :: Spawn()
 	m_MonsterState		= MONSTERSTATE_NONE;
 	m_flKillVictimTime	= 0;
 	m_cGibs				= 0;
-	m_fLiftingPrey		= FALSE;
+	m_fLiftingPrey		= false;
 	m_flTongueAdj		= -100;
 
 	InitBoneControllers();
@@ -157,7 +157,7 @@ void CBarnacle :: BarnacleThink ()
 		if ( !m_hEnemy->IsAlive() )
 		{
 			// someone (maybe even the barnacle) killed the prey. Reset barnacle.
-			m_fLiftingPrey = FALSE;// indicate that we're not lifting prey.
+			m_fLiftingPrey = false;// indicate that we're not lifting prey.
 			m_hEnemy = NULL;
 			return;
 		}
@@ -168,7 +168,7 @@ void CBarnacle :: BarnacleThink ()
 			{
 				// crap, someone killed the prey on the way up.
 				m_hEnemy = NULL;
-				m_fLiftingPrey = FALSE;
+				m_fLiftingPrey = false;
 				return;
 			}
 
@@ -187,7 +187,7 @@ void CBarnacle :: BarnacleThink ()
 			if ( fabs( pev->origin.z - ( vecNewEnemyOrigin.z + m_hEnemy->pev->view_ofs.z - 8 ) ) < BARNACLE_BODY_HEIGHT )
 			{
 		// prey has just been lifted into position ( if the victim origin + eye height + 8 is higher than the bottom of the barnacle, it is assumed that the head is within barnacle's body )
-				m_fLiftingPrey = FALSE;
+				m_fLiftingPrey = false;
 
 				EMIT_SOUND( ENT(pev), CHAN_WEAPON, "barnacle/bcl_bite3.wav", 1, ATTN_NORM );	
 
@@ -298,7 +298,7 @@ void CBarnacle :: BarnacleThink ()
 			{
 				// if tongue is higher than is should be, lower it kind of slowly.
 				m_flAltitude += BARNACLE_PULL_SPEED;
-				m_fTongueExtended = FALSE;
+				m_fTongueExtended = false;
 			}
 			else
 			{

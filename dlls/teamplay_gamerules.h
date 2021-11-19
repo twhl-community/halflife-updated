@@ -49,7 +49,7 @@ public:
 	void ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTeamName, BOOL bKill, BOOL bGib ) override;
 
 private:
-	void RecountTeams( bool bResendInfo = FALSE );
+	void RecountTeams( bool bResendInfo = false );
 	const char *TeamWithFewestPlayers();
 
 	BOOL m_DisableDeathMessages;

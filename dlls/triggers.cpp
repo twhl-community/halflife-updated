@@ -287,13 +287,13 @@ public:
 	int		m_iTargetName	[ MAX_MULTI_TARGETS ];// list if indexes into global string array
 	float	m_flTargetDelay [ MAX_MULTI_TARGETS ];// delay (in seconds) from time of manager fire to target fire
 private:
-	inline BOOL IsClone() { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? TRUE : FALSE; }
+	inline BOOL IsClone() { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? TRUE : false; }
 	inline BOOL ShouldClone() 
 	{ 
 		if ( IsClone() )
-			return FALSE;
+			return false;
 
-		return (pev->spawnflags & SF_MULTIMAN_THREAD) ? TRUE : FALSE; 
+		return (pev->spawnflags & SF_MULTIMAN_THREAD) ? TRUE : false; 
 	}
 
 	CMultiManager *Clone();
@@ -378,7 +378,7 @@ BOOL CMultiManager::HasTarget( string_t targetname )
 		if ( FStrEq(STRING(targetname), STRING(m_iTargetName[i])) )
 			return TRUE;
 	
-	return FALSE;
+	return false;
 }
 
 
@@ -2278,7 +2278,7 @@ void CTriggerCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 
 	if (FBitSet (pev->spawnflags, SF_CAMERA_PLAYER_TAKECONTROL ) )
 	{
-		player->EnableControl(FALSE);
+		player->EnableControl(false);
 	}
 
 	if ( m_sPath )

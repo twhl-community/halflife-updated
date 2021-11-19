@@ -102,7 +102,7 @@ void CXenPLight :: Spawn()
 	pev->nextthink = gpGlobals->time + 0.1;
 	pev->frame = RANDOM_FLOAT(0,255);
 
-	m_pGlow = CSprite::SpriteCreate( XEN_PLANT_GLOW_SPRITE, pev->origin + Vector(0,0,(pev->mins.z+pev->maxs.z)*0.5), FALSE );
+	m_pGlow = CSprite::SpriteCreate( XEN_PLANT_GLOW_SPRITE, pev->origin + Vector(0,0,(pev->mins.z+pev->maxs.z)*0.5), false );
 	m_pGlow->SetTransparency( kRenderGlow, pev->rendercolor.x, pev->rendercolor.y, pev->rendercolor.z, pev->renderamt, pev->renderfx );
 	m_pGlow->SetAttachment( edict(), 1 );
 }
@@ -363,7 +363,7 @@ void CXenTree :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		case TREE_AE_ATTACK:
 		{
 			CBaseEntity *pList[8];
-			BOOL sound = FALSE;
+			BOOL sound = false;
 			int count = UTIL_EntitiesInBox( pList, 8, m_pTrigger->pev->absmin, m_pTrigger->pev->absmax, FL_MONSTER|FL_CLIENT );
 			Vector forward;
 

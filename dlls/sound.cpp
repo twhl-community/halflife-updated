@@ -209,10 +209,10 @@ void CAmbientGeneric :: Spawn()
 
 	SetUse ( &CAmbientGeneric::ToggleUse );
 	
-	m_fActive = FALSE;
+	m_fActive = false;
 
 	if ( FBitSet ( pev->spawnflags, AMBIENT_SOUND_NOT_LOOPING ) )
-		m_fLooping = FALSE;
+		m_fLooping = false;
 	else
 		m_fLooping = TRUE;
 	Precache( );
@@ -257,7 +257,7 @@ void CAmbientGeneric :: RampThink()
 	int pitch = m_dpv.pitch; 
 	int vol = m_dpv.vol;
 	int flags = 0;
-	int fChanged = 0;		// FALSE if pitch and vol remain unchanged this round
+	int fChanged = 0;		// false if pitch and vol remain unchanged this round
 	int	prev;
 
 	if (!m_dpv.spinup && !m_dpv.spindown && !m_dpv.fadein && !m_dpv.fadeout && !m_dpv.lfotype)
@@ -591,7 +591,7 @@ void CAmbientGeneric :: ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCalle
 		}
 		else
 		{
-			m_fActive = FALSE;
+			m_fActive = false;
 			
 			// HACKHACK - this makes the code in Precache() work properly after a save/restore
 			pev->spawnflags |= AMBIENT_SOUND_START_SILENT;
@@ -856,7 +856,7 @@ BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange)
 	// check if line of sight crosses water boundary, or is blocked
 
 	if ((tr.fInOpen && tr.fInWater) || tr.flFraction != 1)
-		return FALSE;
+		return false;
 
 	// calc range from sound entity to player
 
@@ -864,7 +864,7 @@ BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange)
 	flRange = vecRange.Length();
 
 	if (pSound->m_flRadius < flRange)		
-		return FALSE;
+		return false;
 	
 	if (pflRange)
 		*pflRange = flRange;
@@ -1002,7 +1002,7 @@ typedef struct sentenceg
 // globals
 
 SENTENCEG rgsentenceg[CSENTENCEG_MAX];
-int fSentencesInit = FALSE;
+int fSentencesInit = false;
 
 char gszallsentencenames[CVOXFILESENTENCEMAX][CBSENTENCENAME_MAX];
 int gcallsentences = 0;
@@ -1096,7 +1096,7 @@ int USENTENCEG_Pick(int isentenceg, char *szfound)
 	unsigned char count;
 	char sznum[8];
 	unsigned char ipick;
-	int ffound = FALSE;
+	int ffound = false;
 	
 	if (!fSentencesInit)
 		return -1;
@@ -1470,7 +1470,7 @@ void EMIT_GROUPNAME_SUIT(edict_t *entity, const char *groupname)
 // texture name to a material type.  Play footstep sound based
 // on material type.
 
-int fTextureTypeInit = FALSE;
+int fTextureTypeInit = false;
 
 #define CTEXTURESMAX		512			// max number of textures loaded
 

@@ -136,7 +136,7 @@ void CRoach :: Spawn()
 
 	pev->view_ofs		= Vector ( 0, 0, 1 );// position of the eyes relative to monster's origin.
 	pev->takedamage		= DAMAGE_YES;
-	m_fLightHacked		= FALSE;
+	m_fLightHacked		= false;
 	m_flLastLightLevel	= -1;
 	m_iMode				= ROACH_IDLE;
 	m_flNextSmellTime	= gpGlobals->time;
@@ -392,7 +392,7 @@ void CRoach :: Move ( float flInterval )
 	if ( RANDOM_LONG(0,149) == 1 && m_iMode != ROACH_SCARED_BY_LIGHT && m_iMode != ROACH_SMELL_FOOD )
 	{
 		// random skitter while moving as long as not on a b-line to get out of light or going to food
-		PickNewDest( FALSE );
+		PickNewDest( false );
 	}
 }
 

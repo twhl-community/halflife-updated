@@ -44,7 +44,7 @@
 #define CSUITPLAYLIST	4		// max of 4 suit sentences queued up at any time
 
 #define SUIT_GROUP			TRUE
-#define	SUIT_SENTENCE		FALSE
+#define	SUIT_SENTENCE		false
 
 #define	SUIT_REPEAT_OK		0
 #define SUIT_NEXT_IN_30SEC	30
@@ -160,7 +160,7 @@ public:
 	BOOL				m_fInitHUD;				// True when deferred HUD restart msg needs to be sent
 	BOOL				m_fGameHUDInitialized;
 	int					m_iTrain;				// Train control position
-	BOOL				m_fWeapon;				// Set this to FALSE to force a reset of the current weapon HUD info
+	BOOL				m_fWeapon;				// Set this to false to force a reset of the current weapon HUD info
 
 	EHANDLE				m_pTank;				// the tank which the player is currently controlling,  NULL if no tank
 	EHANDLE				m_hViewEntity;			// The view entity being used, or null if the player is using itself as the view entity
@@ -217,10 +217,10 @@ public:
 	void StopSneaking() override { m_tSneaking = gpGlobals->time + 30; }
 	BOOL IsSneaking() override { return m_tSneaking <= gpGlobals->time; }
 	BOOL IsAlive() override { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
-	BOOL ShouldFadeOnDeath() override { return FALSE; }
-	BOOL IsPlayer() override { return TRUE; }			// Spectators should return FALSE for this, they aren't "players" as far as game logic is concerned
+	BOOL ShouldFadeOnDeath() override { return false; }
+	BOOL IsPlayer() override { return TRUE; }			// Spectators should return false for this, they aren't "players" as far as game logic is concerned
 
-	BOOL IsNetClient() override { return TRUE; }		// Bots should return FALSE for this, they can't receive NET messages
+	BOOL IsNetClient() override { return TRUE; }		// Bots should return false for this, they can't receive NET messages
 															// Spectators should return TRUE for this
 	const char *TeamID() override;
 

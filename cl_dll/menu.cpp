@@ -55,7 +55,7 @@ void CHudMenu :: InitHUDData()
 void CHudMenu :: Reset()
 {
 	g_szPrelocalisedMenuString[0] = 0;
-	m_fWaitingForMore = FALSE;
+	m_fWaitingForMore = false;
 }
 
 int CHudMenu :: VidInit()
@@ -161,7 +161,7 @@ int CHudMenu :: Draw( float flTime )
 	menu_g		= 255;
 	menu_b		= 255;
 	menu_x		= 20;
-	menu_ralign	 = FALSE;
+	menu_ralign	 = false;
 
 	const char* sptr = g_szMenuString;
 	
@@ -173,7 +173,7 @@ int CHudMenu :: Draw( float flTime )
 		}
 		else if ( *sptr == '\n' )
 		{
-			menu_ralign	 = FALSE;
+			menu_ralign	 = false;
 			menu_x		 = 20;
 			y			+= (12);
 			
@@ -226,7 +226,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 // takes four values:
 //		short: a bitfield of keys that are valid input
 //		char : the duration, in seconds, the menu should stay up. -1 means is stays until something is chosen.
-//		byte : a boolean, TRUE if there is more string yet to be received before displaying the menu, FALSE if it's the last string
+//		byte : a boolean, TRUE if there is more string yet to be received before displaying the menu, false if it's the last string
 //		string: menu string to display
 // if this message is never received, then scores will simply be the combined totals of the players.
 int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )

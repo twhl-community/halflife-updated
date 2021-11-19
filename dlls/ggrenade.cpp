@@ -351,7 +351,7 @@ void CGrenade:: Spawn()
 	UTIL_SetSize(pev, Vector( 0, 0, 0), Vector(0, 0, 0));
 
 	pev->dmg = 100;
-	m_fRegisteredSound = FALSE;
+	m_fRegisteredSound = false;
 }
 
 

@@ -665,7 +665,7 @@ void CController :: RunTask ( Task_t *pTask )
 			m_iBallTime[0] = m_flShootEnd;
 			m_iBall[1] = 64;
 			m_iBallTime[1] = m_flShootEnd;
-			m_fInCombat = FALSE;
+			m_fInCombat = false;
 		}
 	}
 
@@ -680,7 +680,7 @@ void CController :: RunTask ( Task_t *pTask )
 
 		if (m_fSequenceFinished)
 		{
-			m_fInCombat = FALSE;
+			m_fInCombat = false;
 		}
 
 		CSquadMonster :: RunTask ( pTask );
@@ -795,7 +795,7 @@ BOOL CController :: CheckRangeAttack1 ( float flDot, float flDist )
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 
@@ -805,13 +805,13 @@ BOOL CController :: CheckRangeAttack2 ( float flDot, float flDist )
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 
 BOOL CController :: CheckMeleeAttack1 ( float flDot, float flDist )
 {
-	return FALSE;
+	return false;
 }
 
 
@@ -1081,7 +1081,7 @@ BOOL CController:: ShouldAdvanceRoute( float flWaypointDist )
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 

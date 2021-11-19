@@ -278,8 +278,8 @@ void CTentacle :: Spawn( )
 	m_flInitialYaw = pev->angles.y;
 	pev->ideal_yaw = m_flInitialYaw;
 
-	g_fFlySound = FALSE;
-	g_fSquirmSound = FALSE;
+	g_fFlySound = false;
+	g_fSquirmSound = false;
 
 	m_iHitDmg = 20;
 

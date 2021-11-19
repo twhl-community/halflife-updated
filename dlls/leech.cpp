@@ -202,7 +202,7 @@ void CLeech::Spawn()
 	pev->view_ofs = g_vecZero;
 
 	m_flTurning = 0;
-	m_fPathBlocked = FALSE;
+	m_fPathBlocked = false;
 	SetActivity( ACT_SWIM );
 	SetState( MONSTERSTATE_IDLE );
 	m_stateTime = gpGlobals->time + RANDOM_FLOAT( 1, 5 );
@@ -649,7 +649,7 @@ void CLeech::SwimThink()
 			m_flTurning = 0;
 		}
 
-		m_fPathBlocked = FALSE;
+		m_fPathBlocked = false;
 		pev->speed = UTIL_Approach( targetSpeed, pev->speed, LEECH_SWIM_ACCEL * LEECH_FRAMETIME );
 		pev->velocity = gpGlobals->v_forward * pev->speed;
 

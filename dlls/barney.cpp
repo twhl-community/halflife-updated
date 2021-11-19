@@ -327,12 +327,12 @@ BOOL CBarney :: CheckRangeAttack1 ( float flDot, float flDist )
 			if ( tr.flFraction == 1.0 || (tr.pHit != NULL && CBaseEntity::Instance(tr.pHit) == pEnemy) )
 				m_lastAttackCheck = TRUE;
 			else
-				m_lastAttackCheck = FALSE;
+				m_lastAttackCheck = false;
 			m_checkAttackTime = gpGlobals->time + 1.5;
 		}
 		return m_lastAttackCheck;
 	}
-	return FALSE;
+	return false;
 }
 
 
@@ -392,7 +392,7 @@ void CBarney :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	case BARNEY_AE_HOLSTER:
 		// change bodygroup to replace gun in holster
 		pev->body = BARNEY_BODY_GUNHOLSTERED;
-		m_fGunDrawn = FALSE;
+		m_fGunDrawn = false;
 		break;
 
 	default:
@@ -419,7 +419,7 @@ void CBarney :: Spawn()
 	m_MonsterState		= MONSTERSTATE_NONE;
 
 	pev->body			= 0; // gun in holster
-	m_fGunDrawn			= FALSE;
+	m_fGunDrawn			= false;
 
 	m_afCapability		= bits_CAP_HEAR | bits_CAP_TURN_HEAD | bits_CAP_DOORS_GROUP;
 
@@ -502,7 +502,7 @@ BOOL IsFacing( entvars_t *pevTest, const Vector &reference )
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 
@@ -735,7 +735,7 @@ Schedule_t *CBarney :: GetSchedule ()
 			if ( !m_hTargetEnt->IsAlive() )
 			{
 				// UNDONE: Comment about the recently dead player here?
-				StopFollowing( FALSE );
+				StopFollowing( false );
 				break;
 			}
 			else

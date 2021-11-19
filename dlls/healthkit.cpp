@@ -68,7 +68,7 @@ BOOL CHealthKit::MyTouch( CBasePlayer *pPlayer )
 {
 	if ( pPlayer->pev->deadflag != DEAD_NO )
 	{
-		return FALSE;
+		return false;
 	}
 
 	if ( pPlayer->TakeHealth( gSkillData.healthkitCapacity, DMG_GENERIC ) )
@@ -91,7 +91,7 @@ BOOL CHealthKit::MyTouch( CBasePlayer *pPlayer )
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 

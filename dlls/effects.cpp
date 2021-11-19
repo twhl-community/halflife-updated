@@ -388,7 +388,7 @@ public:
 	{
 		if ( m_life == 0 && !(pev->spawnflags & SF_BEAM_RING) )
 			return TRUE;
-		return FALSE;
+		return false;
 	}
 
 	int		Save( CSave &save ) override;

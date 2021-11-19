@@ -338,7 +338,7 @@ BOOL CIchthyosaur :: CheckMeleeAttack1 ( float flDot, float flDist )
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 void CIchthyosaur::BiteTouch( CBaseEntity *pOther )
@@ -377,7 +377,7 @@ BOOL CIchthyosaur :: CheckRangeAttack1 ( float flDot, float flDist )
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -419,7 +419,7 @@ void CIchthyosaur::BecomeDead()
 //=========================================================
 void CIchthyosaur :: HandleAnimEvent( MonsterEvent_t *pEvent )
 {
-	int bDidAttack = FALSE;
+	int bDidAttack = false;
 	switch( pEvent->event )
 	{
 	case ICHTHYOSAUR_AE_SHAKE_RIGHT:

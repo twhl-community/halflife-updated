@@ -487,8 +487,8 @@ void CBaseButton::Spawn( )
 	if ( ((m_vecPosition2 - m_vecPosition1).Length() < 1) || (pev->spawnflags & SF_BUTTON_DONTMOVE) )
 		m_vecPosition2 = m_vecPosition1;
 
-	m_fStayPushed = (m_flWait == -1 ? TRUE : FALSE);
-	m_fRotating = FALSE;
+	m_fStayPushed = (m_flWait == -1 ? TRUE : false);
+	m_fRotating = false;
 
 	// if the button is flagged for USE button activation only, take away it's touch function and add a use function
 
@@ -673,7 +673,7 @@ void CBaseButton::ButtonActivate( )
 	else
 	{
 		// button is unlocked, play unlocked sound
-		PlayLockSounds(pev, &m_ls, FALSE, TRUE);
+		PlayLockSounds(pev, &m_ls, false, TRUE);
 	}
 
 	ASSERT(m_toggle_state == TS_AT_BOTTOM);
@@ -849,7 +849,7 @@ void CRotButton::Spawn()
 	m_vecAngle2	= pev->angles + pev->movedir * m_flMoveDistance;
 	ASSERTSZ(m_vecAngle1 != m_vecAngle2, "rotating button start/end positions are equal");
 
-	m_fStayPushed = (m_flWait == -1 ? TRUE : FALSE);
+	m_fStayPushed = (m_flWait == -1 ? TRUE : false);
 	m_fRotating = TRUE;
 
 	// if the button is flagged for USE button activation only, take away it's touch function and add a use function
@@ -1020,7 +1020,7 @@ void CMomentaryRotButton::UpdateAllButtons( float value, int start )
 
 void CMomentaryRotButton::UpdateSelf( float value )
 {
-	BOOL fplaysound = FALSE;
+	BOOL fplaysound = false;
 
 	if ( !m_lastUsed )
 	{

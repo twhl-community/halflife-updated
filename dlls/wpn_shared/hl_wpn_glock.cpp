@@ -80,7 +80,7 @@ BOOL CGlock::Deploy( )
 
 void CGlock::SecondaryAttack()
 {
-	GlockFire( 0.1, 0.2, FALSE );
+	GlockFire( 0.1, 0.2, false );
 }
 
 void CGlock::PrimaryAttack()
@@ -150,7 +150,7 @@ void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
 
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
-		m_pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
+		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );
 }
@@ -237,7 +237,7 @@ class CGlockAmmo : public CBasePlayerAmmo
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 			return TRUE;
 		}
-		return FALSE;
+		return false;
 	}
 };
 LINK_ENTITY_TO_CLASS( ammo_glockclip, CGlockAmmo );

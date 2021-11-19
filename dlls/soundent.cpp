@@ -58,7 +58,7 @@ BOOL CSound :: FIsSound ()
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -71,7 +71,7 @@ BOOL CSound :: FIsScent ()
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -263,7 +263,7 @@ void CSoundEnt :: Initialize ()
 	}
 	else
 	{
-		m_fShowReport = FALSE;
+		m_fShowReport = false;
 	}
 }
 

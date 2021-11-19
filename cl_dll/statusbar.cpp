@@ -185,7 +185,7 @@ int CHudStatusBar :: Draw( float fTime )
 			m_pflNameColors[i] = g_ColorYellow;
 			ParseStatusString( i );
 		}
-		m_bReparseString = FALSE;
+		m_bReparseString = false;
 	}
 
 	int Y_START = ScreenHeight - 52;

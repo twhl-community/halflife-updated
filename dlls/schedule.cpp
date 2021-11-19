@@ -34,7 +34,7 @@ BOOL CBaseMonster :: FHaveSchedule()
 {
 	if ( m_pSchedule == NULL )
 	{
-		return FALSE;
+		return false;
 	}
 
 	return TRUE;
@@ -64,7 +64,7 @@ BOOL CBaseMonster :: FScheduleDone ()
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -174,7 +174,7 @@ BOOL CBaseMonster :: FScheduleValid ()
 	if ( m_pSchedule == NULL )
 	{
 		// schedule is empty, and therefore not valid.
-		return FALSE;
+		return false;
 	}
 
 	if ( HasConditions( m_pSchedule->iInterruptMask | bits_COND_SCHEDULE_DONE | bits_COND_TASK_FAILED ) )
@@ -192,7 +192,7 @@ BOOL CBaseMonster :: FScheduleValid ()
 #endif // DEBUG
 
 		// some condition has interrupted the schedule, or the schedule is done
-		return FALSE;
+		return false;
 	}
 	
 	return TRUE;
@@ -1250,7 +1250,7 @@ case TASK_GET_PATH_TO_BESTSCENT:
 		{
 			if (m_pCine->m_iszIdle)
 			{
-				m_pCine->StartSequence( (CBaseMonster *)this, m_pCine->m_iszIdle, FALSE );
+				m_pCine->StartSequence( (CBaseMonster *)this, m_pCine->m_iszIdle, false );
 				if (FStrEq( STRING(m_pCine->m_iszIdle), STRING(m_pCine->m_iszPlay)))
 				{
 					pev->framerate = 0;

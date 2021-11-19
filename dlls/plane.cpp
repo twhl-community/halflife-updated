@@ -20,7 +20,7 @@
 //=========================================================
 CPlane :: CPlane ()
 {
-	m_fInitialized = FALSE;
+	m_fInitialized = false;
 }
 
 //=========================================================
@@ -45,7 +45,7 @@ BOOL CPlane :: PointInFront ( const Vector &vecPoint )
 
 	if ( !m_fInitialized )
 	{
-		return FALSE;
+		return false;
 	}
 
 	flFace = DotProduct ( m_vecNormal, vecPoint ) - m_flDist;
@@ -55,6 +55,6 @@ BOOL CPlane :: PointInFront ( const Vector &vecPoint )
 		return TRUE;
 	}
 
-	return FALSE;
+	return false;
 }
 

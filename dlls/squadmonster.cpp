@@ -73,7 +73,7 @@ BOOL CSquadMonster :: OccupySlot( int iDesiredSlots )
 	if ( !( iDesiredSlots ^ pSquadLeader->m_afSquadSlots ) )
 	{
 		// none of the desired slots are available. 
-		return FALSE;
+		return false;
 	}
 
 	iSquadSlots = pSquadLeader->m_afSquadSlots;
@@ -94,7 +94,7 @@ BOOL CSquadMonster :: OccupySlot( int iDesiredSlots )
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -200,7 +200,7 @@ BOOL CSquadMonster :: SquadAdd( CSquadMonster *pAdd )
 			return TRUE;
 		}
 	}
-	return FALSE;
+	return false;
 	// should complain here
 }
 
@@ -473,7 +473,7 @@ BOOL CSquadMonster :: NoFriendlyFire()
 	else
 	{
 		// if there's no enemy, pretend there's a friendly in the way, so the grunt won't shoot.
-		return FALSE;
+		return false;
 	}
 
 	//UTIL_MakeVectors ( pev->angles );
@@ -504,7 +504,7 @@ BOOL CSquadMonster :: NoFriendlyFire()
 				 rightPlane.PointInFront ( pMember->pev->origin) )
 			{
 				// this guy is in the check volume! Don't shoot!
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -552,7 +552,7 @@ BOOL CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
 	if (SquadMemberInRange( vecCoverLocation, 128 ))
 	{
 		// another squad member is too close to this piece of cover.
-		return FALSE;
+		return false;
 	}
 
 	return TRUE;
@@ -565,7 +565,7 @@ BOOL CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
 BOOL CSquadMonster :: SquadEnemySplit ()
 {
 	if (!InSquad())
-		return FALSE;
+		return false;
 
 	CSquadMonster	*pSquadLeader = MySquadLeader();
 	CBaseEntity		*pEnemy	= pSquadLeader->m_hEnemy;
@@ -578,7 +578,7 @@ BOOL CSquadMonster :: SquadEnemySplit ()
 			return TRUE;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 //=========================================================
@@ -589,7 +589,7 @@ BOOL CSquadMonster :: SquadEnemySplit ()
 BOOL CSquadMonster :: SquadMemberInRange ( const Vector &vecLocation, float flDist )
 {
 	if (!InSquad())
-		return FALSE;
+		return false;
 
 	CSquadMonster *pSquadLeader = MySquadLeader();
 
@@ -599,7 +599,7 @@ BOOL CSquadMonster :: SquadMemberInRange ( const Vector &vecLocation, float flDi
 		if (pSquadMember && (vecLocation - pSquadMember->pev->origin ).Length2D() <= flDist)
 			return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 

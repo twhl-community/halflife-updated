@@ -1051,7 +1051,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	// Feign
 	else if ( !strcmp( pButtonName, "!FEIGN" ) )
 	{
-		pButton = new FeignButton(FALSE, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
+		pButton = new FeignButton(false, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "feign" ));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
@@ -1059,7 +1059,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	// Feign Silently
 	else if ( !strcmp( pButtonName, "!FEIGNSILENT" ) )
 	{
-		pButton = new FeignButton(FALSE, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
+		pButton = new FeignButton(false, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "sfeign" ));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
@@ -1927,7 +1927,7 @@ bool TeamFortressViewport::AllowedToPrintText()
 	{
 		int iId = m_pCurrentMenu->GetMenuID();
 		if ( iId == MENU_TEAM || iId == MENU_CLASS || iId == MENU_INTRO || iId == MENU_CLASSHELP )
-			return FALSE;
+			return false;
 	}
 
 	return TRUE;
@@ -2149,7 +2149,7 @@ bool TeamFortressViewport::SlotInput( int iSlot )
 	if ( m_pCurrentMenu )
 		return m_pCurrentMenu->SlotInput( iSlot );
 
-	return FALSE;
+	return false;
 }
 
 // Direct Key Input

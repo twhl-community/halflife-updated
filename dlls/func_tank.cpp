@@ -65,7 +65,7 @@ public:
 	// Bmodels don't go across transitions
 	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	inline BOOL IsActive() { return (pev->spawnflags & SF_TANK_ACTIVE)?TRUE:FALSE; }
+	inline BOOL IsActive() { return (pev->spawnflags & SF_TANK_ACTIVE)?TRUE:false; }
 	inline void TankActivate() { pev->spawnflags |= SF_TANK_ACTIVE; pev->nextthink = pev->ltime + 0.1; m_fireLast = 0; }
 	inline void TankDeactivate() { pev->spawnflags &= ~SF_TANK_ACTIVE; m_fireLast = 0; StopRotSound(); }
 	inline BOOL CanFire() { return (gpGlobals->time - m_lastSightTime) < m_persist; }
@@ -329,26 +329,26 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 BOOL CFuncTank :: OnControls( entvars_t *pevTest )
 {
 	if ( !(pev->spawnflags & SF_TANK_CANCONTROL) )
-		return FALSE;
+		return false;
 
 	Vector offset = pevTest->origin - pev->origin;
 
 	if ( (m_vecControllerUsePos - pevTest->origin).Length() < 30 )
 		return TRUE;
 
-	return FALSE;
+	return false;
 }
 
 BOOL CFuncTank :: StartControl( CBasePlayer *pController )
 {
 	if ( m_pController != NULL )
-		return FALSE;
+		return false;
 
 	// Team only or disabled?
 	if ( m_iszMaster )
 	{
 		if ( !UTIL_IsMasterTriggered( m_iszMaster, pController ) )
-			return FALSE;
+			return false;
 	}
 
 	ALERT( at_console, "using TANK!\n");
@@ -462,9 +462,9 @@ edict_t *CFuncTank :: FindTarget( edict_t *pPlayer )
 BOOL CFuncTank :: InRange( float range )
 {
 	if ( range < m_minRange )
-		return FALSE;
+		return false;
 	if ( m_maxRange > 0 && range > m_maxRange )
-		return FALSE;
+		return false;
 
 	return TRUE;
 }
@@ -485,7 +485,7 @@ void CFuncTank::TrackTarget()
 {
 	TraceResult tr;
 	edict_t *pPlayer = FIND_CLIENT_IN_PVS( edict() );
-	BOOL updateTime = FALSE, lineOfSight;
+	BOOL updateTime = false, lineOfSight;
 	Vector angles, direction, targetPosition, barrelEnd;
 	edict_t *pTarget;
 
@@ -524,7 +524,7 @@ void CFuncTank::TrackTarget()
 
 		UTIL_TraceLine( barrelEnd, targetPosition, dont_ignore_monsters, edict(), &tr );
 		
-		lineOfSight = FALSE;
+		lineOfSight = false;
 		// No line of sight, don't track
 		if ( tr.flFraction == 1.0 || tr.pHit == pTarget )
 		{
@@ -559,12 +559,12 @@ void CFuncTank::TrackTarget()
 	if ( angles.y > m_yawCenter + m_yawRange )
 	{
 		angles.y = m_yawCenter + m_yawRange;
-		updateTime = FALSE;	// Don't update if you saw the player, but out of range
+		updateTime = false;	// Don't update if you saw the player, but out of range
 	}
 	else if ( angles.y < (m_yawCenter - m_yawRange) )
 	{
 		angles.y = (m_yawCenter - m_yawRange);
-		updateTime = FALSE; // Don't update if you saw the player, but out of range
+		updateTime = false; // Don't update if you saw the player, but out of range
 	}
 
 	if ( updateTime )
@@ -598,7 +598,7 @@ void CFuncTank::TrackTarget()
 
 	if ( CanFire() && ( (fabs(distX) < m_pitchTolerance && fabs(distY) < m_yawTolerance) || (pev->spawnflags & SF_TANK_LINEOFSIGHT) ) )
 	{
-		BOOL fire = FALSE;
+		BOOL fire = false;
 		Vector forward;
 		UTIL_MakeVectorsPrivate( pev->angles, forward, NULL, NULL );
 

@@ -68,7 +68,7 @@ BOOL CBasePlayerWeapon::CanDeploy()
 	}
 	if (!bHasAmmo)
 	{
-		return FALSE;
+		return false;
 	}
 
 	return TRUE;
@@ -77,12 +77,12 @@ BOOL CBasePlayerWeapon::CanDeploy()
 BOOL CBasePlayerWeapon::DefaultReload(int iClipSize, int iAnim, float fDelay, int body)
 {
 	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
-		return FALSE;
+		return false;
 
 	int j = V_min(iClipSize - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
 
 	if (j == 0)
-		return FALSE;
+		return false;
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + fDelay;
 
@@ -108,11 +108,11 @@ BOOL CanAttack(float attack_time, float curtime, BOOL isPredicted)
 	if (1)
 #endif
 	{
-		return (attack_time <= curtime) ? TRUE : FALSE;
+		return (attack_time <= curtime) ? TRUE : false;
 	}
 	else
 	{
-		return ((static_cast<int>(std::floor(attack_time * 1000.0)) * 1000.0) <= 0.0) ? TRUE : FALSE;
+		return ((static_cast<int>(std::floor(attack_time * 1000.0)) * 1000.0) <= 0.0) ? TRUE : false;
 	}
 }
 
@@ -129,7 +129,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 
 		m_pPlayer->TabulateAmmo();
 
-		m_fInReload = FALSE;
+		m_fInReload = false;
 	}
 
 	if (!(m_pPlayer->pev->button & IN_ATTACK))
@@ -167,7 +167,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 	{
 		// no fire buttons down
 
-		m_fFireOnEmpty = FALSE;
+		m_fFireOnEmpty = false;
 
 #ifndef CLIENT_DLL
 		if (!IsUseable() && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))

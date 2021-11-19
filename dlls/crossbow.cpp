@@ -241,7 +241,7 @@ int CCrossbow::AddToPlayer( CBasePlayer *pPlayer )
 		MESSAGE_END();
 		return TRUE;
 	}
-	return FALSE;
+	return false;
 }
 
 void CCrossbow::Precache()
@@ -286,7 +286,7 @@ BOOL CCrossbow::Deploy( )
 
 void CCrossbow::Holster()
 {
-	m_fInReload = FALSE;// cancel any reload in progress.
+	m_fInReload = false;// cancel any reload in progress.
 
 	if (m_pPlayer->m_iFOV != 0)
 	{
@@ -415,7 +415,7 @@ void CCrossbow::FireBolt()
 
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
-		m_pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
+		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(0.75);
 
@@ -520,7 +520,7 @@ class CCrossbowAmmo : public CBasePlayerAmmo
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
 			return TRUE;
 		}
-		return FALSE;
+		return false;
 	}
 };
 LINK_ENTITY_TO_CLASS( ammo_crossbow, CCrossbowAmmo );

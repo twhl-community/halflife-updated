@@ -144,7 +144,7 @@ public:
 	// initialization functions
 	virtual void	Spawn() {}
 	virtual void	Precache() {}
-	virtual void	KeyValue( KeyValueData* pkvd) { pkvd->fHandled = FALSE; }
+	virtual void	KeyValue( KeyValueData* pkvd) { pkvd->fHandled = false; }
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	virtual int		ObjectCaps() { return FCAP_ACROSS_TRANSITION; }
@@ -184,15 +184,15 @@ public:
 	virtual void	SetToggleState( int state ) {}
 	virtual void    StartSneaking() {}
 	virtual void    StopSneaking() {}
-	virtual BOOL	OnControls( entvars_t *pev ) { return FALSE; }
-	virtual BOOL    IsSneaking() { return FALSE; }
+	virtual BOOL	OnControls( entvars_t *pev ) { return false; }
+	virtual BOOL    IsSneaking() { return false; }
 	virtual BOOL	IsAlive() { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
 	virtual BOOL	IsBSPModel() { return pev->solid == SOLID_BSP || pev->movetype == MOVETYPE_PUSHSTEP; }
 	virtual BOOL	ReflectGauss() { return ( IsBSPModel() && !pev->takedamage ); }
 	virtual BOOL	HasTarget( string_t targetname ) { return FStrEq(STRING(targetname), STRING(pev->targetname) ); }
 	virtual BOOL    IsInWorld();
-	virtual	BOOL	IsPlayer() { return FALSE; }
-	virtual BOOL	IsNetClient() { return FALSE; }
+	virtual	BOOL	IsPlayer() { return false; }
+	virtual BOOL	IsNetClient() { return false; }
 	virtual const char *TeamID() { return ""; }
 
 
@@ -247,7 +247,7 @@ public:
 	int		Intersects( CBaseEntity *pOther );
 	void	MakeDormant();
 	int		IsDormant();
-	BOOL    IsLockedByMaster() { return FALSE; }
+	BOOL    IsLockedByMaster() { return false; }
 
 	static CBaseEntity *Instance( edict_t *pent )
 	{ 
@@ -328,7 +328,7 @@ public:
 	//
 	static CBaseEntity *Create( const char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner = NULL );
 
-	virtual BOOL FBecomeProne() {return FALSE;}
+	virtual BOOL FBecomeProne() {return false;}
 	edict_t *edict() { return ENT( pev ); }
 	EOFFSET eoffset( ) { return OFFSET( pev ); }
 	int	  entindex( ) { return ENTINDEX( edict() ); }
