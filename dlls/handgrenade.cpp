@@ -66,13 +66,13 @@ int CHandGrenade::GetItemInfo(ItemInfo *p)
 }
 
 
-BOOL CHandGrenade::Deploy( )
+bool CHandGrenade::Deploy( )
 {
 	m_flReleaseThrow = -1;
 	return DefaultDeploy( "models/v_grenade.mdl", "models/p_grenade.mdl", HANDGRENADE_DRAW, "crowbar" );
 }
 
-BOOL CHandGrenade::CanHolster()
+bool CHandGrenade::CanHolster()
 {
 	// can only holster hand grenades when not primed!
 	return ( m_flStartThrow == 0 );

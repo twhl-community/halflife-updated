@@ -45,7 +45,7 @@ DLL_GLOBAL	BOOL	g_fDrawLines = false;
 //
 // !!!UNDONE - make this CBaseMonster?
 //=========================================================
-BOOL FBoxVisible ( entvars_t *pevLooker, entvars_t *pevTarget, Vector &vecTargetOrigin, float flSize )
+bool FBoxVisible ( entvars_t *pevLooker, entvars_t *pevTarget, Vector &vecTargetOrigin, float flSize )
 {
 	// don't look through water
 	if ((pevLooker->waterlevel != 3 && pevTarget->waterlevel == 3) 

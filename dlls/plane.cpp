@@ -39,7 +39,7 @@ void CPlane :: InitializePlane ( const Vector &vecNormal, const Vector &vecPoint
 // PointInFront - determines whether the given vector is 
 // in front of the plane. 
 //=========================================================
-BOOL CPlane :: PointInFront ( const Vector &vecPoint )
+bool CPlane :: PointInFront ( const Vector &vecPoint )
 {
 	float flFace;
 

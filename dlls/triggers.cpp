@@ -272,7 +272,7 @@ public:
 	void EXPORT ManagerReport();
 #endif
 
-	BOOL		HasTarget( string_t targetname ) override;
+	bool		HasTarget( string_t targetname ) override;
 	
 	int ObjectCaps() override { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
@@ -287,8 +287,8 @@ public:
 	int		m_iTargetName	[ MAX_MULTI_TARGETS ];// list if indexes into global string array
 	float	m_flTargetDelay [ MAX_MULTI_TARGETS ];// delay (in seconds) from time of manager fire to target fire
 private:
-	inline BOOL IsClone() { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? true : false; }
-	inline BOOL ShouldClone() 
+	inline bool IsClone() { return (pev->spawnflags & SF_MULTIMAN_CLONE) ? true : false; }
+	inline bool ShouldClone()
 	{ 
 		if ( IsClone() )
 			return false;
@@ -372,7 +372,7 @@ void CMultiManager :: Spawn()
 }
 
 
-BOOL CMultiManager::HasTarget( string_t targetname )
+bool CMultiManager::HasTarget( string_t targetname )
 { 
 	for ( int i = 0; i < m_cTargets; i++ )
 		if ( FStrEq(STRING(targetname), STRING(m_iTargetName[i])) )

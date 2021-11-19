@@ -72,7 +72,7 @@ int CGlock::GetItemInfo(ItemInfo *p)
 	return 1;
 }
 
-BOOL CGlock::Deploy( )
+bool CGlock::Deploy( )
 {
 	// pev->body = 1;
 	return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded" );
@@ -88,7 +88,7 @@ void CGlock::PrimaryAttack()
 	GlockFire( 0.01, 0.3, true );
 }
 
-void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
+void CGlock::GlockFire( float flSpread , float flCycleTime, bool fUseAutoAim )
 {
 	if (m_iClip <= 0)
 	{
@@ -230,7 +230,7 @@ class CGlockAmmo : public CBasePlayerAmmo
 		PRECACHE_MODEL ("models/w_9mmclip.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) override
+	bool AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		if (pOther->GiveAmmo( AMMO_GLOCKCLIP_GIVE, "9mm", _9MM_MAX_CARRY ) != -1)
 		{

@@ -236,7 +236,7 @@ int CSatchel::GetItemInfo(ItemInfo *p)
 
 //=========================================================
 //=========================================================
-BOOL CSatchel::IsUseable()
+bool CSatchel::IsUseable()
 {
 	if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] > 0 ) 
 	{
@@ -253,7 +253,7 @@ BOOL CSatchel::IsUseable()
 	return false;
 }
 
-BOOL CSatchel::CanDeploy()
+bool CSatchel::CanDeploy()
 {
 	if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] > 0 ) 
 	{
@@ -270,7 +270,7 @@ BOOL CSatchel::CanDeploy()
 	return false;
 }
 
-BOOL CSatchel::Deploy( )
+bool CSatchel::Deploy( )
 {
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;
 	//m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat( m_pPlayer->random_seed, 10, 15 );

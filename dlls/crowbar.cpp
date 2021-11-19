@@ -70,7 +70,7 @@ int CCrowbar::GetItemInfo(ItemInfo *p)
 
 
 
-BOOL CCrowbar::Deploy( )
+bool CCrowbar::Deploy( )
 {
 	return DefaultDeploy( "models/v_crowbar.mdl", "models/p_crowbar.mdl", CROWBAR_DRAW, "crowbar" );
 }

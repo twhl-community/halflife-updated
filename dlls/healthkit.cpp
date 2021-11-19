@@ -26,7 +26,7 @@ class CHealthKit : public CItem
 {
 	void Spawn() override;
 	void Precache() override;
-	BOOL MyTouch( CBasePlayer *pPlayer ) override;
+	bool MyTouch( CBasePlayer *pPlayer ) override;
 
 /*
 	int		Save( CSave &save ) override; 
@@ -64,7 +64,7 @@ void CHealthKit::Precache()
 	PRECACHE_SOUND("items/smallmedkit1.wav");
 }
 
-BOOL CHealthKit::MyTouch( CBasePlayer *pPlayer )
+bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 {
 	if ( pPlayer->pev->deadflag != DEAD_NO )
 	{

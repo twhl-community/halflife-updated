@@ -79,7 +79,7 @@ ClientConnect
 called when a player connects to a server
 ============
 */
-BOOL ClientConnect( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ]  )
+qboolean ClientConnect( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ]  )
 {	
 	return g_pGameRules->ClientConnected( pEntity, pszName, pszAddress, szRejectReason );
 
@@ -144,7 +144,7 @@ void ClientDisconnect( edict_t *pEntity )
 
 
 // called by ClientKill and DeadThink
-void respawn(entvars_t* pev, BOOL fCopyCorpse)
+void respawn(entvars_t* pev, bool fCopyCorpse)
 {
 	if (gpGlobals->coop || gpGlobals->deathmatch)
 	{

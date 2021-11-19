@@ -207,7 +207,7 @@ void CMultiSource::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 }
 
 
-BOOL CMultiSource::IsTriggered( CBaseEntity * )
+bool CMultiSource::IsTriggered( CBaseEntity * )
 {
 	// Is everything triggered?
 	int i = 0;

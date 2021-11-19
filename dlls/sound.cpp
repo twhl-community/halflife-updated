@@ -842,7 +842,7 @@ void CEnvSound :: KeyValue( KeyValueData *pkvd )
 // returns true if the given sound entity (pev) is in range 
 // and can see the given player entity (pevTarget)
 
-BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange) 
+bool FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange)
 {
 	CEnvSound *pSound = GetClassPtr( (CEnvSound *)pev );
 	Vector vecSpot1 = pev->origin + pev->view_ofs;

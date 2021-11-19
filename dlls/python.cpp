@@ -84,7 +84,7 @@ void CPython::Precache()
 	m_usFirePython = PRECACHE_EVENT( 1, "events/python.sc" );
 }
 
-BOOL CPython::Deploy( )
+bool CPython::Deploy( )
 {
 #ifdef CLIENT_DLL
 	if ( bIsMultiplayer() )
@@ -276,7 +276,7 @@ class CPythonAmmo : public CBasePlayerAmmo
 		PRECACHE_MODEL ("models/w_357ammobox.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) override
+	bool AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		if (pOther->GiveAmmo( AMMO_357BOX_GIVE, "357", _357_MAX_CARRY ) != -1)
 		{

@@ -65,11 +65,11 @@ public:
 	// Bmodels don't go across transitions
 	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	inline BOOL IsActive() { return (pev->spawnflags & SF_TANK_ACTIVE)?true:false; }
+	inline bool IsActive() { return (pev->spawnflags & SF_TANK_ACTIVE)?true:false; }
 	inline void TankActivate() { pev->spawnflags |= SF_TANK_ACTIVE; pev->nextthink = pev->ltime + 0.1; m_fireLast = 0; }
 	inline void TankDeactivate() { pev->spawnflags &= ~SF_TANK_ACTIVE; m_fireLast = 0; StopRotSound(); }
-	inline BOOL CanFire() { return (gpGlobals->time - m_lastSightTime) < m_persist; }
-	BOOL		InRange( float range );
+	inline bool CanFire() { return (gpGlobals->time - m_lastSightTime) < m_persist; }
+	bool		InRange( float range );
 
 	// Acquire a target.  pPlayer is a player in the PVS
 	edict_t		*FindTarget( edict_t *pPlayer );
@@ -89,8 +89,8 @@ public:
 	int	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	BOOL OnControls( entvars_t *pevTest ) override;
-	BOOL StartControl( CBasePlayer* pController );
+	bool OnControls( entvars_t *pevTest ) override;
+	bool StartControl( CBasePlayer* pController );
 	void StopControl();
 	void ControllerPostFrame();
 
@@ -326,7 +326,7 @@ void CFuncTank :: KeyValue( KeyValueData *pkvd )
 
 //==================================================================================
 // TANK CONTROLLING
-BOOL CFuncTank :: OnControls( entvars_t *pevTest )
+bool CFuncTank :: OnControls( entvars_t *pevTest )
 {
 	if ( !(pev->spawnflags & SF_TANK_CANCONTROL) )
 		return false;
@@ -339,7 +339,7 @@ BOOL CFuncTank :: OnControls( entvars_t *pevTest )
 	return false;
 }
 
-BOOL CFuncTank :: StartControl( CBasePlayer *pController )
+bool CFuncTank :: StartControl( CBasePlayer *pController )
 {
 	if ( m_pController != NULL )
 		return false;
@@ -459,7 +459,7 @@ edict_t *CFuncTank :: FindTarget( edict_t *pPlayer )
 
 
 
-BOOL CFuncTank :: InRange( float range )
+bool CFuncTank :: InRange( float range )
 {
 	if ( range < m_minRange )
 		return false;

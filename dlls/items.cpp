@@ -182,7 +182,7 @@ class CItemSuit : public CItem
 	{
 		PRECACHE_MODEL ("models/w_suit.mdl");
 	}
-	BOOL MyTouch( CBasePlayer *pPlayer ) override
+	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
 		if ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) )
 			return false;
@@ -214,7 +214,7 @@ class CItemBattery : public CItem
 		PRECACHE_MODEL ("models/w_battery.mdl");
 		PRECACHE_SOUND( "items/gunpickup2.wav" );
 	}
-	BOOL MyTouch( CBasePlayer *pPlayer ) override
+	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
 		if ( pPlayer->pev->deadflag != DEAD_NO )
 		{
@@ -269,7 +269,7 @@ class CItemAntidote : public CItem
 	{
 		PRECACHE_MODEL ("models/w_antidote.mdl");
 	}
-	BOOL MyTouch( CBasePlayer *pPlayer ) override
+	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
 		pPlayer->SetSuitUpdate("!HEV_DET4", false, SUIT_NEXT_IN_1MIN);
 		
@@ -293,7 +293,7 @@ class CItemSecurity : public CItem
 	{
 		PRECACHE_MODEL ("models/w_security.mdl");
 	}
-	BOOL MyTouch( CBasePlayer *pPlayer ) override
+	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
 		pPlayer->m_rgItems[ITEM_SECURITY] += 1;
 		return true;
@@ -314,7 +314,7 @@ class CItemLongJump : public CItem
 	{
 		PRECACHE_MODEL ("models/w_longjump.mdl");
 	}
-	BOOL MyTouch( CBasePlayer *pPlayer ) override
+	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
 		if ( pPlayer->m_fLongJump )
 		{

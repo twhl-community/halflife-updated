@@ -646,7 +646,7 @@ void CTalkMonster :: Killed( entvars_t *pevAttacker, int iGib )
 
 
 
-CBaseEntity	*CTalkMonster::EnumFriends( CBaseEntity *pPrevious, int listNumber, BOOL bTrace )
+CBaseEntity	*CTalkMonster::EnumFriends( CBaseEntity *pPrevious, int listNumber, bool bTrace )
 {
 	CBaseEntity *pFriend = pPrevious;
 	const char *pszFriend;
@@ -799,7 +799,7 @@ void CTalkMonster :: TalkInit()
 // Scan for nearest, visible friend. If fPlayer is true, look for
 // nearest player
 //=========================================================
-CBaseEntity *CTalkMonster :: FindNearestFriend(BOOL fPlayer)
+CBaseEntity *CTalkMonster :: FindNearestFriend(bool fPlayer)
 {
 	CBaseEntity *pFriend = NULL;
 	CBaseEntity *pNearest = NULL;
@@ -946,7 +946,7 @@ int CTalkMonster :: FOkToSpeak()
 }
 
 
-int CTalkMonster::CanPlaySentence( BOOL fDisregardState ) 
+int CTalkMonster::CanPlaySentence(bool fDisregardState )
 { 
 	if ( fDisregardState )
 		return CBaseMonster::CanPlaySentence( fDisregardState );
@@ -1136,7 +1136,7 @@ int CTalkMonster :: FIdleSpeak ()
 	return false;
 }
 
-void CTalkMonster::PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener )
+void CTalkMonster::PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity *pListener )
 {
 	if ( !bConcurrent )
 		ShutUpFriends();
@@ -1308,7 +1308,7 @@ Schedule_t* CTalkMonster :: GetScheduleOfType ( int Type )
 //=========================================================
 // IsTalking - am I saying a sentence right now?
 //=========================================================
-BOOL CTalkMonster :: IsTalking()
+bool CTalkMonster :: IsTalking()
 {
 	if ( m_flStopTalkTime > gpGlobals->time )
 	{
@@ -1361,7 +1361,7 @@ int CTalkMonster::IRelationship( CBaseEntity *pTarget )
 }
 
 
-void CTalkMonster::StopFollowing( BOOL clearSchedule )
+void CTalkMonster::StopFollowing(bool clearSchedule )
 {
 	if ( IsFollowing() )
 	{
@@ -1398,7 +1398,7 @@ void CTalkMonster::StartFollowing( CBaseEntity *pLeader )
 }
 
 
-BOOL CTalkMonster::CanFollow()
+bool CTalkMonster::CanFollow()
 {
 	if ( m_MonsterState == MONSTERSTATE_SCRIPT )
 	{

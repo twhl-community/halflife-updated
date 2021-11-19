@@ -151,7 +151,7 @@ void CCineMonster :: Spawn()
 // FCanOverrideState - returns false, scripted sequences 
 // cannot possess entities regardless of state.
 //=========================================================
-BOOL CCineMonster :: FCanOverrideState()
+bool CCineMonster :: FCanOverrideState()
 {
 	if ( pev->spawnflags & SF_SCRIPT_OVERRIDESTATE )
 		return true;
@@ -162,7 +162,7 @@ BOOL CCineMonster :: FCanOverrideState()
 // FCanOverrideState - returns true because scripted AI can
 // possess entities regardless of their state.
 //=========================================================
-BOOL CCineAI :: FCanOverrideState()
+bool CCineAI :: FCanOverrideState()
 {
 	return true;
 }
@@ -262,7 +262,7 @@ void CCineMonster :: Pain()
 //
 
 // find a viable entity
-int CCineMonster :: FindEntity()
+bool CCineMonster :: FindEntity()
 {
 	edict_t *pentTarget;
 
@@ -483,7 +483,7 @@ void CCineMonster :: CineThink()
 
 
 // lookup a sequence name and setup the target monster to play it
-BOOL CCineMonster :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL completeOnEmpty )
+bool CCineMonster :: StartSequence( CBaseMonster *pTarget, int iszSeq, bool completeOnEmpty )
 {
 	if ( !iszSeq && completeOnEmpty )
 	{
@@ -517,7 +517,7 @@ BOOL CCineMonster :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL comp
 // lookup a sequence name and setup the target monster to play it
 // overridden for CCineAI because it's ok for them to not have an animation sequence
 // for the monster to play. For a regular Scripted Sequence, that situation is an error.
-BOOL CCineAI :: StartSequence( CBaseMonster *pTarget, int iszSeq, BOOL completeOnEmpty )
+bool CCineAI :: StartSequence( CBaseMonster *pTarget, int iszSeq, bool completeOnEmpty )
 {
 	if ( iszSeq == 0 && completeOnEmpty )
 	{
@@ -617,7 +617,7 @@ void CCineAI :: FixScriptMonsterSchedule( CBaseMonster *pMonster )
 	}
 }
 
-BOOL CBaseMonster :: ExitScriptedSequence( )
+bool CBaseMonster :: ExitScriptedSequence( )
 {
 	if ( pev->deadflag == DEAD_DYING )
 	{
@@ -636,7 +636,7 @@ BOOL CBaseMonster :: ExitScriptedSequence( )
 }
 
 
-void CCineMonster::AllowInterrupt( BOOL fAllow )
+void CCineMonster::AllowInterrupt(bool fAllow )
 {
 	if ( pev->spawnflags & SF_SCRIPT_NOINTERRUPT )
 		return;
@@ -644,7 +644,7 @@ void CCineMonster::AllowInterrupt( BOOL fAllow )
 }
 
 
-BOOL CCineMonster::CanInterrupt()
+bool CCineMonster::CanInterrupt()
 {
 	if ( !m_interruptable )
 		return false;
@@ -786,7 +786,7 @@ void CCineMonster :: Activate()
 }
 
 		
-BOOL CBaseMonster :: CineCleanup( )
+bool CBaseMonster :: CineCleanup( )
 {
 	CCineMonster *pOldCine = m_pCine;
 
@@ -928,8 +928,8 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	CBaseMonster *FindEntity();
-	BOOL AcceptableSpeaker( CBaseMonster *pMonster );
-	BOOL StartSentence( CBaseMonster *pTarget );
+	bool AcceptableSpeaker( CBaseMonster *pMonster );
+	bool StartSentence( CBaseMonster *pTarget );
 
 
 private:
@@ -1093,7 +1093,7 @@ void CScriptedSentence :: DelayThink()
 }
 
 
-BOOL CScriptedSentence :: AcceptableSpeaker( CBaseMonster *pMonster )
+bool CScriptedSentence :: AcceptableSpeaker( CBaseMonster *pMonster )
 {
 	if ( pMonster )
 	{
@@ -1153,7 +1153,7 @@ CBaseMonster *CScriptedSentence :: FindEntity()
 }
 
 
-BOOL CScriptedSentence :: StartSentence( CBaseMonster *pTarget )
+bool CScriptedSentence :: StartSentence( CBaseMonster *pTarget )
 {
 	if ( !pTarget )
 	{

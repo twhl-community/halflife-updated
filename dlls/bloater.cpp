@@ -44,8 +44,8 @@ public:
 	void AttackSnd();
 
 	// No range attacks
-	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override { return false; }
-	BOOL CheckRangeAttack2 ( float flDot, float flDist ) override { return false; }
+	bool CheckRangeAttack1 ( float flDot, float flDist ) override { return false; }
+	bool CheckRangeAttack2 ( float flDot, float flDist ) override { return false; }
 	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
 };
 

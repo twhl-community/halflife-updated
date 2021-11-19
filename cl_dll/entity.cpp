@@ -407,7 +407,7 @@ void DLLEXPORT HUD_TempEntUpdate (
 
 	// in order to have tents collide with players, we have to run the player prediction code so
 	// that the client has the player list. We run this code once when we detect any COLLIDEALL 
-	// tent, then set this BOOL to true so the code doesn't get run again if there's more than
+	// tent, then set this bool to true so the code doesn't get run again if there's more than
 	// one COLLIDEALL ent for this update. (often are).
 	gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );
 

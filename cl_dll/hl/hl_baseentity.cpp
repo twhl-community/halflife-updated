@@ -50,8 +50,8 @@ void CBaseEntity::SetObjectCollisionBox() { }
 int	CBaseEntity :: Intersects( CBaseEntity *pOther ) { return 0; }
 void CBaseEntity :: MakeDormant() { }
 int CBaseEntity :: IsDormant() { return 0; }
-BOOL CBaseEntity :: IsInWorld() { return true; }
-int CBaseEntity::ShouldToggle( USE_TYPE useType, BOOL currentState ) { return 0; }
+bool CBaseEntity :: IsInWorld() { return true; }
+int CBaseEntity::ShouldToggle( USE_TYPE useType, bool currentState ) { return 0; }
 int	CBaseEntity :: DamageDecal( int bitsDamageType ) { return -1; }
 CBaseEntity * CBaseEntity::Create( const char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner ) { return NULL; }
 void CBaseEntity::SUB_Remove() { }
@@ -67,7 +67,7 @@ int CBaseAnimating::Save( class CSave & ) { return 1; }
 
 // DEBUG Stubs
 edict_t *DBG_EntOfVars( const entvars_t *pev ) { return NULL; }
-void DBG_AssertFunction(BOOL fExpr,	const char*	szExpr,	const char*	szFile,	int szLine,	const char*	szMessage) { }
+void DBG_AssertFunction(bool fExpr,	const char*	szExpr,	const char*	szFile,	int szLine,	const char*	szMessage) { }
 
 // UTIL_* Stubs
 void UTIL_PrecacheOther( const char *szClassname ) { }
@@ -75,9 +75,9 @@ void UTIL_BloodDrips( const Vector &origin, const Vector &direction, int color, 
 void UTIL_DecalTrace( TraceResult *pTrace, int decalNumber ) { }
 void UTIL_GunshotDecalTrace( TraceResult *pTrace, int decalNumber ) { }
 void UTIL_MakeVectors( const Vector &vecAngles ) { }
-BOOL UTIL_IsValidEntity( edict_t *pent ) { return true; }
+bool UTIL_IsValidEntity( edict_t *pent ) { return true; }
 void UTIL_SetOrigin( entvars_t *, const Vector &org ) { }
-BOOL UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon ) { return true; }
+bool UTIL_GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon ) { return true; }
 void UTIL_LogPrintf(char *,...) { }
 void UTIL_ClientPrintAll( int,char const *,char const *,char const *,char const *,char const *) { }
 void ClientPrint( entvars_t *client, int msg_dest, const char *msg_name, const char *param1, const char *param2, const char *param3, const char *param4 ) { }
@@ -103,7 +103,7 @@ void UTIL_SetSize( entvars_t *pev, const Vector &vecMin, const Vector &vecMax ){
 CBaseEntity *UTIL_FindEntityInSphere( CBaseEntity *pStartEntity, const Vector &vecCenter, float flRadius ){ return 0;}
 
 Vector UTIL_VecToAngles( const Vector &vec ){ return 0; }
-CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, BOOL animate ) { return 0; }
+CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, bool animate ) { return 0; }
 void CBeam::PointEntInit( const Vector &start, int endIndex ) { }
 CBeam *CBeam::BeamCreate( const char *pSpriteName, int width ) { return NULL; }
 void CSprite::Expand( float scaleSpeed, float fadeSpeed ) { }
@@ -111,12 +111,12 @@ void CSprite::Expand( float scaleSpeed, float fadeSpeed ) { }
 
 CBaseEntity* CBaseMonster :: CheckTraceHullAttack( float flDist, int iDamage, int iDmgType ) { return NULL; }
 void CBaseMonster :: Eat ( float flFullDuration ) { }
-BOOL CBaseMonster :: FShouldEat () { return true; }
+bool CBaseMonster :: FShouldEat () { return true; }
 void CBaseMonster :: BarnacleVictimBitten ( entvars_t *pevBarnacle ) { }
 void CBaseMonster :: BarnacleVictimReleased () { }
 void CBaseMonster :: Listen () { }
 float CBaseMonster :: FLSoundVolume ( CSound *pSound ) { return 0.0; }
-BOOL CBaseMonster :: FValidateHintType ( short sHint ) { return false; }
+bool CBaseMonster :: FValidateHintType ( short sHint ) { return false; }
 void CBaseMonster :: Look ( int iDistance ) { }
 int CBaseMonster :: ISoundMask () { return 0; }
 CSound* CBaseMonster :: PBestSound () { return NULL; }
@@ -127,35 +127,35 @@ void CBaseMonster :: MonsterUse ( CBaseEntity *pActivator, CBaseEntity *pCaller,
 int CBaseMonster :: IgnoreConditions () { return 0; }
 void CBaseMonster :: RouteClear () { }
 void CBaseMonster :: RouteNew () { }
-BOOL CBaseMonster :: FRouteClear () { return false; }
-BOOL CBaseMonster :: FRefreshRoute () { return 0; }
-BOOL CBaseMonster::MoveToEnemy( Activity movementAct, float waitTime ) { return false; }
-BOOL CBaseMonster::MoveToLocation( Activity movementAct, float waitTime, const Vector &goal ) { return false; }
-BOOL CBaseMonster::MoveToTarget( Activity movementAct, float waitTime ) { return false; }
-BOOL CBaseMonster::MoveToNode( Activity movementAct, float waitTime, const Vector &goal ) { return false; }
+bool CBaseMonster :: FRouteClear () { return false; }
+bool CBaseMonster :: FRefreshRoute () { return 0; }
+bool CBaseMonster::MoveToEnemy( Activity movementAct, float waitTime ) { return false; }
+bool CBaseMonster::MoveToLocation( Activity movementAct, float waitTime, const Vector &goal ) { return false; }
+bool CBaseMonster::MoveToTarget( Activity movementAct, float waitTime ) { return false; }
+bool CBaseMonster::MoveToNode( Activity movementAct, float waitTime, const Vector &goal ) { return false; }
 int ShouldSimplify( int routeType ) { return true; }
 void CBaseMonster :: RouteSimplify( CBaseEntity *pTargetEnt ) { }
-BOOL CBaseMonster :: FBecomeProne () { return true; }
-BOOL CBaseMonster :: CheckRangeAttack1 ( float flDot, float flDist ) { return false; }
-BOOL CBaseMonster :: CheckRangeAttack2 ( float flDot, float flDist ) { return false; }
-BOOL CBaseMonster :: CheckMeleeAttack1 ( float flDot, float flDist ) { return false; }
-BOOL CBaseMonster :: CheckMeleeAttack2 ( float flDot, float flDist ) { return false; }
+bool CBaseMonster :: FBecomeProne () { return true; }
+bool CBaseMonster :: CheckRangeAttack1 ( float flDot, float flDist ) { return false; }
+bool CBaseMonster :: CheckRangeAttack2 ( float flDot, float flDist ) { return false; }
+bool CBaseMonster :: CheckMeleeAttack1 ( float flDot, float flDist ) { return false; }
+bool CBaseMonster :: CheckMeleeAttack2 ( float flDot, float flDist ) { return false; }
 void CBaseMonster :: CheckAttacks ( CBaseEntity *pTarget, float flDist ) { }
-BOOL CBaseMonster :: FCanCheckAttacks () { return false; }
+bool CBaseMonster :: FCanCheckAttacks () { return false; }
 int CBaseMonster :: CheckEnemy ( CBaseEntity *pEnemy ) { return 0; }
 void CBaseMonster :: PushEnemy( CBaseEntity *pEnemy, Vector &vecLastKnownPos ) { }
-BOOL CBaseMonster :: PopEnemy( ) { return false; }
+bool CBaseMonster :: PopEnemy( ) { return false; }
 void CBaseMonster :: SetActivity ( Activity NewActivity ) { }
 void CBaseMonster :: SetSequenceByName ( const char *szSequence ) { }
 int CBaseMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist ) { return 0; }
 float CBaseMonster :: OpenDoorAndWait( entvars_t *pevDoor ) { return 0.0; }
 void CBaseMonster :: AdvanceRoute ( float distance ) { }
 int CBaseMonster :: RouteClassify( int iMoveFlag ) { return 0; }
-BOOL CBaseMonster :: BuildRoute ( const Vector &vecGoal, int iMoveFlag, CBaseEntity *pTarget ) { return false; }
+bool CBaseMonster :: BuildRoute ( const Vector &vecGoal, int iMoveFlag, CBaseEntity *pTarget ) { return false; }
 void CBaseMonster :: InsertWaypoint ( Vector vecLocation, int afMoveFlags ) { }
-BOOL CBaseMonster :: FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex ) { return false; }
+bool CBaseMonster :: FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex ) { return false; }
 void CBaseMonster :: Move ( float flInterval ) { }
-BOOL CBaseMonster:: ShouldAdvanceRoute( float flWaypointDist ) { return false; }
+bool CBaseMonster:: ShouldAdvanceRoute( float flWaypointDist ) { return false; }
 void CBaseMonster::MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir, float flInterval ) { }
 void CBaseMonster :: MonsterInit () { }
 void CBaseMonster :: MonsterInitThink () { }
@@ -163,13 +163,13 @@ void CBaseMonster :: StartMonster () { }
 void CBaseMonster :: MovementComplete() { }
 int CBaseMonster::TaskIsRunning() { return 0; }
 int CBaseMonster::IRelationship ( CBaseEntity *pTarget ) { return 0; }
-BOOL CBaseMonster :: FindCover ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return false; }
-BOOL CBaseMonster :: BuildNearestRoute ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return false; }
+bool CBaseMonster :: FindCover ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return false; }
+bool CBaseMonster :: BuildNearestRoute ( Vector vecThreat, Vector vecViewOffset, float flMinDist, float flMaxDist ) { return false; }
 CBaseEntity *CBaseMonster :: BestVisibleEnemy () { return NULL; }
-BOOL CBaseMonster :: FInViewCone ( CBaseEntity *pEntity ) { return false; }
-BOOL CBaseMonster :: FInViewCone ( Vector *pOrigin ) { return false; }
-BOOL CBaseEntity :: FVisible ( CBaseEntity *pEntity ) { return false; }
-BOOL CBaseEntity :: FVisible ( const Vector &vecOrigin ) { return false; }
+bool CBaseMonster :: FInViewCone ( CBaseEntity *pEntity ) { return false; }
+bool CBaseMonster :: FInViewCone ( Vector *pOrigin ) { return false; }
+bool CBaseEntity :: FVisible ( CBaseEntity *pEntity ) { return false; }
+bool CBaseEntity :: FVisible ( const Vector &vecOrigin ) { return false; }
 void CBaseMonster :: MakeIdealYaw( Vector vecTarget ) { }
 float	CBaseMonster::FlYawDiff () { return 0.0; }
 float CBaseMonster::ChangeYaw ( int yawSpeed ) { return 0; }
@@ -179,7 +179,7 @@ int CBaseAnimating :: LookupActivityHeaviest ( int activity ) { return 0; }
 void CBaseMonster :: SetEyePosition () { }
 int CBaseAnimating :: LookupSequence ( const char *label ) { return 0; }
 void CBaseAnimating :: ResetSequenceInfo ( ) { }
-BOOL CBaseAnimating :: GetSequenceFlags( ) { return false; }
+int CBaseAnimating :: GetSequenceFlags( ) { return false; }
 void CBaseAnimating :: DispatchAnimEvents ( float flInterval ) { }
 void CBaseMonster :: HandleAnimEvent( MonsterEvent_t *pEvent ) { }
 float CBaseAnimating :: SetBoneController ( int iController, float flValue ) { return 0.0; }
@@ -196,32 +196,32 @@ void CBaseEntity::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vec
 void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t *pevAttacker ) { }
 void CBaseEntity :: TraceBleed( float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType ) { }
 void CBaseMonster :: MakeDamageBloodDecal ( int cCount, float flNoise, TraceResult *ptr, const Vector &vecDir ) { }
-BOOL CBaseMonster :: FGetNodeRoute ( Vector vecDest ) { return true; }
+bool CBaseMonster :: FGetNodeRoute ( Vector vecDest ) { return true; }
 int CBaseMonster :: FindHintNode () { return NO_NODE; }
 void CBaseMonster::ReportAIState() { }
 void CBaseMonster :: KeyValue( KeyValueData *pkvd ) { }
-BOOL CBaseMonster :: FCheckAITrigger () { return false; }
-int CBaseMonster :: CanPlaySequence( BOOL fDisregardMonsterState, int interruptLevel ) { return false; }
-BOOL CBaseMonster :: FindLateralCover ( const Vector &vecThreat, const Vector &vecViewOffset ) { return false; }
+bool CBaseMonster :: FCheckAITrigger () { return false; }
+int CBaseMonster :: CanPlaySequence(bool fDisregardMonsterState, int interruptLevel ) { return false; }
+bool CBaseMonster :: FindLateralCover ( const Vector &vecThreat, const Vector &vecViewOffset ) { return false; }
 Vector CBaseMonster :: ShootAtEnemy( const Vector &shootOrigin ) { return g_vecZero; }
-BOOL CBaseMonster :: FacingIdeal() { return false; }
-BOOL CBaseMonster :: FCanActiveIdle () { return false; }
+bool CBaseMonster :: FacingIdeal() { return false; }
+bool CBaseMonster :: FCanActiveIdle () { return false; }
 void CBaseMonster::PlaySentence( const char *pszSentence, float duration, float volume, float attenuation ) { }
-void CBaseMonster::PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, BOOL bConcurrent, CBaseEntity *pListener ) { }
+void CBaseMonster::PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity *pListener ) { }
 void CBaseMonster::SentenceStop() { }
 void CBaseMonster::CorpseFallThink() { }
 void CBaseMonster :: MonsterInitDead() { }
-BOOL CBaseMonster :: BBoxFlat () { return true; }
-BOOL CBaseMonster :: GetEnemy () { return false; }
+bool CBaseMonster :: BBoxFlat () { return true; }
+bool CBaseMonster :: GetEnemy () { return false; }
 void CBaseMonster :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) { }
 CBaseEntity* CBaseMonster :: DropItem ( const char *pszItemName, const Vector &vecPos, const Vector &vecAng ) { return NULL; }
-BOOL CBaseMonster :: ShouldFadeOnDeath() { return false; }
+bool CBaseMonster :: ShouldFadeOnDeath() { return false; }
 void CBaseMonster :: RadiusDamage(entvars_t* pevInflictor, entvars_t*	pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType ) { }
 void CBaseMonster :: RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType ) { }
 void CBaseMonster::FadeMonster() { }
 void CBaseMonster :: GibMonster() { }
-BOOL CBaseMonster :: HasHumanGibs() { return false; }
-BOOL CBaseMonster :: HasAlienGibs() { return false; }
+bool CBaseMonster :: HasHumanGibs() { return false; }
+bool CBaseMonster :: HasAlienGibs() { return false; }
 Activity CBaseMonster :: GetDeathActivity () { return ACT_DIE_HEADSHOT; }
 MONSTERSTATE CBaseMonster :: GetIdealState () { return MONSTERSTATE_ALERT; }
 Schedule_t* CBaseMonster :: GetScheduleOfType ( int Type ) { return NULL; }
@@ -243,10 +243,10 @@ int CBasePlayer :: TakeHealth( float flHealth, int bitsDamageType ) { return 0; 
 void CBasePlayer :: TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) { }
 int CBasePlayer :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) { return 0; }
 void CBasePlayer::PackDeadPlayerItems() { }
-void CBasePlayer::RemoveAllItems( BOOL removeSuit ) { }
+void CBasePlayer::RemoveAllItems(bool removeSuit ) { }
 void CBasePlayer::SetAnimation( PLAYER_ANIM playerAnim ) { }
 void CBasePlayer::WaterMove() { }
-BOOL CBasePlayer::IsOnLadder() { return false; }
+bool CBasePlayer::IsOnLadder() { return false; }
 void CBasePlayer::PlayerDeathThink() { }
 void CBasePlayer::StartDeathCam() { }
 void CBasePlayer::StartObserver( Vector vecPosition, Vector vecViewAngle ) { }
@@ -266,40 +266,40 @@ int CBasePlayer::Save( CSave &save ) { return 0; }
 void CBasePlayer::RenewItems() { }
 int CBasePlayer::Restore( CRestore &restore ) { return 0; }
 void CBasePlayer::SelectNextItem( int iItem ) { }
-BOOL CBasePlayer::HasWeapons() { return false; }
+bool CBasePlayer::HasWeapons() { return false; }
 void CBasePlayer::SelectPrevItem( int iItem ) { }
-BOOL CBasePlayer :: FlashlightIsOn() { return false; }
+bool CBasePlayer :: FlashlightIsOn() { return false; }
 void CBasePlayer :: FlashlightTurnOn() { }
 void CBasePlayer :: FlashlightTurnOff() { }
 void CBasePlayer :: ForceClientDllUpdate() { }
 void CBasePlayer::ImpulseCommands( ) { }
 void CBasePlayer::CheatImpulseCommands( int iImpulse ) { }
-int CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem ) { return false; }
-int CBasePlayer::RemovePlayerItem( CBasePlayerItem *pItem ) { return false; }
+bool CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem ) { return false; }
+bool CBasePlayer::RemovePlayerItem( CBasePlayerItem *pItem ) { return false; }
 void CBasePlayer::ItemPreFrame() { }
 void CBasePlayer::ItemPostFrame() { }
 int CBasePlayer::AmmoInventory( int iAmmoIndex ) { return -1; }
 int CBasePlayer::GetAmmoIndex(const char *psz) { return -1; }
 void CBasePlayer::SendAmmoUpdate() { }
 void CBasePlayer :: UpdateClientData() { }
-BOOL CBasePlayer :: FBecomeProne () { return true; }
+bool CBasePlayer :: FBecomeProne () { return true; }
 void CBasePlayer :: BarnacleVictimBitten ( entvars_t *pevBarnacle ) { }
 void CBasePlayer :: BarnacleVictimReleased () { }
 int CBasePlayer :: Illumination() { return 0; }
-void CBasePlayer :: EnableControl(BOOL fControl) { }
+void CBasePlayer :: EnableControl(bool fControl) { }
 Vector CBasePlayer :: GetAutoaimVector( float flDelta ) { return g_vecZero; }
 Vector CBasePlayer :: AutoaimDeflection( Vector &vecSrc, float flDist, float flDelta  ) { return g_vecZero; }
 void CBasePlayer :: ResetAutoaim( ) { }
 void CBasePlayer :: SetCustomDecalFrames( int nFrames ) { }
 int CBasePlayer :: GetCustomDecalFrames() { return -1; }
 void CBasePlayer::DropPlayerItem ( char *pszItemName ) { }
-BOOL CBasePlayer::HasPlayerItem( CBasePlayerItem *pCheckItem ) { return false; }
-BOOL CBasePlayer :: SwitchWeapon( CBasePlayerItem *pWeapon )  { return false; }
+bool CBasePlayer::HasPlayerItem( CBasePlayerItem *pCheckItem ) { return false; }
+bool CBasePlayer :: SwitchWeapon( CBasePlayerItem *pWeapon )  { return false; }
 Vector CBasePlayer :: GetGunPosition() { return g_vecZero; }
 const char *CBasePlayer::TeamID() { return ""; }
 int CBasePlayer :: GiveAmmo( int iCount, const char *szName, int iMax ) { return 0; }
-void CBasePlayer::AddPoints( int score, BOOL bAllowNegativeScore ) { } 
-void CBasePlayer::AddPointsToTeam( int score, BOOL bAllowNegativeScore ) { } 
+void CBasePlayer::AddPoints( int score, bool bAllowNegativeScore ) { }
+void CBasePlayer::AddPointsToTeam( int score, bool bAllowNegativeScore ) { }
 void CBasePlayer::TabulateAmmo() {}
 
 void ClearMultiDamage() { }
@@ -331,9 +331,9 @@ void CBasePlayerItem::AttachToPlayer ( CBasePlayer *pPlayer ) { }
 int CBasePlayerWeapon::AddDuplicate( CBasePlayerItem *pOriginal ) { return 0; }
 int CBasePlayerWeapon::AddToPlayer( CBasePlayer *pPlayer ) { return false; }
 int CBasePlayerWeapon::UpdateClientData( CBasePlayer *pPlayer ) { return 0; }
-BOOL CBasePlayerWeapon :: AddPrimaryAmmo( int iCount, char *szName, int iMaxClip, int iMaxCarry ) { return true; }
-BOOL CBasePlayerWeapon :: AddSecondaryAmmo( int iCount, char *szName, int iMax ) { return true; }
-BOOL CBasePlayerWeapon :: IsUseable() { return true; }
+bool CBasePlayerWeapon :: AddPrimaryAmmo( int iCount, char *szName, int iMaxClip, int iMaxCarry ) { return true; }
+bool CBasePlayerWeapon :: AddSecondaryAmmo( int iCount, char *szName, int iMax ) { return true; }
+bool CBasePlayerWeapon :: IsUseable() { return true; }
 int CBasePlayerWeapon::PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
 int CBasePlayerWeapon::SecondaryAmmoIndex() {	return m_iSecondaryAmmoType; }
 void CBasePlayerAmmo::Spawn() { }

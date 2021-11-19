@@ -384,7 +384,7 @@ public:
 	void	EXPORT StrikeUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void	EXPORT ToggleUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	
-	inline BOOL ServerSide()
+	inline bool ServerSide()
 	{
 		if ( m_life == 0 && !(pev->spawnflags & SF_BEAM_RING) )
 			return true;
@@ -1227,7 +1227,7 @@ void CSprite::SpriteInit( const char *pSpriteName, const Vector &origin )
 	Spawn();
 }
 
-CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, BOOL animate )
+CSprite *CSprite::SpriteCreate( const char *pSpriteName, const Vector &origin, bool animate )
 {
 	CSprite *pSprite = GetClassPtr( (CSprite *)NULL );
 	pSprite->SpriteInit( pSpriteName, origin );

@@ -51,7 +51,7 @@ void CSound :: Reset ()
 //=========================================================
 // FIsSound - returns true if the sound is an Audible sound
 //=========================================================
-BOOL CSound :: FIsSound ()
+bool CSound :: FIsSound ()
 {
 	if ( m_iType & ( bits_SOUND_COMBAT | bits_SOUND_WORLD | bits_SOUND_PLAYER | bits_SOUND_DANGER ) )
 	{
@@ -64,7 +64,7 @@ BOOL CSound :: FIsSound ()
 //=========================================================
 // FIsScent - returns true if the sound is actually a scent
 //=========================================================
-BOOL CSound :: FIsScent ()
+bool CSound :: FIsScent ()
 {
 	if ( m_iType & ( bits_SOUND_CARCASS | bits_SOUND_MEAT | bits_SOUND_GARBAGE ) )
 	{

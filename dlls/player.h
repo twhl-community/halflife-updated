@@ -215,12 +215,12 @@ public:
 	Vector BodyTarget( const Vector &posSrc ) override { return Center( ) + pev->view_ofs * RANDOM_FLOAT( 0.5, 1.1 ); }		// position to shoot at
 	void StartSneaking() override { m_tSneaking = gpGlobals->time - 1; }
 	void StopSneaking() override { m_tSneaking = gpGlobals->time + 30; }
-	BOOL IsSneaking() override { return m_tSneaking <= gpGlobals->time; }
-	BOOL IsAlive() override { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
-	BOOL ShouldFadeOnDeath() override { return false; }
-	BOOL IsPlayer() override { return true; }			// Spectators should return false for this, they aren't "players" as far as game logic is concerned
+	bool IsSneaking() override { return m_tSneaking <= gpGlobals->time; }
+	bool IsAlive() override { return (pev->deadflag == DEAD_NO) && pev->health > 0; }
+	bool ShouldFadeOnDeath() override { return false; }
+	bool IsPlayer() override { return true; }			// Spectators should return false for this, they aren't "players" as far as game logic is concerned
 
-	BOOL IsNetClient() override { return true; }		// Bots should return false for this, they can't receive NET messages
+	bool IsNetClient() override { return true; }		// Bots should return false for this, they can't receive NET messages
 															// Spectators should return true for this
 	const char *TeamID() override;
 
@@ -228,8 +228,8 @@ public:
 	int		Restore( CRestore &restore ) override;
 	void RenewItems();
 	void PackDeadPlayerItems();
-	void RemoveAllItems( BOOL removeSuit );
-	BOOL SwitchWeapon( CBasePlayerItem *pWeapon );
+	void RemoveAllItems(bool removeSuit );
+	bool SwitchWeapon( CBasePlayerItem *pWeapon );
 
 	// JOHN:  sends custom messages if player HUD data has changed  (eg health, ammo)
 	virtual void UpdateClientData();
@@ -239,8 +239,8 @@ public:
 	// Player is moved across the transition by other means
 	int		ObjectCaps() override { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	void	Precache() override;
-	BOOL			IsOnLadder();
-	BOOL			FlashlightIsOn();
+	bool			IsOnLadder();
+	bool			FlashlightIsOn();
 	void			FlashlightTurnOn();
 	void			FlashlightTurnOff();
 	
@@ -259,14 +259,14 @@ public:
 	void StartDeathCam();
 	void StartObserver( Vector vecPosition, Vector vecViewAngle );
 
-	void AddPoints( int score, BOOL bAllowNegativeScore ) override;
-	void AddPointsToTeam( int score, BOOL bAllowNegativeScore ) override;
-	BOOL AddPlayerItem( CBasePlayerItem *pItem ) override;
-	BOOL RemovePlayerItem( CBasePlayerItem *pItem ) override;
+	void AddPoints( int score, bool bAllowNegativeScore ) override;
+	void AddPointsToTeam( int score, bool bAllowNegativeScore ) override;
+	bool AddPlayerItem( CBasePlayerItem *pItem ) override;
+	bool RemovePlayerItem( CBasePlayerItem *pItem ) override;
 	void DropPlayerItem ( char *pszItemName );
-	BOOL HasPlayerItem( CBasePlayerItem *pCheckItem );
-	BOOL HasNamedPlayerItem( const char *pszItemName );
-	BOOL HasWeapons();// do I have ANY weapons?
+	bool HasPlayerItem( CBasePlayerItem *pCheckItem );
+	bool HasNamedPlayerItem( const char *pszItemName );
+	bool HasWeapons();// do I have ANY weapons?
 	void SelectPrevItem( int iItem );
 	void SelectNextItem( int iItem );
 	void SelectLastItem();
@@ -274,7 +274,7 @@ public:
 	void ItemPreFrame();
 	void ItemPostFrame();
 	void GiveNamedItem( const char *szName );
-	void EnableControl(BOOL fControl);
+	void EnableControl(bool fControl);
 
 	int  GiveAmmo( int iAmount, const char *szName, int iMax ) override;
 	void SendAmmoUpdate();
@@ -288,7 +288,7 @@ public:
 	void UpdateGeigerCounter();
 	void CheckTimeBasedDamage();
 
-	BOOL FBecomeProne () override;
+	bool FBecomeProne () override;
 	void BarnacleVictimBitten ( entvars_t *pevBarnacle ) override;
 	void BarnacleVictimReleased () override;
 	static int GetAmmoIndex(const char *psz);

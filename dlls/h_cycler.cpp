@@ -40,7 +40,7 @@ public:
 	void Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
 	// Don't treat as a live target
-	BOOL IsAlive() override { return false; }
+	bool IsAlive() override { return false; }
 
 	int		Save( CSave &save ) override;
 	int		Restore( CRestore &restore ) override;
@@ -307,7 +307,7 @@ public:
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	BOOL Deploy() override;
+	bool Deploy() override;
 	void Holster() override;
 	int m_iszModel;
 	int m_iModel;
@@ -332,7 +332,7 @@ void CWeaponCycler::Spawn( )
 
 
 
-BOOL CWeaponCycler::Deploy( )
+bool CWeaponCycler::Deploy( )
 {
 	m_pPlayer->pev->viewmodel = m_iszModel;
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.0;

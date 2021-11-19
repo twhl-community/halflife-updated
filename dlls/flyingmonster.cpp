@@ -58,7 +58,7 @@ int CFlyingMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vec
 }
 
 
-BOOL CFlyingMonster :: FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex )
+bool CFlyingMonster :: FTriangulate ( const Vector &vecStart , const Vector &vecEnd, float flDist, CBaseEntity *pTargetEnt, Vector *pApex )
 {
 	return CBaseMonster::FTriangulate( vecStart, vecEnd, flDist, pTargetEnt, pApex );
 }
@@ -160,7 +160,7 @@ void CFlyingMonster :: Move( float flInterval )
 }
 
 
-BOOL CFlyingMonster:: ShouldAdvanceRoute( float flWaypointDist )
+bool CFlyingMonster:: ShouldAdvanceRoute( float flWaypointDist )
 {
 	// Get true 3D distance to the goal so we actually reach the correct height
 	if ( m_Route[ m_iRouteIndex ].iType & bits_MF_IS_GOAL )
@@ -233,7 +233,7 @@ float CFlyingMonster::CeilingZ( const Vector &position )
 	return maxUp.z;
 }
 
-BOOL CFlyingMonster::ProbeZ( const Vector &position, const Vector &probe, float *pFraction)
+bool CFlyingMonster::ProbeZ( const Vector &position, const Vector &probe, float *pFraction)
 {
 	int conPosition = UTIL_PointContents(position);
 	if ( (((pev->flags) & FL_SWIM) == FL_SWIM) ^ (conPosition == CONTENTS_WATER))

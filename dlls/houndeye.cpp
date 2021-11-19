@@ -91,9 +91,9 @@ public:
 	void PrescheduleThink() override;
 	void SetActivity ( Activity NewActivity ) override;
 	void WriteBeamColor ();
-	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
-	BOOL FValidateHintType ( short sHint ) override;
-	BOOL FCanActiveIdle () override;
+	bool CheckRangeAttack1 ( float flDot, float flDist ) override;
+	bool FValidateHintType ( short sHint ) override;
+	bool FCanActiveIdle () override;
 	Schedule_t *GetScheduleOfType ( int Type ) override;
 	Schedule_t *GetSchedule() override;
 
@@ -132,7 +132,7 @@ int	CHoundeye :: Classify ()
 //=========================================================
 //  FValidateHintType 
 //=========================================================
-BOOL CHoundeye :: FValidateHintType ( short sHint )
+bool CHoundeye :: FValidateHintType ( short sHint )
 {
 	int i;
 
@@ -160,7 +160,7 @@ BOOL CHoundeye :: FValidateHintType ( short sHint )
 //=========================================================
 // FCanActiveIdle
 //=========================================================
-BOOL CHoundeye :: FCanActiveIdle ()
+bool CHoundeye :: FCanActiveIdle ()
 {
 	if ( InSquad() )
 	{
@@ -189,7 +189,7 @@ BOOL CHoundeye :: FCanActiveIdle ()
 // try to get within half of their max attack radius before
 // attacking, so as to increase their chances of doing damage.
 //=========================================================
-BOOL CHoundeye :: CheckRangeAttack1 ( float flDot, float flDist )
+bool CHoundeye :: CheckRangeAttack1 ( float flDot, float flDist )
 {
 	if ( flDist <= ( HOUNDEYE_MAX_ATTACK_RADIUS * 0.5 ) && flDot >= 0.3 )
 	{

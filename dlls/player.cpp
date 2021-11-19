@@ -716,7 +716,7 @@ void CBasePlayer::PackDeadPlayerItems()
 	RemoveAllItems( true );// now strip off everything that wasn't handled by the code above.
 }
 
-void CBasePlayer::RemoveAllItems( BOOL removeSuit )
+void CBasePlayer::RemoveAllItems(bool removeSuit )
 {
 	if (m_pActiveItem)
 	{
@@ -1169,7 +1169,7 @@ void CBasePlayer::WaterMove()
 
 
 // true if the player is attached to a ladder
-BOOL CBasePlayer::IsOnLadder()
+bool CBasePlayer::IsOnLadder()
 { 
 	return ( pev->movetype == MOVETYPE_FLY );
 }
@@ -1596,7 +1596,7 @@ int  CBasePlayer::Classify ()
 }
 
 
-void CBasePlayer::AddPoints( int score, BOOL bAllowNegativeScore )
+void CBasePlayer::AddPoints( int score, bool bAllowNegativeScore )
 {
 	// Positive score always adds
 	if ( score < 0 )
@@ -1625,7 +1625,7 @@ void CBasePlayer::AddPoints( int score, BOOL bAllowNegativeScore )
 }
 
 
-void CBasePlayer::AddPointsToTeam( int score, BOOL bAllowNegativeScore )
+void CBasePlayer::AddPointsToTeam( int score, bool bAllowNegativeScore )
 {
 	int index = entindex();
 
@@ -2646,7 +2646,7 @@ pt_end:
 
 
 // checks if the spot is clear of players
-BOOL IsSpawnPointValid( CBaseEntity *pPlayer, CBaseEntity *pSpot )
+bool IsSpawnPointValid( CBaseEntity *pPlayer, CBaseEntity *pSpot )
 {
 	CBaseEntity *ent = NULL;
 
@@ -3089,7 +3089,7 @@ void CBasePlayer::SelectItem(const char *pstr)
 //==============================================
 // HasWeapons - do I have any weapons at all?
 //==============================================
-BOOL CBasePlayer::HasWeapons()
+bool CBasePlayer::HasWeapons()
 {
 	int i;
 
@@ -3236,7 +3236,7 @@ void CBasePlayer::GiveNamedItem( const char *pszName )
 	DispatchTouch( pent, ENT( pev ) );
 }
 
-BOOL CBasePlayer :: FlashlightIsOn()
+bool CBasePlayer :: FlashlightIsOn()
 {
 	return FBitSet(pev->effects, EF_DIMLIGHT);
 }
@@ -3560,7 +3560,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 //
 // Add a weapon to the player (Item == Weapon == Selectable Object)
 //
-int CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem )
+bool CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem )
 {
 	CBasePlayerItem *pInsert;
 	
@@ -3619,7 +3619,7 @@ int CBasePlayer::AddPlayerItem( CBasePlayerItem *pItem )
 
 
 
-int CBasePlayer::RemovePlayerItem( CBasePlayerItem *pItem )
+bool CBasePlayer::RemovePlayerItem( CBasePlayerItem *pItem )
 {
 	if (m_pActiveItem == pItem)
 	{
@@ -4094,7 +4094,7 @@ void CBasePlayer :: UpdateClientData()
 // FBecomeProne - Overridden for the player to set the proper
 // physics flags when a barnacle grabs player.
 //=========================================================
-BOOL CBasePlayer :: FBecomeProne ()
+bool CBasePlayer :: FBecomeProne ()
 {
 	m_afPhysicsFlags |= PFLAG_ONBARNACLE;
 	return true;
@@ -4135,7 +4135,7 @@ int CBasePlayer :: Illumination()
 }
 
 
-void CBasePlayer :: EnableControl(BOOL fControl)
+void CBasePlayer :: EnableControl(bool fControl)
 {
 	if (!fControl)
 		pev->flags |= FL_FROZEN;
@@ -4514,7 +4514,7 @@ void CBasePlayer::DropPlayerItem ( char *pszItemName )
 //=========================================================
 // HasPlayerItem Does the player already have this item?
 //=========================================================
-BOOL CBasePlayer::HasPlayerItem( CBasePlayerItem *pCheckItem )
+bool CBasePlayer::HasPlayerItem( CBasePlayerItem *pCheckItem )
 {
 	CBasePlayerItem *pItem = m_rgpPlayerItems[pCheckItem->iItemSlot()];
 
@@ -4533,7 +4533,7 @@ BOOL CBasePlayer::HasPlayerItem( CBasePlayerItem *pCheckItem )
 //=========================================================
 // HasNamedPlayerItem Does the player already have this item?
 //=========================================================
-BOOL CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
+bool CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
 {
 	CBasePlayerItem *pItem;
 	int i;
@@ -4558,7 +4558,7 @@ BOOL CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
 //=========================================================
 // 
 //=========================================================
-BOOL CBasePlayer :: SwitchWeapon( CBasePlayerItem *pWeapon ) 
+bool CBasePlayer :: SwitchWeapon( CBasePlayerItem *pWeapon )
 {
 	if (pWeapon && !pWeapon->CanDeploy() )
 	{

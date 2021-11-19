@@ -71,7 +71,7 @@ public:
 
 	MONSTERSTATE GetIdealState () override { return MONSTERSTATE_IDLE; }
 	//TODO: should override base, but has different signature
-	int CanPlaySequence( BOOL fDisregardState ) { return true; }
+	int CanPlaySequence(bool fDisregardState ) { return true; }
 
 	int Classify() override;
 

@@ -58,8 +58,8 @@ public:
 	int		m_iNext;		// index of next sound in this list ( Active or Free )
 	int		m_iNextAudible;	// temporary link that monsters use to build a list of audible sounds
 
-	BOOL	FIsSound();
-	BOOL	FIsScent();
+	bool	FIsSound();
+	bool	FIsScent();
 };
 
 //=========================================================
@@ -83,7 +83,7 @@ public:
 	static CSound*	SoundPointerForIndex( int iIndex );// return a pointer for this index in the sound list
 	static int		ClientSoundIndex ( edict_t *pClient );
 
-	BOOL	IsEmpty() { return m_iActiveSound == SOUNDLIST_EMPTY; }
+	bool	IsEmpty() { return m_iActiveSound == SOUNDLIST_EMPTY; }
 	int		ISoundsInList ( int iListType );
 	int		IAllocSound ();
 	int		ObjectCaps() override { return FCAP_DONT_SAVE; }

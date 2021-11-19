@@ -64,7 +64,7 @@ void CEgon::Precache()
 }
 
 
-BOOL CEgon::Deploy()
+bool CEgon::Deploy()
 {
 	m_deployed = false;
 	m_fireState = FIRE_OFF;
@@ -123,7 +123,7 @@ float CEgon::GetDischargeInterval()
 	return EGON_DISCHARGE_INTERVAL;
 }
 
-BOOL CEgon::HasAmmo()
+bool CEgon::HasAmmo()
 {
 	if ( m_pPlayer->ammo_uranium <= 0 )
 		return false;
@@ -536,7 +536,7 @@ class CEgonAmmo : public CBasePlayerAmmo
 		PRECACHE_MODEL ("models/w_chainammo.mdl");
 		PRECACHE_SOUND("items/9mmclip1.wav");
 	}
-	BOOL AddAmmo( CBaseEntity *pOther ) override
+	bool AddAmmo( CBaseEntity *pOther ) override
 	{ 
 		if (pOther->GiveAmmo( AMMO_URANIUMBOX_GIVE, "uranium", URANIUM_MAX_CARRY ) != -1)
 		{

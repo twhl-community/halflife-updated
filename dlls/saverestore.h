@@ -92,7 +92,7 @@ public:
 	char	*ReadNamedString( const char *pName );
 	int		Empty() { return (m_pdata == NULL) || ((m_pdata->pCurrentData-m_pdata->pBaseData)>=m_pdata->bufferSize); }
 	inline	void SetGlobalMode( int global ) { m_global = global; }
-	void	PrecacheMode( BOOL mode ) { m_precache = mode; }
+	void	PrecacheMode(bool mode ) { m_precache = mode; }
 
 private:
 	char	*BufferPointer();

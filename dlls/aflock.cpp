@@ -79,7 +79,7 @@ public:
 	void SpreadFlock2();
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	void Poop ();
-	BOOL FPathBlocked();
+	bool FPathBlocked();
 	//void KeyValue( KeyValueData *pkvd ) override;
 
 	int		Save( CSave &save ) override;
@@ -499,7 +499,7 @@ void CFlockingFlyer :: SpreadFlock2 ( )
 //=========================================================
 // FBoidPathBlocked - returns true if there is an obstacle ahead
 //=========================================================
-BOOL CFlockingFlyer :: FPathBlocked( )
+bool CFlockingFlyer :: FPathBlocked( )
 {
 	TraceResult		tr;
 	Vector			vecDist;// used for general measurements

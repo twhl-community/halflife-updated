@@ -48,7 +48,7 @@ IMPLEMENT_SAVERESTORE( CSquadMonster, CBaseMonster );
 // OccupySlot - if any slots of the passed slots are 
 // available, the monster will be assigned to one.
 //=========================================================
-BOOL CSquadMonster :: OccupySlot( int iDesiredSlots )
+bool CSquadMonster :: OccupySlot( int iDesiredSlots )
 {
 	int i;
 	int iMask;
@@ -185,7 +185,7 @@ void CSquadMonster :: SquadRemove( CSquadMonster *pRemove )
 // SquadAdd(), add pAdd to my squad
 //
 //=========================================================
-BOOL CSquadMonster :: SquadAdd( CSquadMonster *pAdd )
+bool CSquadMonster :: SquadAdd( CSquadMonster *pAdd )
 {
 	ASSERT( pAdd!=NULL );
 	ASSERT( !pAdd->InSquad() );
@@ -449,7 +449,7 @@ void CSquadMonster :: StartMonster()
 // Builds a large box in front of the grunt and checks to see 
 // if any squad members are in that box. 
 //=========================================================
-BOOL CSquadMonster :: NoFriendlyFire()
+bool CSquadMonster :: NoFriendlyFire()
 {
 	if ( !InSquad() )
 	{
@@ -542,7 +542,7 @@ MONSTERSTATE CSquadMonster :: GetIdealState ()
 // cover location is a good one to move to. (currently based
 // on proximity to others in the squad)
 //=========================================================
-BOOL CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
+bool CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
 {
 	if ( !InSquad() )
 	{
@@ -562,7 +562,7 @@ BOOL CSquadMonster :: FValidateCover ( const Vector &vecCoverLocation )
 // SquadEnemySplit- returns true if not all squad members
 // are fighting the same enemy. 
 //=========================================================
-BOOL CSquadMonster :: SquadEnemySplit ()
+bool CSquadMonster :: SquadEnemySplit ()
 {
 	if (!InSquad())
 		return false;
@@ -586,7 +586,7 @@ BOOL CSquadMonster :: SquadEnemySplit ()
 // cover location is a good one to move to. (currently based
 // on proximity to others in the squad)
 //=========================================================
-BOOL CSquadMonster :: SquadMemberInRange ( const Vector &vecLocation, float flDist )
+bool CSquadMonster :: SquadMemberInRange ( const Vector &vecLocation, float flDist )
 {
 	if (!InSquad())
 		return false;

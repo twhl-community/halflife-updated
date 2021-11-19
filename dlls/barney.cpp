@@ -56,7 +56,7 @@ public:
 	void StartTask( Task_t *pTask ) override;
 	int	ObjectCaps() override { return CTalkMonster :: ObjectCaps() | FCAP_IMPULSE_USE; }
 	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
-	BOOL CheckRangeAttack1 ( float flDot, float flDist ) override;
+	bool CheckRangeAttack1 ( float flDot, float flDist ) override;
 	
 	void DeclineFollowing() override;
 
@@ -311,7 +311,7 @@ void CBarney :: SetYawSpeed ()
 //=========================================================
 // CheckRangeAttack1
 //=========================================================
-BOOL CBarney :: CheckRangeAttack1 ( float flDot, float flDist )
+bool CBarney :: CheckRangeAttack1 ( float flDot, float flDist )
 {
 	if ( flDist <= 1024 && flDot >= 0.5 )
 	{
@@ -488,7 +488,7 @@ void CBarney :: TalkInit()
 }
 
 
-BOOL IsFacing( entvars_t *pevTest, const Vector &reference )
+bool IsFacing( entvars_t *pevTest, const Vector &reference )
 {
 	Vector vecDir = (reference - pevTest->origin);
 	vecDir.z = 0;

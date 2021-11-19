@@ -30,7 +30,7 @@
 // FHaveSchedule - Returns true if monster's m_pSchedule
 // is anything other than NULL.
 //=========================================================
-BOOL CBaseMonster :: FHaveSchedule()
+bool CBaseMonster :: FHaveSchedule()
 {
 	if ( m_pSchedule == NULL )
 	{
@@ -55,7 +55,7 @@ void CBaseMonster :: ClearSchedule()
 // FScheduleDone - Returns true if the caller is on the
 // last task in the schedule
 //=========================================================
-BOOL CBaseMonster :: FScheduleDone ()
+bool CBaseMonster :: FScheduleDone ()
 {
 	ASSERT( m_pSchedule != NULL );
 	
@@ -169,7 +169,7 @@ int CBaseMonster :: IScheduleFlags ()
 // schedule is still the proper schedule to be executing,
 // taking into account all conditions
 //=========================================================
-BOOL CBaseMonster :: FScheduleValid ()
+bool CBaseMonster :: FScheduleValid ()
 {
 	if ( m_pSchedule == NULL )
 	{
