@@ -2059,6 +2059,7 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 	int				i, j, actualCount, emptyCount;
 	TYPEDESCRIPTION	*pTest;
 	int				entityArray[MAX_ENTITYARRAY];
+	byte boolArray[MAX_ENTITYARRAY];
 
 	// Precalculate the number of empty fields
 	emptyCount = 0;
@@ -2135,6 +2136,18 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 		break;
 
 		case FIELD_BOOLEAN:
+		{
+			//TODO: need to refactor save game stuff to make this cleaner and reusable
+			//Convert booleans to bytes
+			for (j = 0; j < pTest->fieldSize; j++)
+			{
+				boolArray[j] = ((BOOL*)pOutputData)[j] ? 1 : 0;
+			}
+
+			WriteData(pTest->fieldName, pTest->fieldSize, (char*)boolArray);
+		}
+		break;
+
 		case FIELD_INTEGER:
 			WriteInt( pTest->fieldName, (int *)pOutputData, pTest->fieldSize );
 		break;
@@ -2351,6 +2364,15 @@ int CRestore::ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCou
 					break;
 
 					case FIELD_BOOLEAN:
+					{
+						// Input and Output sizes are different!
+						pOutputData = (char*)pOutputData + j * (sizeof(bool) - gSizes[pTest->fieldType]);
+						const BOOL value = *((byte*)pInputData) != 0;
+
+						*((BOOL*)pOutputData) = value;
+					}
+					break;
+
 					case FIELD_INTEGER:
 						*((int *)pOutputData) = *( int *)pInputData;
 					break;
