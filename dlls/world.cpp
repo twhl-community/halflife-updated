@@ -190,6 +190,7 @@ void CDecal :: KeyValue( KeyValueData *pkvd )
 		if ( pev->skin >= 0 )
 			return;
 		ALERT( at_console, "Can't find decal %s\n", pkvd->szValue );
+		pkvd->fHandled = true;
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
