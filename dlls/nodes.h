@@ -18,6 +18,8 @@
 
 #pragma once
 
+class FSFile;
+
 //=========================================================
 // DEFINE
 //=========================================================
@@ -160,8 +162,8 @@ public:
 	int m_iLastCoverSearch;
 
 	// functions to create the graph
-	int LinkVisibleNodes(CLink* pLinkPool, FILE* file, int* piBadNode);
-	int RejectInlineLinks(CLink* pLinkPool, FILE* file);
+	int LinkVisibleNodes(CLink* pLinkPool, FSFile& file, int* piBadNode);
+	int RejectInlineLinks(CLink* pLinkPool, FSFile& file);
 	int FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int afCapMask);
 	int FindNearestNode(const Vector& vecOrigin, CBaseEntity* pEntity);
 	int FindNearestNode(const Vector& vecOrigin, int afNodeTypes);
@@ -182,9 +184,9 @@ public:
 	void InitGraph();
 	bool AllocNodes();
 
-	bool CheckNODFile(char* szMapName);
-	bool FLoadGraph(char* szMapName);
-	bool FSaveGraph(char* szMapName);
+	bool CheckNODFile(const char* szMapName);
+	bool FLoadGraph(const char* szMapName);
+	bool FSaveGraph(const char* szMapName);
 	bool FSetGraphPointers();
 	void CheckNode(Vector vecOrigin, int iNode);
 
