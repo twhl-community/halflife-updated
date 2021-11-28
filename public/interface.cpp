@@ -113,17 +113,6 @@ static DLLHIDDEN IBaseInterface* CreateInterfaceLocal(const char* pName, int* pR
 // Input  : pModuleName - module name
 //			*pName - proc name
 //-----------------------------------------------------------------------------
-//static hlds_run wants to use this function
-static void* Sys_GetProcAddress(const char* pModuleName, const char* pName)
-{
-	return GetProcAddress(GetModuleHandle(pModuleName), pName);
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: returns a pointer to a function, given a module
-// Input  : pModuleName - module name
-//			*pName - proc name
-//-----------------------------------------------------------------------------
 // hlds_run wants to use this function
 void* Sys_GetProcAddress(void* pModuleHandle, const char* pName)
 {
@@ -232,15 +221,4 @@ CreateInterfaceFn Sys_GetFactory(CSysModule* pModule)
 CreateInterfaceFn Sys_GetFactoryThis()
 {
 	return CreateInterfaceLocal;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: returns the instance of the named module
-// Input  : *pModuleName - name of the module
-// Output : interface_instance_t - instance of that module
-//-----------------------------------------------------------------------------
-CreateInterfaceFn Sys_GetFactory(const char* pModuleName)
-{
-	//See Sys_GetFactory for why it's now safe to use reinterpret_cast
-	return reinterpret_cast<CreateInterfaceFn>(Sys_GetProcAddress(pModuleName, CREATEINTERFACE_PROCNAME));
 }
