@@ -617,10 +617,7 @@
     <ClInclude Include="..\..\common\weaponinfo.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\winsani_in.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\winsani_out.h">
+    <ClInclude Include="..\..\common\PlatformHeaders.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\filesystem_utils.h">

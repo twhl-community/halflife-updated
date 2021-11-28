@@ -518,12 +518,6 @@
     <ClInclude Include="..\..\common\weaponinfo.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\common\winsani_in.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\common\winsani_out.h">
-      <Filter>Header Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\engine\APIProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -562,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="..\..\game_shared\filesystem_utils.h">
       <Filter>Header Files\game_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\PlatformHeaders.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

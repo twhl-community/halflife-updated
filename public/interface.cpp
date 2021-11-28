@@ -4,8 +4,7 @@
 #include "interface.h"
 
 #ifdef WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
+#include "PlatformHeaders.h"
 #else
 
 #include <dlfcn.h> // dlopen,dlclose, et al

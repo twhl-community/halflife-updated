@@ -21,6 +21,8 @@
 #include "view.h"
 #include "Exports.h"
 
+#include "PlatformHeaders.h"
+
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_gamecontroller.h>
 

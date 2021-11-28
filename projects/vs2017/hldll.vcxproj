@@ -237,6 +237,7 @@
     <ClInclude Include="..\..\common\netadr.h" />
     <ClInclude Include="..\..\common\particledef.h" />
     <ClInclude Include="..\..\common\Platform.h" />
+    <ClInclude Include="..\..\common\PlatformHeaders.h" />
     <ClInclude Include="..\..\common\r_efx.h" />
     <ClInclude Include="..\..\common\r_studioint.h" />
     <ClInclude Include="..\..\common\screenfade.h" />
@@ -244,8 +245,6 @@
     <ClInclude Include="..\..\common\studio_event.h" />
     <ClInclude Include="..\..\common\usercmd.h" />
     <ClInclude Include="..\..\common\weaponinfo.h" />
-    <ClInclude Include="..\..\common\winsani_in.h" />
-    <ClInclude Include="..\..\common\winsani_out.h" />
     <ClInclude Include="..\..\dlls\activity.h" />
     <ClInclude Include="..\..\dlls\activitymap.h" />
     <ClInclude Include="..\..\dlls\animation.h" />
