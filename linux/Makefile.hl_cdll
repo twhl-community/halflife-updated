@@ -111,6 +111,7 @@ COMMON_OBJS = \
 	$(COMMON_OBJ_DIR)/parsemsg.o \
 
 GAME_SHARED_OBJS = \
+	$(GAME_SHARED_OBJ_DIR)/filesystem_utils.o \
 	$(GAME_SHARED_OBJ_DIR)/vgui_checkbutton2.o \
 	$(GAME_SHARED_OBJ_DIR)/vgui_grid.o \
 	$(GAME_SHARED_OBJ_DIR)/vgui_helpers.o \
