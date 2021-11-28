@@ -32,6 +32,9 @@
 #pragma warning(disable : 4201) // nameless struct/union
 #pragma warning(disable : 4514) // unreferenced inline function removed
 #pragma warning(disable : 4100) // unreferenced formal parameter
+#pragma warning(disable : 26495) // Variable is uninitialized
+#pragma warning(disable : 26451) // Arithmetic overflow
+#pragma warning(disable : 26812) // The enum type is unscoped
 
 #include "steam/steamtypes.h" // DAL
 #include "common_types.h"
