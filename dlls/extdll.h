@@ -22,8 +22,6 @@
 #include "Platform.h"
 
 // Header file containing definition of globalvars_t and entvars_t
-typedef unsigned int func_t;   //
-typedef unsigned int string_t; // from engine's pr_comp.h;
 
 // Vector class
 #include "mathlib.h"

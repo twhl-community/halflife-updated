@@ -736,15 +736,6 @@ push_trigger_data
 
 #define TRACER_FREQ 4 // Tracers fire every 4 bullets
 
-typedef struct _SelAmmo
-{
-	byte Ammo1Type;
-	byte Ammo1;
-	byte Ammo2Type;
-	byte Ammo2;
-} SelAmmo;
-
-
 // this moved here from world.cpp, to allow classes to be derived from it
 //=======================
 // CWorld

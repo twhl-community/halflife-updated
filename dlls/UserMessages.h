@@ -17,7 +17,6 @@
 
 extern int gmsgShake;
 extern int gmsgFade;
-extern int gmsgSelAmmo;
 extern int gmsgFlashlight;
 extern int gmsgFlashBattery;
 extern int gmsgResetHUD;

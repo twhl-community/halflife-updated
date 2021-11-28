@@ -54,5 +54,3 @@ struct WEAPON
 	HSPRITE hZoomedAutoaim;
 	Rect rcZoomedAutoaim;
 };
-
-typedef int AMMO;
