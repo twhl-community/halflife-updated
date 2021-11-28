@@ -178,9 +178,8 @@ bool CVoiceGameMgr::ClientCommand(CBasePlayer* pPlayer, const char* cmd)
 		for (int i = 1; i < CMD_ARGC(); i++)
 		{
 			uint32 mask = 0;
-			sscanf(CMD_ARGV(i), "%x", &mask);
 
-			if (i <= VOICE_MAX_PLAYERS_DW)
+			if (1 == sscanf(CMD_ARGV(i), "%x", &mask) && i <= VOICE_MAX_PLAYERS_DW)
 			{
 				VoiceServerDebug("CVoiceGameMgr::ClientCommand: vban (0x%x) from %d\n", mask, playerClientIndex);
 				g_BanMasks[playerClientIndex].SetDWord(i - 1, mask);
