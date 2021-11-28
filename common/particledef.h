@@ -15,8 +15,9 @@
 
 #pragma once
 
-typedef enum {
-	pt_static, 
+typedef enum
+{
+	pt_static,
 	pt_grav,
 	pt_slowgrav,
 	pt_fire,
@@ -26,27 +27,27 @@ typedef enum {
 	pt_blob2,
 	pt_vox_slowgrav,
 	pt_vox_grav,
-	pt_clientcustom   // Must have callback function specified
+	pt_clientcustom // Must have callback function specified
 } ptype_t;
 
 // !!! if this is changed, it must be changed in d_ifacea.h too !!!
 typedef struct particle_s
 {
-// driver-usable fields
-	Vector		org;
-	short		color;
-	short		packedColor;
-// drivers never touch the following fields
-	struct particle_s	*next;
-	Vector		vel;
-	float		ramp;
-	float		die;
-	ptype_t		type;
-	void		(*deathfunc)( struct particle_s *particle );
+	// driver-usable fields
+	Vector org;
+	short color;
+	short packedColor;
+	// drivers never touch the following fields
+	struct particle_s* next;
+	Vector vel;
+	float ramp;
+	float die;
+	ptype_t type;
+	void (*deathfunc)(struct particle_s* particle);
 
 	// for pt_clientcusttom, we'll call this function each frame
-	void		(*callback)( struct particle_s *particle, float frametime );
-	
+	void (*callback)(struct particle_s* particle, float frametime);
+
 	// For deathfunc, etc.
 	unsigned char context;
 } particle_t;

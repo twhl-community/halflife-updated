@@ -43,35 +43,35 @@ bool CHudBattery::Init()
 
 bool CHudBattery::VidInit()
 {
-	int HUD_suit_empty = gHUD.GetSpriteIndex( "suit_empty" );
-	int HUD_suit_full = gHUD.GetSpriteIndex( "suit_full" );
+	int HUD_suit_empty = gHUD.GetSpriteIndex("suit_empty");
+	int HUD_suit_full = gHUD.GetSpriteIndex("suit_full");
 
-	m_hSprite1 = m_hSprite2 = 0;  // delaying get sprite handles until we know the sprites are loaded
-	m_prc1 = &gHUD.GetSpriteRect( HUD_suit_empty );
-	m_prc2 = &gHUD.GetSpriteRect( HUD_suit_full );
+	m_hSprite1 = m_hSprite2 = 0; // delaying get sprite handles until we know the sprites are loaded
+	m_prc1 = &gHUD.GetSpriteRect(HUD_suit_empty);
+	m_prc2 = &gHUD.GetSpriteRect(HUD_suit_full);
 	m_iHeight = m_prc2->bottom - m_prc1->top;
 	m_fFade = 0;
 	return true;
 };
 
-bool CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
+bool CHudBattery::MsgFunc_Battery(const char* pszName, int iSize, void* pbuf)
 {
 	m_iFlags |= HUD_ACTIVE;
-	
-	BEGIN_READ( pbuf, iSize );
+
+	BEGIN_READ(pbuf, iSize);
 	int x = READ_SHORT();
 
-#if defined( _TFC )
+#if defined(_TFC)
 	int y = READ_SHORT();
 
-	if ( x != m_iBat || y != m_iBatMax )
+	if (x != m_iBat || y != m_iBatMax)
 	{
 		m_fFade = FADE_TIME;
 		m_iBat = x;
 		m_iBatMax = y;
 	}
 #else
-	if ( x != m_iBat )
+	if (x != m_iBat)
 	{
 		m_fFade = FADE_TIME;
 		m_iBat = x;
@@ -84,7 +84,7 @@ bool CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 
 bool CHudBattery::Draw(float flTime)
 {
-	if ( (gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH ) != 0)
+	if ((gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH) != 0)
 		return true;
 
 	int r, g, b, x, y, a;
@@ -92,20 +92,20 @@ bool CHudBattery::Draw(float flTime)
 
 	rc = *m_prc2;
 
-#if defined( _TFC )
+#if defined(_TFC)
 	float fScale = 0.0;
-	
-	if ( m_iBatMax > 0 )
+
+	if (m_iBatMax > 0)
 		fScale = 1.0 / (float)m_iBatMax;
 
-	rc.top  += m_iHeight * ((float)(m_iBatMax-(V_min(m_iBatMax,m_iBat))) * fScale); // battery can go from 0 to m_iBatMax so * fScale goes from 0 to 1
+	rc.top += m_iHeight * ((float)(m_iBatMax - (V_min(m_iBatMax, m_iBat))) * fScale); // battery can go from 0 to m_iBatMax so * fScale goes from 0 to 1
 #else
-	rc.top  += m_iHeight * ((float)(100-(V_min(100,m_iBat))) * 0.01);	// battery can go from 0 to 100 so * 0.01 goes from 0 to 1
+	rc.top += m_iHeight * ((float)(100 - (V_min(100, m_iBat))) * 0.01); // battery can go from 0 to 100 so * 0.01 goes from 0 to 1
 #endif
 
-	UnpackRGB(r,g,b, RGB_YELLOWISH);
+	UnpackRGB(r, g, b, RGB_YELLOWISH);
 
-	if ((gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ) == 0)
+	if ((gHUD.m_iWeaponBits & (1 << (WEAPON_SUIT))) == 0)
 		return true;
 
 	// Has health changed? Flash the health #
@@ -123,32 +123,31 @@ bool CHudBattery::Draw(float flTime)
 
 		// Fade the health number back to dim
 
-		a = MIN_ALPHA +  (m_fFade/FADE_TIME) * 128;
-
+		a = MIN_ALPHA + (m_fFade / FADE_TIME) * 128;
 	}
 	else
 		a = MIN_ALPHA;
 
-	ScaleColors(r, g, b, a );
-	
-	int iOffset = (m_prc1->bottom - m_prc1->top)/6;
+	ScaleColors(r, g, b, a);
+
+	int iOffset = (m_prc1->bottom - m_prc1->top) / 6;
 
 	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
-	x = ScreenWidth/4;
+	x = ScreenWidth / 4;
 
 	// make sure we have the right sprite handles
-	if ( 0 == m_hSprite1 )
-		m_hSprite1 = gHUD.GetSprite( gHUD.GetSpriteIndex( "suit_empty" ) );
-	if ( 0 == m_hSprite2 )
-		m_hSprite2 = gHUD.GetSprite( gHUD.GetSpriteIndex( "suit_full" ) );
+	if (0 == m_hSprite1)
+		m_hSprite1 = gHUD.GetSprite(gHUD.GetSpriteIndex("suit_empty"));
+	if (0 == m_hSprite2)
+		m_hSprite2 = gHUD.GetSprite(gHUD.GetSpriteIndex("suit_full"));
 
-	SPR_Set(m_hSprite1, r, g, b );
-	SPR_DrawAdditive( 0,  x, y - iOffset, m_prc1);
+	SPR_Set(m_hSprite1, r, g, b);
+	SPR_DrawAdditive(0, x, y - iOffset, m_prc1);
 
 	if (rc.bottom > rc.top)
 	{
-		SPR_Set(m_hSprite2, r, g, b );
-		SPR_DrawAdditive( 0, x, y - iOffset + (rc.top - m_prc2->top), &rc);
+		SPR_Set(m_hSprite2, r, g, b);
+		SPR_DrawAdditive(0, x, y - iOffset + (rc.top - m_prc2->top), &rc);
 	}
 
 	x += (m_prc1->right - m_prc1->left);

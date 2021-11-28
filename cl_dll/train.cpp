@@ -24,12 +24,12 @@
 #include <stdio.h>
 #include "parsemsg.h"
 
-DECLARE_MESSAGE(m_Train, Train )
+DECLARE_MESSAGE(m_Train, Train)
 
 
 bool CHudTrain::Init()
 {
-	HOOK_MESSAGE( Train );
+	HOOK_MESSAGE(Train);
 
 	m_iPos = 0;
 	m_iFlags = 0;
@@ -47,31 +47,30 @@ bool CHudTrain::VidInit()
 
 bool CHudTrain::Draw(float fTime)
 {
-	if ( 0 == m_hSprite )
+	if (0 == m_hSprite)
 		m_hSprite = LoadSprite("sprites/%d_train.spr");
 
 	if (0 != m_iPos)
 	{
 		int r, g, b, x, y;
 
-		UnpackRGB(r,g,b, RGB_YELLOWISH);
-		SPR_Set(m_hSprite, r, g, b );
+		UnpackRGB(r, g, b, RGB_YELLOWISH);
+		SPR_Set(m_hSprite, r, g, b);
 
 		// This should show up to the right and part way up the armor number
-		y = ScreenHeight - SPR_Height(m_hSprite,0) - gHUD.m_iFontHeight;
-		x = ScreenWidth/3 + SPR_Width(m_hSprite,0)/4;
+		y = ScreenHeight - SPR_Height(m_hSprite, 0) - gHUD.m_iFontHeight;
+		x = ScreenWidth / 3 + SPR_Width(m_hSprite, 0) / 4;
 
-		SPR_DrawAdditive( m_iPos - 1,  x, y, NULL);
-
+		SPR_DrawAdditive(m_iPos - 1, x, y, NULL);
 	}
 
 	return true;
 }
 
 
-bool CHudTrain::MsgFunc_Train(const char *pszName,  int iSize, void *pbuf)
+bool CHudTrain::MsgFunc_Train(const char* pszName, int iSize, void* pbuf)
 {
-	BEGIN_READ( pbuf, iSize );
+	BEGIN_READ(pbuf, iSize);
 
 	// update Train data
 	m_iPos = READ_BYTE();

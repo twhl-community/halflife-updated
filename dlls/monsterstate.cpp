@@ -13,7 +13,7 @@
 *
 ****/
 //=========================================================
-// monsterstate.cpp - base class monster functions for 
+// monsterstate.cpp - base class monster functions for
 // controlling core AI.
 //=========================================================
 
@@ -28,25 +28,25 @@
 //=========================================================
 // SetState
 //=========================================================
-void CBaseMonster :: SetState ( MONSTERSTATE State )
+void CBaseMonster ::SetState(MONSTERSTATE State)
 {
-/*
+	/*
 	if ( State != m_MonsterState )
 	{
 		ALERT ( at_aiconsole, "State Changed to %d\n", State );
 	}
 */
-	
-	switch( State )
+
+	switch (State)
 	{
-	
+
 	// Drop enemy pointers when going to idle
 	case MONSTERSTATE_IDLE:
 
-		if ( m_hEnemy != NULL )
+		if (m_hEnemy != NULL)
 		{
-			m_hEnemy = NULL;// not allowed to have an enemy anymore.
-			ALERT ( at_aiconsole, "Stripped\n" );
+			m_hEnemy = NULL; // not allowed to have an enemy anymore.
+			ALERT(at_aiconsole, "Stripped\n");
 		}
 		break;
 	}
@@ -58,42 +58,42 @@ void CBaseMonster :: SetState ( MONSTERSTATE State )
 //=========================================================
 // RunAI
 //=========================================================
-void CBaseMonster :: RunAI ()
+void CBaseMonster ::RunAI()
 {
 	// to test model's eye height
 	//UTIL_ParticleEffect ( pev->origin + pev->view_ofs, g_vecZero, 255, 10 );
 
 	// IDLE sound permitted in ALERT state is because monsters were silent in ALERT state. Only play IDLE sound in IDLE state
 	// once we have sounds for that state.
-	if ( ( m_MonsterState == MONSTERSTATE_IDLE || m_MonsterState == MONSTERSTATE_ALERT ) && RANDOM_LONG(0,99) == 0 && (pev->spawnflags & SF_MONSTER_GAG) == 0 )
+	if ((m_MonsterState == MONSTERSTATE_IDLE || m_MonsterState == MONSTERSTATE_ALERT) && RANDOM_LONG(0, 99) == 0 && (pev->spawnflags & SF_MONSTER_GAG) == 0)
 	{
 		IdleSound();
 	}
 
-	if ( m_MonsterState != MONSTERSTATE_NONE	&& 
-		 m_MonsterState != MONSTERSTATE_PRONE   && 
-		 m_MonsterState != MONSTERSTATE_DEAD )// don't bother with this crap if monster is prone. 
+	if (m_MonsterState != MONSTERSTATE_NONE &&
+		m_MonsterState != MONSTERSTATE_PRONE &&
+		m_MonsterState != MONSTERSTATE_DEAD) // don't bother with this crap if monster is prone.
 	{
 		// collect some sensory Condition information.
 		// don't let monsters outside of the player's PVS act up, or most of the interesting
 		// things will happen before the player gets there!
-		// UPDATE: We now let COMBAT state monsters think and act fully outside of player PVS. This allows the player to leave 
+		// UPDATE: We now let COMBAT state monsters think and act fully outside of player PVS. This allows the player to leave
 		// an area where monsters are fighting, and the fight will continue.
-		if ( !FNullEnt( FIND_CLIENT_IN_PVS( edict() ) ) || ( m_MonsterState == MONSTERSTATE_COMBAT ) )
+		if (!FNullEnt(FIND_CLIENT_IN_PVS(edict())) || (m_MonsterState == MONSTERSTATE_COMBAT))
 		{
-			Look( m_flDistLook );
-			Listen();// check for audible sounds. 
+			Look(m_flDistLook);
+			Listen(); // check for audible sounds.
 
 			// now filter conditions.
-			ClearConditions( IgnoreConditions() );
+			ClearConditions(IgnoreConditions());
 
 			GetEnemy();
 		}
 
 		// do these calculations if monster has an enemy.
-		if ( m_hEnemy != NULL )
+		if (m_hEnemy != NULL)
 		{
-			CheckEnemy( m_hEnemy );
+			CheckEnemy(m_hEnemy);
 		}
 
 		CheckAmmo();
@@ -107,25 +107,25 @@ void CBaseMonster :: RunAI ()
 
 	// if the monster didn't use these conditions during the above call to MaintainSchedule() or CheckAITrigger()
 	// we throw them out cause we don't want them sitting around through the lifespan of a schedule
-	// that doesn't use them. 
-	m_afConditions &= ~( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE );
+	// that doesn't use them.
+	m_afConditions &= ~(bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE);
 }
 
 //=========================================================
 // GetIdealState - surveys the Conditions information available
 // and finds the best new state for a monster.
 //=========================================================
-MONSTERSTATE CBaseMonster :: GetIdealState ()
+MONSTERSTATE CBaseMonster ::GetIdealState()
 {
-	int	iConditions;
+	int iConditions;
 
 	iConditions = IScheduleFlags();
-	
+
 	// If no schedule conditions, the new ideal state is probably the reason we're in here.
-	switch ( m_MonsterState )
+	switch (m_MonsterState)
 	{
 	case MONSTERSTATE_IDLE:
-		
+
 		/*
 		IDLE goes to ALERT upon hearing a sound
 		-IDLE goes to ALERT upon being injured
@@ -134,36 +134,36 @@ MONSTERSTATE CBaseMonster :: GetIdealState ()
 		IDLE goes to HUNT upon smelling food
 		*/
 		{
-			if ( (iConditions & bits_COND_NEW_ENEMY ) != 0)
+			if ((iConditions & bits_COND_NEW_ENEMY) != 0)
 			{
-				// new enemy! This means an idle monster has seen someone it dislikes, or 
+				// new enemy! This means an idle monster has seen someone it dislikes, or
 				// that a monster in combat has found a more suitable target to attack
 				m_IdealMonsterState = MONSTERSTATE_COMBAT;
 			}
-			else if ( (iConditions & bits_COND_LIGHT_DAMAGE ) != 0)
+			else if ((iConditions & bits_COND_LIGHT_DAMAGE) != 0)
 			{
-				MakeIdealYaw ( m_vecEnemyLKP );
+				MakeIdealYaw(m_vecEnemyLKP);
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 			}
-			else if ( (iConditions & bits_COND_HEAVY_DAMAGE ) != 0)
+			else if ((iConditions & bits_COND_HEAVY_DAMAGE) != 0)
 			{
-				MakeIdealYaw ( m_vecEnemyLKP );
+				MakeIdealYaw(m_vecEnemyLKP);
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 			}
-			else if ( (iConditions & bits_COND_HEAR_SOUND ) != 0)
+			else if ((iConditions & bits_COND_HEAR_SOUND) != 0)
 			{
-				CSound *pSound;
-				
+				CSound* pSound;
+
 				pSound = PBestSound();
-				ASSERT( pSound != NULL );
-				if ( pSound )
+				ASSERT(pSound != NULL);
+				if (pSound)
 				{
-					MakeIdealYaw ( pSound->m_vecOrigin );
-					if ( (pSound->m_iType & (bits_SOUND_COMBAT|bits_SOUND_DANGER) ) != 0)
+					MakeIdealYaw(pSound->m_vecOrigin);
+					if ((pSound->m_iType & (bits_SOUND_COMBAT | bits_SOUND_DANGER)) != 0)
 						m_IdealMonsterState = MONSTERSTATE_ALERT;
 				}
 			}
-			else if ( (iConditions & (bits_COND_SMELL | bits_COND_SMELL_FOOD) ) != 0)
+			else if ((iConditions & (bits_COND_SMELL | bits_COND_SMELL_FOOD)) != 0)
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 			}
@@ -177,18 +177,18 @@ MONSTERSTATE CBaseMonster :: GetIdealState ()
 		ALERT goes to HUNT upon hearing a noise
 		*/
 		{
-			if ( (iConditions & (bits_COND_NEW_ENEMY|bits_COND_SEE_ENEMY) ) != 0)
+			if ((iConditions & (bits_COND_NEW_ENEMY | bits_COND_SEE_ENEMY)) != 0)
 			{
 				// see an enemy we MUST attack
 				m_IdealMonsterState = MONSTERSTATE_COMBAT;
 			}
-			else if ( (iConditions & bits_COND_HEAR_SOUND ) != 0)
+			else if ((iConditions & bits_COND_HEAR_SOUND) != 0)
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
-				CSound *pSound = PBestSound();
-				ASSERT( pSound != NULL );
-				if ( pSound )
-					MakeIdealYaw ( pSound->m_vecOrigin );
+				CSound* pSound = PBestSound();
+				ASSERT(pSound != NULL);
+				if (pSound)
+					MakeIdealYaw(pSound->m_vecOrigin);
 			}
 			break;
 		}
@@ -198,11 +198,11 @@ MONSTERSTATE CBaseMonster :: GetIdealState ()
 		COMBAT goes to ALERT upon death of enemy
 		*/
 		{
-			if ( m_hEnemy == NULL )
+			if (m_hEnemy == NULL)
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 				// pev->effects = EF_BRIGHTFIELD;
-				ALERT ( at_aiconsole, "***Combat state with no enemy!\n" );
+				ALERT(at_aiconsole, "***Combat state with no enemy!\n");
 			}
 			break;
 		}
@@ -217,9 +217,9 @@ MONSTERSTATE CBaseMonster :: GetIdealState ()
 			break;
 		}
 	case MONSTERSTATE_SCRIPT:
-		if ( (iConditions & (bits_COND_TASK_FAILED|bits_COND_LIGHT_DAMAGE|bits_COND_HEAVY_DAMAGE) ) != 0)
+		if ((iConditions & (bits_COND_TASK_FAILED | bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE)) != 0)
 		{
-			ExitScriptedSequence();	// This will set the ideal state
+			ExitScriptedSequence(); // This will set the ideal state
 		}
 		break;
 
@@ -230,4 +230,3 @@ MONSTERSTATE CBaseMonster :: GetIdealState ()
 
 	return m_IdealMonsterState;
 }
-

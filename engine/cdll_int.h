@@ -15,7 +15,7 @@
 //
 //  cdll_int.h
 //
-// 4-23-98  
+// 4-23-98
 // JOHN:  client dll interface declarations
 //
 
@@ -31,19 +31,19 @@
 // this file is included by both the engine and the client-dll,
 // so make sure engine declarations aren't done twice
 
-typedef int HSPRITE;	// handle to a graphic
+typedef int HSPRITE; // handle to a graphic
 
 #define SCRINFO_SCREENFLASH 1
-#define SCRINFO_STRETCHED	2
+#define SCRINFO_STRETCHED 2
 
 typedef struct SCREENINFO_s
 {
-	int		iSize;
-	int		iWidth;
-	int		iHeight;
-	int		iFlags;
-	int		iCharHeight;
-	short	charWidths[256];
+	int iSize;
+	int iWidth;
+	int iHeight;
+	int iFlags;
+	int iCharHeight;
+	short charWidths[256];
 } SCREENINFO;
 
 
@@ -54,9 +54,9 @@ typedef struct client_data_s
 
 	// fields that can be changed by the cldll
 	Vector viewangles;
-	int		iWeaponBits;
-//	int		iAccessoryBits;
-	float	fov;	// field of view
+	int iWeaponBits;
+	//	int		iAccessoryBits;
+	float fov; // field of view
 } client_data_t;
 
 typedef struct client_sprite_s
@@ -72,14 +72,14 @@ typedef struct client_sprite_s
 
 typedef struct hud_player_info_s
 {
-	char *name;
+	char* name;
 	short ping;
-	byte thisplayer;  // true if this is the calling player
+	byte thisplayer; // true if this is the calling player
 
 	byte spectator;
 	byte packetloss;
 
-	char *model;
+	char* model;
 	short topcolor;
 	short bottomcolor;
 
@@ -88,7 +88,7 @@ typedef struct hud_player_info_s
 
 #include "in_buttons.h"
 
-#define CLDLL_INTERFACE_VERSION		7
+#define CLDLL_INTERFACE_VERSION 7
 
 //#include "server.h" // server_static_t define for apiproxy
 #include "APIProxy.h"

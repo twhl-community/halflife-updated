@@ -16,17 +16,17 @@
 // Bloater
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include "extdll.h"
+#include "util.h"
+#include "cbase.h"
+#include "monsters.h"
+#include "schedule.h"
 
 
 //=========================================================
 // Monster's Anim Events Go Here
 //=========================================================
-#define	BLOATER_AE_ATTACK_MELEE1		0x01
+#define BLOATER_AE_ATTACK_MELEE1 0x01
 
 
 class CBloater : public CBaseMonster
@@ -35,8 +35,8 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	void SetYawSpeed() override;
-	int  Classify () override;
-	void HandleAnimEvent( MonsterEvent_t *pEvent ) override;
+	int Classify() override;
+	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
 
 	void PainSound() override;
 	void AlertSound() override;
@@ -44,27 +44,27 @@ public:
 	void AttackSnd();
 
 	// No range attacks
-	bool CheckRangeAttack1 ( float flDot, float flDist ) override { return false; }
-	bool CheckRangeAttack2 ( float flDot, float flDist ) override { return false; }
-	bool TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool CheckRangeAttack1(float flDot, float flDist) override { return false; }
+	bool CheckRangeAttack2(float flDot, float flDist) override { return false; }
+	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 };
 
-LINK_ENTITY_TO_CLASS( monster_bloater, CBloater );
+LINK_ENTITY_TO_CLASS(monster_bloater, CBloater);
 
 //=========================================================
-// Classify - indicates this monster's place in the 
+// Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int	CBloater :: Classify ()
+int CBloater ::Classify()
 {
-	return	CLASS_ALIEN_MONSTER;
+	return CLASS_ALIEN_MONSTER;
 }
 
 //=========================================================
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBloater :: SetYawSpeed ()
+void CBloater ::SetYawSpeed()
 {
 	int ys;
 
@@ -79,13 +79,13 @@ void CBloater :: SetYawSpeed ()
 	pev->yaw_speed = ys;
 }
 
-bool CBloater :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
+bool CBloater ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	PainSound();
-	return CBaseMonster::TakeDamage( pevInflictor, pevAttacker, flDamage, bitsDamageType );
+	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
-void CBloater :: PainSound()
+void CBloater ::PainSound()
 {
 #if 0	
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -104,7 +104,7 @@ void CBloater :: PainSound()
 #endif
 }
 
-void CBloater :: AlertSound()
+void CBloater ::AlertSound()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -124,7 +124,7 @@ void CBloater :: AlertSound()
 #endif
 }
 
-void CBloater :: IdleSound()
+void CBloater ::IdleSound()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -144,7 +144,7 @@ void CBloater :: IdleSound()
 #endif
 }
 
-void CBloater :: AttackSnd()
+void CBloater ::AttackSnd()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -166,41 +166,40 @@ void CBloater :: AttackSnd()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CBloater :: HandleAnimEvent( MonsterEvent_t *pEvent )
+void CBloater ::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
-	switch( pEvent->event )
+	switch (pEvent->event)
 	{
-		case BLOATER_AE_ATTACK_MELEE1:
-		{
-			// do stuff for this event.
-			AttackSnd();
-		}
-		break;
+	case BLOATER_AE_ATTACK_MELEE1: {
+		// do stuff for this event.
+		AttackSnd();
+	}
+	break;
 
-		default:
-			CBaseMonster::HandleAnimEvent( pEvent );
-			break;
+	default:
+		CBaseMonster::HandleAnimEvent(pEvent);
+		break;
 	}
 }
 
 //=========================================================
 // Spawn
 //=========================================================
-void CBloater :: Spawn()
+void CBloater ::Spawn()
 {
-	Precache( );
+	Precache();
 
 	SET_MODEL(ENT(pev), "models/floater.mdl");
-	UTIL_SetSize( pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX );
+	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
-	pev->solid			= SOLID_SLIDEBOX;
-	pev->movetype		= MOVETYPE_FLY;
-	pev->spawnflags		|= FL_FLY;
-	m_bloodColor		= BLOOD_COLOR_GREEN;
-	pev->health			= 40;
-	pev->view_ofs		= VEC_VIEW;// position of the eyes relative to monster's origin.
-	m_flFieldOfView		= 0.5;// indicates the width of this monster's forward view cone ( as a dotproduct result )
-	m_MonsterState		= MONSTERSTATE_NONE;
+	pev->solid = SOLID_SLIDEBOX;
+	pev->movetype = MOVETYPE_FLY;
+	pev->spawnflags |= FL_FLY;
+	m_bloodColor = BLOOD_COLOR_GREEN;
+	pev->health = 40;
+	pev->view_ofs = VEC_VIEW; // position of the eyes relative to monster's origin.
+	m_flFieldOfView = 0.5;	  // indicates the width of this monster's forward view cone ( as a dotproduct result )
+	m_MonsterState = MONSTERSTATE_NONE;
 
 	MonsterInit();
 }
@@ -208,12 +207,11 @@ void CBloater :: Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CBloater :: Precache()
+void CBloater ::Precache()
 {
 	PRECACHE_MODEL("models/floater.mdl");
-}	
+}
 
 //=========================================================
 // AI Schedules Specific to this monster
 //=========================================================
-

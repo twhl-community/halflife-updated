@@ -27,19 +27,17 @@
 
 // Holds engine functionality callbacks
 enginefuncs_t g_engfuncs;
-globalvars_t  *gpGlobals;
+globalvars_t* gpGlobals;
 
 #undef DLLEXPORT
 #ifdef WIN32
 #define DLLEXPORT __stdcall
 #else
-#define DLLEXPORT __attribute__ ((visibility("default")))
+#define DLLEXPORT __attribute__((visibility("default")))
 #endif
 
-extern "C" void DLLEXPORT GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
+extern "C" void DLLEXPORT GiveFnptrsToDll(enginefuncs_t* pengfuncsFromEngine, globalvars_t* pGlobals)
 {
 	memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));
 	gpGlobals = pGlobals;
 }
-
-

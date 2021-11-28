@@ -22,18 +22,18 @@
 
 */
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"decals.h"
+#include "extdll.h"
+#include "util.h"
+#include "cbase.h"
+#include "monsters.h"
+#include "decals.h"
 
 
 class CLegacyCineMonster : public CBaseMonster
 {
 public:
-	void CineSpawn( const char *szModel );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
+	void CineSpawn(const char* szModel);
+	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 	void EXPORT CineThink();
 	void Pain();
 	void Die();
@@ -89,42 +89,42 @@ public:
 // ********** Scientist SPAWN **********
 //
 
-LINK_ENTITY_TO_CLASS( monster_cine_scientist, CCineScientist );
-LINK_ENTITY_TO_CLASS( monster_cine_panther, CCinePanther );
-LINK_ENTITY_TO_CLASS( monster_cine_barney, CCineBarney );
-LINK_ENTITY_TO_CLASS( monster_cine2_scientist, CCine2Scientist );
-LINK_ENTITY_TO_CLASS( monster_cine2_hvyweapons, CCine2HeavyWeapons );
-LINK_ENTITY_TO_CLASS( monster_cine2_slave, CCine2Slave );
-LINK_ENTITY_TO_CLASS( monster_cine3_scientist, CCine3Scientist );
-LINK_ENTITY_TO_CLASS( monster_cine3_barney, CCine3Barney );
+LINK_ENTITY_TO_CLASS(monster_cine_scientist, CCineScientist);
+LINK_ENTITY_TO_CLASS(monster_cine_panther, CCinePanther);
+LINK_ENTITY_TO_CLASS(monster_cine_barney, CCineBarney);
+LINK_ENTITY_TO_CLASS(monster_cine2_scientist, CCine2Scientist);
+LINK_ENTITY_TO_CLASS(monster_cine2_hvyweapons, CCine2HeavyWeapons);
+LINK_ENTITY_TO_CLASS(monster_cine2_slave, CCine2Slave);
+LINK_ENTITY_TO_CLASS(monster_cine3_scientist, CCine3Scientist);
+LINK_ENTITY_TO_CLASS(monster_cine3_barney, CCine3Barney);
 
 //
 // ********** Scientist SPAWN **********
 //
 
-void CLegacyCineMonster :: CineSpawn( const char *szModel )
+void CLegacyCineMonster ::CineSpawn(const char* szModel)
 {
 	PRECACHE_MODEL(szModel);
 	SET_MODEL(ENT(pev), szModel);
 	UTIL_SetSize(pev, Vector(-16, -16, 0), Vector(16, 16, 64));
 
-	pev->solid			= SOLID_SLIDEBOX;
-	pev->movetype		= MOVETYPE_STEP;
-	pev->effects		= 0;
-	pev->health			= 1;
-	pev->yaw_speed		= 10;
-	
-	// ugly alpha hack, can't set ints from the bsp.	
-	pev->sequence		= (int)pev->impulse;
-	ResetSequenceInfo( );
+	pev->solid = SOLID_SLIDEBOX;
+	pev->movetype = MOVETYPE_STEP;
+	pev->effects = 0;
+	pev->health = 1;
+	pev->yaw_speed = 10;
+
+	// ugly alpha hack, can't set ints from the bsp.
+	pev->sequence = (int)pev->impulse;
+	ResetSequenceInfo();
 	pev->framerate = 0.0;
 
 	m_bloodColor = BLOOD_COLOR_RED;
 
 	// if no targetname, start now
-	if ( FStringNull(pev->targetname) )	
+	if (FStringNull(pev->targetname))
 	{
-		SetThink( &CLegacyCineMonster::CineThink );
+		SetThink(&CLegacyCineMonster::CineThink);
 		pev->nextthink += 1.0;
 	}
 }
@@ -133,39 +133,39 @@ void CLegacyCineMonster :: CineSpawn( const char *szModel )
 //
 // CineStart
 //
-void CLegacyCineMonster :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CLegacyCineMonster ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	pev->animtime = 0;	// reset the sequence
-	SetThink( &CLegacyCineMonster::CineThink );
+	pev->animtime = 0; // reset the sequence
+	SetThink(&CLegacyCineMonster::CineThink);
 	pev->nextthink = gpGlobals->time;
 }
 
 //
 // ********** Scientist DIE **********
 //
-void CLegacyCineMonster :: Die()
+void CLegacyCineMonster ::Die()
 {
-	SetThink( &CLegacyCineMonster::SUB_Remove );
+	SetThink(&CLegacyCineMonster::SUB_Remove);
 }
 
 //
 // ********** Scientist PAIN **********
 //
-void CLegacyCineMonster :: Pain()
+void CLegacyCineMonster ::Pain()
 {
 	EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pain3.wav", 1, ATTN_NORM);
 }
 
-void CLegacyCineMonster :: CineThink()
+void CLegacyCineMonster ::CineThink()
 {
 	// DBG_CheckMonsterData(pev);
-	
+
 	// Emit particles from origin (double check animator's placement of model)
 	// THIS is a test feature
 	//UTIL_ParticleEffect(pev->origin, g_vecZero, 255, 20);
 
 	if (0 == pev->animtime)
-		ResetSequenceInfo( );
+		ResetSequenceInfo();
 
 	pev->nextthink = gpGlobals->time + 1.0;
 
@@ -175,67 +175,66 @@ void CLegacyCineMonster :: CineThink()
 		return;
 	}
 
-	StudioFrameAdvance ( );
+	StudioFrameAdvance();
 }
 
 //
 // cine_blood
 //
-// e3/prealpha only. 
+// e3/prealpha only.
 class CCineBlood : public CBaseEntity
 {
 public:
 	void Spawn() override;
-	void EXPORT BloodStart ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT BloodGush ();
+	void EXPORT BloodStart(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void EXPORT BloodGush();
 };
 
-LINK_ENTITY_TO_CLASS( cine_blood, CCineBlood );
+LINK_ENTITY_TO_CLASS(cine_blood, CCineBlood);
 
 
-void CCineBlood :: BloodGush ()
+void CCineBlood ::BloodGush()
 {
-	Vector	vecSplatDir;
-	TraceResult	tr;
+	Vector vecSplatDir;
+	TraceResult tr;
 	pev->nextthink = gpGlobals->time + 0.1;
 
 	UTIL_MakeVectors(pev->angles);
-	if ( pev->health-- < 0 )
+	if (pev->health-- < 0)
 		REMOVE_ENTITY(ENT(pev));
-// CHANGE_METHOD ( ENT(pev), em_think, SUB_Remove );
+	// CHANGE_METHOD ( ENT(pev), em_think, SUB_Remove );
 
-	if ( RANDOM_FLOAT ( 0 , 1 ) < 0.7 )// larger chance of globs
+	if (RANDOM_FLOAT(0, 1) < 0.7) // larger chance of globs
 	{
-		UTIL_BloodDrips( pev->origin, UTIL_RandomBloodVector(), BLOOD_COLOR_RED, 10 );
+		UTIL_BloodDrips(pev->origin, UTIL_RandomBloodVector(), BLOOD_COLOR_RED, 10);
 	}
-	else// slim chance of geyser
+	else // slim chance of geyser
 	{
-		UTIL_BloodStream( pev->origin, UTIL_RandomBloodVector(), BLOOD_COLOR_RED, RANDOM_LONG(50, 150) );
+		UTIL_BloodStream(pev->origin, UTIL_RandomBloodVector(), BLOOD_COLOR_RED, RANDOM_LONG(50, 150));
 	}
 
-	if ( RANDOM_FLOAT ( 0, 1 ) < 0.75 )
-	{// decals the floor with blood.
-		vecSplatDir = Vector ( 0 , 0 , -1 );
-		vecSplatDir = vecSplatDir + (RANDOM_FLOAT(-1,1) * 0.6 * gpGlobals->v_right) + (RANDOM_FLOAT(-1,1) * 0.6 * gpGlobals->v_forward);// randomize a bit
-		UTIL_TraceLine( pev->origin + Vector ( 0, 0 , 64) , pev->origin + vecSplatDir * 256, ignore_monsters, ENT(pev), &tr);
-		if ( tr.flFraction != 1.0 )
+	if (RANDOM_FLOAT(0, 1) < 0.75)
+	{ // decals the floor with blood.
+		vecSplatDir = Vector(0, 0, -1);
+		vecSplatDir = vecSplatDir + (RANDOM_FLOAT(-1, 1) * 0.6 * gpGlobals->v_right) + (RANDOM_FLOAT(-1, 1) * 0.6 * gpGlobals->v_forward); // randomize a bit
+		UTIL_TraceLine(pev->origin + Vector(0, 0, 64), pev->origin + vecSplatDir * 256, ignore_monsters, ENT(pev), &tr);
+		if (tr.flFraction != 1.0)
 		{
 			// Decal with a bloodsplat
-			UTIL_BloodDecalTrace( &tr, BLOOD_COLOR_RED );
+			UTIL_BloodDecalTrace(&tr, BLOOD_COLOR_RED);
 		}
 	}
 }
 
-void CCineBlood :: BloodStart ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CCineBlood ::BloodStart(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	SetThink( &CCineBlood::BloodGush );
-	pev->nextthink = gpGlobals->time;// now!
+	SetThink(&CCineBlood::BloodGush);
+	pev->nextthink = gpGlobals->time; // now!
 }
 
-void CCineBlood :: Spawn ()
+void CCineBlood ::Spawn()
 {
 	pev->solid = SOLID_NOT;
-	SetUse ( &CCineBlood::BloodStart );
-	pev->health = 20;//hacked health to count iterations
+	SetUse(&CCineBlood::BloodStart);
+	pev->health = 20; //hacked health to count iterations
 }
-

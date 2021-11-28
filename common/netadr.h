@@ -28,8 +28,8 @@ typedef enum
 
 typedef struct netadr_s
 {
-	netadrtype_t	type;
-	unsigned char	ip[4];
-	unsigned char	ipx[10];
-	unsigned short	port;
+	netadrtype_t type;
+	unsigned char ip[4];
+	unsigned char ipx[10];
+	unsigned short port;
 } netadr_t;

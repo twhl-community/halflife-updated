@@ -17,12 +17,12 @@
 // YWB:  UNDONE
 
 // Spectator functions
-// 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"spectator.h"
+//
+#include "extdll.h"
+#include "util.h"
+#include "cbase.h"
+#include "monsters.h"
+#include "spectator.h"
 
 /*
 ===========
@@ -36,7 +36,7 @@ void CBaseSpectator::SpectatorConnect()
 	pev->flags = FL_SPECTATOR;
 	pev->solid = SOLID_NOT;
 	pev->movetype = MOVETYPE_NOCLIP;
-	
+
 	m_pGoalEnt = NULL;
 }
 
@@ -60,11 +60,11 @@ Called by SpectatorThink if the spectator entered an impulse
 */
 void CBaseSpectator::SpectatorImpulseCommand()
 {
-	static edict_t	*pGoal		= NULL;
-	edict_t         *pPreviousGoal;
-	edict_t         *pCurrentGoal;
-	bool			bFound;
-	
+	static edict_t* pGoal = NULL;
+	edict_t* pPreviousGoal;
+	edict_t* pCurrentGoal;
+	bool bFound;
+
 	switch (pev->impulse)
 	{
 	case 1:
@@ -72,7 +72,7 @@ void CBaseSpectator::SpectatorImpulseCommand()
 		// note that if the spectator is tracking, this doesn't do
 		// much
 		pPreviousGoal = pGoal;
-		pCurrentGoal  = pGoal;
+		pCurrentGoal = pGoal;
 		// Start at the current goal, skip the world, and stop if we looped
 		//  back around
 
@@ -94,11 +94,11 @@ void CBaseSpectator::SpectatorImpulseCommand()
 			}
 		}
 
-		if (!bFound)  // Didn't find a good spot.
+		if (!bFound) // Didn't find a good spot.
 			break;
-		
+
 		pGoal = pCurrentGoal;
-		UTIL_SetOrigin( pev, pGoal->v.origin );
+		UTIL_SetOrigin(pev, pGoal->v.origin);
 		pev->angles = pGoal->v.angles;
 		pev->fixangle = 0;
 		break;
@@ -117,15 +117,15 @@ SpectatorThink
 Called every frame after physics are run
 ================
 */
-void  CBaseSpectator::SpectatorThink()
+void CBaseSpectator::SpectatorThink()
 {
 	if ((pev->flags & FL_SPECTATOR) == 0)
 	{
 		pev->flags = FL_SPECTATOR;
 	}
 
-	pev->solid	   = SOLID_NOT;
-	pev->movetype  = MOVETYPE_NOCLIP;
+	pev->solid = SOLID_NOT;
+	pev->movetype = MOVETYPE_NOCLIP;
 
 	if (0 != pev->impulse)
 		SpectatorImpulseCommand();
@@ -144,6 +144,6 @@ void CBaseSpectator::Spawn()
 	pev->flags = FL_SPECTATOR;
 	pev->solid = SOLID_NOT;
 	pev->movetype = MOVETYPE_NOCLIP;
-	
+
 	m_pGoalEnt = NULL;
 }

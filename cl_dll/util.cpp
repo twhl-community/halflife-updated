@@ -25,10 +25,10 @@
 #include "cl_util.h"
 #include <string.h>
 
-HSPRITE LoadSprite(const char *pszName)
+HSPRITE LoadSprite(const char* pszName)
 {
 	int i;
-	char sz[256]; 
+	char sz[256];
 
 	if (ScreenWidth < 640)
 		i = 320;
@@ -39,4 +39,3 @@ HSPRITE LoadSprite(const char *pszName)
 
 	return SPR_Load(sz);
 }
-

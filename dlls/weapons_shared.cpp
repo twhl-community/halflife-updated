@@ -41,7 +41,7 @@ void AddAmmoNameToAmmoRegistry(const char* szAmmoname)
 		giAmmoIndex = 0;
 
 	CBasePlayerItem::AmmoInfoArray[giAmmoIndex].pszName = szAmmoname;
-	CBasePlayerItem::AmmoInfoArray[giAmmoIndex].iId = giAmmoIndex;   // yes, this info is redundant
+	CBasePlayerItem::AmmoInfoArray[giAmmoIndex].iId = giAmmoIndex; // yes, this info is redundant
 }
 
 bool CBasePlayerWeapon::CanDeploy()
@@ -102,7 +102,7 @@ void CBasePlayerWeapon::ResetEmptySound()
 
 bool CanAttack(float attack_time, float curtime, bool isPredicted)
 {
-#if defined( CLIENT_WEAPONS )
+#if defined(CLIENT_WEAPONS)
 	if (!isPredicted)
 #else
 	if (1)
@@ -120,7 +120,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 {
 	if ((m_fInReload) && (m_pPlayer->m_flNextAttack <= UTIL_WeaponTimeBase()))
 	{
-		// complete the reload. 
+		// complete the reload.
 		int j = V_min(iMaxClip() - m_iClip, m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]);
 
 		// Add them to the clip

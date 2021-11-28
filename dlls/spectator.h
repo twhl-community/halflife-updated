@@ -16,7 +16,7 @@
 
 #pragma once
 
-class CBaseSpectator : public CBaseEntity 
+class CBaseSpectator : public CBaseEntity
 {
 public:
 	void Spawn() override;

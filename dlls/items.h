@@ -18,9 +18,9 @@
 class CItem : public CBaseEntity
 {
 public:
-	void	Spawn() override;
-	CBaseEntity*	Respawn() override;
-	void	EXPORT ItemTouch( CBaseEntity *pOther );
-	void	EXPORT Materialize();
-	virtual bool MyTouch( CBasePlayer *pPlayer ) { return false; }
+	void Spawn() override;
+	CBaseEntity* Respawn() override;
+	void EXPORT ItemTouch(CBaseEntity* pOther);
+	void EXPORT Materialize();
+	virtual bool MyTouch(CBasePlayer* pPlayer) { return false; }
 };

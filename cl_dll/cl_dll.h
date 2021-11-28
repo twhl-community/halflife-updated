@@ -30,7 +30,7 @@
 
 #include "Platform.h"
 
-typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
+typedef int (*pfnUserMsgHook)(const char* pszName, int iSize, void* pbuf);
 
 #include "mathlib.h"
 
