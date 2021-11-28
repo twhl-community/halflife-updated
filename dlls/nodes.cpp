@@ -3305,14 +3305,12 @@ void CGraph ::ComputeStaticRoutingTables()
 		}
 		ALERT(at_aiconsole, "Size of Routes = %d\n", nTotalCompressedSize);
 	}
-	if (Routes)
-		delete Routes;
-	if (BestNextNodes)
-		delete BestNextNodes;
-	if (pRoute)
-		delete pRoute;
-	if (pMyPath)
-		delete pMyPath;
+
+	delete[] Routes;
+	delete[] BestNextNodes;
+	delete[] pRoute;
+	delete[] pMyPath;
+
 	Routes = 0;
 	BestNextNodes = 0;
 	pRoute = 0;
@@ -3447,10 +3445,8 @@ void CGraph ::TestRoutingTables()
 
 EnoughSaid:
 
-	if (pMyPath)
-		delete pMyPath;
-	if (pMyPath2)
-		delete pMyPath2;
+	delete[] pMyPath;
+	delete[] pMyPath2;
 	pMyPath = 0;
 	pMyPath2 = 0;
 }
