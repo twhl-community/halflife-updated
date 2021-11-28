@@ -16,6 +16,7 @@
 #pragma once
 
 extern void GameDLLInit( void );
+void GameDLLShutdown();
 
 
 extern cvar_t	displaysoundlist;

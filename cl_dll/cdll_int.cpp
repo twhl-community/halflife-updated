@@ -34,6 +34,7 @@
 
 #include "tri.h"
 #include "vgui_TeamFortressViewport.h"
+#include "filesystem_utils.h"
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
@@ -144,6 +145,11 @@ int DLLEXPORT Initialize(cl_enginefunc_t* pEnginefuncs, int iVersion)
 
 	EV_HookEvents();
 	CL_LoadParticleMan();
+
+	if (!FileSystem_LoadFileSystem())
+	{
+		return 0;
+	}
 
 	// get tracker interface, if any
 	return 1;

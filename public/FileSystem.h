@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include "archtypes.h"     // DAL
+#include "steam/steamtypes.h"     // DAL
 #include "interface.h"
 
 //-----------------------------------------------------------------------------

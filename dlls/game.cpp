@@ -16,6 +16,7 @@
 #include "eiface.h"
 #include "util.h"
 #include "game.h"
+#include "filesystem_utils.h"
 
 cvar_t displaysoundlist = {"displaysoundlist", "0"};
 
@@ -467,6 +468,13 @@ void GameDLLInit()
 	g_footsteps = CVAR_GET_POINTER("mp_footsteps");
 	g_psv_cheats = CVAR_GET_POINTER("sv_cheats");
 
+	if (!FileSystem_LoadFileSystem())
+	{
+		//Shut the game down as soon as possible.
+		SERVER_COMMAND("quit\n");
+		return;
+	}
+
 	CVAR_REGISTER(&displaysoundlist);
 	CVAR_REGISTER(&allow_spectators);
 
@@ -898,4 +906,9 @@ void GameDLLInit()
 	// END REGISTER CVARS FOR SKILL LEVEL STUFF
 
 	SERVER_COMMAND("exec skill.cfg\n");
+}
+
+void GameDLLShutdown()
+{
+	FileSystem_FreeFileSystem();
 }
