@@ -33,22 +33,22 @@
 class CWorldItem : public CBaseEntity
 {
 public:
-	void	KeyValue(KeyValueData *pkvd ) override;
+	bool	KeyValue(KeyValueData *pkvd ) override;
 	void	Spawn() override;
 	int		m_iType;
 };
 
 LINK_ENTITY_TO_CLASS(world_items, CWorldItem);
 
-void CWorldItem::KeyValue(KeyValueData *pkvd)
+bool CWorldItem::KeyValue(KeyValueData *pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "type"))
 	{
 		m_iType = atoi(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CBaseEntity::KeyValue( pkvd );
+
+	return CBaseEntity::KeyValue( pkvd );
 }
 
 void CWorldItem::Spawn()
@@ -102,7 +102,7 @@ void CItem::Spawn()
 	}
 }
 
-extern int gEvilImpulse101;
+extern bool gEvilImpulse101;
 
 void CItem::ItemTouch( CBaseEntity *pOther )
 {
@@ -157,7 +157,7 @@ CBaseEntity* CItem::Respawn()
 
 void CItem::Materialize()
 {
-	if ( pev->effects & EF_NODRAW )
+	if ( (pev->effects & EF_NODRAW ) != 0)
 	{
 		// changing from invisible state to visible.
 		EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, "items/suitchargeok1.wav", 1, ATTN_NORM, 0, 150 );
@@ -184,10 +184,10 @@ class CItemSuit : public CItem
 	}
 	bool MyTouch( CBasePlayer *pPlayer ) override
 	{
-		if ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) )
+		if ( (pPlayer->pev->weapons & (1<<WEAPON_SUIT) ) != 0)
 			return false;
 
-		if ( pev->spawnflags & SF_SUIT_SHORTLOGON )
+		if ( (pev->spawnflags & SF_SUIT_SHORTLOGON ) != 0)
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_A0");		// short version of suit logon,
 		else
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
@@ -222,7 +222,7 @@ class CItemBattery : public CItem
 		}
 
 		if ((pPlayer->pev->armorvalue < MAX_NORMAL_BATTERY) &&
-			(pPlayer->pev->weapons & (1<<WEAPON_SUIT)))
+			(pPlayer->pev->weapons & (1<<WEAPON_SUIT)) != 0)
 		{
 			int pct;
 			char szcharge[64];
@@ -321,7 +321,7 @@ class CItemLongJump : public CItem
 			return false;
 		}
 
-		if ( ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) ) )
+		if ( ( pPlayer->pev->weapons & (1<<WEAPON_SUIT) ) != 0 )
 		{
 			pPlayer->m_fLongJump = true;// player now has longjump module
 

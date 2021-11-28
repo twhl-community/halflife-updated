@@ -46,7 +46,7 @@
 #define TEAMMENU_WINDOW_INFO_Y			YRES(234)
       
 // Creation
-CTeamMenuPanel::CTeamMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,int tall) : CMenuPanel(iTrans, iRemoveMe, x,y,wide,tall)
+CTeamMenuPanel::CTeamMenuPanel(int iTrans, bool iRemoveMe, int x,int y,int wide,int tall) : CMenuPanel(iTrans, iRemoveMe, x,y,wide,tall)
 {
 	// Get the scheme used for the Titles
 	CSchemeManager *pSchemes = gViewPort->GetSchemeManager();
@@ -190,7 +190,7 @@ void CTeamMenuPanel::Update()
 				iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
 
 				// Start with the first option up
-				if (!m_iCurrentInfo)
+				if (0 == m_iCurrentInfo)
 					SetActiveInfo( i );
 
 				char szPlayerList[ (MAX_PLAYER_NAME_LENGTH + 3) * 31 ];  // name + ", "
@@ -202,7 +202,7 @@ void CTeamMenuPanel::Update()
 				{
 					if ( g_PlayerInfoList[j].name == NULL )
 						continue; // empty player slot, skip
-					if ( g_PlayerInfoList[j].thisplayer )
+					if ( 0 != g_PlayerInfoList[j].thisplayer )
 						continue; // skip this player
 					if ( g_PlayerExtraInfo[j].teamnumber != i )
 						continue; // skip over players in other teams
@@ -257,7 +257,7 @@ void CTeamMenuPanel::Update()
 	}
 	
 	// If the player is already in a team, make the cancel button visible
-	if ( g_iTeamNumber )
+	if ( 0 != g_iTeamNumber )
 	{
 		m_pCancelButton->setPos( TEAMMENU_TOPLEFT_BUTTON_X, iYPos );
 		iYPos += TEAMMENU_BUTTON_SIZE_Y + TEAMMENU_BUTTON_SPACER_Y;
@@ -272,7 +272,7 @@ void CTeamMenuPanel::Update()
 	if (!m_bUpdatedMapName)
 	{
 		const char *level = gEngfuncs.pfnGetLevelName();
-		if (level && level[0])
+		if (level && '\0' != level[0])
 		{
 			char sz[256]; 
 			char szTitle[256]; 

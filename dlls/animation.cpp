@@ -28,13 +28,13 @@ extern globalvars_t				*gpGlobals;
 
 
 
-int ExtractBbox( void *pmodel, int sequence, float *mins, float *maxs )
+bool ExtractBbox( void *pmodel, int sequence, float *mins, float *maxs )
 {
 	studiohdr_t *pstudiohdr;
 	
 	pstudiohdr = (studiohdr_t *)pmodel;
 	if (! pstudiohdr)
-		return 0;
+		return false;
 
 	mstudioseqdesc_t	*pseqdesc;
 
@@ -48,7 +48,7 @@ int ExtractBbox( void *pmodel, int sequence, float *mins, float *maxs )
 	maxs[1] = pseqdesc[ sequence ].bbmax[1];
 	maxs[2] = pseqdesc[ sequence ].bbmax[2];
 
-	return 1;
+	return true;
 }
 
 
@@ -71,7 +71,7 @@ int LookupActivity( void *pmodel, entvars_t *pev, int activity )
 		if (pseqdesc[i].activity == activity)
 		{
 			weighttotal += pseqdesc[i].actweight;
-			if (!weighttotal || RANDOM_LONG(0,weighttotal-1) < pseqdesc[i].actweight)
+			if (0 == weighttotal || RANDOM_LONG(0,weighttotal-1) < pseqdesc[i].actweight)
 				seq = i;
 		}
 	}
@@ -146,11 +146,11 @@ int LookupSequence( void *pmodel, const char *label )
 }
 
 
-int IsSoundEvent( int eventNumber )
+bool IsSoundEvent( int eventNumber )
 {
 	if ( eventNumber == SCRIPT_EVENT_SOUND || eventNumber == SCRIPT_EVENT_SOUND_VOICE )
-		return 1;
-	return 0;
+		return true;
+	return false;
 }
 
 
@@ -181,7 +181,7 @@ void SequencePrecache( void *pmodel, const char *pSequenceName )
 			// of it's name if it is.
 			if ( IsSoundEvent( pevent[i].event ) )
 			{
-				if ( !strlen(pevent[i].options) )
+				if ( 0 == strlen(pevent[i].options) )
 				{
 					ALERT( at_error, "Bad sound event %d in sequence %s :: %s (sound is \"%s\")\n", pevent[i].event, pstudiohdr->name, pSequenceName, pevent[i].options );
 				}
@@ -279,7 +279,7 @@ int GetAnimationEvent( void *pmodel, entvars_t *pev, MonsterEvent_t *pMonsterEve
 			continue;
 
 		if ( (pevent[index].frame >= flStart && pevent[index].frame < flEnd) || 
-			((pseqdesc->flags & STUDIO_LOOPING) && flEnd >= pseqdesc->numframes - 1 && pevent[index].frame < flEnd - pseqdesc->numframes + 1) )
+			((pseqdesc->flags & STUDIO_LOOPING) != 0 && flEnd >= pseqdesc->numframes - 1 && pevent[index].frame < flEnd - pseqdesc->numframes + 1) )
 		{
 			pMonsterEvent->event = pevent[index].event;
 			pMonsterEvent->options = pevent[index].options;
@@ -311,7 +311,7 @@ float SetController( void *pmodel, entvars_t *pev, int iController, float flValu
 
 	// wrap 0..360 if it's a rotational controller
 
-	if (pbonecontroller->type & (STUDIO_XR | STUDIO_YR | STUDIO_ZR))
+	if ((pbonecontroller->type & (STUDIO_XR | STUDIO_YR | STUDIO_ZR)) != 0)
 	{
 		// ugly hack, invert value if end < start
 		if (pbonecontroller->end < pbonecontroller->start)
@@ -359,7 +359,7 @@ float SetBlending( void *pmodel, entvars_t *pev, int iBlender, float flValue )
 	if (pseqdesc->blendtype[iBlender] == 0)
 		return flValue;
 
-	if (pseqdesc->blendtype[iBlender] & (STUDIO_XR | STUDIO_YR | STUDIO_ZR))
+	if ((pseqdesc->blendtype[iBlender] & (STUDIO_XR | STUDIO_YR | STUDIO_ZR)) != 0)
 	{
 		// ugly hack, invert value if end < start
 		if (pseqdesc->blendend[iBlender] < pseqdesc->blendstart[iBlender])
@@ -441,7 +441,7 @@ int FindTransition( void *pmodel, int iEndingAnim, int iGoalAnim, int *piDir )
 			*piDir = 1;
 			return i;
 		}
-		if (pseqdesc[i].nodeflags)
+		if (0 != pseqdesc[i].nodeflags)
 		{
 			if (pseqdesc[i].exitnode == iEndNode && pseqdesc[i].entrynode == iInternNode)
 			{

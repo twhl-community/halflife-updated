@@ -173,16 +173,16 @@ public:
 	enum NODEQUERY { NODEGRAPH_DYNAMIC, NODEGRAPH_STATIC };
 	// A static query means we're asking about the possiblity of handling this entity at ANY time
 	// A dynamic query means we're asking about it RIGHT NOW.  So we should query the current state
-	int		HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, NODEQUERY queryType );
+	bool		HandleLinkEnt ( int iNode, entvars_t *pevLinkEnt, int afCapMask, NODEQUERY queryType );
 	entvars_t*	LinkEntForLink ( CLink *pLink, CNode *pNode );
 	void	ShowNodeConnections ( int iNode );
 	void	InitGraph();
-	int		AllocNodes ();
+	bool		AllocNodes ();
 	
-	int		CheckNODFile(char *szMapName);
-	int		FLoadGraph(char *szMapName);
-	int		FSaveGraph(char *szMapName);
-	int		FSetGraphPointers();
+	bool	CheckNODFile(char *szMapName);
+	bool	FLoadGraph(char *szMapName);
+	bool	FSaveGraph(char *szMapName);
+	bool	FSetGraphPointers();
 	void	CheckNode(Vector vecOrigin, int iNode);
 
 	void    BuildRegionTables();
@@ -264,7 +264,7 @@ public:
 class CNodeEnt : public CBaseEntity
 {
 	void Spawn() override;
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 	int	ObjectCaps() override { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	short m_sHintType;
@@ -300,8 +300,8 @@ class CQueue
 public:
 
 	CQueue();// constructor
-	inline int Full () { return ( m_cSize == MAX_STACK_NODES ); }
-	inline int Empty () { return ( m_cSize == 0 ); }
+	inline bool Full () { return ( m_cSize == MAX_STACK_NODES ); }
+	inline bool Empty () { return ( m_cSize == 0 ); }
 	//inline int Tail () { return ( m_queue[ m_tail ] ); }
 	inline int Size () { return ( m_cSize ); }
 	void Insert( int, float );
@@ -327,8 +327,8 @@ class CQueuePriority
 public:
 
 	CQueuePriority();// constructor
-	inline int Full () { return ( m_cSize == MAX_STACK_NODES ); }
-	inline int Empty () { return ( m_cSize == 0 ); }
+	inline bool Full () { return ( m_cSize == MAX_STACK_NODES ); }
+	inline bool Empty () { return ( m_cSize == 0 ); }
 	//inline int Tail ( float & ) { return ( m_queue[ m_tail ].Id ); }
 	inline int Size () { return ( m_cSize ); }
 	void Insert( int, float );

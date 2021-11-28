@@ -292,7 +292,7 @@ void CommandButton::setParentMenu( CCommandMenu *pParentMenu )
 
 
 //===========================================================
-int ClassButton::IsNotValid()
+bool ClassButton::IsNotValid()
 {
 	// If this is the main ChangeClass button, remove it if the player's only able to be civilians
 	if ( m_iPlayerClass == -1 )

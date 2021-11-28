@@ -27,7 +27,7 @@
 
 DECLARE_MESSAGE( m_StatusIcons, StatusIcon );
 
-int CHudStatusIcons::Init()
+bool CHudStatusIcons::Init()
 {
 	HOOK_MESSAGE( StatusIcon );
 
@@ -35,13 +35,13 @@ int CHudStatusIcons::Init()
 
 	Reset();
 
-	return 1;
+	return true;
 }
 
-int CHudStatusIcons::VidInit()
+bool CHudStatusIcons::VidInit()
 {
 
-	return 1;
+	return true;
 }
 
 void CHudStatusIcons::Reset()
@@ -51,10 +51,10 @@ void CHudStatusIcons::Reset()
 }
 
 // Draw status icons along the left-hand side of the screen
-int CHudStatusIcons::Draw( float flTime )
+bool CHudStatusIcons::Draw( float flTime )
 {
-	if (gEngfuncs.IsSpectateOnly())
-		return 1;
+	if (0 != gEngfuncs.IsSpectateOnly())
+		return true;
 	// find starting position to draw from, along right-hand side of screen
 	int x = 5;
 	int y = ScreenHeight / 2;
@@ -62,7 +62,7 @@ int CHudStatusIcons::Draw( float flTime )
 	// loop through icon list, and draw any valid icons drawing up from the middle of screen
 	for ( int i = 0; i < MAX_ICONSPRITES; i++ )
 	{
-		if ( m_IconList[i].spr )
+		if ( 0 != m_IconList[i].spr )
 		{
 			y -= ( m_IconList[i].rc.bottom - m_IconList[i].rc.top ) + 5;
 			
@@ -71,7 +71,7 @@ int CHudStatusIcons::Draw( float flTime )
 		}
 	}
 	
-	return 1;
+	return true;
 }
 
 // Message handler for StatusIcon message
@@ -81,11 +81,11 @@ int CHudStatusIcons::Draw( float flTime )
 //		byte   : red
 //		byte   : green
 //		byte   : blue
-int CHudStatusIcons::MsgFunc_StatusIcon( const char *pszName, int iSize, void *pbuf )
+bool CHudStatusIcons::MsgFunc_StatusIcon( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
-	int ShouldEnable = READ_BYTE();
+	bool ShouldEnable = READ_BYTE() != 0;
 	char *pszIconName = READ_STRING();
 	if ( ShouldEnable )
 	{
@@ -100,7 +100,7 @@ int CHudStatusIcons::MsgFunc_StatusIcon( const char *pszName, int iSize, void *p
 		DisableIcon( pszIconName );
 	}
 
-	return 1;
+	return true;
 }
 
 // add the icon to the icon list, and set it's drawing color
@@ -119,7 +119,7 @@ void CHudStatusIcons::EnableIcon( const char *pszIconName, unsigned char red, un
 		// icon not in list, so find an empty slot to add to
 		for ( i = 0; i < MAX_ICONSPRITES; i++ )
 		{
-			if ( !m_IconList[i].spr )
+			if ( 0 == m_IconList[i].spr )
 				break;
 		}
 	}

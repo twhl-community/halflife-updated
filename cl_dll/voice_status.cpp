@@ -38,7 +38,7 @@
 using namespace vgui;
 
 
-extern int cam_thirdperson;
+extern bool cam_thirdperson;
 
 
 #define VOICE_MODEL_INTERVAL		0.3
@@ -246,7 +246,7 @@ int CVoiceStatus::Init(
 }
 
 
-int CVoiceStatus::VidInit()
+bool CVoiceStatus::VidInit()
 {
 	FreeBitmaps();
 
@@ -335,7 +335,7 @@ void CVoiceStatus::Frame(double frametime)
 
 void CVoiceStatus::CreateEntities()
 {
-	if(!m_VoiceHeadModel)
+	if(0 == m_VoiceHeadModel)
 		return;
 
 	cl_entity_t *localPlayer = gEngfuncs.GetLocalPlayer();
@@ -353,7 +353,7 @@ void CVoiceStatus::CreateEntities()
 			continue;
 
 		// Don't show an icon for dead or spectating players (ie: invisible entities).
-		if(pClient->curstate.effects & EF_NODRAW)
+		if((pClient->curstate.effects & EF_NODRAW) != 0)
 			continue;
 
 		// Don't show an icon for the local player unless we're in thirdperson mode.
@@ -386,7 +386,7 @@ void CVoiceStatus::CreateEntities()
 }
 
 
-void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
+void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
 {
 	cvar_t *pVoiceLoopback = NULL;
 
@@ -395,10 +395,10 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 		return;
 	}
 
-	if ( gEngfuncs.pfnGetCvarFloat( "voice_clientdebug" ) )
+	if ( 0 != gEngfuncs.pfnGetCvarFloat( "voice_clientdebug" ) )
 	{
 		char msg[256];
-		snprintf( msg, sizeof( msg ), "CVoiceStatus::UpdateSpeakerStatus: ent %d talking = %d\n", entindex, bTalking );
+		snprintf( msg, sizeof( msg ), "CVoiceStatus::UpdateSpeakerStatus: ent %d talking = %d\n", entindex, static_cast<int>(bTalking) );
 		gEngfuncs.pfnConsolePrint( msg );
 	}
 
@@ -407,7 +407,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 	// Is it the local player talking?
 	if ( entindex == -1 )
 	{
-		m_bTalking = !!bTalking;
+		m_bTalking = bTalking;
 		if( bTalking )
 		{
 			// Enable voice for them automatically if they try to talk.
@@ -422,7 +422,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 	}
 	else if ( entindex == -2 )
 	{
-		m_bServerAcked = !!bTalking;
+		m_bServerAcked = bTalking;
 	}
 
 	if ( entindex >= 0 && entindex <= VOICE_MAX_PLAYERS )
@@ -443,7 +443,7 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, qboolean bTalking )
 			if ( !pLabel )
 			{
 				// if this isn't the local player (unless they have voice_loopback on)
-				if ( ( entindex != iLocalPlayerIndex ) || ( pVoiceLoopback && pVoiceLoopback->value ) )
+				if ( ( entindex != iLocalPlayerIndex ) || ( pVoiceLoopback && 0 != pVoiceLoopback->value ) )
 				{
 					if ( pLabel = GetFreeVoiceLabel() )
 					{
@@ -500,7 +500,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 	char const *pLevelName = gEngfuncs.pfnGetLevelName();
 	if( pLevelName[0] == 0 )
 	{
-		if( gEngfuncs.pfnGetCvarFloat("voice_clientdebug") )
+		if( 0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug") )
 		{
 			gEngfuncs.pfnConsolePrint( "CVoiceStatus::UpdateServerState: pLevelName[0]==0\n" );
 		}
@@ -508,7 +508,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 		return;
 	}
 	
-	int bCVarModEnable = !!gEngfuncs.pfnGetCvarFloat("voice_modenable");
+	int bCVarModEnable = static_cast<int>(0 != gEngfuncs.pfnGetCvarFloat("voice_modenable"));
 	if(bForce || m_bServerModEnable != bCVarModEnable)
 	{
 		m_bServerModEnable = bCVarModEnable;
@@ -517,7 +517,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 		snprintf(str, sizeof(str), "VModEnable %d", m_bServerModEnable);
 		ServerCmd(str);
 
-		if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+		if(0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			char msg[256];
 			sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
@@ -536,7 +536,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 		for(unsigned long i=0; i < 32; i++)
 		{
 			char playerID[16];
-			if(!gEngfuncs.GetPlayerUniqueID(i+1, playerID))
+			if(0 == gEngfuncs.GetPlayerUniqueID(i+1, playerID))
 				continue;
 
 			if(m_BanMgr.GetPlayerBan(playerID))
@@ -557,7 +557,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 
 	if(bChange || bForce)
 	{
-		if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+		if(0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			char msg[256];
 			sprintf(msg, "CVoiceStatus::UpdateServerState: Sending '%s'\n", str);
@@ -568,7 +568,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 	}
 	else
 	{
-		if (gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+		if (0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			gEngfuncs.pfnConsolePrint( "CVoiceStatus::UpdateServerState: no change\n" );
 		}
@@ -640,7 +640,7 @@ void CVoiceStatus::HandleVoiceMaskMsg(int iSize, void *pbuf)
 		m_AudiblePlayers.SetDWord(dw, (unsigned long)READ_LONG());
 		m_ServerBannedPlayers.SetDWord(dw, (unsigned long)READ_LONG());
 
-		if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+		if(0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 		{
 			char str[256];
 			gEngfuncs.pfnConsolePrint("CVoiceStatus::HandleVoiceMaskMsg\n");
@@ -658,7 +658,7 @@ void CVoiceStatus::HandleVoiceMaskMsg(int iSize, void *pbuf)
 
 void CVoiceStatus::HandleReqStateMsg(int iSize, void *pbuf)
 {
-	if(gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+	if(0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 	{
 		gEngfuncs.pfnConsolePrint("CVoiceStatus::HandleReqStateMsg\n");
 	}
@@ -761,7 +761,7 @@ void CVoiceStatus::RepositionLabels()
 		m_pLocalLabel->setParent(*m_pParentPanel);
 		m_pLocalLabel->setVisible( true );
 
-		if( m_bServerAcked && !!gEngfuncs.pfnGetCvarFloat("voice_clientdebug") )
+		if( m_bServerAcked && 0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug") )
 			m_pLocalLabel->setImage( m_pAckBitmap );
 		else
 			m_pLocalLabel->setImage( m_pLocalBitmap );
@@ -832,7 +832,7 @@ void CVoiceStatus::FreeBitmaps()
 bool CVoiceStatus::IsPlayerBlocked(int iPlayer)
 {
 	char playerID[16];
-	if (!gEngfuncs.GetPlayerUniqueID(iPlayer, playerID))
+	if (0 == gEngfuncs.GetPlayerUniqueID(iPlayer, playerID))
 		return false;
 
 	return m_BanMgr.GetPlayerBan(playerID);
@@ -855,25 +855,25 @@ bool CVoiceStatus::IsPlayerAudible(int iPlayer)
 //-----------------------------------------------------------------------------
 void CVoiceStatus::SetPlayerBlockedState(int iPlayer, bool blocked)
 {
-	if (gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+	if (0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 	{
 		gEngfuncs.pfnConsolePrint( "CVoiceStatus::SetPlayerBlockedState part 1\n" );
 	}
 
 	char playerID[16];
-	if (!gEngfuncs.GetPlayerUniqueID(iPlayer, playerID))
+	if (0 == gEngfuncs.GetPlayerUniqueID(iPlayer, playerID))
 		return;
 
-	if (gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+	if (0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 	{
 		gEngfuncs.pfnConsolePrint( "CVoiceStatus::SetPlayerBlockedState part 2\n" );
 	}
 
 	// Squelch or (try to) unsquelch this player.
-	if (gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
+	if (0 != gEngfuncs.pfnGetCvarFloat("voice_clientdebug"))
 	{
 		char str[256];
-		sprintf(str, "CVoiceStatus::SetPlayerBlockedState: setting player %d ban to %d\n", iPlayer, !m_BanMgr.GetPlayerBan(playerID));
+		sprintf(str, "CVoiceStatus::SetPlayerBlockedState: setting player %d ban to %d\n", iPlayer, static_cast<int>(!m_BanMgr.GetPlayerBan(playerID)));
 		gEngfuncs.pfnConsolePrint(str);
 	}
 

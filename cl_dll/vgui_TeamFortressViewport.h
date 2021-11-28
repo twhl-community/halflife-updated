@@ -198,7 +198,7 @@ public:
 		m_pSubLabel = pSubLabel;
 	}
 
-	virtual int IsNotValid( void )
+	virtual bool IsNotValid( void )
 	{
 		return false;
 	}
@@ -371,8 +371,8 @@ private:
 	CommandButton *m_aButtons[ MAX_BUTTONS ];
 	int			  m_iButtons;
 
-	// opens menu from top to bottom (0 = default), or from bottom to top (1)?
-	int				m_iDirection; 
+	// opens menu from top to bottom (false = default), or from bottom to top (true)?
+	bool			m_iDirection; 
 public:
 	CCommandMenu( CCommandMenu *pParentMenu, int x,int y,int wide,int tall ) : Panel(x,y,wide,tall)
 	{
@@ -380,11 +380,11 @@ public:
 		m_iXOffset = x;
 		m_iYOffset = y;
 		m_iButtons = 0;
-		m_iDirection = 0;
+		m_iDirection = false;
 	}
 
 
-	CCommandMenu( CCommandMenu *pParentMenu, int direction, int x,int y,int wide,int tall ) : Panel(x,y,wide,tall)
+	CCommandMenu( CCommandMenu *pParentMenu, bool direction, int x,int y,int wide,int tall ) : Panel(x,y,wide,tall)
 	{
 		m_pParentMenu = pParentMenu;
 		m_iXOffset = x;
@@ -394,7 +394,7 @@ public:
 	}
 
 	float		m_flButtonSizeY;
-	int			m_iSpectCmdMenu;
+	bool		m_iSpectCmdMenu;
 	void		AddButton( CommandButton *pButton );
 	bool		RecalculateVisibles( int iNewYPos, bool bHideAll );
 	void		RecalculatePositions( int iYOffset );
@@ -403,7 +403,7 @@ public:
 	CCommandMenu *GetParentMenu() { return m_pParentMenu; };
 	int			GetXOffset() { return m_iXOffset; };
 	int			GetYOffset() { return m_iYOffset; };
-	int			GetDirection() { return m_iDirection; };
+	bool		GetDirection() { return m_iDirection; };
 	int			GetNumButtons() { return m_iButtons; };
 	CommandButton *FindButtonWithSubmenu( CCommandMenu *pSubMenu );
 
@@ -491,7 +491,7 @@ private:
 	vgui::Cursor* _cursorNone;
 	vgui::Cursor* _cursorArrow;
 
-	int			 m_iInitialized;
+	bool		 m_iInitialized;
 
 	CCommandMenu *m_pCommandMenus[ MAX_MENUS ];
 	CCommandMenu *m_pCurrentCommandMenu;
@@ -516,7 +516,7 @@ private:
 	CSchemeManager m_SchemeManager;
 
 	// MOTD
-	int		m_iGotAllMOTD;
+	bool	m_iGotAllMOTD;
 	char	m_szMOTD[ MAX_MOTD_LENGTH ];
 
 	//  Command Menu Team buttons
@@ -525,15 +525,15 @@ private:
 	BuildButton   *m_pBuildButtons[3];
 	BuildButton   *m_pBuildActiveButtons[3];
 
-	int					m_iAllowSpectators;
+	bool		m_iAllowSpectators;
 
 	// Data for specific sections of the Command Menu
 	int			m_iValidClasses[5];
-	int			m_iIsFeigning;
+	bool		m_iIsFeigning;
 	int			m_iIsSettingDetpack;
 	int			m_iNumberOfTeams;
 	int			m_iBuildState;
-	int			m_iRandomPC;
+	bool		m_iRandomPC;
 	char		m_sTeamNames[5][MAX_TEAMNAME_SIZE];
 
 	// Localisation strings
@@ -548,7 +548,7 @@ public:
 	TeamFortressViewport(int x,int y,int wide,int tall);
 	void Initialize( void );
 
-	int		CreateCommandMenu( const char * menuFile, int direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset );
+	int		CreateCommandMenu( const char * menuFile, bool direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset );
 	void	CreateScoreBoard( void );
 	CommandButton * CreateCustomButton( char *pButtonText, char * pButtonName, int  iYOffset );
 	CCommandMenu *	CreateDisguiseSubmenu( CommandButton *pButton, CCommandMenu *pParentMenu, const char *commandText, int iYOffset, int iXOffset = 0 );
@@ -559,7 +559,7 @@ public:
 	void UpdateHighlights( void );
 	void UpdateSpectatorPanel( void );
 
-	int	 KeyInput( int down, int keynum, const char *pszCurrentBinding );
+	bool KeyInput( bool down, int keynum, const char *pszCurrentBinding );
 	void InputPlayerSpecial( void );
 	void GetAllPlayersInfo( void );
 	void DeathMsg( int killer, int victim );
@@ -587,30 +587,30 @@ public:
 	// Data Handlers
 	int GetValidClasses(int iTeam) { return m_iValidClasses[iTeam]; };
 	int GetNumberOfTeams() { return m_iNumberOfTeams; };
-	int GetIsFeigning() { return m_iIsFeigning; };
+	bool GetIsFeigning() { return m_iIsFeigning; };
 	int GetIsSettingDetpack() { return m_iIsSettingDetpack; };
 	int GetBuildState() { return m_iBuildState; };
-	int IsRandomPC() { return m_iRandomPC; };
+	bool IsRandomPC() { return m_iRandomPC; };
 	char *GetTeamName( int iTeam ) { return m_sTeamNames[iTeam]; };
-	int GetAllowSpectators() { return m_iAllowSpectators; };
+	bool GetAllowSpectators() { return m_iAllowSpectators; };
 
 	// Message Handlers
-	int MsgFunc_ValClass(const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_TeamNames(const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_Feign(const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_TeamScore( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf );
-	int MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf );	
-	int MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf );	
+	bool MsgFunc_ValClass(const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_TeamNames(const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_Feign(const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_TeamScore( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf );	
+	bool MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf );	
 
 	// Input
 	bool SlotInput( int iSlot );
@@ -644,7 +644,7 @@ class CMenuHandler_StringCommand : public ActionSignal
 {
 protected:
 	char	m_pszCommand[MAX_COMMAND_SIZE];
-	int		m_iCloseVGUIMenu;
+	bool	m_iCloseVGUIMenu;
 public:
 	CMenuHandler_StringCommand( const char *pszCommand )
 	{
@@ -653,7 +653,7 @@ public:
 		m_iCloseVGUIMenu = false;
 	}
 
-	CMenuHandler_StringCommand( const char *pszCommand, int iClose )
+	CMenuHandler_StringCommand( const char *pszCommand, bool iClose )
 	{
 		strncpy( m_pszCommand, pszCommand, MAX_COMMAND_SIZE);
 		m_pszCommand[MAX_COMMAND_SIZE-1] = '\0';
@@ -681,7 +681,7 @@ public:
 	{
 	}
 
-	CMenuHandler_StringCommandWatch( const char *pszCommand, int iClose ) : CMenuHandler_StringCommand( pszCommand, iClose )
+	CMenuHandler_StringCommandWatch( const char *pszCommand, bool iClose ) : CMenuHandler_StringCommand( pszCommand, iClose )
 	{
 	}
 
@@ -981,7 +981,7 @@ public:
 		m_iPlayerClass = iClass;
 	}
 
-	virtual int IsNotValid();
+	virtual bool IsNotValid();
 };
 
 class TeamButton : public CommandButton
@@ -994,7 +994,7 @@ public:
 		m_iTeamNumber = iTeam;
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 		int iTeams = gViewPort->GetNumberOfTeams();
 		// Never valid if there's only 1 team
@@ -1015,14 +1015,14 @@ public:
 class FeignButton : public CommandButton
 {
 private:
-	int	m_iFeignState;
+	bool m_iFeignState;
 public:
-	FeignButton( int iState, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall)
+	FeignButton( bool iState, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall)
 	{
 		m_iFeignState = iState;
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 		// Only visible for spies
 #ifdef _TFC
@@ -1043,10 +1043,10 @@ public:
 	{
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 		// Only visible if the server allows it
-		if ( gViewPort->GetAllowSpectators() != 0 )
+		if ( gViewPort->GetAllowSpectators() )
 			return false;
 
 		return true;
@@ -1069,7 +1069,7 @@ public:
 		m_iValidTeamsBits = iValidTeamNumsBits;
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 #ifdef _TFC
 		// Only visible for spies
@@ -1099,7 +1099,7 @@ public:
 		m_iDetpackState = iState;
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 #ifdef _TFC
 		// Only visible for demomen
@@ -1141,7 +1141,7 @@ public:
 		m_iBuildData = iData;
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 #ifdef _TFC
 		// Only visible for engineers
@@ -1217,7 +1217,7 @@ public:
 		sprintf( m_szMapName, "maps/%s.bsp", pMapName );
 	}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 		const char *level = gEngfuncs.pfnGetLevelName();
 		if (!level)
@@ -1243,7 +1243,7 @@ public:
 	TeamOnlyCommandButton( int iTeamNum, const char* text,int x,int y,int wide,int tall, bool flat ) : 
 	  CommandButton( text, x, y, wide, tall, false, flat ), m_iTeamNum(iTeamNum) {}
 
-	virtual int IsNotValid()
+	virtual bool IsNotValid()
 	{
 		if ( g_iTeamNumber != m_iTeamNum )
 			return true;
@@ -1563,17 +1563,17 @@ class CMenuPanel : public CTransparentPanel
 private:
 	CMenuPanel *m_pNextMenu;
 	int			m_iMenuID;
-	int			m_iRemoveMe;
-	int			m_iIsActive;
+	bool		m_iRemoveMe;
+	bool		m_iIsActive;
 	float		m_flOpenTime;
 public:
-	CMenuPanel(int iRemoveMe, int x,int y,int wide,int tall) : CTransparentPanel(100, x,y,wide,tall)
+	CMenuPanel(bool iRemoveMe, int x,int y,int wide,int tall) : CTransparentPanel(100, x,y,wide,tall)
 	{
 		Reset();
 		m_iRemoveMe = iRemoveMe;
 	}
 
-	CMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,int tall) : CTransparentPanel(iTrans, x,y,wide,tall)
+	CMenuPanel(int iTrans, bool iRemoveMe, int x,int y,int wide,int tall) : CTransparentPanel(iTrans, x,y,wide,tall)
 	{
 		Reset();
 		m_iRemoveMe = iRemoveMe;
@@ -1599,7 +1599,7 @@ public:
 		m_iMenuID = iID;
 	}
 
-	void SetActive( int iState )
+	void SetActive( bool iState )
 	{
 		m_iIsActive = iState;
 	}
@@ -1623,10 +1623,10 @@ public:
 		// This MenuPanel has now been deleted. Don't append code here.
 	}
 
-	int			ShouldBeRemoved() { return m_iRemoveMe; };
+	bool		ShouldBeRemoved() { return m_iRemoveMe; };
 	CMenuPanel* GetNextMenu() { return m_pNextMenu; };
 	int			GetMenuID() { return m_iMenuID; };
-	int			IsActive() { return m_iIsActive; };
+	bool		IsActive() { return m_iIsActive; };
 	float		GetOpenTime() { return m_flOpenTime; };
 
 	// Numeric input
@@ -1686,7 +1686,7 @@ private:
 	char m_sPlayersOnTeamString[STRLENMAX_PLAYERSONTEAM];
 
 public:
-	CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,int tall);
+	CClassMenuPanel(int iTrans, bool iRemoveMe, int x,int y,int wide,int tall);
 
 	virtual bool SlotInput( int iSlot );
 	virtual void Open( void );
@@ -1717,7 +1717,7 @@ public:
 	int					m_iCurrentInfo;
 
 public:
-	CTeamMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,int tall);
+	CTeamMenuPanel(int iTrans, bool iRemoveMe, int x,int y,int wide,int tall);
 
 	virtual bool SlotInput( int iSlot );
 	virtual void Open( void );

@@ -29,12 +29,12 @@
 class CLight : public CPointEntity
 {
 public:
-	void	KeyValue( KeyValueData* pkvd ) override;
+	bool	KeyValue( KeyValueData* pkvd ) override;
 	void	Spawn() override;
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -56,27 +56,25 @@ IMPLEMENT_SAVERESTORE( CLight, CPointEntity );
 //
 // Cache user-entity-field values until spawn is called.
 //
-void CLight :: KeyValue( KeyValueData* pkvd)
+bool CLight :: KeyValue( KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style"))
 	{
 		m_iStyle = atoi(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pitch"))
 	{
 		pev->angles.x = atof(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "pattern"))
 	{
 		m_iszPattern = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-	{
-		CPointEntity::KeyValue( pkvd );
-	}
+
+	return CPointEntity::KeyValue( pkvd );
 }
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) LIGHT_START_OFF
@@ -99,7 +97,7 @@ void CLight :: Spawn()
 //		CHANGE_METHOD(ENT(pev), em_use, light_use);
 		if (FBitSet(pev->spawnflags, SF_LIGHT_START_OFF))
 			LIGHT_STYLE(m_iStyle, "a");
-		else if (m_iszPattern)
+		else if (!FStringNull(m_iszPattern))
 			LIGHT_STYLE(m_iStyle, (char *)STRING( m_iszPattern ));
 		else
 			LIGHT_STYLE(m_iStyle, "m");
@@ -116,7 +114,7 @@ void CLight :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 
 		if (FBitSet(pev->spawnflags, SF_LIGHT_START_OFF))
 		{
-			if (m_iszPattern)
+			if (!FStringNull(m_iszPattern))
 				LIGHT_STYLE(m_iStyle, (char *)STRING( m_iszPattern ));
 			else
 				LIGHT_STYLE(m_iStyle, "m");
@@ -139,13 +137,13 @@ LINK_ENTITY_TO_CLASS( light_spot, CLight );
 class CEnvLight : public CLight
 {
 public:
-	void	KeyValue( KeyValueData* pkvd ) override;
+	bool	KeyValue( KeyValueData* pkvd ) override;
 	void	Spawn() override;
 };
 
 LINK_ENTITY_TO_CLASS( light_environment, CEnvLight );
 
-void CEnvLight::KeyValue( KeyValueData* pkvd )
+bool CEnvLight::KeyValue( KeyValueData* pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "_light"))
 	{
@@ -168,18 +166,17 @@ void CEnvLight::KeyValue( KeyValueData* pkvd )
 		g = pow( g / 114.0, 0.6 ) * 264;
 		b = pow( b / 114.0, 0.6 ) * 264;
 
-		pkvd->fHandled = true;
 		sprintf( szColor, "%d", r );
 		CVAR_SET_STRING( "sv_skycolor_r", szColor );
 		sprintf( szColor, "%d", g );
 		CVAR_SET_STRING( "sv_skycolor_g", szColor );
 		sprintf( szColor, "%d", b );
 		CVAR_SET_STRING( "sv_skycolor_b", szColor );
+
+		return true;
 	}
-	else
-	{
-		CLight::KeyValue( pkvd );
-	}
+
+	return CLight::KeyValue( pkvd );
 }
 
 

@@ -34,9 +34,9 @@ class CRuleEntity : public CBaseEntity
 {
 public:
 	void	Spawn() override;
-	void	KeyValue( KeyValueData *pkvd ) override;
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	KeyValue( KeyValueData *pkvd ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void	SetMaster( int iszMaster ) { m_iszMaster = iszMaster; }
@@ -64,25 +64,22 @@ void CRuleEntity::Spawn()
 }
 
 
-void CRuleEntity::KeyValue( KeyValueData *pkvd )
+bool CRuleEntity::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "master"))
 	{
 		SetMaster( ALLOC_STRING(pkvd->szValue) );
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CBaseEntity::KeyValue( pkvd );
+
+	return CBaseEntity::KeyValue( pkvd );
 }
 
 bool CRuleEntity::CanFireForActivator( CBaseEntity *pActivator )
 {
-	if ( m_iszMaster )
+	if ( !FStringNull(m_iszMaster ))
 	{
-		if ( UTIL_IsMasterTriggered( m_iszMaster, pActivator ) )
-			return true;
-		else
-			return false;
+		return UTIL_IsMasterTriggered(m_iszMaster, pActivator);
 	}
 	
 	return true;
@@ -136,11 +133,11 @@ class CGameScore : public CRulePointEntity
 public:
 	void	Spawn() override;
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	void	KeyValue( KeyValueData *pkvd ) override;
+	bool	KeyValue( KeyValueData *pkvd ) override;
 
 	inline	int		Points() { return pev->frags; }
-	inline	bool	AllowNegativeScore() { return pev->spawnflags & SF_SCORE_NEGATIVE; }
-	inline	bool	AwardToTeam() { return pev->spawnflags & SF_SCORE_TEAM; }
+	inline	bool	AllowNegativeScore() { return (pev->spawnflags & SF_SCORE_NEGATIVE) != 0; }
+	inline	bool	AwardToTeam() { return (pev->spawnflags & SF_SCORE_TEAM) != 0; }
 
 	inline	void	SetPoints( int points ) { pev->frags = points; }
 
@@ -156,15 +153,15 @@ void CGameScore::Spawn()
 }
 
 
-void CGameScore::KeyValue( KeyValueData *pkvd )
+bool CGameScore::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "points"))
 	{
 		SetPoints( atoi(pkvd->szValue) );
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CRulePointEntity::KeyValue( pkvd );
+
+	return CRulePointEntity::KeyValue( pkvd );
 }
 
 
@@ -223,13 +220,13 @@ class CGameText : public CRulePointEntity
 {
 public:
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	void	KeyValue( KeyValueData *pkvd ) override;
+	bool	KeyValue( KeyValueData *pkvd ) override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	inline	bool	MessageToAll() { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS); }
+	inline	bool	MessageToAll() { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS) != 0; }
 	inline	void	MessageSet( const char *pMessage ) { pev->message = ALLOC_STRING(pMessage); }
 	inline	const char *MessageGet()	{ return STRING(pev->message); }
 
@@ -250,27 +247,27 @@ TYPEDESCRIPTION	CGameText::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( CGameText, CRulePointEntity );
 
 
-void CGameText::KeyValue( KeyValueData *pkvd )
+bool CGameText::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "channel"))
 	{
 		m_textParms.channel = atoi( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "x"))
 	{
 		m_textParms.x = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "y"))
 	{
 		m_textParms.y = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "effect"))
 	{
 		m_textParms.effect = atoi( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "color"))
 	{
@@ -280,7 +277,7 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 		m_textParms.g1 = color[1];
 		m_textParms.b1 = color[2];
 		m_textParms.a1 = color[3];
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "color2"))
 	{
@@ -290,30 +287,30 @@ void CGameText::KeyValue( KeyValueData *pkvd )
 		m_textParms.g2 = color[1];
 		m_textParms.b2 = color[2];
 		m_textParms.a2 = color[3];
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "fadein"))
 	{
 		m_textParms.fadeinTime = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "fadeout"))
 	{
 		m_textParms.fadeoutTime = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "holdtime"))
 	{
 		m_textParms.holdTime = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "fxtime"))
 	{
 		m_textParms.fxTime = atof( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CRulePointEntity::KeyValue( pkvd );
+
+	return CRulePointEntity::KeyValue( pkvd );
 }
 
 
@@ -351,14 +348,14 @@ void CGameText::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 class CGameTeamMaster : public CRulePointEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd ) override;
+	bool		KeyValue( KeyValueData *pkvd ) override;
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	int			ObjectCaps() override { return CRulePointEntity:: ObjectCaps() | FCAP_MASTER; }
 
 	bool		IsTriggered( CBaseEntity *pActivator ) override;
 	const char	*TeamID() override;
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) ? true : false; }
-	inline bool AnyTeam() { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) != 0; }
+	inline bool AnyTeam() { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) != 0; }
 
 private:
 	bool		TeamMatch( CBaseEntity *pActivator );
@@ -369,12 +366,12 @@ private:
 
 LINK_ENTITY_TO_CLASS( game_team_master, CGameTeamMaster );
 
-void CGameTeamMaster::KeyValue( KeyValueData *pkvd )
+bool CGameTeamMaster::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "teamindex"))
 	{
 		m_teamIndex = atoi( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "triggerstate"))
 	{
@@ -391,10 +388,10 @@ void CGameTeamMaster::KeyValue( KeyValueData *pkvd )
 			triggerType = USE_ON;
 			break;
 		}
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CRulePointEntity::KeyValue( pkvd );
+
+	return CRulePointEntity::KeyValue( pkvd );
 }
 
 
@@ -464,8 +461,8 @@ class CGameTeamSet : public CRulePointEntity
 {
 public:
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_TEAMSET_FIREONCE) ? true : false; }
-	inline bool ShouldClearTeam() { return (pev->spawnflags & SF_TEAMSET_CLEARTEAM) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_TEAMSET_FIREONCE) != 0; }
+	inline bool ShouldClearTeam() { return (pev->spawnflags & SF_TEAMSET_CLEARTEAM) != 0; }
 
 private:
 };
@@ -501,11 +498,11 @@ void CGameTeamSet::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 class CGamePlayerZone : public CRuleBrushEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd ) override;
+	bool		KeyValue( KeyValueData *pkvd ) override;
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
@@ -526,30 +523,30 @@ TYPEDESCRIPTION	CGamePlayerZone::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CGamePlayerZone, CRuleBrushEntity );
 
-void CGamePlayerZone::KeyValue( KeyValueData *pkvd )
+bool CGamePlayerZone::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "intarget"))
 	{
 		m_iszInTarget = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "outtarget"))
 	{
 		m_iszOutTarget = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "incount"))
 	{
 		m_iszInCount = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "outcount"))
 	{
 		m_iszOutCount = ALLOC_STRING( pkvd->szValue );
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CRuleBrushEntity::KeyValue( pkvd );
+
+	return CRuleBrushEntity::KeyValue( pkvd );
 }
 
 void CGamePlayerZone::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
@@ -571,17 +568,17 @@ void CGamePlayerZone::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 			int			hullNumber;
 
 			hullNumber = human_hull;
-			if ( pPlayer->pev->flags & FL_DUCKING )
+			if ( (pPlayer->pev->flags & FL_DUCKING ) != 0)
 			{
 				hullNumber = head_hull;
 			}
 
 			UTIL_TraceModel( pPlayer->pev->origin, pPlayer->pev->origin, hullNumber, edict(), &trace );
 
-			if ( trace.fStartSolid )
+			if ( 0 != trace.fStartSolid )
 			{
 				playersInCount++;
-				if ( m_iszInTarget )
+				if ( !FStringNull(m_iszInTarget) )
 				{
 					FireTargets( STRING(m_iszInTarget), pPlayer, pActivator, useType, value );
 				}
@@ -589,7 +586,7 @@ void CGamePlayerZone::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 			else
 			{
 				playersOutCount++;
-				if ( m_iszOutTarget )
+				if ( !FStringNull(m_iszOutTarget) )
 				{
 					FireTargets( STRING(m_iszOutTarget), pPlayer, pActivator, useType, value );
 				}
@@ -597,12 +594,12 @@ void CGamePlayerZone::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 		}
 	}
 
-	if ( m_iszInCount )
+	if ( !FStringNull(m_iszInCount) )
 	{
 		FireTargets( STRING(m_iszInCount), pActivator, this, USE_SET, playersInCount );
 	}
 
-	if ( m_iszOutCount )
+	if ( !FStringNull(m_iszOutCount) )
 	{
 		FireTargets( STRING(m_iszOutCount), pActivator, this, USE_SET, playersOutCount );
 	}
@@ -619,7 +616,7 @@ class CGamePlayerHurt : public CRulePointEntity
 {
 public:
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_PKILL_FIREONCE) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_PKILL_FIREONCE) != 0; }
 
 private:
 };
@@ -663,8 +660,8 @@ class CGameCounter : public CRulePointEntity
 public:
 	void		Spawn() override;
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) ? true : false; }
-	inline bool ResetOnFire() { return (pev->spawnflags & SF_GAMECOUNT_RESET) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) != 0; }
+	inline bool ResetOnFire() { return (pev->spawnflags & SF_GAMECOUNT_RESET) != 0; }
 
 	inline void CountUp() { pev->frags++; }
 	inline void CountDown() { pev->frags--; }
@@ -738,7 +735,7 @@ class CGameCounterSet : public CRulePointEntity
 {
 public:
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNTSET_FIREONCE) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_GAMECOUNTSET_FIREONCE) != 0; }
 
 private:
 };
@@ -770,11 +767,11 @@ void CGameCounterSet::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 class CGamePlayerEquip : public CRulePointEntity
 {
 public:
-	void		KeyValue( KeyValueData *pkvd ) override;
+	bool		KeyValue( KeyValueData *pkvd ) override;
 	void		Touch( CBaseEntity *pOther ) override;
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	inline bool	UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) ? true : false; }
+	inline bool	UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) != 0; }
 
 private:
 
@@ -787,15 +784,14 @@ private:
 LINK_ENTITY_TO_CLASS( game_player_equip, CGamePlayerEquip );
 
 
-void CGamePlayerEquip::KeyValue( KeyValueData *pkvd )
+bool CGamePlayerEquip::KeyValue( KeyValueData *pkvd )
 {
-	CRulePointEntity::KeyValue( pkvd );
 
-	if ( !pkvd->fHandled )
+	if (!CRulePointEntity::KeyValue(pkvd))
 	{
 		for ( int i = 0; i < MAX_EQUIP; i++ )
 		{
-			if ( !m_weaponNames[i] )
+			if ( FStringNull(m_weaponNames[i]) )
 			{
 				char tmp[128];
 
@@ -804,11 +800,12 @@ void CGamePlayerEquip::KeyValue( KeyValueData *pkvd )
 				m_weaponNames[i] = ALLOC_STRING(tmp);
 				m_weaponCount[i] = atoi(pkvd->szValue);
 				m_weaponCount[i] = V_max(1,m_weaponCount[i]);
-				pkvd->fHandled = true;
-				break;
+				return true;
 			}
 		}
 	}
+
+	return false;
 }
 
 
@@ -837,7 +834,7 @@ void CGamePlayerEquip::EquipPlayer( CBaseEntity *pEntity )
 
 	for ( int i = 0; i < MAX_EQUIP; i++ )
 	{
-		if ( !m_weaponNames[i] )
+		if ( FStringNull(m_weaponNames[i]) )
 			break;
 		for ( int j = 0; j < m_weaponCount[i]; j++ )
 		{
@@ -870,9 +867,9 @@ public:
 
 private:
 
-	inline bool RemoveOnFire() { return (pev->spawnflags & SF_PTEAM_FIREONCE) ? true : false; }
-	inline bool ShouldKillPlayer() { return (pev->spawnflags & SF_PTEAM_KILL) ? true : false; }
-	inline bool ShouldGibPlayer() { return (pev->spawnflags & SF_PTEAM_GIB) ? true : false; }
+	inline bool RemoveOnFire() { return (pev->spawnflags & SF_PTEAM_FIREONCE) != 0; }
+	inline bool ShouldKillPlayer() { return (pev->spawnflags & SF_PTEAM_KILL) != 0; }
+	inline bool ShouldGibPlayer() { return (pev->spawnflags & SF_PTEAM_GIB) != 0; }
 	
 	const char *TargetTeamName( const char *pszTargetName );
 };

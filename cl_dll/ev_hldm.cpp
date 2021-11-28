@@ -230,7 +230,7 @@ void EV_HLDM_GunshotDecalTrace( pmtrace_t *pTrace, char *decalName )
 	pe = gEngfuncs.pEventAPI->EV_GetPhysent( pTrace->ent );
 
 	// Only decal brush models such as the world etc.
-	if (  decalName && decalName[0] && pe && ( pe->solid == SOLID_BSP || pe->movetype == MOVETYPE_PUSHSTEP ) )
+	if (  decalName && '\0' != decalName[0] && pe && (pe->solid == SOLID_BSP || pe->movetype == MOVETYPE_PUSHSTEP))
 	{
 		if ( CVAR_GET_FLOAT( "r_decals" ) )
 		{
@@ -265,11 +265,11 @@ void EV_HLDM_DecalGunshot( pmtrace_t *pTrace, int iBulletType )
 	}
 }
 
-int EV_HLDM_CheckTracer( int idx, float *vecSrc, float *end, float *forward, float *right, int iBulletType, int iTracerFreq, int *tracerCount )
+bool EV_HLDM_CheckTracer( int idx, float *vecSrc, float *end, float *forward, float *right, int iBulletType, int iTracerFreq, int *tracerCount )
 {
-	int tracer = 0;
+	bool tracer = false;
 	int i;
-	qboolean player = idx >= 1 && idx <= gEngfuncs.GetMaxClients() ? true : false;
+	bool player = idx >= 1 && idx <= gEngfuncs.GetMaxClients();
 
 	if ( iTracerFreq != 0 && ( (*tracerCount)++ % iTracerFreq) == 0 )
 	{
@@ -291,7 +291,7 @@ int EV_HLDM_CheckTracer( int idx, float *vecSrc, float *end, float *forward, flo
 		}
 		
 		if ( iTracerFreq != 1 )		// guns that always trace also always decal
-			tracer = 1;
+			tracer = true;
 
 		switch( iBulletType )
 		{
@@ -321,7 +321,7 @@ void EV_HLDM_FireBullets( int idx, float *forward, float *right, float *up, int 
 	int i;
 	pmtrace_t tr;
 	int iShot;
-	int tracer;
+	bool tracer;
 	
 	for ( iShot = 1; iShot <= cShots; iShot++ )	
 	{
@@ -353,7 +353,7 @@ void EV_HLDM_FireBullets( int idx, float *forward, float *right, float *up, int 
 			}
 		}
 
-		gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );
+		gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 	
 		// Store off the old count
 		gEngfuncs.pEventAPI->EV_PushPMStates();
@@ -414,7 +414,7 @@ void EV_FireGlock1( event_args_t *args )
 	Vector origin;
 	Vector angles;
 	Vector velocity;
-	int empty;
+	bool empty;
 
 	Vector ShellVelocity;
 	Vector ShellOrigin;
@@ -427,7 +427,7 @@ void EV_FireGlock1( event_args_t *args )
 	VectorCopy( args->angles, angles );
 	VectorCopy( args->velocity, velocity );
 
-	empty = args->bparam1;
+	empty = 0 != args->bparam1;
 	AngleVectors( angles, forward, right, up );
 
 	shell = gEngfuncs.pEventAPI->EV_FindModelIndex ("models/shell.mdl");// brass shell
@@ -459,7 +459,7 @@ void EV_FireGlock2( event_args_t *args )
 	Vector origin;
 	Vector angles;
 	Vector velocity;
-	int empty;
+	bool empty;
 	
 	Vector ShellVelocity;
 	Vector ShellOrigin;
@@ -473,7 +473,7 @@ void EV_FireGlock2( event_args_t *args )
 	VectorCopy( args->angles, angles );
 	VectorCopy( args->velocity, velocity );
 
-	empty = args->bparam1;
+	empty = 0 != args->bparam1;
 	AngleVectors( angles, forward, right, up );
 
 	shell = gEngfuncs.pEventAPI->EV_FindModelIndex ("models/shell.mdl");// brass shell
@@ -727,7 +727,7 @@ void EV_FirePython( event_args_t *args )
 	if ( EV_IsLocal( idx ) )
 	{
 		// Python uses different body in multiplayer versus single player
-		int multiplayer = gEngfuncs.GetMaxClients() == 1 ? 0 : 1;
+		bool multiplayer = gEngfuncs.GetMaxClients() != 1;
 
 		// Add muzzle flash to current weapon model
 		EV_MuzzleFlash();
@@ -777,7 +777,7 @@ void EV_SpinGauss( event_args_t *args )
 
 	pitch = args->iparam1;
 
-	iSoundState = args->bparam1 ? SND_CHANGE_PITCH : 0;
+	iSoundState = 0 != args->bparam1 ? SND_CHANGE_PITCH : 0;
 
 	gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, "ambience/pulsemachine.wav", 1.0, ATTN_NORM, iSoundState, pitch );
 }
@@ -806,7 +806,7 @@ void EV_FireGauss( event_args_t *args )
 	float flDamage = args->fparam1;
 	int primaryfire = args->bparam1;
 
-	int m_fPrimaryFire = args->bparam1;
+	bool m_fPrimaryFire = 0 != args->bparam1;
 	int m_iWeaponVolume = GAUSS_PRIMARY_FIRE_VOLUME;
 	Vector vecSrc;
 	Vector vecDest;
@@ -814,8 +814,8 @@ void EV_FireGauss( event_args_t *args )
 	pmtrace_t tr, beam_tr;
 	float flMaxFrac = 1.0;
 	int	nTotal = 0;
-	int fHasPunched = 0;
-	int fFirstBeam = 1;
+	bool fHasPunched = false;
+	bool fFirstBeam = true;
 	int	nMaxHits = 10;
 	physent_t *pEntity;
 	int m_iBeam, m_iGlow, m_iBalls;
@@ -826,7 +826,7 @@ void EV_FireGauss( event_args_t *args )
 	VectorCopy( args->angles, angles );
 	VectorCopy( args->velocity, velocity );
 
-	if ( args->bparam2 )
+	if ( 0 != args->bparam2 )
 	{
 		EV_StopPreviousGauss( idx );
 		return;
@@ -847,7 +847,7 @@ void EV_FireGauss( event_args_t *args )
 		V_PunchAxis( 0, -2.0 );
 		gEngfuncs.pEventAPI->EV_WeaponAnimation( GAUSS_FIRE2, 2 );
 
-		if ( m_fPrimaryFire == false )
+		if ( !m_fPrimaryFire )
 			 g_flApplyVel = flDamage;	
 			 
 	}
@@ -858,7 +858,7 @@ void EV_FireGauss( event_args_t *args )
 	{
 		nMaxHits--;
 
-		gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );
+		gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );
 		
 		// Store off the old count
 		gEngfuncs.pEventAPI->EV_PushPMStates();
@@ -871,7 +871,7 @@ void EV_FireGauss( event_args_t *args )
 
 		gEngfuncs.pEventAPI->EV_PopPMStates();
 
-		if ( tr.allsolid )
+		if ( 0 != tr.allsolid )
 			break;
 
 		if (fFirstBeam)
@@ -881,7 +881,7 @@ void EV_FireGauss( event_args_t *args )
 				// Add muzzle flash to current weapon model
 				EV_MuzzleFlash();
 			}
-			fFirstBeam = 0;
+			fFirstBeam = false;
 
 			gEngfuncs.pEfxAPI->R_BeamEntPoint( 
 				idx | 0x1000,
@@ -973,7 +973,7 @@ void EV_FireGauss( event_args_t *args )
 				{
 					break;
 				}
-				fHasPunched = 1;
+				fHasPunched = true;
 				
 				// try punching through wall if secondary attack (primary is incapable of breaking through)
 				if ( !m_fPrimaryFire )
@@ -991,7 +991,7 @@ void EV_FireGauss( event_args_t *args )
 					gEngfuncs.pEventAPI->EV_SetTraceHull( 2 );
 					gEngfuncs.pEventAPI->EV_PlayerTrace( start, vecDest, PM_STUDIO_BOX, -1, &beam_tr );
 
-					if ( !beam_tr.allsolid )
+					if ( 0 == beam_tr.allsolid )
 					{
 						Vector delta;
 						float n;
@@ -1152,7 +1152,7 @@ void EV_FireCrossbow2( event_args_t *args )
 
 	if ( EV_IsLocal( idx ) )
 	{
-		if ( args->iparam1 )
+		if ( 0 != args->iparam1 )
 			gEngfuncs.pEventAPI->EV_WeaponAnimation( CROSSBOW_FIRE1, 1 );
 		else
 			gEngfuncs.pEventAPI->EV_WeaponAnimation( CROSSBOW_FIRE3, 1 );
@@ -1226,7 +1226,7 @@ void EV_FireCrossbow( event_args_t *args )
 	//Only play the weapon anims if I shot it. 
 	if ( EV_IsLocal( idx ) )
 	{
-		if ( args->iparam1 )
+		if ( 0 != args->iparam1 )
 			gEngfuncs.pEventAPI->EV_WeaponAnimation( CROSSBOW_FIRE1, 1 );
 		else
 			gEngfuncs.pEventAPI->EV_WeaponAnimation( CROSSBOW_FIRE3, 1 );
@@ -1293,7 +1293,7 @@ void EV_EgonFire( event_args_t *args )
 	VectorCopy( args->origin, origin );
 	iFireState = args->iparam1;
 	iFireMode = args->iparam2;
-	int iStartup = args->bparam1;
+	bool iStartup = 0 != args->bparam1;
 
 
 	if ( iStartup )
@@ -1321,7 +1321,7 @@ void EV_EgonFire( event_args_t *args )
 	if ( EV_IsLocal( idx ) )
 		gEngfuncs.pEventAPI->EV_WeaponAnimation ( g_fireAnims1[ gEngfuncs.pfnRandomLong( 0, 3 ) ], 1 );
 
-	if ( iStartup == 1 && EV_IsLocal( idx ) && !pBeam && !pBeam2 && !pFlare && cl_lw->value ) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
+	if ( iStartup && EV_IsLocal( idx ) && !pBeam && !pBeam2 && !pFlare && 0 != cl_lw->value ) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
 	{
 		Vector vecSrc, vecEnd, origin, angles, forward, right, up;
 		pmtrace_t tr;
@@ -1338,7 +1338,7 @@ void EV_EgonFire( event_args_t *args )
 
 			VectorMA( vecSrc, 2048, forward, vecEnd );
 
-			gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );	
+			gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );	
 				
 			// Store off the old count
 			gEngfuncs.pEventAPI->EV_PushPMStates();
@@ -1395,7 +1395,7 @@ void EV_EgonStop( event_args_t *args )
 
 	gEngfuncs.pEventAPI->EV_StopSound( idx, CHAN_STATIC, EGON_SOUND_RUN );
 	
-	if ( args->iparam1 )
+	if ( 0 != args->iparam1 )
 		 gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_WEAPON, EGON_SOUND_OFF, 0.98, ATTN_NORM, 0, 100 );
 
 	if ( EV_IsLocal( idx ) ) 
@@ -1417,7 +1417,7 @@ void EV_EgonStop( event_args_t *args )
 		{
 			pFlare->die = gEngfuncs.GetClientTime();
 
-			if (gEngfuncs.GetMaxClients() == 1 || !(pFlare->flags & FTENT_NOMODEL))
+			if (gEngfuncs.GetMaxClients() == 1 || (pFlare->flags & FTENT_NOMODEL) == 0)
 			{
 				if (pFlare->tentOffset.x != 0.0f)	// true for iFireMode == FIRE_WIDE
 				{
@@ -1530,7 +1530,7 @@ void EV_SnarkFire( event_args_t *args )
 	if ( !EV_IsLocal ( idx ) )
 		return;
 	
-	if ( args->ducking )
+	if ( 0 != args->ducking )
 		vecSrc = vecSrc - ( VEC_HULL_MIN - VEC_DUCK_HULL_MIN );
 	
 	// Store off the old count
@@ -1560,7 +1560,7 @@ void EV_TrainPitchAdjust( event_args_t *args )
 	int noise;
 	float m_flVolume;
 	int pitch;
-	int stop;
+	bool stop;
 	
 	char sz[ 256 ];
 
@@ -1569,7 +1569,7 @@ void EV_TrainPitchAdjust( event_args_t *args )
 	VectorCopy( args->origin, origin );
 
 	us_params = (unsigned short)args->iparam1;
-	stop	  = args->bparam1;
+	stop	  = 0 != args->bparam1;
 
 	m_flVolume	= (float)(us_params & 0x003f)/40.0;
 	noise		= (int)(((us_params) >> 12 ) & 0x0007);
@@ -1599,7 +1599,7 @@ void EV_TrainPitchAdjust( event_args_t *args )
 	}
 }
 
-int EV_TFC_IsAllyTeam( int iTeam1, int iTeam2 )
+bool EV_TFC_IsAllyTeam( int iTeam1, int iTeam2 )
 {
-	return 0;
+	return false;
 }

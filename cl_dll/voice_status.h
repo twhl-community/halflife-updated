@@ -86,7 +86,7 @@ public:
 		vgui::Panel **pParentPanel);
 	
 	// ackPosition is the bottom position of where CVoiceStatus will draw the voice acknowledgement labels.
-	virtual int VidInit();
+	virtual bool VidInit();
 
 
 public:
@@ -98,7 +98,7 @@ public:
 	// entindex is -1 to represent the local client talking (before the data comes back from the server). 
 	// When the server acknowledges that the local client is talking, then entindex will be gEngfuncs.GetLocalPlayer().
 	// entindex is -2 to represent the local client's voice being acked by the server.
-	void	UpdateSpeakerStatus(int entindex, qboolean bTalking);
+	void	UpdateSpeakerStatus(int entindex, bool bTalking);
 
 	// sets the correct image in the label for the player
 	void	UpdateSpeakerImage(vgui::Label *pLabel, int iPlayer);

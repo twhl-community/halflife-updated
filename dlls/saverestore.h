@@ -61,11 +61,11 @@ public:
 	void	WritePositionVector( const char *pname, const Vector &value );		// Offset for landmark if necessary
 	void	WritePositionVector( const char *pname, const float *value, int count );	// array of pos vectors
 	void	WriteFunction( const char *pname, void **value, int count );		// Save a function pointer
-	int		WriteEntVars( const char *pname, entvars_t *pev );		// Save entvars_t (entvars_t)
-	int		WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
+	bool	WriteEntVars( const char *pname, entvars_t *pev );		// Save entvars_t (entvars_t)
+	bool	WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
 
 private:
-	int		DataEmpty( const char *pdata, int size );
+	bool	DataEmpty( const char *pdata, int size );
 	void	BufferField( const char *pname, int size, const char *pdata );
 	void	BufferString( char *pdata, int len );
 	void	BufferData( const char *pdata, int size );
@@ -83,15 +83,15 @@ class CRestore : public CSaveRestoreBuffer
 {
 public:
 	CRestore( SAVERESTOREDATA *pdata ) : CSaveRestoreBuffer( pdata ) { m_global = 0; m_precache = true; }
-	int		ReadEntVars( const char *pname, entvars_t *pev );		// entvars_t
-	int		ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
+	bool	ReadEntVars( const char *pname, entvars_t *pev );		// entvars_t
+	bool	ReadFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount );
 	int		ReadField( void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount, int startField, int size, char *pName, void *pData );
 	int		ReadInt();
 	short	ReadShort();
 	int		ReadNamedInt( const char *pName );
 	char	*ReadNamedString( const char *pName );
-	int		Empty() { return (m_pdata == NULL) || ((m_pdata->pCurrentData-m_pdata->pBaseData)>=m_pdata->bufferSize); }
-	inline	void SetGlobalMode( int global ) { m_global = global; }
+	bool	Empty() { return (m_pdata == NULL) || ((m_pdata->pCurrentData-m_pdata->pBaseData)>=m_pdata->bufferSize); }
+	inline	void SetGlobalMode( bool global ) { m_global = global; }
 	void	PrecacheMode(bool mode ) { m_precache = mode; }
 
 private:
@@ -99,11 +99,11 @@ private:
 	void	BufferReadBytes( char *pOutput, int size );
 	void	BufferSkipBytes( int bytes );
 	int		BufferSkipZString();
-	int		BufferCheckZString( const char *string );
+	bool	BufferCheckZString( const char *string );
 
 	void	BufferReadHeader( HEADER *pheader );
 
-	int		m_global;		// Restoring a global entity?
+	bool	m_global;		// Restoring a global entity?
 	bool	m_precache;
 };
 
@@ -112,16 +112,16 @@ private:
 //#define ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
 
 #define IMPLEMENT_SAVERESTORE(derivedClass,baseClass) \
-	int derivedClass::Save( CSave &save )\
+	bool derivedClass::Save( CSave &save )\
 	{\
 		if ( !baseClass::Save(save) )\
-			return 0;\
+			return false;\
 		return save.WriteFields( #derivedClass, this, m_SaveData, ARRAYSIZE(m_SaveData) );\
 	}\
-	int derivedClass::Restore( CRestore &restore )\
+	bool derivedClass::Restore( CRestore &restore )\
 	{\
 		if ( !baseClass::Restore(restore) )\
-			return 0;\
+			return false;\
 		return restore.ReadFields( #derivedClass, this, m_SaveData, ARRAYSIZE(m_SaveData) );\
 	}
 
@@ -149,9 +149,9 @@ public:
 	void			EntityUpdate( string_t globalname, string_t mapname );
 	const globalentity_t	*EntityFromTable( string_t globalname );
 	GLOBALESTATE	EntityGetState( string_t globalname );
-	int				EntityInTable( string_t globalname ) { return (Find( globalname ) != NULL) ? 1 : 0; }
-	int				Save( CSave &save );
-	int				Restore( CRestore &restore );
+	bool			EntityInTable( string_t globalname ) { return Find( globalname ) != NULL; }
+	bool			Save( CSave &save );
+	bool			Restore( CRestore &restore );
 	static TYPEDESCRIPTION m_SaveData[];
 
 //#ifdef _DEBUG

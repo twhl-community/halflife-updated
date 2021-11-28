@@ -42,9 +42,9 @@ public:
 	void EXPORT BarnacleThink ();
 	void EXPORT WaitTillDead ();
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	float m_flAltitude;
@@ -89,7 +89,7 @@ void CBarnacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
 	switch( pEvent->event )
 	{
 	case BARNACLE_AE_PUKEGIB:
-		CGib::SpawnRandomGibs( pev, 1, 1 );	
+		CGib::SpawnRandomGibs( pev, 1, true );	
 		break;
 	default:
 		CBaseMonster::HandleAnimEvent( pEvent );
@@ -130,9 +130,9 @@ void CBarnacle :: Spawn()
 	UTIL_SetOrigin ( pev, pev->origin );
 }
 
-int CBarnacle::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
+bool CBarnacle::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
 {
-	if ( bitsDamageType & DMG_CLUB )
+	if ( (bitsDamageType & DMG_CLUB) != 0 )
 	{
 		flDamage = pev->health;
 	}
@@ -251,10 +251,10 @@ void CBarnacle :: BarnacleThink ()
 			m_flTongueAdj = -100;
 		}
 
-		if ( m_cGibs && RANDOM_LONG(0,99) == 1 )
+		if ( 0 != m_cGibs && RANDOM_LONG(0,99) == 1 )
 		{
 			// cough up a gib.
-			CGib::SpawnRandomGibs( pev, 1, 1 );
+			CGib::SpawnRandomGibs( pev, 1, true );
 			m_cGibs--;
 
 			switch ( RANDOM_LONG(0,2) )
@@ -412,7 +412,7 @@ CBaseEntity *CBarnacle :: TongueTouchEnt ( float *pflLength )
 
 	CBaseEntity *pList[10];
 	int count = UTIL_EntitiesInBox( pList, 10, mins, maxs, (FL_CLIENT|FL_MONSTER) );
-	if ( count )
+	if ( 0 != count )
 	{
 		for ( int i = 0; i < count; i++ )
 		{

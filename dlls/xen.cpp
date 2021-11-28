@@ -31,8 +31,8 @@ public:
 
 	int	ObjectCaps() override { return CBaseAnimating :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	int	Save( CSave &save ) override;
-	int	Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
@@ -72,8 +72,8 @@ public:
 	void		LightOn();
 	void		LightOff();
 
-	int	Save( CSave &save ) override;
-	int	Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
@@ -199,7 +199,7 @@ void CXenHair::Spawn()
 	UTIL_SetSize( pev, Vector(-4,-4,0), Vector(4,4,32));
 	pev->sequence = 0;
 	
-	if ( !(pev->spawnflags & SF_HAIR_SYNC) )
+	if ( (pev->spawnflags & SF_HAIR_SYNC) == 0)
 	{
 		pev->frame = RANDOM_FLOAT(0,255);
 		pev->framerate = RANDOM_FLOAT( 0.7, 1.4 );
@@ -265,13 +265,13 @@ public:
 	void		Precache() override;
 	void		Touch( CBaseEntity *pOther ) override;
 	void		Think() override;
-	int			TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override { Attack(); return 0; }
+	bool		TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override { Attack(); return false; }
 	void		HandleAnimEvent( MonsterEvent_t *pEvent ) override;
 	void		Attack();
 	int			Classify() override { return CLASS_BARNACLE; }
 
-	int	Save( CSave &save ) override;
-	int	Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	static const char *pAttackHitSounds[];
@@ -432,7 +432,7 @@ public:
 	void		Precache() override;
 	void		Touch( CBaseEntity *pOther ) override;
 	void		Think() override;
-	int			TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override { Attack(); return 0; }
+	bool		TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override { Attack(); return false; }
 //	void		HandleAnimEvent( MonsterEvent_t *pEvent );
 	void		Attack() {}
 

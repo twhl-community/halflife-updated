@@ -92,8 +92,8 @@ public:
 
 	// Operators
 	inline Vector operator-() const				{ return Vector(-x,-y,-z);				}
-	inline int operator==(const Vector& v) const	{ return x==v.x && y==v.y && z==v.z;	}
-	inline int operator!=(const Vector& v) const	{ return !(*this==v);					}
+	inline bool operator==(const Vector& v) const	{ return x==v.x && y==v.y && z==v.z;	}
+	inline bool operator!=(const Vector& v) const	{ return !(*this==v);					}
 	inline Vector operator+(const Vector& v) const	{ return Vector(x+v.x, y+v.y, z+v.z);	}
 	inline Vector operator-(const Vector& v) const	{ return Vector(x-v.x, y-v.y, z-v.z);	}
 	inline Vector operator*(float fl) const			{ return Vector(x*fl, y*fl, z*fl);		}

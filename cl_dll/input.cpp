@@ -21,7 +21,7 @@
 #include "vgui_TeamFortressViewport.h"
 
 
-extern int g_iAlive;
+extern bool g_iAlive;
 
 extern int g_weaponselect;
 extern cl_enginefunc_t gEngfuncs;
@@ -34,13 +34,13 @@ void IN_Move ( float frametime, usercmd_t *cmd);
 void IN_Shutdown();
 void V_Init();
 void VectorAngles( const float *forward, float *angles );
-int CL_ButtonBits( int );
+int CL_ButtonBits( bool );
 
 // xxx need client dll function to get and clear impuse
 extern cvar_t *in_joystick;
 
 int	in_impulse	= 0;
-int	in_cancel	= 0;
+bool in_cancel	= false;
 
 cvar_t	*m_pitch;
 cvar_t	*m_yaw;
@@ -126,7 +126,7 @@ Removes references to +use and replaces them with the keyname in the output stri
 NOTE:  Only works for text with +word in it.
 ============
 */
-int KB_ConvertString( char *in, char **ppout )
+bool KB_ConvertString( char *in, char **ppout )
 {
 	char sz[ 4096 ];
 	char binding[ 64 ];
@@ -136,17 +136,17 @@ int KB_ConvertString( char *in, char **ppout )
 	const char *pBinding;
 
 	if ( !ppout )
-		return 0;
+		return false;
 
 	*ppout = NULL;
 	p = in;
 	pOut = sz;
-	while ( *p )
+	while ( '\0' != *p)
 	{
 		if ( *p == '+' )
 		{
 			pEnd = binding;
-			while ( *p && ( isalnum( *p ) || ( pEnd == binding ) ) && ( ( pEnd - binding ) < 63 ) )
+			while ( '\0' != *p && (0 != isalnum(*p) || (pEnd == binding)) && ((pEnd - binding) < 63))
 			{
 				*pEnd++ = *p++;
 			}
@@ -170,7 +170,7 @@ int KB_ConvertString( char *in, char **ppout )
 				pEnd = binding;
 			}
 
-			while ( *pEnd )
+			while ( '\0' !=  *pEnd)
 			{
 				*pOut++ = *pEnd++;
 			}
@@ -192,7 +192,7 @@ int KB_ConvertString( char *in, char **ppout )
 	strcpy( pOut, sz );
 	*ppout = pOut;
 
-	return 1;
+	return true;
 }
 
 /*
@@ -292,7 +292,7 @@ void KeyDown (kbutton_t *b)
 	const char	*c;
 
 	c = gEngfuncs.Cmd_Argv(1);
-	if (c[0])
+	if ('\0' != c[0])
 		k = atoi(c);
 	else
 		k = -1;		// typed manually at the console for continuous down
@@ -300,9 +300,9 @@ void KeyDown (kbutton_t *b)
 	if (k == b->down[0] || k == b->down[1])
 		return;		// repeating key
 	
-	if (!b->down[0])
+	if (0 == b->down[0])
 		b->down[0] = k;
-	else if (!b->down[1])
+	else if (0 == b->down[1])
 		b->down[1] = k;
 	else
 	{
@@ -310,7 +310,8 @@ void KeyDown (kbutton_t *b)
 		return;
 	}
 	
-	if (b->state & 1)
+	//TODO: define constants
+	if ((b->state & 1) != 0)
 		return;		// still down
 	b->state |= 1 + 2;	// down + impulse down
 }
@@ -326,7 +327,7 @@ void KeyUp (kbutton_t *b)
 	const char	*c;
 	
 	c = gEngfuncs.Cmd_Argv(1);
-	if (c[0])
+	if ('\0' != c[0])
 		k = atoi(c);
 	else
 	{ // typed manually at the console, assume for unsticking, so clear all
@@ -341,13 +342,13 @@ void KeyUp (kbutton_t *b)
 		b->down[1] = 0;
 	else
 		return;		// key up without coresponding down (menu pass through)
-	if (b->down[0] || b->down[1])
+	if (0 != b->down[0] || 0 != b->down[1])
 	{
 		//Con_Printf ("Keys down for button: '%c' '%c' '%c' (%d,%d,%d)!\n", b->down[0], b->down[1], c, b->down[0], b->down[1], c);
 		return;		// some other key is still holding it down
 	}
 
-	if (!(b->state & 1))
+	if ((b->state & 1) == 0)
 		return;		// still up (this should not happen)
 
 	b->state &= ~1;		// now up
@@ -366,7 +367,7 @@ int DLLEXPORT HUD_Key_Event( int down, int keynum, const char *pszCurrentBinding
 //	RecClKeyEvent(down, keynum, pszCurrentBinding);
 
 	if (gViewPort)
-		return gViewPort->KeyInput(down, keynum, pszCurrentBinding);
+		return static_cast<int>(gViewPort->KeyInput(0 != down, keynum, pszCurrentBinding));
 	
 	return 1;
 }
@@ -493,13 +494,13 @@ void IN_AttackDown()
 void IN_AttackUp()
 {
 	KeyUp( &in_attack );
-	in_cancel = 0;
+	in_cancel = false;
 }
 
 // Special handling
 void IN_Cancel()
 {
-	in_cancel = 1;
+	in_cancel = true;
 }
 
 void IN_Impulse ()
@@ -528,7 +529,7 @@ void IN_ScoreUp()
 void IN_MLookUp ()
 {
 	KeyUp( &in_mlook );
-	if ( !( in_mlook.state & 1 ) && lookspring->value )
+	if ( ( in_mlook.state & 1 ) == 0 && 0 != lookspring->value )
 	{
 		V_StartPitchDrift();
 	}
@@ -547,11 +548,10 @@ Returns 0.25 if a key was pressed and released during the frame,
 float CL_KeyState (kbutton_t *key)
 {
 	float		val = 0.0;
-	int			impulsedown, impulseup, down;
-	
-	impulsedown = key->state & 2;
-	impulseup	= key->state & 4;
-	down		= key->state & 1;
+
+	const bool impulsedown = (key->state & 2) != 0;
+	const bool impulseup = (key->state & 4) != 0;
+	const bool down = (key->state & 1) != 0;
 	
 	if ( impulsedown && !impulseup )
 	{
@@ -602,7 +602,7 @@ void CL_AdjustAngles ( float frametime, float *viewangles )
 	float	speed;
 	float	up, down;
 	
-	if (in_speed.state & 1)
+	if ((in_speed.state & 1) != 0)
 	{
 		speed = frametime * cl_anglespeedkey->value;
 	}
@@ -611,13 +611,13 @@ void CL_AdjustAngles ( float frametime, float *viewangles )
 		speed = frametime;
 	}
 
-	if (!(in_strafe.state & 1))
+	if ((in_strafe.state & 1) == 0)
 	{
 		viewangles[YAW] -= speed*cl_yawspeed->value*CL_KeyState (&in_right);
 		viewangles[YAW] += speed*cl_yawspeed->value*CL_KeyState (&in_left);
 		viewangles[YAW] = anglemod(viewangles[YAW]);
 	}
-	if (in_klook.state & 1)
+	if ((in_klook.state & 1) != 0)
 	{
 		V_StopPitchDrift ();
 		viewangles[PITCH] -= speed*cl_pitchspeed->value * CL_KeyState (&in_forward);
@@ -630,7 +630,7 @@ void CL_AdjustAngles ( float frametime, float *viewangles )
 	viewangles[PITCH] -= speed*cl_pitchspeed->value * up;
 	viewangles[PITCH] += speed*cl_pitchspeed->value * down;
 
-	if (up || down)
+	if (0 != up || 0 != down)
 		V_StopPitchDrift ();
 		
 	if (viewangles[PITCH] > cl_pitchdown->value)
@@ -661,7 +661,7 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 	Vector viewangles;
 	static Vector oldangles;
 
-	if ( active )
+	if ( 0 != active )
 	{
 		//memset( viewangles, 0, sizeof( Vector ) );
 		//viewangles[ 0 ] = viewangles[ 1 ] = viewangles[ 2 ] = 0.0;
@@ -673,7 +673,7 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 		
 		gEngfuncs.SetViewAngles( (float *)viewangles );
 
-		if ( in_strafe.state & 1 )
+		if ( (in_strafe.state & 1 ) != 0)
 		{
 			cmd->sidemove += cl_sidespeed->value * CL_KeyState (&in_right);
 			cmd->sidemove -= cl_sidespeed->value * CL_KeyState (&in_left);
@@ -685,14 +685,14 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 		cmd->upmove += cl_upspeed->value * CL_KeyState (&in_up);
 		cmd->upmove -= cl_upspeed->value * CL_KeyState (&in_down);
 
-		if ( !(in_klook.state & 1 ) )
+		if ( (in_klook.state & 1 ) == 0)
 		{	
 			cmd->forwardmove += cl_forwardspeed->value * CL_KeyState (&in_forward);
 			cmd->forwardmove -= cl_backspeed->value * CL_KeyState (&in_back);
 		}	
 
 		// adjust for speed key
-		if ( in_speed.state & 1 )
+		if ( (in_speed.state & 1 ) != 0)
 		{
 			cmd->forwardmove *= cl_movespeedkey->value;
 			cmd->sidemove *= cl_movespeedkey->value;
@@ -727,14 +727,14 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 	//
 	// set button and flag bits
 	//
-	cmd->buttons = CL_ButtonBits( 1 );
+	cmd->buttons = CL_ButtonBits( true );
 
 	// If they're in a modal dialog, ignore the attack button.
 	if(GetClientVoiceMgr()->IsInSquelchMode())
 		cmd->buttons &= ~IN_ATTACK;
 
 	// Using joystick?
-	if ( in_joystick->value )
+	if (0 != in_joystick->value )
 	{
 		if ( cmd->forwardmove > 0 )
 		{
@@ -767,9 +767,9 @@ CL_IsDead
 Returns 1 if health is <= 0
 ============
 */
-int	CL_IsDead()
+bool CL_IsDead()
 {
-	return ( gHUD.m_Health.m_iHealth <= 0 ) ? 1 : 0;
+	return gHUD.m_Health.m_iHealth <= 0;
 }
 
 /*
@@ -780,36 +780,36 @@ Returns appropriate button info for keyboard and mouse state
 Set bResetState to 1 to clear old state info
 ============
 */
-int CL_ButtonBits( int bResetState )
+int CL_ButtonBits( bool bResetState )
 {
 	int bits = 0;
 
-	if ( in_attack.state & 3 )
+	if ( (in_attack.state & 3 ) != 0)
 	{
 		bits |= IN_ATTACK;
 	}
 	
-	if (in_duck.state & 3)
+	if ((in_duck.state & 3) != 0)
 	{
 		bits |= IN_DUCK;
 	}
  
-	if (in_jump.state & 3)
+	if ((in_jump.state & 3) != 0)
 	{
 		bits |= IN_JUMP;
 	}
 
-	if ( in_forward.state & 3 )
+	if ( (in_forward.state & 3 ) != 0)
 	{
 		bits |= IN_FORWARD;
 	}
 	
-	if (in_back.state & 3)
+	if ((in_back.state & 3) != 0)
 	{
 		bits |= IN_BACK;
 	}
 
-	if (in_use.state & 3)
+	if ((in_use.state & 3) != 0)
 	{
 		bits |= IN_USE;
 	}
@@ -819,42 +819,42 @@ int CL_ButtonBits( int bResetState )
 		bits |= IN_CANCEL;
 	}
 
-	if ( in_left.state & 3 )
+	if ( (in_left.state & 3 ) != 0)
 	{
 		bits |= IN_LEFT;
 	}
 	
-	if (in_right.state & 3)
+	if ((in_right.state & 3) != 0)
 	{
 		bits |= IN_RIGHT;
 	}
 	
-	if ( in_moveleft.state & 3 )
+	if ( (in_moveleft.state & 3 ) != 0)
 	{
 		bits |= IN_MOVELEFT;
 	}
 	
-	if (in_moveright.state & 3)
+	if ((in_moveright.state & 3) != 0)
 	{
 		bits |= IN_MOVERIGHT;
 	}
 
-	if (in_attack2.state & 3)
+	if ((in_attack2.state & 3) != 0)
 	{
 		bits |= IN_ATTACK2;
 	}
 
-	if (in_reload.state & 3)
+	if ((in_reload.state & 3) != 0)
 	{
 		bits |= IN_RELOAD;
 	}
 
-	if (in_alt1.state & 3)
+	if ((in_alt1.state & 3) != 0)
 	{
 		bits |= IN_ALT1;
 	}
 
-	if ( in_score.state & 3 )
+	if ( (in_score.state & 3 ) != 0)
 	{
 		bits |= IN_SCORE;
 	}
@@ -894,13 +894,13 @@ CL_ResetButtonBits
 */
 void CL_ResetButtonBits( int bits )
 {
-	int bitsNew = CL_ButtonBits( 0 ) ^ bits;
+	int bitsNew = CL_ButtonBits( false ) ^ bits;
 
 	// Has the attack button been changed
-	if ( bitsNew & IN_ATTACK )
+	if ( (bitsNew & IN_ATTACK ) != 0)
 	{
 		// Was it pressed? or let go?
-		if ( bits & IN_ATTACK )
+		if ( (bits & IN_ATTACK ) != 0)
 		{
 			KeyDown( &in_attack );
 		}

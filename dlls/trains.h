@@ -39,25 +39,25 @@ class CPathTrack : public CPointEntity
 public:
 	void		Spawn() override;
 	void		Activate() override;
-	void		KeyValue( KeyValueData* pkvd) override;
+	bool		KeyValue( KeyValueData* pkvd) override;
 	
 	void		SetPrevious( CPathTrack *pprevious );
 	void		Link();
 	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	CPathTrack	*ValidPath( CPathTrack *ppath, int testFlag );		// Returns ppath if enabled, NULL otherwise
+	CPathTrack	*ValidPath( CPathTrack *ppath, bool testFlag );		// Returns ppath if enabled, NULL otherwise
 	void		Project( CPathTrack *pstart, CPathTrack *pend, Vector *origin, float dist );
 
 	static CPathTrack *Instance( edict_t *pent );
 
-	CPathTrack	*LookAhead( Vector *origin, float dist, int move );
+	CPathTrack	*LookAhead( Vector *origin, float dist, bool move );
 	CPathTrack	*Nearest( Vector origin );
 
 	CPathTrack	*GetNext();
 	CPathTrack	*GetPrevious();
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 #if PATH_SPARKLE_DEBUG
@@ -80,7 +80,7 @@ public:
 
 	void Blocked( CBaseEntity *pOther ) override;
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	void KeyValue( KeyValueData* pkvd ) override;
+	bool KeyValue( KeyValueData* pkvd ) override;
 
 	void EXPORT Next();
 	void EXPORT Find();
@@ -98,8 +98,8 @@ public:
 	
 	static CFuncTrackTrain *Instance( edict_t *pent );
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
@@ -114,7 +114,7 @@ public:
 	float		m_startSpeed;
 	Vector		m_controlMins;
 	Vector		m_controlMaxs;
-	int			m_soundPlaying;
+	bool		m_soundPlaying;
 	int			m_sounds;
 	float		m_flVolume;
 	float		m_flBank;

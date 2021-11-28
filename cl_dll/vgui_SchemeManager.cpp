@@ -55,7 +55,7 @@ public:
 	int fontWeight;
 
 	vgui::Font *font;
-	int ownFontPointer; // true if the font is ours to delete
+	bool ownFontPointer; // true if the font is ours to delete
 
 	// scheme
 	byte fgColor[4];
@@ -122,7 +122,7 @@ static byte *LoadFileByResolution( const char *filePrefix, int xRes, const char 
 
 	// try open the file
 	byte *pFile = NULL;
-	while ( 1 )
+	while ( true )
 	{
 
 		// try load
@@ -263,11 +263,11 @@ CSchemeManager::CSchemeManager( int xRes, int yRes )
 				}
 
 				// font size
-				if ( !pScheme->fontSize )
+				if ( 0 == pScheme->fontSize )
 				{
 					pScheme->fontSize = 17;
 				}
-				if ( !pScheme->fontName[0] )
+				if ( '\0' == pScheme->fontName[0])
 				{
 					strcpy( pScheme->fontName, "Arial" );
 				}
@@ -393,7 +393,7 @@ buildDefaultFont:
 			fontFileLength = -1;
 			pFontData = NULL;
 
-			if(g_CV_BitmapFonts && g_CV_BitmapFonts->value)
+			if(g_CV_BitmapFonts && 0 != g_CV_BitmapFonts->value)
 			{
 				int fontRes = 640;
 				if ( m_xRes >= 1600 )

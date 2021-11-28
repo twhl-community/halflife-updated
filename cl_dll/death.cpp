@@ -30,9 +30,9 @@ struct DeathNoticeItem {
 	char szKiller[MAX_PLAYER_NAME_LENGTH*2];
 	char szVictim[MAX_PLAYER_NAME_LENGTH*2];
 	int iId;	// the index number of the associated sprite
-	int iSuicide;
-	int iTeamKill;
-	int iNonPlayerKill;
+	bool iSuicide;
+	bool iTeamKill;
+	bool iNonPlayerKill;
 	float flDisplayTime;
 	float *KillerColor;
 	float *VictimColor;
@@ -67,7 +67,7 @@ float *GetClientColor( int clientIndex )
 	return NULL;
 }
 
-int CHudDeathNotice :: Init()
+bool CHudDeathNotice :: Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -75,7 +75,7 @@ int CHudDeathNotice :: Init()
 
 	CVAR_CREATE( "hud_deathnotice_time", "6", 0 );
 
-	return 1;
+	return true;
 }
 
 
@@ -85,14 +85,14 @@ void CHudDeathNotice :: InitHUDData()
 }
 
 
-int CHudDeathNotice :: VidInit()
+bool CHudDeathNotice :: VidInit()
 {
 	m_HUD_d_skull = gHUD.GetSpriteIndex( "d_skull" );
 
-	return 1;
+	return true;
 }
 
-int CHudDeathNotice :: Draw( float flTime )
+bool CHudDeathNotice :: Draw( float flTime )
 {
 	int x, y, r, g, b;
 
@@ -143,7 +143,7 @@ int CHudDeathNotice :: Draw( float flTime )
 			x += (gHUD.GetSpriteRect(id).right - gHUD.GetSpriteRect(id).left);
 
 			// Draw victims name (if it was a player that was killed)
-			if (rgDeathNoticeList[i].iNonPlayerKill == false)
+			if (!rgDeathNoticeList[i].iNonPlayerKill)
 			{
 				if ( rgDeathNoticeList[i].VictimColor )
 					gEngfuncs.pfnDrawSetTextColor( rgDeathNoticeList[i].VictimColor[0], rgDeathNoticeList[i].VictimColor[1], rgDeathNoticeList[i].VictimColor[2] );
@@ -152,11 +152,11 @@ int CHudDeathNotice :: Draw( float flTime )
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 // This message handler may be better off elsewhere
-int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *pbuf )
+bool CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *pbuf )
 {
 	m_iFlags |= HUD_ACTIVE;
 
@@ -232,7 +232,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 		if ( killer == victim || killer == 0 )
 			rgDeathNoticeList[i].iSuicide = true;
 
-		if ( !strcmp( killedwith, "d_teammate" ) )
+		if ( 0 == strcmp( killedwith, "d_teammate" ) )
 			rgDeathNoticeList[i].iTeamKill = true;
 	}
 
@@ -258,7 +258,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 		{
 			ConsolePrint( rgDeathNoticeList[i].szVictim );
 
-			if ( !strcmp( killedwith, "d_world" ) )
+			if ( 0 == strcmp( killedwith, "d_world" ) )
 			{
 				ConsolePrint( " died" );
 			}
@@ -280,14 +280,14 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 			ConsolePrint( rgDeathNoticeList[i].szVictim );
 		}
 
-		if ( killedwith && *killedwith && (*killedwith > 13 ) && strcmp( killedwith, "d_world" ) && !rgDeathNoticeList[i].iTeamKill )
+		if ( killedwith && '\0' != *killedwith && (*killedwith > 13) && 0 != strcmp(killedwith, "d_world") && !rgDeathNoticeList[i].iTeamKill)
 		{
 			ConsolePrint( " with " );
 
 			// replace the code names with the 'real' names
-			if ( !strcmp( killedwith+2, "egon" ) )
+			if ( 0 == strcmp( killedwith+2, "egon" ) )
 				strcpy( killedwith, "d_gluon gun" );
-			if ( !strcmp( killedwith+2, "gauss" ) )
+			if ( 0 == strcmp( killedwith+2, "gauss" ) )
 				strcpy( killedwith, "d_tau cannon" );
 
 			ConsolePrint( killedwith+2 ); // skip over the "d_" part
@@ -296,7 +296,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 		ConsolePrint( "\n" );
 	}
 
-	return 1;
+	return true;
 }
 
 

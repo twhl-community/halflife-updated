@@ -234,7 +234,7 @@ float AngleBetweenVectors( const Vector& v1, const Vector& v2 )
 	float l1 = Length( v1 );
 	float l2 = Length( v2 );
 
-	if ( !l1 || !l2 )
+	if ( 0 == l1 || 0 == l2 )
 		return 0.0f;
 
 	angle = acos( DotProduct( v1, v2 ) ) / (l1*l2);
@@ -250,15 +250,15 @@ void VectorTransform (const float* in1, float in2[3][4], float* out)
 	out[2] = DotProduct(*reinterpret_cast<const Vector*>(in1), *reinterpret_cast<const Vector*>(in2[2])) + in2[2][3];
 }
 
-int VectorCompare (const float* v1, const float* v2)
+bool VectorCompare (const float* v1, const float* v2)
 {
 	int		i;
 	
 	for (i=0 ; i<3 ; i++)
 		if (v1[i] != v2[i])
-			return 0;
+			return false;
 			
-	return 1;
+	return true;
 }
 
 void VectorMA (const float* veca, float scale, const float* vecb, float* vecc)
@@ -301,7 +301,7 @@ float VectorNormalize (float* v)
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
 	length = sqrt (length);		// FIXME
 
-	if (length)
+	if (0 != length)
 	{
 		ilength = 1/length;
 		v[0] *= ilength;
@@ -330,7 +330,7 @@ void VectorScale (const float* in, float scale, float* out)
 int Q_log2(int val)
 {
 	int answer=0;
-	while (val>>=1)
+	while ((val>>=1) != 0)
 		answer++;
 	return answer;
 }

@@ -27,7 +27,7 @@
 DECLARE_MESSAGE(m_Train, Train )
 
 
-int CHudTrain::Init()
+bool CHudTrain::Init()
 {
 	HOOK_MESSAGE( Train );
 
@@ -35,22 +35,22 @@ int CHudTrain::Init()
 	m_iFlags = 0;
 	gHUD.AddHudElem(this);
 
-	return 1;
+	return true;
 };
 
-int CHudTrain::VidInit()
+bool CHudTrain::VidInit()
 {
 	m_hSprite = 0;
 
-	return 1;
+	return true;
 };
 
-int CHudTrain::Draw(float fTime)
+bool CHudTrain::Draw(float fTime)
 {
-	if ( !m_hSprite )
+	if ( 0 == m_hSprite )
 		m_hSprite = LoadSprite("sprites/%d_train.spr");
 
-	if (m_iPos)
+	if (0 != m_iPos)
 	{
 		int r, g, b, x, y;
 
@@ -65,21 +65,21 @@ int CHudTrain::Draw(float fTime)
 
 	}
 
-	return 1;
+	return true;
 }
 
 
-int CHudTrain::MsgFunc_Train(const char *pszName,  int iSize, void *pbuf)
+bool CHudTrain::MsgFunc_Train(const char *pszName,  int iSize, void *pbuf)
 {
 	BEGIN_READ( pbuf, iSize );
 
 	// update Train data
 	m_iPos = READ_BYTE();
 
-	if (m_iPos)
+	if (0 != m_iPos)
 		m_iFlags |= HUD_ACTIVE;
 	else
 		m_iFlags &= ~HUD_ACTIVE;
 
-	return 1;
+	return true;
 }

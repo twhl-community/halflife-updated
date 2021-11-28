@@ -59,7 +59,7 @@ inline edict_t *FIND_ENTITY_BY_TARGET(edict_t *entStart, const char *pszName)
 // Keeps clutter down a bit, when using a float as a bit-vector
 #define SetBits(flBitVector, bits)		((flBitVector) = (int)(flBitVector) | (bits))
 #define ClearBits(flBitVector, bits)	((flBitVector) = (int)(flBitVector) & ~(bits))
-#define FBitSet(flBitVector, bit)		((int)(flBitVector) & (bit))
+#define FBitSet(flBitVector, bit)		(((int)(flBitVector) & (bit)) != 0)
 
 // Makes these more explicit, and easier to find
 #define FILE_GLOBAL static
@@ -246,7 +246,7 @@ extern void			UTIL_TraceModel			(const Vector &vecStart, const Vector &vecEnd, i
 extern Vector		UTIL_GetAimVector		(edict_t* pent, float flSpeed);
 extern int			UTIL_PointContents		(const Vector &vec);
 
-extern int			UTIL_IsMasterTriggered	(string_t sMaster, CBaseEntity *pActivator);
+extern bool			UTIL_IsMasterTriggered	(string_t sMaster, CBaseEntity *pActivator);
 extern void			UTIL_BloodStream( const Vector &origin, const Vector &direction, int color, int amount );
 extern void			UTIL_BloodDrips( const Vector &origin, const Vector &direction, int color, int amount );
 extern Vector		UTIL_RandomBloodVector();
@@ -444,14 +444,14 @@ extern char gszallsentencenames[CVOXFILESENTENCEMAX][CBSENTENCENAME_MAX];
 extern int gcallsentences;
 
 int USENTENCEG_Pick(int isentenceg, char *szfound);
-int USENTENCEG_PickSequential(int isentenceg, char *szfound, int ipick, int freset);
+int USENTENCEG_PickSequential(int isentenceg, char *szfound, int ipick, bool freset);
 void USENTENCEG_InitLRU(unsigned char *plru, int count);
 
 void SENTENCEG_Init();
 void SENTENCEG_Stop(edict_t *entity, int isentenceg, int ipick);
 int SENTENCEG_PlayRndI(edict_t *entity, int isentenceg, float volume, float attenuation, int flags, int pitch);
 int SENTENCEG_PlayRndSz(edict_t *entity, const char *szrootname, float volume, float attenuation, int flags, int pitch);
-int SENTENCEG_PlaySequentialSz(edict_t *entity, const char *szrootname, float volume, float attenuation, int flags, int pitch, int ipick, int freset);
+int SENTENCEG_PlaySequentialSz(edict_t *entity, const char *szrootname, float volume, float attenuation, int flags, int pitch, int ipick, bool freset);
 int SENTENCEG_GetIndex(const char *szrootname);
 int SENTENCEG_Lookup(const char *sample, char *sentencenum);
 

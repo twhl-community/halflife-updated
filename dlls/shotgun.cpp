@@ -66,7 +66,7 @@ void CShotgun::Precache()
 	m_usDoubleFire = PRECACHE_EVENT( 1, "events/shotgun2.sc" );
 }
 
-int CShotgun::AddToPlayer( CBasePlayer *pPlayer )
+bool CShotgun::AddToPlayer( CBasePlayer *pPlayer )
 {
 	if ( CBasePlayerWeapon::AddToPlayer( pPlayer ) )
 	{
@@ -79,7 +79,7 @@ int CShotgun::AddToPlayer( CBasePlayer *pPlayer )
 }
 
 
-int CShotgun::GetItemInfo(ItemInfo *p)
+bool CShotgun::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "buckshot";
@@ -93,7 +93,7 @@ int CShotgun::GetItemInfo(ItemInfo *p)
 	p->iId = m_iId = WEAPON_SHOTGUN;
 	p->iWeight = SHOTGUN_WEIGHT;
 
-	return 1;
+	return true;
 }
 
 
@@ -158,7 +158,7 @@ void CShotgun::PrimaryAttack()
 	PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usSingleFire, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0 );
 
 
-	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
+	if (0 == m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
@@ -232,7 +232,7 @@ void CShotgun::SecondaryAttack()
 		
 	PLAYBACK_EVENT_FULL( flags, m_pPlayer->edict(), m_usDoubleFire, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0 );
 
-	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
+	if (0 == m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
@@ -316,13 +316,13 @@ void CShotgun::WeaponIdle()
 
 	if (m_flTimeWeaponIdle <  UTIL_WeaponTimeBase() )
 	{
-		if (m_iClip == 0 && m_fInSpecialReload == 0 && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+		if (m_iClip == 0 && m_fInSpecialReload == 0 && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 		{
 			Reload( );
 		}
 		else if (m_fInSpecialReload != 0)
 		{
-			if (m_iClip != 8 && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+			if (m_iClip != 8 && 0 != m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 			{
 				Reload( );
 			}
@@ -363,7 +363,7 @@ void CShotgun::WeaponIdle()
 
 void CShotgun::ItemPostFrame()
 {
-	if (m_flPumpTime && m_flPumpTime < gpGlobals->time)
+	if (0 != m_flPumpTime && m_flPumpTime < gpGlobals->time)
 	{
 		// play pumping sound
 		EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0, 0x1f));

@@ -45,7 +45,7 @@
 class CMessageWindowPanel : public CMenuPanel
 {
 public:
-	CMessageWindowPanel( const char *szMOTD, const char *szTitle, int iShadeFullScreen, int iRemoveMe, int x, int y, int wide, int tall );
+	CMessageWindowPanel( const char *szMOTD, const char *szTitle, bool iShadeFullScreen, bool iRemoveMe, int x, int y, int wide, int tall );
 
 private:
 	CTransparentPanel *m_pBackgroundPanel;
@@ -56,7 +56,7 @@ private:
 // Purpose: Creates a new CMessageWindowPanel
 // Output : CMenuPanel - interface to the panel
 //-----------------------------------------------------------------------------
-CMenuPanel *CMessageWindowPanel_Create( const char *szMOTD, const char *szTitle, int iShadeFullscreen, int iRemoveMe, int x, int y, int wide, int tall )
+CMenuPanel *CMessageWindowPanel_Create( const char *szMOTD, const char *szTitle, bool iShadeFullscreen, bool iRemoveMe, int x, int y, int wide, int tall )
 {
 	return new CMessageWindowPanel( szMOTD, szTitle, iShadeFullscreen, iRemoveMe, x, y, wide, tall );
 }
@@ -64,7 +64,7 @@ CMenuPanel *CMessageWindowPanel_Create( const char *szMOTD, const char *szTitle,
 //-----------------------------------------------------------------------------
 // Purpose: Constructs a message panel
 //-----------------------------------------------------------------------------
-CMessageWindowPanel::CMessageWindowPanel( const char *szMOTD, const char *szTitle, int iShadeFullscreen, int iRemoveMe, int x, int y, int wide, int tall ) : CMenuPanel( iShadeFullscreen ? 100 : 255, iRemoveMe, x, y, wide, tall )
+CMessageWindowPanel::CMessageWindowPanel( const char *szMOTD, const char *szTitle, bool iShadeFullscreen, bool iRemoveMe, int x, int y, int wide, int tall ) : CMenuPanel( iShadeFullscreen ? 100 : 255, iRemoveMe, x, y, wide, tall )
 {
 	// Get the scheme used for the Titles
 	CSchemeManager *pSchemes = gViewPort->GetSchemeManager();

@@ -46,12 +46,12 @@ typedef struct
 class CHudHealth: public CHudBase
 {
 public:
-    int Init() override;
-    int VidInit() override;
-    int Draw(float fTime) override;
+	bool Init() override;
+	bool VidInit() override;
+	bool Draw(float fTime) override;
     void Reset() override;
-	int MsgFunc_Health(const char *pszName,  int iSize, void *pbuf);
-	int MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf);
+	bool MsgFunc_Health(const char *pszName,  int iSize, void *pbuf);
+	bool MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf);
 	int m_iHealth;
 	int m_HUD_dmg_bio;
 	int m_HUD_cross;
@@ -65,8 +65,8 @@ private:
 	
 	DAMAGE_IMAGE m_dmg[NUM_DMG_TYPES];
 	int	m_bitsDamage;
-	int DrawPain(float fTime);
-	int DrawDamage(float fTime);
+	bool DrawPain(float fTime);
+	bool DrawDamage(float fTime);
 	void CalcDamageDirection(Vector vecFrom);
 	void UpdateTiles(float fTime, long bits);
 };	

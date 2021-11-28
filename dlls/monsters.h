@@ -153,7 +153,7 @@ public:
 
 	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
 	static	void SpawnHeadGib( entvars_t *pevVictim );
-	static	void SpawnRandomGibs( entvars_t *pevVictim, int cGibs, int human );
+	static	void SpawnRandomGibs( entvars_t *pevVictim, int cGibs, bool human );
 	static  void SpawnStickyGibs( entvars_t *pevVictim, Vector vecOrigin, int cGibs );
 
 	int		m_bloodColor;

@@ -69,7 +69,7 @@ void DLLEXPORT Demo_ReadBuffer( int size, unsigned char *buffer )
 		g_demosniper = *(int * )&buffer[ i ];
 		i += sizeof( int );
 		
-		if ( g_demosniper )
+		if ( 0 != g_demosniper )
 		{
 			g_demosniperdamage = *( int * )&buffer[ i ];
 			i += sizeof( int );

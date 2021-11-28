@@ -87,8 +87,8 @@ public:
 
 	void EXPORT AnimateUntilDead();
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 	static CSprite *SpriteCreate( const char *pSpriteName, const Vector &origin, bool animate );
 
@@ -187,18 +187,18 @@ class CLaser : public CBeam
 public:
 	void	Spawn() override;
 	void	Precache() override;
-	void	KeyValue( KeyValueData *pkvd ) override;
+	bool	KeyValue( KeyValueData *pkvd ) override;
 
 	void	TurnOn();
 	void	TurnOff();
-	int		IsOn();
+	bool	IsOn();
 
 	void	FireAtPoint( TraceResult &point );
 
 	void	EXPORT StrikeThink();
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	CSprite	*m_pSprite;

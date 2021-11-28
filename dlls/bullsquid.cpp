@@ -65,8 +65,8 @@ public:
 	void Touch( CBaseEntity *pOther ) override;
 	void EXPORT Animate();
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int  m_maxFrame;
@@ -103,7 +103,7 @@ void CSquidSpit::Animate()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
-	if ( pev->frame++ )
+	if ( 0 != pev->frame++ )
 	{
 		if ( pev->frame > m_maxFrame )
 		{
@@ -145,7 +145,7 @@ void CSquidSpit :: Touch ( CBaseEntity *pOther )
 		break;
 	}
 
-	if ( !pOther->pev->takedamage )
+	if ( 0 == pOther->pev->takedamage )
 	{
 
 		// make a splat on the wall
@@ -209,13 +209,13 @@ public:
 	bool FValidateHintType ( short sHint ) override;
 	Schedule_t *GetSchedule() override;
 	Schedule_t *GetScheduleOfType ( int Type ) override;
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
 	int IRelationship ( CBaseEntity *pTarget ) override;
 	int IgnoreConditions () override;
 	MONSTERSTATE GetIdealState () override;
 
-	int	Save( CSave &save ) override;
-	int Restore( CRestore &restore ) override;
+	bool Save( CSave &save ) override;
+	bool Restore( CRestore &restore ) override;
 
 	CUSTOM_SCHEDULES;
 	static TYPEDESCRIPTION m_SaveData[];
@@ -282,7 +282,7 @@ int CBullsquid::IRelationship ( CBaseEntity *pTarget )
 // TakeDamage - overridden for bullsquid so we can keep track
 // of how much time has passed since it was last injured
 //=========================================================
-int CBullsquid :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
+bool CBullsquid :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
 {
 	float flDist;
 	Vector vecApex;
@@ -1261,7 +1261,7 @@ MONSTERSTATE CBullsquid :: GetIdealState ()
 		COMBAT goes to ALERT upon death of enemy
 		*/
 		{
-			if ( m_hEnemy != NULL && ( iConditions & bits_COND_LIGHT_DAMAGE || iConditions & bits_COND_HEAVY_DAMAGE ) && FClassnameIs( m_hEnemy->pev, "monster_headcrab" ) )
+			if ( m_hEnemy != NULL && (iConditions & (bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE)) != 0 && FClassnameIs( m_hEnemy->pev, "monster_headcrab" ) )
 			{
 				// if the squid has a headcrab enemy and something hurts it, it's going to forget about the crab for a while.
 				m_hEnemy = NULL;

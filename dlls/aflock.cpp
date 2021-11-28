@@ -36,11 +36,11 @@ class CFlockingFlyerFlock : public CBaseMonster
 public:
 	void Spawn() override;
 	void Precache() override;
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 	void SpawnFlock();
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// Sounds are shared by the flock
@@ -82,12 +82,12 @@ public:
 	bool FPathBlocked();
 	//void KeyValue( KeyValueData *pkvd ) override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	int IsLeader() { return m_pSquadLeader == this; }
-	int	InSquad() { return m_pSquadLeader != NULL; }
+	bool IsLeader() { return m_pSquadLeader == this; }
+	bool InSquad() { return m_pSquadLeader != NULL; }
 	int	SquadCount();
 	void SquadRemove( CFlockingFlyer *pRemove );
 	void SquadUnlink();
@@ -130,18 +130,20 @@ IMPLEMENT_SAVERESTORE( CFlockingFlyer, CBaseMonster );
 
 //=========================================================
 //=========================================================
-void CFlockingFlyerFlock :: KeyValue( KeyValueData *pkvd )
+bool CFlockingFlyerFlock :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "iFlockSize"))
 	{
 		m_cFlockSize = atoi(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "flFlockRadius"))
 	{
 		m_flFlockRadius = atof(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
+
+	return false;
 }
 
 //=========================================================
@@ -299,7 +301,7 @@ void CFlockingFlyer :: Killed( entvars_t *pevAttacker, int iGib )
 
 void CFlockingFlyer :: FallHack()
 {
-	if ( pev->flags & FL_ONGROUND )
+	if ( (pev->flags & FL_ONGROUND) != 0 )
 	{
 		if ( !FClassnameIs ( pev->groundentity, "worldspawn" ) )
 		{

@@ -36,7 +36,7 @@ typedef struct overviewInfo_s {
 	int			layers;		// how may layers do we have
 	float		layersHeights[OVERVIEW_MAX_LAYERS];
 	char		layersImages[OVERVIEW_MAX_LAYERS][255];
-	qboolean	rotated;	// are map images rotated (90 degrees) ?
+	bool		rotated;	// are map images rotated (90 degrees) ?
 	
 	int			insetWindowX;
 	int			insetWindowY;
@@ -88,10 +88,10 @@ public:
 	void FindPlayer(const char *name);
 	void DirectorMessage( int iSize, void *pbuf );
 	void SetSpectatorStartPosition();
-	int Init() override;
-	int VidInit() override;
+	bool Init() override;
+	bool VidInit() override;
 
-	int Draw(float flTime) override;
+	bool Draw(float flTime) override;
 
 	void	AddWaypoint( float time, Vector pos, Vector angle, float fov, int flags );
 	void	SetCameraView(Vector pos, Vector angle, float fov);
@@ -116,9 +116,9 @@ public:
 	cvar_t *			m_drawstatus;
 	cvar_t *			m_autoDirector;
 	cvar_t *			m_pip;
-	qboolean			m_chatEnabled;
+	bool				m_chatEnabled;
 	
-	qboolean			m_IsInterpolating;
+	bool				m_IsInterpolating;
 	int					m_ChaseEntity;	// if != 0, follow this entity with viewangles
 	int					m_WayPoint;		// current waypoint 1
 	int					m_NumWayPoints;	// current number of waypoints

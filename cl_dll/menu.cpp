@@ -30,11 +30,11 @@
 char g_szMenuString[MAX_MENU_STRING];
 char g_szPrelocalisedMenuString[MAX_MENU_STRING];
 
-int KB_ConvertString( char *in, char **ppout );
+bool KB_ConvertString( char *in, char **ppout );
 
 DECLARE_MESSAGE( m_Menu, ShowMenu );
 
-int CHudMenu :: Init()
+bool CHudMenu :: Init()
 {
 	gHUD.AddHudElem( this );
 
@@ -42,12 +42,12 @@ int CHudMenu :: Init()
 
 	InitHUDData();
 
-	return 1;
+	return true;
 }
 
 void CHudMenu :: InitHUDData()
 {
-	m_fMenuDisplayed = 0;
+	m_fMenuDisplayed = false;
 	m_bitsValidSlots = 0;
 	Reset();
 }
@@ -58,9 +58,9 @@ void CHudMenu :: Reset()
 	m_fWaitingForMore = false;
 }
 
-int CHudMenu :: VidInit()
+bool CHudMenu :: VidInit()
 {
-	return 1;
+	return true;
 }
 
 
@@ -78,7 +78,8 @@ int CHudMenu :: VidInit()
    \R : Right-align (just for the remainder of the current line)
 =================================*/
 
-static int menu_r, menu_g, menu_b, menu_x, menu_ralign;
+static int menu_r, menu_g, menu_b, menu_x;
+static bool menu_ralign;
 
 static inline const char* ParseEscapeToken( const char* token )
 {
@@ -126,22 +127,22 @@ static inline const char* ParseEscapeToken( const char* token )
 }
 
 
-int CHudMenu :: Draw( float flTime )
+bool CHudMenu :: Draw( float flTime )
 {
 	// check for if menu is set to disappear
 	if ( m_flShutoffTime > 0 )
 	{
 		if ( m_flShutoffTime <= gHUD.m_flTime )
 		{  // times up, shutoff
-			m_fMenuDisplayed = 0;
+			m_fMenuDisplayed = false;
 			m_iFlags &= ~HUD_ACTIVE;
-			return 1;
+			return true;
 		}
 	}
 
 	// don't draw the menu if the scoreboard is being shown
 	if ( gViewPort && gViewPort->IsScoreBoardVisible() )
-		return 1;
+		return true;
 
 	// draw the menu, along the left-hand side of the screen
 
@@ -202,21 +203,21 @@ int CHudMenu :: Draw( float flTime )
 		}
 	}
 	
-	return 1;
+	return true;
 }
 
 // selects an item from the menu
 void CHudMenu :: SelectMenuItem( int menu_item )
 {
 	// if menu_item is in a valid slot,  send a menuselect command to the server
-	if ( (menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item-1))) )
+	if ( (menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item-1))) != 0 )
 	{
 		char szbuf[32];
 		sprintf( szbuf, "menuselect %d\n", menu_item );
 		EngineClientCmd( szbuf );
 
 		// remove the menu
-		m_fMenuDisplayed = 0;
+		m_fMenuDisplayed = false;
 		m_iFlags &= ~HUD_ACTIVE;
 	}
 }
@@ -229,7 +230,7 @@ void CHudMenu :: SelectMenuItem( int menu_item )
 //		byte : a boolean, true if there is more string yet to be received before displaying the menu, false if it's the last string
 //		string: menu string to display
 // if this message is never received, then scores will simply be the combined totals of the players.
-int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
+bool CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 {
 	char *temp = NULL;
 
@@ -237,14 +238,14 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 
 	m_bitsValidSlots = READ_SHORT();
 	int DisplayTime = READ_CHAR();
-	int NeedMore = READ_BYTE();
+	bool NeedMore = READ_BYTE() != 0;
 
 	if ( DisplayTime > 0 )
 		m_flShutoffTime = DisplayTime + gHUD.m_flTime;
 	else
 		m_flShutoffTime = -1;
 
-	if ( m_bitsValidSlots )
+	if ( 0 != m_bitsValidSlots )
 	{
 		if ( !m_fWaitingForMore ) // this is the start of a new menu
 		{
@@ -268,16 +269,16 @@ int CHudMenu :: MsgFunc_ShowMenu( const char *pszName, int iSize, void *pbuf )
 			}
 		}
 
-		m_fMenuDisplayed = 1;
+		m_fMenuDisplayed = true;
 		m_iFlags |= HUD_ACTIVE;
 	}
 	else
 	{
-		m_fMenuDisplayed = 0; // no valid slots means that the menu should be turned off
+		m_fMenuDisplayed = false; // no valid slots means that the menu should be turned off
 		m_iFlags &= ~HUD_ACTIVE;
 	}
 
 	m_fWaitingForMore = NeedMore;
 
-	return 1;
+	return true;
 }

@@ -27,7 +27,7 @@
 DECLARE_MESSAGE( m_AmmoSecondary, SecAmmoVal );
 DECLARE_MESSAGE( m_AmmoSecondary, SecAmmoIcon );
 
-int CHudAmmoSecondary :: Init()
+bool CHudAmmoSecondary :: Init()
 {
 	HOOK_MESSAGE( SecAmmoVal );
 	HOOK_MESSAGE( SecAmmoIcon );
@@ -40,7 +40,7 @@ int CHudAmmoSecondary :: Init()
 
 	Reset();
 
-	return 1;
+	return true;
 }
 
 void CHudAmmoSecondary :: Reset()
@@ -48,15 +48,15 @@ void CHudAmmoSecondary :: Reset()
 	m_fFade = 0;
 }
 
-int CHudAmmoSecondary :: VidInit()
+bool CHudAmmoSecondary :: VidInit()
 {
-	return 1;
+	return true;
 }
 
-int CHudAmmoSecondary :: Draw(float flTime)
+bool CHudAmmoSecondary :: Draw(float flTime)
 {
-	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
-		return 1;
+	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) != 0)
+		return true;
 
 	// draw secondary ammo icons above normal ammo readout
 	int a, x, y, r, g, b, AmmoWidth;
@@ -71,7 +71,7 @@ int CHudAmmoSecondary :: Draw(float flTime)
 	y = ScreenHeight - (gHUD.m_iFontHeight*4);  // this is one font height higher than the weapon ammo values
 	x = ScreenWidth - AmmoWidth;
 
-	if ( m_HUD_ammoicon )
+	if ( 0 != m_HUD_ammoicon )
 	{
 		// Draw the ammo icon
 		x -= (gHUD.GetSpriteRect(m_HUD_ammoicon).right - gHUD.GetSpriteRect(m_HUD_ammoicon).left);
@@ -107,18 +107,18 @@ int CHudAmmoSecondary :: Draw(float flTime)
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 // Message handler for Secondary Ammo Value
 // accepts one value:
 //		string:  sprite name
-int CHudAmmoSecondary :: MsgFunc_SecAmmoIcon( const char *pszName, int iSize, void *pbuf )
+bool CHudAmmoSecondary :: MsgFunc_SecAmmoIcon( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	m_HUD_ammoicon = gHUD.GetSpriteIndex( READ_STRING() );
 
-	return 1;
+	return true;
 }
 
 // Message handler for Secondary Ammo Icon
@@ -126,13 +126,13 @@ int CHudAmmoSecondary :: MsgFunc_SecAmmoIcon( const char *pszName, int iSize, vo
 // takes two values:
 //		byte:  ammo index
 //		byte:  ammo value
-int CHudAmmoSecondary :: MsgFunc_SecAmmoVal( const char *pszName, int iSize, void *pbuf )
+bool CHudAmmoSecondary :: MsgFunc_SecAmmoVal( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
 	int index = READ_BYTE();
 	if ( index < 0 || index >= MAX_SEC_AMMO_VALUES )
-		return 1;
+		return true;
 
 	m_iAmmoAmounts[index] = READ_BYTE();
 	m_iFlags |= HUD_ACTIVE;
@@ -147,13 +147,13 @@ int CHudAmmoSecondary :: MsgFunc_SecAmmoVal( const char *pszName, int iSize, voi
 	if ( count == 0 ) 
 	{	// the ammo fields are all empty, so turn off this hud area
 		m_iFlags &= ~HUD_ACTIVE;
-		return 1;
+		return true;
 	}
 
 	// make the icons light up
 	m_fFade = 200.0f;
 
-	return 1;
+	return true;
 }
 
 

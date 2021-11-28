@@ -27,10 +27,10 @@
 #define MOUSE_BUTTON_COUNT 5
 
 // Set this to 1 to show mouse cursor.  Experimental
-int	g_iVisibleMouse = 0;
+bool g_iVisibleMouse = false;
 
 extern cl_enginefunc_t gEngfuncs;
-extern int iMouseInUse;
+extern bool iMouseInUse;
 
 extern kbutton_t	in_strafe;
 extern kbutton_t	in_mlook;
@@ -81,12 +81,12 @@ int			mouse_oldbuttonstate;
 int			old_mouse_x, old_mouse_y, mx_accum, my_accum;
 float		mouse_x, mouse_y;
 
-static int	restore_spi;
+static bool	restore_spi;
 static int	originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
-static int	mouseactive = 0;
-int			mouseinitialized;
-static int	mouseparmsvalid;
-static int	mouseshowtoggle = 1;
+static bool	mouseactive = false;
+bool		mouseinitialized;
+static bool	mouseparmsvalid;
+static bool	mouseshowtoggle = true;
 
 // joystick defines and variables
 // where should defines be moved?
@@ -146,7 +146,7 @@ cvar_t	*joy_yawsensitivity;
 cvar_t	*joy_wwhack1;
 cvar_t	*joy_wwhack2;
 
-int			joy_avail, joy_advancedinit, joy_haspov;
+bool		joy_avail, joy_advancedinit, joy_haspov;
 
 #ifdef WIN32
 DWORD	s_hMouseThreadId = 0;
@@ -187,9 +187,9 @@ long ThreadInterlockedExchange( long *pDest, long value )
 
 DWORD WINAPI MousePos_ThreadFunction( LPVOID p )
 {
-	s_hMouseDoneQuitEvent = CreateEvent( NULL, false, false, NULL );
+	s_hMouseDoneQuitEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
 
-	while ( 1 )
+	while ( true )
 	{
 		if ( WaitForSingleObject( s_hMouseQuitEvent, (int)m_mousethread_sleep->value ) == WAIT_OBJECT_0 )
 		{
@@ -229,10 +229,10 @@ void DLLEXPORT IN_ActivateMouse ()
 	{
 #ifdef WIN32
 		if (mouseparmsvalid)
-			restore_spi = SystemParametersInfo (SPI_SETMOUSE, 0, newmouseparms, 0);
+			restore_spi = SystemParametersInfo (SPI_SETMOUSE, 0, newmouseparms, 0) != FALSE;
 
 #endif
-		mouseactive = 1;
+		mouseactive = true;
 	}
 
 #ifdef WIN32
@@ -267,7 +267,7 @@ void DLLEXPORT IN_DeactivateMouse ()
 
 #endif
 
-		mouseactive = 0;
+		mouseactive = false;
 	}
 
 #ifdef WIN32
@@ -287,25 +287,25 @@ IN_StartupMouse
 */
 void IN_StartupMouse ()
 {
-	if ( gEngfuncs.CheckParm ("-nomouse", NULL ) ) 
+	if ( 0 != gEngfuncs.CheckParm ("-nomouse", NULL ) ) 
 		return; 
 
-	mouseinitialized = 1;
+	mouseinitialized = true;
 #ifdef WIN32
-	mouseparmsvalid = SystemParametersInfo (SPI_GETMOUSE, 0, originalmouseparms, 0);
+	mouseparmsvalid = SystemParametersInfo (SPI_GETMOUSE, 0, originalmouseparms, 0) != FALSE;
 
 	if (mouseparmsvalid)
 	{
-		if ( gEngfuncs.CheckParm ("-noforcemspd", NULL ) ) 
+		if ( 0 != gEngfuncs.CheckParm ("-noforcemspd", NULL ) ) 
 			newmouseparms[2] = originalmouseparms[2];
 
-		if ( gEngfuncs.CheckParm ("-noforcemaccel", NULL ) ) 
+		if ( 0 != gEngfuncs.CheckParm ("-noforcemaccel", NULL ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
 		}
 
-		if ( gEngfuncs.CheckParm ("-noforcemparms", NULL ) ) 
+		if ( 0 != gEngfuncs.CheckParm ("-noforcemparms", NULL ) ) 
 		{
 			newmouseparms[0] = originalmouseparms[0];
 			newmouseparms[1] = originalmouseparms[1];
@@ -415,14 +415,14 @@ void DLLEXPORT IN_MouseEvent (int mstate)
 	// perform button actions
 	for (i=0 ; i<mouse_buttons ; i++)
 	{
-		if ( (mstate & (1<<i)) &&
-			!(mouse_oldbuttonstate & (1<<i)) )
+		if ( (mstate & (1<<i)) != 0 &&
+			(mouse_oldbuttonstate & (1<<i)) == 0)
 		{
 			gEngfuncs.Key_Event (K_MOUSE1 + i, 1);
 		}
 
-		if ( !(mstate & (1<<i)) &&
-			(mouse_oldbuttonstate & (1<<i)) )
+		if ( (mstate & (1<<i)) == 0 &&
+			(mouse_oldbuttonstate & (1<<i)) != 0)
 		{
 			gEngfuncs.Key_Event (K_MOUSE1 + i, 0);
 		}
@@ -492,7 +492,7 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 
 	gEngfuncs.GetViewAngles( (float *)viewangles );
 
-	if ( in_mlook.state & 1)
+	if ( (in_mlook.state & 1) != 0)
 	{
 		V_StopPitchDrift ();
 	}
@@ -551,7 +551,7 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 		mx_accum = 0;
 		my_accum = 0;
 
-		if (m_filter && m_filter->value)
+		if (m_filter && 0 != m_filter->value)
 		{
 			mouse_x = (mx + old_mouse_x) * 0.5;
 			mouse_y = (my + old_mouse_y) * 0.5;
@@ -569,12 +569,12 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 		IN_ScaleMouse( &mouse_x, &mouse_y );
 
 		// add mouse X/Y movement to cmd
-		if ( (in_strafe.state & 1) || (lookstrafe->value && (in_mlook.state & 1) ))
+		if ( (in_strafe.state & 1) != 0 || (0 != lookstrafe->value && (in_mlook.state & 1) != 0 ))
 			cmd->sidemove += m_side->value * mouse_x;
 		else
 			viewangles[YAW] -= m_yaw->value * mouse_x;
 
-		if ( (in_mlook.state & 1) && !(in_strafe.state & 1))
+		if ( (in_mlook.state & 1) != 0 && (in_strafe.state & 1) == 0)
 		{
 			viewangles[PITCH] += m_pitch->value * mouse_y;
 			if (viewangles[PITCH] > cl_pitchdown->value)
@@ -584,7 +584,7 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 		}
 		else
 		{
-			if ((in_strafe.state & 1) && gEngfuncs.IsNoClipping() )
+			if ((in_strafe.state & 1) != 0 && 0 != gEngfuncs.IsNoClipping() )
 			{
 				cmd->upmove -= m_forward->value * mouse_y;
 			}
@@ -595,7 +595,7 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 		}
 
 		// if the mouse has moved, force it to the center, so there's room to move
-		if ( mx || my )
+		if ( 0 != mx || 0 != my )
 		{
 			IN_ResetMouse();
 		}
@@ -604,12 +604,12 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 	gEngfuncs.SetViewAngles( (float *)viewangles );
 
 #ifdef WIN32
-	if (!m_bRawInput && mouseRelative)
+	if (!m_bRawInput && SDL_FALSE != mouseRelative)
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 		mouseRelative = SDL_FALSE;
 	}
-	else if (m_bRawInput && !mouseRelative)
+	else if (m_bRawInput && SDL_FALSE == mouseRelative)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 		mouseRelative = SDL_TRUE;
@@ -691,25 +691,25 @@ IN_StartupJoystick
 void IN_StartupJoystick () 
 { 
 	// abort startup if user requests no joystick
-	if ( gEngfuncs.CheckParm ("-nojoy", NULL ) ) 
+	if ( 0 != gEngfuncs.CheckParm ("-nojoy", NULL ) ) 
 		return; 
  
  	// assume no joystick
-	joy_avail = 0; 
+	joy_avail = false; 
 
 	int nJoysticks = SDL_NumJoysticks();
 	if ( nJoysticks > 0 )
 	{
 		for ( int i = 0; i < nJoysticks; i++ )
 		{
-			if ( SDL_IsGameController( i ) )
+			if ( SDL_FALSE != SDL_IsGameController( i ) )
 			{
 				s_pJoystick = SDL_GameControllerOpen( i );
 				if ( s_pJoystick )
 				{
 					//save the joystick's number of buttons and POV status
 					joy_numbuttons = SDL_CONTROLLER_BUTTON_MAX;
-					joy_haspov = 0;
+					joy_haspov = false;
 					
 					// old button and POV states default to no buttons pressed
 					joy_oldbuttonstate = joy_oldpovstate = 0;
@@ -717,8 +717,8 @@ void IN_StartupJoystick ()
 					// mark the joystick as available and advanced initialization not completed
 					// this is needed as cvars are not available during initialization
 					gEngfuncs.Con_Printf ("joystick found\n\n", SDL_GameControllerName(s_pJoystick)); 
-					joy_avail = 1; 
-					joy_advancedinit = 0;
+					joy_avail = true; 
+					joy_advancedinit = false;
 					break;
 				}
 
@@ -833,7 +833,7 @@ void IN_Commands ()
 	buttonstate = 0;
 	for ( i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++ )
 	{
-		if ( SDL_GameControllerGetButton( s_pJoystick, (SDL_GameControllerButton)i ) )
+		if ( 0 != SDL_GameControllerGetButton( s_pJoystick, (SDL_GameControllerButton)i ) )
 		{
 			buttonstate |= 1<<i;
 		}
@@ -846,13 +846,13 @@ void IN_Commands ()
 
 	for (i=0 ; i < (int)joy_numbuttons ; i++)
 	{
-		if ( (buttonstate & (1<<i)) && !(joy_oldbuttonstate & (1<<i)) )
+		if ( (buttonstate & (1<<i)) != 0 && (joy_oldbuttonstate & (1<<i)) == 0)
 		{
 			key_index = (i < 4) ? K_JOY1 : K_AUX1;
 			gEngfuncs.Key_Event (key_index + i, 1);
 		}
 
-		if ( !(buttonstate & (1<<i)) && (joy_oldbuttonstate & (1<<i)) )
+		if ( (buttonstate & (1<<i)) == 0 && (joy_oldbuttonstate & (1<<i)) != 0)
 		{
 			key_index = (i < 4) ? K_JOY1 : K_AUX1;
 			gEngfuncs.Key_Event (key_index + i, 0);
@@ -869,12 +869,12 @@ void IN_Commands ()
 		// determine which bits have changed and key an auxillary event for each change
 		for (i=0 ; i < 4 ; i++)
 		{
-			if ( (povstate & (1<<i)) && !(joy_oldpovstate & (1<<i)) )
+			if ( (povstate & (1<<i)) != 0 && (joy_oldpovstate & (1<<i)) == 0)
 			{
 				gEngfuncs.Key_Event (K_AUX29 + i, 1);
 			}
 
-			if ( !(povstate & (1<<i)) && (joy_oldpovstate & (1<<i)) )
+			if ( (povstate & (1<<i)) == 0 && (joy_oldpovstate & (1<<i)) != 0)
 			{
 				gEngfuncs.Key_Event (K_AUX29 + i, 0);
 			}
@@ -889,10 +889,10 @@ void IN_Commands ()
 IN_ReadJoystick
 =============== 
 */  
-int IN_ReadJoystick ()
+bool IN_ReadJoystick ()
 {
 	SDL_JoystickUpdate();
-	return 1;
+	return true;
 }
 
 
@@ -913,25 +913,25 @@ void IN_JoyMove ( float frametime, usercmd_t *cmd )
 
 	// complete initialization if first time in
 	// this is needed as cvars are not available at initialization time
-	if( joy_advancedinit != 1 )
+	if( !joy_advancedinit )
 	{
 		Joy_AdvancedUpdate_f();
-		joy_advancedinit = 1;
+		joy_advancedinit = true;
 	}
 
 	// verify joystick is available and that the user wants to use it
-	if (!joy_avail || !in_joystick->value)
+	if (!joy_avail || 0 == in_joystick->value)
 	{
 		return; 
 	}
  
 	// collect the joystick data, if possible
-	if (IN_ReadJoystick () != 1)
+	if (!IN_ReadJoystick ())
 	{
 		return;
 	}
 
-	if (in_speed.state & 1)
+	if ((in_speed.state & 1) != 0)
 		speed = cl_movespeedkey->value;
 	else
 		speed = 1;
@@ -966,7 +966,7 @@ void IN_JoyMove ( float frametime, usercmd_t *cmd )
 		switch (dwAxisMap[i])
 		{
 		case AxisForward:
-			if ((joy_advanced->value == 0.0) && (in_jlook.state & 1))
+			if ((joy_advanced->value == 0.0) && (in_jlook.state & 1) != 0)
 			{
 				// user wants forward control to become look control
 				if (fabs(fAxisValue) > joy_pitchthreshold->value)
@@ -1013,7 +1013,7 @@ void IN_JoyMove ( float frametime, usercmd_t *cmd )
 			break;
 
 		case AxisTurn:
-			if ((in_strafe.state & 1) || (lookstrafe->value && (in_jlook.state & 1)))
+			if ((in_strafe.state & 1) != 0 || (0 != lookstrafe->value && (in_jlook.state & 1) != 0))
 			{
 				// user wants turn control to become side control
 				if (fabs(fAxisValue) > joy_sidethreshold->value)
@@ -1040,7 +1040,7 @@ void IN_JoyMove ( float frametime, usercmd_t *cmd )
 			break;
 
 		case AxisLook:
-			if (in_jlook.state & 1)
+			if ((in_jlook.state & 1) != 0)
 			{
 				if (fabs(fAxisValue) > joy_pitchthreshold->value)
 				{
@@ -1142,7 +1142,7 @@ void IN_Init ()
 	{
 		s_mouseDeltaX = s_mouseDeltaY = 0;
 		
-		s_hMouseQuitEvent = CreateEvent( NULL, false, false, NULL );
+		s_hMouseQuitEvent = CreateEvent( NULL, FALSE, FALSE, NULL );
 		if ( s_hMouseQuitEvent )
 		{
 			s_hMouseThread = CreateThread( NULL, 0, MousePos_ThreadFunction, NULL, 0, &s_hMouseThreadId );

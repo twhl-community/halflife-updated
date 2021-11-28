@@ -45,7 +45,7 @@ struct ITEM_INFO
 
 void HistoryResource :: AddToHistory( int iType, int iId, int iCount )
 {
-	if ( iType == HISTSLOT_AMMO && !iCount )
+	if ( iType == HISTSLOT_AMMO && 0 == iCount )
 		return;  // no amount, so don't add
 
 	if ( (((AMMO_PICKUP_GAP * iCurrentHistorySlot) + AMMO_PICKUP_PICK_HEIGHT) > AMMO_PICKUP_HEIGHT_MAX) || (iCurrentHistorySlot >= MAX_HISTORY) )
@@ -95,7 +95,7 @@ void HistoryResource :: CheckClearHistory()
 {
 	for ( int i = 0; i < MAX_HISTORY; i++ )
 	{
-		if ( rgAmmoHistory[i].type )
+		if (HISTSLOT_EMPTY != rgAmmoHistory[i].type )
 			return;
 	}
 
@@ -105,11 +105,11 @@ void HistoryResource :: CheckClearHistory()
 //
 // Draw Ammo pickup history
 //
-int HistoryResource :: DrawAmmoHistory( float flTime )
+bool HistoryResource :: DrawAmmoHistory( float flTime )
 {
 	for ( int i = 0; i < MAX_HISTORY; i++ )
 	{
-		if ( rgAmmoHistory[i].type )
+		if (HISTSLOT_EMPTY != rgAmmoHistory[i].type )
 		{
 			rgAmmoHistory[i].DisplayTime = V_min( rgAmmoHistory[i].DisplayTime, gHUD.m_flTime + HISTORY_DRAW_TIME );
 
@@ -131,7 +131,7 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 				// Draw the pic
 				int ypos = ScreenHeight - (AMMO_PICKUP_PICK_HEIGHT + (AMMO_PICKUP_GAP * i));
 				int xpos = ScreenWidth - 24;
-				if ( spr && *spr )    // weapon isn't loaded yet so just don't draw the pic
+				if ( spr && 0 != *spr )    // weapon isn't loaded yet so just don't draw the pic
 				{ // the dll has to make sure it has sent info the weapons you need
 					SPR_Set( *spr, r, g, b );
 					SPR_DrawAdditive( 0, xpos, ypos, &rcPic );
@@ -145,7 +145,7 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 				WEAPON *weap = gWR.GetWeapon( rgAmmoHistory[i].iId );
 
 				if ( !weap )
-					return 1;  // we don't know about the weapon yet, so don't draw anything
+					return true;  // we don't know about the weapon yet, so don't draw anything
 
 				int r, g, b;
 				UnpackRGB(r,g,b, RGB_YELLOWISH);
@@ -165,7 +165,7 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 			{
 				int r, g, b;
 
-				if ( !rgAmmoHistory[i].iId )
+				if ( 0 == rgAmmoHistory[i].iId )
 					continue;  // sprite not loaded
 
 				Rect rect = gHUD.GetSpriteRect( rgAmmoHistory[i].iId );
@@ -184,7 +184,7 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 	}
 
 
-	return 1;
+	return true;
 }
 
 

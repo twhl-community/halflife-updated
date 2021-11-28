@@ -79,10 +79,10 @@ public:
 	void LoadWeaponSprites( WEAPON* wp );
 	void LoadAllWeaponSprites();
 	WEAPON* GetFirstPos( int iSlot );
-	void SelectSlot( int iSlot, int fAdvance, int iDirection );
+	void SelectSlot( int iSlot, bool fAdvance, int iDirection );
 	WEAPON* GetNextActivePos( int iSlot, int iSlotPos );
 
-	int HasAmmo( WEAPON *p );
+	bool HasAmmo( WEAPON *p );
 
 ///// AMMO /////
 	AMMO GetAmmo( int iId ) { return iId; }
@@ -136,7 +136,7 @@ public:
 	void AddToHistory( int iType, const char *szName, int iCount = 0 );
 
 	void CheckClearHistory();
-	int DrawAmmoHistory( float flTime );
+	bool DrawAmmoHistory( float flTime );
 };
 
 extern HistoryResource gHR;

@@ -36,8 +36,8 @@ extern extra_player_info_t  g_PlayerExtraInfo[MAX_PLAYERS+1];   // additional pl
 team_info_t			 g_TeamInfo[MAX_TEAMS+1];
 int					 g_IsSpectator[MAX_PLAYERS+1];
 
-int HUD_IsGame( const char *game );
-int EV_TFC_IsAllyTeam( int iTeam1, int iTeam2 );
+bool HUD_IsGame( const char *game );
+bool EV_TFC_IsAllyTeam( int iTeam1, int iTeam2 );
 
 // Scoreboard dimensions
 #define SBOARD_TITLE_SIZE_Y			YRES(22)
@@ -252,7 +252,7 @@ void ScorePanel::Initialize()
 
 bool HACK_GetPlayerUniqueID( int iPlayer, char playerID[16] )
 {
-	return !!gEngfuncs.GetPlayerUniqueID( iPlayer, playerID ); // TODO remove after testing
+	return 0 != gEngfuncs.GetPlayerUniqueID( iPlayer, playerID ); // TODO remove after testing
 }
 		
 //-----------------------------------------------------------------------------
@@ -347,7 +347,7 @@ void ScorePanel::SortTeams()
 		g_TeamInfo[j].ping += g_PlayerInfoList[i].ping;
 		g_TeamInfo[j].packetloss += g_PlayerInfoList[i].packetloss;
 
-		if ( g_PlayerInfoList[i].thisplayer )
+		if ( 0 != g_PlayerInfoList[i].thisplayer )
 			g_TeamInfo[j].ownteam = true;
 		else
 			g_TeamInfo[j].ownteam = false;
@@ -369,7 +369,7 @@ void ScorePanel::SortTeams()
 	}
 
 	// Draw the teams
-	while ( 1 )
+	while ( true )
 	{
 		int highest_frags = -99999; int lowest_deaths = 99999;
 		int best_team = 0;
@@ -391,7 +391,7 @@ void ScorePanel::SortTeams()
 		}
 
 		// draw the best team on the scoreboard
-		if ( !best_team )
+		if ( 0 == best_team )
 			break;
 
 		// Put this team in the sorted list
@@ -416,7 +416,7 @@ void ScorePanel::SortPlayers( int iTeam, char *team )
 	bool bCreatedTeam = false;
 
 	// draw the players, in order,  and restricted to team if set
-	while ( 1 )
+	while ( true )
 	{
 		// Find the top ranking player
 		int highest_frags = -99999;	int lowest_deaths = 99999;
@@ -442,11 +442,11 @@ void ScorePanel::SortPlayers( int iTeam, char *team )
 			}
 		}
 
-		if ( !best_player )
+		if ( 0 == best_player )
 			break;
 
 		// If we haven't created the Team yet, do it first
-		if (!bCreatedTeam && iTeam)
+		if (!bCreatedTeam && 0 != iTeam)
 		{
 			m_iIsATeam[ m_iRows ] = iTeam;
 			m_iRows++;
@@ -661,7 +661,7 @@ void ScorePanel::FillGrid()
 				pl_info = &g_PlayerInfoList[ m_iSortedRows[row] ];
 
 				// Set background color
-				if ( pl_info->thisplayer ) // if it is their name, draw it a different color
+				if (0 != pl_info->thisplayer ) // if it is their name, draw it a different color
 				{
 					// Highlight this player
 					pLabel->setFgColor(Scheme::sc_white);
@@ -670,7 +670,7 @@ void ScorePanel::FillGrid()
 										iTeamColors[ g_PlayerExtraInfo[ m_iSortedRows[row] ].teamnumber % iNumberOfTeamColors ][2],
 										196 );
 				}
-				else if ( m_iSortedRows[row] == m_iLastKilledBy && m_fLastKillTime && m_fLastKillTime > gHUD.m_flTime )
+				else if ( m_iSortedRows[row] == m_iLastKilledBy && 0 != m_fLastKillTime && m_fLastKillTime > gHUD.m_flTime )
 				{
 					// Killer's name
 					pLabel->setBgColor( 255,0,0, 255 - ((float)15 * (float)(m_fLastKillTime - gHUD.m_flTime)) );
@@ -693,7 +693,7 @@ void ScorePanel::FillGrid()
 
 			// Fill out with the correct data
 			strcpy(sz, "");
-			if ( m_iIsATeam[row] )
+			if (TEAM_NO != m_iIsATeam[row] )
 			{
 				char sz2[128];
 
@@ -880,7 +880,7 @@ void ScorePanel::DeathMsg( int killer, int victim )
 	// if we were the one killed,  or the world killed us, set the scoreboard to indicate suicide
 	if ( victim == m_iPlayerNum || killer == 0 )
 	{
-		m_iLastKilledBy = killer ? killer : m_iPlayerNum;
+		m_iLastKilledBy = 0 != killer ? killer : m_iPlayerNum;
 		m_fLastKillTime = gHUD.m_flTime + 10;	// display who we were killed by for 10 seconds
 
 		if ( killer == m_iPlayerNum )
@@ -916,7 +916,7 @@ void ScorePanel::mousePressed(MouseCode code, Panel* panel)
 			// print text message
 			hud_player_info_t *pl_info = &g_PlayerInfoList[iPlayer];
 
-			if (pl_info && pl_info->name && pl_info->name[0])
+			if (pl_info && pl_info->name && '\0' != pl_info->name[0])
 			{
 				char string[256];
 				if (GetClientVoiceMgr()->IsPlayerBlocked(iPlayer))
@@ -991,10 +991,10 @@ void ScorePanel::MouseOverCell(int row, int col)
 
 	// don't act on disconnected players or ourselves
 	hud_player_info_t *pl_info = &g_PlayerInfoList[ m_iSortedRows[row] ];
-	if (!pl_info->name || !pl_info->name[0])
+	if (!pl_info->name || '\0' == pl_info->name[0])
 		return;
 
-	if (pl_info->thisplayer && !gEngfuncs.IsSpectateOnly() )
+	if (0 != pl_info->thisplayer && 0 == gEngfuncs.IsSpectateOnly() )
 		return;
 
 	// setup the new highlight

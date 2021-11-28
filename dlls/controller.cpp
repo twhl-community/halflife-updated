@@ -40,8 +40,8 @@
 class CController : public CSquadMonster
 {
 public:
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void Spawn() override;
@@ -85,7 +85,7 @@ public:
 	static const char *pPainSounds[];
 	static const char *pDeathSounds[];
 
-	int TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType ) override;
 	void Killed( entvars_t *pevAttacker, int iGib ) override;
 	void GibMonster() override;
 
@@ -97,7 +97,7 @@ public:
 	Vector m_vecEstVelocity;
 
 	Vector m_velocity;
-	int m_fInCombat;
+	bool m_fInCombat;
 };
 
 LINK_ENTITY_TO_CLASS( monster_alien_controller, CController );
@@ -178,7 +178,7 @@ void CController :: SetYawSpeed ()
 	pev->yaw_speed = ys;
 }
 
-int CController :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
+bool CController :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
 {
 	// HACK HACK -- until we fix this.
 	if ( IsAlive() )
@@ -1100,7 +1100,7 @@ int CController :: CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd
 	}
 
 	// ALERT( at_console, "check %d %d %f\n", tr.fStartSolid, tr.fAllSolid, tr.flFraction );
-	if (tr.fStartSolid || tr.flFraction < 1.0)
+	if (0 != tr.fStartSolid || tr.flFraction < 1.0)
 	{
 		if ( pTarget && pTarget->edict() == gpGlobals->trace_ent )
 			return LOCALMOVE_VALID;
@@ -1226,7 +1226,7 @@ void CControllerHeadBall :: HuntThink()
 		UTIL_TraceLine( pev->origin, m_hEnemy->Center(), dont_ignore_monsters, ENT(pev), &tr );
 
 		CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
-		if (pEntity != NULL && pEntity->pev->takedamage)
+		if (pEntity != NULL && 0 != pEntity->pev->takedamage)
 		{
 			ClearMultiDamage( );
 			pEntity->TraceAttack( m_hOwner->pev, gSkillData.controllerDmgZap, pev->velocity, &tr, DMG_SHOCK );
@@ -1396,7 +1396,7 @@ void CControllerZapBall :: AnimateThink()
 
 void CControllerZapBall::ExplodeTouch( CBaseEntity *pOther )
 {
-	if (pOther->pev->takedamage)
+	if (0 != pOther->pev->takedamage)
 	{
 		TraceResult tr = UTIL_GetGlobalTrace( );
 

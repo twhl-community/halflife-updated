@@ -175,10 +175,11 @@ void CCheckButton2::SetupControls()
 
 
 	// Position the controls.
-	int iLeftControl = !m_bCheckboxLeft;
+	int iLeftControl = m_bCheckboxLeft ? 0 : 1;
+	int rightControl = m_bCheckboxLeft ? 1 : 0;
 	int iBiggestY = controlSizes[0][1] > controlSizes[1][0] ? 0 : 1;
 	controls[iLeftControl]->setPos(0, (controlSizes[iBiggestY][1] - controlSizes[iLeftControl][1]) / 2);
-	controls[!iLeftControl]->setPos(controlSizes[iLeftControl][0] + EXTRA_X, (controlSizes[iBiggestY][1] - controlSizes[!iLeftControl][1]) / 2);
+	controls[rightControl]->setPos(controlSizes[iLeftControl][0] + EXTRA_X, (controlSizes[iBiggestY][1] - controlSizes[rightControl][1]) / 2);
 
 	
 	// Fit this control to the sizes of the subcontrols.

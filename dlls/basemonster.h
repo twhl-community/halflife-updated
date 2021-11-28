@@ -109,12 +109,12 @@ public:
 
 	float m_flLastYawTime;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 
 // monster use function
 	void EXPORT			MonsterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
@@ -189,9 +189,9 @@ public:
 		virtual Schedule_t *GetScheduleOfType( int Type );
 		virtual Schedule_t *GetSchedule();
 		virtual void ScheduleChange() {}
-		// virtual int CanPlaySequence() { return ((m_pCine == NULL) && (m_MonsterState == MONSTERSTATE_NONE || m_MonsterState == MONSTERSTATE_IDLE || m_IdealMonsterState == MONSTERSTATE_IDLE)); }
-		virtual int CanPlaySequence( bool fDisregardState, int interruptLevel );
-		virtual int CanPlaySentence( bool fDisregardState ) { return IsAlive(); }
+		// virtual bool CanPlaySequence() { return ((m_pCine == NULL) && (m_MonsterState == MONSTERSTATE_NONE || m_MonsterState == MONSTERSTATE_IDLE || m_IdealMonsterState == MONSTERSTATE_IDLE)); }
+		virtual bool CanPlaySequence( bool fDisregardState, int interruptLevel );
+		virtual bool CanPlaySentence( bool fDisregardState ) { return IsAlive(); }
 		virtual void PlaySentence( const char *pszSentence, float duration, float volume, float attenuation );
 		virtual void PlayScriptedSentence( const char *pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity *pListener );
 
@@ -205,7 +205,7 @@ public:
 		virtual void ReportAIState();
 
 		void CheckAttacks ( CBaseEntity *pTarget, float flDist );
-		virtual int CheckEnemy ( CBaseEntity *pEnemy );
+		virtual bool CheckEnemy ( CBaseEntity *pEnemy );
 		void PushEnemy( CBaseEntity *pEnemy, Vector &vecLastKnownPos );
 		bool PopEnemy();
 
@@ -215,9 +215,9 @@ public:
 		void MovementComplete();
 		inline void TaskFail() { SetConditions(bits_COND_TASK_FAILED); }
 		inline void TaskBegin() { m_iTaskStatus = TASKSTATUS_RUNNING; }
-		int TaskIsRunning();
-		inline int TaskIsComplete() { return (m_iTaskStatus == TASKSTATUS_COMPLETE); }
-		inline int MovementIsComplete() { return (m_movementGoal == MOVEGOAL_NONE); }
+		bool TaskIsRunning();
+		inline bool TaskIsComplete() { return (m_iTaskStatus == TASKSTATUS_COMPLETE); }
+		inline bool MovementIsComplete() { return (m_movementGoal == MOVEGOAL_NONE); }
 
 		int IScheduleFlags ();
 		bool FRefreshRoute();
@@ -306,13 +306,13 @@ public:
 
 	virtual	Vector  GetGunPosition();
 
-	int TakeHealth( float flHealth, int bitsDamageType ) override;
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
-	int			DeadTakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
+	bool TakeHealth( float flHealth, int bitsDamageType ) override;
+	bool TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
+	bool DeadTakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType );
 
 	void RadiusDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );
 	void RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType );
-        int		IsMoving() override { return m_movementGoal != MOVEGOAL_NONE; }
+    bool IsMoving() override { return m_movementGoal != MOVEGOAL_NONE; }
 
 	void RouteClear();
 	void RouteNew();

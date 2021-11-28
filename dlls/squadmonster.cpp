@@ -70,7 +70,7 @@ bool CSquadMonster :: OccupySlot( int iDesiredSlots )
 
 	CSquadMonster *pSquadLeader = MySquadLeader();
 
-	if ( !( iDesiredSlots ^ pSquadLeader->m_afSquadSlots ) )
+	if ( ( iDesiredSlots ^ pSquadLeader->m_afSquadSlots ) == 0)
 	{
 		// none of the desired slots are available. 
 		return false;
@@ -81,9 +81,9 @@ bool CSquadMonster :: OccupySlot( int iDesiredSlots )
 	for ( i = 0; i < NUM_SLOTS; i++ )
 	{
 		iMask = 1<<i;
-		if ( iDesiredSlots & iMask ) // am I looking for this bit?
+		if ( (iDesiredSlots & iMask ) != 0) // am I looking for this bit?
 		{
-			if ( !(iSquadSlots & iMask) )	// Is it already taken?
+			if ( (iSquadSlots & iMask) == 0)	// Is it already taken?
 			{
 				// No, use this bit
 				pSquadLeader->m_afSquadSlots |= iMask;
@@ -384,9 +384,9 @@ int CSquadMonster :: SquadRecruit( int searchRadius, int maxMembers )
 //=========================================================
 // CheckEnemy
 //=========================================================
-int CSquadMonster :: CheckEnemy ( CBaseEntity *pEnemy )
+bool CSquadMonster :: CheckEnemy ( CBaseEntity *pEnemy )
 {
-	int iUpdatedLKP;
+	bool iUpdatedLKP;
 
 	iUpdatedLKP = CBaseMonster :: CheckEnemy ( m_hEnemy );
 	
@@ -415,12 +415,12 @@ void CSquadMonster :: StartMonster()
 {
 	CBaseMonster :: StartMonster();
 
-	if ( ( m_afCapability & bits_CAP_SQUAD ) && !InSquad() )
+	if ( ( m_afCapability & bits_CAP_SQUAD ) != 0 && !InSquad() )
 	{
 		if ( !FStringNull( pev->netname ) )
 		{
 			// if I have a groupname, I can only recruit if I'm flagged as leader
-			if ( !( pev->spawnflags & SF_SQUADMONSTER_LEADER ) )
+			if ( ( pev->spawnflags & SF_SQUADMONSTER_LEADER ) == 0)
 			{
 				return;
 			}
@@ -429,7 +429,7 @@ void CSquadMonster :: StartMonster()
 		// try to form squads now.
 		int iSquadSize = SquadRecruit( 1024, 4 );
 
-		if ( iSquadSize )
+		if ( 0 != iSquadSize )
 		{
 		  ALERT ( at_aiconsole, "Squad of %d %s formed\n", iSquadSize, STRING( pev->classname ) );
 		}
@@ -596,7 +596,7 @@ bool CSquadMonster :: SquadMemberInRange ( const Vector &vecLocation, float flDi
 	for (int i = 0; i < MAX_SQUAD_MEMBERS; i++)
 	{
 		CSquadMonster *pSquadMember = pSquadLeader->MySquadMember(i);
-		if (pSquadMember && (vecLocation - pSquadMember->pev->origin ).Length2D() <= flDist)
+		if (nullptr != pSquadMember && (vecLocation - pSquadMember->pev->origin ).Length2D() <= flDist)
 			return true;
 	}
 	return false;

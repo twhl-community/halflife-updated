@@ -60,7 +60,7 @@ const char *CBreakable::pSpawnObjects[] =
 	"weapon_hornetgun",	// 21
 };
 
-void CBreakable::KeyValue( KeyValueData* pkvd )
+bool CBreakable::KeyValue( KeyValueData* pkvd )
 {
 	// UNDONE_WC: explicitly ignoring these fields, but they shouldn't be in the map file!
 	if (FStrEq(pkvd->szKeyName, "explosion"))
@@ -81,7 +81,7 @@ void CBreakable::KeyValue( KeyValueData* pkvd )
 			m_Explosion = expRandom;
 		}
 
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "material"))
 	{
@@ -94,38 +94,38 @@ void CBreakable::KeyValue( KeyValueData* pkvd )
 		else
 			m_Material = (Materials)i;
 
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "deadmodel"))
 	{
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "shards"))
 	{
 //			m_iShards = atof(pkvd->szValue);
-			pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "gibmodel") )
 	{
 		m_iszGibModel = ALLOC_STRING(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "spawnobject") )
 	{
 		int object = atoi( pkvd->szValue );
 		if ( object > 0 && object < ARRAYSIZE(pSpawnObjects) )
 			m_iszSpawnObject = MAKE_STRING( pSpawnObjects[object] );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "explodemagnitude") )
 	{
 		ExplosionSetMagnitude( atoi( pkvd->szValue ) );
-		pkvd->fHandled = true;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "lip") )
-		pkvd->fHandled = true;
-	else
-		CBaseDelay::KeyValue( pkvd );
+		return true;
+
+	return CBaseDelay::KeyValue( pkvd );
 }
 
 
@@ -285,7 +285,7 @@ void CBreakable::MaterialSoundRandom( edict_t *pEdict, Materials soundMaterial, 
 
 	pSoundList = MaterialSoundList( soundMaterial, soundCount );
 
-	if ( soundCount )
+	if ( 0 != soundCount )
 		EMIT_SOUND( pEdict, CHAN_BODY, pSoundList[ RANDOM_LONG(0,soundCount-1) ], volume, 1.0 );
 }
 
@@ -349,13 +349,13 @@ void CBreakable::Precache()
 		break;
 	}
 	MaterialSoundPrecache( m_Material );
-	if ( m_iszGibModel )
+	if ( !FStringNull(m_iszGibModel) )
 		pGibName = STRING(m_iszGibModel);
 
 	m_idShard = PRECACHE_MODEL( (char *)pGibName );
 
 	// Precache the spawn item's data
-	if ( m_iszSpawnObject )
+	if ( !FStringNull(m_iszSpawnObject) )
 		UTIL_PrecacheOther( (char *)STRING( m_iszSpawnObject ) );
 }
 
@@ -433,7 +433,7 @@ void CBreakable::DamageSound()
 		break;
 	}
 
-	if (i)
+	if (0 != i)
 		EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, rgpsz[RANDOM_LONG(0,i-1)], fvol, ATTN_NORM, 0, pitch);
 }
 
@@ -535,7 +535,7 @@ void CBreakable::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 // exceptions that are breakable-specific
 // bitsDamageType indicates the type of damage sustained ie: DMG_CRUSH
 //=========================================================
-int CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
+bool CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
 {
 	Vector	vecTemp;
 
@@ -547,7 +547,7 @@ int CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, f
 		
 		// if a client hit the breakable with a crowbar, and breakable is crowbar-sensitive, break it now.
 		if ( FBitSet ( pevAttacker->flags, FL_CLIENT ) &&
-				 FBitSet ( pev->spawnflags, SF_BREAK_CROWBAR ) && (bitsDamageType & DMG_CLUB))
+				 FBitSet ( pev->spawnflags, SF_BREAK_CROWBAR ) && (bitsDamageType & DMG_CLUB) != 0)
 			flDamage = pev->health;
 	}
 	else
@@ -557,14 +557,14 @@ int CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, f
 	}
 	
 	if (!IsBreakable())
-		return 0;
+		return false;
 
 	// Breakables take double damage from the crowbar
-	if ( bitsDamageType & DMG_CLUB )
+	if ( (bitsDamageType & DMG_CLUB) != 0 )
 		flDamage *= 2;
 
 	// Boxes / glass / etc. don't take much poison damage, just the impact of the dart - consider that 10%
-	if ( bitsDamageType & DMG_POISON )
+	if ( (bitsDamageType & DMG_POISON) != 0 )
 		flDamage *= 0.1;
 
 // this global is still used for glass and other non-monster killables, along with decals.
@@ -576,7 +576,7 @@ int CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, f
 	{
 		Killed( pevAttacker, GIB_NORMAL );
 		Die();
-		return 0;
+		return false;
 	}
 
 	// Make a shard noise each time func breakable is hit.
@@ -584,7 +584,7 @@ int CBreakable :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, f
 
 	DamageSound();
 
-	return 1;
+	return true;
 }
 
 
@@ -736,7 +736,7 @@ void CBreakable::Die()
 	// BUGBUG -- can only find 256 entities on a breakable -- should be enough
 	CBaseEntity *pList[256];
 	int count = UTIL_EntitiesInBox( pList, 256, mins, maxs, FL_ONGROUND );
-	if ( count )
+	if ( 0 != count )
 	{
 		for ( int i = 0; i < count; i++ )
 		{
@@ -754,7 +754,7 @@ void CBreakable::Die()
 
 	SetThink( &CBreakable::SUB_Remove );
 	pev->nextthink = pev->ltime + 0.1;
-	if ( m_iszSpawnObject )
+	if ( !FStringNull(m_iszSpawnObject) )
 		CBaseEntity::Create( (char *)STRING(m_iszSpawnObject), VecBModelOrigin(pev), pev->angles, edict() );
 
 
@@ -790,20 +790,20 @@ public:
 	void	Spawn () override;
 	void	Precache() override;
 	void	Touch ( CBaseEntity *pOther ) override;
-	void	Move( CBaseEntity *pMover, int push );
-	void	KeyValue( KeyValueData *pkvd ) override;
+	void	Move( CBaseEntity *pMover, bool push );
+	bool	KeyValue( KeyValueData *pkvd ) override;
 	void	Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void	EXPORT StopSound();
 //	virtual void	SetActivator( CBaseEntity *pActivator ) { m_pPusher = pActivator; }
 
 	int	ObjectCaps() override { return (CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 
 	inline float MaxSpeed() { return m_maxSpeed; }
 	
 	// breakables use an overridden takedamage
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )  override;
+	bool TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )  override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -828,7 +828,7 @@ const char *CPushable :: m_soundNames[3] = { "debris/pushbox1.wav", "debris/push
 
 void CPushable :: Spawn()
 {
-	if ( pev->spawnflags & SF_PUSH_BREAKABLE )
+	if ( (pev->spawnflags & SF_PUSH_BREAKABLE) != 0 )
 		CBreakable::Spawn();
 	else
 		Precache( );
@@ -858,17 +858,16 @@ void CPushable :: Precache()
 	for ( int i = 0; i < 3; i++ )
 		PRECACHE_SOUND( m_soundNames[i] );
 
-	if ( pev->spawnflags & SF_PUSH_BREAKABLE )
+	if ( (pev->spawnflags & SF_PUSH_BREAKABLE) != 0 )
 		CBreakable::Precache( );
 }
 
 
-void CPushable :: KeyValue( KeyValueData *pkvd )
+bool CPushable :: KeyValue( KeyValueData *pkvd )
 {
 	if ( FStrEq(pkvd->szKeyName, "size") )
 	{
 		int bbox = atoi(pkvd->szValue);
-		pkvd->fHandled = true;
 
 		switch( bbox )
 		{
@@ -890,14 +889,15 @@ void CPushable :: KeyValue( KeyValueData *pkvd )
 			break;
 		}
 
+		return true;
 	}
 	else if ( FStrEq(pkvd->szKeyName, "buoyancy") )
 	{
 		pev->skin = atof(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CBreakable::KeyValue( pkvd );
+
+	return CBreakable::KeyValue( pkvd );
 }
 
 
@@ -906,13 +906,13 @@ void CPushable :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 {
 	if ( !pActivator || !pActivator->IsPlayer() )
 	{
-		if ( pev->spawnflags & SF_PUSH_BREAKABLE )
+		if ( (pev->spawnflags & SF_PUSH_BREAKABLE) != 0 )
 			this->CBreakable::Use( pActivator, pCaller, useType, value );
 		return;
 	}
 
 	if ( pActivator->pev->velocity != g_vecZero )
-		Move( pActivator, 0 );
+		Move( pActivator, false );
 }
 
 
@@ -921,14 +921,14 @@ void CPushable :: Touch( CBaseEntity *pOther )
 	if ( FClassnameIs( pOther->pev, "worldspawn" ) )
 		return;
 
-	Move( pOther, 1 );
+	Move( pOther, true );
 }
 
 
-void CPushable :: Move( CBaseEntity *pOther, int push )
+void CPushable :: Move( CBaseEntity *pOther, bool push )
 {
 	entvars_t*	pevToucher = pOther->pev;
-	int playerTouch = 0;
+	bool playerTouch = false;
 
 	// Is entity standing on this pushable ?
 	if ( FBitSet(pevToucher->flags,FL_ONGROUND) && pevToucher->groundentity && VARS(pevToucher->groundentity) == pev )
@@ -943,16 +943,16 @@ void CPushable :: Move( CBaseEntity *pOther, int push )
 
 	if ( pOther->IsPlayer() )
 	{
-		if ( push && !(pevToucher->button & (IN_FORWARD|IN_USE)) )	// Don't push unless the player is pushing forward and NOT use (pull)
+		if ( push && (pevToucher->button & (IN_FORWARD|IN_USE)) == 0 )	// Don't push unless the player is pushing forward and NOT use (pull)
 			return;
-		playerTouch = 1;
+		playerTouch = true;
 	}
 
 	float factor;
 
 	if ( playerTouch )
 	{
-		if ( !(pevToucher->flags & FL_ONGROUND) )	// Don't push away from jumping/falling players unless in water
+		if ( (pevToucher->flags & FL_ONGROUND) == 0 )	// Don't push away from jumping/falling players unless in water
 		{
 			if ( pev->waterlevel < 1 )
 				return;
@@ -1003,11 +1003,11 @@ void CPushable::StopSound()
 }
 #endif
 
-int CPushable::TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
+bool CPushable::TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
 {
-	if ( pev->spawnflags & SF_PUSH_BREAKABLE )
+	if ( (pev->spawnflags & SF_PUSH_BREAKABLE) != 0 )
 		return CBreakable::TakeDamage( pevInflictor, pevAttacker, flDamage, bitsDamageType );
 
-	return 1;
+	return true;
 }
 

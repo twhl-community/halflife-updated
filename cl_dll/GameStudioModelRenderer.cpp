@@ -59,7 +59,7 @@ R_StudioDrawPlayer
 */
 int R_StudioDrawPlayer( int flags, entity_state_t *pplayer )
 {
-	return g_StudioRenderer.StudioDrawPlayer( flags, pplayer );
+	return static_cast<int>(g_StudioRenderer.StudioDrawPlayer( flags, pplayer ));
 }
 
 /*
@@ -70,7 +70,7 @@ R_StudioDrawModel
 */
 int R_StudioDrawModel( int flags )
 {
-	return g_StudioRenderer.StudioDrawModel( flags );
+	return static_cast<int>(g_StudioRenderer.StudioDrawModel( flags ));
 }
 
 /*

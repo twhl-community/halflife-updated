@@ -25,8 +25,8 @@ public:
 
 public:  
 	// Public Interfaces
-	virtual int StudioDrawModel ( int flags );
-	virtual int StudioDrawPlayer ( int flags, struct entity_state_s *pplayer );
+	virtual bool StudioDrawModel ( int flags );
+	virtual bool StudioDrawPlayer ( int flags, struct entity_state_s *pplayer );
 
 public:
 	// Local interfaces
@@ -36,7 +36,7 @@ public:
 	virtual mstudioanim_t *StudioGetAnim ( model_t *m_pSubModel, mstudioseqdesc_t *pseqdesc );
 
 	// Interpolate model position and angles and set up matrices
-	virtual void StudioSetUpTransform (int trivial_accept);
+	virtual void StudioSetUpTransform (bool trivial_accept);
 
 	// Set up model bone positions
 	virtual void StudioSetupBones ();	
@@ -102,9 +102,9 @@ public:
 	double			m_clOldTime;			
 
 	// Do interpolation?
-	int				m_fDoInterp;			
+	bool			m_fDoInterp;			
 	// Do gait estimation?
-	int				m_fGaitEstimation;		
+	bool			m_fGaitEstimation;		
 
 	// Current render frame #
 	int				m_nFrameCount;

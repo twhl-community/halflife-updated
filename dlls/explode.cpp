@@ -72,7 +72,7 @@ void CShower::Think()
 
 void CShower::Touch( CBaseEntity *pOther )
 {
-	if ( pev->flags & FL_ONGROUND )
+	if ( (pev->flags & FL_ONGROUND) != 0 )
 		pev->velocity = pev->velocity * 0.1;
 	else
 		pev->velocity = pev->velocity * 0.6;
@@ -86,11 +86,11 @@ class CEnvExplosion : public CBaseMonster
 public:
 	void Spawn( ) override;
 	void EXPORT Smoke ();
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	int m_iMagnitude;// how large is the fireball? how much damage?
@@ -106,15 +106,15 @@ TYPEDESCRIPTION	CEnvExplosion::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( CEnvExplosion, CBaseMonster );
 LINK_ENTITY_TO_CLASS( env_explosion, CEnvExplosion );
 
-void CEnvExplosion::KeyValue( KeyValueData *pkvd )
+bool CEnvExplosion::KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "iMagnitude"))
 	{
 		m_iMagnitude = atoi(pkvd->szValue);
-		pkvd->fHandled = true;
+		return true;
 	}
-	else
-		CBaseEntity::KeyValue( pkvd );
+
+	return CBaseEntity::KeyValue( pkvd );
 }
 
 void CEnvExplosion::Spawn()
@@ -171,7 +171,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 	}
 
 	// draw decal
-	if (! ( pev->spawnflags & SF_ENVEXPLOSION_NODECAL))
+	if ( ( pev->spawnflags & SF_ENVEXPLOSION_NODECAL) == 0)
 	{
 		if ( RANDOM_FLOAT( 0 , 1 ) < 0.5 )
 		{
@@ -184,7 +184,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 	}
 
 	// draw fireball
-	if ( !( pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL ) )
+	if ( ( pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL ) == 0 )
 	{
 		MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, pev->origin );
 			WRITE_BYTE( TE_EXPLOSION);
@@ -212,7 +212,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 	}
 
 	// do damage
-	if ( !( pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE ) )
+	if ( ( pev->spawnflags & SF_ENVEXPLOSION_NODAMAGE ) == 0 )
 	{
 		RadiusDamage ( pev, pev, m_iMagnitude, CLASS_NONE, DMG_BLAST );
 	}
@@ -221,7 +221,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 	pev->nextthink = gpGlobals->time + 0.3;
 
 	// draw sparks
-	if ( !( pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS ) )
+	if ( ( pev->spawnflags & SF_ENVEXPLOSION_NOSPARKS ) == 0 )
 	{
 		int sparkCount = RANDOM_LONG(0,3);
 
@@ -234,7 +234,7 @@ void CEnvExplosion::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 
 void CEnvExplosion::Smoke()
 {
-	if ( !( pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE ) )
+	if ( ( pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE ) == 0 )
 	{
 		MESSAGE_BEGIN( MSG_PAS, SVC_TEMPENTITY, pev->origin );
 			WRITE_BYTE( TE_SMOKE );
@@ -247,7 +247,7 @@ void CEnvExplosion::Smoke()
 		MESSAGE_END();
 	}
 	
-	if ( !(pev->spawnflags & SF_ENVEXPLOSION_REPEATABLE) )
+	if ( (pev->spawnflags & SF_ENVEXPLOSION_REPEATABLE) == 0 )
 	{
 		UTIL_Remove( this );
 	}

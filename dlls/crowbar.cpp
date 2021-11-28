@@ -53,7 +53,7 @@ void CCrowbar::Precache()
 	m_usCrowbar = PRECACHE_EVENT ( 1, "events/crowbar.sc" );
 }
 
-int CCrowbar::GetItemInfo(ItemInfo *p)
+bool CCrowbar::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = NULL;
@@ -65,7 +65,7 @@ int CCrowbar::GetItemInfo(ItemInfo *p)
 	p->iPosition = 0;
 	p->iId = WEAPON_CROWBAR;
 	p->iWeight = CROWBAR_WEIGHT;
-	return 1;
+	return true;
 }
 
 
@@ -129,7 +129,7 @@ void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, const Vector& 
 
 void CCrowbar::PrimaryAttack()
 {
-	if (! Swing( 1 ))
+	if (! Swing( true ))
 	{
 		SetThink( &CCrowbar::SwingAgain );
 		pev->nextthink = gpGlobals->time + 0.1;
@@ -145,13 +145,13 @@ void CCrowbar::Smack( )
 
 void CCrowbar::SwingAgain()
 {
-	Swing( 0 );
+	Swing( false );
 }
 
 
-int CCrowbar::Swing( int fFirst )
+bool CCrowbar::Swing(bool fFirst )
 {
-	int fDidHit = false;
+	bool fDidHit = false;
 
 	TraceResult tr;
 
@@ -235,7 +235,7 @@ int CCrowbar::Swing( int fFirst )
 #ifndef CLIENT_DLL
 		// play thwack, smack, or dong sound
 		float flVol = 1.0;
-		int fHitWorld = true;
+		bool fHitWorld = true;
 
 		if (pEntity)
 		{

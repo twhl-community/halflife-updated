@@ -52,7 +52,7 @@
 #define CLASSMENU_WINDOW_PLAYERS_Y		YRES(42)
 
 // Creation
-CClassMenuPanel::CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide,int tall) : CMenuPanel(iTrans, iRemoveMe, x,y,wide,tall)
+CClassMenuPanel::CClassMenuPanel(int iTrans, bool iRemoveMe, int x,int y,int wide,int tall) : CMenuPanel(iTrans, iRemoveMe, x,y,wide,tall)
 {
 	// don't show class graphics at below 640x480 resolution
 	bool bShowClassGraphic = true;
@@ -254,7 +254,7 @@ CClassMenuPanel::CClassMenuPanel(int iTrans, int iRemoveMe, int x,int y,int wide
 void CClassMenuPanel::Update()
 {
 	// Don't allow the player to join a team if they're not in a team
-	if (!g_iTeamNumber)
+	if (0 == g_iTeamNumber)
 		return;
 
 	int	 iYPos = CLASSMENU_TOPLEFT_BUTTON_Y;
@@ -350,7 +350,7 @@ void CClassMenuPanel::Update()
 #endif
 
 	// If the player already has a class, make the cancel button visible
-	if ( g_iPlayerClass )
+	if ( 0 != g_iPlayerClass )
 	{
 		m_pCancelButton->setPos( CLASSMENU_TOPLEFT_BUTTON_X, iYPos );
 		m_pCancelButton->setVisible( true );

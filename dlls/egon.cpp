@@ -71,7 +71,7 @@ bool CEgon::Deploy()
 	return DefaultDeploy( "models/v_egon.mdl", "models/p_egon.mdl", EGON_DRAW, "egon" );
 }
 
-int CEgon::AddToPlayer( CBasePlayer *pPlayer )
+bool CEgon::AddToPlayer( CBasePlayer *pPlayer )
 {
 	if ( CBasePlayerWeapon::AddToPlayer( pPlayer ) )
 	{
@@ -93,7 +93,7 @@ void CEgon::Holster()
     EndAttack();
 }
 
-int CEgon::GetItemInfo(ItemInfo *p)
+bool CEgon::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "uranium";
@@ -107,7 +107,7 @@ int CEgon::GetItemInfo(ItemInfo *p)
 	p->iFlags = 0;
 	p->iWeight = EGON_WEIGHT;
 
-	return 1;
+	return true;
 }
 
 #define EGON_PULSE_INTERVAL			0.1
@@ -235,7 +235,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 	
 	UTIL_TraceLine( vecOrigSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr );
 
-	if (tr.fAllSolid)
+	if (0 != tr.fAllSolid)
 		return;
 
 #ifndef CLIENT_DLL
@@ -246,7 +246,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 
 	if ( g_pGameRules->IsMultiplayer() )
 	{
-		if ( m_pSprite && pEntity->pev->takedamage )
+		if ( m_pSprite && 0 != pEntity->pev->takedamage )
 		{
 			m_pSprite->pev->effects &= ~EF_NODRAW;
 		}
@@ -269,7 +269,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 		{
 			// Narrow mode only does damage to the entity it hits
 			ClearMultiDamage();
-			if (pEntity->pev->takedamage)
+			if (0 != pEntity->pev->takedamage)
 			{
 				pEntity->TraceAttack( m_pPlayer->pev, gSkillData.plrDmgEgonNarrow, vecDir, &tr, DMG_ENERGYBEAM );
 			}
@@ -306,7 +306,7 @@ void CEgon::Fire( const Vector &vecOrigSrc, const Vector &vecDir )
 		{
 			// wide mode does damage to the ent, and radius damage
 			ClearMultiDamage();
-			if (pEntity->pev->takedamage)
+			if (0 != pEntity->pev->takedamage)
 			{
 				pEntity->TraceAttack( m_pPlayer->pev, gSkillData.plrDmgEgonWide, vecDir, &tr, DMG_ENERGYBEAM | DMG_ALWAYSGIB);
 			}
@@ -470,7 +470,7 @@ void CEgon::DestroyEffect()
 
 void CEgon::WeaponIdle()
 {
-	if (!(m_pPlayer->m_afButtonPressed & IN_ATTACK2) && (m_pPlayer->pev->button & IN_ATTACK))
+	if ((m_pPlayer->m_afButtonPressed & IN_ATTACK2) == 0 && (m_pPlayer->pev->button & IN_ATTACK) != 0)
 	{
 		return;
 	}
@@ -511,7 +511,7 @@ void CEgon::EndAttack()
 	if ( m_fireState != FIRE_OFF ) //Checking the button just in case!.
 		 bMakeNoise = true;
 
-	PLAYBACK_EVENT_FULL( FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0, bMakeNoise, 0, 0, 0 );
+	PLAYBACK_EVENT_FULL( FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0, static_cast<int>(bMakeNoise), 0, 0, 0 );
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;

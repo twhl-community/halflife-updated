@@ -31,7 +31,7 @@ int CFlyingMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vec
 	if (FBitSet(pev->flags, FL_SWIM) && (UTIL_PointContents(vecEnd) != CONTENTS_WATER))
 	{
 		// ALERT(at_aiconsole, "can't swim out of water\n");
-		return false;
+		return LOCALMOVE_INVALID;
 	}
 
 	TraceResult tr;
@@ -47,7 +47,7 @@ int CFlyingMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vec
 	}
 
 	// ALERT( at_console, "check %d %d %f\n", tr.fStartSolid, tr.fAllSolid, tr.flFraction );
-	if (tr.fStartSolid || tr.flFraction < 1.0)
+	if (0 != tr.fStartSolid || tr.flFraction < 1.0)
 	{
 		if ( pTarget && pTarget->edict() == gpGlobals->trace_ent )
 			return LOCALMOVE_VALID;
@@ -163,7 +163,7 @@ void CFlyingMonster :: Move( float flInterval )
 bool CFlyingMonster:: ShouldAdvanceRoute( float flWaypointDist )
 {
 	// Get true 3D distance to the goal so we actually reach the correct height
-	if ( m_Route[ m_iRouteIndex ].iType & bits_MF_IS_GOAL )
+	if ( (m_Route[ m_iRouteIndex ].iType & bits_MF_IS_GOAL) != 0 )
 		flWaypointDist = ( m_Route[ m_iRouteIndex ].vecLocation - pev->origin ).Length();
 
 	if ( flWaypointDist <= 64 + (m_flGroundSpeed * gpGlobals->frametime) )
@@ -196,7 +196,7 @@ void CFlyingMonster::MoveExecute( CBaseEntity *pTargetEnt, const Vector &vecDir,
 		else
 			m_flightSpeed = UTIL_Approach( 20, m_flightSpeed, 300 * gpGlobals->frametime );
 		
-		if ( CheckLocalMove ( pev->origin, vecMove, pTargetEnt, NULL ) )
+		if (LOCALMOVE_INVALID != CheckLocalMove ( pev->origin, vecMove, pTargetEnt, NULL ) )
 		{
 			m_vecTravel = (vecMove - pev->origin);
 			m_vecTravel = m_vecTravel.Normalize();
@@ -226,7 +226,7 @@ float CFlyingMonster::CeilingZ( const Vector &position )
 	if (tr.flFraction != 1.0)
 		maxUp.z = tr.vecEndPos.z;
 
-	if ((pev->flags) & FL_SWIM)
+	if ((pev->flags & FL_SWIM) != 0)
 	{
 		return UTIL_WaterLevel( position, minUp.z, maxUp.z );
 	}

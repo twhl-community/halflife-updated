@@ -224,13 +224,13 @@ class CBasePlayerItem : public CBaseAnimating
 public:
     void SetObjectCollisionBox() override;
 
-    int		Save( CSave &save ) override;
-    int		Restore( CRestore &restore ) override;
+    bool	Save( CSave &save ) override;
+    bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
-	virtual int AddToPlayer( CBasePlayer *pPlayer );	// return true if the item you want the item added to the player inventory
-	virtual int AddDuplicate( CBasePlayerItem *pItem ) { return false; }	// return true if you want your duplicate removed from world
+	virtual bool AddToPlayer( CBasePlayer *pPlayer );	// return true if the item you want the item added to the player inventory
+	virtual bool AddDuplicate( CBasePlayerItem *pItem ) { return false; }	// return true if you want your duplicate removed from world
 	void EXPORT DestroyItem();
 	void EXPORT DefaultTouch( CBaseEntity *pOther );	// default weapon touch
 	void EXPORT FallThink ();// when an item is first spawned, this think is run to determine when the object has hit the ground.
@@ -239,7 +239,7 @@ public:
 	CBaseEntity* Respawn () override;// copy a weapon
 	void FallInit();
 	void CheckRespawn();
-	virtual int GetItemInfo(ItemInfo *p) { return 0; }	// returns 0 if struct not filled out
+	virtual bool GetItemInfo(ItemInfo *p) { return false; }	// returns false if struct not filled out
 	virtual bool CanDeploy() { return true; }
 	virtual bool Deploy( )								// returns is deploy was successful
 		 { return true; }
@@ -258,7 +258,7 @@ public:
 	virtual int PrimaryAmmoIndex() { return -1; }
 	virtual int SecondaryAmmoIndex() { return -1; }
 
-	virtual int UpdateClientData( CBasePlayer *pPlayer ) { return 0; }
+	virtual bool UpdateClientData( CBasePlayer *pPlayer ) { return false; }
 
 	virtual CBasePlayerItem *GetWeaponPtr() { return NULL; }
 
@@ -290,19 +290,19 @@ public:
 class CBasePlayerWeapon : public CBasePlayerItem
 {
 public:
-    int		Save( CSave &save ) override;
-    int		Restore( CRestore &restore ) override;
+    bool	Save( CSave &save ) override;
+    bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	// generic weapon versions of CBasePlayerItem calls
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
-	int AddDuplicate( CBasePlayerItem *pItem ) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool AddDuplicate( CBasePlayerItem *pItem ) override;
 
-	virtual int ExtractAmmo( CBasePlayerWeapon *pWeapon ); //{ return true; }			// Return true if you can add ammo to yourself when picked up
-	virtual int ExtractClipAmmo( CBasePlayerWeapon *pWeapon );// { return true; }			// Return true if you can add ammo to yourself when picked up
+	virtual bool ExtractAmmo( CBasePlayerWeapon *pWeapon ); //{ return true; }			// Return true if you can add ammo to yourself when picked up
+	virtual bool ExtractClipAmmo( CBasePlayerWeapon *pWeapon );// { return true; }			// Return true if you can add ammo to yourself when picked up
 
-	virtual int AddWeapon() { ExtractAmmo( this ); return true; }	// Return true if you want to add yourself to the player
+	virtual bool AddWeapon() { ExtractAmmo( this ); return true; }	// Return true if you want to add yourself to the player
 
 	// generic "shared" ammo handlers
 	bool AddPrimaryAmmo( int iCount, char *szName, int iMaxClip, int iMaxCarry );
@@ -310,8 +310,8 @@ public:
 
 	void UpdateItemInfo() override {}	// updates HUD state
 
-	int m_iPlayEmptySound;
-	int m_fFireOnEmpty;		// True when the gun is empty and the player is still holding down the
+	bool m_iPlayEmptySound;
+	bool m_fFireOnEmpty;		// True when the gun is empty and the player is still holding down the
 							// attack key(s)
 	virtual bool PlayEmptySound();
 	virtual void ResetEmptySound();
@@ -329,7 +329,7 @@ public:
 	virtual void SecondaryAttack() {}			// do "+ATTACK2"
 	virtual void Reload() {}						// do "+RELOAD"
 	virtual void WeaponIdle() {}					// called when no buttons pressed
-	int UpdateClientData( CBasePlayer *pPlayer ) override;		// sends hud info to client dll, if things have changed
+	bool UpdateClientData( CBasePlayer *pPlayer ) override;		// sends hud info to client dll, if things have changed
 	virtual void RetireWeapon();
 	virtual bool ShouldWeaponIdle() {return false; }
 	void Holster() override;
@@ -353,7 +353,7 @@ public:
 	int		m_iClip;											// number of shots left in the primary weapon clip, -1 it not used
 	int		m_iClientClip;										// the last version of m_iClip sent to hud dll
 	int		m_iClientWeaponState;								// the last version of the weapon state sent to hud dll (is current weapon, is on target)
-	int		m_fInReload;										// Are we in the middle of a reload;
+	bool	m_fInReload;										// Are we in the middle of a reload;
 
 	int		m_iDefaultAmmo;// how much ammo you get when you pick up this weapon as placed by a level designer.
 	
@@ -442,15 +442,15 @@ class CWeaponBox : public CBaseEntity
 	void Precache() override;
 	void Spawn() override;
 	void Touch( CBaseEntity *pOther ) override;
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 	bool IsEmpty();
 	int  GiveAmmo( int iCount, const char *szName, int iMax, int *pIndex = NULL );
 	void SetObjectCollisionBox() override;
 
 public:
 	void EXPORT Kill ();
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	bool HasWeapon( CBasePlayerItem *pCheckItem );
@@ -490,7 +490,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 2; }
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -537,10 +537,10 @@ public:
 	int iItemSlot() override { return 1; }
 	void EXPORT SwingAgain();
 	void EXPORT Smack();
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 
 	void PrimaryAttack() override;
-	int Swing( int fFirst );
+	bool Swing(bool fFirst );
 	bool Deploy() override;
 	void Holster() override;
 	int m_iSwing;
@@ -576,8 +576,8 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 2; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool Deploy() override;
@@ -616,8 +616,8 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 3; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -663,13 +663,13 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot( ) override { return 3; }
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 
 	void FireBolt();
 	void FireSniperBolt();
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 	bool Deploy( ) override;
 	void Holster() override;
 	void Reload() override;
@@ -708,8 +708,8 @@ class CShotgun : public CBasePlayerWeapon
 public:
 
 #ifndef CLIENT_DLL
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
@@ -717,8 +717,8 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot( ) override { return 3; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -726,7 +726,7 @@ public:
 	void Reload() override;
 	void WeaponIdle() override;
 	void ItemPostFrame() override;
-	int m_fInReload;
+	int m_fInReload; //TODO: not used, remove
 	float m_flNextReload;
 	int m_iShell;
 
@@ -777,8 +777,8 @@ class CRpg : public CBasePlayerWeapon
 public:
 
 #ifndef CLIENT_DLL
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
@@ -786,8 +786,8 @@ public:
 	void Precache() override;
 	void Reload() override;
 	int iItemSlot() override { return 4; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	bool Deploy() override;
 	bool CanHolster() override;
@@ -801,7 +801,7 @@ public:
 	bool ShouldWeaponIdle() override { return true; }
 
 	CLaserSpot *m_pSpot;
-	int m_fSpotActive;
+	bool m_fSpotActive;
 	int m_cActiveRockets;// how many missiles in flight from this launcher right now?
 
 	bool UseDecrement() override
@@ -821,8 +821,8 @@ private:
 class CRpgRocket : public CGrenade
 {
 public:
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 	void Spawn() override;
 	void Precache() override;
@@ -857,16 +857,16 @@ class CGauss : public CBasePlayerWeapon
 public:
 
 #ifndef CLIENT_DLL
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 4; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -937,16 +937,16 @@ class CEgon : public CBasePlayerWeapon
 {
 public:
 #ifndef CLIENT_DLL
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 4; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -1013,8 +1013,8 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 4; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -1059,7 +1059,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 5; }
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 
 	void PrimaryAttack() override;
 	bool Deploy() override;
@@ -1099,19 +1099,19 @@ class CSatchel : public CBasePlayerWeapon
 public:
 
 #ifndef CLIENT_DLL
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 #endif
 
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 5; }
-	int GetItemInfo(ItemInfo *p) override;
-	int AddToPlayer( CBasePlayer *pPlayer ) override;
+	bool GetItemInfo(ItemInfo *p) override;
+	bool AddToPlayer( CBasePlayer *pPlayer ) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	int AddDuplicate( CBasePlayerItem *pOriginal ) override;
+	bool AddDuplicate( CBasePlayerItem *pOriginal ) override;
 	bool CanDeploy() override;
 	bool Deploy() override;
 	bool IsUseable() override;
@@ -1149,7 +1149,7 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 5; }
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 	void SetObjectCollisionBox() override
 	{
 		//!!!BUGBUG - fix the model!
@@ -1192,14 +1192,14 @@ public:
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 5; }
-	int GetItemInfo(ItemInfo *p) override;
+	bool GetItemInfo(ItemInfo *p) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool Deploy() override;
 	void Holster() override;
 	void WeaponIdle() override;
-	int m_fJustThrown;
+	bool m_fJustThrown;
 
 	bool UseDecrement() override
 	{ 

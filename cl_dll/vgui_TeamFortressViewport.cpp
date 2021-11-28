@@ -57,7 +57,7 @@
 #include "shake.h"
 #include "screenfade.h"
 
-extern int g_iVisibleMouse;
+extern bool g_iVisibleMouse;
 class CCommandMenu;
 int g_iPlayerClass;
 int g_iTeamNumber;
@@ -77,7 +77,7 @@ int g_iUser3 = 0;
 #define SBOARD_INDENT_Y_400		20
 
 void IN_ResetMouse();
-extern CMenuPanel *CMessageWindowPanel_Create( const char *szMOTD, const char *szTitle, int iShadeFullscreen, int iRemoveMe, int x, int y, int wide, int tall );
+extern CMenuPanel *CMessageWindowPanel_Create( const char *szMOTD, const char *szTitle, bool iShadeFullscreen, bool iRemoveMe, int x, int y, int wide, int tall );
 extern float * GetClientColor( int clientIndex );
 
 using namespace vgui;
@@ -313,7 +313,7 @@ bool CCommandMenu::RecalculateVisibles( int iYOffset, bool bHideAll )
 	{
 		int iClass = m_aButtons[i]->GetPlayerClass();
 
-		if ( (iClass && iClass != g_iPlayerClass ) || ( m_aButtons[i]->IsNotValid() ) || bHideAll )
+		if ( (0 != iClass && iClass != g_iPlayerClass ) || ( m_aButtons[i]->IsNotValid() ) || bHideAll )
 		{
 			m_aButtons[i]->setVisible( false );
 			if ( m_aButtons[i]->GetSubMenu() != NULL )
@@ -342,7 +342,7 @@ bool CCommandMenu::RecalculateVisibles( int iYOffset, bool bHideAll )
 	// Set Size
 	setSize( _size[0], (iVisibleButtons * (m_flButtonSizeY-1)) + 1 );
 
-	if ( iYOffset )
+	if ( 0 != iYOffset )
 	{
 		m_iYOffset = iYOffset;
 	}
@@ -371,7 +371,7 @@ bool CCommandMenu::RecalculateVisibles( int iYOffset, bool bHideAll )
 		}
 	}
 
-	return iVisibleButtons?true:false;
+	return 0 != iVisibleButtons;
 }
 
 // Make sure all submenus can fit on the screen
@@ -451,7 +451,7 @@ CCommandMenu *TeamFortressViewport::CreateSubMenu( CommandButton *pButton, CComm
 	int iYPos = 0;
 	int iWide = CMENU_SIZE_X;
 	int iTall = 0;
-	int iDirection = 0;
+	bool iDirection = false;
 
 	if (pParentMenu)
 	{
@@ -609,21 +609,21 @@ TeamFortressViewport::TeamFortressViewport(int x,int y,int wide,int tall) : Pane
 	m_iNumMenus = 0;
 	m_iCurrentTeamNumber = m_iUser1 = m_iUser2 = m_iUser3 = 0;
 
-	m_StandardMenu = CreateCommandMenu("commandmenu.txt", 0, CMENU_TOP, false, CMENU_SIZE_X, BUTTON_SIZE_Y, 0 );
-	m_SpectatorOptionsMenu = CreateCommandMenu("spectatormenu.txt", 1, PANEL_HEIGHT, true, CMENU_SIZE_X, BUTTON_SIZE_Y / 2, 0 );	// above bottom bar, flat design
-	m_SpectatorCameraMenu = CreateCommandMenu("spectcammenu.txt", 1, PANEL_HEIGHT, true, XRES( 200 ), BUTTON_SIZE_Y / 2, ScreenWidth - ( XRES ( 200 ) + 15 ) );	// above bottom bar, flat design
+	m_StandardMenu = CreateCommandMenu("commandmenu.txt", false, CMENU_TOP, false, CMENU_SIZE_X, BUTTON_SIZE_Y, 0 );
+	m_SpectatorOptionsMenu = CreateCommandMenu("spectatormenu.txt", true, PANEL_HEIGHT, true, CMENU_SIZE_X, BUTTON_SIZE_Y / 2, 0 );	// above bottom bar, flat design
+	m_SpectatorCameraMenu = CreateCommandMenu("spectcammenu.txt", true, PANEL_HEIGHT, true, XRES( 200 ), BUTTON_SIZE_Y / 2, ScreenWidth - ( XRES ( 200 ) + 15 ) );	// above bottom bar, flat design
 
 	m_PlayerMenu =  m_iNumMenus;
 	m_iNumMenus++;
 
 	float flLabelSize = ( (ScreenWidth - (XRES ( CAMOPTIONS_BUTTON_X ) + 15)) - XRES ( 24 + 15 ) ) - XRES( (15 + OPTIONS_BUTTON_X + 15) + 38 );
 
-	m_pCommandMenus[m_PlayerMenu] = new CCommandMenu(NULL, 1, 
+	m_pCommandMenus[m_PlayerMenu] = new CCommandMenu(NULL, true, 
 									XRES( ( 15 + OPTIONS_BUTTON_X + 15 ) + 31 ),PANEL_HEIGHT, flLabelSize,300);	
 	m_pCommandMenus[m_PlayerMenu]->setParent(this);
 	m_pCommandMenus[m_PlayerMenu]->setVisible(false);
 	m_pCommandMenus[m_PlayerMenu]->m_flButtonSizeY = BUTTON_SIZE_Y /2;
-	m_pCommandMenus[m_PlayerMenu]->m_iSpectCmdMenu = 1;
+	m_pCommandMenus[m_PlayerMenu]->m_iSpectCmdMenu = true;
 
 	UpdatePlayerMenu(m_PlayerMenu);
 }
@@ -682,7 +682,7 @@ void TeamFortressViewport::Initialize()
 // Purpose: Read the Command Menu structure from the txt file and create the menu.
 //			Returns Index of menu in m_pCommandMenus
 //-----------------------------------------------------------------------------
-int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset )
+int TeamFortressViewport::CreateCommandMenu( const char * menuFile, bool direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset )
 {
 	// COMMAND MENU
 	// Create the root of this new Command Menu
@@ -730,9 +730,9 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 			char cCommand[cCommandLength] = "";
 			char szMap[MAX_MAPNAME] = "";
 			int	 iPlayerClass = 0;
-			int  iCustom = false;
+			bool iCustom = false;
 			int  iTeamOnly = -1;
-			int  iToggle = 0;
+			bool iToggle = false;
 			int  iButtonY;
 			bool bGetExtraToken = true;
 			CommandButton *pButton = NULL;
@@ -750,7 +750,7 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 			cCustom[31] = '\0';
 
 			// See if it's a custom button
-			if (!strcmp(cCustom, "CUSTOM") )
+			if (0 == strcmp(cCustom, "CUSTOM") )
 			{
 				iCustom = true;
 
@@ -758,7 +758,7 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
 			// See if it's a map
-			else if (!strcmp(cCustom, "MAP") )
+			else if (0 == strcmp(cCustom, "MAP") )
 			{
 				// Get the mapname
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
@@ -768,7 +768,7 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 				// Get the next token
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
-			else if ( !strncmp(cCustom, "TEAM", 4) ) // TEAM1, TEAM2, TEAM3, TEAM4
+			else if ( 0 == strncmp(cCustom, "TEAM", 4) ) // TEAM1, TEAM2, TEAM3, TEAM4
 			{
 				// make it a team only button
 				iTeamOnly = atoi( cCustom + 4 );
@@ -776,7 +776,7 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 				// Get the next token
 				pfile = gEngfuncs.COM_ParseFile(pfile, token);
 			}
-			else if ( !strncmp(cCustom, "TOGGLE", 6) ) 
+			else if ( 0 == strncmp(cCustom, "TOGGLE", 6) ) 
 			{
 				iToggle = true;
 				// Get the next token
@@ -788,7 +788,7 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 #ifdef _TFC
 				for (int i = 1; i <= PC_ENGINEER; i++)
 				{
-					if ( !strcmp(token, sTFClasses[i]) )
+					if ( 0 == strcmp(token, sTFClasses[i]) )
 					{
 						// Save it off
 						iPlayerClass = i;
@@ -847,11 +847,11 @@ int TeamFortressViewport::CreateCommandMenu( const char * menuFile, int directio
 				// button that only shows up if the player is on team iTeamOnly
 				pButton = new TeamOnlyCommandButton( iTeamOnly, cText, xOffset, iButtonY, flButtonSizeX, flButtonSizeY, flatDesign );
 			}
-			else if ( iToggle && direction == 0 )
+			else if ( iToggle && !direction )
 			{
 				pButton = new ToggleCommandButton( cCommand, cText, xOffset, iButtonY, flButtonSizeX, flButtonSizeY, flatDesign );
 			}
-			else if ( direction == 1 )
+			else if ( direction )
 			{
 				if ( iToggle )
 					pButton = new SpectToggleButton( cCommand, cText, xOffset, iButtonY, flButtonSizeX, flButtonSizeY, flatDesign );
@@ -963,7 +963,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	CCommandMenu  *pMenu = NULL;
 
 	// ChangeTeam
-	if ( !strcmp( pButtonName, "!CHANGETEAM" ) )
+	if ( 0 == strcmp( pButtonName, "!CHANGETEAM" ) )
 	{
 		// ChangeTeam Submenu
 		pButton = new CommandButton(pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
@@ -994,7 +994,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pMenu->AddButton( m_pTeamButtons[5] ); 
 	}
 	// ChangeClass
-	else if ( !strcmp( pButtonName, "!CHANGECLASS" ) )
+	else if ( 0 == strcmp( pButtonName, "!CHANGECLASS" ) )
 	{
 		// Create the Change class menu
 		pButton = new ClassButton(-1, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y, false);
@@ -1021,7 +1021,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 	}
 #ifdef _TFC
 	// Map Briefing
-	else if ( !strcmp( pButtonName, "!MAPBRIEFING" ) )
+	else if ( 0 == strcmp( pButtonName, "!MAPBRIEFING" ) )
 	{
 		pButton = new CommandButton(pButtonText, 0, BUTTON_SIZE_Y * m_pCurrentCommandMenu->GetNumButtons(), CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_TextWindow(MENU_MAPBRIEFING));
@@ -1029,14 +1029,14 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Class Descriptions
-	else if ( !strcmp( pButtonName, "!CLASSDESC" ) )
+	else if ( 0 == strcmp( pButtonName, "!CLASSDESC" ) )
 	{
 		pButton = new ClassButton(0, pButtonText, 0, BUTTON_SIZE_Y * m_pCurrentCommandMenu->GetNumButtons(), CMENU_SIZE_X, BUTTON_SIZE_Y, false);
 		pButton->addActionSignal(new CMenuHandler_TextWindow(MENU_CLASSHELP));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!SERVERINFO" ) )
+	else if ( 0 == strcmp( pButtonName, "!SERVERINFO" ) )
 	{
 		pButton = new ClassButton(0, pButtonText, 0, BUTTON_SIZE_Y * m_pCurrentCommandMenu->GetNumButtons(), CMENU_SIZE_X, BUTTON_SIZE_Y, false);
 		pButton->addActionSignal(new CMenuHandler_TextWindow(MENU_INTRO));
@@ -1044,12 +1044,12 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Spy abilities
-	else if ( !strcmp( pButtonName, "!SPY" ) )
+	else if ( 0 == strcmp( pButtonName, "!SPY" ) )
 	{
 		pButton = new DisguiseButton( 0, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y );
 	}
 	// Feign
-	else if ( !strcmp( pButtonName, "!FEIGN" ) )
+	else if ( 0 == strcmp( pButtonName, "!FEIGN" ) )
 	{
 		pButton = new FeignButton(false, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "feign" ));
@@ -1057,7 +1057,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Feign Silently
-	else if ( !strcmp( pButtonName, "!FEIGNSILENT" ) )
+	else if ( 0 == strcmp( pButtonName, "!FEIGNSILENT" ) )
 	{
 		pButton = new FeignButton(false, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "sfeign" ));
@@ -1065,7 +1065,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Stop Feigning
-	else if ( !strcmp( pButtonName, "!FEIGNSTOP" ) )
+	else if ( 0 == strcmp( pButtonName, "!FEIGNSTOP" ) )
 	{
 		pButton = new FeignButton(true, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "feign" ));
@@ -1073,19 +1073,19 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Disguise
-	else if ( !strcmp( pButtonName, "!DISGUISEENEMY" ) )
+	else if ( 0 == strcmp( pButtonName, "!DISGUISEENEMY" ) )
 	{
 		// Create the disguise enemy button, which active only if there are 2 teams
 		pButton = new DisguiseButton(DISGUISE_TEAM2, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		CreateDisguiseSubmenu( pButton, m_pCurrentCommandMenu, "disguise_enemy", iYOffset);
 	}
-	else if ( !strcmp( pButtonName, "!DISGUISEFRIENDLY" ) )
+	else if ( 0 == strcmp( pButtonName, "!DISGUISEFRIENDLY" ) )
 	{
 		// Create the disguise friendly button, which active only if there are 1 or 2 teams
 		pButton = new DisguiseButton(DISGUISE_TEAM1 | DISGUISE_TEAM2, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		CreateDisguiseSubmenu( pButton, m_pCurrentCommandMenu, "disguise_friendly", iYOffset );
 	}
-	else if ( !strcmp( pButtonName, "!DISGUISE" ) )
+	else if ( 0 == strcmp( pButtonName, "!DISGUISE" ) )
 	{
 		// Create the Disguise button
 		pButton = new DisguiseButton( DISGUISE_TEAM3 | DISGUISE_TEAM4, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
@@ -1108,7 +1108,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		}
 	}
 	// Start setting a Detpack
-	else if ( !strcmp( pButtonName, "!DETPACKSTART" ) )
+	else if ( 0 == strcmp( pButtonName, "!DETPACKSTART" ) )
 	{
 		// Detpack Submenu
 		pButton = new DetpackButton(2, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
@@ -1131,7 +1131,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pMenu->AddButton( pDetButton );
 	}
 	// Stop setting a Detpack
-	else if ( !strcmp( pButtonName, "!DETPACKSTOP" ) )
+	else if ( 0 == strcmp( pButtonName, "!DETPACKSTOP" ) )
 	{
 		pButton = new DetpackButton(1, pButtonText, 0, BUTTON_SIZE_Y, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand( "detstop" ));
@@ -1139,103 +1139,103 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Engineer building
-	else if ( !strcmp( pButtonName, "!BUILD" ) )
+	else if ( 0 == strcmp( pButtonName, "!BUILD" ) )
 	{
 		// only appears if the player is an engineer, and either they have built something or have enough metal to build
 		pButton = new BuildButton( BUILDSTATE_BASE, 0, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 	}
-	else if ( !strcmp( pButtonName, "!BUILDSENTRY" ) )
+	else if ( 0 == strcmp( pButtonName, "!BUILDSENTRY" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_CANBUILD, BuildButton::SENTRYGUN, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("build 2"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!BUILDDISPENSER" ) )
+	else if ( 0 == strcmp( pButtonName, "!BUILDDISPENSER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_CANBUILD, BuildButton::DISPENSER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("build 1"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!ROTATESENTRY180" ) )
+	else if ( 0 == strcmp( pButtonName, "!ROTATESENTRY180" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::SENTRYGUN, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("rotatesentry180"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!ROTATESENTRY" ) )
+	else if ( 0 == strcmp( pButtonName, "!ROTATESENTRY" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::SENTRYGUN, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("rotatesentry"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DISMANTLEDISPENSER" ) )
+	else if ( 0 == strcmp( pButtonName, "!DISMANTLEDISPENSER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::DISPENSER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("dismantle 1"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DISMANTLESENTRY" ) )
+	else if ( 0 == strcmp( pButtonName, "!DISMANTLESENTRY" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::SENTRYGUN, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("dismantle 2"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DETONATEDISPENSER" ) )
+	else if (0 == strcmp( pButtonName, "!DETONATEDISPENSER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::DISPENSER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("detdispenser"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DETONATESENTRY" ) )
+	else if (0 == strcmp( pButtonName, "!DETONATESENTRY" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::SENTRYGUN, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("detsentry"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!BUILDENTRYTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!BUILDENTRYTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_CANBUILD, BuildButton::ENTRY_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("build 4"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DISMANTLEENTRYTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!DISMANTLEENTRYTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::ENTRY_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("dismantle 4"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DETONATEENTRYTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!DETONATEENTRYTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::ENTRY_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("detentryteleporter"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!BUILDEXITTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!BUILDEXITTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_CANBUILD, BuildButton::EXIT_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("build 5"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
-	else if ( !strcmp( pButtonName, "!DISMANTLEEXITTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!DISMANTLEEXITTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::EXIT_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("dismantle 5"));
 		// Create an input signal that'll popup the current menu
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}	
-	else if ( !strcmp( pButtonName, "!DETONATEEXITTELEPORTER" ) )
+	else if (0 == strcmp( pButtonName, "!DETONATEEXITTELEPORTER" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_HASBUILDING, BuildButton::EXIT_TELEPORTER, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("detexitteleporter"));
@@ -1243,7 +1243,7 @@ CommandButton *TeamFortressViewport::CreateCustomButton( char *pButtonText, char
 		pButton->addInputSignal( new CMenuHandler_PopupSubMenuInput(pButton, m_pCurrentCommandMenu) );
 	}
 	// Stop building
-	else if ( !strcmp( pButtonName, "!BUILDSTOP" ) )
+	else if (0 == strcmp( pButtonName, "!BUILDSTOP" ) )
 	{
 		pButton = new BuildButton( BUILDSTATE_BUILDING, 0, pButtonText, 0, BUTTON_SIZE_Y * 2, CMENU_SIZE_X, BUTTON_SIZE_Y);
 		pButton->addActionSignal(new CMenuHandler_StringCommand("build"));
@@ -1501,7 +1501,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 	if (!m_pSpectatorPanel)
 		return;
 
-	if ( g_iUser1 && gHUD.m_pCvarDraw->value && !gHUD.m_iIntermission)	// don't draw in dev_overview mode
+	if ( 0 != g_iUser1 && 0 != gHUD.m_pCvarDraw->value && !gHUD.m_iIntermission)	// don't draw in dev_overview mode
 	{
 		char bottomText[128];
 		char helpString2[128];
@@ -1527,7 +1527,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		sprintf(bottomText,"#Spec_Mode%d", g_iUser1 );
 		sprintf(helpString2,"#Spec_Mode%d", g_iUser1 );
 
-		if ( gEngfuncs.IsSpectateOnly() )
+		if ( 0 != gEngfuncs.IsSpectateOnly() )
 			strcat(helpString2, " - HLTV");
 
 		// check if we're locked onto a target, show the player's name
@@ -1537,13 +1537,13 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		}
 
 		// special case in free map and inset off, don't show names
-		if ( (g_iUser1 == OBS_MAP_FREE) && !gHUD.m_Spectator.m_pip->value )
+		if ( (g_iUser1 == OBS_MAP_FREE) && 0 == gHUD.m_Spectator.m_pip->value )
 			name = NULL;
 		else
 			name = g_PlayerInfoList[player].name;
 
 		// create player & health string
-		if ( player && name )
+		if ( 0 != player && name )
 		{
 			strncpy( bottomText, name, sizeof(bottomText) );
 			bottomText[ sizeof(bottomText) - 1 ] = 0;
@@ -1555,7 +1555,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		}
 
 		// in first person mode colorize player names
-		if ( (g_iUser1 == OBS_IN_EYE) && player )
+		if ( (g_iUser1 == OBS_IN_EYE) && 0 != player )
 		{
 			float * color = GetClientColor( player );
 			int r = color[0]*255;
@@ -1573,7 +1573,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		}
 
 		// add sting auto if we are in auto directed mode
-		if ( gHUD.m_Spectator.m_autoDirector->value )
+		if ( 0 != gHUD.m_Spectator.m_autoDirector->value )
 		{
 			char tempString[128];
 			sprintf(tempString, "#Spec_Auto %s", helpString2);
@@ -1587,7 +1587,7 @@ void TeamFortressViewport::UpdateSpectatorPanel()
 		// update extra info field
 		char szText[64];
 
-		if ( gEngfuncs.IsSpectateOnly() )
+		if ( 0 != gEngfuncs.IsSpectateOnly() )
 		{
 			// in HLTV mode show number of spectators
 			snprintf( szText, 63, "%s: %d", CHudTextMessage::BufferedLocaliseTextString( "#Spectators" ), gHUD.m_Spectator.m_iSpectatorNumber );
@@ -1660,7 +1660,7 @@ void TeamFortressViewport::SetCurrentMenu( CMenuPanel *pMenu )
 	if ( m_pCurrentMenu )
 	{
 		// Don't open menus in demo playback
-		if ( gEngfuncs.pDemoAPI->IsPlayingback() )
+		if ( 0 != gEngfuncs.pDemoAPI->IsPlayingback() )
 			return;
 
 		m_pCurrentMenu->Open();
@@ -1683,7 +1683,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 
 	if ( iTextToShow == SHOW_MOTD )
 	{
-		if (!m_szServerName || !m_szServerName[0])
+		if (!m_szServerName || '\0' == m_szServerName[0])
 			strcpy( cTitle, "Half-Life" );
 		else
 			strncpy( cTitle, m_szServerName, sizeof(cTitle) );
@@ -1693,7 +1693,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow( int iTextToShow )
 	else if ( iTextToShow == SHOW_MAPBRIEFING )
 	{
 		// Get the current mapname, and open it's map briefing text
-		if (m_sMapName && m_sMapName[0])
+		if (m_sMapName && '\0' != m_sMapName[0])
 		{
 			strcpy( sz, "maps/");
 			strcat( sz, m_sMapName );
@@ -1809,7 +1809,7 @@ void TeamFortressViewport::ShowVGUIMenu( int iMenu )
 	CMenuPanel *pNewMenu = NULL;
 
 	// Don't open menus in demo playback
-	if ( gEngfuncs.pDemoAPI->IsPlayingback() )
+	if ( 0 != gEngfuncs.pDemoAPI->IsPlayingback() )
 		return;
 
 	// Don't open any menus except the MOTD during intermission
@@ -1940,7 +1940,7 @@ bool TeamFortressViewport::AllowedToPrintText()
 CMenuPanel* TeamFortressViewport::ShowTeamMenu()
 {
 	// Don't open menus in demo playback
-	if ( gEngfuncs.pDemoAPI->IsPlayingback() )
+	if ( 0 != gEngfuncs.pDemoAPI->IsPlayingback() )
 		return NULL;
 
 	m_pTeamMenu->Reset();
@@ -1962,7 +1962,7 @@ void TeamFortressViewport::CreateTeamMenu()
 CMenuPanel* TeamFortressViewport::ShowClassMenu()
 {
 	// Don't open menus in demo playback
-	if ( gEngfuncs.pDemoAPI->IsPlayingback() )
+	if ( 0 != gEngfuncs.pDemoAPI->IsPlayingback() )
 		return NULL;
 
 	m_pClassMenu->Reset();
@@ -2027,7 +2027,7 @@ void TeamFortressViewport::UpdateCursorState()
 	}
 
 	// Don't reset mouse in demo playback
-	if ( !gEngfuncs.pDemoAPI->IsPlayingback() )
+	if ( 0 == gEngfuncs.pDemoAPI->IsPlayingback() )
 	{
 		IN_ResetMouse();
 	}
@@ -2048,7 +2048,7 @@ void TeamFortressViewport::GetAllPlayersInfo()
 	{
 		gEngfuncs.pfnGetPlayerInfo( i, &g_PlayerInfoList[i] );
 
-		if ( g_PlayerInfoList[i].thisplayer )
+		if ( 0 != g_PlayerInfoList[i].thisplayer )
 			m_pScoreBoard->m_iPlayerNum = i;  // !!!HACK: this should be initialized elsewhere... maybe gotten from the engine
 	}
 }
@@ -2153,17 +2153,17 @@ bool TeamFortressViewport::SlotInput( int iSlot )
 }
 
 // Direct Key Input
-int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrentBinding )
+bool TeamFortressViewport::KeyInput( bool down, int keynum, const char *pszCurrentBinding )
 {
 	// Enter gets out of Spectator Mode by bringing up the Team Menu
-	if (m_iUser1 && gEngfuncs.Con_IsVisible() == false )
+	if (0 != m_iUser1 && 0 == gEngfuncs.Con_IsVisible() )
 	{
 		if ( down && (keynum == K_ENTER || keynum == K_KP_ENTER) )
 			ShowVGUIMenu( MENU_TEAM );
 	}
 
 	// Open Text Window?
-	if (m_pCurrentMenu && gEngfuncs.Con_IsVisible() == false)
+	if (m_pCurrentMenu && 0 == gEngfuncs.Con_IsVisible())
 	{
 		int iMenuID = m_pCurrentMenu->GetMenuID();
 
@@ -2173,10 +2173,10 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 			// Escape gets you out of Team/Class menus if the Cancel button is visible
 			if ( keynum == K_ESCAPE )
 			{
-				if ( (iMenuID == MENU_TEAM && g_iTeamNumber) || (iMenuID == MENU_CLASS && g_iPlayerClass) )
+				if ( (iMenuID == MENU_TEAM && 0 != g_iTeamNumber) || (iMenuID == MENU_CLASS && 0 != g_iPlayerClass) )
 				{
 					HideTopMenu();
-					return 0;
+					return false;
 				}
 			}
 
@@ -2185,7 +2185,7 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 				if ( down && (keynum == i) )
 				{
 					SlotInput( i - '0' );
-					return 0;
+					return false;
 				}
 			}
 		}
@@ -2196,17 +2196,17 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 			if ( iMenuID == MENU_MAPBRIEFING || iMenuID == MENU_INTRO || iMenuID == MENU_CLASSHELP )
 			{
 				HideTopMenu();
-				return 0;
+				return false;
 			}
 		}
 
 		// Grab jump key on Team Menu as autoassign
-		if ( pszCurrentBinding && down && !strcmp(pszCurrentBinding, "+jump") )
+		if ( pszCurrentBinding && down && 0 == strcmp(pszCurrentBinding, "+jump") )
 		{
 			if (iMenuID == MENU_TEAM)
 			{
 				m_pTeamMenu->SlotInput(5);
-				return 0;
+				return false;
 			}
 		}
 
@@ -2219,7 +2219,7 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 		if ( keynum == K_ESCAPE )
 		{
 			HideCommandMenu();
-			return 0;
+			return false;
 		}
 
 		// only trap the number keys
@@ -2231,16 +2231,16 @@ int	TeamFortressViewport::KeyInput( int down, int keynum, const char *pszCurrent
 				HideCommandMenu();
 			}
 
-			return 0;
+			return false;
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 //================================================================
 // Message Handlers
-int TeamFortressViewport::MsgFunc_ValClass(const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_ValClass(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	
@@ -2250,10 +2250,10 @@ int TeamFortressViewport::MsgFunc_ValClass(const char *pszName, int iSize, void 
 	// Force the menu to update
 	UpdateCommandMenu( m_StandardMenu );
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_TeamNames(const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_TeamNames(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	
@@ -2282,22 +2282,22 @@ int TeamFortressViewport::MsgFunc_TeamNames(const char *pszName, int iSize, void
 	if (m_pTeamMenu)
 		m_pTeamMenu->Update();
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_Feign(const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_Feign(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	
-	m_iIsFeigning = READ_BYTE();
+	m_iIsFeigning = READ_BYTE() != 0;
 
 	// Force the menu to update
 	UpdateCommandMenu( m_StandardMenu );
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
@@ -2306,10 +2306,10 @@ int TeamFortressViewport::MsgFunc_Detpack(const char *pszName, int iSize, void *
 	// Force the menu to update
 	UpdateCommandMenu( m_StandardMenu );
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
@@ -2325,17 +2325,17 @@ int TeamFortressViewport::MsgFunc_VGUIMenu(const char *pszName, int iSize, void 
 	// Bring up the menu6
 	ShowVGUIMenu( iMenu );
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf )
 {
 	if (m_iGotAllMOTD)
 		m_szMOTD[0] = 0;
 
 	BEGIN_READ( pbuf, iSize );
 
-	m_iGotAllMOTD = READ_BYTE();
+	m_iGotAllMOTD = READ_BYTE() != 0;
 
 	int roomInArray = sizeof(m_szMOTD) - strlen(m_szMOTD) - 1;
 
@@ -2343,15 +2343,15 @@ int TeamFortressViewport::MsgFunc_MOTD( const char *pszName, int iSize, void *pb
 	m_szMOTD[ sizeof(m_szMOTD)-1 ] = '\0';
 
 	// don't show MOTD for HLTV spectators
-	if ( m_iGotAllMOTD && !gEngfuncs.IsSpectateOnly() )
+	if ( m_iGotAllMOTD && 0 == gEngfuncs.IsSpectateOnly() )
 	{
 		ShowVGUIMenu( MENU_INTRO );
 	}
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
@@ -2360,29 +2360,29 @@ int TeamFortressViewport::MsgFunc_BuildSt( const char *pszName, int iSize, void 
 	// Force the menu to update
 	UpdateCommandMenu( m_StandardMenu );
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
-	m_iRandomPC = READ_BYTE();
+	m_iRandomPC = READ_BYTE() != 0;
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
 	strncpy( m_szServerName, READ_STRING(), sizeof(m_szServerName) );
 	m_szServerName[sizeof(m_szServerName) - 1] = 0;
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	short cl = READ_BYTE();
@@ -2405,7 +2405,7 @@ int TeamFortressViewport::MsgFunc_ScoreInfo( const char *pszName, int iSize, voi
 		UpdateOnPlayerInfo();
 	}
 
-	return 1;
+	return true;
 }
 
 // Message handler for TeamScore message
@@ -2414,7 +2414,7 @@ int TeamFortressViewport::MsgFunc_ScoreInfo( const char *pszName, int iSize, voi
 //		short: teams kills
 //		short: teams deaths 
 // if this message is never received, then scores will simply be the combined totals of the players.
-int TeamFortressViewport::MsgFunc_TeamScore( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_TeamScore( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	char *TeamName = READ_STRING();
@@ -2428,24 +2428,24 @@ int TeamFortressViewport::MsgFunc_TeamScore( const char *pszName, int iSize, voi
 	}
 
 	if ( i > m_pScoreBoard->m_iNumTeams )
-		return 1;
+		return true;
 
 	// use this new score data instead of combined player scoresw
 	g_TeamInfo[i].scores_overriden = true;
 	g_TeamInfo[i].frags = READ_SHORT();
 	g_TeamInfo[i].deaths = READ_SHORT();
 
-	return 1;
+	return true;
 }
 
 // Message handler for TeamInfo message
 // accepts two values:
 //		byte: client number
 //		string: client team name
-int TeamFortressViewport::MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf )
 {
 	if (!m_pScoreBoard)
-		return 1;
+		return true;
 
 	BEGIN_READ( pbuf, iSize );
 	short cl = READ_BYTE();
@@ -2459,7 +2459,7 @@ int TeamFortressViewport::MsgFunc_TeamInfo( const char *pszName, int iSize, void
 	// rebuild the list of teams
 	m_pScoreBoard->RebuildTeams();
 
-	return 1;
+	return true;
 }
 
 void TeamFortressViewport::DeathMsg( int killer, int victim )
@@ -2467,7 +2467,7 @@ void TeamFortressViewport::DeathMsg( int killer, int victim )
 	m_pScoreBoard->DeathMsg(killer,victim);
 }
 
-int TeamFortressViewport::MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
@@ -2477,14 +2477,14 @@ int TeamFortressViewport::MsgFunc_Spectator( const char *pszName, int iSize, voi
 		g_IsSpectator[cl] = READ_BYTE();
 	}
 
-	return 1;
+	return true;
 }
 
-int TeamFortressViewport::MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
-	m_iAllowSpectators = READ_BYTE();
+	m_iAllowSpectators = READ_BYTE() != 0;
 
 	// Force the menu to update
 	UpdateCommandMenu( m_StandardMenu );
@@ -2493,7 +2493,7 @@ int TeamFortressViewport::MsgFunc_AllowSpec( const char *pszName, int iSize, voi
 	if (m_pTeamMenu)
 		m_pTeamMenu->Update();
 
-	return 1;
+	return true;
 }
 
 #if defined( _TFC )
@@ -2502,11 +2502,11 @@ extern globalvars_t *gpGlobals;
 #endif 
 
 // used to reset the player's screen immediately
-int TeamFortressViewport::MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf )
 {
 #if defined( _TFC )
 	if ( !gpGlobals )
-		return 0;
+		return false;
 
 	screenfade_t sf;
 	gEngfuncs.pfnGetScreenFade( &sf );
@@ -2528,11 +2528,11 @@ int TeamFortressViewport::MsgFunc_ResetFade( const char *pszName, int iSize, voi
 	gEngfuncs.pfnSetScreenFade( &sf );
 #endif
 
-	return 1;
+	return true;
 }
 
 // used to fade a player's screen out/in when they're spectating someone who is teleported
-int TeamFortressViewport::MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf )
+bool TeamFortressViewport::MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf )
 {
 #if defined( _TFC )
 	BEGIN_READ( pbuf, iSize );
@@ -2591,5 +2591,5 @@ int TeamFortressViewport::MsgFunc_SpecFade( const char *pszName, int iSize, void
 	}
 #endif
 
-	return 1;
+	return true;
 }

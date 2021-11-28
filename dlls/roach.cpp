@@ -392,7 +392,7 @@ void CRoach :: Move ( float flInterval )
 	if ( RANDOM_LONG(0,149) == 1 && m_iMode != ROACH_SCARED_BY_LIGHT && m_iMode != ROACH_SMELL_FOOD )
 	{
 		// random skitter while moving as long as not on a b-line to get out of light or going to food
-		PickNewDest( false );
+		PickNewDest(ROACH_IDLE);
 	}
 }
 

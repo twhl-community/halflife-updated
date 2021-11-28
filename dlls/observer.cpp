@@ -54,7 +54,7 @@ void CBasePlayer::Observer_FindNextPlayer( bool bReverse )
 		if ( pEnt == this )
 			continue;
 		// Don't spec observers or players who haven't picked a class yet
-		if ( ((CBasePlayer*)pEnt)->IsObserver() || (pEnt->pev->effects & EF_NODRAW) )
+		if ( ((CBasePlayer*)pEnt)->IsObserver() || (pEnt->pev->effects & EF_NODRAW) != 0 )
 			continue;
 
 		// MOD AUTHORS: Add checks on target here.
@@ -89,7 +89,7 @@ void CBasePlayer::Observer_HandleButtons()
 		return;
 
 	// Jump changes from modes: Chase to Roaming
-	if ( m_afButtonPressed & IN_JUMP )
+	if ( (m_afButtonPressed & IN_JUMP ) != 0)
 	{
 		if ( pev->iuser1 == OBS_CHASE_LOCKED )
 			Observer_SetMode( OBS_CHASE_FREE );
@@ -113,7 +113,7 @@ void CBasePlayer::Observer_HandleButtons()
 	}
 
 	// Attack moves to the next player
-	if ( m_afButtonPressed & IN_ATTACK )//&& pev->iuser1 != OBS_ROAMING )
+	if ( (m_afButtonPressed & IN_ATTACK ) != 0)//&& pev->iuser1 != OBS_ROAMING )
 	{
 		Observer_FindNextPlayer( false );
 
@@ -121,7 +121,7 @@ void CBasePlayer::Observer_HandleButtons()
 	}
 
 	// Attack2 moves to the prev player
-	if ( m_afButtonPressed & IN_ATTACK2)// && pev->iuser1 != OBS_ROAMING )
+	if ( (m_afButtonPressed & IN_ATTACK2) != 0)// && pev->iuser1 != OBS_ROAMING )
 	{
 		Observer_FindNextPlayer( true );
 
@@ -239,7 +239,7 @@ void CBasePlayer::Observer_SetMode( int iMode )
 
 		if ( (pEnt == this) || (pEnt == NULL) )
 			m_hObserverTarget = NULL;
-		else if ( ((CBasePlayer*)pEnt)->IsObserver() || (pEnt->pev->effects & EF_NODRAW) )
+		else if ( ((CBasePlayer*)pEnt)->IsObserver() || (pEnt->pev->effects & EF_NODRAW) != 0 )
 			m_hObserverTarget = NULL;
 	}
 

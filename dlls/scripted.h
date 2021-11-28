@@ -45,15 +45,15 @@ class CCineMonster : public CBaseMonster
 {
 public:
 	void Spawn() override;
-	void KeyValue( KeyValueData *pkvd ) override;
+	bool KeyValue( KeyValueData *pkvd ) override;
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value ) override;
 	void Blocked( CBaseEntity *pOther ) override;
 	void Touch( CBaseEntity *pOther ) override;
 	int	 ObjectCaps() override { return (CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	void Activate() override;
 
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	
 	static	TYPEDESCRIPTION m_SaveData[];
 
@@ -61,7 +61,7 @@ public:
 	void EXPORT CineThink();
 	void Pain();
 	void Die();
-	void DelayStart( int state );
+	void DelayStart( bool state );
 	bool FindEntity();
 	virtual void PossessEntity();
 

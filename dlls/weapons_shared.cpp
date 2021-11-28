@@ -46,7 +46,7 @@ void AddAmmoNameToAmmoRegistry(const char* szAmmoname)
 
 bool CBasePlayerWeapon::CanDeploy()
 {
-	bool bHasAmmo = 0;
+	bool bHasAmmo = false;
 
 	if (!pszAmmo1())
 	{
@@ -64,7 +64,7 @@ bool CBasePlayerWeapon::CanDeploy()
 	}
 	if (m_iClip > 0)
 	{
-		bHasAmmo |= 1;
+		bHasAmmo |= true;
 	}
 	if (!bHasAmmo)
 	{
@@ -97,7 +97,7 @@ bool CBasePlayerWeapon::DefaultReload(int iClipSize, int iAnim, float fDelay, in
 
 void CBasePlayerWeapon::ResetEmptySound()
 {
-	m_iPlayEmptySound = 1;
+	m_iPlayEmptySound = true;
 }
 
 bool CanAttack(float attack_time, float curtime, bool isPredicted)
@@ -132,14 +132,14 @@ void CBasePlayerWeapon::ItemPostFrame()
 		m_fInReload = false;
 	}
 
-	if (!(m_pPlayer->pev->button & IN_ATTACK))
+	if ((m_pPlayer->pev->button & IN_ATTACK) == 0)
 	{
 		m_flLastFireTime = 0.0f;
 	}
 
-	if ((m_pPlayer->pev->button & IN_ATTACK2) && CanAttack(m_flNextSecondaryAttack, gpGlobals->time, UseDecrement()))
+	if ((m_pPlayer->pev->button & IN_ATTACK2) != 0 && CanAttack(m_flNextSecondaryAttack, gpGlobals->time, UseDecrement()))
 	{
-		if (pszAmmo2() && !m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()])
+		if (pszAmmo2() && 0 == m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()])
 		{
 			m_fFireOnEmpty = true;
 		}
@@ -148,9 +148,9 @@ void CBasePlayerWeapon::ItemPostFrame()
 		SecondaryAttack();
 		m_pPlayer->pev->button &= ~IN_ATTACK2;
 	}
-	else if ((m_pPlayer->pev->button & IN_ATTACK) && CanAttack(m_flNextPrimaryAttack, gpGlobals->time, UseDecrement()))
+	else if ((m_pPlayer->pev->button & IN_ATTACK) != 0 && CanAttack(m_flNextPrimaryAttack, gpGlobals->time, UseDecrement()))
 	{
-		if ((m_iClip == 0 && pszAmmo1()) || (iMaxClip() == -1 && !m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()]))
+		if ((m_iClip == 0 && pszAmmo1()) || (iMaxClip() == -1 && 0 == m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()]))
 		{
 			m_fFireOnEmpty = true;
 		}
@@ -158,12 +158,12 @@ void CBasePlayerWeapon::ItemPostFrame()
 		m_pPlayer->TabulateAmmo();
 		PrimaryAttack();
 	}
-	else if (m_pPlayer->pev->button & IN_RELOAD && iMaxClip() != WEAPON_NOCLIP && !m_fInReload)
+	else if ((m_pPlayer->pev->button & IN_RELOAD) != 0 && iMaxClip() != WEAPON_NOCLIP && !m_fInReload)
 	{
 		// reload when reload is pressed, or if no buttons are down and weapon is empty.
 		Reload();
 	}
-	else if (!(m_pPlayer->pev->button & (IN_ATTACK | IN_ATTACK2)))
+	else if ((m_pPlayer->pev->button & (IN_ATTACK | IN_ATTACK2)) == 0)
 	{
 		// no fire buttons down
 
@@ -173,7 +173,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 		if (!IsUseable() && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))
 		{
 			// weapon isn't useable, switch.
-			if (!(iFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY) && g_pGameRules->GetNextBestWeapon(m_pPlayer, this))
+			if ((iFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY) == 0 && g_pGameRules->GetNextBestWeapon(m_pPlayer, this))
 			{
 				m_flNextPrimaryAttack = (UseDecrement() ? 0.0 : gpGlobals->time) + 0.3;
 				return;
@@ -183,7 +183,7 @@ void CBasePlayerWeapon::ItemPostFrame()
 #endif
 		{
 			// weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
-			if (m_iClip == 0 && !(iFlags() & ITEM_FLAG_NOAUTORELOAD) && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))
+			if (m_iClip == 0 && (iFlags() & ITEM_FLAG_NOAUTORELOAD) == 0 && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))
 			{
 				Reload();
 				return;

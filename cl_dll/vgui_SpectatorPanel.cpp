@@ -26,7 +26,7 @@ void DLLEXPORT HUD_ChatInputPosition( int *x, int *y )
 {
 //	RecClChatInputPosition( x, y );
 
-	if ( g_iUser1 != 0 || gEngfuncs.IsSpectateOnly() )
+	if ( g_iUser1 != 0 || 0 != gEngfuncs.IsSpectateOnly() )
 	{
 		if ( gHUD.m_Spectator.m_pip->value == INSET_OFF )
 		{
@@ -333,7 +333,7 @@ void SpectatorPanel::EnableInsetView(bool isEnabled)
 		// short black bar to see full inset
 		m_TopBorder->setBounds(	XRES(offset), 0, XRES(640 - offset ), PANEL_HEIGHT );
 
-		if ( gEngfuncs.IsSpectateOnly() )
+		if ( 0 != gEngfuncs.IsSpectateOnly() )
 		{
 			m_TopBanner->setVisible( true );
 			m_TopBanner->setPos( XRES(offset), 0 );
@@ -349,7 +349,7 @@ void SpectatorPanel::EnableInsetView(bool isEnabled)
 	{	
 		// full black bar, no inset border
 		// show banner only in real HLTV mode
-		if ( gEngfuncs.IsSpectateOnly() )
+		if ( 0 != gEngfuncs.IsSpectateOnly() )
 		{
 			m_TopBanner->setVisible( true );
 			m_TopBanner->setPos( 0,0 );

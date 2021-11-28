@@ -51,7 +51,7 @@ int giDmgFlags[NUM_DMG_TYPES] =
 	DMG_HALLUC
 };
 
-int CHudHealth::Init()
+bool CHudHealth::Init()
 {
 	HOOK_MESSAGE(Health);
 	HOOK_MESSAGE(Damage);
@@ -67,7 +67,7 @@ int CHudHealth::Init()
 
 
 	gHUD.AddHudElem(this);
-	return 1;
+	return true;
 }
 
 void CHudHealth::Reset()
@@ -84,7 +84,7 @@ void CHudHealth::Reset()
 	}
 }
 
-int CHudHealth::VidInit()
+bool CHudHealth::VidInit()
 {
 	m_hSprite = 0;
 
@@ -93,10 +93,10 @@ int CHudHealth::VidInit()
 
 	giDmgHeight = gHUD.GetSpriteRect(m_HUD_dmg_bio).right - gHUD.GetSpriteRect(m_HUD_dmg_bio).left;
 	giDmgWidth = gHUD.GetSpriteRect(m_HUD_dmg_bio).bottom - gHUD.GetSpriteRect(m_HUD_dmg_bio).top;
-	return 1;
+	return true;
 }
 
-int CHudHealth:: MsgFunc_Health(const char *pszName,  int iSize, void *pbuf )
+bool CHudHealth:: MsgFunc_Health(const char *pszName,  int iSize, void *pbuf )
 {
 	// TODO: update local health data
 	BEGIN_READ( pbuf, iSize );
@@ -111,11 +111,11 @@ int CHudHealth:: MsgFunc_Health(const char *pszName,  int iSize, void *pbuf )
 		m_iHealth = x;
 	}
 
-	return 1;
+	return true;
 }
 
 
-int CHudHealth:: MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf )
+bool CHudHealth:: MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 
@@ -134,7 +134,7 @@ int CHudHealth:: MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf )
 	if ( damageTaken > 0 || armor > 0 )
 		CalcDamageDirection(vecFrom);
 
-	return 1;
+	return true;
 }
 
 
@@ -166,20 +166,20 @@ void CHudHealth::GetPainColor( int &r, int &g, int &b )
 #endif 
 }
 
-int CHudHealth::Draw(float flTime)
+bool CHudHealth::Draw(float flTime)
 {
 	int r, g, b;
 	int a = 0, x, y;
 	int HealthWidth;
 
-	if ( (gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH) || gEngfuncs.IsSpectateOnly() )
-		return 1;
+	if ( (gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH) != 0 || 0 != gEngfuncs.IsSpectateOnly() )
+		return true;
 
-	if ( !m_hSprite )
+	if ( 0 == m_hSprite )
 		m_hSprite = LoadSprite(PAIN_NAME);
 	
 	// Has health changed? Flash the health #
-	if (m_fFade)
+	if (0 != m_fFade)
 	{
 		m_fFade -= (gHUD.m_flTimeDelta * 20);
 		if (m_fFade <= 0)
@@ -204,7 +204,7 @@ int CHudHealth::Draw(float flTime)
 	ScaleColors(r, g, b, a );
 
 	// Only draw health if we have the suit.
-	if (gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)))
+	if ((gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT))) != 0)
 	{
 		HealthWidth = gHUD.GetSpriteRect(gHUD.m_HUD_number_0).right - gHUD.GetSpriteRect(gHUD.m_HUD_number_0).left;
 		int CrossWidth = gHUD.GetSpriteRect(m_HUD_cross).right - gHUD.GetSpriteRect(m_HUD_cross).left;
@@ -242,7 +242,7 @@ void CHudHealth::CalcDamageDirection(Vector vecFrom)
 	float	side, front;
 	Vector vecOrigin, vecAngles;
 
-	if (!vecFrom[0] && !vecFrom[1] && !vecFrom[2])
+	if (vecFrom == g_vecZero)
 	{
 		m_fAttackFront = m_fAttackRear = m_fAttackRight = m_fAttackLeft = 0;
 		return;
@@ -295,10 +295,10 @@ void CHudHealth::CalcDamageDirection(Vector vecFrom)
 	}
 }
 
-int CHudHealth::DrawPain(float flTime)
+bool CHudHealth::DrawPain(float flTime)
 {
-	if (!(m_fAttackFront || m_fAttackRear || m_fAttackLeft || m_fAttackRight))
-		return 1;
+	if (!(0 != m_fAttackFront || 0 != m_fAttackRear || 0 != m_fAttackLeft || 0 != m_fAttackRight))
+		return true;
 
 	int r, g, b;
 	int x, y, a, shade;
@@ -366,16 +366,16 @@ int CHudHealth::DrawPain(float flTime)
 	} else
 		m_fAttackLeft = 0;
 
-	return 1;
+	return true;
 }
 
-int CHudHealth::DrawDamage(float flTime)
+bool CHudHealth::DrawDamage(float flTime)
 {
 	int r, g, b, a;
 	DAMAGE_IMAGE *pdmg;
 
-	if (!m_bitsDamage)
-		return 1;
+	if (0 == m_bitsDamage)
+		return true;
 
 	UnpackRGB(r,g,b, RGB_YELLOWISH);
 	
@@ -387,7 +387,7 @@ int CHudHealth::DrawDamage(float flTime)
 	int i;
 	for ( i = 0; i < NUM_DMG_TYPES; i++)
 	{
-		if (m_bitsDamage & giDmgFlags[i])
+		if ((m_bitsDamage & giDmgFlags[i]) != 0)
 		{
 			pdmg = &m_dmg[i];
 			SPR_Set(gHUD.GetSprite(m_HUD_dmg_bio + i), r, g, b );
@@ -401,7 +401,7 @@ int CHudHealth::DrawDamage(float flTime)
 	{
 		DAMAGE_IMAGE *pdmg = &m_dmg[i];
 
-		if ( m_bitsDamage & giDmgFlags[i] )
+		if ( (m_bitsDamage & giDmgFlags[i] ) != 0)
 		{
 			pdmg->fExpire = V_min( flTime + DMG_IMAGE_LIFE, pdmg->fExpire );
 
@@ -417,7 +417,7 @@ int CHudHealth::DrawDamage(float flTime)
 				for (int j = 0; j < NUM_DMG_TYPES; j++)
 				{
 					pdmg = &m_dmg[j];
-					if ((pdmg->y) && (pdmg->y < y))
+					if (0 != pdmg->y && (pdmg->y < y))
 						pdmg->y += giDmgHeight;
 
 				}
@@ -427,7 +427,7 @@ int CHudHealth::DrawDamage(float flTime)
 		}
 	}
 
-	return 1;
+	return true;
 }
  
 
@@ -443,15 +443,15 @@ void CHudHealth::UpdateTiles(float flTime, long bitsDamage)
 		pdmg = &m_dmg[i];
 
 		// Is this one already on?
-		if (m_bitsDamage & giDmgFlags[i])
+		if ((m_bitsDamage & giDmgFlags[i]) != 0)
 		{
 			pdmg->fExpire = flTime + DMG_IMAGE_LIFE; // extend the duration
-			if (!pdmg->fBaseline)
+			if (0 == pdmg->fBaseline)
 				pdmg->fBaseline = flTime;
 		}
 
 		// Are we just turning it on?
-		if (bitsOn & giDmgFlags[i])
+		if ((bitsOn & giDmgFlags[i]) != 0)
 		{
 			// put this one at the bottom
 			pdmg->x = giDmgWidth/8;
@@ -465,7 +465,7 @@ void CHudHealth::UpdateTiles(float flTime, long bitsDamage)
 					continue;
 
 				pdmg = &m_dmg[j];
-				if (pdmg->y)
+				if (0 != pdmg->y)
 					pdmg->y -= giDmgHeight;
 
 			}

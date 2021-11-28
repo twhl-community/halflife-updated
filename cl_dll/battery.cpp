@@ -27,7 +27,7 @@
 
 DECLARE_MESSAGE(m_Battery, Battery)
 
-int CHudBattery::Init()
+bool CHudBattery::Init()
 {
 	m_iBat = 0;
 	m_fFade = 0;
@@ -37,11 +37,11 @@ int CHudBattery::Init()
 
 	gHUD.AddHudElem(this);
 
-	return 1;
+	return true;
 };
 
 
-int CHudBattery::VidInit()
+bool CHudBattery::VidInit()
 {
 	int HUD_suit_empty = gHUD.GetSpriteIndex( "suit_empty" );
 	int HUD_suit_full = gHUD.GetSpriteIndex( "suit_full" );
@@ -51,10 +51,10 @@ int CHudBattery::VidInit()
 	m_prc2 = &gHUD.GetSpriteRect( HUD_suit_full );
 	m_iHeight = m_prc2->bottom - m_prc1->top;
 	m_fFade = 0;
-	return 1;
+	return true;
 };
 
-int CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
+bool CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 {
 	m_iFlags |= HUD_ACTIVE;
 	
@@ -78,14 +78,14 @@ int CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 	}
 #endif
 
-	return 1;
+	return true;
 }
 
 
-int CHudBattery::Draw(float flTime)
+bool CHudBattery::Draw(float flTime)
 {
-	if ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH )
-		return 1;
+	if ( (gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH ) != 0)
+		return true;
 
 	int r, g, b, x, y, a;
 	Rect rc;
@@ -105,11 +105,11 @@ int CHudBattery::Draw(float flTime)
 
 	UnpackRGB(r,g,b, RGB_YELLOWISH);
 
-	if (!(gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ))
-		return 1;
+	if ((gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ) == 0)
+		return true;
 
 	// Has health changed? Flash the health #
-	if (m_fFade)
+	if (0 != m_fFade)
 	{
 		if (m_fFade > FADE_TIME)
 			m_fFade = FADE_TIME;
@@ -137,9 +137,9 @@ int CHudBattery::Draw(float flTime)
 	x = ScreenWidth/4;
 
 	// make sure we have the right sprite handles
-	if ( !m_hSprite1 )
+	if ( 0 == m_hSprite1 )
 		m_hSprite1 = gHUD.GetSprite( gHUD.GetSpriteIndex( "suit_empty" ) );
-	if ( !m_hSprite2 )
+	if ( 0 == m_hSprite2 )
 		m_hSprite2 = gHUD.GetSprite( gHUD.GetSpriteIndex( "suit_full" ) );
 
 	SPR_Set(m_hSprite1, r, g, b );
@@ -154,5 +154,5 @@ int CHudBattery::Draw(float flTime)
 	x += (m_prc1->right - m_prc1->left);
 	x = gHUD.DrawHudNumber(x, y, DHN_3DIGITS | DHN_DRAWZERO, m_iBat, r, g, b);
 
-	return 1;
+	return true;
 }

@@ -28,7 +28,7 @@
 
 DECLARE_MESSAGE(m_Geiger, Geiger )
 
-int CHudGeiger::Init()
+bool CHudGeiger::Init()
 {
 	HOOK_MESSAGE( Geiger );
 
@@ -39,15 +39,15 @@ int CHudGeiger::Init()
 
 	srand( (unsigned)time( NULL ) );
 
-	return 1;
+	return true;
 };
 
-int CHudGeiger::VidInit()
+bool CHudGeiger::VidInit()
 {
-	return 1;
+	return true;
 };
 
-int CHudGeiger::MsgFunc_Geiger(const char *pszName,  int iSize, void *pbuf)
+bool CHudGeiger::MsgFunc_Geiger(const char *pszName,  int iSize, void *pbuf)
 {
 
 	BEGIN_READ( pbuf, iSize );
@@ -58,10 +58,10 @@ int CHudGeiger::MsgFunc_Geiger(const char *pszName,  int iSize, void *pbuf)
 	
 	m_iFlags |= HUD_ACTIVE;
 
-	return 1;
+	return true;
 }
 
-int CHudGeiger::Draw (float flTime)
+bool CHudGeiger::Draw (float flTime)
 {
 	int pct;
 	float flvol;
@@ -176,5 +176,5 @@ int CHudGeiger::Draw (float flTime)
 		}
 	}
 
-	return 1;
+	return true;
 }

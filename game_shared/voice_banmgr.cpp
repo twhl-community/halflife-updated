@@ -125,7 +125,7 @@ void CVoiceBanMgr::SaveState(char const *pGameDir)
 
 bool CVoiceBanMgr::GetPlayerBan(char const playerID[16])
 {
-	return !!InternalFindPlayerSquelch(playerID);
+	return nullptr != InternalFindPlayerSquelch(playerID);
 }
 
 

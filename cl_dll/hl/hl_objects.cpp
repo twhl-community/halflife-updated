@@ -51,7 +51,7 @@ void UpdateBeams ()
 	
 	VectorMA( vecSrc, 2048, forward, vecEnd );
 
-	gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( false, true );	
+	gEngfuncs.pEventAPI->EV_SetUpPlayerPrediction( 0, 1 );	
 						
 	// Store off the old count
 	gEngfuncs.pEventAPI->EV_PushPMStates();
@@ -85,7 +85,7 @@ void UpdateBeams ()
 		{
 			pFlare->flags |= FTENT_NOMODEL;
 
-			if (!(tr.allsolid || tr.ent <= 0 || tr.fraction == 1.0f))	// Beam hit some non-world entity
+			if (!(0 != tr.allsolid || tr.ent <= 0 || tr.fraction == 1.0f))	// Beam hit some non-world entity
 			{
 				physent_t* pEntity = gEngfuncs.pEventAPI->EV_GetPhysent(tr.ent);
 

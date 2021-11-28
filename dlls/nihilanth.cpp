@@ -27,8 +27,8 @@
 class CNihilanth : public CBaseMonster
 {
 public:
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void Spawn() override;
@@ -66,7 +66,7 @@ public:
 	void ShootBalls();
 	void MakeFriend( Vector vecPos );
 	
-	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType) override;
 
 	void PainSound() override;
@@ -171,8 +171,8 @@ IMPLEMENT_SAVERESTORE( CNihilanth, CBaseMonster );
 class CNihilanthHVR : public CBaseMonster
 {
 public:
-	int		Save( CSave &save ) override;
-	int		Restore( CRestore &restore ) override;
+	bool	Save( CSave &save ) override;
+	bool	Restore( CRestore &restore ) override;
 	static	TYPEDESCRIPTION m_SaveData[];
 
 	void Spawn() override;
@@ -1230,22 +1230,22 @@ void CNihilanth::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 }
 
 
-int CNihilanth :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
+bool CNihilanth :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
 {
 	if (pevInflictor->owner == edict())
-		return 0;
+		return false;
 
 	if (flDamage >= pev->health)
 	{
 		pev->health = 1;
 		if (m_irritation != 3)
-			return 0;
+			return false;
 	}
 	
 	PainSound( );
 
 	pev->health -= flDamage;
-	return 0;
+	return false;
 }
 
 
@@ -1482,7 +1482,7 @@ void CNihilanthHVR :: ZapThink()
 		UTIL_TraceLine( pev->origin, m_hEnemy->Center(), dont_ignore_monsters, edict(), &tr );
 
 		CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
-		if (pEntity != NULL && pEntity->pev->takedamage)
+		if (pEntity != NULL && 0 != pEntity->pev->takedamage)
 		{
 			ClearMultiDamage( );
 			pEntity->TraceAttack( pev, gSkillData.nihilanthZap, pev->velocity, &tr, DMG_SHOCK );

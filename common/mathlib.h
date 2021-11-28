@@ -52,7 +52,7 @@ inline void VectorClear( float *a ) { a[ 0 ] = 0.0; a[ 1 ] = 0.0; a[ 2 ] = 0.0; 
 
 void VectorMA (const float* veca, float scale, const float* vecb, float* vecc);
 
-int VectorCompare (const float* v1, const float* v2);
+bool VectorCompare (const float* v1, const float* v2);
 float Length (const float* v);
 void CrossProduct (const float* v1, const float* v2, float* cross);
 float VectorNormalize (float* v);		// returns vector length

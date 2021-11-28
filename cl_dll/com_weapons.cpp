@@ -27,7 +27,7 @@
 // g_runfuncs is true if this is the first time we've "predicated" a particular movement/firing
 //  command.  If it is 1, then we should play events/sounds etc., otherwise, we just will be
 //  updating state info, but not firing events
-int	g_runfuncs = 0;
+bool g_runfuncs = false;
 
 // During our weapon prediction processing, we'll need to reference some data that is part of
 //  the final state passed into the postthink functionality.  We'll set this pointer and then
@@ -80,7 +80,7 @@ HUD_SendWeaponAnim
 Change weapon model animation
 =====================
 */
-void HUD_SendWeaponAnim( int iAnim, int body, int force )
+void HUD_SendWeaponAnim( int iAnim, int body, bool force )
 {
 	// Don't actually change it.
 	if ( !g_runfuncs && !force )
@@ -212,7 +212,7 @@ int UTIL_SharedRandomLong( unsigned int seed, int low, int high )
 	U_Srand( (int)seed + low + high );
 
 	range = high - low + 1;
-	if ( !(range - 1) )
+	if ( 0 == (range - 1) )
 	{
 		return low;
 	}
@@ -245,7 +245,7 @@ float UTIL_SharedRandomFloat( unsigned int seed, float low, float high )
 	U_Random();
 
 	range = high - low;
-	if ( !range )
+	if ( 0 == range )
 	{
 		return low;
 	}
