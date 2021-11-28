@@ -25,10 +25,6 @@
 
 #include "cbase.h"
 
-// Holds engine functionality callbacks
-enginefuncs_t g_engfuncs;
-globalvars_t* gpGlobals;
-
 #undef DLLEXPORT
 #ifdef WIN32
 #define DLLEXPORT __stdcall

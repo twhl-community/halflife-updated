@@ -335,5 +335,13 @@ public:
 #define AUTOAIM_8DEGREES 0.1391731009601
 #define AUTOAIM_10DEGREES 0.1736481776669
 
+inline bool gInitHUD = true;
+inline bool gEvilImpulse101 = false;
+inline bool giPrecacheGrunt = false;
 
-extern bool gInitHUD;
+/**
+*	@brief Display the game title if this key is set
+*/
+inline DLL_GLOBAL bool gDisplayTitle = false;
+inline DLL_GLOBAL unsigned int g_ulModelIndexPlayer = 0;
+inline DLL_GLOBAL CBaseEntity* g_pLastSpawn = nullptr;

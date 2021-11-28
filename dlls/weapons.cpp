@@ -31,25 +31,7 @@
 #include "gamerules.h"
 #include "UserMessages.h"
 
-extern bool gEvilImpulse101;
-
-
 #define NOT_USED 255
-
-DLL_GLOBAL short g_sModelIndexLaser; // holds the index for the laser beam
-DLL_GLOBAL const char* g_pModelNameLaser = "sprites/laserbeam.spr";
-DLL_GLOBAL short g_sModelIndexLaserDot;	  // holds the index for the laser beam dot
-DLL_GLOBAL short g_sModelIndexFireball;	  // holds the index for the fireball
-DLL_GLOBAL short g_sModelIndexSmoke;	  // holds the index for the smoke cloud
-DLL_GLOBAL short g_sModelIndexWExplosion; // holds the index for the underwater explosion
-DLL_GLOBAL short g_sModelIndexBubbles;	  // holds the index for the bubbles model
-DLL_GLOBAL short g_sModelIndexBloodDrop;  // holds the sprite index for the initial blood
-DLL_GLOBAL short g_sModelIndexBloodSpray; // holds the sprite index for splattered blood
-
-ItemInfo CBasePlayerItem::ItemInfoArray[MAX_WEAPONS];
-AmmoInfo CBasePlayerItem::AmmoInfoArray[MAX_AMMO_SLOTS];
-
-MULTIDAMAGE gMultiDamage;
 
 #define TRACER_FREQ 4 // Tracers fire every fourth bullet
 

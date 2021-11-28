@@ -218,7 +218,7 @@ typedef struct
 	int iId;
 } AmmoInfo;
 
-extern int giAmmoIndex;
+inline int giAmmoIndex = 0;
 
 void AddAmmoNameToAmmoRegistry(const char* szAmmoname);
 
@@ -268,8 +268,8 @@ public:
 
 	virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
 
-	static ItemInfo ItemInfoArray[MAX_WEAPONS];
-	static AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
+	static inline ItemInfo ItemInfoArray[MAX_WEAPONS];
+	static inline AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
 
 	CBasePlayer* m_pPlayer;
 	CBasePlayerItem* m_pNext;
@@ -385,16 +385,16 @@ public:
 };
 
 
-extern DLL_GLOBAL short g_sModelIndexLaser; // holds the index for the laser beam
-extern DLL_GLOBAL const char* g_pModelNameLaser;
+inline DLL_GLOBAL short g_sModelIndexLaser; // holds the index for the laser beam
+constexpr DLL_GLOBAL const char* g_pModelNameLaser = "sprites/laserbeam.spr";
 
-extern DLL_GLOBAL short g_sModelIndexLaserDot;	 // holds the index for the laser beam dot
-extern DLL_GLOBAL short g_sModelIndexFireball;	 // holds the index for the fireball
-extern DLL_GLOBAL short g_sModelIndexSmoke;		 // holds the index for the smoke cloud
-extern DLL_GLOBAL short g_sModelIndexWExplosion; // holds the index for the underwater explosion
-extern DLL_GLOBAL short g_sModelIndexBubbles;	 // holds the index for the bubbles model
-extern DLL_GLOBAL short g_sModelIndexBloodDrop;	 // holds the sprite index for blood drops
-extern DLL_GLOBAL short g_sModelIndexBloodSpray; // holds the sprite index for blood spray (bigger)
+inline DLL_GLOBAL short g_sModelIndexLaserDot;	 // holds the index for the laser beam dot
+inline DLL_GLOBAL short g_sModelIndexFireball;	 // holds the index for the fireball
+inline DLL_GLOBAL short g_sModelIndexSmoke;		 // holds the index for the smoke cloud
+inline DLL_GLOBAL short g_sModelIndexWExplosion; // holds the index for the underwater explosion
+inline DLL_GLOBAL short g_sModelIndexBubbles;	 // holds the index for the bubbles model
+inline DLL_GLOBAL short g_sModelIndexBloodDrop;	 // holds the sprite index for blood drops
+inline DLL_GLOBAL short g_sModelIndexBloodSpray; // holds the sprite index for blood spray (bigger)
 
 extern void ClearMultiDamage();
 extern void ApplyMultiDamage(entvars_t* pevInflictor, entvars_t* pevAttacker);
@@ -412,7 +412,7 @@ typedef struct
 	int type;
 } MULTIDAMAGE;
 
-extern MULTIDAMAGE gMultiDamage;
+inline MULTIDAMAGE gMultiDamage;
 
 
 #define LOUD_GUN_VOLUME 1000

@@ -39,10 +39,6 @@
 
 Vector VecBModelOrigin(entvars_t* pevBModel);
 
-extern DLL_GLOBAL bool g_fDrawLines;
-extern DLL_GLOBAL short g_sModelIndexLaser;	   // holds the index for the laser beam
-extern DLL_GLOBAL short g_sModelIndexLaserDot; // holds the index for the laser beam dot
-
 // Global Savedata for monster
 // UNDONE: Save schedule data?  Can this be done?  We may
 // lose our enemy pointer or other data (goal ent, target, etc)

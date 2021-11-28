@@ -30,8 +30,6 @@
 
 //float flRandom = RANDOM_FLOAT(0,1);
 
-DLL_GLOBAL bool g_fDrawLines = false;
-
 //=========================================================
 //
 // AI UTILITY FUNCTIONS

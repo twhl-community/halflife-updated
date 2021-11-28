@@ -21,8 +21,6 @@
 
 LINK_ENTITY_TO_CLASS(soundent, CSoundEnt);
 
-CSoundEnt* pSoundEnt;
-
 //=========================================================
 // CSound - Clear - zeros all fields for a sound
 //=========================================================

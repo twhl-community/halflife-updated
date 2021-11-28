@@ -18,7 +18,8 @@
 #include "event_flags.h"
 
 // Must be provided by user of this code
-extern enginefuncs_t g_engfuncs;
+// Holds engine functionality callbacks
+inline enginefuncs_t g_engfuncs;
 
 // The actual engine callbacks
 #define GETPLAYERUSERID (*g_engfuncs.pfnGetPlayerUserId)

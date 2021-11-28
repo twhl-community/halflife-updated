@@ -25,7 +25,7 @@
 
 inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float* pOrigin, entvars_t* ent); // implementation later in this file
 
-extern globalvars_t* gpGlobals;
+inline globalvars_t* gpGlobals = nullptr;
 
 // Use this instead of ALLOC_STRING on constant strings
 #define STRING(offset) ((const char*)(gpGlobals->pStringBase + (unsigned int)(offset)))
@@ -392,7 +392,7 @@ void DBG_AssertFunction(bool fExpr, const char* szExpr, const char* szFile, int 
 #define LANGUAGE_FRENCH 2
 #define LANGUAGE_BRITISH 3
 
-extern DLL_GLOBAL int g_Language;
+inline DLL_GLOBAL int g_Language;
 
 #define AMBIENT_SOUND_STATIC 0 // medium radius attenuation
 #define AMBIENT_SOUND_EVERYWHERE 1
@@ -534,8 +534,8 @@ void EMIT_GROUPNAME_SUIT(edict_t* entity, const char* groupname);
 #define GROUP_OP_AND 0
 #define GROUP_OP_NAND 1
 
-extern int g_groupmask;
-extern int g_groupop;
+inline int g_groupmask = 0;
+inline int g_groupop = 0;
 
 class UTIL_GroupTrace
 {

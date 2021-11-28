@@ -29,16 +29,9 @@
 #include "hltv.h"
 #include "UserMessages.h"
 
-extern DLL_GLOBAL CGameRules* g_pGameRules;
-extern DLL_GLOBAL bool g_fGameOver;
-
-extern bool g_teamplay;
-
 #define ITEM_RESPAWN_TIME 30
 #define WEAPON_RESPAWN_TIME 20
 #define AMMO_RESPAWN_TIME 20
-
-float g_flIntermissionStartTime = 0;
 
 CVoiceGameMgr g_VoiceGameMgr;
 
@@ -69,8 +62,6 @@ CHalfLifeMultiplay ::CHalfLifeMultiplay()
 	g_VoiceGameMgr.Init(&g_GameMgrHelper, gpGlobals->maxClients);
 
 	RefreshSkillData();
-	m_flIntermissionEndTime = 0;
-	g_flIntermissionStartTime = 0;
 
 	// 11/8/98
 	// Modified by YWB:  Server .cfg file is now a cvar, so that
@@ -170,10 +161,6 @@ void CHalfLifeMultiplay::RefreshSkillData()
 // longest the intermission can last, in seconds
 #define MAX_INTERMISSION_TIME 120
 
-extern cvar_t timeleft, fragsleft;
-
-extern cvar_t mp_chattime;
-
 //=========================================================
 //=========================================================
 void CHalfLifeMultiplay ::Think()
@@ -196,13 +183,13 @@ void CHalfLifeMultiplay ::Think()
 		else if (time > MAX_INTERMISSION_TIME)
 			CVAR_SET_STRING("mp_chattime", UTIL_dtos1(MAX_INTERMISSION_TIME));
 
-		m_flIntermissionEndTime = g_flIntermissionStartTime + mp_chattime.value;
+		m_flIntermissionEndTime = m_flIntermissionStartTime + mp_chattime.value;
 
 		// check to see if we should change levels now
 		if (m_flIntermissionEndTime < gpGlobals->time)
 		{
 			if (m_iEndIntermissionButtonHit // check that someone has pressed a key, or the max intermission time is over
-				|| ((g_flIntermissionStartTime + MAX_INTERMISSION_TIME) < gpGlobals->time))
+				|| ((m_flIntermissionStartTime + MAX_INTERMISSION_TIME) < gpGlobals->time))
 				ChangeLevel(); // intermission is over
 		}
 
@@ -1158,7 +1145,7 @@ void CHalfLifeMultiplay ::GoToIntermission()
 		CVAR_SET_STRING("mp_chattime", UTIL_dtos1(MAX_INTERMISSION_TIME));
 
 	m_flIntermissionEndTime = gpGlobals->time + ((int)mp_chattime.value);
-	g_flIntermissionStartTime = gpGlobals->time;
+	m_flIntermissionStartTime = gpGlobals->time;
 
 	g_fGameOver = true;
 	m_iEndIntermissionButtonHit = false;

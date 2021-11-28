@@ -25,11 +25,10 @@
 #include "game.h"
 #include "UserMessages.h"
 
+//TODO: these should be members of CHalfLifeTeamplay
 static char team_names[MAX_TEAMS][MAX_TEAMNAME_LENGTH];
 static int team_scores[MAX_TEAMS];
 static int num_teams = 0;
-
-extern DLL_GLOBAL bool g_fGameOver;
 
 CHalfLifeTeamplay ::CHalfLifeTeamplay()
 {
@@ -66,8 +65,6 @@ CHalfLifeTeamplay ::CHalfLifeTeamplay()
 
 	RecountTeams();
 }
-
-extern cvar_t timeleft, fragsleft;
 
 #include "voice_gamemgr.h"
 extern CVoiceGameMgr g_VoiceGameMgr;

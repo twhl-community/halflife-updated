@@ -102,8 +102,6 @@ void CItem::Spawn()
 	}
 }
 
-extern bool gEvilImpulse101;
-
 void CItem::ItemTouch(CBaseEntity* pOther)
 {
 	// if it's not a player, ignore

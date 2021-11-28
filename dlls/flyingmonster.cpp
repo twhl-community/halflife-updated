@@ -22,9 +22,6 @@
 #define FLYING_AE_FLAP (8)
 #define FLYING_AE_FLAPSOUND (9)
 
-
-extern DLL_GLOBAL edict_t* g_pBodyQueueHead;
-
 int CFlyingMonster ::CheckLocalMove(const Vector& vecStart, const Vector& vecEnd, CBaseEntity* pTarget, float* pflDist)
 {
 	// UNDONE: need to check more than the endpoint

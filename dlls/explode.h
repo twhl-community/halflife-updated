@@ -22,8 +22,4 @@
 #define SF_ENVEXPLOSION_NODECAL (1 << 4)	// don't make a scorch mark
 #define SF_ENVEXPLOSION_NOSPARKS (1 << 5)	// don't make a scorch mark
 
-extern DLL_GLOBAL short g_sModelIndexFireball;
-extern DLL_GLOBAL short g_sModelIndexSmoke;
-
-
 extern void ExplosionCreate(const Vector& center, const Vector& angles, edict_t* pOwner, int magnitude, bool doDamage);

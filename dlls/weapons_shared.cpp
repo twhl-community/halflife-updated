@@ -19,8 +19,6 @@
 #include "weapons.h"
 #include "gamerules.h"
 
-int giAmmoIndex = 0;
-
 // Precaches the ammo and queues the ammo info for sending to clients
 void AddAmmoNameToAmmoRegistry(const char* szAmmoname)
 {

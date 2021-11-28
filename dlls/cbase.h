@@ -58,6 +58,12 @@ extern "C" DLLEXPORT int GetEntityAPI(DLL_FUNCTIONS* pFunctionTable, int interfa
 extern "C" DLLEXPORT int GetEntityAPI2(DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion);
 extern "C" DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion);
 
+/**
+*	@brief HACKHACK -- this is a hack to keep the node graph entity from "touching" things (like triggers)
+*	while it builds the graph
+*/
+inline bool gTouchDisabled = false;
+
 extern int DispatchSpawn(edict_t* pent);
 extern void DispatchKeyValue(edict_t* pentKeyvalue, KeyValueData* pkvd);
 extern void DispatchTouch(edict_t* pentTouched, edict_t* pentOther);
@@ -749,3 +755,5 @@ public:
 	void Precache() override;
 	bool KeyValue(KeyValueData* pkvd) override;
 };
+
+inline DLL_GLOBAL edict_t* g_pBodyQueueHead = nullptr;

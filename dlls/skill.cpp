@@ -19,10 +19,6 @@
 #include "util.h"
 #include "skill.h"
 
-
-skilldata_t gSkillData;
-
-
 //=========================================================
 // take the name of a cvar, tack a digit for the skill level
 // on, and return the value.of that Cvar

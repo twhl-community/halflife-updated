@@ -94,3 +94,5 @@ public:
 private:
 	CSound m_SoundPool[MAX_WORLD_SOUNDS];
 };
+
+inline CSoundEnt* pSoundEnt;

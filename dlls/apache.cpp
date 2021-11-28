@@ -20,8 +20,6 @@
 #include "weapons.h"
 #include "effects.h"
 
-extern DLL_GLOBAL int g_iSkillLevel;
-
 #define SF_WAITFORTRIGGER (0x04 | 0x40) // UNDONE: Fix!
 #define SF_NOWRECKAGE 0x08
 

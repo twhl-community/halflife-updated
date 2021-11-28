@@ -30,7 +30,6 @@
 #include "../com_weapons.h"
 #include "../demo.h"
 
-extern globalvars_t* gpGlobals;
 extern int g_iUser1;
 
 // Pool of client side entities/entvars_t

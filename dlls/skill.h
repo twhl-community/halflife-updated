@@ -139,10 +139,10 @@ struct skilldata_t
 	float plrArm;
 };
 
-extern DLL_GLOBAL skilldata_t gSkillData;
+inline DLL_GLOBAL skilldata_t gSkillData;
 float GetSkillCvar(const char* pName);
 
-extern DLL_GLOBAL int g_iSkillLevel;
+inline DLL_GLOBAL int g_iSkillLevel;
 
 #define SKILL_EASY 1
 #define SKILL_MEDIUM 2

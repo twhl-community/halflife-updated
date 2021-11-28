@@ -37,8 +37,6 @@
 #define MAX_NODE_INITIAL_LINKS 128
 #define MAX_NODES 1024
 
-extern DLL_GLOBAL edict_t* g_pBodyQueueHead;
-
 Vector VecBModelOrigin(entvars_t* pevBModel);
 
 CGraph WorldGraph;
@@ -1615,7 +1613,6 @@ void CTestHull ::ShowBadNode()
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
-extern bool gTouchDisabled;
 void CTestHull::CallBuildNodeGraph()
 {
 	// TOUCH HACK -- Don't allow this entity to call anyone's "touch" function

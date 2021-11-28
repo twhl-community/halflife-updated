@@ -355,9 +355,12 @@ public:
 protected:
 	virtual void ChangeLevel();
 	virtual void GoToIntermission();
-	float m_flIntermissionEndTime;
+	float m_flIntermissionStartTime = 0;
+	float m_flIntermissionEndTime = 0;
 	bool m_iEndIntermissionButtonHit;
 	void SendMOTDToClient(edict_t* client);
 };
 
-extern DLL_GLOBAL CGameRules* g_pGameRules;
+inline DLL_GLOBAL CGameRules* g_pGameRules = nullptr;
+inline DLL_GLOBAL bool g_fGameOver;
+inline bool g_teamplay = false;

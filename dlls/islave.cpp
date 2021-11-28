@@ -26,8 +26,6 @@
 #include "weapons.h"
 #include "soundent.h"
 
-extern DLL_GLOBAL int g_iSkillLevel;
-
 //=========================================================
 // Monster's Anim Events Go Here
 //=========================================================

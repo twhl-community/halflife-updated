@@ -15,6 +15,7 @@
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
+#include "monsters.h"
 #include "saverestore.h"
 #include "client.h"
 #include "decals.h"
@@ -30,8 +31,6 @@ char PM_FindTextureType(char* name);
 void OnFreeEntPrivateData(edict_s* pEdict);
 
 extern Vector VecBModelOrigin(entvars_t* pevBModel);
-extern DLL_GLOBAL Vector g_vecAttackDir;
-extern DLL_GLOBAL int g_iSkillLevel;
 
 static DLL_FUNCTIONS gFunctionTable =
 	{
@@ -217,10 +216,6 @@ void DispatchKeyValue(edict_t* pentKeyvalue, KeyValueData* pkvd)
 	pkvd->fHandled = static_cast<int32>(pEntity->KeyValue(pkvd));
 }
 
-
-// HACKHACK -- this is a hack to keep the node graph entity from "touching" things (like triggers)
-// while it builds the graph
-bool gTouchDisabled = false;
 void DispatchTouch(edict_t* pentTouched, edict_t* pentOther)
 {
 	if (gTouchDisabled)
