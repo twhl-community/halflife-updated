@@ -2653,7 +2653,7 @@ void CBaseMonster ::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case SCRIPT_EVENT_SENTENCE_RND1: // Play a named sentence group 33% of the time
 		if (RANDOM_LONG(0, 2) == 0)
 			break;
-		// fall through...
+		[[fallthrough]];
 	case SCRIPT_EVENT_SENTENCE: // Play a named sentence group
 		SENTENCEG_PlayRndSz(edict(), pEvent->options, 1.0, ATTN_IDLE, 0, 100);
 		break;
