@@ -6,9 +6,11 @@
 AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
 AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
 BasedOnStyle: LLVM
 BraceWrapping:
+  BeforeLambdaBody: true
   AfterCaseLabel: true
   AfterClass: true
   AfterControlStatement: true
