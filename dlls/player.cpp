@@ -142,7 +142,7 @@ LINK_ENTITY_TO_CLASS(player, CBasePlayer);
 
 
 
-void CBasePlayer ::Pain()
+void CBasePlayer::Pain()
 {
 	float flRndSound; //sound randomizer
 
@@ -241,7 +241,7 @@ int TrainSpeed(int iSpeed, int iMax)
 	return iRet;
 }
 
-void CBasePlayer ::DeathSound()
+void CBasePlayer::DeathSound()
 {
 	// water death sounds
 	/*
@@ -273,12 +273,12 @@ void CBasePlayer ::DeathSound()
 // override takehealth
 // bitsDamageType indicates type of damage healed.
 
-bool CBasePlayer ::TakeHealth(float flHealth, int bitsDamageType)
+bool CBasePlayer::TakeHealth(float flHealth, int bitsDamageType)
 {
-	return CBaseMonster ::TakeHealth(flHealth, bitsDamageType);
+	return CBaseMonster::TakeHealth(flHealth, bitsDamageType);
 }
 
-Vector CBasePlayer ::GetGunPosition()
+Vector CBasePlayer::GetGunPosition()
 {
 	//	UTIL_MakeVectors(pev->v_angle);
 	//	m_HackedGunPos = pev->view_ofs;
@@ -292,7 +292,7 @@ Vector CBasePlayer ::GetGunPosition()
 //=========================================================
 // TraceAttack
 //=========================================================
-void CBasePlayer ::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
+void CBasePlayer::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	if (0 != pev->takedamage)
 	{
@@ -339,7 +339,7 @@ void CBasePlayer ::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector ve
 #define ARMOR_RATIO 0.2 // Armor Takes 80% of the damage
 #define ARMOR_BONUS 0.5 // Each Point of Armor is work 1/x points of health
 
-bool CBasePlayer ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CBasePlayer::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// have suit diagnose the problem - ie: report damage type
 	int bitsDamage = bitsDamageType;
@@ -2139,7 +2139,7 @@ Things powered by the battery
 
 #define GEIGERDELAY 0.25
 
-void CBasePlayer ::UpdateGeigerCounter()
+void CBasePlayer::UpdateGeigerCounter()
 {
 	byte range;
 
@@ -2356,13 +2356,13 @@ CheckPowerups(entvars_t* pev)
 // UpdatePlayerSound - updates the position of the player's
 // reserved sound slot in the sound list.
 //=========================================================
-void CBasePlayer ::UpdatePlayerSound()
+void CBasePlayer::UpdatePlayerSound()
 {
 	int iBodyVolume;
 	int iVolume;
 	CSound* pSound;
 
-	pSound = CSoundEnt::SoundPointerForIndex(CSoundEnt ::ClientSoundIndex(edict()));
+	pSound = CSoundEnt::SoundPointerForIndex(CSoundEnt::ClientSoundIndex(edict()));
 
 	if (!pSound)
 	{
@@ -2845,7 +2845,7 @@ void CBasePlayer::Spawn()
 }
 
 
-void CBasePlayer ::Precache()
+void CBasePlayer::Precache()
 {
 	// in the event that the player JUST spawned, and the level node graph
 	// was loaded, fix all of the node graph pointers before the game starts.
@@ -3221,13 +3221,13 @@ void CBasePlayer::GiveNamedItem(const char* pszName)
 	DispatchTouch(pent, ENT(pev));
 }
 
-bool CBasePlayer ::FlashlightIsOn()
+bool CBasePlayer::FlashlightIsOn()
 {
 	return FBitSet(pev->effects, EF_DIMLIGHT);
 }
 
 
-void CBasePlayer ::FlashlightTurnOn()
+void CBasePlayer::FlashlightTurnOn()
 {
 	if (!g_pGameRules->FAllowFlashlight())
 	{
@@ -3248,7 +3248,7 @@ void CBasePlayer ::FlashlightTurnOn()
 }
 
 
-void CBasePlayer ::FlashlightTurnOff()
+void CBasePlayer::FlashlightTurnOff()
 {
 	EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, SOUND_FLASHLIGHT_OFF, 1.0, ATTN_NORM, 0, PITCH_NORM);
 	ClearBits(pev->effects, EF_DIMLIGHT);
@@ -3269,7 +3269,7 @@ so that the client side .dll can behave correctly.
 Reset stuff so that the state is transmitted.
 ===============
 */
-void CBasePlayer ::ForceClientDllUpdate()
+void CBasePlayer::ForceClientDllUpdate()
 {
 	m_iClientHealth = -1;
 	m_iClientBattery = -1;
@@ -3640,7 +3640,7 @@ bool CBasePlayer::RemovePlayerItem(CBasePlayerItem* pItem)
 //
 // Returns the unique ID for the ammo, or -1 if error
 //
-int CBasePlayer ::GiveAmmo(int iCount, const char* szName, int iMax)
+int CBasePlayer::GiveAmmo(int iCount, const char* szName, int iMax)
 {
 	if (!szName)
 	{
@@ -3800,7 +3800,7 @@ ForceClientDllUpdate to ensure the demo gets messages
 reflecting all of the HUD state info.
 =========================================================
 */
-void CBasePlayer ::UpdateClientData()
+void CBasePlayer::UpdateClientData()
 {
 	const bool fullHUDInitRequired = m_fInitHUD != false;
 
@@ -4073,7 +4073,7 @@ void CBasePlayer ::UpdateClientData()
 // FBecomeProne - Overridden for the player to set the proper
 // physics flags when a barnacle grabs player.
 //=========================================================
-bool CBasePlayer ::FBecomeProne()
+bool CBasePlayer::FBecomeProne()
 {
 	m_afPhysicsFlags |= PFLAG_ONBARNACLE;
 	return true;
@@ -4084,7 +4084,7 @@ bool CBasePlayer ::FBecomeProne()
 // by Barnacle victims when the barnacle pulls their head
 // into its mouth. For the player, just die.
 //=========================================================
-void CBasePlayer ::BarnacleVictimBitten(entvars_t* pevBarnacle)
+void CBasePlayer::BarnacleVictimBitten(entvars_t* pevBarnacle)
 {
 	TakeDamage(pevBarnacle, pevBarnacle, pev->health + pev->armorvalue, DMG_SLASH | DMG_ALWAYSGIB);
 }
@@ -4093,7 +4093,7 @@ void CBasePlayer ::BarnacleVictimBitten(entvars_t* pevBarnacle)
 // BarnacleVictimReleased - overridden for player who has
 // physics flags concerns.
 //=========================================================
-void CBasePlayer ::BarnacleVictimReleased()
+void CBasePlayer::BarnacleVictimReleased()
 {
 	m_afPhysicsFlags &= ~PFLAG_ONBARNACLE;
 }
@@ -4103,7 +4103,7 @@ void CBasePlayer ::BarnacleVictimReleased()
 // Illumination
 // return player light level plus virtual muzzle flash
 //=========================================================
-int CBasePlayer ::Illumination()
+int CBasePlayer::Illumination()
 {
 	int iIllum = CBaseEntity::Illumination();
 
@@ -4114,7 +4114,7 @@ int CBasePlayer ::Illumination()
 }
 
 
-void CBasePlayer ::EnableControl(bool fControl)
+void CBasePlayer::EnableControl(bool fControl)
 {
 	if (!fControl)
 		pev->flags |= FL_FROZEN;
@@ -4141,7 +4141,7 @@ void CBasePlayer ::EnableControl(bool fControl)
 // Autoaim
 // set crosshair position to point to enemey
 //=========================================================
-Vector CBasePlayer ::GetAutoaimVector(float flDelta)
+Vector CBasePlayer::GetAutoaimVector(float flDelta)
 {
 	if (g_iSkillLevel == SKILL_HARD)
 	{
@@ -4227,7 +4227,7 @@ Vector CBasePlayer ::GetAutoaimVector(float flDelta)
 }
 
 
-Vector CBasePlayer ::AutoaimDeflection(Vector& vecSrc, float flDist, float flDelta)
+Vector CBasePlayer::AutoaimDeflection(Vector& vecSrc, float flDist, float flDelta)
 {
 	edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(1);
 	CBaseEntity* pEntity;
@@ -4348,7 +4348,7 @@ Vector CBasePlayer ::AutoaimDeflection(Vector& vecSrc, float flDist, float flDel
 }
 
 
-void CBasePlayer ::ResetAutoaim()
+void CBasePlayer::ResetAutoaim()
 {
 	if (m_vecAutoAim.x != 0 || m_vecAutoAim.y != 0)
 	{
@@ -4366,7 +4366,7 @@ SetCustomDecalFrames
   Note:  -1 means no custom frames present.
 =============
 */
-void CBasePlayer ::SetCustomDecalFrames(int nFrames)
+void CBasePlayer::SetCustomDecalFrames(int nFrames)
 {
 	if (nFrames > 0 &&
 		nFrames < 8)
@@ -4382,7 +4382,7 @@ GetCustomDecalFrames
   Returns the # of custom frames this player's custom clan logo contains.
 =============
 */
-int CBasePlayer ::GetCustomDecalFrames()
+int CBasePlayer::GetCustomDecalFrames()
 {
 	return m_nCustomSprayFrames;
 }
@@ -4531,7 +4531,7 @@ bool CBasePlayer::HasNamedPlayerItem(const char* pszItemName)
 //=========================================================
 //
 //=========================================================
-bool CBasePlayer ::SwitchWeapon(CBasePlayerItem* pWeapon)
+bool CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
 {
 	if (pWeapon && !pWeapon->CanDeploy())
 	{
@@ -4602,7 +4602,7 @@ LINK_ENTITY_TO_CLASS(monster_hevsuit_dead, CDeadHEV);
 //=========================================================
 // ********** DeadHEV SPAWN **********
 //=========================================================
-void CDeadHEV ::Spawn()
+void CDeadHEV::Spawn()
 {
 	PRECACHE_MODEL("models/player.mdl");
 	SET_MODEL(ENT(pev), "models/player.mdl");
@@ -4639,7 +4639,7 @@ private:
 
 LINK_ENTITY_TO_CLASS(player_weaponstrip, CStripWeapons);
 
-void CStripWeapons ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CStripWeapons::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	CBasePlayer* pPlayer = NULL;
 
@@ -4694,7 +4694,7 @@ TYPEDESCRIPTION CRevertSaved::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CRevertSaved, CPointEntity);
 
-bool CRevertSaved ::KeyValue(KeyValueData* pkvd)
+bool CRevertSaved::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "duration"))
 	{
@@ -4720,7 +4720,7 @@ bool CRevertSaved ::KeyValue(KeyValueData* pkvd)
 	return CPointEntity::KeyValue(pkvd);
 }
 
-void CRevertSaved ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CRevertSaved::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	UTIL_ScreenFadeAll(pev->rendercolor, Duration(), HoldTime(), pev->renderamt, FFADE_OUT);
 	pev->nextthink = gpGlobals->time + MessageTime();
@@ -4728,7 +4728,7 @@ void CRevertSaved ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 }
 
 
-void CRevertSaved ::MessageThink()
+void CRevertSaved::MessageThink()
 {
 	UTIL_ShowMessageAll(STRING(pev->message));
 	float nextThink = LoadTime() - MessageTime();
@@ -4742,7 +4742,7 @@ void CRevertSaved ::MessageThink()
 }
 
 
-void CRevertSaved ::LoadThink()
+void CRevertSaved::LoadThink()
 {
 	if (0 == gpGlobals->deathmatch)
 	{

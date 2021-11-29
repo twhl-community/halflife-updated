@@ -275,7 +275,7 @@ const char* CNihilanth::pDeathSounds[] =
 };
 
 
-void CNihilanth ::Spawn()
+void CNihilanth::Spawn()
 {
 	Precache();
 	// motor
@@ -351,7 +351,7 @@ void CNihilanth::Precache()
 
 
 
-void CNihilanth ::PainSound()
+void CNihilanth::PainSound()
 {
 	if (m_flNextPainSound > gpGlobals->time)
 		return;
@@ -368,7 +368,7 @@ void CNihilanth ::PainSound()
 	}
 }
 
-void CNihilanth ::DeathSound()
+void CNihilanth::DeathSound()
 {
 	EMIT_SOUND(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pDeathSounds), 1.0, 0.1);
 }
@@ -421,12 +421,12 @@ void CNihilanth::StartupThink()
 }
 
 
-void CNihilanth ::Killed(entvars_t* pevAttacker, int iGib)
+void CNihilanth::Killed(entvars_t* pevAttacker, int iGib)
 {
 	CBaseMonster::Killed(pevAttacker, iGib);
 }
 
-void CNihilanth ::DyingThink()
+void CNihilanth::DyingThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 	DispatchAnimEvents();
@@ -557,14 +557,14 @@ void CNihilanth::CrashTouch(CBaseEntity* pOther)
 
 
 
-void CNihilanth ::GibMonster()
+void CNihilanth::GibMonster()
 {
 	// EMIT_SOUND_DYN(edict(), CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);
 }
 
 
 
-void CNihilanth ::FloatSequence()
+void CNihilanth::FloatSequence()
 {
 	if (m_irritation >= 2)
 	{
@@ -593,7 +593,7 @@ void CNihilanth ::FloatSequence()
 }
 
 
-void CNihilanth ::ShootBalls()
+void CNihilanth::ShootBalls()
 {
 	if (m_flShootEnd > gpGlobals->time)
 	{
@@ -630,7 +630,7 @@ void CNihilanth ::ShootBalls()
 }
 
 
-void CNihilanth ::MakeFriend(Vector vecStart)
+void CNihilanth::MakeFriend(Vector vecStart)
 {
 	int i;
 
@@ -680,7 +680,7 @@ void CNihilanth ::MakeFriend(Vector vecStart)
 }
 
 
-void CNihilanth ::NextActivity()
+void CNihilanth::NextActivity()
 {
 	UTIL_MakeAimVectors(pev->angles);
 
@@ -841,7 +841,7 @@ void CNihilanth ::NextActivity()
 	FloatSequence();
 }
 
-void CNihilanth ::HuntThink()
+void CNihilanth::HuntThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 	DispatchAnimEvents();
@@ -907,7 +907,7 @@ void CNihilanth ::HuntThink()
 
 
 
-void CNihilanth ::Flight()
+void CNihilanth::Flight()
 {
 	// estimate where I'll be facing in one seconds
 	UTIL_MakeAimVectors(pev->angles + m_avelocity);
@@ -975,7 +975,7 @@ void CNihilanth ::Flight()
 }
 
 
-bool CNihilanth ::AbsorbSphere()
+bool CNihilanth::AbsorbSphere()
 {
 	for (int i = 0; i < N_SPHERES; i++)
 	{
@@ -992,7 +992,7 @@ bool CNihilanth ::AbsorbSphere()
 }
 
 
-bool CNihilanth ::EmitSphere()
+bool CNihilanth::EmitSphere()
 {
 	m_iActiveSpheres = 0;
 	int empty = 0;
@@ -1022,7 +1022,7 @@ bool CNihilanth ::EmitSphere()
 }
 
 
-void CNihilanth ::TargetSphere(USE_TYPE useType, float value)
+void CNihilanth::TargetSphere(USE_TYPE useType, float value)
 {
 	CBaseMonster* pSphere;
 	int i;
@@ -1049,7 +1049,7 @@ void CNihilanth ::TargetSphere(USE_TYPE useType, float value)
 
 
 
-void CNihilanth ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CNihilanth::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -1236,7 +1236,7 @@ void CNihilanth::CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 }
 
 
-bool CNihilanth ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CNihilanth::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (pevInflictor->owner == edict())
 		return false;
@@ -1306,7 +1306,7 @@ CBaseEntity* CNihilanth::RandomTargetname(const char* szName)
 
 
 
-void CNihilanthHVR ::Spawn()
+void CNihilanthHVR::Spawn()
 {
 	Precache();
 
@@ -1316,7 +1316,7 @@ void CNihilanthHVR ::Spawn()
 }
 
 
-void CNihilanthHVR ::Precache()
+void CNihilanthHVR::Precache()
 {
 	PRECACHE_MODEL("sprites/flare6.spr");
 	PRECACHE_MODEL("sprites/nhth1.spr");
@@ -1332,7 +1332,7 @@ void CNihilanthHVR ::Precache()
 
 
 
-void CNihilanthHVR ::CircleInit(CBaseEntity* pTarget)
+void CNihilanthHVR::CircleInit(CBaseEntity* pTarget)
 {
 	pev->movetype = MOVETYPE_NOCLIP;
 	pev->solid = SOLID_NOT;
@@ -1374,7 +1374,7 @@ CBaseEntity* CNihilanthHVR::RandomClassname(const char* szName)
 	return pEntity;
 }
 
-void CNihilanthHVR ::HoverThink()
+void CNihilanthHVR::HoverThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
@@ -1439,7 +1439,7 @@ void CNihilanthHVR ::HoverThink()
 
 
 
-void CNihilanthHVR ::ZapInit(CBaseEntity* pEnemy)
+void CNihilanthHVR::ZapInit(CBaseEntity* pEnemy)
 {
 	pev->movetype = MOVETYPE_FLY;
 	pev->solid = SOLID_BBOX;
@@ -1461,7 +1461,7 @@ void CNihilanthHVR ::ZapInit(CBaseEntity* pEnemy)
 	EMIT_SOUND_DYN(edict(), CHAN_WEAPON, "debris/zap4.wav", 1, ATTN_NORM, 0, 100);
 }
 
-void CNihilanthHVR ::ZapThink()
+void CNihilanthHVR::ZapThink()
 {
 	pev->nextthink = gpGlobals->time + 0.05;
 
@@ -1563,7 +1563,7 @@ void CNihilanthHVR::ZapTouch(CBaseEntity* pOther)
 
 
 
-void CNihilanthHVR ::TeleportInit(CNihilanth* pOwner, CBaseEntity* pEnemy, CBaseEntity* pTarget, CBaseEntity* pTouch)
+void CNihilanthHVR::TeleportInit(CNihilanth* pOwner, CBaseEntity* pEnemy, CBaseEntity* pTarget, CBaseEntity* pTouch)
 {
 	pev->movetype = MOVETYPE_FLY;
 	pev->solid = SOLID_BBOX;
@@ -1588,7 +1588,7 @@ void CNihilanthHVR ::TeleportInit(CNihilanth* pOwner, CBaseEntity* pEnemy, CBase
 }
 
 
-void CNihilanthHVR ::GreenBallInit()
+void CNihilanthHVR::GreenBallInit()
 {
 	pev->movetype = MOVETYPE_FLY;
 	pev->solid = SOLID_BBOX;
@@ -1604,7 +1604,7 @@ void CNihilanthHVR ::GreenBallInit()
 }
 
 
-void CNihilanthHVR ::TeleportThink()
+void CNihilanthHVR::TeleportThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
@@ -1650,7 +1650,7 @@ void CNihilanthHVR ::TeleportThink()
 }
 
 
-void CNihilanthHVR ::AbsorbInit()
+void CNihilanthHVR::AbsorbInit()
 {
 	SetThink(&CNihilanthHVR::DissipateThink);
 	pev->renderamt = 255;
@@ -1696,7 +1696,7 @@ void CNihilanthHVR::TeleportTouch(CBaseEntity* pOther)
 }
 
 
-void CNihilanthHVR ::DissipateThink()
+void CNihilanthHVR::DissipateThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
@@ -1731,7 +1731,7 @@ void CNihilanthHVR ::DissipateThink()
 }
 
 
-bool CNihilanthHVR ::CircleTarget(Vector vecTarget)
+bool CNihilanthHVR::CircleTarget(Vector vecTarget)
 {
 	bool fClose = false;
 
@@ -1786,7 +1786,7 @@ bool CNihilanthHVR ::CircleTarget(Vector vecTarget)
 }
 
 
-void CNihilanthHVR ::MovetoTarget(Vector vecTarget)
+void CNihilanthHVR::MovetoTarget(Vector vecTarget)
 {
 	if (m_vecIdeal == Vector(0, 0, 0))
 	{
@@ -1806,7 +1806,7 @@ void CNihilanthHVR ::MovetoTarget(Vector vecTarget)
 
 
 
-void CNihilanthHVR ::Crawl()
+void CNihilanthHVR::Crawl()
 {
 
 	Vector vecAim = Vector(RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1), RANDOM_FLOAT(-1, 1)).Normalize();

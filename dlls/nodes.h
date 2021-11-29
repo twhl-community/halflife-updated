@@ -270,7 +270,7 @@ class CNodeEnt : public CBaseEntity
 {
 	void Spawn() override;
 	bool KeyValue(KeyValueData* pkvd) override;
-	int ObjectCaps() override { return CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	short m_sHintType;
 	short m_sHintActivity;

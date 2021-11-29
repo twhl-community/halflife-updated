@@ -307,7 +307,7 @@ void CGrenade::SlideTouch(CBaseEntity* pOther)
 	}
 }
 
-void CGrenade ::BounceSound()
+void CGrenade::BounceSound()
 {
 	switch (RANDOM_LONG(0, 2))
 	{
@@ -323,7 +323,7 @@ void CGrenade ::BounceSound()
 	}
 }
 
-void CGrenade ::TumbleThink()
+void CGrenade::TumbleThink()
 {
 	if (!IsInWorld())
 	{
@@ -433,7 +433,7 @@ CGrenade* CGrenade::ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecV
 }
 
 
-CGrenade* CGrenade ::ShootSatchelCharge(entvars_t* pevOwner, Vector vecStart, Vector vecVelocity)
+CGrenade* CGrenade::ShootSatchelCharge(entvars_t* pevOwner, Vector vecStart, Vector vecVelocity)
 {
 	CGrenade* pGrenade = GetClassPtr((CGrenade*)NULL);
 	pGrenade->pev->movetype = MOVETYPE_BOUNCE;
@@ -464,7 +464,7 @@ CGrenade* CGrenade ::ShootSatchelCharge(entvars_t* pevOwner, Vector vecStart, Ve
 
 
 
-void CGrenade ::UseSatchelCharges(entvars_t* pevOwner, SATCHELCODE code)
+void CGrenade::UseSatchelCharges(entvars_t* pevOwner, SATCHELCODE code)
 {
 	edict_t* pentFind;
 	edict_t* pentOwner;

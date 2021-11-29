@@ -48,7 +48,7 @@ IMPLEMENT_SAVERESTORE(CSquadMonster, CBaseMonster);
 // OccupySlot - if any slots of the passed slots are
 // available, the monster will be assigned to one.
 //=========================================================
-bool CSquadMonster ::OccupySlot(int iDesiredSlots)
+bool CSquadMonster::OccupySlot(int iDesiredSlots)
 {
 	int i;
 	int iMask;
@@ -100,7 +100,7 @@ bool CSquadMonster ::OccupySlot(int iDesiredSlots)
 //=========================================================
 // VacateSlot
 //=========================================================
-void CSquadMonster ::VacateSlot()
+void CSquadMonster::VacateSlot()
 {
 	if (m_iMySlot != bits_NO_SLOT && InSquad())
 	{
@@ -113,7 +113,7 @@ void CSquadMonster ::VacateSlot()
 //=========================================================
 // ScheduleChange
 //=========================================================
-void CSquadMonster ::ScheduleChange()
+void CSquadMonster::ScheduleChange()
 {
 	VacateSlot();
 }
@@ -121,7 +121,7 @@ void CSquadMonster ::ScheduleChange()
 //=========================================================
 // Killed
 //=========================================================
-void CSquadMonster ::Killed(entvars_t* pevAttacker, int iGib)
+void CSquadMonster::Killed(entvars_t* pevAttacker, int iGib)
 {
 	VacateSlot();
 
@@ -130,7 +130,7 @@ void CSquadMonster ::Killed(entvars_t* pevAttacker, int iGib)
 		MySquadLeader()->SquadRemove(this);
 	}
 
-	CBaseMonster ::Killed(pevAttacker, iGib);
+	CBaseMonster::Killed(pevAttacker, iGib);
 }
 
 // These functions are still awaiting conversion to CSquadMonster
@@ -142,7 +142,7 @@ void CSquadMonster ::Killed(entvars_t* pevAttacker, int iGib)
 // If I am pRemove, promote m_pSquadNext to leader
 //
 //=========================================================
-void CSquadMonster ::SquadRemove(CSquadMonster* pRemove)
+void CSquadMonster::SquadRemove(CSquadMonster* pRemove)
 {
 	ASSERT(pRemove != NULL);
 	ASSERT(this->IsLeader());
@@ -185,7 +185,7 @@ void CSquadMonster ::SquadRemove(CSquadMonster* pRemove)
 // SquadAdd(), add pAdd to my squad
 //
 //=========================================================
-bool CSquadMonster ::SquadAdd(CSquadMonster* pAdd)
+bool CSquadMonster::SquadAdd(CSquadMonster* pAdd)
 {
 	ASSERT(pAdd != NULL);
 	ASSERT(!pAdd->InSquad());
@@ -212,7 +212,7 @@ bool CSquadMonster ::SquadAdd(CSquadMonster* pAdd)
 // members who don't have current info.
 //
 //=========================================================
-void CSquadMonster ::SquadPasteEnemyInfo()
+void CSquadMonster::SquadPasteEnemyInfo()
 {
 	CSquadMonster* pSquadLeader = MySquadLeader();
 	if (pSquadLeader)
@@ -227,7 +227,7 @@ void CSquadMonster ::SquadPasteEnemyInfo()
 // so the most recent data is always available here.
 //
 //=========================================================
-void CSquadMonster ::SquadCopyEnemyInfo()
+void CSquadMonster::SquadCopyEnemyInfo()
 {
 	CSquadMonster* pSquadLeader = MySquadLeader();
 	if (pSquadLeader)
@@ -240,7 +240,7 @@ void CSquadMonster ::SquadCopyEnemyInfo()
 // the same entity.
 //
 //=========================================================
-void CSquadMonster ::SquadMakeEnemy(CBaseEntity* pEnemy)
+void CSquadMonster::SquadMakeEnemy(CBaseEntity* pEnemy)
 {
 	if (!InSquad())
 		return;
@@ -281,7 +281,7 @@ void CSquadMonster ::SquadMakeEnemy(CBaseEntity* pEnemy)
 // callable from leaders & followers
 //
 //=========================================================
-int CSquadMonster ::SquadCount()
+int CSquadMonster::SquadCount()
 {
 	if (!InSquad())
 		return 0;
@@ -304,7 +304,7 @@ int CSquadMonster ::SquadCount()
 // link them as a group.  returns the group size
 //
 //=========================================================
-int CSquadMonster ::SquadRecruit(int searchRadius, int maxMembers)
+int CSquadMonster::SquadRecruit(int searchRadius, int maxMembers)
 {
 	int squadCount;
 	int iMyClass = Classify(); // cache this monster's class
@@ -384,11 +384,11 @@ int CSquadMonster ::SquadRecruit(int searchRadius, int maxMembers)
 //=========================================================
 // CheckEnemy
 //=========================================================
-bool CSquadMonster ::CheckEnemy(CBaseEntity* pEnemy)
+bool CSquadMonster::CheckEnemy(CBaseEntity* pEnemy)
 {
 	bool iUpdatedLKP;
 
-	iUpdatedLKP = CBaseMonster ::CheckEnemy(m_hEnemy);
+	iUpdatedLKP = CBaseMonster::CheckEnemy(m_hEnemy);
 
 	// communicate with squad members about the enemy IF this individual has the same enemy as the squad leader.
 	if (InSquad() && (CBaseEntity*)m_hEnemy == MySquadLeader()->m_hEnemy)
@@ -411,9 +411,9 @@ bool CSquadMonster ::CheckEnemy(CBaseEntity* pEnemy)
 //=========================================================
 // StartMonster
 //=========================================================
-void CSquadMonster ::StartMonster()
+void CSquadMonster::StartMonster()
 {
-	CBaseMonster ::StartMonster();
+	CBaseMonster::StartMonster();
 
 	if ((m_afCapability & bits_CAP_SQUAD) != 0 && !InSquad())
 	{
@@ -448,7 +448,7 @@ void CSquadMonster ::StartMonster()
 // Builds a large box in front of the grunt and checks to see
 // if any squad members are in that box.
 //=========================================================
-bool CSquadMonster ::NoFriendlyFire()
+bool CSquadMonster::NoFriendlyFire()
 {
 	if (!InSquad())
 	{
@@ -515,7 +515,7 @@ bool CSquadMonster ::NoFriendlyFire()
 // GetIdealState - surveys the Conditions information available
 // and finds the best new state for a monster.
 //=========================================================
-MONSTERSTATE CSquadMonster ::GetIdealState()
+MONSTERSTATE CSquadMonster::GetIdealState()
 {
 	int iConditions;
 
@@ -533,7 +533,7 @@ MONSTERSTATE CSquadMonster ::GetIdealState()
 		break;
 	}
 
-	return CBaseMonster ::GetIdealState();
+	return CBaseMonster::GetIdealState();
 }
 
 //=========================================================
@@ -541,7 +541,7 @@ MONSTERSTATE CSquadMonster ::GetIdealState()
 // cover location is a good one to move to. (currently based
 // on proximity to others in the squad)
 //=========================================================
-bool CSquadMonster ::FValidateCover(const Vector& vecCoverLocation)
+bool CSquadMonster::FValidateCover(const Vector& vecCoverLocation)
 {
 	if (!InSquad())
 	{
@@ -561,7 +561,7 @@ bool CSquadMonster ::FValidateCover(const Vector& vecCoverLocation)
 // SquadEnemySplit- returns true if not all squad members
 // are fighting the same enemy.
 //=========================================================
-bool CSquadMonster ::SquadEnemySplit()
+bool CSquadMonster::SquadEnemySplit()
 {
 	if (!InSquad())
 		return false;
@@ -585,7 +585,7 @@ bool CSquadMonster ::SquadEnemySplit()
 // cover location is a good one to move to. (currently based
 // on proximity to others in the squad)
 //=========================================================
-bool CSquadMonster ::SquadMemberInRange(const Vector& vecLocation, float flDist)
+bool CSquadMonster::SquadMemberInRange(const Vector& vecLocation, float flDist)
 {
 	if (!InSquad())
 		return false;

@@ -42,7 +42,7 @@ LINK_ENTITY_TO_CLASS( my_monster, CMyMonster );
 // Classify - indicates this monster's place in the 
 // relationship table.
 //=========================================================
-int	CMyMonster :: Classify ()
+int	CMyMonster:: Classify ()
 {
 	return	CLASS_MY_MONSTER;
 }
@@ -51,7 +51,7 @@ int	CMyMonster :: Classify ()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CMyMonster :: SetYawSpeed ()
+void CMyMonster:: SetYawSpeed ()
 {
 	int ys;
 
@@ -69,7 +69,7 @@ void CMyMonster :: SetYawSpeed ()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CMyMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
+void CMyMonster:: HandleAnimEvent( MonsterEvent_t *pEvent )
 {
 	switch( pEvent->event )
 	{
@@ -83,7 +83,7 @@ void CMyMonster :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //=========================================================
 // Spawn
 //=========================================================
-void CMyMonster :: Spawn()
+void CMyMonster:: Spawn()
 {
 	Precache( );
 
@@ -104,7 +104,7 @@ void CMyMonster :: Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CMyMonster :: Precache()
+void CMyMonster:: Precache()
 {
 	PRECACHE_SOUND("mysound.wav");
 

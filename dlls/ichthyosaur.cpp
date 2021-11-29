@@ -183,32 +183,32 @@ const char* CIchthyosaur::pDieSounds[] =
 	EMIT_SOUND_DYN(ENT(pev), chan, array[RANDOM_LONG(0, ARRAYSIZE(array) - 1)], 1.0, 0.6, 0, RANDOM_LONG(95, 105));
 
 
-void CIchthyosaur ::IdleSound()
+void CIchthyosaur::IdleSound()
 {
 	EMIT_ICKY_SOUND(CHAN_VOICE, pIdleSounds);
 }
 
-void CIchthyosaur ::AlertSound()
+void CIchthyosaur::AlertSound()
 {
 	EMIT_ICKY_SOUND(CHAN_VOICE, pAlertSounds);
 }
 
-void CIchthyosaur ::AttackSound()
+void CIchthyosaur::AttackSound()
 {
 	EMIT_ICKY_SOUND(CHAN_VOICE, pAttackSounds);
 }
 
-void CIchthyosaur ::BiteSound()
+void CIchthyosaur::BiteSound()
 {
 	EMIT_ICKY_SOUND(CHAN_WEAPON, pBiteSounds);
 }
 
-void CIchthyosaur ::DeathSound()
+void CIchthyosaur::DeathSound()
 {
 	EMIT_ICKY_SOUND(CHAN_VOICE, pDieSounds);
 }
 
-void CIchthyosaur ::PainSound()
+void CIchthyosaur::PainSound()
 {
 	EMIT_ICKY_SOUND(CHAN_VOICE, pPainSounds);
 }
@@ -314,7 +314,7 @@ IMPLEMENT_CUSTOM_SCHEDULES(CIchthyosaur, CFlyingMonster);
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CIchthyosaur ::Classify()
+int CIchthyosaur::Classify()
 {
 	return CLASS_ALIEN_MONSTER;
 }
@@ -323,7 +323,7 @@ int CIchthyosaur ::Classify()
 //=========================================================
 // CheckMeleeAttack1
 //=========================================================
-bool CIchthyosaur ::CheckMeleeAttack1(float flDot, float flDist)
+bool CIchthyosaur::CheckMeleeAttack1(float flDot, float flDist)
 {
 	if (flDot >= 0.7 && m_flEnemyTouched > gpGlobals->time - 0.2)
 	{
@@ -354,7 +354,7 @@ void CIchthyosaur::CombatUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 // CheckRangeAttack1  - swim in for a chomp
 //
 //=========================================================
-bool CIchthyosaur ::CheckRangeAttack1(float flDot, float flDist)
+bool CIchthyosaur::CheckRangeAttack1(float flDot, float flDist)
 {
 	if (flDot > -0.7 && (m_bOnAttack || (flDist <= 192 && m_idealDist <= 192)))
 	{
@@ -368,7 +368,7 @@ bool CIchthyosaur ::CheckRangeAttack1(float flDot, float flDist)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CIchthyosaur ::SetYawSpeed()
+void CIchthyosaur::SetYawSpeed()
 {
 	pev->yaw_speed = 100;
 }
@@ -378,7 +378,7 @@ void CIchthyosaur ::SetYawSpeed()
 //=========================================================
 // Killed - overrides CFlyingMonster.
 //
-void CIchthyosaur ::Killed(entvars_t* pevAttacker, int iGib)
+void CIchthyosaur::Killed(entvars_t* pevAttacker, int iGib)
 {
 	CBaseMonster::Killed(pevAttacker, iGib);
 	pev->velocity = Vector(0, 0, 0);
@@ -401,7 +401,7 @@ void CIchthyosaur::BecomeDead()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CIchthyosaur ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CIchthyosaur::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	bool bDidAttack = false;
 	switch (pEvent->event)
@@ -454,7 +454,7 @@ void CIchthyosaur ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CIchthyosaur ::Spawn()
+void CIchthyosaur::Spawn()
 {
 	Precache();
 
@@ -493,7 +493,7 @@ void CIchthyosaur ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CIchthyosaur ::Precache()
+void CIchthyosaur::Precache()
 {
 	PRECACHE_MODEL("models/icky.mdl");
 
@@ -545,13 +545,13 @@ Schedule_t* CIchthyosaur::GetSchedule()
 		return GetScheduleOfType(SCHED_STANDOFF);
 	}
 
-	return CFlyingMonster ::GetSchedule();
+	return CFlyingMonster::GetSchedule();
 }
 
 
 //=========================================================
 //=========================================================
-Schedule_t* CIchthyosaur ::GetScheduleOfType(int Type)
+Schedule_t* CIchthyosaur::GetScheduleOfType(int Type)
 {
 	// ALERT( at_console, "GetScheduleOfType( %d ) %d\n", Type, m_bOnAttack );
 	switch (Type)
@@ -568,7 +568,7 @@ Schedule_t* CIchthyosaur ::GetScheduleOfType(int Type)
 		AttackSound();
 	}
 
-	return CBaseMonster ::GetScheduleOfType(Type);
+	return CBaseMonster::GetScheduleOfType(Type);
 }
 
 
@@ -610,7 +610,7 @@ void CIchthyosaur::StartTask(Task_t* pTask)
 	}
 }
 
-void CIchthyosaur ::RunTask(Task_t* pTask)
+void CIchthyosaur::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -723,7 +723,7 @@ void CIchthyosaur ::RunTask(Task_t* pTask)
 		break;
 
 	default:
-		CFlyingMonster ::RunTask(pTask);
+		CFlyingMonster::RunTask(pTask);
 		break;
 	}
 }
@@ -777,7 +777,7 @@ float CIchthyosaur::FlPitchDiff()
 	return flPitchDiff;
 }
 
-float CIchthyosaur ::ChangePitch(int speed)
+float CIchthyosaur::ChangePitch(int speed)
 {
 	if (pev->movetype == MOVETYPE_FLY)
 	{
@@ -885,7 +885,7 @@ void CIchthyosaur::MonsterThink()
 	}
 }
 
-void CIchthyosaur ::Stop()
+void CIchthyosaur::Stop()
 {
 	if (!m_bOnAttack)
 		m_flightSpeed = 80.0;

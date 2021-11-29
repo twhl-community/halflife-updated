@@ -143,7 +143,7 @@ const char* CISlave::pDeathSounds[] =
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CISlave ::Classify()
+int CISlave::Classify()
 {
 	return CLASS_ALIEN_MILITARY;
 }
@@ -158,7 +158,7 @@ int CISlave::IRelationship(CBaseEntity* pTarget)
 }
 
 
-void CISlave ::CallForHelp(const char* szClassname, float flDist, EHANDLE hEnemy, Vector& vecLocation)
+void CISlave::CallForHelp(const char* szClassname, float flDist, EHANDLE hEnemy, Vector& vecLocation)
 {
 	// ALERT( at_aiconsole, "help " );
 
@@ -187,7 +187,7 @@ void CISlave ::CallForHelp(const char* szClassname, float flDist, EHANDLE hEnemy
 //=========================================================
 // ALertSound - scream
 //=========================================================
-void CISlave ::AlertSound()
+void CISlave::AlertSound()
 {
 	if (m_hEnemy != NULL)
 	{
@@ -200,7 +200,7 @@ void CISlave ::AlertSound()
 //=========================================================
 // IdleSound
 //=========================================================
-void CISlave ::IdleSound()
+void CISlave::IdleSound()
 {
 	if (RANDOM_LONG(0, 2) == 0)
 	{
@@ -235,7 +235,7 @@ void CISlave ::IdleSound()
 //=========================================================
 // PainSound
 //=========================================================
-void CISlave ::PainSound()
+void CISlave::PainSound()
 {
 	if (RANDOM_LONG(0, 2) == 0)
 	{
@@ -247,7 +247,7 @@ void CISlave ::PainSound()
 // DieSound
 //=========================================================
 
-void CISlave ::DeathSound()
+void CISlave::DeathSound()
 {
 	EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, pDeathSounds[RANDOM_LONG(0, ARRAYSIZE(pDeathSounds) - 1)], 1.0, ATTN_NORM, 0, m_voicePitch);
 }
@@ -257,7 +257,7 @@ void CISlave ::DeathSound()
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards.
 //=========================================================
-int CISlave ::ISoundMask()
+int CISlave::ISoundMask()
 {
 	return bits_SOUND_WORLD |
 		   bits_SOUND_COMBAT |
@@ -276,7 +276,7 @@ void CISlave::Killed(entvars_t* pevAttacker, int iGib)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CISlave ::SetYawSpeed()
+void CISlave::SetYawSpeed()
 {
 	int ys;
 
@@ -305,7 +305,7 @@ void CISlave ::SetYawSpeed()
 //
 // Returns number of events handled, 0 if none.
 //=========================================================
-void CISlave ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	// ALERT( at_console, "event %d : %f\n", pEvent->event, pev->frame );
 	switch (pEvent->event)
@@ -444,7 +444,7 @@ void CISlave ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // CheckRangeAttack1 - normal beam attack
 //=========================================================
-bool CISlave ::CheckRangeAttack1(float flDot, float flDist)
+bool CISlave::CheckRangeAttack1(float flDot, float flDist)
 {
 	if (m_flNextAttack > gpGlobals->time)
 	{
@@ -457,7 +457,7 @@ bool CISlave ::CheckRangeAttack1(float flDot, float flDist)
 //=========================================================
 // CheckRangeAttack2 - check bravery and try to resurect dead comrades
 //=========================================================
-bool CISlave ::CheckRangeAttack2(float flDot, float flDist)
+bool CISlave::CheckRangeAttack2(float flDot, float flDist)
 {
 	return false;
 
@@ -503,18 +503,18 @@ bool CISlave ::CheckRangeAttack2(float flDot, float flDist)
 //=========================================================
 // StartTask
 //=========================================================
-void CISlave ::StartTask(Task_t* pTask)
+void CISlave::StartTask(Task_t* pTask)
 {
 	ClearBeams();
 
-	CSquadMonster ::StartTask(pTask);
+	CSquadMonster::StartTask(pTask);
 }
 
 
 //=========================================================
 // Spawn
 //=========================================================
-void CISlave ::Spawn()
+void CISlave::Spawn()
 {
 	Precache();
 
@@ -539,7 +539,7 @@ void CISlave ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CISlave ::Precache()
+void CISlave::Precache()
 {
 	int i;
 
@@ -573,7 +573,7 @@ void CISlave ::Precache()
 // TakeDamage - get provoked when injured
 //=========================================================
 
-bool CISlave ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CISlave::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// don't slash one of your own
 	if ((bitsDamageType & DMG_SLASH) != 0 && pevAttacker && IRelationship(Instance(pevAttacker)) < R_DL)
@@ -629,7 +629,7 @@ IMPLEMENT_CUSTOM_SCHEDULES(CISlave, CSquadMonster);
 
 //=========================================================
 //=========================================================
-Schedule_t* CISlave ::GetSchedule()
+Schedule_t* CISlave::GetSchedule()
 {
 	ClearBeams();
 
@@ -661,7 +661,7 @@ Schedule_t* CISlave ::GetSchedule()
 		if (HasConditions(bits_COND_ENEMY_DEAD))
 		{
 			// call base class, all code to handle dead enemies is centralized there.
-			return CBaseMonster ::GetSchedule();
+			return CBaseMonster::GetSchedule();
 		}
 
 		if (pev->health < 20 || m_iBravery < 0)
@@ -686,14 +686,14 @@ Schedule_t* CISlave ::GetSchedule()
 }
 
 
-Schedule_t* CISlave ::GetScheduleOfType(int Type)
+Schedule_t* CISlave::GetScheduleOfType(int Type)
 {
 	switch (Type)
 	{
 	case SCHED_FAIL:
 		if (HasConditions(bits_COND_CAN_MELEE_ATTACK1))
 		{
-			return CSquadMonster ::GetScheduleOfType(SCHED_MELEE_ATTACK1);
+			return CSquadMonster::GetScheduleOfType(SCHED_MELEE_ATTACK1);
 		}
 		break;
 	case SCHED_RANGE_ATTACK1:
@@ -701,7 +701,7 @@ Schedule_t* CISlave ::GetScheduleOfType(int Type)
 	case SCHED_RANGE_ATTACK2:
 		return slSlaveAttack1;
 	}
-	return CSquadMonster ::GetScheduleOfType(Type);
+	return CSquadMonster::GetScheduleOfType(Type);
 }
 
 
@@ -709,7 +709,7 @@ Schedule_t* CISlave ::GetScheduleOfType(int Type)
 // ArmBeam - small beam from arm to nearby geometry
 //=========================================================
 
-void CISlave ::ArmBeam(int side)
+void CISlave::ArmBeam(int side)
 {
 	TraceResult tr;
 	float flDist = 1.0;
@@ -755,7 +755,7 @@ void CISlave ::ArmBeam(int side)
 //=========================================================
 // BeamGlow - brighten all beams
 //=========================================================
-void CISlave ::BeamGlow()
+void CISlave::BeamGlow()
 {
 	int b = m_iBeams * 32;
 	if (b > 255)
@@ -774,7 +774,7 @@ void CISlave ::BeamGlow()
 //=========================================================
 // WackBeam - regenerate dead colleagues
 //=========================================================
-void CISlave ::WackBeam(int side, CBaseEntity* pEntity)
+void CISlave::WackBeam(int side, CBaseEntity* pEntity)
 {
 	Vector vecDest;
 	float flDist = 1.0;
@@ -800,7 +800,7 @@ void CISlave ::WackBeam(int side, CBaseEntity* pEntity)
 //=========================================================
 // ZapBeam - heavy damage directly forward
 //=========================================================
-void CISlave ::ZapBeam(int side)
+void CISlave::ZapBeam(int side)
 {
 	Vector vecSrc, vecAim;
 	TraceResult tr;
@@ -838,7 +838,7 @@ void CISlave ::ZapBeam(int side)
 //=========================================================
 // ClearBeams - remove all beams
 //=========================================================
-void CISlave ::ClearBeams()
+void CISlave::ClearBeams()
 {
 	for (int i = 0; i < ISLAVE_MAX_BEAMS; i++)
 	{

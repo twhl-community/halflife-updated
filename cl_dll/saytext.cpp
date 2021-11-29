@@ -48,7 +48,7 @@ static int line_height = 0;
 
 DECLARE_MESSAGE(m_SayText, SayText);
 
-bool CHudSayText ::Init()
+bool CHudSayText::Init()
 {
 	gHUD.AddHudElem(this);
 
@@ -65,14 +65,14 @@ bool CHudSayText ::Init()
 }
 
 
-void CHudSayText ::InitHUDData()
+void CHudSayText::InitHUDData()
 {
 	memset(g_szLineBuffer, 0, sizeof g_szLineBuffer);
 	memset(g_pflNameColors, 0, sizeof g_pflNameColors);
 	memset(g_iNameLengths, 0, sizeof g_iNameLengths);
 }
 
-bool CHudSayText ::VidInit()
+bool CHudSayText::VidInit()
 {
 	return true;
 }
@@ -96,7 +96,7 @@ int ScrollTextUp()
 	return 1;
 }
 
-bool CHudSayText ::Draw(float flTime)
+bool CHudSayText::Draw(float flTime)
 {
 	int y = Y_START;
 
@@ -163,7 +163,7 @@ bool CHudSayText ::Draw(float flTime)
 	return true;
 }
 
-bool CHudSayText ::MsgFunc_SayText(const char* pszName, int iSize, void* pbuf)
+bool CHudSayText::MsgFunc_SayText(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);
 
@@ -173,7 +173,7 @@ bool CHudSayText ::MsgFunc_SayText(const char* pszName, int iSize, void* pbuf)
 	return true;
 }
 
-void CHudSayText ::SayTextPrint(const char* pszBuf, int iBufSize, int clientIndex)
+void CHudSayText::SayTextPrint(const char* pszBuf, int iBufSize, int clientIndex)
 {
 	if (gViewPort && gViewPort->AllowedToPrintText() == false)
 	{
@@ -234,7 +234,7 @@ void CHudSayText ::SayTextPrint(const char* pszBuf, int iBufSize, int clientInde
 	Y_START = ScreenHeight - 60 - (line_height * (MAX_LINES + 2));
 }
 
-void CHudSayText ::EnsureTextFitsInOneLineAndWrapIfHaveTo(int line)
+void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo(int line)
 {
 	int line_width = 0;
 	GetConsoleStringSize(g_szLineBuffer[line], &line_width, &line_height);

@@ -42,7 +42,7 @@ IMPLEMENT_SAVERESTORE(CBaseAnimating, CBaseDelay);
 // StudioFrameAdvance - advance the animation frame up to the current time
 // if an flInterval is passed in, only advance animation that number of seconds
 //=========================================================
-float CBaseAnimating ::StudioFrameAdvance(float flInterval)
+float CBaseAnimating::StudioFrameAdvance(float flInterval)
 {
 	if (flInterval == 0.0)
 	{
@@ -74,12 +74,12 @@ float CBaseAnimating ::StudioFrameAdvance(float flInterval)
 //=========================================================
 // LookupActivity
 //=========================================================
-int CBaseAnimating ::LookupActivity(int activity)
+int CBaseAnimating::LookupActivity(int activity)
 {
 	ASSERT(activity != 0);
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return ::LookupActivity(pmodel, pev, activity);
+	return::LookupActivity(pmodel, pev, activity);
 }
 
 //=========================================================
@@ -88,26 +88,26 @@ int CBaseAnimating ::LookupActivity(int activity)
 // Get activity with highest 'weight'
 //
 //=========================================================
-int CBaseAnimating ::LookupActivityHeaviest(int activity)
+int CBaseAnimating::LookupActivityHeaviest(int activity)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return ::LookupActivityHeaviest(pmodel, pev, activity);
+	return::LookupActivityHeaviest(pmodel, pev, activity);
 }
 
 //=========================================================
 //=========================================================
-int CBaseAnimating ::LookupSequence(const char* label)
+int CBaseAnimating::LookupSequence(const char* label)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return ::LookupSequence(pmodel, label);
+	return::LookupSequence(pmodel, label);
 }
 
 
 //=========================================================
 //=========================================================
-void CBaseAnimating ::ResetSequenceInfo()
+void CBaseAnimating::ResetSequenceInfo()
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
@@ -123,17 +123,17 @@ void CBaseAnimating ::ResetSequenceInfo()
 
 //=========================================================
 //=========================================================
-int CBaseAnimating ::GetSequenceFlags()
+int CBaseAnimating::GetSequenceFlags()
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return ::GetSequenceFlags(pmodel, pev);
+	return::GetSequenceFlags(pmodel, pev);
 }
 
 //=========================================================
 // DispatchAnimEvents
 //=========================================================
-void CBaseAnimating ::DispatchAnimEvents(float flInterval)
+void CBaseAnimating::DispatchAnimEvents(float flInterval)
 {
 	MonsterEvent_t event;
 
@@ -168,7 +168,7 @@ void CBaseAnimating ::DispatchAnimEvents(float flInterval)
 
 //=========================================================
 //=========================================================
-float CBaseAnimating ::SetBoneController(int iController, float flValue)
+float CBaseAnimating::SetBoneController(int iController, float flValue)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
@@ -177,7 +177,7 @@ float CBaseAnimating ::SetBoneController(int iController, float flValue)
 
 //=========================================================
 //=========================================================
-void CBaseAnimating ::InitBoneControllers()
+void CBaseAnimating::InitBoneControllers()
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
@@ -189,72 +189,72 @@ void CBaseAnimating ::InitBoneControllers()
 
 //=========================================================
 //=========================================================
-float CBaseAnimating ::SetBlending(int iBlender, float flValue)
+float CBaseAnimating::SetBlending(int iBlender, float flValue)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return ::SetBlending(pmodel, pev, iBlender, flValue);
+	return::SetBlending(pmodel, pev, iBlender, flValue);
 }
 
 //=========================================================
 //=========================================================
-void CBaseAnimating ::GetBonePosition(int iBone, Vector& origin, Vector& angles)
+void CBaseAnimating::GetBonePosition(int iBone, Vector& origin, Vector& angles)
 {
 	GET_BONE_POSITION(ENT(pev), iBone, origin, angles);
 }
 
 //=========================================================
 //=========================================================
-void CBaseAnimating ::GetAttachment(int iAttachment, Vector& origin, Vector& angles)
+void CBaseAnimating::GetAttachment(int iAttachment, Vector& origin, Vector& angles)
 {
 	GET_ATTACHMENT(ENT(pev), iAttachment, origin, angles);
 }
 
 //=========================================================
 //=========================================================
-int CBaseAnimating ::FindTransition(int iEndingSequence, int iGoalSequence, int* piDir)
+int CBaseAnimating::FindTransition(int iEndingSequence, int iGoalSequence, int* piDir)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
 	if (piDir == NULL)
 	{
 		int iDir;
-		int sequence = ::FindTransition(pmodel, iEndingSequence, iGoalSequence, &iDir);
+		int sequence =::FindTransition(pmodel, iEndingSequence, iGoalSequence, &iDir);
 		if (iDir != 1)
 			return -1;
 		else
 			return sequence;
 	}
 
-	return ::FindTransition(pmodel, iEndingSequence, iGoalSequence, piDir);
+	return::FindTransition(pmodel, iEndingSequence, iGoalSequence, piDir);
 }
 
 //=========================================================
 //=========================================================
-void CBaseAnimating ::GetAutomovement(Vector& origin, Vector& angles, float flInterval)
+void CBaseAnimating::GetAutomovement(Vector& origin, Vector& angles, float flInterval)
 {
 }
 
-void CBaseAnimating ::SetBodygroup(int iGroup, int iValue)
+void CBaseAnimating::SetBodygroup(int iGroup, int iValue)
 {
 	::SetBodygroup(GET_MODEL_PTR(ENT(pev)), pev, iGroup, iValue);
 }
 
-int CBaseAnimating ::GetBodygroup(int iGroup)
+int CBaseAnimating::GetBodygroup(int iGroup)
 {
-	return ::GetBodygroup(GET_MODEL_PTR(ENT(pev)), pev, iGroup);
+	return::GetBodygroup(GET_MODEL_PTR(ENT(pev)), pev, iGroup);
 }
 
 
-bool CBaseAnimating ::ExtractBbox(int sequence, float* mins, float* maxs)
+bool CBaseAnimating::ExtractBbox(int sequence, float* mins, float* maxs)
 {
-	return ::ExtractBbox(GET_MODEL_PTR(ENT(pev)), sequence, mins, maxs);
+	return::ExtractBbox(GET_MODEL_PTR(ENT(pev)), sequence, mins, maxs);
 }
 
 //=========================================================
 //=========================================================
 
-void CBaseAnimating ::SetSequenceBox()
+void CBaseAnimating::SetSequenceBox()
 {
 	Vector mins, maxs;
 

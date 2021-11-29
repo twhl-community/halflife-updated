@@ -78,7 +78,7 @@ TYPEDESCRIPTION CMonsterMaker::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CMonsterMaker, CBaseMonster);
 
-bool CMonsterMaker ::KeyValue(KeyValueData* pkvd)
+bool CMonsterMaker::KeyValue(KeyValueData* pkvd)
 {
 
 	if (FStrEq(pkvd->szKeyName, "monstercount"))
@@ -101,7 +101,7 @@ bool CMonsterMaker ::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CMonsterMaker ::Spawn()
+void CMonsterMaker::Spawn()
 {
 	pev->solid = SOLID_NOT;
 
@@ -148,7 +148,7 @@ void CMonsterMaker ::Spawn()
 	m_flGround = 0;
 }
 
-void CMonsterMaker ::Precache()
+void CMonsterMaker::Precache()
 {
 	CBaseMonster::Precache();
 
@@ -246,7 +246,7 @@ void CMonsterMaker::CyclicUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 //=========================================================
 // ToggleUse - activates/deactivates the monster maker
 //=========================================================
-void CMonsterMaker ::ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CMonsterMaker::ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!ShouldToggle(useType, m_fActive))
 		return;
@@ -268,7 +268,7 @@ void CMonsterMaker ::ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, US
 //=========================================================
 // MakerThink - creates a new monster every so often
 //=========================================================
-void CMonsterMaker ::MakerThink()
+void CMonsterMaker::MakerThink()
 {
 	pev->nextthink = gpGlobals->time + m_flDelay;
 
@@ -278,7 +278,7 @@ void CMonsterMaker ::MakerThink()
 
 //=========================================================
 //=========================================================
-void CMonsterMaker ::DeathNotice(entvars_t* pevChild)
+void CMonsterMaker::DeathNotice(entvars_t* pevChild)
 {
 	// ok, we've gotten the deathnotice from our child, now clear out its owner if we don't want it to fade.
 	m_cLiveChildren--;

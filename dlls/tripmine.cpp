@@ -76,7 +76,7 @@ TYPEDESCRIPTION CTripmineGrenade::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CTripmineGrenade, CGrenade);
 
 
-void CTripmineGrenade ::Spawn()
+void CTripmineGrenade::Spawn()
 {
 	Precache();
 	// motor
@@ -128,7 +128,7 @@ void CTripmineGrenade ::Spawn()
 }
 
 
-void CTripmineGrenade ::Precache()
+void CTripmineGrenade::Precache()
 {
 	PRECACHE_MODEL("models/v_tripmine.mdl");
 	PRECACHE_SOUND("weapons/mine_deploy.wav");
@@ -137,7 +137,7 @@ void CTripmineGrenade ::Precache()
 }
 
 
-void CTripmineGrenade ::WarningThink()
+void CTripmineGrenade::WarningThink()
 {
 	// play warning sound
 	// EMIT_SOUND( ENT(pev), CHAN_VOICE, "buttons/Blip2.wav", 1.0, ATTN_NORM );
@@ -148,7 +148,7 @@ void CTripmineGrenade ::WarningThink()
 }
 
 
-void CTripmineGrenade ::PowerupThink()
+void CTripmineGrenade::PowerupThink()
 {
 	TraceResult tr;
 
@@ -213,7 +213,7 @@ void CTripmineGrenade ::PowerupThink()
 }
 
 
-void CTripmineGrenade ::KillBeam()
+void CTripmineGrenade::KillBeam()
 {
 	if (m_pBeam)
 	{
@@ -223,7 +223,7 @@ void CTripmineGrenade ::KillBeam()
 }
 
 
-void CTripmineGrenade ::MakeBeam()
+void CTripmineGrenade::MakeBeam()
 {
 	TraceResult tr;
 
@@ -247,7 +247,7 @@ void CTripmineGrenade ::MakeBeam()
 }
 
 
-void CTripmineGrenade ::BeamBreakThink()
+void CTripmineGrenade::BeamBreakThink()
 {
 	bool bBlowup = false;
 
@@ -296,7 +296,7 @@ void CTripmineGrenade ::BeamBreakThink()
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
-bool CTripmineGrenade ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CTripmineGrenade::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (gpGlobals->time < m_flPowerUp && flDamage < pev->health)
 	{

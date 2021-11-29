@@ -49,7 +49,7 @@ public:
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 	void Blocked(CBaseEntity* pOther) override;
 	void Touch(CBaseEntity* pOther) override;
-	int ObjectCaps() override { return (CBaseMonster ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int ObjectCaps() override { return (CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	void Activate() override;
 
 	bool Save(CSave& save) override;

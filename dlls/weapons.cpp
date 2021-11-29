@@ -391,7 +391,7 @@ TYPEDESCRIPTION CBasePlayerWeapon::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CBasePlayerWeapon, CBasePlayerItem);
 
 
-void CBasePlayerItem ::SetObjectCollisionBox()
+void CBasePlayerItem::SetObjectCollisionBox()
 {
 	pev->absmin = pev->origin + Vector(-24, -24, 0);
 	pev->absmax = pev->origin + Vector(24, 24, 16);
@@ -401,7 +401,7 @@ void CBasePlayerItem ::SetObjectCollisionBox()
 //=========================================================
 // Sets up movetype, size, solidtype for a new weapon.
 //=========================================================
-void CBasePlayerItem ::FallInit()
+void CBasePlayerItem::FallInit()
 {
 	pev->movetype = MOVETYPE_TOSS;
 	pev->solid = SOLID_BBOX;
@@ -485,7 +485,7 @@ void CBasePlayerItem::AttemptToMaterialize()
 // CheckRespawn - a player is taking this weapon, should
 // it respawn?
 //=========================================================
-void CBasePlayerItem ::CheckRespawn()
+void CBasePlayerItem::CheckRespawn()
 {
 	switch (g_pGameRules->WeaponShouldRespawn(this))
 	{
@@ -712,7 +712,7 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 	MESSAGE_END();
 }
 
-bool CBasePlayerWeapon ::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry)
+bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry)
 {
 	int iIdAmmo;
 
@@ -750,7 +750,7 @@ bool CBasePlayerWeapon ::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, 
 }
 
 
-bool CBasePlayerWeapon ::AddSecondaryAmmo(int iCount, char* szName, int iMax)
+bool CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax)
 {
 	int iIdAmmo;
 
@@ -772,7 +772,7 @@ bool CBasePlayerWeapon ::AddSecondaryAmmo(int iCount, char* szName, int iMax)
 // (does it have ammo loaded? do I have any ammo for the
 // weapon?, etc)
 //=========================================================
-bool CBasePlayerWeapon ::IsUseable()
+bool CBasePlayerWeapon::IsUseable()
 {
 	if (m_iClip > 0)
 	{
@@ -808,7 +808,7 @@ bool CBasePlayerWeapon ::IsUseable()
 	return false;
 }
 
-bool CBasePlayerWeapon ::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
+bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
 {
 	if (!CanDeploy())
 		return false;
@@ -826,7 +826,7 @@ bool CBasePlayerWeapon ::DefaultDeploy(const char* szViewModel, const char* szWe
 	return true;
 }
 
-bool CBasePlayerWeapon ::PlayEmptySound()
+bool CBasePlayerWeapon::PlayEmptySound()
 {
 	if (m_iPlayEmptySound)
 	{
@@ -894,7 +894,7 @@ void CBasePlayerAmmo::Materialize()
 	SetTouch(&CBasePlayerAmmo::DefaultTouch);
 }
 
-void CBasePlayerAmmo ::DefaultTouch(CBaseEntity* pOther)
+void CBasePlayerAmmo::DefaultTouch(CBaseEntity* pOther)
 {
 	if (!pOther->IsPlayer())
 	{
@@ -1048,7 +1048,7 @@ void CWeaponBox::Precache()
 
 //=========================================================
 //=========================================================
-bool CWeaponBox ::KeyValue(KeyValueData* pkvd)
+bool CWeaponBox::KeyValue(KeyValueData* pkvd)
 {
 	if (m_cAmmoTypes < MAX_AMMO_SLOTS)
 	{

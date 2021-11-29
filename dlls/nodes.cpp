@@ -49,7 +49,7 @@ LINK_ENTITY_TO_CLASS(info_node_air, CNodeEnt);
 // memory currently in use by the world graph, NULLs
 // all pointers, and zeros the node count.
 //=========================================================
-void CGraph ::InitGraph()
+void CGraph::InitGraph()
 {
 
 	// Make the graph unavailable
@@ -109,7 +109,7 @@ void CGraph ::InitGraph()
 // reasonable number of nodes so we can build the path which
 // will be saved to disk.
 //=========================================================
-bool CGraph ::AllocNodes()
+bool CGraph::AllocNodes()
 {
 	//  malloc all of the nodes
 	m_pNodes = (CNode*)calloc(sizeof(CNode), MAX_NODES);
@@ -137,7 +137,7 @@ bool CGraph ::AllocNodes()
 // pNode is the node the monster will be standing on when it
 // will need to stop and trigger the ent.
 //=========================================================
-entvars_t* CGraph ::LinkEntForLink(CLink* pLink, CNode* pNode)
+entvars_t* CGraph::LinkEntForLink(CLink* pLink, CNode* pNode)
 {
 	edict_t* pentSearch;
 	edict_t* pentTrigger;
@@ -206,7 +206,7 @@ entvars_t* CGraph ::LinkEntForLink(CLink* pLink, CNode* pNode)
 // Given the monster's capability, determine whether
 // or not the monster can go this way.
 //=========================================================
-bool CGraph ::HandleLinkEnt(int iNode, entvars_t* pevLinkEnt, int afCapMask, NODEQUERY queryType)
+bool CGraph::HandleLinkEnt(int iNode, entvars_t* pevLinkEnt, int afCapMask, NODEQUERY queryType)
 {
 	edict_t* pentWorld;
 	CBaseEntity* pDoor;
@@ -288,7 +288,7 @@ bool CGraph ::HandleLinkEnt(int iNode, entvars_t* pevLinkEnt, int afCapMask, NOD
 // into the passed int pointer, and a bool telling whether or 
 // not the point is along the line into the passed bool pointer.
 //=========================================================
-int	CGraph :: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, bool *pfAlongLine )
+int	CGraph:: FindNearestLink ( const Vector &vecTestPoint, int *piNearestLink, bool *pfAlongLine )
 {
 	int			i, j;// loops
 	
@@ -575,7 +575,7 @@ int CGraph::NextNodeInRoute(int iCurrentNode, int iDest, int iHull, int iCap)
 // find a path usable by a monster with those capabilities
 // returns the number of nodes copied into supplied array
 //=========================================================
-int CGraph ::FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int afCapMask)
+int CGraph::FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int afCapMask)
 {
 	int iVisitNode;
 	int iCurrentNode;
@@ -815,7 +815,7 @@ void inline UpdateRange(int& minValue, int& maxValue, int Goal, int Best)
 		minValue = Lower;
 }
 
-void CGraph ::CheckNode(Vector vecOrigin, int iNode)
+void CGraph::CheckNode(Vector vecOrigin, int iNode)
 {
 	// Have we already seen this point before?.
 	//
@@ -859,12 +859,12 @@ void CGraph ::CheckNode(Vector vecOrigin, int iNode)
 // the given vector -1 is failure (couldn't find a valid
 // near node )
 //=========================================================
-int CGraph ::FindNearestNode(const Vector& vecOrigin, CBaseEntity* pEntity)
+int CGraph::FindNearestNode(const Vector& vecOrigin, CBaseEntity* pEntity)
 {
 	return FindNearestNode(vecOrigin, NodeType(pEntity));
 }
 
-int CGraph ::FindNearestNode(const Vector& vecOrigin, int afNodeTypes)
+int CGraph::FindNearestNode(const Vector& vecOrigin, int afNodeTypes)
 {
 	int i;
 	TraceResult tr;
@@ -1114,7 +1114,7 @@ int CGraph ::FindNearestNode(const Vector& vecOrigin, int afNodeTypes)
 // CGraph - ShowNodeConnections - draws a line from the given node
 // to all connected nodes
 //=========================================================
-void CGraph ::ShowNodeConnections(int iNode)
+void CGraph::ShowNodeConnections(int iNode)
 {
 	Vector vecSpot;
 	CNode* pNode;
@@ -1173,7 +1173,7 @@ void CGraph ::ShowNodeConnections(int iNode)
 // If there's a problem with this process, the index
 // of the offending node will be written to piBadNode
 //=========================================================
-int CGraph ::LinkVisibleNodes(CLink* pLinkPool, FSFile& file, int* piBadNode)
+int CGraph::LinkVisibleNodes(CLink* pLinkPool, FSFile& file, int* piBadNode)
 {
 	int i, j, z;
 	edict_t* pTraceEnt;
@@ -1372,7 +1372,7 @@ int CGraph ::LinkVisibleNodes(CLink* pLinkPool, FSFile& file, int* piBadNode)
 // want status reports written to disk ). RETURNS the number
 // of connections that were rejected
 //=========================================================
-int CGraph ::RejectInlineLinks(CLink* pLinkPool, FSFile& file)
+int CGraph::RejectInlineLinks(CLink* pLinkPool, FSFile& file)
 {
 	int i, j, k;
 
@@ -1471,7 +1471,7 @@ class CTestHull : public CBaseMonster
 
 public:
 	void Spawn(entvars_t* pevMasterNode);
-	int ObjectCaps() override { return CBaseMonster ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	void EXPORT CallBuildNodeGraph();
 	void BuildNodeGraph();
 	void EXPORT ShowBadNode();
@@ -1486,7 +1486,7 @@ LINK_ENTITY_TO_CLASS(testhull, CTestHull);
 //=========================================================
 // CTestHull::Spawn
 //=========================================================
-void CTestHull ::Spawn(entvars_t* pevMasterNode)
+void CTestHull::Spawn(entvars_t* pevMasterNode)
 {
 	SET_MODEL(ENT(pev), "models/player.mdl");
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
@@ -1533,7 +1533,7 @@ void CTestHull::DropDelay()
 // nodes start out as ents in the world. As they are spawned,
 // the node info is recorded then the ents are discarded.
 //=========================================================
-bool CNodeEnt ::KeyValue(KeyValueData* pkvd)
+bool CNodeEnt::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "hinttype"))
 	{
@@ -1552,7 +1552,7 @@ bool CNodeEnt ::KeyValue(KeyValueData* pkvd)
 
 //=========================================================
 //=========================================================
-void CNodeEnt ::Spawn()
+void CNodeEnt::Spawn()
 {
 	pev->movetype = MOVETYPE_NONE;
 	pev->solid = SOLID_NOT; // always solid_not
@@ -1597,7 +1597,7 @@ void CNodeEnt ::Spawn()
 // hull will be placed up the bad node's location and will generate
 // particles
 //=========================================================
-void CTestHull ::ShowBadNode()
+void CTestHull::ShowBadNode()
 {
 	pev->movetype = MOVETYPE_FLY;
 	pev->angles.y = pev->angles.y + 4;
@@ -1630,7 +1630,7 @@ void CTestHull::CallBuildNodeGraph()
 // hull that walks between each node and each of its links
 // to ensure that a monster can actually fit through the space
 //=========================================================
-void CTestHull ::BuildNodeGraph()
+void CTestHull::BuildNodeGraph()
 {
 	TraceResult tr;
 
@@ -2069,7 +2069,7 @@ void CTestHull ::BuildNodeGraph()
 //=========================================================
 // returns a hardcoded path.
 //=========================================================
-void CTestHull ::PathFind()
+void CTestHull::PathFind()
 {
 	int iPath[50];
 	int iPathSize;
@@ -2119,7 +2119,7 @@ void CTestHull ::PathFind()
 //=========================================================
 // CStack Constructor
 //=========================================================
-CStack ::CStack()
+CStack::CStack()
 {
 	m_level = 0;
 }
@@ -2127,7 +2127,7 @@ CStack ::CStack()
 //=========================================================
 // pushes a value onto the stack
 //=========================================================
-void CStack ::Push(int value)
+void CStack::Push(int value)
 {
 	if (m_level >= MAX_STACK_NODES)
 	{
@@ -2141,7 +2141,7 @@ void CStack ::Push(int value)
 //=========================================================
 // pops a value off of the stack
 //=========================================================
-int CStack ::Pop()
+int CStack::Pop()
 {
 	if (m_level <= 0)
 		return -1;
@@ -2153,7 +2153,7 @@ int CStack ::Pop()
 //=========================================================
 // returns the value on the top of the stack
 //=========================================================
-int CStack ::Top()
+int CStack::Top()
 {
 	return m_stack[m_level - 1];
 }
@@ -2161,7 +2161,7 @@ int CStack ::Top()
 //=========================================================
 // copies every element on the stack into an array LIFO
 //=========================================================
-void CStack ::CopyToArray(int* piArray)
+void CStack::CopyToArray(int* piArray)
 {
 	int i;
 
@@ -2174,7 +2174,7 @@ void CStack ::CopyToArray(int* piArray)
 //=========================================================
 // CQueue constructor
 //=========================================================
-CQueue ::CQueue()
+CQueue::CQueue()
 {
 	m_cSize = 0;
 	m_head = 0;
@@ -2184,7 +2184,7 @@ CQueue ::CQueue()
 //=========================================================
 // inserts a value into the queue
 //=========================================================
-void CQueue ::Insert(int iValue, float fPriority)
+void CQueue::Insert(int iValue, float fPriority)
 {
 
 	if (Full())
@@ -2208,7 +2208,7 @@ void CQueue ::Insert(int iValue, float fPriority)
 //=========================================================
 // removes a value from the queue (FIFO)
 //=========================================================
-int CQueue ::Remove(float& fPriority)
+int CQueue::Remove(float& fPriority)
 {
 	if (m_head == MAX_STACK_NODES)
 	{ // wrap
@@ -2223,7 +2223,7 @@ int CQueue ::Remove(float& fPriority)
 //=========================================================
 // CQueue constructor
 //=========================================================
-CQueuePriority ::CQueuePriority()
+CQueuePriority::CQueuePriority()
 {
 	m_cSize = 0;
 }
@@ -2231,7 +2231,7 @@ CQueuePriority ::CQueuePriority()
 //=========================================================
 // inserts a value into the priority queue
 //=========================================================
-void CQueuePriority ::Insert(int iValue, float fPriority)
+void CQueuePriority::Insert(int iValue, float fPriority)
 {
 
 	if (Full())
@@ -2250,7 +2250,7 @@ void CQueuePriority ::Insert(int iValue, float fPriority)
 // removes the smallest item from the priority queue
 //
 //=========================================================
-int CQueuePriority ::Remove(float& fPriority)
+int CQueuePriority::Remove(float& fPriority)
 {
 	int iReturn = m_heap[0].Id;
 	fPriority = m_heap[0].Priority;
@@ -2318,7 +2318,7 @@ void CQueuePriority::Heap_SiftUp()
 // will be loaded. If file cannot be loaded, the node tree
 // will be created and saved to disk.
 //=========================================================
-bool CGraph ::FLoadGraph(const char* szMapName)
+bool CGraph::FLoadGraph(const char* szMapName)
 {
 	// make sure the directories have been made
 	g_pFileSystem->CreateDirHierarchy("maps/graphs", "GAMECONFIG");
@@ -2485,7 +2485,7 @@ bool CGraph ::FLoadGraph(const char* szMapName)
 // CGraph - FSaveGraph - It's not rocket science.
 // this WILL overwrite existing files.
 //=========================================================
-bool CGraph ::FSaveGraph(const char* szMapName)
+bool CGraph::FSaveGraph(const char* szMapName)
 {
 	if (0 == m_fGraphPresent || 0 == m_fGraphPointersSet)
 	{ // protect us in the case that the node graph isn't available or built
@@ -2544,7 +2544,7 @@ bool CGraph ::FSaveGraph(const char* szMapName)
 // this is done after loading the graph from disk, whereupon
 // the pointers are not valid.
 //=========================================================
-bool CGraph ::FSetGraphPointers()
+bool CGraph::FSetGraphPointers()
 {
 	int i;
 	edict_t* pentLinkEnt;
@@ -2603,7 +2603,7 @@ bool CGraph ::FSetGraphPointers()
 // though. ( I now suspect that we are getting GMT back from
 // these functions and must compensate for local time ) (sjb)
 //=========================================================
-bool CGraph ::CheckNODFile(const char* szMapName)
+bool CGraph::CheckNODFile(const char* szMapName)
 {
 	const std::string bspFileName{std::string{"maps/"} + szMapName + ".bsp"};
 	const std::string graphFileName{std::string{"maps/graphs/"} + szMapName + ".nod"};
@@ -3017,7 +3017,7 @@ void CGraph::BuildRegionTables()
 	memset(m_Cache, 0, sizeof(m_Cache));
 }
 
-void CGraph ::ComputeStaticRoutingTables()
+void CGraph::ComputeStaticRoutingTables()
 {
 	int nRoutes = m_cNodes * m_cNodes;
 #define FROM_TO(x, y) ((x)*m_cNodes + (y))
@@ -3324,7 +3324,7 @@ void CGraph ::ComputeStaticRoutingTables()
 
 // Test those routing tables. Doesn't really work, yet.
 //
-void CGraph ::TestRoutingTables()
+void CGraph::TestRoutingTables()
 {
 	int* pMyPath = new int[m_cNodes];
 	int* pMyPath2 = new int[m_cNodes];
@@ -3563,7 +3563,7 @@ void CNodeViewer::Spawn()
 }
 
 
-void CNodeViewer ::FindNodeConnections(int iNode)
+void CNodeViewer::FindNodeConnections(int iNode)
 {
 	AddNode(iNode, WorldGraph.NextNodeInRoute(iNode, m_iBaseNode, m_iHull, 0));
 	for (int i = 0; i < WorldGraph.m_pNodes[iNode].m_cNumLinks; i++)
@@ -3598,7 +3598,7 @@ void CNodeViewer::AddNode(int iFrom, int iTo)
 }
 
 
-void CNodeViewer ::DrawThink()
+void CNodeViewer::DrawThink()
 {
 	pev->nextthink = gpGlobals->time;
 

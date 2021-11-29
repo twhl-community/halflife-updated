@@ -55,12 +55,12 @@ public:
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
 	// Bmodels don't go across transitions
-	int ObjectCaps() override { return CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
 
 LINK_ENTITY_TO_CLASS(func_wall, CFuncWall);
 
-void CFuncWall ::Spawn()
+void CFuncWall::Spawn()
 {
 	pev->angles = g_vecZero;
 	pev->movetype = MOVETYPE_PUSH; // so it doesn't get pushed by anything
@@ -72,7 +72,7 @@ void CFuncWall ::Spawn()
 }
 
 
-void CFuncWall ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CFuncWall::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (ShouldToggle(useType, pev->frame != 0))
 		pev->frame = 1 - pev->frame;
@@ -93,7 +93,7 @@ public:
 
 LINK_ENTITY_TO_CLASS(func_wall_toggle, CFuncWallToggle);
 
-void CFuncWallToggle ::Spawn()
+void CFuncWallToggle::Spawn()
 {
 	CFuncWall::Spawn();
 	if ((pev->spawnflags & SF_WALL_START_OFF) != 0)
@@ -101,7 +101,7 @@ void CFuncWallToggle ::Spawn()
 }
 
 
-void CFuncWallToggle ::TurnOff()
+void CFuncWallToggle::TurnOff()
 {
 	pev->solid = SOLID_NOT;
 	pev->effects |= EF_NODRAW;
@@ -109,7 +109,7 @@ void CFuncWallToggle ::TurnOff()
 }
 
 
-void CFuncWallToggle ::TurnOn()
+void CFuncWallToggle::TurnOn()
 {
 	pev->solid = SOLID_BSP;
 	pev->effects &= ~EF_NODRAW;
@@ -117,7 +117,7 @@ void CFuncWallToggle ::TurnOn()
 }
 
 
-bool CFuncWallToggle ::IsOn()
+bool CFuncWallToggle::IsOn()
 {
 	if (pev->solid == SOLID_NOT)
 		return false;
@@ -125,7 +125,7 @@ bool CFuncWallToggle ::IsOn()
 }
 
 
-void CFuncWallToggle ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CFuncWallToggle::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	bool status = IsOn();
 
@@ -151,7 +151,7 @@ public:
 };
 
 LINK_ENTITY_TO_CLASS(func_conveyor, CFuncConveyor);
-void CFuncConveyor ::Spawn()
+void CFuncConveyor::Spawn()
 {
 	SetMovedir(pev);
 	CFuncWall::Spawn();
@@ -174,7 +174,7 @@ void CFuncConveyor ::Spawn()
 
 
 // HACKHACK -- This is ugly, but encode the speed in the rendercolor to avoid adding more data to the network stream
-void CFuncConveyor ::UpdateSpeed(float speed)
+void CFuncConveyor::UpdateSpeed(float speed)
 {
 	// Encode it as an integer with 4 fractional bits
 	int speedCode = (int)(fabs(speed) * 16.0);
@@ -189,7 +189,7 @@ void CFuncConveyor ::UpdateSpeed(float speed)
 }
 
 
-void CFuncConveyor ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CFuncConveyor::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	pev->speed = -pev->speed;
 	UpdateSpeed(pev->speed);
@@ -209,12 +209,12 @@ public:
 	void Spawn() override;
 	void EXPORT SloshTouch(CBaseEntity* pOther);
 	bool KeyValue(KeyValueData* pkvd) override;
-	int ObjectCaps() override { return CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 };
 
 LINK_ENTITY_TO_CLASS(func_illusionary, CFuncIllusionary);
 
-bool CFuncIllusionary ::KeyValue(KeyValueData* pkvd)
+bool CFuncIllusionary::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "skin")) //skin is used for content type
 	{
@@ -225,7 +225,7 @@ bool CFuncIllusionary ::KeyValue(KeyValueData* pkvd)
 	return CBaseToggle::KeyValue(pkvd);
 }
 
-void CFuncIllusionary ::Spawn()
+void CFuncIllusionary::Spawn()
 {
 	pev->angles = g_vecZero;
 	pev->movetype = MOVETYPE_NONE;
@@ -283,7 +283,7 @@ public:
 	void EXPORT Rotate();
 	void RampPitchVol(bool fUp);
 	void Blocked(CBaseEntity* pOther) override;
-	int ObjectCaps() override { return CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 
@@ -309,7 +309,7 @@ IMPLEMENT_SAVERESTORE(CFuncRotating, CBaseEntity);
 
 LINK_ENTITY_TO_CLASS(func_rotating, CFuncRotating);
 
-bool CFuncRotating ::KeyValue(KeyValueData* pkvd)
+bool CFuncRotating::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "fanfriction"))
 	{
@@ -357,7 +357,7 @@ REVERSE will cause the it to rotate in the opposite direction.
 */
 
 
-void CFuncRotating ::Spawn()
+void CFuncRotating::Spawn()
 {
 	// set final pitch.  Must not be PITCH_NORM, since we
 	// plan on pitch shifting later.
@@ -442,7 +442,7 @@ void CFuncRotating ::Spawn()
 }
 
 
-void CFuncRotating ::Precache()
+void CFuncRotating::Precache()
 {
 	char* szSoundFile = (char*)STRING(pev->message);
 
@@ -514,7 +514,7 @@ void CFuncRotating ::Precache()
 //
 // Touch - will hurt others based on how fast the brush is spinning
 //
-void CFuncRotating ::HurtTouch(CBaseEntity* pOther)
+void CFuncRotating::HurtTouch(CBaseEntity* pOther)
 {
 	entvars_t* pevOther = pOther->pev;
 
@@ -537,7 +537,7 @@ void CFuncRotating ::HurtTouch(CBaseEntity* pOther)
 #define FANPITCHMIN 30
 #define FANPITCHMAX 100
 
-void CFuncRotating ::RampPitchVol(bool fUp)
+void CFuncRotating::RampPitchVol(bool fUp)
 {
 
 	Vector vecAVel = pev->avelocity;
@@ -581,7 +581,7 @@ void CFuncRotating ::RampPitchVol(bool fUp)
 //
 // SpinUp - accelerates a non-moving func_rotating up to it's speed
 //
-void CFuncRotating ::SpinUp()
+void CFuncRotating::SpinUp()
 {
 	Vector vecAVel; //rotational velocity
 
@@ -611,7 +611,7 @@ void CFuncRotating ::SpinUp()
 //
 // SpinDown - decelerates a moving func_rotating to a standstill.
 //
-void CFuncRotating ::SpinDown()
+void CFuncRotating::SpinDown()
 {
 	Vector vecAVel; //rotational velocity
 	vec_t vecdir;
@@ -649,7 +649,7 @@ void CFuncRotating ::SpinDown()
 	}
 }
 
-void CFuncRotating ::Rotate()
+void CFuncRotating::Rotate()
 {
 	pev->nextthink = pev->ltime + 10;
 }
@@ -657,7 +657,7 @@ void CFuncRotating ::Rotate()
 //=========================================================
 // Rotating Use - when a rotating brush is triggered
 //=========================================================
-void CFuncRotating ::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CFuncRotating::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// is this a brush that should accelerate and decelerate when turned on/off (fan)?
 	if (FBitSet(pev->spawnflags, SF_BRUSH_ACCDCC))
@@ -709,7 +709,7 @@ void CFuncRotating ::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, 
 //
 // RotatingBlocked - An entity has blocked the brush
 //
-void CFuncRotating ::Blocked(CBaseEntity* pOther)
+void CFuncRotating::Blocked(CBaseEntity* pOther)
 
 {
 	pOther->TakeDamage(pev, pev, pev->dmg, DMG_CRUSH);
@@ -733,7 +733,7 @@ public:
 	void EXPORT Stop();
 	void Touch(CBaseEntity* pOther) override;
 	void EXPORT RopeTouch(CBaseEntity* pOther); // this touch func makes the pendulum a rope
-	int ObjectCaps() override { return CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 	void Blocked(CBaseEntity* pOther) override;
@@ -768,7 +768,7 @@ IMPLEMENT_SAVERESTORE(CPendulum, CBaseEntity);
 
 
 
-bool CPendulum ::KeyValue(KeyValueData* pkvd)
+bool CPendulum::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "distance"))
 	{
@@ -785,10 +785,10 @@ bool CPendulum ::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CPendulum ::Spawn()
+void CPendulum::Spawn()
 {
 	// set the axis of rotation
-	CBaseToggle ::AxisDir(pev);
+	CBaseToggle::AxisDir(pev);
 
 	if (FBitSet(pev->spawnflags, SF_DOOR_PASSABLE))
 		pev->solid = SOLID_NOT;
@@ -824,7 +824,7 @@ void CPendulum ::Spawn()
 }
 
 
-void CPendulum ::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CPendulum::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (0 != pev->speed) // Pendulum is moving, stop it and auto-return if necessary
 	{
@@ -832,7 +832,7 @@ void CPendulum ::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 		{
 			float delta;
 
-			delta = CBaseToggle ::AxisDelta(pev->spawnflags, pev->angles, m_start);
+			delta = CBaseToggle::AxisDelta(pev->spawnflags, pev->angles, m_start);
 
 			pev->avelocity = m_maxSpeed * pev->movedir;
 			pev->nextthink = pev->ltime + (delta / m_maxSpeed);
@@ -855,7 +855,7 @@ void CPendulum ::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_
 }
 
 
-void CPendulum ::Stop()
+void CPendulum::Stop()
 {
 	pev->angles = m_start;
 	pev->speed = 0;
@@ -870,11 +870,11 @@ void CPendulum::Blocked(CBaseEntity* pOther)
 }
 
 
-void CPendulum ::Swing()
+void CPendulum::Swing()
 {
 	float delta, dt;
 
-	delta = CBaseToggle ::AxisDelta(pev->spawnflags, pev->angles, m_center);
+	delta = CBaseToggle::AxisDelta(pev->spawnflags, pev->angles, m_center);
 	dt = gpGlobals->time - m_time; // How much time has passed?
 	m_time = gpGlobals->time;	   // Remember the last time called
 
@@ -911,7 +911,7 @@ void CPendulum ::Swing()
 }
 
 
-void CPendulum ::Touch(CBaseEntity* pOther)
+void CPendulum::Touch(CBaseEntity* pOther)
 {
 	entvars_t* pevOther = pOther->pev;
 
@@ -933,7 +933,7 @@ void CPendulum ::Touch(CBaseEntity* pOther)
 	pevOther->velocity = (pevOther->origin - VecBModelOrigin(pev)).Normalize() * damage;
 }
 
-void CPendulum ::RopeTouch(CBaseEntity* pOther)
+void CPendulum::RopeTouch(CBaseEntity* pOther)
 {
 	entvars_t* pevOther = pOther->pev;
 

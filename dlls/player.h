@@ -236,7 +236,7 @@ public:
 	static TYPEDESCRIPTION m_playerSaveData[];
 
 	// Player is moved across the transition by other means
-	int ObjectCaps() override { return CBaseMonster ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 	void Precache() override;
 	bool IsOnLadder();
 	bool FlashlightIsOn();

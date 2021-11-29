@@ -90,7 +90,7 @@ void CHud::Think()
 // Redraw
 // step through the local data,  placing the appropriate graphics & text as appropriate
 // returns 1 if they've changed, 0 otherwise
-bool CHud ::Redraw(float flTime, bool intermission)
+bool CHud::Redraw(float flTime, bool intermission)
 {
 	m_fOldTime = m_flTime; // save time of previous redraw
 	m_flTime = flTime;
@@ -213,12 +213,12 @@ void ScaleColors(int& r, int& g, int& b, int a)
 	b = (int)(b * x);
 }
 
-int CHud ::DrawHudString(int xpos, int ypos, int iMaxX, const char* szIt, int r, int g, int b)
+int CHud::DrawHudString(int xpos, int ypos, int iMaxX, const char* szIt, int r, int g, int b)
 {
 	return xpos + gEngfuncs.pfnDrawString(xpos, ypos, szIt, r, g, b);
 }
 
-int CHud ::DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r, int g, int b)
+int CHud::DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r, int g, int b)
 {
 	char szString[32];
 	sprintf(szString, "%d", iNumber);
@@ -226,12 +226,12 @@ int CHud ::DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r
 }
 
 // draws a string from right to left (right-aligned)
-int CHud ::DrawHudStringReverse(int xpos, int ypos, int iMinX, const char* szString, int r, int g, int b)
+int CHud::DrawHudStringReverse(int xpos, int ypos, int iMinX, const char* szString, int r, int g, int b)
 {
 	return xpos - gEngfuncs.pfnDrawStringReverse(xpos, ypos, szString, r, g, b);
 }
 
-int CHud ::DrawHudNumber(int x, int y, int iFlags, int iNumber, int r, int g, int b)
+int CHud::DrawHudNumber(int x, int y, int iFlags, int iNumber, int r, int g, int b)
 {
 	int iWidth = GetSpriteRect(m_HUD_number_0).right - GetSpriteRect(m_HUD_number_0).left;
 	int k;

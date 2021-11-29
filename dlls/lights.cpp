@@ -56,7 +56,7 @@ IMPLEMENT_SAVERESTORE(CLight, CPointEntity);
 //
 // Cache user-entity-field values until spawn is called.
 //
-bool CLight ::KeyValue(KeyValueData* pkvd)
+bool CLight::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style"))
 	{
@@ -84,7 +84,7 @@ Default style is 0
 If targeted, it will toggle between on or off.
 */
 
-void CLight ::Spawn()
+void CLight::Spawn()
 {
 	if (FStringNull(pev->targetname))
 	{ // inert light
@@ -105,7 +105,7 @@ void CLight ::Spawn()
 }
 
 
-void CLight ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CLight::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (m_iStyle >= 32)
 	{
@@ -180,7 +180,7 @@ bool CEnvLight::KeyValue(KeyValueData* pkvd)
 }
 
 
-void CEnvLight ::Spawn()
+void CEnvLight::Spawn()
 {
 	char szVector[64];
 	UTIL_MakeAimVectors(pev->angles);

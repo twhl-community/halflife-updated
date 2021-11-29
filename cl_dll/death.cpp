@@ -74,7 +74,7 @@ float* GetClientColor(int clientIndex)
 	return NULL;
 }
 
-bool CHudDeathNotice ::Init()
+bool CHudDeathNotice::Init()
 {
 	gHUD.AddHudElem(this);
 
@@ -86,20 +86,20 @@ bool CHudDeathNotice ::Init()
 }
 
 
-void CHudDeathNotice ::InitHUDData()
+void CHudDeathNotice::InitHUDData()
 {
 	memset(rgDeathNoticeList, 0, sizeof(rgDeathNoticeList));
 }
 
 
-bool CHudDeathNotice ::VidInit()
+bool CHudDeathNotice::VidInit()
 {
 	m_HUD_d_skull = gHUD.GetSpriteIndex("d_skull");
 
 	return true;
 }
 
-bool CHudDeathNotice ::Draw(float flTime)
+bool CHudDeathNotice::Draw(float flTime)
 {
 	int x, y, r, g, b;
 
@@ -167,7 +167,7 @@ bool CHudDeathNotice ::Draw(float flTime)
 }
 
 // This message handler may be better off elsewhere
-bool CHudDeathNotice ::MsgFunc_DeathMsg(const char* pszName, int iSize, void* pbuf)
+bool CHudDeathNotice::MsgFunc_DeathMsg(const char* pszName, int iSize, void* pbuf)
 {
 	m_iFlags |= HUD_ACTIVE;
 

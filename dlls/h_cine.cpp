@@ -102,7 +102,7 @@ LINK_ENTITY_TO_CLASS(monster_cine3_barney, CCine3Barney);
 // ********** Scientist SPAWN **********
 //
 
-void CLegacyCineMonster ::CineSpawn(const char* szModel)
+void CLegacyCineMonster::CineSpawn(const char* szModel)
 {
 	PRECACHE_MODEL(szModel);
 	SET_MODEL(ENT(pev), szModel);
@@ -133,7 +133,7 @@ void CLegacyCineMonster ::CineSpawn(const char* szModel)
 //
 // CineStart
 //
-void CLegacyCineMonster ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CLegacyCineMonster::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	pev->animtime = 0; // reset the sequence
 	SetThink(&CLegacyCineMonster::CineThink);
@@ -143,7 +143,7 @@ void CLegacyCineMonster ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 //
 // ********** Scientist DIE **********
 //
-void CLegacyCineMonster ::Die()
+void CLegacyCineMonster::Die()
 {
 	SetThink(&CLegacyCineMonster::SUB_Remove);
 }
@@ -151,12 +151,12 @@ void CLegacyCineMonster ::Die()
 //
 // ********** Scientist PAIN **********
 //
-void CLegacyCineMonster ::Pain()
+void CLegacyCineMonster::Pain()
 {
 	EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pain3.wav", 1, ATTN_NORM);
 }
 
-void CLegacyCineMonster ::CineThink()
+void CLegacyCineMonster::CineThink()
 {
 	// DBG_CheckMonsterData(pev);
 
@@ -193,7 +193,7 @@ public:
 LINK_ENTITY_TO_CLASS(cine_blood, CCineBlood);
 
 
-void CCineBlood ::BloodGush()
+void CCineBlood::BloodGush()
 {
 	Vector vecSplatDir;
 	TraceResult tr;
@@ -226,13 +226,13 @@ void CCineBlood ::BloodGush()
 	}
 }
 
-void CCineBlood ::BloodStart(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CCineBlood::BloodStart(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	SetThink(&CCineBlood::BloodGush);
 	pev->nextthink = gpGlobals->time; // now!
 }
 
-void CCineBlood ::Spawn()
+void CCineBlood::Spawn()
 {
 	pev->solid = SOLID_NOT;
 	SetUse(&CCineBlood::BloodStart);

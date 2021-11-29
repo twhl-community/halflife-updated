@@ -386,7 +386,7 @@ const char* CBigMomma::pFootSounds[] =
 
 
 
-bool CBigMomma ::KeyValue(KeyValueData* pkvd)
+bool CBigMomma::KeyValue(KeyValueData* pkvd)
 {
 #if 0
 	if (FStrEq(pkvd->szKeyName, "volume"))
@@ -403,7 +403,7 @@ bool CBigMomma ::KeyValue(KeyValueData* pkvd)
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CBigMomma ::Classify()
+int CBigMomma::Classify()
 {
 	return CLASS_ALIEN_MONSTER;
 }
@@ -412,7 +412,7 @@ int CBigMomma ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBigMomma ::SetYawSpeed()
+void CBigMomma::SetYawSpeed()
 {
 	int ys;
 
@@ -433,7 +433,7 @@ void CBigMomma ::SetYawSpeed()
 //
 // Returns number of events handled, 0 if none.
 //=========================================================
-void CBigMomma ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CBigMomma::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -552,7 +552,7 @@ void CBigMomma ::HandleAnimEvent(MonsterEvent_t* pEvent)
 	}
 }
 
-void CBigMomma ::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
+void CBigMomma::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	if (ptr->iHitgroup != 1)
 	{
@@ -577,7 +577,7 @@ void CBigMomma ::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecD
 }
 
 
-bool CBigMomma ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CBigMomma::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// Don't take any acid damage -- BigMomma's mortar is acid
 	if ((bitsDamageType & DMG_ACID) != 0)
@@ -596,7 +596,7 @@ bool CBigMomma ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
-void CBigMomma ::LayHeadcrab()
+void CBigMomma::LayHeadcrab()
 {
 	CBaseEntity* pChild = CBaseEntity::Create(BIG_CHILDCLASS, pev->origin, pev->angles, edict());
 
@@ -652,7 +652,7 @@ void CBigMomma::LaunchMortar()
 //=========================================================
 // Spawn
 //=========================================================
-void CBigMomma ::Spawn()
+void CBigMomma::Spawn()
 {
 	Precache();
 
@@ -673,7 +673,7 @@ void CBigMomma ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CBigMomma ::Precache()
+void CBigMomma::Precache()
 {
 	PRECACHE_MODEL("models/big_mom.mdl");
 

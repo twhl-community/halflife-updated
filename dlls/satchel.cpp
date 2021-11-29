@@ -46,7 +46,7 @@ void CSatchelCharge::Deactivate()
 }
 
 
-void CSatchelCharge ::Spawn()
+void CSatchelCharge::Spawn()
 {
 	Precache();
 	// motor
@@ -102,7 +102,7 @@ void CSatchelCharge::SatchelSlide(CBaseEntity* pOther)
 }
 
 
-void CSatchelCharge ::SatchelThink()
+void CSatchelCharge::SatchelThink()
 {
 	StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -130,7 +130,7 @@ void CSatchelCharge ::SatchelThink()
 	}
 }
 
-void CSatchelCharge ::Precache()
+void CSatchelCharge::Precache()
 {
 	PRECACHE_MODEL("models/grenade.mdl");
 	PRECACHE_SOUND("weapons/g_bounce1.wav");
@@ -138,7 +138,7 @@ void CSatchelCharge ::Precache()
 	PRECACHE_SOUND("weapons/g_bounce3.wav");
 }
 
-void CSatchelCharge ::BounceSound()
+void CSatchelCharge::BounceSound()
 {
 	switch (RANDOM_LONG(0, 2))
 	{

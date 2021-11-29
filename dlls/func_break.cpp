@@ -537,7 +537,7 @@ void CBreakable::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecD
 // exceptions that are breakable-specific
 // bitsDamageType indicates the type of damage sustained ie: DMG_CRUSH
 //=========================================================
-bool CBreakable ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CBreakable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	Vector vecTemp;
 
@@ -778,13 +778,13 @@ void CBreakable::Die()
 
 
 
-bool CBreakable ::IsBreakable()
+bool CBreakable::IsBreakable()
 {
 	return m_Material != matUnbreakableGlass;
 }
 
 
-int CBreakable ::DamageDecal(int bitsDamageType)
+int CBreakable::DamageDecal(int bitsDamageType)
 {
 	if (m_Material == matGlass)
 		return DECAL_GLASSBREAK1 + RANDOM_LONG(0, 2);
@@ -808,7 +808,7 @@ public:
 	void EXPORT StopSound();
 	//	virtual void	SetActivator( CBaseEntity *pActivator ) { m_pPusher = pActivator; }
 
-	int ObjectCaps() override { return (CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 
@@ -835,10 +835,10 @@ IMPLEMENT_SAVERESTORE(CPushable, CBreakable);
 
 LINK_ENTITY_TO_CLASS(func_pushable, CPushable);
 
-const char* CPushable ::m_soundNames[3] = {"debris/pushbox1.wav", "debris/pushbox2.wav", "debris/pushbox3.wav"};
+const char* CPushable::m_soundNames[3] = {"debris/pushbox1.wav", "debris/pushbox2.wav", "debris/pushbox3.wav"};
 
 
-void CPushable ::Spawn()
+void CPushable::Spawn()
 {
 	if ((pev->spawnflags & SF_PUSH_BREAKABLE) != 0)
 		CBreakable::Spawn();
@@ -865,7 +865,7 @@ void CPushable ::Spawn()
 }
 
 
-void CPushable ::Precache()
+void CPushable::Precache()
 {
 	for (int i = 0; i < 3; i++)
 		PRECACHE_SOUND(m_soundNames[i]);
@@ -875,7 +875,7 @@ void CPushable ::Precache()
 }
 
 
-bool CPushable ::KeyValue(KeyValueData* pkvd)
+bool CPushable::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "size"))
 	{
@@ -914,7 +914,7 @@ bool CPushable ::KeyValue(KeyValueData* pkvd)
 
 
 // Pull the func_pushable
-void CPushable ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CPushable::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!pActivator || !pActivator->IsPlayer())
 	{
@@ -928,7 +928,7 @@ void CPushable ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 }
 
 
-void CPushable ::Touch(CBaseEntity* pOther)
+void CPushable::Touch(CBaseEntity* pOther)
 {
 	if (FClassnameIs(pOther->pev, "worldspawn"))
 		return;
@@ -937,7 +937,7 @@ void CPushable ::Touch(CBaseEntity* pOther)
 }
 
 
-void CPushable ::Move(CBaseEntity* pOther, bool push)
+void CPushable::Move(CBaseEntity* pOther, bool push)
 {
 	entvars_t* pevToucher = pOther->pev;
 	bool playerTouch = false;

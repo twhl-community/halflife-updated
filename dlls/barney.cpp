@@ -54,7 +54,7 @@ public:
 
 	void RunTask(Task_t* pTask) override;
 	void StartTask(Task_t* pTask) override;
-	int ObjectCaps() override { return CTalkMonster ::ObjectCaps() | FCAP_IMPULSE_USE; }
+	int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	bool CheckRangeAttack1(float flDot, float flDist) override;
 
@@ -205,12 +205,12 @@ DEFINE_CUSTOM_SCHEDULES(CBarney){
 
 IMPLEMENT_CUSTOM_SCHEDULES(CBarney, CTalkMonster);
 
-void CBarney ::StartTask(Task_t* pTask)
+void CBarney::StartTask(Task_t* pTask)
 {
 	CTalkMonster::StartTask(pTask);
 }
 
-void CBarney ::RunTask(Task_t* pTask)
+void CBarney::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -234,7 +234,7 @@ void CBarney ::RunTask(Task_t* pTask)
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards.
 //=========================================================
-int CBarney ::ISoundMask()
+int CBarney::ISoundMask()
 {
 	return bits_SOUND_WORLD |
 		   bits_SOUND_COMBAT |
@@ -249,7 +249,7 @@ int CBarney ::ISoundMask()
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CBarney ::Classify()
+int CBarney::Classify()
 {
 	return CLASS_PLAYER_ALLY;
 }
@@ -257,7 +257,7 @@ int CBarney ::Classify()
 //=========================================================
 // ALertSound - barney says "Freeze!"
 //=========================================================
-void CBarney ::AlertSound()
+void CBarney::AlertSound()
 {
 	if (m_hEnemy != NULL)
 	{
@@ -271,7 +271,7 @@ void CBarney ::AlertSound()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBarney ::SetYawSpeed()
+void CBarney::SetYawSpeed()
 {
 	int ys;
 
@@ -300,7 +300,7 @@ void CBarney ::SetYawSpeed()
 //=========================================================
 // CheckRangeAttack1
 //=========================================================
-bool CBarney ::CheckRangeAttack1(float flDot, float flDist)
+bool CBarney::CheckRangeAttack1(float flDot, float flDist)
 {
 	if (flDist <= 1024 && flDot >= 0.5)
 	{
@@ -329,7 +329,7 @@ bool CBarney ::CheckRangeAttack1(float flDot, float flDist)
 // BarneyFirePistol - shoots one round from the pistol at
 // the enemy barney is facing.
 //=========================================================
-void CBarney ::BarneyFirePistol()
+void CBarney::BarneyFirePistol()
 {
 	Vector vecShootOrigin;
 
@@ -364,7 +364,7 @@ void CBarney ::BarneyFirePistol()
 //
 // Returns number of events handled, 0 if none.
 //=========================================================
-void CBarney ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CBarney::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -392,7 +392,7 @@ void CBarney ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CBarney ::Spawn()
+void CBarney::Spawn()
 {
 	Precache();
 
@@ -419,7 +419,7 @@ void CBarney ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CBarney ::Precache()
+void CBarney::Precache()
 {
 	PRECACHE_MODEL("models/barney.mdl");
 
@@ -441,7 +441,7 @@ void CBarney ::Precache()
 }
 
 // Init talk data
-void CBarney ::TalkInit()
+void CBarney::TalkInit()
 {
 
 	CTalkMonster::TalkInit();
@@ -495,7 +495,7 @@ bool IsFacing(entvars_t* pevTest, const Vector& reference)
 }
 
 
-bool CBarney ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CBarney::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// make sure friends talk about it if player hurts talkmonsters...
 	bool ret = CTalkMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
@@ -539,7 +539,7 @@ bool CBarney ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float
 //=========================================================
 // PainSound
 //=========================================================
-void CBarney ::PainSound()
+void CBarney::PainSound()
 {
 	if (gpGlobals->time < m_painTime)
 		return;
@@ -563,7 +563,7 @@ void CBarney ::PainSound()
 //=========================================================
 // DeathSound
 //=========================================================
-void CBarney ::DeathSound()
+void CBarney::DeathSound()
 {
 	switch (RANDOM_LONG(0, 2))
 	{
@@ -632,7 +632,7 @@ void CBarney::Killed(entvars_t* pevAttacker, int iGib)
 // AI Schedules Specific to this monster
 //=========================================================
 
-Schedule_t* CBarney ::GetScheduleOfType(int Type)
+Schedule_t* CBarney::GetScheduleOfType(int Type)
 {
 	Schedule_t* psched;
 
@@ -683,7 +683,7 @@ Schedule_t* CBarney ::GetScheduleOfType(int Type)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t* CBarney ::GetSchedule()
+Schedule_t* CBarney::GetSchedule()
 {
 	if (HasConditions(bits_COND_HEAR_SOUND))
 	{
@@ -706,7 +706,7 @@ Schedule_t* CBarney ::GetSchedule()
 		if (HasConditions(bits_COND_ENEMY_DEAD))
 		{
 			// call base class, all code to handle dead enemies is centralized there.
-			return CBaseMonster ::GetSchedule();
+			return CBaseMonster::GetSchedule();
 		}
 
 		// always act surprized with a new enemy
@@ -761,7 +761,7 @@ Schedule_t* CBarney ::GetSchedule()
 	return CTalkMonster::GetSchedule();
 }
 
-MONSTERSTATE CBarney ::GetIdealState()
+MONSTERSTATE CBarney::GetIdealState()
 {
 	return CTalkMonster::GetIdealState();
 }
@@ -817,7 +817,7 @@ LINK_ENTITY_TO_CLASS(monster_barney_dead, CDeadBarney);
 //=========================================================
 // ********** DeadBarney SPAWN **********
 //=========================================================
-void CDeadBarney ::Spawn()
+void CDeadBarney::Spawn()
 {
 	PRECACHE_MODEL("models/barney.mdl");
 	SET_MODEL(ENT(pev), "models/barney.mdl");

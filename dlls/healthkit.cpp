@@ -49,7 +49,7 @@ TYPEDESCRIPTION	CHealthKit::m_SaveData[] =
 IMPLEMENT_SAVERESTORE( CHealthKit, CItem);
 */
 
-void CHealthKit ::Spawn()
+void CHealthKit::Spawn()
 {
 	Precache();
 	SET_MODEL(ENT(pev), "models/w_medkit.mdl");
@@ -108,7 +108,7 @@ public:
 	void EXPORT Recharge();
 	bool KeyValue(KeyValueData* pkvd) override;
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	int ObjectCaps() override { return (CBaseToggle ::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return (CBaseToggle::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 

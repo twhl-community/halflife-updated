@@ -126,14 +126,14 @@ IMPLEMENT_SAVERESTORE(CHAssassin, CBaseMonster);
 //=========================================================
 // DieSound
 //=========================================================
-void CHAssassin ::DeathSound()
+void CHAssassin::DeathSound()
 {
 }
 
 //=========================================================
 // IdleSound
 //=========================================================
-void CHAssassin ::IdleSound()
+void CHAssassin::IdleSound()
 {
 }
 
@@ -141,7 +141,7 @@ void CHAssassin ::IdleSound()
 // ISoundMask - returns a bit mask indicating which types
 // of sounds this monster regards.
 //=========================================================
-int CHAssassin ::ISoundMask()
+int CHAssassin::ISoundMask()
 {
 	return bits_SOUND_WORLD |
 		   bits_SOUND_COMBAT |
@@ -154,7 +154,7 @@ int CHAssassin ::ISoundMask()
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CHAssassin ::Classify()
+int CHAssassin::Classify()
 {
 	return CLASS_HUMAN_MILITARY;
 }
@@ -163,7 +163,7 @@ int CHAssassin ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHAssassin ::SetYawSpeed()
+void CHAssassin::SetYawSpeed()
 {
 	int ys;
 
@@ -185,7 +185,7 @@ void CHAssassin ::SetYawSpeed()
 //=========================================================
 // Shoot
 //=========================================================
-void CHAssassin ::Shoot()
+void CHAssassin::Shoot()
 {
 	if (m_hEnemy == NULL)
 	{
@@ -238,7 +238,7 @@ void CHAssassin ::Shoot()
 //
 // Returns number of events handled, 0 if none.
 //=========================================================
-void CHAssassin ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CHAssassin::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -272,7 +272,7 @@ void CHAssassin ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CHAssassin ::Spawn()
+void CHAssassin::Spawn()
 {
 	Precache();
 
@@ -301,7 +301,7 @@ void CHAssassin ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CHAssassin ::Precache()
+void CHAssassin::Precache()
 {
 	PRECACHE_MODEL("models/hassassin.mdl");
 
@@ -599,7 +599,7 @@ IMPLEMENT_CUSTOM_SCHEDULES(CHAssassin, CBaseMonster);
 //=========================================================
 // CheckMeleeAttack1 - jump like crazy if the enemy gets too close.
 //=========================================================
-bool CHAssassin ::CheckMeleeAttack1(float flDot, float flDist)
+bool CHAssassin::CheckMeleeAttack1(float flDot, float flDist)
 {
 	if (m_flNextJump < gpGlobals->time && (flDist <= 128 || HasMemory(bits_MEMORY_BADJUMP)) && m_hEnemy != NULL)
 	{
@@ -629,7 +629,7 @@ bool CHAssassin ::CheckMeleeAttack1(float flDot, float flDist)
 // CheckRangeAttack1  - drop a cap in their ass
 //
 //=========================================================
-bool CHAssassin ::CheckRangeAttack1(float flDot, float flDist)
+bool CHAssassin::CheckRangeAttack1(float flDot, float flDist)
 {
 	if (!HasConditions(bits_COND_ENEMY_OCCLUDED) && flDist > 64 && flDist <= 2048 /* && flDot >= 0.5 */ /* && NoFriendlyFire() */)
 	{
@@ -651,7 +651,7 @@ bool CHAssassin ::CheckRangeAttack1(float flDot, float flDist)
 //=========================================================
 // CheckRangeAttack2 - toss grenade is enemy gets in the way and is too close.
 //=========================================================
-bool CHAssassin ::CheckRangeAttack2(float flDot, float flDist)
+bool CHAssassin::CheckRangeAttack2(float flDot, float flDist)
 {
 	m_fThrowGrenade = false;
 	if (!FBitSet(m_hEnemy->pev->flags, FL_ONGROUND))
@@ -686,9 +686,9 @@ bool CHAssassin ::CheckRangeAttack2(float flDot, float flDist)
 //=========================================================
 // RunAI
 //=========================================================
-void CHAssassin ::RunAI()
+void CHAssassin::RunAI()
 {
-	CBaseMonster ::RunAI();
+	CBaseMonster::RunAI();
 
 	// always visible if moving
 	// always visible is not on hard
@@ -743,7 +743,7 @@ void CHAssassin ::RunAI()
 //=========================================================
 // StartTask
 //=========================================================
-void CHAssassin ::StartTask(Task_t* pTask)
+void CHAssassin::StartTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -754,13 +754,13 @@ void CHAssassin ::StartTask(Task_t* pTask)
 		}
 		else
 		{
-			CBaseMonster ::StartTask(pTask);
+			CBaseMonster::StartTask(pTask);
 		}
 		break;
 	case TASK_ASSASSIN_FALL_TO_GROUND:
 		break;
 	default:
-		CBaseMonster ::StartTask(pTask);
+		CBaseMonster::StartTask(pTask);
 		break;
 	}
 }
@@ -769,7 +769,7 @@ void CHAssassin ::StartTask(Task_t* pTask)
 //=========================================================
 // RunTask
 //=========================================================
-void CHAssassin ::RunTask(Task_t* pTask)
+void CHAssassin::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -804,7 +804,7 @@ void CHAssassin ::RunTask(Task_t* pTask)
 		}
 		break;
 	default:
-		CBaseMonster ::RunTask(pTask);
+		CBaseMonster::RunTask(pTask);
 		break;
 	}
 }
@@ -815,7 +815,7 @@ void CHAssassin ::RunTask(Task_t* pTask)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-Schedule_t* CHAssassin ::GetSchedule()
+Schedule_t* CHAssassin::GetSchedule()
 {
 	switch (m_MonsterState)
 	{
@@ -844,7 +844,7 @@ Schedule_t* CHAssassin ::GetSchedule()
 		if (HasConditions(bits_COND_ENEMY_DEAD))
 		{
 			// call base class, all code to handle dead enemies is centralized there.
-			return CBaseMonster ::GetSchedule();
+			return CBaseMonster::GetSchedule();
 		}
 
 		// flying?
@@ -938,12 +938,12 @@ Schedule_t* CHAssassin ::GetSchedule()
 	break;
 	}
 
-	return CBaseMonster ::GetSchedule();
+	return CBaseMonster::GetSchedule();
 }
 
 //=========================================================
 //=========================================================
-Schedule_t* CHAssassin ::GetScheduleOfType(int Type)
+Schedule_t* CHAssassin::GetScheduleOfType(int Type)
 {
 	// ALERT( at_console, "%d\n", m_iFrustration );
 	switch (Type)
@@ -991,5 +991,5 @@ Schedule_t* CHAssassin ::GetScheduleOfType(int Type)
 		return slAssassinJumpLand;
 	}
 
-	return CBaseMonster ::GetScheduleOfType(Type);
+	return CBaseMonster::GetScheduleOfType(Type);
 }

@@ -977,7 +977,7 @@ public:
 	bool KeyValue(KeyValueData* pkvd) override;
 	int ObjectCaps() override
 	{
-		int flags = CBaseToggle ::ObjectCaps() & (~FCAP_ACROSS_TRANSITION);
+		int flags = CBaseToggle::ObjectCaps() & (~FCAP_ACROSS_TRANSITION);
 		if ((pev->spawnflags & SF_MOMENTARY_DOOR) != 0)
 			return flags;
 		return flags | FCAP_CONTINUOUS_USE;
@@ -1358,7 +1358,7 @@ void CButtonTarget::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 }
 
 
-int CButtonTarget ::ObjectCaps()
+int CButtonTarget::ObjectCaps()
 {
 	int caps = CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
 

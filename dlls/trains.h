@@ -102,7 +102,7 @@ public:
 	bool Restore(CRestore& restore) override;
 
 	static TYPEDESCRIPTION m_SaveData[];
-	int ObjectCaps() override { return (CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DIRECTIONAL_USE; }
 
 	void OverrideReset() override;
 

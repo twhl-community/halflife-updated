@@ -32,7 +32,7 @@ class CCycler : public CBaseMonster
 {
 public:
 	void GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax);
-	int ObjectCaps() override { return (CBaseEntity ::ObjectCaps() | FCAP_IMPULSE_USE); }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE); }
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	void Spawn() override;
 	void Think() override;
@@ -79,7 +79,7 @@ public:
 	void Spawn() override;
 };
 LINK_ENTITY_TO_CLASS(cycler_prdroid, CCyclerProbe);
-void CCyclerProbe ::Spawn()
+void CCyclerProbe::Spawn()
 {
 	pev->origin = pev->origin + Vector(0, 0, 16);
 	GenericCyclerSpawn("models/prdroid.mdl", Vector(-16, -16, -16), Vector(16, 16, 16));
@@ -89,7 +89,7 @@ void CCyclerProbe ::Spawn()
 
 // Cycler member functions
 
-void CCycler ::GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax)
+void CCycler::GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax)
 {
 	if (!szModel || '\0' == *szModel)
 	{
@@ -108,7 +108,7 @@ void CCycler ::GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vec
 }
 
 
-void CCycler ::Spawn()
+void CCycler::Spawn()
 {
 	InitBoneControllers();
 	pev->solid = SOLID_SLIDEBOX;
@@ -144,7 +144,7 @@ void CCycler ::Spawn()
 //
 // cycler think
 //
-void CCycler ::Think()
+void CCycler::Think()
 {
 	pev->nextthink = gpGlobals->time + 0.1;
 
@@ -169,7 +169,7 @@ void CCycler ::Think()
 //
 // CyclerUse - starts a rotation trend
 //
-void CCycler ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
+void CCycler::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	m_animate = !m_animate;
 	if (m_animate)
@@ -181,8 +181,8 @@ void CCycler ::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTy
 //
 // CyclerPain , changes sequences when shot
 //
-//void CCycler :: Pain( float flDamage )
-bool CCycler ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+//void CCycler:: Pain( float flDamage )
+bool CCycler::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (m_animate)
 	{
@@ -214,7 +214,7 @@ public:
 	void Spawn() override;
 	void Think() override;
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	int ObjectCaps() override { return (CBaseEntity ::ObjectCaps() | FCAP_IMPULSE_USE); }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE); }
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	void Animate(float frames);
 

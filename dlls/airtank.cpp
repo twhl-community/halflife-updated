@@ -46,7 +46,7 @@ TYPEDESCRIPTION CAirtank::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CAirtank, CGrenade);
 
 
-void CAirtank ::Spawn()
+void CAirtank::Spawn()
 {
 	Precache();
 	// motor
@@ -74,7 +74,7 @@ void CAirtank::Precache()
 }
 
 
-void CAirtank ::Killed(entvars_t* pevAttacker, int iGib)
+void CAirtank::Killed(entvars_t* pevAttacker, int iGib)
 {
 	pev->owner = ENT(pevAttacker);
 

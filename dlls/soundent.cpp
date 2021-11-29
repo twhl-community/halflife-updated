@@ -24,7 +24,7 @@ LINK_ENTITY_TO_CLASS(soundent, CSoundEnt);
 //=========================================================
 // CSound - Clear - zeros all fields for a sound
 //=========================================================
-void CSound ::Clear()
+void CSound::Clear()
 {
 	m_vecOrigin = g_vecZero;
 	m_iType = 0;
@@ -38,7 +38,7 @@ void CSound ::Clear()
 // Reset - clears the volume, origin, and type for a sound,
 // but doesn't expire or unlink it.
 //=========================================================
-void CSound ::Reset()
+void CSound::Reset()
 {
 	m_vecOrigin = g_vecZero;
 	m_iType = 0;
@@ -49,7 +49,7 @@ void CSound ::Reset()
 //=========================================================
 // FIsSound - returns true if the sound is an Audible sound
 //=========================================================
-bool CSound ::FIsSound()
+bool CSound::FIsSound()
 {
 	if ((m_iType & (bits_SOUND_COMBAT | bits_SOUND_WORLD | bits_SOUND_PLAYER | bits_SOUND_DANGER)) != 0)
 	{
@@ -62,7 +62,7 @@ bool CSound ::FIsSound()
 //=========================================================
 // FIsScent - returns true if the sound is actually a scent
 //=========================================================
-bool CSound ::FIsScent()
+bool CSound::FIsScent()
 {
 	if ((m_iType & (bits_SOUND_CARCASS | bits_SOUND_MEAT | bits_SOUND_GARBAGE)) != 0)
 	{
@@ -75,7 +75,7 @@ bool CSound ::FIsScent()
 //=========================================================
 // Spawn
 //=========================================================
-void CSoundEnt ::Spawn()
+void CSoundEnt::Spawn()
 {
 	pev->solid = SOLID_NOT;
 	Initialize();
@@ -88,7 +88,7 @@ void CSoundEnt ::Spawn()
 // for sounds that have ExpireTimes less than or equal
 // to the current world time, and these sounds are deallocated.
 //=========================================================
-void CSoundEnt ::Think()
+void CSoundEnt::Think()
 {
 	int iSound;
 	int iPreviousSound;
@@ -126,7 +126,7 @@ void CSoundEnt ::Think()
 //=========================================================
 // Precache - dummy function
 //=========================================================
-void CSoundEnt ::Precache()
+void CSoundEnt::Precache()
 {
 }
 
@@ -135,7 +135,7 @@ void CSoundEnt ::Precache()
 // to the top of the free list. TAKE CARE to only call this
 // function for sounds in the Active list!!
 //=========================================================
-void CSoundEnt ::FreeSound(int iSound, int iPrevious)
+void CSoundEnt::FreeSound(int iSound, int iPrevious)
 {
 	if (!pSoundEnt)
 	{
@@ -165,7 +165,7 @@ void CSoundEnt ::FreeSound(int iSound, int iPrevious)
 // IAllocSound - moves a sound from the Free list to the
 // Active list returns the index of the alloc'd sound
 //=========================================================
-int CSoundEnt ::IAllocSound()
+int CSoundEnt::IAllocSound()
 {
 	int iNewSound;
 
@@ -194,7 +194,7 @@ int CSoundEnt ::IAllocSound()
 // InsertSound - Allocates a free sound and fills it with
 // sound info.
 //=========================================================
-void CSoundEnt ::InsertSound(int iType, const Vector& vecOrigin, int iVolume, float flDuration)
+void CSoundEnt::InsertSound(int iType, const Vector& vecOrigin, int iVolume, float flDuration)
 {
 	int iThisSound;
 
@@ -222,7 +222,7 @@ void CSoundEnt ::InsertSound(int iType, const Vector& vecOrigin, int iVolume, fl
 // Initialize - clears all sounds and moves them into the
 // free sound list.
 //=========================================================
-void CSoundEnt ::Initialize()
+void CSoundEnt::Initialize()
 {
 	int i;
 	int iSound;
@@ -268,7 +268,7 @@ void CSoundEnt ::Initialize()
 // ISoundsInList - returns the number of sounds in the desired
 // sound list.
 //=========================================================
-int CSoundEnt ::ISoundsInList(int iListType)
+int CSoundEnt::ISoundsInList(int iListType)
 {
 	int iThisSound = [=]()
 	{
@@ -297,7 +297,7 @@ int CSoundEnt ::ISoundsInList(int iListType)
 //=========================================================
 // ActiveList - returns the head of the active sound list
 //=========================================================
-int CSoundEnt ::ActiveList()
+int CSoundEnt::ActiveList()
 {
 	if (!pSoundEnt)
 	{
@@ -310,7 +310,7 @@ int CSoundEnt ::ActiveList()
 //=========================================================
 // FreeList - returns the head of the free sound list
 //=========================================================
-int CSoundEnt ::FreeList()
+int CSoundEnt::FreeList()
 {
 	if (!pSoundEnt)
 	{
@@ -324,7 +324,7 @@ int CSoundEnt ::FreeList()
 // SoundPointerForIndex - returns a pointer to the instance
 // of CSound at index's position in the sound pool.
 //=========================================================
-CSound* CSoundEnt ::SoundPointerForIndex(int iIndex)
+CSound* CSoundEnt::SoundPointerForIndex(int iIndex)
 {
 	if (!pSoundEnt)
 	{
@@ -352,7 +352,7 @@ CSound* CSoundEnt ::SoundPointerForIndex(int iIndex)
 // so this function ensures that a client gets the proper index
 // to his reserved sound in the soundlist.
 //=========================================================
-int CSoundEnt ::ClientSoundIndex(edict_t* pClient)
+int CSoundEnt::ClientSoundIndex(edict_t* pClient)
 {
 	int iReturn = ENTINDEX(pClient) - 1;
 

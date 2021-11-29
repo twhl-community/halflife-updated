@@ -149,7 +149,7 @@ const char* CHeadCrab::pBiteSounds[] =
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CHeadCrab ::Classify()
+int CHeadCrab::Classify()
 {
 	return CLASS_ALIEN_PREY;
 }
@@ -159,13 +159,13 @@ int CHeadCrab ::Classify()
 // bounding box is much larger than the actual creature so
 // this is needed for targeting
 //=========================================================
-Vector CHeadCrab ::Center()
+Vector CHeadCrab::Center()
 {
 	return Vector(pev->origin.x, pev->origin.y, pev->origin.z + 6);
 }
 
 
-Vector CHeadCrab ::BodyTarget(const Vector& posSrc)
+Vector CHeadCrab::BodyTarget(const Vector& posSrc)
 {
 	return Center();
 }
@@ -174,7 +174,7 @@ Vector CHeadCrab ::BodyTarget(const Vector& posSrc)
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CHeadCrab ::SetYawSpeed()
+void CHeadCrab::SetYawSpeed()
 {
 	int ys;
 
@@ -206,7 +206,7 @@ void CHeadCrab ::SetYawSpeed()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CHeadCrab ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CHeadCrab::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -269,7 +269,7 @@ void CHeadCrab ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CHeadCrab ::Spawn()
+void CHeadCrab::Spawn()
 {
 	Precache();
 
@@ -292,7 +292,7 @@ void CHeadCrab ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CHeadCrab ::Precache()
+void CHeadCrab::Precache()
 {
 	PRECACHE_SOUND_ARRAY(pIdleSounds);
 	PRECACHE_SOUND_ARRAY(pAlertSounds);
@@ -308,7 +308,7 @@ void CHeadCrab ::Precache()
 //=========================================================
 // RunTask
 //=========================================================
-void CHeadCrab ::RunTask(Task_t* pTask)
+void CHeadCrab::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -323,7 +323,7 @@ void CHeadCrab ::RunTask(Task_t* pTask)
 		break;
 	}
 	default: {
-		CBaseMonster ::RunTask(pTask);
+		CBaseMonster::RunTask(pTask);
 	}
 	}
 }
@@ -332,7 +332,7 @@ void CHeadCrab ::RunTask(Task_t* pTask)
 // LeapTouch - this is the headcrab's touch function when it
 // is in the air
 //=========================================================
-void CHeadCrab ::LeapTouch(CBaseEntity* pOther)
+void CHeadCrab::LeapTouch(CBaseEntity* pOther)
 {
 	if (0 == pOther->pev->takedamage)
 	{
@@ -358,7 +358,7 @@ void CHeadCrab ::LeapTouch(CBaseEntity* pOther)
 //=========================================================
 // PrescheduleThink
 //=========================================================
-void CHeadCrab ::PrescheduleThink()
+void CHeadCrab::PrescheduleThink()
 {
 	// make the crab coo a little bit in combat state
 	if (m_MonsterState == MONSTERSTATE_COMBAT && RANDOM_FLOAT(0, 5) < 0.1)
@@ -367,7 +367,7 @@ void CHeadCrab ::PrescheduleThink()
 	}
 }
 
-void CHeadCrab ::StartTask(Task_t* pTask)
+void CHeadCrab::StartTask(Task_t* pTask)
 {
 	m_iTaskStatus = TASKSTATUS_RUNNING;
 
@@ -380,7 +380,7 @@ void CHeadCrab ::StartTask(Task_t* pTask)
 		break;
 	}
 	default: {
-		CBaseMonster ::StartTask(pTask);
+		CBaseMonster::StartTask(pTask);
 	}
 	}
 }
@@ -389,7 +389,7 @@ void CHeadCrab ::StartTask(Task_t* pTask)
 //=========================================================
 // CheckRangeAttack1
 //=========================================================
-bool CHeadCrab ::CheckRangeAttack1(float flDot, float flDist)
+bool CHeadCrab::CheckRangeAttack1(float flDot, float flDist)
 {
 	if (FBitSet(pev->flags, FL_ONGROUND) && flDist <= 256 && flDot >= 0.65)
 	{
@@ -401,7 +401,7 @@ bool CHeadCrab ::CheckRangeAttack1(float flDot, float flDist)
 //=========================================================
 // CheckRangeAttack2
 //=========================================================
-bool CHeadCrab ::CheckRangeAttack2(float flDot, float flDist)
+bool CHeadCrab::CheckRangeAttack2(float flDot, float flDist)
 {
 	return false;
 	// BUGBUG: Why is this code here?  There is no ACT_RANGE_ATTACK2 animation.  I've disabled it for now.
@@ -414,7 +414,7 @@ bool CHeadCrab ::CheckRangeAttack2(float flDot, float flDist)
 #endif
 }
 
-bool CHeadCrab ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CHeadCrab::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// Don't take any acid damage -- BigMomma's mortar is acid
 	if ((bitsDamageType & DMG_ACID) != 0)
@@ -427,7 +427,7 @@ bool CHeadCrab ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 // IdleSound
 //=========================================================
 #define CRAB_ATTN_IDLE (float)1.5
-void CHeadCrab ::IdleSound()
+void CHeadCrab::IdleSound()
 {
 	EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pIdleSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -435,7 +435,7 @@ void CHeadCrab ::IdleSound()
 //=========================================================
 // AlertSound
 //=========================================================
-void CHeadCrab ::AlertSound()
+void CHeadCrab::AlertSound()
 {
 	EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pAlertSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -443,7 +443,7 @@ void CHeadCrab ::AlertSound()
 //=========================================================
 // AlertSound
 //=========================================================
-void CHeadCrab ::PainSound()
+void CHeadCrab::PainSound()
 {
 	EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pPainSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
@@ -451,12 +451,12 @@ void CHeadCrab ::PainSound()
 //=========================================================
 // DeathSound
 //=========================================================
-void CHeadCrab ::DeathSound()
+void CHeadCrab::DeathSound()
 {
 	EMIT_SOUND_DYN(edict(), CHAN_VOICE, RANDOM_SOUND_ARRAY(pDeathSounds), GetSoundVolue(), ATTN_IDLE, 0, GetVoicePitch());
 }
 
-Schedule_t* CHeadCrab ::GetScheduleOfType(int Type)
+Schedule_t* CHeadCrab::GetScheduleOfType(int Type)
 {
 	switch (Type)
 	{
@@ -484,7 +484,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS(monster_babycrab, CBabyCrab);
 
-void CBabyCrab ::Spawn()
+void CBabyCrab::Spawn()
 {
 	CHeadCrab::Spawn();
 	SET_MODEL(ENT(pev), "models/baby_headcrab.mdl");
@@ -495,20 +495,20 @@ void CBabyCrab ::Spawn()
 	pev->health = gSkillData.headcrabHealth * 0.25; // less health than full grown
 }
 
-void CBabyCrab ::Precache()
+void CBabyCrab::Precache()
 {
 	PRECACHE_MODEL("models/baby_headcrab.mdl");
 	CHeadCrab::Precache();
 }
 
 
-void CBabyCrab ::SetYawSpeed()
+void CBabyCrab::SetYawSpeed()
 {
 	pev->yaw_speed = 120;
 }
 
 
-bool CBabyCrab ::CheckRangeAttack1(float flDot, float flDist)
+bool CBabyCrab::CheckRangeAttack1(float flDot, float flDist)
 {
 	if ((pev->flags & FL_ONGROUND) != 0)
 	{
@@ -524,7 +524,7 @@ bool CBabyCrab ::CheckRangeAttack1(float flDot, float flDist)
 }
 
 
-Schedule_t* CBabyCrab ::GetScheduleOfType(int Type)
+Schedule_t* CBabyCrab::GetScheduleOfType(int Type)
 {
 	switch (Type)
 	{

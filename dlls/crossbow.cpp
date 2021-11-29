@@ -88,7 +88,7 @@ void CCrossbowBolt::Precache()
 }
 
 
-int CCrossbowBolt ::Classify()
+int CCrossbowBolt::Classify()
 {
 	return CLASS_NONE;
 }

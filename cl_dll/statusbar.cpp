@@ -38,7 +38,7 @@ DECLARE_MESSAGE(m_StatusBar, StatusValue);
 float* GetClientColor(int clientIndex);
 extern float g_ColorYellow[3];
 
-bool CHudStatusBar ::Init()
+bool CHudStatusBar::Init()
 {
 	gHUD.AddHudElem(this);
 
@@ -52,14 +52,14 @@ bool CHudStatusBar ::Init()
 	return true;
 }
 
-bool CHudStatusBar ::VidInit()
+bool CHudStatusBar::VidInit()
 {
 	// Load sprites here
 
 	return true;
 }
 
-void CHudStatusBar ::Reset()
+void CHudStatusBar::Reset()
 {
 	int i = 0;
 
@@ -75,7 +75,7 @@ void CHudStatusBar ::Reset()
 		m_pflNameColors[i] = g_ColorYellow;
 }
 
-void CHudStatusBar ::ParseStatusString(int line_num)
+void CHudStatusBar::ParseStatusString(int line_num)
 {
 	// localise string first
 	char szBuffer[MAX_STATUSTEXT_LENGTH];
@@ -176,7 +176,7 @@ void CHudStatusBar ::ParseStatusString(int line_num)
 	}
 }
 
-bool CHudStatusBar ::Draw(float fTime)
+bool CHudStatusBar::Draw(float fTime)
 {
 	if (m_bReparseString)
 	{
@@ -227,7 +227,7 @@ bool CHudStatusBar ::Draw(float fTime)
 // if StatusValue[slotnum] != 0, the following string is drawn, upto the next newline - otherwise the text is skipped upto next newline
 // %pX, where X is an integer, will substitute a player name here, getting the player index from StatusValue[X]
 // %iX, where X is an integer, will substitute a number here, getting the number from StatusValue[X]
-bool CHudStatusBar ::MsgFunc_StatusText(const char* pszName, int iSize, void* pbuf)
+bool CHudStatusBar::MsgFunc_StatusText(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);
 
@@ -249,7 +249,7 @@ bool CHudStatusBar ::MsgFunc_StatusText(const char* pszName, int iSize, void* pb
 // accepts two values:
 //		byte: index into the status value array
 //		short: value to store
-bool CHudStatusBar ::MsgFunc_StatusValue(const char* pszName, int iSize, void* pbuf)
+bool CHudStatusBar::MsgFunc_StatusValue(const char* pszName, int iSize, void* pbuf)
 {
 	BEGIN_READ(pbuf, iSize);
 

@@ -1601,7 +1601,7 @@ char* sOldWeaponPModels[] =
 		"models/p_shotgun2.mdl"};
 
 
-int CStudioModelRenderer ::ReturnDiguisedClass(int iPlayerIndex)
+int CStudioModelRenderer::ReturnDiguisedClass(int iPlayerIndex)
 {
 	m_pRenderModel = IEngineStudio.SetupPlayerModel(iPlayerIndex);
 

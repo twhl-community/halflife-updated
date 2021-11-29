@@ -29,7 +29,7 @@ public:
 	void SetActivity(Activity act);
 	inline Activity GetActivity() { return m_Activity; }
 
-	int ObjectCaps() override { return CBaseAnimating ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseAnimating::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
@@ -46,7 +46,7 @@ TYPEDESCRIPTION CActAnimating::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CActAnimating, CBaseAnimating);
 
-void CActAnimating ::SetActivity(Activity act)
+void CActAnimating::SetActivity(Activity act)
 {
 	int sequence = LookupActivity(act);
 	if (sequence != ACTIVITY_NOT_AVAILABLE)
@@ -89,7 +89,7 @@ TYPEDESCRIPTION CXenPLight::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CXenPLight, CActAnimating);
 
-void CXenPLight ::Spawn()
+void CXenPLight::Spawn()
 {
 	Precache();
 
@@ -108,14 +108,14 @@ void CXenPLight ::Spawn()
 }
 
 
-void CXenPLight ::Precache()
+void CXenPLight::Precache()
 {
 	PRECACHE_MODEL("models/light.mdl");
 	PRECACHE_MODEL(XEN_PLANT_GLOW_SPRITE);
 }
 
 
-void CXenPLight ::Think()
+void CXenPLight::Think()
 {
 	StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -150,7 +150,7 @@ void CXenPLight ::Think()
 }
 
 
-void CXenPLight ::Touch(CBaseEntity* pOther)
+void CXenPLight::Touch(CBaseEntity* pOther)
 {
 	if (pOther->IsPlayer())
 	{
@@ -163,7 +163,7 @@ void CXenPLight ::Touch(CBaseEntity* pOther)
 }
 
 
-void CXenPLight ::LightOn()
+void CXenPLight::LightOn()
 {
 	SUB_UseTargets(this, USE_ON, 0);
 	if (m_pGlow)
@@ -171,7 +171,7 @@ void CXenPLight ::LightOn()
 }
 
 
-void CXenPLight ::LightOff()
+void CXenPLight::LightOff()
 {
 	SUB_UseTargets(this, USE_OFF, 0);
 	if (m_pGlow)
@@ -233,7 +233,7 @@ public:
 };
 LINK_ENTITY_TO_CLASS(xen_ttrigger, CXenTreeTrigger);
 
-CXenTreeTrigger* CXenTreeTrigger ::TriggerCreate(edict_t* pOwner, const Vector& position)
+CXenTreeTrigger* CXenTreeTrigger::TriggerCreate(edict_t* pOwner, const Vector& position)
 {
 	CXenTreeTrigger* pTrigger = GetClassPtr((CXenTreeTrigger*)NULL);
 	pTrigger->pev->origin = position;
@@ -294,7 +294,7 @@ TYPEDESCRIPTION CXenTree::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CXenTree, CActAnimating);
 
-void CXenTree ::Spawn()
+void CXenTree::Spawn()
 {
 	Precache();
 
@@ -331,7 +331,7 @@ const char* CXenTree::pAttackMissSounds[] =
 		"zombie/claw_miss2.wav",
 };
 
-void CXenTree ::Precache()
+void CXenTree::Precache()
 {
 	PRECACHE_MODEL("models/tree.mdl");
 	PRECACHE_MODEL(XEN_PLANT_GLOW_SPRITE);
@@ -340,7 +340,7 @@ void CXenTree ::Precache()
 }
 
 
-void CXenTree ::Touch(CBaseEntity* pOther)
+void CXenTree::Touch(CBaseEntity* pOther)
 {
 	if (!pOther->IsPlayer() && FClassnameIs(pOther->pev, "monster_bigmomma"))
 		return;
@@ -349,7 +349,7 @@ void CXenTree ::Touch(CBaseEntity* pOther)
 }
 
 
-void CXenTree ::Attack()
+void CXenTree::Attack()
 {
 	if (GetActivity() == ACT_IDLE)
 	{
@@ -360,7 +360,7 @@ void CXenTree ::Attack()
 }
 
 
-void CXenTree ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CXenTree::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -397,7 +397,7 @@ void CXenTree ::HandleAnimEvent(MonsterEvent_t* pEvent)
 	CActAnimating::HandleAnimEvent(pEvent);
 }
 
-void CXenTree ::Think()
+void CXenTree::Think()
 {
 	float flInterval = StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;
@@ -470,7 +470,7 @@ public:
 	int Classify() override { return CLASS_BARNACLE; }
 };
 
-CXenHull* CXenHull ::CreateHull(CBaseEntity* source, const Vector& mins, const Vector& maxs, const Vector& offset)
+CXenHull* CXenHull::CreateHull(CBaseEntity* source, const Vector& mins, const Vector& maxs, const Vector& offset)
 {
 	CXenHull* pHull = GetClassPtr((CXenHull*)NULL);
 
@@ -530,10 +530,10 @@ void CXenSporeLarge::Spawn()
 
 	// Rotate the leg hulls into position
 	for (int i = 0; i < ARRAYSIZE(m_hullSizes); i++)
-		CXenHull ::CreateHull(this, Vector(-12, -12, 0), Vector(12, 12, 120), (m_hullSizes[i].x * forward) + (m_hullSizes[i].y * right));
+		CXenHull::CreateHull(this, Vector(-12, -12, 0), Vector(12, 12, 120), (m_hullSizes[i].x * forward) + (m_hullSizes[i].y * right));
 }
 
-void CXenSpore ::Spawn()
+void CXenSpore::Spawn()
 {
 	Precache();
 
@@ -558,18 +558,18 @@ const char* CXenSpore::pModelNames[] =
 };
 
 
-void CXenSpore ::Precache()
+void CXenSpore::Precache()
 {
 	PRECACHE_MODEL((char*)pModelNames[pev->skin]);
 }
 
 
-void CXenSpore ::Touch(CBaseEntity* pOther)
+void CXenSpore::Touch(CBaseEntity* pOther)
 {
 }
 
 
-void CXenSpore ::Think()
+void CXenSpore::Think()
 {
 	float flInterval = StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;

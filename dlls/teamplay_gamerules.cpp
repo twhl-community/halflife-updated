@@ -30,7 +30,7 @@ static char team_names[MAX_TEAMS][MAX_TEAMNAME_LENGTH];
 static int team_scores[MAX_TEAMS];
 static int num_teams = 0;
 
-CHalfLifeTeamplay ::CHalfLifeTeamplay()
+CHalfLifeTeamplay::CHalfLifeTeamplay()
 {
 	m_DisableDeathMessages = false;
 	m_DisableDeathPenalty = false;
@@ -69,7 +69,7 @@ CHalfLifeTeamplay ::CHalfLifeTeamplay()
 #include "voice_gamemgr.h"
 extern CVoiceGameMgr g_VoiceGameMgr;
 
-void CHalfLifeTeamplay ::Think()
+void CHalfLifeTeamplay::Think()
 {
 	///// Check game rules /////
 	static int last_frags;
@@ -141,7 +141,7 @@ void CHalfLifeTeamplay ::Think()
 // the user has typed a command which is unrecognized by everything else;
 // this check to see if the gamerules knows anything about the command
 //=========================================================
-bool CHalfLifeTeamplay ::ClientCommand(CBasePlayer* pPlayer, const char* pcmd)
+bool CHalfLifeTeamplay::ClientCommand(CBasePlayer* pPlayer, const char* pcmd)
 {
 	if (g_VoiceGameMgr.ClientCommand(pPlayer, pcmd))
 		return true;
@@ -161,7 +161,7 @@ bool CHalfLifeTeamplay ::ClientCommand(CBasePlayer* pPlayer, const char* pcmd)
 	return false;
 }
 
-void CHalfLifeTeamplay ::UpdateGameMode(CBasePlayer* pPlayer)
+void CHalfLifeTeamplay::UpdateGameMode(CBasePlayer* pPlayer)
 {
 	MESSAGE_BEGIN(MSG_ONE, gmsgGameMode, NULL, pPlayer->edict());
 	WRITE_BYTE(1); // game mode teamplay
@@ -381,7 +381,7 @@ void CHalfLifeTeamplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, en
 
 //=========================================================
 //=========================================================
-void CHalfLifeTeamplay ::PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor)
+void CHalfLifeTeamplay::PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor)
 {
 	if (!m_DisableDeathPenalty)
 	{

@@ -67,7 +67,7 @@ IMPLEMENT_SAVERESTORE(CGMan, CBaseMonster);
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CGMan ::Classify()
+int CGMan::Classify()
 {
 	return CLASS_NONE;
 }
@@ -76,7 +76,7 @@ int CGMan ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGMan ::SetYawSpeed()
+void CGMan::SetYawSpeed()
 {
 	int ys;
 
@@ -94,7 +94,7 @@ void CGMan ::SetYawSpeed()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CGMan ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CGMan::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -108,7 +108,7 @@ void CGMan ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // ISoundMask - generic monster can't hear.
 //=========================================================
-int CGMan ::ISoundMask()
+int CGMan::ISoundMask()
 {
 	return bits_SOUND_NONE;
 }
@@ -116,7 +116,7 @@ int CGMan ::ISoundMask()
 //=========================================================
 // Spawn
 //=========================================================
-void CGMan ::Spawn()
+void CGMan::Spawn()
 {
 	Precache();
 
@@ -136,7 +136,7 @@ void CGMan ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CGMan ::Precache()
+void CGMan::Precache()
 {
 	PRECACHE_MODEL("models/gman.mdl");
 }
@@ -147,7 +147,7 @@ void CGMan ::Precache()
 //=========================================================
 
 
-void CGMan ::StartTask(Task_t* pTask)
+void CGMan::StartTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -161,7 +161,7 @@ void CGMan ::StartTask(Task_t* pTask)
 	CBaseMonster::StartTask(pTask);
 }
 
-void CGMan ::RunTask(Task_t* pTask)
+void CGMan::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -209,7 +209,7 @@ void CGMan ::RunTask(Task_t* pTask)
 //=========================================================
 // Override all damage
 //=========================================================
-bool CGMan ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CGMan::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	pev->health = pev->max_health / 2; // always trigger the 50% damage aitrigger
 

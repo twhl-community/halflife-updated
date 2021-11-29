@@ -59,7 +59,7 @@ public:
 	int DamageDecal(int bitsDamageType) override;
 
 	void EXPORT Die();
-	int ObjectCaps() override { return (CBaseEntity ::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
+	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 

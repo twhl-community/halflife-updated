@@ -55,7 +55,7 @@ LINK_ENTITY_TO_CLASS(monster_bloater, CBloater);
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CBloater ::Classify()
+int CBloater::Classify()
 {
 	return CLASS_ALIEN_MONSTER;
 }
@@ -64,7 +64,7 @@ int CBloater ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CBloater ::SetYawSpeed()
+void CBloater::SetYawSpeed()
 {
 	int ys;
 
@@ -79,13 +79,13 @@ void CBloater ::SetYawSpeed()
 	pev->yaw_speed = ys;
 }
 
-bool CBloater ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CBloater::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	PainSound();
 	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
-void CBloater ::PainSound()
+void CBloater::PainSound()
 {
 #if 0	
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -104,7 +104,7 @@ void CBloater ::PainSound()
 #endif
 }
 
-void CBloater ::AlertSound()
+void CBloater::AlertSound()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -124,7 +124,7 @@ void CBloater ::AlertSound()
 #endif
 }
 
-void CBloater ::IdleSound()
+void CBloater::IdleSound()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -144,7 +144,7 @@ void CBloater ::IdleSound()
 #endif
 }
 
-void CBloater ::AttackSnd()
+void CBloater::AttackSnd()
 {
 #if 0
 	int pitch = 95 + RANDOM_LONG(0,9);
@@ -166,7 +166,7 @@ void CBloater ::AttackSnd()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CBloater ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CBloater::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -185,7 +185,7 @@ void CBloater ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CBloater ::Spawn()
+void CBloater::Spawn()
 {
 	Precache();
 
@@ -207,7 +207,7 @@ void CBloater ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CBloater ::Precache()
+void CBloater::Precache()
 {
 	PRECACHE_MODEL("models/floater.mdl");
 }

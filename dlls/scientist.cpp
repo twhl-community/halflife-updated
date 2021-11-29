@@ -80,7 +80,7 @@ public:
 	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
 	void RunTask(Task_t* pTask) override;
 	void StartTask(Task_t* pTask) override;
-	int ObjectCaps() override { return CTalkMonster ::ObjectCaps() | FCAP_IMPULSE_USE; }
+	int ObjectCaps() override { return CTalkMonster::ObjectCaps() | FCAP_IMPULSE_USE; }
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	int FriendNumber(int arrayNumber) override;
 	void SetActivity(Activity newActivity) override;
@@ -414,7 +414,7 @@ void CScientist::DeclineFollowing()
 }
 
 
-void CScientist ::Scream()
+void CScientist::Scream()
 {
 	if (FOkToSpeak())
 	{
@@ -433,7 +433,7 @@ Activity CScientist::GetStoppedActivity()
 }
 
 
-void CScientist ::StartTask(Task_t* pTask)
+void CScientist::StartTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -496,7 +496,7 @@ void CScientist ::StartTask(Task_t* pTask)
 	}
 }
 
-void CScientist ::RunTask(Task_t* pTask)
+void CScientist::RunTask(Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -566,7 +566,7 @@ void CScientist ::RunTask(Task_t* pTask)
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CScientist ::Classify()
+int CScientist::Classify()
 {
 	return CLASS_HUMAN_PASSIVE;
 }
@@ -576,7 +576,7 @@ int CScientist ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CScientist ::SetYawSpeed()
+void CScientist::SetYawSpeed()
 {
 	int ys;
 
@@ -606,7 +606,7 @@ void CScientist ::SetYawSpeed()
 // HandleAnimEvent - catches the monster-specific messages
 // that occur when tagged animation frames are played.
 //=========================================================
-void CScientist ::HandleAnimEvent(MonsterEvent_t* pEvent)
+void CScientist::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -632,7 +632,7 @@ void CScientist ::HandleAnimEvent(MonsterEvent_t* pEvent)
 //=========================================================
 // Spawn
 //=========================================================
-void CScientist ::Spawn()
+void CScientist::Spawn()
 {
 	Precache();
 
@@ -670,7 +670,7 @@ void CScientist ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CScientist ::Precache()
+void CScientist::Precache()
 {
 	PRECACHE_MODEL("models/scientist.mdl");
 	PRECACHE_SOUND("scientist/sci_pain1.wav");
@@ -687,7 +687,7 @@ void CScientist ::Precache()
 }
 
 // Init talk data
-void CScientist ::TalkInit()
+void CScientist::TalkInit()
 {
 
 	CTalkMonster::TalkInit();
@@ -741,7 +741,7 @@ void CScientist ::TalkInit()
 	}
 }
 
-bool CScientist ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CScientist::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 
 	if (pevInflictor && (pevInflictor->flags & FL_CLIENT) != 0)
@@ -760,7 +760,7 @@ bool CScientist ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 // of sounds this monster regards. In the base class implementation,
 // monsters care about all sounds, but no scents.
 //=========================================================
-int CScientist ::ISoundMask()
+int CScientist::ISoundMask()
 {
 	return bits_SOUND_WORLD |
 		   bits_SOUND_COMBAT |
@@ -774,7 +774,7 @@ int CScientist ::ISoundMask()
 //=========================================================
 // PainSound
 //=========================================================
-void CScientist ::PainSound()
+void CScientist::PainSound()
 {
 	if (gpGlobals->time < m_painTime)
 		return;
@@ -804,7 +804,7 @@ void CScientist ::PainSound()
 //=========================================================
 // DeathSound
 //=========================================================
-void CScientist ::DeathSound()
+void CScientist::DeathSound()
 {
 	PainSound();
 }
@@ -817,7 +817,7 @@ void CScientist::Killed(entvars_t* pevAttacker, int iGib)
 }
 
 
-void CScientist ::SetActivity(Activity newActivity)
+void CScientist::SetActivity(Activity newActivity)
 {
 	int iSequence;
 
@@ -830,7 +830,7 @@ void CScientist ::SetActivity(Activity newActivity)
 }
 
 
-Schedule_t* CScientist ::GetScheduleOfType(int Type)
+Schedule_t* CScientist::GetScheduleOfType(int Type)
 {
 	Schedule_t* psched;
 
@@ -885,7 +885,7 @@ Schedule_t* CScientist ::GetScheduleOfType(int Type)
 	return CTalkMonster::GetScheduleOfType(Type);
 }
 
-Schedule_t* CScientist ::GetSchedule()
+Schedule_t* CScientist::GetSchedule()
 {
 	// so we don't keep calling through the EHANDLE stuff
 	CBaseEntity* pEnemy = m_hEnemy;
@@ -1000,7 +1000,7 @@ Schedule_t* CScientist ::GetSchedule()
 	return CTalkMonster::GetSchedule();
 }
 
-MONSTERSTATE CScientist ::GetIdealState()
+MONSTERSTATE CScientist::GetIdealState()
 {
 	switch (m_MonsterState)
 	{
@@ -1122,7 +1122,7 @@ LINK_ENTITY_TO_CLASS(monster_scientist_dead, CDeadScientist);
 //
 // ********** DeadScientist SPAWN **********
 //
-void CDeadScientist ::Spawn()
+void CDeadScientist::Spawn()
 {
 	PRECACHE_MODEL("models/scientist.mdl");
 	SET_MODEL(ENT(pev), "models/scientist.mdl");
@@ -1204,7 +1204,7 @@ typedef enum
 //
 // ********** Scientist SPAWN **********
 //
-void CSittingScientist ::Spawn()
+void CSittingScientist::Spawn()
 {
 	PRECACHE_MODEL("models/scientist.mdl");
 	SET_MODEL(ENT(pev), "models/scientist.mdl");
@@ -1243,7 +1243,7 @@ void CSittingScientist ::Spawn()
 	DROP_TO_FLOOR(ENT(pev));
 }
 
-void CSittingScientist ::Precache()
+void CSittingScientist::Precache()
 {
 	m_baseSequence = LookupSequence("sitlookleft");
 	TalkInit();
@@ -1252,7 +1252,7 @@ void CSittingScientist ::Precache()
 //=========================================================
 // ID as a passive human
 //=========================================================
-int CSittingScientist ::Classify()
+int CSittingScientist::Classify()
 {
 	return CLASS_HUMAN_PASSIVE;
 }
@@ -1271,7 +1271,7 @@ int CSittingScientist::FriendNumber(int arrayNumber)
 //=========================================================
 // sit, do stuff
 //=========================================================
-void CSittingScientist ::SittingThink()
+void CSittingScientist::SittingThink()
 {
 	CBaseEntity* pent;
 
@@ -1373,7 +1373,7 @@ void CSittingScientist ::SittingThink()
 }
 
 // prepare sitting scientist to answer a question
-void CSittingScientist ::SetAnswerQuestion(CTalkMonster* pSpeaker)
+void CSittingScientist::SetAnswerQuestion(CTalkMonster* pSpeaker)
 {
 	m_flResponseDelay = gpGlobals->time + RANDOM_FLOAT(3, 4);
 	m_hTalkTarget = (CBaseMonster*)pSpeaker;
@@ -1384,7 +1384,7 @@ void CSittingScientist ::SetAnswerQuestion(CTalkMonster* pSpeaker)
 // FIdleSpeak
 // ask question of nearby friend, or make statement
 //=========================================================
-bool CSittingScientist ::FIdleSpeak()
+bool CSittingScientist::FIdleSpeak()
 {
 	// try to start a conversation, or make statement
 	int pitch;

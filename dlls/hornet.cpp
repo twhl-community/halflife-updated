@@ -46,18 +46,18 @@ IMPLEMENT_SAVERESTORE(CHornet, CBaseMonster);
 //=========================================================
 // don't let hornets gib, ever.
 //=========================================================
-bool CHornet ::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+bool CHornet::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// filter these bits a little.
 	bitsDamageType &= ~(DMG_ALWAYSGIB);
 	bitsDamageType |= DMG_NEVERGIB;
 
-	return CBaseMonster ::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
+	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 }
 
 //=========================================================
 //=========================================================
-void CHornet ::Spawn()
+void CHornet::Spawn()
 {
 	Precache();
 
@@ -115,7 +115,7 @@ void CHornet ::Spawn()
 }
 
 
-void CHornet ::Precache()
+void CHornet::Precache()
 {
 	PRECACHE_MODEL("models/hornet.mdl");
 
@@ -145,7 +145,7 @@ int CHornet::IRelationship(CBaseEntity* pTarget)
 		return R_NO;
 	}
 
-	return CBaseMonster ::IRelationship(pTarget);
+	return CBaseMonster::IRelationship(pTarget);
 }
 
 //=========================================================
@@ -165,7 +165,7 @@ int CHornet::Classify()
 //=========================================================
 // StartTrack - starts a hornet out tracking its target
 //=========================================================
-void CHornet ::StartTrack()
+void CHornet::StartTrack()
 {
 	IgniteTrail();
 
@@ -178,7 +178,7 @@ void CHornet ::StartTrack()
 //=========================================================
 // StartDart - starts a hornet out just flying straight.
 //=========================================================
-void CHornet ::StartDart()
+void CHornet::StartDart()
 {
 	IgniteTrail();
 
@@ -246,7 +246,7 @@ old colors
 //=========================================================
 // Hornet is flying, gently tracking target
 //=========================================================
-void CHornet ::TrackTarget()
+void CHornet::TrackTarget()
 {
 	Vector vecFlightDir;
 	Vector vecDirToEnemy;
@@ -376,7 +376,7 @@ void CHornet ::TrackTarget()
 //=========================================================
 // Tracking Hornet hit something
 //=========================================================
-void CHornet ::TrackTouch(CBaseEntity* pOther)
+void CHornet::TrackTouch(CBaseEntity* pOther)
 {
 	if (pOther->edict() == pev->owner || pOther->pev->modelindex == pev->modelindex)
 	{ // bumped into the guy that shot it.

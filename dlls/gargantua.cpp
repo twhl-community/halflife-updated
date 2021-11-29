@@ -505,7 +505,7 @@ void CGargantua::StompAttack()
 }
 
 
-void CGargantua ::FlameCreate()
+void CGargantua::FlameCreate()
 {
 	int i;
 	Vector posGun, angleGun;
@@ -546,7 +546,7 @@ void CGargantua ::FlameCreate()
 }
 
 
-void CGargantua ::FlameControls(float angleX, float angleY)
+void CGargantua::FlameControls(float angleX, float angleY)
 {
 	if (angleY < -180)
 		angleY += 360;
@@ -565,7 +565,7 @@ void CGargantua ::FlameControls(float angleX, float angleY)
 }
 
 
-void CGargantua ::FlameUpdate()
+void CGargantua::FlameUpdate()
 {
 	int i;
 	static float offset[2] = {60, -60};
@@ -621,7 +621,7 @@ void CGargantua ::FlameUpdate()
 
 
 
-void CGargantua ::FlameDamage(Vector vecStart, Vector vecEnd, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
+void CGargantua::FlameDamage(Vector vecStart, Vector vecEnd, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
 	CBaseEntity* pEntity = NULL;
 	TraceResult tr;
@@ -690,7 +690,7 @@ void CGargantua ::FlameDamage(Vector vecStart, Vector vecEnd, entvars_t* pevInfl
 }
 
 
-void CGargantua ::FlameDestroy()
+void CGargantua::FlameDestroy()
 {
 	int i;
 
@@ -706,7 +706,7 @@ void CGargantua ::FlameDestroy()
 }
 
 
-void CGargantua ::PrescheduleThink()
+void CGargantua::PrescheduleThink()
 {
 	if (!HasConditions(bits_COND_SEE_ENEMY))
 	{
@@ -724,7 +724,7 @@ void CGargantua ::PrescheduleThink()
 // Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int CGargantua ::Classify()
+int CGargantua::Classify()
 {
 	return CLASS_ALIEN_MONSTER;
 }
@@ -733,7 +733,7 @@ int CGargantua ::Classify()
 // SetYawSpeed - allows each sequence to have a different
 // turn rate associated with it.
 //=========================================================
-void CGargantua ::SetYawSpeed()
+void CGargantua::SetYawSpeed()
 {
 	int ys;
 
@@ -763,7 +763,7 @@ void CGargantua ::SetYawSpeed()
 //=========================================================
 // Spawn
 //=========================================================
-void CGargantua ::Spawn()
+void CGargantua::Spawn()
 {
 	Precache();
 
@@ -792,7 +792,7 @@ void CGargantua ::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CGargantua ::Precache()
+void CGargantua::Precache()
 {
 	int i;
 
