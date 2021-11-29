@@ -1678,21 +1678,13 @@ static int gSizes[FIELD_TYPECOUNT] =
 
 
 // Base class includes common SAVERESTOREDATA pointer, and manages the entity table
-CSaveRestoreBuffer ::CSaveRestoreBuffer()
-{
-	m_pdata = NULL;
-}
-
-
-CSaveRestoreBuffer ::CSaveRestoreBuffer(SAVERESTOREDATA* pdata)
-{
-	m_pdata = pdata;
-}
-
-
-CSaveRestoreBuffer ::~CSaveRestoreBuffer()
+CSaveRestoreBuffer ::CSaveRestoreBuffer(SAVERESTOREDATA& data)
+	: m_data(data)
 {
 }
+
+
+CSaveRestoreBuffer ::~CSaveRestoreBuffer() = default;
 
 int CSaveRestoreBuffer ::EntityIndex(CBaseEntity* pEntity)
 {
@@ -1717,15 +1709,15 @@ int CSaveRestoreBuffer ::EntityIndex(EOFFSET eoLookup)
 
 int CSaveRestoreBuffer ::EntityIndex(edict_t* pentLookup)
 {
-	if (!m_pdata || pentLookup == NULL)
+	if (pentLookup == NULL)
 		return -1;
 
 	int i;
 	ENTITYTABLE* pTable;
 
-	for (i = 0; i < m_pdata->tableCount; i++)
+	for (i = 0; i < m_data.tableCount; i++)
 	{
-		pTable = m_pdata->pTable + i;
+		pTable = m_data.pTable + i;
 		if (pTable->pent == pentLookup)
 			return i;
 	}
@@ -1735,15 +1727,15 @@ int CSaveRestoreBuffer ::EntityIndex(edict_t* pentLookup)
 
 edict_t* CSaveRestoreBuffer ::EntityFromIndex(int entityIndex)
 {
-	if (!m_pdata || entityIndex < 0)
+	if (entityIndex < 0)
 		return NULL;
 
 	int i;
 	ENTITYTABLE* pTable;
 
-	for (i = 0; i < m_pdata->tableCount; i++)
+	for (i = 0; i < m_data.tableCount; i++)
 	{
-		pTable = m_pdata->pTable + i;
+		pTable = m_data.pTable + i;
 		if (pTable->id == entityIndex)
 			return pTable->pent;
 	}
@@ -1753,27 +1745,24 @@ edict_t* CSaveRestoreBuffer ::EntityFromIndex(int entityIndex)
 
 int CSaveRestoreBuffer ::EntityFlagsSet(int entityIndex, int flags)
 {
-	if (!m_pdata || entityIndex < 0)
+	if (entityIndex < 0)
 		return 0;
-	if (entityIndex > m_pdata->tableCount)
+	if (entityIndex > m_data.tableCount)
 		return 0;
 
-	m_pdata->pTable[entityIndex].flags |= flags;
+	m_data.pTable[entityIndex].flags |= flags;
 
-	return m_pdata->pTable[entityIndex].flags;
+	return m_data.pTable[entityIndex].flags;
 }
 
 
 void CSaveRestoreBuffer ::BufferRewind(int size)
 {
-	if (!m_pdata)
-		return;
+	if (m_data.size < size)
+		size = m_data.size;
 
-	if (m_pdata->size < size)
-		size = m_pdata->size;
-
-	m_pdata->pCurrentData -= size;
-	m_pdata->size -= size;
+	m_data.pCurrentData -= size;
+	m_data.size -= size;
 }
 
 #ifndef WIN32
@@ -1811,40 +1800,44 @@ unsigned int CSaveRestoreBuffer ::HashString(const char* pszToken)
 
 unsigned short CSaveRestoreBuffer ::TokenHash(const char* pszToken)
 {
-	unsigned short hash = (unsigned short)(HashString(pszToken) % (unsigned)m_pdata->tokenCount);
-
 #if _DEBUG
 	static int tokensparsed = 0;
 	tokensparsed++;
-	if (0 == m_pdata->tokenCount || !m_pdata->pTokens)
-		ALERT(at_error, "No token table array in TokenHash()!");
 #endif
+	if (0 == m_data.tokenCount || nullptr == m_data.pTokens)
+	{
+		//if we're here it means trigger_changelevel is trying to actually save something when it's not supposed to.
+		ALERT(at_error, "No token table array in TokenHash()!\n");
+		return 0;
+	}
 
-	for (int i = 0; i < m_pdata->tokenCount; i++)
+	const unsigned short hash = (unsigned short)(HashString(pszToken) % (unsigned)m_data.tokenCount);
+
+	for (int i = 0; i < m_data.tokenCount; i++)
 	{
 #if _DEBUG
 		static bool beentheredonethat = false;
 		if (i > 50 && !beentheredonethat)
 		{
 			beentheredonethat = true;
-			ALERT(at_error, "CSaveRestoreBuffer :: TokenHash() is getting too full!");
+			ALERT(at_error, "CSaveRestoreBuffer :: TokenHash() is getting too full!\n");
 		}
 #endif
 
 		int index = hash + i;
-		if (index >= m_pdata->tokenCount)
-			index -= m_pdata->tokenCount;
+		if (index >= m_data.tokenCount)
+			index -= m_data.tokenCount;
 
-		if (!m_pdata->pTokens[index] || strcmp(pszToken, m_pdata->pTokens[index]) == 0)
+		if (!m_data.pTokens[index] || strcmp(pszToken, m_data.pTokens[index]) == 0)
 		{
-			m_pdata->pTokens[index] = (char*)pszToken;
+			m_data.pTokens[index] = (char*)pszToken;
 			return index;
 		}
 	}
 
 	// Token hash table full!!!
 	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
-	ALERT(at_error, "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!");
+	ALERT(at_error, "CSaveRestoreBuffer :: TokenHash() is COMPLETELY FULL!\n");
 	return 0;
 }
 
@@ -1884,8 +1877,7 @@ void CSave ::WriteTime(const char* pname, const float* data, int count)
 
 		// Always encode time as a delta from the current time so it can be re-based if loaded in a new level
 		// Times of 0 are never written to the file, so they will be restored as 0, not a relative time
-		if (m_pdata)
-			tmp -= m_pdata->time;
+		tmp -= m_data.time;
 
 		BufferData((const char*)&tmp, sizeof(float));
 		data++;
@@ -1948,10 +1940,9 @@ void CSave ::WriteVector(const char* pname, const float* value, int count)
 
 void CSave ::WritePositionVector(const char* pname, const Vector& value)
 {
-
-	if (m_pdata && 0 != m_pdata->fUseLandmark)
+	if (0 != m_data.fUseLandmark)
 	{
-		Vector tmp = value - m_pdata->vecLandmarkOffset;
+		Vector tmp = value - m_data.vecLandmarkOffset;
 		WriteVector(pname, tmp);
 	}
 
@@ -1969,8 +1960,8 @@ void CSave ::WritePositionVector(const char* pname, const float* value, int coun
 	{
 		Vector tmp(value[0], value[1], value[2]);
 
-		if (m_pdata && 0 != m_pdata->fUseLandmark)
-			tmp = tmp - m_pdata->vecLandmarkOffset;
+		if (0 != m_data.fUseLandmark)
+			tmp = tmp - m_data.vecLandmarkOffset;
 
 		BufferData((const char*)&tmp.x, sizeof(float) * 3);
 		value += 3;
@@ -1986,7 +1977,7 @@ void CSave ::WriteFunction(const char* pname, void** data, int count)
 	if (functionName)
 		BufferField(pname, strlen(functionName) + 1, functionName);
 	else
-		ALERT(at_error, "Invalid function pointer in entity!");
+		ALERT(at_error, "Invalid function pointer in entity!\n");
 }
 
 
@@ -2200,7 +2191,7 @@ void CSave ::BufferHeader(const char* pname, int size)
 {
 	short hashvalue = TokenHash(pname);
 	if (size > 1 << (sizeof(short) * 8))
-		ALERT(at_error, "CSave :: BufferHeader() size parameter exceeds 'short'!");
+		ALERT(at_error, "CSave :: BufferHeader() size parameter exceeds 'short'!\n");
 	BufferData((const char*)&size, sizeof(short));
 	BufferData((const char*)&hashvalue, sizeof(short));
 }
@@ -2208,19 +2199,16 @@ void CSave ::BufferHeader(const char* pname, int size)
 
 void CSave ::BufferData(const char* pdata, int size)
 {
-	if (!m_pdata)
-		return;
-
-	if (m_pdata->size + size > m_pdata->bufferSize)
+	if (m_data.size + size > m_data.bufferSize)
 	{
-		ALERT(at_error, "Save/Restore overflow!");
-		m_pdata->size = m_pdata->bufferSize;
+		ALERT(at_error, "Save/Restore overflow!\n");
+		m_data.size = m_data.bufferSize;
 		return;
 	}
 
-	memcpy(m_pdata->pCurrentData, pdata, size);
-	m_pdata->pCurrentData += size;
-	m_pdata->size += size;
+	memcpy(m_data.pCurrentData, pdata, size);
+	m_data.pCurrentData += size;
+	m_data.size += size;
 }
 
 
@@ -2235,20 +2223,15 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 {
 	int i, j, stringCount, fieldNumber, entityIndex;
 	TYPEDESCRIPTION* pTest;
-	float time, timeData;
+	float timeData;
 	Vector position;
 	edict_t* pent;
 	char* pString;
 
-	time = 0;
 	position = Vector(0, 0, 0);
 
-	if (m_pdata)
-	{
-		time = m_pdata->time;
-		if (0 != m_pdata->fUseLandmark)
-			position = m_pdata->vecLandmarkOffset;
-	}
+	if (0 != m_data.fUseLandmark)
+		position = m_data.vecLandmarkOffset;
 
 	for (i = 0; i < fieldCount; i++)
 	{
@@ -2268,7 +2251,7 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 					case FIELD_TIME:
 						timeData = *(float*)pInputData;
 						// Re-base time variables
-						timeData += time;
+						timeData += m_data.time;
 						*((float*)pOutputData) = timeData;
 						break;
 					case FIELD_FLOAT:
@@ -2446,7 +2429,7 @@ bool CRestore::ReadFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* p
 	for (i = 0; i < fileCount; i++)
 	{
 		BufferReadHeader(&header);
-		lastField = ReadField(pBaseData, pFields, fieldCount, lastField, header.size, m_pdata->pTokens[header.token], header.pData);
+		lastField = ReadField(pBaseData, pFields, fieldCount, lastField, header.size, m_data.pTokens[header.token], header.pData);
 		lastField++;
 	}
 
@@ -2505,30 +2488,25 @@ char* CRestore::ReadNamedString(const char* pName)
 
 char* CRestore::BufferPointer()
 {
-	if (!m_pdata)
-		return NULL;
-
-	return m_pdata->pCurrentData;
+	return m_data.pCurrentData;
 }
 
 void CRestore::BufferReadBytes(char* pOutput, int size)
 {
-	ASSERT(m_pdata != NULL);
-
-	if (!m_pdata || Empty())
+	if (Empty())
 		return;
 
-	if ((m_pdata->size + size) > m_pdata->bufferSize)
+	if ((m_data.size + size) > m_data.bufferSize)
 	{
-		ALERT(at_error, "Restore overflow!");
-		m_pdata->size = m_pdata->bufferSize;
+		ALERT(at_error, "Restore overflow!\n");
+		m_data.size = m_data.bufferSize;
 		return;
 	}
 
 	if (pOutput)
-		memcpy(pOutput, m_pdata->pCurrentData, size);
-	m_pdata->pCurrentData += size;
-	m_pdata->size += size;
+		memcpy(pOutput, m_data.pCurrentData, size);
+	m_data.pCurrentData += size;
+	m_data.size += size;
 }
 
 
@@ -2539,16 +2517,10 @@ void CRestore::BufferSkipBytes(int bytes)
 
 int CRestore::BufferSkipZString()
 {
-	char* pszSearch;
-	int len;
+	const int maxLen = m_data.bufferSize - m_data.size;
 
-	if (!m_pdata)
-		return 0;
-
-	int maxLen = m_pdata->bufferSize - m_pdata->size;
-
-	len = 0;
-	pszSearch = m_pdata->pCurrentData;
+	int len = 0;
+	char* pszSearch = m_data.pCurrentData;
 	while ('\0' != *pszSearch++ && len < maxLen)
 		len++;
 
@@ -2561,14 +2533,11 @@ int CRestore::BufferSkipZString()
 
 bool CRestore::BufferCheckZString(const char* string)
 {
-	if (!m_pdata)
-		return false;
-
-	int maxLen = m_pdata->bufferSize - m_pdata->size;
-	int len = strlen(string);
+	const int maxLen = m_data.bufferSize - m_data.size;
+	const int len = strlen(string);
 	if (len <= maxLen)
 	{
-		if (0 == strncmp(string, m_pdata->pCurrentData, len))
+		if (0 == strncmp(string, m_data.pCurrentData, len))
 			return true;
 	}
 	return false;

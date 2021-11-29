@@ -1645,9 +1645,11 @@ int CChangeLevel::ChangeList(LEVELLIST* pLevelList, int maxList)
 		pentChangelevel = FIND_ENTITY_BY_STRING(pentChangelevel, "classname", "trigger_changelevel");
 	}
 
-	if (gpGlobals->pSaveData && ((SAVERESTOREDATA*)gpGlobals->pSaveData)->pTable)
+	//Token table is null at this point, so don't use CSaveRestoreBuffer::IsValidSaveRestoreData here.
+	if (auto pSaveData = reinterpret_cast<SAVERESTOREDATA*>(gpGlobals->pSaveData);
+		nullptr != pSaveData && pSaveData->pTable)
 	{
-		CSave saveHelper((SAVERESTOREDATA*)gpGlobals->pSaveData);
+		CSave saveHelper(*pSaveData);
 
 		for (i = 0; i < count; i++)
 		{

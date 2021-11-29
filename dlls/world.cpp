@@ -431,14 +431,24 @@ void CGlobalState::ClearStates()
 
 void SaveGlobalState(SAVERESTOREDATA* pSaveData)
 {
-	CSave saveHelper(pSaveData);
+	if (!CSaveRestoreBuffer::IsValidSaveRestoreData(pSaveData))
+	{
+		return;
+	}
+
+	CSave saveHelper(*pSaveData);
 	gGlobalState.Save(saveHelper);
 }
 
 
 void RestoreGlobalState(SAVERESTOREDATA* pSaveData)
 {
-	CRestore restoreHelper(pSaveData);
+	if (!CSaveRestoreBuffer::IsValidSaveRestoreData(pSaveData))
+	{
+		return;
+	}
+
+	CRestore restoreHelper(*pSaveData);
 	gGlobalState.Restore(restoreHelper);
 }
 

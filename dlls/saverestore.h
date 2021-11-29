@@ -21,8 +21,7 @@ class CBaseEntity;
 class CSaveRestoreBuffer
 {
 public:
-	CSaveRestoreBuffer();
-	CSaveRestoreBuffer(SAVERESTOREDATA* pdata);
+	CSaveRestoreBuffer(SAVERESTOREDATA& data);
 	~CSaveRestoreBuffer();
 
 	int EntityIndex(entvars_t* pevLookup);
@@ -37,8 +36,25 @@ public:
 
 	unsigned short TokenHash(const char* pszToken);
 
+	//Data is only valid if it's a valid pointer and if it has a token list
+	[[nodiscard]] static bool IsValidSaveRestoreData(SAVERESTOREDATA* data)
+	{
+		const bool isValid = nullptr != data
+			&& nullptr != data->pTokens
+			&& data->tokenCount > 0;
+
+		ASSERT(isValid);
+
+		if (!isValid)
+		{
+			int x = 10;
+		}
+
+		return isValid;
+	}
+
 protected:
-	SAVERESTOREDATA* m_pdata;
+	SAVERESTOREDATA& m_data;
 	void BufferRewind(int size);
 	unsigned int HashString(const char* pszToken);
 };
@@ -47,7 +63,7 @@ protected:
 class CSave : public CSaveRestoreBuffer
 {
 public:
-	CSave(SAVERESTOREDATA* pdata) : CSaveRestoreBuffer(pdata){};
+	using CSaveRestoreBuffer::CSaveRestoreBuffer;
 
 	void WriteShort(const char* pname, const short* value, int count);
 	void WriteInt(const char* pname, const int* value, int count);				// Save an int
@@ -82,11 +98,8 @@ typedef struct
 class CRestore : public CSaveRestoreBuffer
 {
 public:
-	CRestore(SAVERESTOREDATA* pdata) : CSaveRestoreBuffer(pdata)
-	{
-		m_global = 0;
-		m_precache = true;
-	}
+	using CSaveRestoreBuffer::CSaveRestoreBuffer;
+
 	bool ReadEntVars(const char* pname, entvars_t* pev); // entvars_t
 	bool ReadFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount);
 	int ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount, int startField, int size, char* pName, void* pData);
@@ -94,8 +107,8 @@ public:
 	short ReadShort();
 	int ReadNamedInt(const char* pName);
 	char* ReadNamedString(const char* pName);
-	bool Empty() { return (m_pdata == NULL) || ((m_pdata->pCurrentData - m_pdata->pBaseData) >= m_pdata->bufferSize); }
-	inline void SetGlobalMode(bool global) { m_global = global; }
+	bool Empty() { return (m_data.pCurrentData - m_data.pBaseData) >= m_data.bufferSize; }
+	void SetGlobalMode(bool global) { m_global = global; }
 	void PrecacheMode(bool mode) { m_precache = mode; }
 
 private:
@@ -107,8 +120,8 @@ private:
 
 	void BufferReadHeader(HEADER* pheader);
 
-	bool m_global; // Restoring a global entity?
-	bool m_precache;
+	bool m_global = false; // Restoring a global entity?
+	bool m_precache = true;
 };
 
 #define MAX_ENTITYARRAY 64
