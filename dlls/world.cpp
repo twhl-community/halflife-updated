@@ -493,10 +493,7 @@ void CWorld::Precache()
 	CVAR_SET_STRING("room_type", "0"); // clear DSP
 
 	// Set up game rules
-	if (g_pGameRules)
-	{
-		delete g_pGameRules;
-	}
+	delete g_pGameRules;
 
 	g_pGameRules = InstallGameRules();
 

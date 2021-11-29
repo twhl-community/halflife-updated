@@ -373,8 +373,7 @@ int CImageLabel::getImageTall()
 
 void CImageLabel::LoadImage(const char* pImageName)
 {
-	if (m_pTGA)
-		delete m_pTGA;
+	delete m_pTGA;
 
 	// Load the Image
 	m_pTGA = LoadTGAForRes(pImageName);

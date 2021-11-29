@@ -1,4 +1,4 @@
-Checks: '-*,readability-implicit-bool-conversion'
+Checks: '-*,readability-delete-null-pointer,readability-implicit-bool-conversion'
 CheckOptions:
     - key: readability-implicit-bool-conversion.AllowPointerConditions
       value: '1'
