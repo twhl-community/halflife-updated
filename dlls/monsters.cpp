@@ -642,7 +642,8 @@ bool CBaseMonster::FRefreshRoute()
 
 	switch (m_movementGoal)
 	{
-	case MOVEGOAL_PATHCORNER: {
+	case MOVEGOAL_PATHCORNER:
+	{
 		// monster is on a path_corner loop
 		pPathCorner = m_pGoalEnt;
 		i = 0;
@@ -2706,7 +2707,8 @@ void CBaseMonster::HandleAnimEvent(MonsterEvent_t* pEvent)
 		}
 		break;
 
-	case MONSTER_EVENT_SWISHSOUND: {
+	case MONSTER_EVENT_SWISHSOUND:
+	{
 		// NO MONSTER may use this anim event unless that monster's precache precaches this sound!!!
 		EMIT_SOUND(ENT(pev), CHAN_BODY, "zombie/claw_miss2.wav", 1, ATTN_NORM);
 		break;

@@ -974,7 +974,8 @@ Schedule_t* CBaseMonster::GetScheduleOfType(int Type)
 	switch (Type)
 	{
 	// This is the schedule for scripted sequences AND scripted AI
-	case SCHED_AISCRIPT: {
+	case SCHED_AISCRIPT:
+	{
 		ASSERT(m_pCine != NULL);
 		if (!m_pCine)
 		{
@@ -999,7 +1000,8 @@ Schedule_t* CBaseMonster::GetScheduleOfType(int Type)
 		}
 		break;
 	}
-	case SCHED_IDLE_STAND: {
+	case SCHED_IDLE_STAND:
+	{
 		if (RANDOM_LONG(0, 14) == 0 && FCanActiveIdle())
 		{
 			return &slActiveIdle[0];
@@ -1007,100 +1009,132 @@ Schedule_t* CBaseMonster::GetScheduleOfType(int Type)
 
 		return &slIdleStand[0];
 	}
-	case SCHED_IDLE_WALK: {
+	case SCHED_IDLE_WALK:
+	{
 		return &slIdleWalk[0];
 	}
-	case SCHED_WAIT_TRIGGER: {
+	case SCHED_WAIT_TRIGGER:
+	{
 		return &slIdleTrigger[0];
 	}
-	case SCHED_WAKE_ANGRY: {
+	case SCHED_WAKE_ANGRY:
+	{
 		return &slWakeAngry[0];
 	}
-	case SCHED_ALERT_FACE: {
+	case SCHED_ALERT_FACE:
+	{
 		return &slAlertFace[0];
 	}
-	case SCHED_ALERT_STAND: {
+	case SCHED_ALERT_STAND:
+	{
 		return &slAlertStand[0];
 	}
-	case SCHED_COMBAT_STAND: {
+	case SCHED_COMBAT_STAND:
+	{
 		return &slCombatStand[0];
 	}
-	case SCHED_COMBAT_FACE: {
+	case SCHED_COMBAT_FACE:
+	{
 		return &slCombatFace[0];
 	}
-	case SCHED_CHASE_ENEMY: {
+	case SCHED_CHASE_ENEMY:
+	{
 		return &slChaseEnemy[0];
 	}
-	case SCHED_CHASE_ENEMY_FAILED: {
+	case SCHED_CHASE_ENEMY_FAILED:
+	{
 		return &slFail[0];
 	}
-	case SCHED_SMALL_FLINCH: {
+	case SCHED_SMALL_FLINCH:
+	{
 		return &slSmallFlinch[0];
 	}
-	case SCHED_ALERT_SMALL_FLINCH: {
+	case SCHED_ALERT_SMALL_FLINCH:
+	{
 		return &slAlertSmallFlinch[0];
 	}
-	case SCHED_RELOAD: {
+	case SCHED_RELOAD:
+	{
 		return &slReload[0];
 	}
-	case SCHED_ARM_WEAPON: {
+	case SCHED_ARM_WEAPON:
+	{
 		return &slArmWeapon[0];
 	}
-	case SCHED_STANDOFF: {
+	case SCHED_STANDOFF:
+	{
 		return &slStandoff[0];
 	}
-	case SCHED_RANGE_ATTACK1: {
+	case SCHED_RANGE_ATTACK1:
+	{
 		return &slRangeAttack1[0];
 	}
-	case SCHED_RANGE_ATTACK2: {
+	case SCHED_RANGE_ATTACK2:
+	{
 		return &slRangeAttack2[0];
 	}
-	case SCHED_MELEE_ATTACK1: {
+	case SCHED_MELEE_ATTACK1:
+	{
 		return &slPrimaryMeleeAttack[0];
 	}
-	case SCHED_MELEE_ATTACK2: {
+	case SCHED_MELEE_ATTACK2:
+	{
 		return &slSecondaryMeleeAttack[0];
 	}
-	case SCHED_SPECIAL_ATTACK1: {
+	case SCHED_SPECIAL_ATTACK1:
+	{
 		return &slSpecialAttack1[0];
 	}
-	case SCHED_SPECIAL_ATTACK2: {
+	case SCHED_SPECIAL_ATTACK2:
+	{
 		return &slSpecialAttack2[0];
 	}
-	case SCHED_TAKE_COVER_FROM_BEST_SOUND: {
+	case SCHED_TAKE_COVER_FROM_BEST_SOUND:
+	{
 		return &slTakeCoverFromBestSound[0];
 	}
-	case SCHED_TAKE_COVER_FROM_ENEMY: {
+	case SCHED_TAKE_COVER_FROM_ENEMY:
+	{
 		return &slTakeCoverFromEnemy[0];
 	}
-	case SCHED_COWER: {
+	case SCHED_COWER:
+	{
 		return &slCower[0];
 	}
-	case SCHED_AMBUSH: {
+	case SCHED_AMBUSH:
+	{
 		return &slAmbush[0];
 	}
-	case SCHED_BARNACLE_VICTIM_GRAB: {
+	case SCHED_BARNACLE_VICTIM_GRAB:
+	{
 		return &slBarnacleVictimGrab[0];
 	}
-	case SCHED_BARNACLE_VICTIM_CHOMP: {
+	case SCHED_BARNACLE_VICTIM_CHOMP:
+	{
 		return &slBarnacleVictimChomp[0];
 	}
-	case SCHED_INVESTIGATE_SOUND: {
+	case SCHED_INVESTIGATE_SOUND:
+	{
 		return &slInvestigateSound[0];
 	}
-	case SCHED_DIE: {
+	case SCHED_DIE:
+	{
 		return &slDie[0];
 	}
-	case SCHED_TAKE_COVER_FROM_ORIGIN: {
+	case SCHED_TAKE_COVER_FROM_ORIGIN:
+	{
 		return &slTakeCoverFromOrigin[0];
 	}
-	case SCHED_VICTORY_DANCE: {
+	case SCHED_VICTORY_DANCE:
+	{
 		return &slVictoryDance[0];
 	}
-	case SCHED_FAIL: {
+	case SCHED_FAIL:
+	{
 		return slFail;
 	}
-	default: {
+	default:
+	{
 		ALERT(at_console, "GetScheduleOfType()\nNo CASE for Schedule Type %d!\n", Type);
 
 		return &slIdleStand[0];

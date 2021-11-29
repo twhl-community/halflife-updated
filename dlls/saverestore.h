@@ -39,9 +39,7 @@ public:
 	//Data is only valid if it's a valid pointer and if it has a token list
 	[[nodiscard]] static bool IsValidSaveRestoreData(SAVERESTOREDATA* data)
 	{
-		const bool isValid = nullptr != data
-			&& nullptr != data->pTokens
-			&& data->tokenCount > 0;
+		const bool isValid = nullptr != data && nullptr != data->pTokens && data->tokenCount > 0;
 
 		ASSERT(isValid);
 

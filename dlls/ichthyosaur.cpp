@@ -407,7 +407,8 @@ void CIchthyosaur::HandleAnimEvent(MonsterEvent_t* pEvent)
 	switch (pEvent->event)
 	{
 	case ICHTHYOSAUR_AE_SHAKE_RIGHT:
-	case ICHTHYOSAUR_AE_SHAKE_LEFT: {
+	case ICHTHYOSAUR_AE_SHAKE_LEFT:
+	{
 		if (m_hEnemy != NULL && FVisible(m_hEnemy))
 		{
 			CBaseEntity* pHurt = m_hEnemy;

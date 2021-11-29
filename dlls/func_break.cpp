@@ -507,7 +507,8 @@ void CBreakable::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecD
 	{
 		switch (m_Material)
 		{
-		case matComputer: {
+		case matComputer:
+		{
 			UTIL_Sparks(ptr->vecEndPos);
 
 			float flVolume = RANDOM_FLOAT(0.7, 1.0); //random volume range

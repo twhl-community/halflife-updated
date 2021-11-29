@@ -2119,7 +2119,8 @@ bool CSave::WriteFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFi
 			WriteVector(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
 			break;
 
-		case FIELD_BOOLEAN: {
+		case FIELD_BOOLEAN:
+		{
 			//TODO: need to refactor save game stuff to make this cleaner and reusable
 			//Convert booleans to bytes
 			for (j = 0; j < pTest->fieldSize; j++)
@@ -2338,7 +2339,8 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 						((float*)pOutputData)[2] = ((float*)pInputData)[2] + position.z;
 						break;
 
-					case FIELD_BOOLEAN: {
+					case FIELD_BOOLEAN:
+					{
 						// Input and Output sizes are different!
 						pOutputData = (char*)pOutputData + j * (sizeof(bool) - gSizes[pTest->fieldType]);
 						const bool value = *((byte*)pInputData) != 0;

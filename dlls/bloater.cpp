@@ -170,7 +170,8 @@ void CBloater::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
-	case BLOATER_AE_ATTACK_MELEE1: {
+	case BLOATER_AE_ATTACK_MELEE1:
+	{
 		// do stuff for this event.
 		AttackSnd();
 	}

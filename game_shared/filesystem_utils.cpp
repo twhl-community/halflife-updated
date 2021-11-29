@@ -36,7 +36,7 @@ bool FileSystem_LoadFileSystem()
 	}
 
 	// Determine which filesystem to use.
-#if defined ( _WIN32 )
+#if defined(_WIN32)
 	const char* szFsModule = "filesystem_stdio.dll";
 #elif defined(OSX)
 	const char* szFsModule = "filesystem_stdio.dylib";

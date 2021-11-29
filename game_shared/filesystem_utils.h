@@ -105,7 +105,7 @@ public:
 
 	int Write(const void* input, int size);
 
-	template<typename... Args>
+	template <typename... Args>
 	int Printf(const char* format, Args&&... args)
 	{
 		return g_pFileSystem->FPrintf(_handle, format, std::forward<Args>(args)...);

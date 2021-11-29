@@ -245,7 +245,8 @@ void CHAssassin::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case ASSASSIN_AE_SHOOT1:
 		Shoot();
 		break;
-	case ASSASSIN_AE_TOSS1: {
+	case ASSASSIN_AE_TOSS1:
+	{
 		UTIL_MakeVectors(pev->angles);
 		CGrenade::ShootTimed(pev, pev->origin + gpGlobals->v_forward * 34 + Vector(0, 0, 32), m_vecTossVelocity, 2.0);
 
@@ -254,7 +255,8 @@ void CHAssassin::HandleAnimEvent(MonsterEvent_t* pEvent)
 		// !!!LATER - when in a group, only try to throw grenade if ordered.
 	}
 	break;
-	case ASSASSIN_AE_JUMP: {
+	case ASSASSIN_AE_JUMP:
+	{
 		// ALERT( at_console, "jumping");
 		UTIL_MakeAimVectors(pev->angles);
 		pev->movetype = MOVETYPE_TOSS;
@@ -820,7 +822,8 @@ Schedule_t* CHAssassin::GetSchedule()
 	switch (m_MonsterState)
 	{
 	case MONSTERSTATE_IDLE:
-	case MONSTERSTATE_ALERT: {
+	case MONSTERSTATE_ALERT:
+	{
 		if (HasConditions(bits_COND_HEAR_SOUND))
 		{
 			CSound* pSound;
@@ -839,7 +842,8 @@ Schedule_t* CHAssassin::GetSchedule()
 	}
 	break;
 
-	case MONSTERSTATE_COMBAT: {
+	case MONSTERSTATE_COMBAT:
+	{
 		// dead enemy
 		if (HasConditions(bits_COND_ENEMY_DEAD))
 		{

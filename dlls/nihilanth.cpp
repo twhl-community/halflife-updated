@@ -1201,7 +1201,8 @@ void CNihilanth::CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 {
 	switch (useType)
 	{
-	case USE_OFF: {
+	case USE_OFF:
+	{
 		CBaseEntity* pTouch = UTIL_FindEntityByTargetname(NULL, m_szDeadTouch);
 
 		if (pTouch)

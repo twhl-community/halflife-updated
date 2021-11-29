@@ -689,7 +689,8 @@ void CStudioModelRenderer::StudioFxTransform(cl_entity_t* ent, float transform[3
 			transform[gEngfuncs.pfnRandomLong(0, 2)][3] += offset;
 		}
 		break;
-	case kRenderFxExplode: {
+	case kRenderFxExplode:
+	{
 		float scale;
 
 		scale = 1.0 + (m_clTime - ent->curstate.animtime) * 10.0;

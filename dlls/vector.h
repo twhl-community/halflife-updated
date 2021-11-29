@@ -27,7 +27,7 @@ public:
 	constexpr Vector2D& operator=(const Vector2D&) = default;
 
 	constexpr Vector2D(float X, float Y)
-		: x(X) , y(Y)
+		: x(X), y(Y)
 	{
 	}
 

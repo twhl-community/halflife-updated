@@ -169,7 +169,8 @@ void CEgon::Attack()
 
 	switch (m_fireState)
 	{
-	case FIRE_OFF: {
+	case FIRE_OFF:
+	{
 		if (!HasAmmo())
 		{
 			m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.25;
@@ -192,7 +193,8 @@ void CEgon::Attack()
 	}
 	break;
 
-	case FIRE_CHARGE: {
+	case FIRE_CHARGE:
+	{
 		Fire(vecSrc, vecAiming);
 		m_pPlayer->m_iWeaponVolume = EGON_PRIMARY_VOLUME;
 

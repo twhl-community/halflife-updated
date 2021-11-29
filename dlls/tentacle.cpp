@@ -674,7 +674,8 @@ void CTentacle::Cycle()
 		case TENTACLE_ANIM_Floor_Tap:
 		case TENTACLE_ANIM_Lev1_Tap:
 		case TENTACLE_ANIM_Lev2_Tap:
-		case TENTACLE_ANIM_Lev3_Tap: {
+		case TENTACLE_ANIM_Lev3_Tap:
+		{
 			Vector vecSrc;
 			UTIL_MakeVectors(pev->angles);
 

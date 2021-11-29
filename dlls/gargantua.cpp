@@ -994,7 +994,8 @@ void CGargantua::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
-	case GARG_AE_SLASH_LEFT: {
+	case GARG_AE_SLASH_LEFT:
+	{
 		// HACKHACK!!!
 		CBaseEntity* pHurt = GargantuaCheckTraceHullAttack(GARG_ATTACKDIST + 10.0, gSkillData.gargantuaDmgSlash, DMG_SLASH);
 		if (pHurt)

@@ -325,11 +325,13 @@ void CSatchel::PrimaryAttack()
 {
 	switch (m_chargeReady)
 	{
-	case 0: {
+	case 0:
+	{
 		Throw();
 	}
 	break;
-	case 1: {
+	case 1:
+	{
 		SendWeaponAnim(SATCHEL_RADIO_FIRE);
 
 		edict_t* pPlayer = m_pPlayer->edict();

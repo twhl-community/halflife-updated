@@ -310,7 +310,8 @@ void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 	// ALERT( at_console, "event %d : %f\n", pEvent->event, pev->frame );
 	switch (pEvent->event)
 	{
-	case ISLAVE_AE_CLAW: {
+	case ISLAVE_AE_CLAW:
+	{
 		// SOUND HERE!
 		CBaseEntity* pHurt = CheckTraceHullAttack(70, gSkillData.slaveDmgClaw, DMG_SLASH);
 		if (pHurt)
@@ -331,7 +332,8 @@ void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 	}
 	break;
 
-	case ISLAVE_AE_CLAWRAKE: {
+	case ISLAVE_AE_CLAWRAKE:
+	{
 		CBaseEntity* pHurt = CheckTraceHullAttack(70, gSkillData.slaveDmgClawrake, DMG_SLASH);
 		if (pHurt)
 		{
@@ -349,7 +351,8 @@ void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 	}
 	break;
 
-	case ISLAVE_AE_ZAP_POWERUP: {
+	case ISLAVE_AE_ZAP_POWERUP:
+	{
 		// speed up attack when on hard
 		if (g_iSkillLevel == SKILL_HARD)
 			pev->framerate = 1.5;
@@ -389,7 +392,8 @@ void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 	}
 	break;
 
-	case ISLAVE_AE_ZAP_SHOOT: {
+	case ISLAVE_AE_ZAP_SHOOT:
+	{
 		ClearBeams();
 
 		if (m_hDead != NULL)
@@ -430,7 +434,8 @@ void CISlave::HandleAnimEvent(MonsterEvent_t* pEvent)
 	}
 	break;
 
-	case ISLAVE_AE_ZAP_DONE: {
+	case ISLAVE_AE_ZAP_DONE:
+	{
 		ClearBeams();
 	}
 	break;

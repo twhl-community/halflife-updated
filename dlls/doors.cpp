@@ -578,7 +578,7 @@ bool CBaseDoor::DoorActivate()
 	{ // door should open
 
 		if (m_hActivator != NULL && m_hActivator->IsPlayer())
-		{	// give health if player opened the door (medikit)
+		{ // give health if player opened the door (medikit)
 			// VARS( m_eoActivator )->health += m_bHealthValue;
 
 			m_hActivator->TakeHealth(m_bHealthValue, DMG_GENERIC);

@@ -270,12 +270,13 @@ void CSoundEnt::Initialize()
 //=========================================================
 int CSoundEnt::ISoundsInList(int iListType)
 {
-	int iThisSound = [=]()
-	{
+	int iThisSound = [=]() {
 		switch (iListType)
 		{
-		case SOUNDLISTTYPE_FREE: return m_iFreeSound;
-		case SOUNDLISTTYPE_ACTIVE: return m_iActiveSound;
+		case SOUNDLISTTYPE_FREE:
+			return m_iFreeSound;
+		case SOUNDLISTTYPE_ACTIVE:
+			return m_iActiveSound;
 		default:
 			ALERT(at_console, "Unknown Sound List Type!\n");
 			return SOUNDLIST_EMPTY;

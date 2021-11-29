@@ -79,7 +79,7 @@ int CBaseAnimating::LookupActivity(int activity)
 	ASSERT(activity != 0);
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return::LookupActivity(pmodel, pev, activity);
+	return ::LookupActivity(pmodel, pev, activity);
 }
 
 //=========================================================
@@ -92,7 +92,7 @@ int CBaseAnimating::LookupActivityHeaviest(int activity)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return::LookupActivityHeaviest(pmodel, pev, activity);
+	return ::LookupActivityHeaviest(pmodel, pev, activity);
 }
 
 //=========================================================
@@ -101,7 +101,7 @@ int CBaseAnimating::LookupSequence(const char* label)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return::LookupSequence(pmodel, label);
+	return ::LookupSequence(pmodel, label);
 }
 
 
@@ -127,7 +127,7 @@ int CBaseAnimating::GetSequenceFlags()
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return::GetSequenceFlags(pmodel, pev);
+	return ::GetSequenceFlags(pmodel, pev);
 }
 
 //=========================================================
@@ -193,7 +193,7 @@ float CBaseAnimating::SetBlending(int iBlender, float flValue)
 {
 	void* pmodel = GET_MODEL_PTR(ENT(pev));
 
-	return::SetBlending(pmodel, pev, iBlender, flValue);
+	return ::SetBlending(pmodel, pev, iBlender, flValue);
 }
 
 //=========================================================
@@ -219,14 +219,14 @@ int CBaseAnimating::FindTransition(int iEndingSequence, int iGoalSequence, int* 
 	if (piDir == NULL)
 	{
 		int iDir;
-		int sequence =::FindTransition(pmodel, iEndingSequence, iGoalSequence, &iDir);
+		int sequence = ::FindTransition(pmodel, iEndingSequence, iGoalSequence, &iDir);
 		if (iDir != 1)
 			return -1;
 		else
 			return sequence;
 	}
 
-	return::FindTransition(pmodel, iEndingSequence, iGoalSequence, piDir);
+	return ::FindTransition(pmodel, iEndingSequence, iGoalSequence, piDir);
 }
 
 //=========================================================
@@ -242,13 +242,13 @@ void CBaseAnimating::SetBodygroup(int iGroup, int iValue)
 
 int CBaseAnimating::GetBodygroup(int iGroup)
 {
-	return::GetBodygroup(GET_MODEL_PTR(ENT(pev)), pev, iGroup);
+	return ::GetBodygroup(GET_MODEL_PTR(ENT(pev)), pev, iGroup);
 }
 
 
 bool CBaseAnimating::ExtractBbox(int sequence, float* mins, float* maxs)
 {
-	return::ExtractBbox(GET_MODEL_PTR(ENT(pev)), sequence, mins, maxs);
+	return ::ExtractBbox(GET_MODEL_PTR(ENT(pev)), sequence, mins, maxs);
 }
 
 //=========================================================

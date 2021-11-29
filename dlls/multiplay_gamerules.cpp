@@ -820,7 +820,7 @@ void CHalfLifeMultiplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, e
 	//  Print a standard message
 	// TODO: make this go direct to console
 	return; // just remove for now
-	/*
+			/*
 	char	szText[ 128 ];
 
 	if ( pKiller->flags & FL_MONSTER )
