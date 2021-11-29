@@ -410,16 +410,16 @@ bool CHGrunt ::FCanCheckAttacks()
 //=========================================================
 bool CHGrunt ::CheckMeleeAttack1(float flDot, float flDist)
 {
-	CBaseMonster* pEnemy;
+	CBaseMonster* pEnemy = nullptr;
 
 	if (m_hEnemy != NULL)
 	{
 		pEnemy = m_hEnemy->MyMonsterPointer();
+	}
 
-		if (!pEnemy)
-		{
-			return false;
-		}
+	if (!pEnemy)
+	{
+		return false;
 	}
 
 	if (flDist <= 64 && flDot >= 0.7 &&
