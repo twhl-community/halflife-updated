@@ -476,22 +476,17 @@ void CTalkMonster::RunTask(Task_t* pTask)
 	switch (pTask->iTask)
 	{
 	case TASK_TLK_CLIENT_STARE:
-	case TASK_TLK_LOOK_AT_CLIENT:
-
-		edict_t* pPlayer;
+	case TASK_TLK_LOOK_AT_CLIENT: {
+		// Get edict for one player
+		edict_t* pPlayer = g_engfuncs.pfnPEntityOfEntIndex(1);
 
 		// track head to the client for a while.
-		if (m_MonsterState == MONSTERSTATE_IDLE &&
+		if (pPlayer &&
+			m_MonsterState == MONSTERSTATE_IDLE &&
 			!IsMoving() &&
 			!IsTalking())
 		{
-			// Get edict for one player
-			pPlayer = g_engfuncs.pfnPEntityOfEntIndex(1);
-
-			if (pPlayer)
-			{
-				IdleHeadTurn(pPlayer->v.origin);
-			}
+			IdleHeadTurn(pPlayer->v.origin);
 		}
 		else
 		{
@@ -522,6 +517,7 @@ void CTalkMonster::RunTask(Task_t* pTask)
 			TaskComplete();
 		}
 		break;
+	}
 
 	case TASK_FACE_PLAYER: {
 		// Get edict for one player
