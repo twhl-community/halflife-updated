@@ -7,6 +7,9 @@
 
 #pragma once
 
+//Include this here so warnings are disabled for VGUI1 code as well.
+#include "Platform.h"
+
 //If you are going to add stuff to the vgui core...
 //
 //Keep it simple.
