@@ -1671,7 +1671,7 @@ void TeamFortressViewport::SetCurrentMenu(CMenuPanel* pMenu)
 CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 {
 	char sz[256];
-	char* cText;
+	const char* cText = "";
 	char* pfile = NULL;
 	static const int MAX_TITLE_LENGTH = 64;
 	char cTitle[MAX_TITLE_LENGTH];
@@ -1788,6 +1788,7 @@ CMenuPanel* TeamFortressViewport::CreateTextWindow(int iTextToShow)
 		{
 			sprintf(sz, "classes/long_%s.txt", sTFClassSelection[g_iPlayerClass]);
 		}
+		//TODO: This is a bug waiting to happen, won't be freed later on. Use IFileSystem
 		char* pfile = (char*)gEngfuncs.COM_LoadFile(sz, 5, NULL);
 		if (pfile)
 		{

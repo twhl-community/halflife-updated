@@ -375,6 +375,7 @@ bool CHudMessage::Draw(float fTime)
 			// This is when the message is over
 			switch (pMessage->effect)
 			{
+			default:
 			case 0:
 			case 1:
 				endTime = m_startTime[i] + pMessage->fadein + pMessage->fadeout + pMessage->holdtime;

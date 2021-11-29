@@ -295,6 +295,7 @@ void CBreakable::Precache()
 
 	switch (m_Material)
 	{
+	default: //Wood is default, needs to match constant used in KeyValue
 	case matWood:
 		pGibName = "models/woodgibs.mdl";
 
@@ -394,6 +395,7 @@ void CBreakable::DamageSound()
 		i = 3;
 		break;
 
+	default: //Wood is default, needs to match constant used in KeyValue
 	case matWood:
 		rgpsz[0] = "debris/wood1.wav";
 		rgpsz[1] = "debris/wood2.wav";

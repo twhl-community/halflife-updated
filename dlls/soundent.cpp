@@ -270,28 +270,19 @@ void CSoundEnt ::Initialize()
 //=========================================================
 int CSoundEnt ::ISoundsInList(int iListType)
 {
-	int i;
-	int iThisSound;
+	int iThisSound = [=]()
+	{
+		switch (iListType)
+		{
+		case SOUNDLISTTYPE_FREE: return m_iFreeSound;
+		case SOUNDLISTTYPE_ACTIVE: return m_iActiveSound;
+		default:
+			ALERT(at_console, "Unknown Sound List Type!\n");
+			return SOUNDLIST_EMPTY;
+		}
+	}();
 
-	if (iListType == SOUNDLISTTYPE_FREE)
-	{
-		iThisSound = m_iFreeSound;
-	}
-	else if (iListType == SOUNDLISTTYPE_ACTIVE)
-	{
-		iThisSound = m_iActiveSound;
-	}
-	else
-	{
-		ALERT(at_console, "Unknown Sound List Type!\n");
-	}
-
-	if (iThisSound == SOUNDLIST_EMPTY)
-	{
-		return 0;
-	}
-
-	i = 0;
+	int i = 0;
 
 	while (iThisSound != SOUNDLIST_EMPTY)
 	{
