@@ -8,6 +8,11 @@
 // in_win.c -- windows 95 mouse and joystick code
 // 02/21/97 JCB Added extended DirectInput code to support external controllers.
 
+#include <atomic>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+
 #include "hud.h"
 #include "cl_util.h"
 #include "camera.h"
@@ -150,14 +155,6 @@ cvar_t* joy_wwhack2;
 
 bool joy_avail, joy_advancedinit, joy_haspov;
 
-#ifdef WIN32
-DWORD s_hMouseThreadId = 0;
-HANDLE s_hMouseThread = 0;
-HANDLE s_hMouseQuitEvent = 0;
-HANDLE s_hMouseDoneQuitEvent = 0;
-SDL_bool mouseRelative = SDL_TRUE;
-#endif
-
 /*
 ===========
 Force_CenterView_f
@@ -176,47 +173,68 @@ void Force_CenterView_f()
 }
 
 #ifdef WIN32
-long s_mouseDeltaX = 0;
-long s_mouseDeltaY = 0;
-POINT current_pos;
-POINT old_mouse_pos;
-
-long ThreadInterlockedExchange(long* pDest, long value)
+struct MouseThread
 {
-	return InterlockedExchange(pDest, value);
+	std::thread Thread;
+	std::mutex Mutex;
+	std::condition_variable Condition;
+	bool QuittingTime = false;
+};
+
+MouseThread s_MouseThread;
+
+SDL_bool mouseRelative = SDL_TRUE;
+
+std::atomic<Point> s_mouseDelta;
+std::atomic<Point> current_pos;
+std::atomic<Point> old_mouse_pos;
+
+Point GetMousePosition()
+{
+	POINT mouse_pos;
+	GetCursorPos(&mouse_pos);
+
+	return
+	{
+		static_cast<int>(mouse_pos.x),
+		static_cast<int>(mouse_pos.y)
+	};
 }
 
-
-DWORD WINAPI MousePos_ThreadFunction(LPVOID p)
+void MousePos_ThreadFunction()
 {
-	s_hMouseDoneQuitEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-
 	while (true)
 	{
-		if (WaitForSingleObject(s_hMouseQuitEvent, (int)m_mousethread_sleep->value) == WAIT_OBJECT_0)
 		{
-			return 0;
+			std::unique_lock lock{s_MouseThread.Mutex};
+
+			//TODO: accessing the cvar value is a race condition
+			if (s_MouseThread.Condition.wait_for(
+				lock,
+				std::chrono::milliseconds{(int)m_mousethread_sleep->value},
+				[]() { return s_MouseThread.QuittingTime; }))
+			{
+				break;
+			}
 		}
 
 		if (mouseactive)
 		{
-			POINT mouse_pos;
-			GetCursorPos(&mouse_pos);
+			const auto mouse_pos = GetMousePosition();
 
-			volatile int mx = mouse_pos.x - old_mouse_pos.x + s_mouseDeltaX;
-			volatile int my = mouse_pos.y - old_mouse_pos.y + s_mouseDeltaY;
+			const auto oldPos = old_mouse_pos.load();
+			const auto delta = s_mouseDelta.load();
 
-			ThreadInterlockedExchange(&old_mouse_pos.x, mouse_pos.x);
-			ThreadInterlockedExchange(&old_mouse_pos.y, mouse_pos.y);
+			const Point pos
+			{
+				mouse_pos.x - oldPos.x + delta.x,
+				mouse_pos.y - oldPos.y + delta.y
+			};
 
-			ThreadInterlockedExchange(&s_mouseDeltaX, mx);
-			ThreadInterlockedExchange(&s_mouseDeltaY, my);
+			old_mouse_pos = mouse_pos;
+			s_mouseDelta = pos;
 		}
 	}
-
-	SetEvent(s_hMouseDoneQuitEvent);
-
-	return 0;
 }
 #endif
 
@@ -329,30 +347,16 @@ void IN_Shutdown()
 	IN_DeactivateMouse();
 
 #ifdef WIN32
-	if (s_hMouseQuitEvent)
+	if (s_MouseThread.Thread.joinable())
 	{
-		SetEvent(s_hMouseQuitEvent);
-		WaitForSingleObject(s_hMouseDoneQuitEvent, 100);
-	}
+		//Mouse thread is active, signal it to quit and wait.
+		{
+			std::lock_guard guard{s_MouseThread.Mutex};
+			s_MouseThread.QuittingTime = true;
+		}
 
-	if (s_hMouseThread)
-	{
-		TerminateThread(s_hMouseThread, 0);
-		CloseHandle(s_hMouseThread);
-		s_hMouseThread = (HANDLE)0;
-	}
-
-	if (s_hMouseQuitEvent)
-	{
-		CloseHandle(s_hMouseQuitEvent);
-		s_hMouseQuitEvent = (HANDLE)0;
-	}
-
-
-	if (s_hMouseDoneQuitEvent)
-	{
-		CloseHandle(s_hMouseDoneQuitEvent);
-		s_hMouseDoneQuitEvent = (HANDLE)0;
+		s_MouseThread.Condition.notify_one();
+		s_MouseThread.Thread.join();
 	}
 #endif
 }
@@ -394,10 +398,10 @@ void IN_ResetMouse()
 
 	if (!m_bRawInput && mouseactive && gEngfuncs.GetWindowCenterX && gEngfuncs.GetWindowCenterY)
 	{
-
 		SetCursorPos(gEngfuncs.GetWindowCenterX(), gEngfuncs.GetWindowCenterY());
-		ThreadInterlockedExchange(&old_mouse_pos.x, gEngfuncs.GetWindowCenterX());
-		ThreadInterlockedExchange(&old_mouse_pos.y, gEngfuncs.GetWindowCenterY());
+
+		const Point center{gEngfuncs.GetWindowCenterX(), gEngfuncs.GetWindowCenterY()};
+		old_mouse_pos = center;
 	}
 #endif
 }
@@ -489,7 +493,7 @@ IN_MouseMove
 */
 void IN_MouseMove(float frametime, usercmd_t* cmd)
 {
-	int mx, my;
+	Point pos;
 	Vector viewangles;
 
 	gEngfuncs.GetViewAngles((float*)viewangles);
@@ -509,14 +513,12 @@ void IN_MouseMove(float frametime, usercmd_t* cmd)
 		{
 			if (m_bMouseThread)
 			{
-				ThreadInterlockedExchange(&current_pos.x, s_mouseDeltaX);
-				ThreadInterlockedExchange(&current_pos.y, s_mouseDeltaY);
-				ThreadInterlockedExchange(&s_mouseDeltaX, 0);
-				ThreadInterlockedExchange(&s_mouseDeltaY, 0);
+				current_pos = s_mouseDelta.load();
+				s_mouseDelta = Point{};
 			}
 			else
 			{
-				GetCursorPos(&current_pos);
+				current_pos = GetMousePosition();
 			}
 		}
 		else
@@ -524,30 +526,26 @@ void IN_MouseMove(float frametime, usercmd_t* cmd)
 		{
 			SDL_GetRelativeMouseState(&deltaX, &deltaY);
 #ifdef WIN32
-			current_pos.x = deltaX;
-			current_pos.y = deltaY;
+			current_pos = {deltaX, deltaY};
 #endif
 		}
 
 #ifdef WIN32
 		if (!m_bRawInput)
 		{
-			if (m_bMouseThread)
+			pos = current_pos.load();
+
+			if (!m_bMouseThread)
 			{
-				mx = current_pos.x;
-				my = current_pos.y;
-			}
-			else
-			{
-				mx = current_pos.x - gEngfuncs.GetWindowCenterX() + mx_accum;
-				my = current_pos.y - gEngfuncs.GetWindowCenterY() + my_accum;
+				pos.x = pos.x - gEngfuncs.GetWindowCenterX() + mx_accum;
+				pos.y = pos.y - gEngfuncs.GetWindowCenterY() + my_accum;
 			}
 		}
 		else
 #endif
 		{
-			mx = deltaX + mx_accum;
-			my = deltaY + my_accum;
+			pos.x = deltaX + mx_accum;
+			pos.y = deltaY + my_accum;
 		}
 
 		mx_accum = 0;
@@ -555,17 +553,17 @@ void IN_MouseMove(float frametime, usercmd_t* cmd)
 
 		if (m_filter && 0 != m_filter->value)
 		{
-			mouse_x = (mx + old_mouse_x) * 0.5;
-			mouse_y = (my + old_mouse_y) * 0.5;
+			mouse_x = (pos.x + old_mouse_x) * 0.5;
+			mouse_y = (pos.y + old_mouse_y) * 0.5;
 		}
 		else
 		{
-			mouse_x = mx;
-			mouse_y = my;
+			mouse_x = pos.x;
+			mouse_y = pos.y;
 		}
 
-		old_mouse_x = mx;
-		old_mouse_y = my;
+		old_mouse_x = pos.x;
+		old_mouse_y = pos.y;
 
 		// Apply custom mouse scaling/acceleration
 		IN_ScaleMouse(&mouse_x, &mouse_y);
@@ -597,7 +595,7 @@ void IN_MouseMove(float frametime, usercmd_t* cmd)
 		}
 
 		// if the mouse has moved, force it to the center, so there's room to move
-		if (0 != mx || 0 != my)
+		if (0 != pos.x || 0 != pos.y)
 		{
 			IN_ResetMouse();
 		}
@@ -648,10 +646,11 @@ void DLLEXPORT IN_Accumulate()
 			{
 				if (!m_bMouseThread)
 				{
-					GetCursorPos(&current_pos);
+					const auto pos = GetMousePosition();
+					current_pos = pos;
 
-					mx_accum += current_pos.x - gEngfuncs.GetWindowCenterX();
-					my_accum += current_pos.y - gEngfuncs.GetWindowCenterY();
+					mx_accum += pos.x - gEngfuncs.GetWindowCenterX();
+					my_accum += pos.y - gEngfuncs.GetWindowCenterY();
 				}
 			}
 			else
@@ -1136,13 +1135,9 @@ void IN_Init()
 
 	if (!m_bRawInput && m_bMouseThread && m_mousethread_sleep)
 	{
-		s_mouseDeltaX = s_mouseDeltaY = 0;
+		s_mouseDelta = Point{};
 
-		s_hMouseQuitEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-		if (s_hMouseQuitEvent)
-		{
-			s_hMouseThread = CreateThread(NULL, 0, MousePos_ThreadFunction, NULL, 0, &s_hMouseThreadId);
-		}
+		s_MouseThread.Thread = std::thread{&MousePos_ThreadFunction};
 	}
 #endif
 
