@@ -1302,8 +1302,8 @@ void SENTENCEG_Stop(edict_t* entity, int isentenceg, int ipick)
 
 void SENTENCEG_Init()
 {
-	char buffer[512];
-	char szgroup[64];
+	char buffer[512]{};
+	char szgroup[64]{};
 	int i, j;
 	int isentencegs;
 
@@ -1314,8 +1314,6 @@ void SENTENCEG_Init()
 	gcallsentences = 0;
 
 	memset(rgsentenceg, 0, CSENTENCEG_MAX * sizeof(SENTENCEG));
-	memset(buffer, 0, 512);
-	memset(szgroup, 0, 64);
 	isentencegs = -1;
 
 
