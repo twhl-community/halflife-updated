@@ -1913,7 +1913,6 @@ void CSpeaker::Precache()
 }
 void CSpeaker::SpeakerThink()
 {
-	const char* szSoundFile;
 	float flvolume = pev->health * 0.1;
 	float flattenuation = 0.3;
 	int flags = 0;
@@ -1927,51 +1926,27 @@ void CSpeaker::SpeakerThink()
 		return;
 	}
 
-	if (0 != m_preset)
+	const char* const szSoundFile = [this]()
 	{
 		// go lookup preset text, assign szSoundFile
 		switch (m_preset)
 		{
-		case 1:
-			szSoundFile = "C1A0_";
-			break;
-		case 2:
-			szSoundFile = "C1A1_";
-			break;
-		case 3:
-			szSoundFile = "C1A2_";
-			break;
-		case 4:
-			szSoundFile = "C1A3_";
-			break;
-		case 5:
-			szSoundFile = "C1A4_";
-			break;
-		case 6:
-			szSoundFile = "C2A1_";
-			break;
-		case 7:
-			szSoundFile = "C2A2_";
-			break;
-		case 8:
-			szSoundFile = "C2A3_";
-			break;
-		case 9:
-			szSoundFile = "C2A4_";
-			break;
-		case 10:
-			szSoundFile = "C2A5_";
-			break;
-		case 11:
-			szSoundFile = "C3A1_";
-			break;
-		case 12:
-			szSoundFile = "C3A2_";
-			break;
+		case 0: return STRING(pev->message);
+		case 1: return "C1A0_";
+		case 2: return "C1A1_";
+		case 3: return "C1A2_";
+		case 4: return "C1A3_";
+		case 5: return "C1A4_";
+		case 6: return "C2A1_";
+		case 7: return "C2A2_";
+		case 8: return "C2A3_";
+		case 9: return "C2A4_";
+		case 10: return "C2A5_";
+		case 11: return "C3A1_";
+		case 12: return "C3A2_";
+		default: return "";
 		}
-	}
-	else
-		szSoundFile = STRING(pev->message);
+	}();
 
 	if (szSoundFile[0] == '!')
 	{
