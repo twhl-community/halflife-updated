@@ -24,7 +24,6 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <malloc.h> // _alloca
 
 #include "vgui_TeamFortressViewport.h"
 
@@ -123,6 +122,8 @@ bool CHudSayText::Draw(float flTime)
 		}
 	}
 
+	char line[MAX_CHARS_PER_LINE]{};
+
 	for (int i = 0; i < MAX_LINES; i++)
 	{
 		if ('\0' != *g_szLineBuffer[i])
@@ -130,25 +131,26 @@ bool CHudSayText::Draw(float flTime)
 			if (*g_szLineBuffer[i] == 2 && g_pflNameColors[i])
 			{
 				// it's a saytext string
-				char* buf = static_cast<char*>(_alloca(strlen(g_szLineBuffer[i])));
-				if (buf)
-				{
-					//char buf[MAX_PLAYER_NAME_LENGTH+32];
 
-					// draw the first x characters in the player color
-					strncpy(buf, g_szLineBuffer[i], V_min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH + 32));
-					buf[V_min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH + 31)] = 0;
-					gEngfuncs.pfnDrawSetTextColor(g_pflNameColors[i][0], g_pflNameColors[i][1], g_pflNameColors[i][2]);
-					int x = DrawConsoleString(LINE_START, y, buf + 1); // don't draw the control code at the start
-					strncpy(buf, g_szLineBuffer[i] + g_iNameLengths[i], strlen(g_szLineBuffer[i]));
-					buf[strlen(g_szLineBuffer[i] + g_iNameLengths[i]) - 1] = '\0';
-					// color is reset after each string draw
-					DrawConsoleString(x, y, buf);
-				}
-				else
-				{
-					assert("Not able to alloca chat buffer!\n");
-				}
+				//Make a copy we can freely modify
+				strncpy(line, g_szLineBuffer[i], sizeof(line) - 1);
+				line[sizeof(line) - 1] = '\0';
+
+				// draw the first x characters in the player color
+				const std::size_t playerNameEndIndex = V_min(g_iNameLengths[i], MAX_PLAYER_NAME_LENGTH + 31);
+
+				//Cut off the actual text so we can print player name
+				line[playerNameEndIndex] = '\0';
+
+				gEngfuncs.pfnDrawSetTextColor(g_pflNameColors[i][0], g_pflNameColors[i][1], g_pflNameColors[i][2]);
+				const int x = DrawConsoleString(LINE_START, y, line + 1); // don't draw the control code at the start
+
+				//Reset last character
+				line[playerNameEndIndex] = g_szLineBuffer[i][playerNameEndIndex];
+
+				// color is reset after each string draw
+				//Print the text without player name
+				DrawConsoleString(x, y, line + g_iNameLengths[i]);
 			}
 			else
 			{
