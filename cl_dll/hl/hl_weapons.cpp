@@ -33,7 +33,7 @@
 extern int g_iUser1;
 
 // Pool of client side entities/entvars_t
-static entvars_t ev[MAX_WEAPONS];
+static entvars_t ev[MAX_WEAPONS + 1];
 static int num_ents = 0;
 
 // The entity we'll use to represent the local client
