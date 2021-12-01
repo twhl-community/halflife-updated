@@ -316,7 +316,7 @@ void DLLEXPORT HUD_CreateEntities()
 }
 
 #if defined(_TFC)
-extern int g_bACSpinning[33];
+extern int g_bACSpinning[MAX_PLAYERS + 1];
 #endif
 
 /*

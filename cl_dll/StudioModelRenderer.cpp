@@ -31,7 +31,7 @@ extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
 #define TEAM3_COLOR 45
 #define TEAM4_COLOR 100
 
-int m_nPlayerGaitSequences[MAX_CLIENTS];
+int m_nPlayerGaitSequences[MAX_PLAYERS];
 
 // Global engine <-> studio model rendering code interface
 engine_studio_api_t IEngineStudio;
@@ -1639,8 +1639,8 @@ char* ReturnCorrectedModelString(int iSwitchClass)
 #endif
 
 #ifdef _TFC
-float g_flSpinUpTime[33];
-float g_flSpinDownTime[33];
+float g_flSpinUpTime[MAX_PLAYERS + 1];
+float g_flSpinDownTime[MAX_PLAYERS + 1];
 #endif
 
 

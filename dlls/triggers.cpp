@@ -926,6 +926,8 @@ void CBaseTrigger::HurtTouch(CBaseEntity* pOther)
 	if ((pev->spawnflags & SF_TRIGGER_HURT_NO_CLIENTS) != 0 && pOther->IsPlayer())
 		return;
 
+	static_assert(MAX_PLAYERS <= 32, "Rework the player mask logic to support more than 32 players");
+
 	// HACKHACK -- In multiplayer, players touch this based on packet receipt.
 	// So the players who send packets later aren't always hurt.  Keep track of
 	// how much time has passed and whether or not you've touched that player

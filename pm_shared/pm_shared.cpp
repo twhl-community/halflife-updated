@@ -126,8 +126,6 @@ typedef struct hull_s
 // fall over
 #define ROLL 2
 
-#define MAX_CLIENTS 32
-
 #define CONTENTS_CURRENT_0 -9
 #define CONTENTS_CURRENT_90 -10
 #define CONTENTS_CURRENT_180 -11
@@ -138,7 +136,7 @@ typedef struct hull_s
 #define CONTENTS_TRANSLUCENT -15
 
 static Vector rgv3tStuckTable[54];
-static int rgStuckLast[MAX_CLIENTS][2];
+static int rgStuckLast[MAX_PLAYERS][2];
 
 // Texture names
 static int gcTextures = 0;
@@ -1707,7 +1705,7 @@ bool PM_CheckStuck()
 	int i;
 	pmtrace_t traceresult;
 
-	static float rgStuckCheckTime[MAX_CLIENTS][2]; // Last time we did a full
+	static float rgStuckCheckTime[MAX_PLAYERS][2]; // Last time we did a full
 
 	// If position is okay, exit
 	hitent = pmove->PM_TestPlayerPosition(pmove->origin, &traceresult);

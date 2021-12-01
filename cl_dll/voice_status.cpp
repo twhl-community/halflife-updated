@@ -327,7 +327,7 @@ void CVoiceStatus::Frame(double frametime)
 			m_Labels[i].m_pBackground->setVisible(false);
 	}
 
-	for (int i = 0; i < VOICE_MAX_PLAYERS; i++)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 		UpdateBanButton(i);
 }
 
@@ -340,7 +340,7 @@ void CVoiceStatus::CreateEntities()
 	cl_entity_t* localPlayer = gEngfuncs.GetLocalPlayer();
 
 	int iOutModel = 0;
-	for (int i = 0; i < VOICE_MAX_PLAYERS; i++)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (!m_VoicePlayers[i])
 			continue;
@@ -424,7 +424,7 @@ void CVoiceStatus::UpdateSpeakerStatus(int entindex, bool bTalking)
 		m_bServerAcked = bTalking;
 	}
 
-	if (entindex >= 0 && entindex <= VOICE_MAX_PLAYERS)
+	if (entindex >= 0 && entindex <= MAX_PLAYERS)
 	{
 		int iClient = entindex - 1;
 		if (iClient < 0)
@@ -530,9 +530,13 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 
 	for (unsigned long dw = 0; dw < VOICE_MAX_PLAYERS_DW; dw++)
 	{
+		//The ban mask is a 32 bit int, so make sure this doesn't silently break.
+		//Note that the server will also need updating.
+		static_assert(MAX_PLAYERS <= 32, "The voice ban bit vector only supports up to 32 players");
+
 		unsigned long serverBanMask = 0;
 		unsigned long banMask = 0;
-		for (unsigned long i = 0; i < 32; i++)
+		for (unsigned long i = 0; i < MAX_PLAYERS; i++)
 		{
 			char playerID[16];
 			if (0 == gEngfuncs.GetPlayerUniqueID(i + 1, playerID))
@@ -541,7 +545,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 			if (m_BanMgr.GetPlayerBan(playerID))
 				banMask |= 1 << i;
 
-			if (m_ServerBannedPlayers[dw * 32 + i])
+			if (m_ServerBannedPlayers[dw * MAX_PLAYERS + i])
 				serverBanMask |= 1 << i;
 		}
 
@@ -811,7 +815,7 @@ void CVoiceStatus::FreeBitmaps()
 	m_pScoreboardBanned = NULL;
 
 	// Clear references to the images in panels.
-	for (int i = 0; i < VOICE_MAX_PLAYERS; i++)
+	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (m_pBanButtons[i])
 		{

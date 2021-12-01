@@ -43,7 +43,7 @@
 
 extern engine_studio_api_t IEngineStudio;
 
-static int tracerCount[32];
+static int tracerCount[MAX_PLAYERS];
 
 #include "pm_shared.h"
 

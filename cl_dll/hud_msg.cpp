@@ -24,8 +24,6 @@
 #include "particleman.h"
 extern IParticleMan* g_pParticleMan;
 
-#define MAX_CLIENTS 32
-
 #if !defined(_TFC)
 extern BEAM* pBeam;
 extern BEAM* pBeam2;
