@@ -220,7 +220,7 @@ void DLLEXPORT HUD_TxferPredictionData(struct entity_state_s* ps, const struct e
 	VectorCopy(ppcd->vuser3, pcd->vuser3);
 	VectorCopy(ppcd->vuser4, pcd->vuser4);
 
-	memcpy(wd, pwd, 32 * sizeof(weapon_data_t));
+	memcpy(wd, pwd, MAX_WEAPONS * sizeof(weapon_data_t));
 }
 
 #if defined(BEAM_TEST)

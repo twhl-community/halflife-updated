@@ -33,7 +33,7 @@
 extern int g_iUser1;
 
 // Pool of client side entities/entvars_t
-static entvars_t ev[32];
+static entvars_t ev[MAX_WEAPONS];
 static int num_ents = 0;
 
 // The entity we'll use to represent the local client
@@ -42,7 +42,7 @@ static CBasePlayer player;
 // Local version of game .dll global variables ( time, etc. )
 static globalvars_t Globals;
 
-static CBasePlayerWeapon* g_pWpns[32];
+static CBasePlayerWeapon* g_pWpns[MAX_WEAPONS];
 
 float g_flApplyVel = 0.0;
 bool g_irunninggausspred = false;
@@ -609,7 +609,7 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	if (!pWeapon)
 		return;
 
-	for (i = 0; i < 32; i++)
+	for (i = 0; i < MAX_WEAPONS; i++)
 	{
 		pCurrent = g_pWpns[i];
 		if (!pCurrent)
@@ -772,7 +772,7 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		HUD_SendWeaponAnim(to->client.weaponanim, pWeapon->pev->body, true);
 	}
 
-	for (i = 0; i < 32; i++)
+	for (i = 0; i < MAX_WEAPONS; i++)
 	{
 		pCurrent = g_pWpns[i];
 
