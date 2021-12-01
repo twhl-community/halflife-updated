@@ -23,7 +23,7 @@
 
 extern cvar_t* tfc_newmodels;
 
-extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS + 1];
+extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
 
 // team colors for old TFC models
 #define TEAM1_COLOR 150

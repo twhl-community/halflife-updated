@@ -1453,7 +1453,7 @@ void TeamFortressViewport::UpdatePlayerMenu(int menuIndex)
 	gViewPort->GetAllPlayersInfo();
 
 
-	for (int i = 1; i < MAX_PLAYERS; i++)
+	for (int i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
 		//if ( g_PlayerInfoList[i].name == NULL )
 		//	continue; // empty player slot, skip
@@ -2060,7 +2060,7 @@ void TeamFortressViewport::UpdateHighlights()
 
 void TeamFortressViewport::GetAllPlayersInfo()
 {
-	for (int i = 1; i < MAX_PLAYERS; i++)
+	for (int i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
 		gEngfuncs.pfnGetPlayerInfo(i, &g_PlayerInfoList[i]);
 
@@ -2406,7 +2406,7 @@ bool TeamFortressViewport::MsgFunc_ScoreInfo(const char* pszName, int iSize, voi
 	short playerclass = READ_SHORT();
 	short teamnumber = READ_SHORT();
 
-	if (cl > 0 && cl <= MAX_PLAYERS)
+	if (cl > 0 && cl <= MAX_PLAYERS_HUD)
 	{
 		g_PlayerExtraInfo[cl].frags = frags;
 		g_PlayerExtraInfo[cl].deaths = deaths;
@@ -2465,7 +2465,7 @@ bool TeamFortressViewport::MsgFunc_TeamInfo(const char* pszName, int iSize, void
 	BEGIN_READ(pbuf, iSize);
 	short cl = READ_BYTE();
 
-	if (cl > 0 && cl <= MAX_PLAYERS)
+	if (cl > 0 && cl <= MAX_PLAYERS_HUD)
 	{
 		// set the players team
 		strncpy(g_PlayerExtraInfo[cl].teamname, READ_STRING(), MAX_TEAM_NAME);
@@ -2487,7 +2487,7 @@ bool TeamFortressViewport::MsgFunc_Spectator(const char* pszName, int iSize, voi
 	BEGIN_READ(pbuf, iSize);
 
 	short cl = READ_BYTE();
-	if (cl > 0 && cl <= MAX_PLAYERS)
+	if (cl > 0 && cl <= MAX_PLAYERS_HUD)
 	{
 		g_IsSpectator[cl] = READ_BYTE();
 	}

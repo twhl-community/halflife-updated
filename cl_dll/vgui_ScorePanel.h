@@ -30,7 +30,7 @@
 #define COLUMN_VOICE 6
 #define COLUMN_BLANK 7
 #define NUM_COLUMNS 8
-#define NUM_ROWS (MAX_PLAYERS + (MAX_SCOREBOARD_TEAMS * 2))
+#define NUM_ROWS (MAX_PLAYERS_HUD + (MAX_SCOREBOARD_TEAMS * 2))
 
 using namespace vgui;
 
@@ -269,7 +269,7 @@ public:
 	int m_iRows;
 	int m_iSortedRows[NUM_ROWS];
 	int m_iIsATeam[NUM_ROWS];
-	bool m_bHasBeenSorted[MAX_PLAYERS];
+	bool m_bHasBeenSorted[MAX_PLAYERS_HUD];
 	int m_iLastKilledBy;
 	int m_fLastKillTime;
 

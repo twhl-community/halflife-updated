@@ -31,10 +31,10 @@
 #include "voice_status.h"
 #include "vgui_SpectatorPanel.h"
 
-extern hud_player_info_t g_PlayerInfoList[MAX_PLAYERS + 1];	   // player info from the engine
-extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS + 1]; // additional player info sent directly to the client dll
+extern hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	   // player info from the engine
+extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
 team_info_t g_TeamInfo[MAX_TEAMS + 1];
-int g_IsSpectator[MAX_PLAYERS + 1];
+int g_IsSpectator[MAX_PLAYERS_HUD + 1];
 
 bool HUD_IsGame(const char* game);
 bool EV_TFC_IsAllyTeam(int iTeam1, int iTeam2);
@@ -279,7 +279,7 @@ void ScorePanel::Update()
 		m_iSortedRows[i] = 0;
 		m_iIsATeam[i] = TEAM_NO;
 	}
-	for (i = 0; i < MAX_PLAYERS; i++)
+	for (i = 0; i < MAX_PLAYERS_HUD; i++)
 	{
 		m_bHasBeenSorted[i] = false;
 	}
@@ -320,7 +320,7 @@ void ScorePanel::SortTeams()
 	}
 
 	// recalc the team scores, then draw them
-	for (i = 1; i < MAX_PLAYERS; i++)
+	for (i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
 		if (g_PlayerInfoList[i].name == NULL)
 			continue; // empty player slot, skip
@@ -425,7 +425,7 @@ void ScorePanel::SortPlayers(int iTeam, char* team)
 		int best_player;
 		best_player = 0;
 
-		for (int i = 1; i < MAX_PLAYERS; i++)
+		for (int i = 1; i < MAX_PLAYERS_HUD; i++)
 		{
 			if (m_bHasBeenSorted[i] == false && g_PlayerInfoList[i].name && g_PlayerExtraInfo[i].frags >= highest_frags)
 			{
@@ -483,7 +483,7 @@ void ScorePanel::RebuildTeams()
 	// rebuild the team list
 	gViewPort->GetAllPlayersInfo();
 	m_iNumTeams = 0;
-	for (i = 1; i < MAX_PLAYERS; i++)
+	for (i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
 		if (g_PlayerInfoList[i].name == NULL)
 			continue;

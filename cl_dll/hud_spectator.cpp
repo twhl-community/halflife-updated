@@ -642,7 +642,7 @@ bool CHudSpectator::Draw(float flTime)
 
 
 	// loop through all the players and draw additional infos to their sprites on the map
-	for (int i = 0; i < MAX_PLAYERS; i++)
+	for (int i = 0; i < MAX_PLAYERS_HUD; i++)
 	{
 
 		if (m_vPlayerPos[i][2] < 0) // marked as invisible ?
@@ -913,10 +913,10 @@ void CHudSpectator::FindNextPlayer(bool bReverse)
 		iCurrent += iDir;
 
 		// Loop through the clients
-		if (iCurrent > MAX_PLAYERS)
+		if (iCurrent > MAX_PLAYERS_HUD)
 			iCurrent = 1;
 		if (iCurrent < 1)
-			iCurrent = MAX_PLAYERS;
+			iCurrent = MAX_PLAYERS_HUD;
 
 		pEnt = gEngfuncs.GetEntityByIndex(iCurrent);
 
@@ -972,7 +972,7 @@ void CHudSpectator::FindPlayer(const char* name)
 
 	cl_entity_t* pEnt = NULL;
 
-	for (int i = 1; i < MAX_PLAYERS; i++)
+	for (int i = 1; i < MAX_PLAYERS_HUD; i++)
 	{
 
 		pEnt = gEngfuncs.GetEntityByIndex(i);
@@ -1553,7 +1553,7 @@ void CHudSpectator::DrawOverviewEntities()
 
 	gEngfuncs.pTriAPI->CullFace(TRI_NONE);
 
-	for (i = 0; i < MAX_PLAYERS; i++)
+	for (i = 0; i < MAX_PLAYERS_HUD; i++)
 		m_vPlayerPos[i][2] = -1; // mark as invisible
 
 	// draw all players

@@ -129,7 +129,7 @@ public:
 	CInterpolation m_WayInterpolation;
 
 private:
-	Vector m_vPlayerPos[MAX_PLAYERS];
+	Vector m_vPlayerPos[MAX_PLAYERS_HUD];
 	HSPRITE m_hsprPlayerBlue;
 	HSPRITE m_hsprPlayerRed;
 	HSPRITE m_hsprPlayer;

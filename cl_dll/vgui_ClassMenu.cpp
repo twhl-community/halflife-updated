@@ -298,7 +298,7 @@ void CClassMenuPanel::Update()
 
 		// Now count the number of teammembers of this class
 		int iTotal = 0;
-		for (int j = 1; j < MAX_PLAYERS; j++)
+		for (int j = 1; j < MAX_PLAYERS_HUD; j++)
 		{
 			if (g_PlayerInfoList[j].name == NULL)
 				continue; // empty player slot, skip
