@@ -1674,6 +1674,7 @@ static int gSizes[FIELD_TYPECOUNT] =
 		sizeof(float), // FIELD_TIME
 		sizeof(int),   // FIELD_MODELNAME
 		sizeof(int),   // FIELD_SOUNDNAME
+		sizeof(std::uint64_t), //FIELD_INT64
 };
 
 
@@ -2136,6 +2137,10 @@ bool CSave::WriteFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFi
 			WriteInt(pTest->fieldName, (int*)pOutputData, pTest->fieldSize);
 			break;
 
+		case FIELD_INT64:
+			WriteData(pTest->fieldName, sizeof(std::uint64_t) * pTest->fieldSize, ((char*)pOutputData));
+			break;
+
 		case FIELD_SHORT:
 			WriteData(pTest->fieldName, 2 * pTest->fieldSize, ((char*)pOutputData));
 			break;
@@ -2351,6 +2356,10 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 
 					case FIELD_INTEGER:
 						*((int*)pOutputData) = *(int*)pInputData;
+						break;
+
+					case FIELD_INT64:
+						*((std::uint64_t*)pOutputData) = *(std::uint64_t*)pInputData;
 						break;
 
 					case FIELD_SHORT:
