@@ -354,7 +354,7 @@ void CHudAmmo::Think()
 		{
 			WEAPON* p = gWR.GetWeapon(i);
 
-			if (p)
+			if (p && WEAPON_NONE != p->iId)
 			{
 				if ((gHUD.m_iWeaponBits & (1 << p->iId)) != 0)
 					gWR.PickupWeapon(p);
