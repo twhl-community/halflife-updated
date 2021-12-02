@@ -50,6 +50,9 @@ bool CHud::MsgFunc_ResetHUD(const char* pszName, int iSize, void* pbuf)
 		pList = pList->pNext;
 	}
 
+	//Reset weapon bits.
+	m_iWeaponBits = 0ULL;
+
 	// reset sensitivity
 	m_flMouseSensitivity = 0;
 
@@ -144,5 +147,17 @@ bool CHud::MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf)
 	}
 	else
 		this->m_StatusIcons.DisableIcon("dmg_concuss");
+	return true;
+}
+
+bool CHud::MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+
+	const std::uint64_t lowerBits = READ_LONG();
+	const std::uint64_t upperBits = READ_LONG();
+
+	m_iWeaponBits = lowerBits | (upperBits << 32ULL);
+
 	return true;
 }

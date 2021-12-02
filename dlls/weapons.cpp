@@ -625,7 +625,7 @@ bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 {
 	bool bResult = CBasePlayerItem::AddToPlayer(pPlayer);
 
-	pPlayer->pev->weapons |= (1 << m_iId);
+	pPlayer->SetWeaponBit(m_iId);
 
 	if (0 == m_iPrimaryAmmoType)
 	{

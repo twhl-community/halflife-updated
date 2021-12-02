@@ -185,6 +185,8 @@ void CWallHealth::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 	if (!pActivator->IsPlayer())
 		return;
 
+	auto player = static_cast<CBasePlayer*>(pActivator);
+
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0)
 	{
@@ -193,7 +195,7 @@ void CWallHealth::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 	}
 
 	// if the player doesn't have the suit, or there is no juice left, make the deny noise
-	if ((m_iJuice <= 0) || (pActivator->pev->weapons & (1 << WEAPON_SUIT)) == 0)
+	if ((m_iJuice <= 0) || !player->HasSuit())
 	{
 		if (m_flSoundTime <= gpGlobals->time)
 		{
@@ -226,7 +228,7 @@ void CWallHealth::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE us
 
 
 	// charge the player
-	if (pActivator->TakeHealth(1, DMG_GENERIC))
+	if (player->TakeHealth(1, DMG_GENERIC))
 	{
 		m_iJuice--;
 	}

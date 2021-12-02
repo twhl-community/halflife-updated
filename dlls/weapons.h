@@ -65,7 +65,6 @@ public:
 #define ITEM_SECURITY 3
 #define ITEM_BATTERY 4
 
-#define WEAPON_ALLWEAPONS (~(1 << WEAPON_SUIT))
 #define MAX_NORMAL_BATTERY 100
 
 

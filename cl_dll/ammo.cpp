@@ -356,7 +356,7 @@ void CHudAmmo::Think()
 
 			if (p && WEAPON_NONE != p->iId)
 			{
-				if ((gHUD.m_iWeaponBits & (1 << p->iId)) != 0)
+				if (gHUD.HasWeapon(p->iId))
 					gWR.PickupWeapon(p);
 				else
 					gWR.DropWeapon(p);
@@ -424,10 +424,10 @@ void WeaponsResource::SelectSlot(int iSlot, bool fAdvance, int iDirection)
 	if (gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)
 		return;
 
-	if ((gHUD.m_iWeaponBits & (1 << (WEAPON_SUIT))) == 0)
+	if (!gHUD.HasSuit())
 		return;
 
-	if ((gHUD.m_iWeaponBits & ~(1 << (WEAPON_SUIT))) == 0)
+	if (!gHUD.HasAnyWeapons())
 		return;
 
 	WEAPON* p = NULL;
@@ -829,7 +829,7 @@ bool CHudAmmo::Draw(float flTime)
 	int a, x, y, r, g, b;
 	int AmmoWidth;
 
-	if ((gHUD.m_iWeaponBits & (1 << (WEAPON_SUIT))) == 0)
+	if (!gHUD.HasSuit())
 		return true;
 
 	if ((gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)

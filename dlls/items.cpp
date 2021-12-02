@@ -182,7 +182,7 @@ class CItemSuit : public CItem
 	}
 	bool MyTouch(CBasePlayer* pPlayer) override
 	{
-		if ((pPlayer->pev->weapons & (1 << WEAPON_SUIT)) != 0)
+		if (pPlayer->HasSuit())
 			return false;
 
 		if ((pev->spawnflags & SF_SUIT_SHORTLOGON) != 0)
@@ -190,7 +190,7 @@ class CItemSuit : public CItem
 		else
 			EMIT_SOUND_SUIT(pPlayer->edict(), "!HEV_AAx"); // long version of suit logon
 
-		pPlayer->pev->weapons |= (1 << WEAPON_SUIT);
+		pPlayer->SetHasSuit(true);
 		return true;
 	}
 };
@@ -220,7 +220,7 @@ class CItemBattery : public CItem
 		}
 
 		if ((pPlayer->pev->armorvalue < MAX_NORMAL_BATTERY) &&
-			(pPlayer->pev->weapons & (1 << WEAPON_SUIT)) != 0)
+			pPlayer->HasSuit())
 		{
 			int pct;
 			char szcharge[64];
@@ -319,7 +319,7 @@ class CItemLongJump : public CItem
 			return false;
 		}
 
-		if ((pPlayer->pev->weapons & (1 << WEAPON_SUIT)) != 0)
+		if (pPlayer->HasSuit())
 		{
 			pPlayer->m_fLongJump = true; // player now has longjump module
 

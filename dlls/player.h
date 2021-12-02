@@ -182,6 +182,12 @@ public:
 	CBasePlayerItem* m_pActiveItem;
 	CBasePlayerItem* m_pClientActiveItem; // client version of the active item
 	CBasePlayerItem* m_pLastItem;
+
+	std::uint64_t m_WeaponBits;
+
+	//Not saved, used to update client.
+	std::uint64_t m_ClientWeaponBits;
+
 	// shared ammo slots
 	int m_rgAmmo[MAX_AMMO_SLOTS];
 	int m_rgAmmoLast[MAX_AMMO_SLOTS];
@@ -229,6 +235,12 @@ public:
 	void PackDeadPlayerItems();
 	void RemoveAllItems(bool removeSuit);
 	bool SwitchWeapon(CBasePlayerItem* pWeapon);
+
+	void SetWeaponBit(int id);
+	void ClearWeaponBit(int id);
+
+	bool HasSuit() const;
+	void SetHasSuit(bool hasSuit);
 
 	// JOHN:  sends custom messages if player HUD data has changed  (eg health, ammo)
 	virtual void UpdateClientData();
@@ -329,6 +341,33 @@ public:
 
 	bool m_bRestored;
 };
+
+inline void CBasePlayer::SetWeaponBit(int id)
+{
+	m_WeaponBits |= 1ULL << id;
+}
+
+inline void CBasePlayer::ClearWeaponBit(int id)
+{
+	m_WeaponBits &= ~(1ULL << id);
+}
+
+inline bool CBasePlayer::HasSuit() const
+{
+	return (m_WeaponBits & (1ULL << WEAPON_SUIT)) != 0;
+}
+
+inline void CBasePlayer::SetHasSuit(bool hasSuit)
+{
+	if (hasSuit)
+	{
+		SetWeaponBit(WEAPON_SUIT);
+	}
+	else
+	{
+		ClearWeaponBit(WEAPON_SUIT);
+	}
+}
 
 #define AUTOAIM_2DEGREES 0.0348994967025
 #define AUTOAIM_5DEGREES 0.08715574274766

@@ -517,6 +517,21 @@ public:
 	int GetHudNumberWidth(int number, int width, int flags);
 	int DrawHudNumberReverse(int x, int y, int number, int flags, int r, int g, int b);
 
+	bool HasWeapon(int id) const
+	{
+		return (m_iWeaponBits & (1ULL << id)) != 0;
+	}
+
+	bool HasSuit() const
+	{
+		return HasWeapon(WEAPON_SUIT);
+	}
+
+	bool HasAnyWeapons() const
+	{
+		return (m_iWeaponBits & ~static_cast<std::uint64_t>(WEAPON_SUIT)) != 0;
+	}
+
 private:
 	// the memory for these arrays are allocated in the first call to CHud::VidInit(), when the hud.txt and associated sprites are loaded.
 	// freed in ~CHud()
@@ -574,11 +589,12 @@ public:
 	void MsgFunc_ViewMode(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_SetFOV(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf);
 
 	// Screen information
 	SCREENINFO m_scrinfo;
 
-	int m_iWeaponBits;
+	std::uint64_t m_iWeaponBits;
 	bool m_fPlayerDead;
 	bool m_iIntermission;
 

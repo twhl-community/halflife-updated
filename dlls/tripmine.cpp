@@ -404,7 +404,7 @@ void CTripmine::Holster()
 	if (0 == m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
 	{
 		// out of mines
-		m_pPlayer->pev->weapons &= ~(1 << WEAPON_TRIPMINE);
+		m_pPlayer->ClearWeaponBit(m_iId);
 		SetThink(&CTripmine::DestroyItem);
 		pev->nextthink = gpGlobals->time + 0.1;
 	}

@@ -102,7 +102,7 @@ bool CHudFlashlight::Draw(float flTime)
 	int r, g, b, x, y, a;
 	Rect rc;
 
-	if ((gHUD.m_iWeaponBits & (1 << (WEAPON_SUIT))) == 0)
+	if (!gHUD.HasSuit())
 		return true;
 
 	if (m_fOn)

@@ -24,6 +24,7 @@
 #include "util.h"
 #include "cbase.h"
 #include "saverestore.h"
+#include "player.h"
 #include "skill.h"
 #include "gamerules.h"
 
@@ -110,6 +111,8 @@ void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 	if (!FClassnameIs(pActivator->pev, "player"))
 		return;
 
+	auto player = static_cast<CBasePlayer*>(pActivator);
+
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0)
 	{
@@ -118,7 +121,7 @@ void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 	}
 
 	// if the player doesn't have the suit, or there is no juice left, make the deny noise
-	if ((m_iJuice <= 0) || (pActivator->pev->weapons & (1 << WEAPON_SUIT)) == 0)
+	if ((m_iJuice <= 0) || !player->HasSuit())
 	{
 		if (m_flSoundTime <= gpGlobals->time)
 		{
@@ -137,6 +140,7 @@ void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 		return;
 
 	// Make sure that we have a caller
+	//TODO: useless, it's accessed earlier on.
 	if (!pActivator)
 		return;
 
@@ -144,6 +148,7 @@ void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useT
 
 	//only recharge the player
 
+	//TODO: put this check at the top.
 	if (!m_hActivator->IsPlayer())
 		return;
 
