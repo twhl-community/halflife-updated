@@ -493,7 +493,6 @@ void EV_FireGlock2(event_args_t* args)
 	Vector ShellOrigin;
 	int shell;
 	Vector vecSrc, vecAiming;
-	Vector vecSpread;
 	Vector up, right, forward;
 
 	idx = args->entindex;
@@ -546,9 +545,7 @@ void EV_FireShotGunDouble(event_args_t* args)
 	Vector ShellOrigin;
 	int shell;
 	Vector vecSrc, vecAiming;
-	Vector vecSpread;
 	Vector up, right, forward;
-	float flSpread = 0.01;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
@@ -600,9 +597,7 @@ void EV_FireShotGunSingle(event_args_t* args)
 	Vector ShellOrigin;
 	int shell;
 	Vector vecSrc, vecAiming;
-	Vector vecSpread;
 	Vector up, right, forward;
-	float flSpread = 0.01;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
@@ -659,7 +654,6 @@ void EV_FireMP5(event_args_t* args)
 	int shell;
 	Vector vecSrc, vecAiming;
 	Vector up, right, forward;
-	float flSpread = 0.01;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
@@ -742,7 +736,6 @@ void EV_FirePython(event_args_t* args)
 
 	Vector vecSrc, vecAiming;
 	Vector up, right, forward;
-	float flSpread = 0.01;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
@@ -831,16 +824,13 @@ void EV_FireGauss(event_args_t* args)
 	Vector angles;
 	Vector velocity;
 	float flDamage = args->fparam1;
-	int primaryfire = args->bparam1;
 
 	bool m_fPrimaryFire = 0 != args->bparam1;
-	int m_iWeaponVolume = GAUSS_PRIMARY_FIRE_VOLUME;
 	Vector vecSrc;
 	Vector vecDest;
 	edict_t* pentIgnore;
 	pmtrace_t tr, beam_tr;
 	float flMaxFrac = 1.0;
-	int nTotal = 0;
 	bool fHasPunched = false;
 	bool fFirstBeam = true;
 	int nMaxHits = 10;
@@ -1107,8 +1097,6 @@ void EV_Crowbar(event_args_t* args)
 {
 	int idx;
 	Vector origin;
-	Vector angles;
-	Vector velocity;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
@@ -1314,12 +1302,11 @@ void EV_EgonFlareCallback(struct tempent_s* ent, float frametime, float currentt
 
 void EV_EgonFire(event_args_t* args)
 {
-	int idx, iFireState, iFireMode;
+	int idx, iFireMode;
 	Vector origin;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
-	iFireState = args->iparam1;
 	iFireMode = args->iparam2;
 	bool iStartup = 0 != args->bparam1;
 
@@ -1351,7 +1338,7 @@ void EV_EgonFire(event_args_t* args)
 
 	if (iStartup && EV_IsLocal(idx) && !pBeam && !pBeam2 && !pFlare && 0 != cl_lw->value) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
 	{
-		Vector vecSrc, vecEnd, origin, angles, forward, right, up;
+		Vector vecSrc, vecEnd, angles, forward, right, up;
 		pmtrace_t tr;
 
 		cl_entity_t* pl = gEngfuncs.GetEntityByIndex(idx);
@@ -1471,13 +1458,12 @@ void EV_EgonStop(event_args_t* args)
 //======================
 void EV_HornetGunFire(event_args_t* args)
 {
-	int idx, iFireMode;
-	Vector origin, angles, vecSrc, forward, right, up;
+	int idx;
+	Vector origin, angles;
 
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
 	VectorCopy(args->angles, angles);
-	iFireMode = args->iparam1;
 
 	//Only play the weapon anims if I shot it.
 	if (EV_IsLocal(idx))
@@ -1552,7 +1538,7 @@ void EV_TripmineFire(event_args_t* args)
 void EV_SnarkFire(event_args_t* args)
 {
 	int idx;
-	Vector vecSrc, angles, view_ofs, forward;
+	Vector vecSrc, angles, forward;
 	pmtrace_t tr;
 
 	idx = args->entindex;
