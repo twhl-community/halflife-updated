@@ -17,11 +17,7 @@
 #include <vgui/IScheme.h>
 #include <vgui_controls/Controls.h>
 
-#ifdef CZERO
-#include "vgui/hl_base/iviewport.h"
-#else
 #include <game_controls/iviewport.h>
-#endif
 
 #include "voice_common.h"
 #include "cl_entity.h"
