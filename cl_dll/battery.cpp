@@ -61,22 +61,11 @@ bool CHudBattery::MsgFunc_Battery(const char* pszName, int iSize, void* pbuf)
 	BEGIN_READ(pbuf, iSize);
 	int x = READ_SHORT();
 
-#if defined(_TFC)
-	int y = READ_SHORT();
-
-	if (x != m_iBat || y != m_iBatMax)
-	{
-		m_fFade = FADE_TIME;
-		m_iBat = x;
-		m_iBatMax = y;
-	}
-#else
 	if (x != m_iBat)
 	{
 		m_fFade = FADE_TIME;
 		m_iBat = x;
 	}
-#endif
 
 	return true;
 }
@@ -92,16 +81,7 @@ bool CHudBattery::Draw(float flTime)
 
 	rc = *m_prc2;
 
-#if defined(_TFC)
-	float fScale = 0.0;
-
-	if (m_iBatMax > 0)
-		fScale = 1.0 / (float)m_iBatMax;
-
-	rc.top += m_iHeight * ((float)(m_iBatMax - (V_min(m_iBatMax, m_iBat))) * fScale); // battery can go from 0 to m_iBatMax so * fScale goes from 0 to 1
-#else
 	rc.top += m_iHeight * ((float)(100 - (V_min(100, m_iBat))) * 0.01); // battery can go from 0 to 100 so * 0.01 goes from 0 to 1
-#endif
 
 	UnpackRGB(r, g, b, RGB_YELLOWISH);
 

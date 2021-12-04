@@ -16,9 +16,6 @@
     <Filter Include="Source Files\dlls">
       <UniqueIdentifier>{a59f65b1-455f-459d-bc2a-75775255cd5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\dlls\wpn_shared">
-      <UniqueIdentifier>{000b311c-d555-467e-b6cb-5e669fb8c45e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\pm_shared">
       <UniqueIdentifier>{7f184267-1d16-4bbc-9212-a804fcd04e6a}</UniqueIdentifier>
     </Filter>
@@ -183,8 +180,8 @@
     <ClCompile Include="..\..\dlls\hgrunt.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\wpn_shared\hl_wpn_glock.cpp">
-      <Filter>Source Files\dlls\wpn_shared</Filter>
+    <ClCompile Include="..\..\dlls\glock.cpp">
+      <Filter>Source Files\dlls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\monstermaker.cpp">
       <Filter>Source Files\dlls</Filter>
