@@ -12,8 +12,6 @@
 	#include "../czero/cl_dll/hud.h"
 #elif defined(CSTRIKE)
 	#include "../cstrike/cl_dll/hud.h"
-#elif defined(DOD)
-	#include "../dod/cl_dll/hud.h"
 #elif defined(BLUESHIFT)
 	#include "../blueshift/cl_dll/hud.h"
 #else

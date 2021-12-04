@@ -10,8 +10,6 @@
 #include "../dmc/cl_dll/hud.h"
 #elif defined(CSTRIKE)
 #include "../cstrike/cl_dll/hud.h"
-#elif defined(DOD)
-#include "../dod/cl_dll/hud.h"
 #else
 #include "hud.h"
 #endif
