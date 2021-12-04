@@ -21,7 +21,7 @@ clientdata_t none
 	DEFINE_DELTA( ammo_cells, DT_SIGNED | DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( ammo_rockets, DT_SIGNED | DT_INTEGER, 10, 1.0 ),
 
-	DEFINE_DELTA( m_iId, DT_INTEGER, 5, 1.0 ),
+	DEFINE_DELTA( m_iId, DT_INTEGER, 6, 1.0 ),
 
 	DEFINE_DELTA( punchangle[2], DT_SIGNED | DT_FLOAT, 16, 8.0 ),
 	DEFINE_DELTA( flags, DT_INTEGER, 32, 1.0 ), // Cut to 3 bits?
