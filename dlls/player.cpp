@@ -1781,6 +1781,22 @@ void CBasePlayer::PreThink()
 			SET_VIEW(edict(), viewEntity->edict());
 		}
 	}
+	
+	// in the event that the player JUST spawned, and the level node graph
+	// was loaded, fix all of the node graph pointers before the game starts.
+
+	// !!!BUGBUG - now that we have multiplayer, this needs to be moved!
+	if (0 != WorldGraph.m_fGraphPresent && 0 == WorldGraph.m_fGraphPointersSet)
+	{
+		if (!WorldGraph.FSetGraphPointers())
+		{
+			ALERT(at_console, "**Graph pointers were not set!\n");
+		}
+		else
+		{
+			ALERT(at_console, "**Graph Pointers Set!\n");
+		}
+	}
 
 	// JOHN: checks if new client data (for HUD and view control) needs to be sent to the client
 	UpdateClientData();
@@ -2848,22 +2864,6 @@ void CBasePlayer::Spawn()
 
 void CBasePlayer::Precache()
 {
-	// in the event that the player JUST spawned, and the level node graph
-	// was loaded, fix all of the node graph pointers before the game starts.
-
-	// !!!BUGBUG - now that we have multiplayer, this needs to be moved!
-	if (0 != WorldGraph.m_fGraphPresent && 0 == WorldGraph.m_fGraphPointersSet)
-	{
-		if (!WorldGraph.FSetGraphPointers())
-		{
-			ALERT(at_console, "**Graph pointers were not set!\n");
-		}
-		else
-		{
-			ALERT(at_console, "**Graph Pointers Set!\n");
-		}
-	}
-
 	// SOUNDS / MODELS ARE PRECACHED in ClientPrecache() (game specific)
 	// because they need to precache before any clients have connected
 

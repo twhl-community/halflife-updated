@@ -140,9 +140,6 @@ void DLLEXPORT HUD_ProcessPlayerState(struct entity_state_s* dst, const struct e
 	dst->team = src->team;
 	dst->colormap = src->colormap;
 
-#if defined(_TFC)
-	dst->fuser1 = src->fuser1;
-#endif
 
 	// Save off some data so other areas of the Client DLL can get to it
 	cl_entity_t* player = gEngfuncs.GetLocalPlayer(); // Get the local player's index
@@ -315,9 +312,6 @@ void DLLEXPORT HUD_CreateEntities()
 	GetClientVoiceMgr()->CreateEntities();
 }
 
-#if defined(_TFC)
-extern int g_bACSpinning[MAX_PLAYERS + 1];
-#endif
 
 /*
 =========================
@@ -333,12 +327,6 @@ void DLLEXPORT HUD_StudioEvent(const struct mstudioevent_s* event, const struct 
 
 	bool iMuzzleFlash = true;
 
-#if defined(_TFC)
-
-	if (g_bACSpinning[entity->index - 1])
-		iMuzzleFlash = false;
-
-#endif
 
 	switch (event->event)
 	{
