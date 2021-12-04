@@ -451,9 +451,6 @@ void IN_Attack2Down()
 {
 	KeyDown(&in_attack2);
 
-#ifdef _TFC
-	__CmdFunc_InputPlayerSpecial();
-#endif
 
 	gHUD.m_Spectator.HandleButtonsDown(IN_ATTACK2);
 }
@@ -1016,9 +1013,6 @@ void ShutdownInput()
 #include "interface.h"
 void CL_UnloadParticleMan();
 
-#if defined(_TFC)
-void ClearEventList();
-#endif
 
 void DLLEXPORT HUD_Shutdown()
 {
@@ -1026,9 +1020,6 @@ void DLLEXPORT HUD_Shutdown()
 
 	ShutdownInput();
 
-#if defined(_TFC)
-	ClearEventList();
-#endif
 
 	FileSystem_FreeFileSystem();
 	CL_UnloadParticleMan();

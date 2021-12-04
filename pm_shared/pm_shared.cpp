@@ -2131,11 +2131,6 @@ void PM_LadderMove(physent_t* pLadder)
 	if (pmove->movetype == MOVETYPE_NOCLIP)
 		return;
 
-#if defined(_TFC)
-	// this is how TFC freezes players, so we don't want them climbing ladders
-	if (pmove->maxspeed <= 1.0)
-		return;
-#endif
 
 	pmove->PM_GetModelBounds(pLadder->model, modelmins, modelmaxs);
 
@@ -3078,13 +3073,11 @@ void PM_PlayerMove(qboolean server)
 		}
 	}
 
-#if !defined(_TFC)
 	// Slow down, I'm pulling it! (a box maybe) but only when I'm standing on ground
 	if ((pmove->onground != -1) && (pmove->cmd.buttons & IN_USE) != 0)
 	{
 		VectorScale(pmove->velocity, 0.3, pmove->velocity);
 	}
-#endif
 
 	// Handle movement
 	switch (pmove->movetype)
