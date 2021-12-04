@@ -1395,25 +1395,6 @@ int V_FindViewModelByWeaponModel(int weaponindex)
 
 	static const char* modelmap[][2] = {
 
-#ifdef _TFC // TFC models override HL models
-		{"models/p_mini.mdl", "models/v_tfac.mdl"},
-		{"models/p_sniper.mdl", "models/v_tfc_sniper.mdl"},
-		{"models/p_umbrella.mdl", "models/v_umbrella.mdl"},
-		{"models/p_crowbar.mdl", "models/v_tfc_crowbar.mdl"},
-		{"models/p_spanner.mdl", "models/v_tfc_spanner.mdl"},
-		{"models/p_knife.mdl", "models/v_tfc_knife.mdl"},
-		{"models/p_medkit.mdl", "models/v_tfc_medkit.mdl"},
-		{"models/p_egon.mdl", "models/v_flame.mdl"},
-		{"models/p_glauncher.mdl", "models/v_tfgl.mdl"},
-		{"models/p_rpg.mdl", "models/v_tfc_rpg.mdl"},
-		{"models/p_nailgun.mdl", "models/v_tfc_nailgun.mdl"},
-		{"models/p_snailgun.mdl", "models/v_tfc_supernailgun.mdl"},
-		{"models/p_9mmhandgun.mdl", "models/v_tfc_railgun.mdl"},
-		{"models/p_srpg.mdl", "models/v_tfc_rpg.mdl"},
-		{"models/p_smallshotgun.mdl", "models/v_tfc_12gauge.mdl"},
-		{"models/p_shotgun.mdl", "models/v_tfc_shotgun.mdl"},
-		{"models/p_spygun.mdl", "models/v_tfc_pistol.mdl"},
-#endif
 		{"models/p_crossbow.mdl", "models/v_crossbow.mdl"},
 		{"models/p_crowbar.mdl", "models/v_crowbar.mdl"},
 		{"models/p_egon.mdl", "models/v_egon.mdl"},
@@ -1498,11 +1479,7 @@ void V_CalcSpectatorRefdef(struct ref_params_s* pparams)
 		}
 
 		// predict missing client data and set weapon model ( in HLTV mode or inset in eye mode )
-#ifdef _TFC
-		if (0 != gEngfuncs.IsSpectateOnly() || gHUD.m_Spectator.m_pip->value == INSET_IN_EYE)
-#else
 		if (0 != gEngfuncs.IsSpectateOnly())
-#endif
 		{
 			V_GetInEyePos(g_iUser2, pparams->simorg, pparams->cl_viewangles);
 
