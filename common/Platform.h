@@ -66,8 +66,6 @@ using qboolean = int;
 #define DLLEXPORT __declspec(dllexport)
 #define DLLHIDDEN
 #else // WIN32
-#define MAX_PATH PATH_MAX
-
 #define stricmp strcasecmp
 #define strnicmp strncasecmp
 #define _alloca alloca
