@@ -90,6 +90,7 @@ DLL_OBJS = \
 	$(HL1_SERVER_OBJ_DIR)/crowbar.o \
 	$(HL1_SERVER_OBJ_DIR)/egon.o \
 	$(HL1_SERVER_OBJ_DIR)/gauss.o \
+	$(HL1_SERVER_OBJ_DIR)/glock.o \
 	$(HL1_SERVER_OBJ_DIR)/handgrenade.o \
 	$(HL1_SERVER_OBJ_DIR)/hornetgun.o \
 	$(HL1_SERVER_OBJ_DIR)/mp5.o \
@@ -100,7 +101,6 @@ DLL_OBJS = \
 	$(HL1_SERVER_OBJ_DIR)/squeakgrenade.o \
 	$(HL1_SERVER_OBJ_DIR)/tripmine.o \
 	$(HL1_SERVER_OBJ_DIR)/weapons_shared.o \
-	$(HL1_SERVER_OBJ_DIR)/wpn_shared/hl_wpn_glock.o \
 
 
 PUBLIC_OBJS = \
