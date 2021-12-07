@@ -1,8 +1,8 @@
 Directory Contents
 ==================
 
-vs2010
-  Contains Visual C++ 2010 Express project and solution files.
+vs2019
+  Contains Visual C++ 2019 project and solution files.
   Please read readme.txt included in that folder for further instructions.
 
 

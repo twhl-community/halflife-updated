@@ -2,8 +2,8 @@ Directory Contents
 ==================
 
 projects.sln
-  Solution file for Visual C++ 2010 Express, containing the main projects for
-  compiling the valve, dmc and ricochet DLL files.
+  Solution file for Visual C++ 2019, containing the main projects for
+  compiling the valve DLL files.
   
 utils.sln
   Solution file containing projects for the utilities.
@@ -22,7 +22,7 @@ Installing GLUT and GLAUX
 =========================
 
 Some projects in utils.sln use the GLUT (mdlviwer) and the GLAUX (qbsp2, qcsg)
-libraries, which are not shipped with Visual C++ 2010 Express / Windows SDK
+libraries, which are not shipped with Visual C++ 2019 / Windows SDK
 v7.0A.
 
 Thus you need to install the GLUT and GLAUX libraries manually:
@@ -115,7 +115,7 @@ http://www.microsoft.com/en-us/download/details.aspx?id=11800
 Burn it to a CD and start KitSetup.exe.
 It's enough to select "Build Environment" in the options you want to install.
 
-Now we need to point Visual C++ 2010 Express to the folders for the MFC/ATL
+Now we need to point Visual C++ 2019 to the folders for the MFC/ATL
 includes and libraries:
 
 To do this open utils.sln and right click the serverctrl project and select
