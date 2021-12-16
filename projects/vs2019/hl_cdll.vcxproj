@@ -281,6 +281,9 @@
     <ClInclude Include="..\..\pm_shared\pm_movevars.h" />
     <ClInclude Include="..\..\pm_shared\pm_shared.h" />
     <ClInclude Include="..\..\public\interface.h" />
+    <ClInclude Include="..\..\public\particleman.h" />
+    <ClInclude Include="..\..\public\pman_particlemem.h" />
+    <ClInclude Include="..\..\public\pman_triangleffect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
