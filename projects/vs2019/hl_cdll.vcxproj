@@ -221,7 +221,7 @@
     <ClInclude Include="..\..\cl_dll\particleman\IParticleMan_Active.h" />
     <ClInclude Include="..\..\cl_dll\particleman\particleman.h" />
     <ClInclude Include="..\..\cl_dll\particleman\particleman_internal.h" />
-    <ClInclude Include="..\..\cl_dll\particleman\pman_particlemem.h" />
+    <ClInclude Include="..\..\cl_dll\particleman\CMiniMem.h" />
     <ClInclude Include="..\..\cl_dll\StudioModelRenderer.h" />
     <ClInclude Include="..\..\cl_dll\tri.h" />
     <ClInclude Include="..\..\cl_dll\vgui_int.h" />

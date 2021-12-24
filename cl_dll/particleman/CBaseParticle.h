@@ -21,7 +21,7 @@
 #define RENDER_FACEPLAYER_ROTATEZ (1 << 8) //Just like above but m_vAngles.z is untouched so the sprite can rotate.
 
 
-#include "pman_particlemem.h"
+#include "CMiniMem.h"
 
 //pure virtual baseclass
 class CBaseParticle

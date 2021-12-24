@@ -18,7 +18,7 @@
 #include "triangleapi.h"
 #include "particleman.h"
 #include "particleman_internal.h"
-#include "pman_particlemem.h"
+#include "CMiniMem.h"
 #include "IParticleMan_Active.h"
 
 static bool g_iRenderMode = true;

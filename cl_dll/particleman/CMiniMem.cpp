@@ -21,7 +21,7 @@
 #include "cl_util.h"
 #include "particleman.h"
 #include "particleman_internal.h"
-#include "pman_particlemem.h"
+#include "CMiniMem.h"
 
 void* CMiniMem::Allocate(std::size_t sizeInBytes, std::size_t alignment)
 {

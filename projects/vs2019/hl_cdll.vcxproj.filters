@@ -590,7 +590,7 @@
     <ClInclude Include="..\..\cl_dll\particleman\particleman.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cl_dll\particleman\pman_particlemem.h">
+    <ClInclude Include="..\..\cl_dll\particleman\CMiniMem.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\particleman\CBaseParticle.h">
