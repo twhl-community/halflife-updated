@@ -97,7 +97,9 @@ public:
 
 	// Methods
 	constexpr void CopyToArray(float* rgfl) const { rgfl[0] = x, rgfl[1] = y, rgfl[2] = z; }
-	[[nodiscard]] float Length() const { return static_cast<float>(sqrt(x * x + y * y + z * z)); }
+
+	[[nodiscard]] constexpr float LengthSquared() const { return x * x + y * y + z * z; }
+	[[nodiscard]] float Length() const { return static_cast<float>(sqrt(LengthSquared())); }
 	[[nodiscard]] constexpr operator float*() { return &x; }			 // Vectors will now automatically convert to float * when needed
 	[[nodiscard]] constexpr operator const float*() const { return &x; } // Vectors will now automatically convert to float * when needed
 

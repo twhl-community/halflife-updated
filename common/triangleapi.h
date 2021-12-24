@@ -42,7 +42,7 @@ typedef struct triangleapi_s
 	void (*Color4f)(float r, float g, float b, float a);
 	void (*Color4ub)(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 	void (*TexCoord2f)(float u, float v);
-	void (*Vertex3fv)(float* worldPnt);
+	void (*Vertex3fv)(const float* worldPnt);
 	void (*Vertex3f)(float x, float y, float z);
 	void (*Brightness)(float brightness);
 	void (*CullFace)(TRICULLSTYLE style);

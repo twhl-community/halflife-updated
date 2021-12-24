@@ -5,16 +5,6 @@
 
 #define PARTICLEMAN_INTERFACE "create_particleman"
 
-#ifdef WIN32
-#define PARTICLEMAN_DLLNAME "cl_dlls/particleman.dll"
-#elif defined(OSX)
-#define PARTICLEMAN_DLLNAME "cl_dlls/particleman.dylib"
-#elif defined(LINUX)
-#define PARTICLEMAN_DLLNAME "cl_dlls/particleman.so"
-#else
-#error
-#endif
-
 class CBaseParticle;
 
 class IParticleMan : public IBaseInterface
