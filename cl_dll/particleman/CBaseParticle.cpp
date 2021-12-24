@@ -417,8 +417,6 @@ void CBaseParticle::CheckCollision(float time)
 	{
 		const float frametime = time - g_flOldTime;
 
-		auto old = m_vVelocity;
-
 		m_vOrigin = m_vPrevOrigin + m_vVelocity * (trace.fraction * frametime);
 
 		float bounce;
