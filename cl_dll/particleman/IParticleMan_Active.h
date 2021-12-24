@@ -31,20 +31,5 @@ public:
 
 	char* RequestNewMemBlock(int iSize) override;
 
-	void CoreInitializeSprite(CCoreTriangleEffect* pParticle, Vector org, Vector normal, model_s* sprite, float size, float brightness) override;
-	void CoreThink(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreDraw(CCoreTriangleEffect* pParticle) override;
-	void CoreAnimate(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreAnimateAndDie(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreExpand(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreContract(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreFade(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreSpin(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreCalculateVelocity(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreCheckCollision(CCoreTriangleEffect* pParticle, float time) override;
-	void CoreTouch(CCoreTriangleEffect* pParticle, Vector pos, Vector normal, int index) override;
-	void CoreDie(CCoreTriangleEffect* pParticle) override;
-	void CoreForce(CCoreTriangleEffect* pParticle) override;
-	bool CoreCheckVisibility(CCoreTriangleEffect* pParticle) override;
 	void SetRender(int iRender) override;
 };
