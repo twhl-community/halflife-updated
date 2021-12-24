@@ -72,8 +72,8 @@ CBaseParticle* IParticleMan_Active::CreateParticle(Vector org, Vector normal, mo
 	auto particle = new CBaseParticle();
 
 	particle->InitializeSprite(org, normal, sprite, size, brightness);
-	//TODO: unsafe
-	strcpy(particle->m_szClassname, classname);
+	strncpy(particle->m_szClassname, classname, sizeof(particle->m_szClassname) - 1);
+	particle->m_szClassname[sizeof(particle->m_szClassname) - 1] = '\0';
 
 	return particle;
 }
