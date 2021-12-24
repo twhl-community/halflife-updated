@@ -78,14 +78,6 @@ void CMiniMem::ProcessAll()
 	{
 		auto effect = _particles[i];
 
-		if (!effect)
-		{
-			//TODO: bad error handling?
-			while (true)
-			{
-			}
-		}
-
 		if (!IsGamePaused())
 		{
 			effect->Think(time);
@@ -148,14 +140,6 @@ int CMiniMem::ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, floa
 	
 	for (auto effect : _particles)
 	{
-		if (!effect)
-		{
-			//TODO: bad error handling?
-			while (true)
-			{
-			}
-		}
-
 		if (!effect->m_bAffectedByForce)
 		{
 			continue;
