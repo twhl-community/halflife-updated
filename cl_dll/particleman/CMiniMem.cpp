@@ -141,26 +141,6 @@ CMiniMem* CMiniMem::Instance()
 	return _instance;
 }
 
-int ParticleSortFn(const void* elem1, const void* elem2)
-{
-	auto lhs = reinterpret_cast<const visibleparticles_t*>(elem1);
-	auto rhs = reinterpret_cast<const visibleparticles_t*>(elem2);
-
-	const float lhsDistance = lhs->pVisibleParticle->GetPlayerDistance();
-	const float rhsDistance = rhs->pVisibleParticle->GetPlayerDistance();
-
-	if (lhsDistance < rhsDistance)
-	{
-		return 1;
-	}
-	else if (lhsDistance > rhsDistance)
-	{
-		return -1;
-	}
-
-	return 0;
-}
-
 void CMiniMem::ProcessAll()
 {
 	const float time = gEngfuncs.GetClientTime();
@@ -213,10 +193,6 @@ void CMiniMem::ProcessAll()
 		particle = next;
 	}
 
-	//TODO: replace with std::sort
-	qsort(m_pVisibleParticles, m_iParticlesDrawn, sizeof(m_pVisibleParticles[0]), &ParticleSortFn);
-
-	/*
 	std::sort(m_pVisibleParticles, m_pVisibleParticles + m_iParticlesDrawn, [](const visibleparticles_t& lhs, const visibleparticles_t& rhs)
 		{
 			//Particles are ordered farthest to nearest so they can be drawn in order.
@@ -225,8 +201,6 @@ void CMiniMem::ProcessAll()
 
 			return lhsDistance > rhsDistance;
 		});
-		*/
-
 
 	for (int i = 0; i < m_iParticlesDrawn; ++i)
 	{
