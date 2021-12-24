@@ -13,6 +13,8 @@
 *
 ****/
 
+#include <vector>
+
 #include "hud.h"
 #include "cl_util.h"
 #include "triangleapi.h"
@@ -25,9 +27,14 @@ static bool g_iRenderMode = true;
 
 static cvar_t* cl_pmanstats = nullptr;
 
-static ForceList g_pForceList;
+static std::vector<ForceMember> g_pForceList;
 
 EXPOSE_INTERFACE(IParticleMan_Active, IParticleMan, PARTICLEMAN_INTERFACE);
+
+IParticleMan_Active::IParticleMan_Active()
+{
+	g_pForceList.reserve(MaxForceElements);
+}
 
 void IParticleMan_Active::SetRender(int iRender)
 {
@@ -36,43 +43,20 @@ void IParticleMan_Active::SetRender(int iRender)
 
 void IParticleMan_Active::ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, float flStrength, float flDuration)
 {
-	if (g_pForceList.m_iElements >= MaxForceElements)
+	if (g_pForceList.size() >= MaxForceElements)
 	{
 		return;
 	}
 
-	++g_pForceList.m_iElements;
+	ForceMember member;
 
-	auto member = new ForceMember();
+	member.m_vOrigin = vOrigin;
+	member.m_vDirection = vDirection;
+	member.m_flRadius = flRadius;
+	member.m_flStrength = flStrength;
+	member.m_flDieTime = gEngfuncs.GetClientTime() + flDuration;
 
-	member->m_pNext = nullptr;
-	member->m_pPrevious = nullptr;
-	member->m_flRadius = 0;
-	member->m_flStrength = 0;
-	member->m_flDieTime = 0;
-	member->m_iIndex = g_pForceList.m_iElements;
-
-	if (nullptr != g_pForceList.pFirst)
-	{
-		member->m_pPrevious = g_pForceList.pCurrent;
-
-		g_pForceList.pCurrent->m_pNext = member;
-
-		g_pForceList.pLast = g_pForceList.pCurrent = member;
-	}
-	else
-	{
-		g_pForceList.pLast = g_pForceList.pCurrent = g_pForceList.pFirst = member;
-	}
-
-	if (auto current = g_pForceList.pCurrent; nullptr != current)
-	{
-		current->m_vOrigin = vOrigin;
-		current->m_vDirection = vDirection;
-		current->m_flRadius = flRadius;
-		current->m_flStrength = flStrength;
-		current->m_flDieTime = gEngfuncs.GetClientTime() + flDuration;
-	}
+	g_pForceList.push_back(member);
 }
 
 void IParticleMan_Active::SetUp(cl_enginefunc_t* pEnginefuncs)
@@ -97,7 +81,7 @@ CBaseParticle* IParticleMan_Active::CreateParticle(Vector org, Vector normal, mo
 void IParticleMan_Active::ResetParticles()
 {
 	CMiniMem::Instance()->Reset();
-	g_pForceList.Clear();
+	g_pForceList.clear();
 }
 
 void IParticleMan_Active::SetVariables(float flGravity, Vector vViewAngles)
@@ -116,35 +100,29 @@ void IParticleMan_Active::Update()
 
 	const float time = gEngfuncs.GetClientTime();
 
-	for (auto member = g_pForceList.pFirst; nullptr != member;)
+	for (std::size_t i = 0; i < g_pForceList.size();)
 	{
-		auto next = member->m_pNext;
-
-		if (member->m_flDieTime != 0 && member->m_flDieTime < time)
+		if (auto& member = g_pForceList[i]; member.m_flDieTime != 0 && member.m_flDieTime < time)
 		{
-			if (member == g_pForceList.pFirst)
+			//Always swap to last before erasing to make it cheaper to do.
+			if (i + 1 < g_pForceList.size())
 			{
-				g_pForceList.pFirst = member->m_pNext;
+				std::swap(member, g_pForceList[g_pForceList.size() - 1]);
 			}
 
-			if (member == g_pForceList.pLast)
-			{
-				g_pForceList.pLast = g_pForceList.pCurrent = member->m_pPrevious;
-			}
-
-			delete member;
-
-			--g_pForceList.m_iElements;
+			g_pForceList.erase(g_pForceList.begin() + (g_pForceList.size() - 1));
 		}
-
-		member = next;
+		else
+		{
+			++i;
+		}
 	}
 
 	auto memory = CMiniMem::Instance();
 
-	for (auto member = g_pForceList.pFirst; nullptr != member; member = member->m_pNext)
+	for (const auto& member : g_pForceList)
 	{
-		memory->ApplyForce(member->m_vOrigin, member->m_vDirection, member->m_flRadius, member->m_flStrength);
+		memory->ApplyForce(member.m_vOrigin, member.m_vDirection, member.m_flRadius, member.m_flStrength);
 	}
 
 	g_cFrustum.CalculateFrustum();

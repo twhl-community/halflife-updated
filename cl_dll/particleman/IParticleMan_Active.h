@@ -20,6 +20,8 @@
 class IParticleMan_Active : public IParticleMan
 {
 public:
+	IParticleMan_Active();
+
 	void SetUp(cl_enginefunc_t* pEnginefuncs) override;
 	void Update() override;
 	void SetVariables(float flGravity, Vector vViewAngles) override;

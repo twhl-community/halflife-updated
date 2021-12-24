@@ -25,10 +25,11 @@
 #undef clamp
 
 #include <algorithm>
+#include <cstddef>
 
 #include "CFrustum.h"
 
-constexpr int MaxForceElements = 128;
+constexpr std::size_t MaxForceElements = 128;
 
 inline CFrustum g_cFrustum;
 inline float g_flGravity;
@@ -42,9 +43,6 @@ inline bool IsGamePaused()
 
 struct ForceMember
 {
-	int m_iIndex;
-	ForceMember* m_pNext;
-	ForceMember* m_pPrevious;
 	Vector m_vOrigin;
 	Vector m_vDirection;
 	float m_flRadius;
@@ -52,32 +50,3 @@ struct ForceMember
 	float m_flDieTime;
 };
 
-/**
-*	@brief List of physics forces to apply every frame.
-*/
-struct ForceList
-{
-	~ForceList()
-	{
-		Clear();
-	}
-
-	void Clear()
-	{
-		while (nullptr != pFirst)
-		{
-			auto next = pFirst->m_pNext;
-			delete pFirst;
-			pFirst = next;
-		}
-
-		pCurrent = nullptr;
-		pLast = nullptr;
-		m_iElements = 0;
-	}
-
-	int m_iElements = 0;
-	ForceMember* pFirst = nullptr;
-	ForceMember* pCurrent = nullptr;
-	ForceMember* pLast = nullptr;
-};
