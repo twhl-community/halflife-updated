@@ -578,15 +578,6 @@
     <ClInclude Include="..\..\common\PlatformHeaders.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\public\particleman.h">
-      <Filter>Header Files\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\public\pman_particlemem.h">
-      <Filter>Header Files\public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\public\pman_triangleffect.h">
-      <Filter>Header Files\public</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cl_dll\particleman\particleman_internal.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
@@ -594,6 +585,15 @@
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\particleman\IParticleMan_Active.h">
+      <Filter>Header Files\cl_dll\particleman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\particleman\particleman.h">
+      <Filter>Header Files\cl_dll\particleman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\particleman\pman_particlemem.h">
+      <Filter>Header Files\cl_dll\particleman</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\particleman\pman_triangleffect.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
   </ItemGroup>
