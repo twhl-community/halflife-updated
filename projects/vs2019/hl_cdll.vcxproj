@@ -144,7 +144,7 @@
     <ClCompile Include="..\..\cl_dll\in_camera.cpp" />
     <ClCompile Include="..\..\cl_dll\menu.cpp" />
     <ClCompile Include="..\..\cl_dll\message.cpp" />
-    <ClCompile Include="..\..\cl_dll\particleman\CCoreTriangleEffect.cpp" />
+    <ClCompile Include="..\..\cl_dll\particleman\CBaseParticle.cpp" />
     <ClCompile Include="..\..\cl_dll\particleman\CMiniMem.cpp" />
     <ClCompile Include="..\..\cl_dll\particleman\CFrustum.cpp" />
     <ClCompile Include="..\..\cl_dll\particleman\IParticleMan_Active.cpp" />
@@ -216,12 +216,12 @@
     <ClInclude Include="..\..\cl_dll\interpolation.h" />
     <ClInclude Include="..\..\cl_dll\in_defs.h" />
     <ClInclude Include="..\..\cl_dll\kbutton.h" />
+    <ClInclude Include="..\..\cl_dll\particleman\CBaseParticle.h" />
     <ClInclude Include="..\..\cl_dll\particleman\CFrustum.h" />
     <ClInclude Include="..\..\cl_dll\particleman\IParticleMan_Active.h" />
     <ClInclude Include="..\..\cl_dll\particleman\particleman.h" />
     <ClInclude Include="..\..\cl_dll\particleman\particleman_internal.h" />
     <ClInclude Include="..\..\cl_dll\particleman\pman_particlemem.h" />
-    <ClInclude Include="..\..\cl_dll\particleman\pman_triangleffect.h" />
     <ClInclude Include="..\..\cl_dll\StudioModelRenderer.h" />
     <ClInclude Include="..\..\cl_dll\tri.h" />
     <ClInclude Include="..\..\cl_dll\vgui_int.h" />

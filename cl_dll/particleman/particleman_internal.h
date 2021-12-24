@@ -28,30 +28,12 @@
 
 #include "CFrustum.h"
 
-constexpr long MemoryPoolSize = 30000;
-constexpr unsigned long MinimumParticleClassSize = 276;
 constexpr int MaxForceElements = 128;
-
-inline unsigned long g_lMaxParticleClassSize;
 
 inline CFrustum g_cFrustum;
 inline float g_flGravity;
 inline float g_flOldTime;
 inline Vector g_vViewAngles;
-
-/**
-*	@brief Updates the maximum particle class size as needed.
-*	@param lSize Size of a particle class type, in bytes.
-*/
-constexpr long MaxParticleClassSize(unsigned long lSize)
-{
-	if (lSize > 0)
-	{
-		g_lMaxParticleClassSize = std::max({MinimumParticleClassSize, g_lMaxParticleClassSize, lSize});
-	}
-
-	return g_lMaxParticleClassSize;
-}
 
 inline bool IsGamePaused()
 {

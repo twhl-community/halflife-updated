@@ -77,6 +77,7 @@ void CHud::MsgFunc_InitHUD(const char* pszName, int iSize, void* pbuf)
 	}
 
 
+	//TODO: needs to be called on every map change, not just when starting a new game
 	if (g_pParticleMan)
 		g_pParticleMan->ResetParticles();
 

@@ -75,29 +75,12 @@ void IParticleMan_Active::ApplyForce(Vector vOrigin, Vector vDirection, float fl
 	}
 }
 
-char* IParticleMan_Active::RequestNewMemBlock(int iSize)
-{
-	if (!g_iRenderMode)
-	{
-		return nullptr;
-	}
-
-	return CMiniMem::Instance()->newBlock();
-}
-
-void IParticleMan_Active::AddCustomParticleClassSize(unsigned long lSize)
-{
-	MaxParticleClassSize(lSize);
-}
-
 void IParticleMan_Active::SetUp(cl_enginefunc_t* pEnginefuncs)
 {
 	//Note: disabled because we're in the client dll.
 	//std::memcpy(&gEngfuncs, pEnginefuncs, sizeof(gEngfuncs));
 
 	cl_pmanstats = gEngfuncs.pfnRegisterVariable("cl_pmanstats", "0", 0);
-	g_lMaxParticleClassSize = 0;
-	MaxParticleClassSize(0);
 }
 
 CBaseParticle* IParticleMan_Active::CreateParticle(Vector org, Vector normal, model_s* sprite, float size, float brightness, const char* classname)
@@ -157,19 +140,21 @@ void IParticleMan_Active::Update()
 		member = next;
 	}
 
+	auto memory = CMiniMem::Instance();
+
 	for (auto member = g_pForceList.pFirst; nullptr != member; member = member->m_pNext)
 	{
-		CMiniMem::ApplyForce(member->m_vOrigin, member->m_vDirection, member->m_flRadius, member->m_flStrength);
+		memory->ApplyForce(member->m_vOrigin, member->m_vDirection, member->m_flRadius, member->m_flStrength);
 	}
 
 	g_cFrustum.CalculateFrustum();
 
-	CMiniMem::Instance()->ProcessAll();
+	memory->ProcessAll();
 
 	if (nullptr != cl_pmanstats && cl_pmanstats->value == 1)
 	{
-		gEngfuncs.Con_NPrintf(15, "Number of Particles: %d", CMiniMem::Instance()->GetTotalParticles());
-		gEngfuncs.Con_NPrintf(16, "Particles Drawn: %d", CMiniMem::Instance()->GetDrawnParticles());
-		gEngfuncs.Con_NPrintf(17, "CMiniMem Free: %d%%", CMiniMem::Instance()->PercentUsed());
+		//TODO: engine doesn't support printing size_t, use local printf
+		gEngfuncs.Con_NPrintf(15, "Number of Particles: %d", static_cast<int>(CMiniMem::Instance()->GetTotalParticles()));
+		gEngfuncs.Con_NPrintf(16, "Particles Drawn: %d", static_cast<int>(CMiniMem::Instance()->GetDrawnParticles()));
 	}
 }

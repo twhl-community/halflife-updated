@@ -311,9 +311,6 @@ void CL_LoadParticleMan()
 	if (g_pParticleMan)
 	{
 		g_pParticleMan->SetUp(&gEngfuncs);
-
-		// Add custom particle classes here BEFORE calling anything else or you will die.
-		g_pParticleMan->AddCustomParticleClassSize(sizeof(CBaseParticle));
 	}
 }
 

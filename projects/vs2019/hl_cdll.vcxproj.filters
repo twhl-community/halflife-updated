@@ -318,7 +318,7 @@
     <ClCompile Include="..\..\cl_dll\particleman\CFrustum.cpp">
       <Filter>Source Files\cl_dll\particleman</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\particleman\CCoreTriangleEffect.cpp">
+    <ClCompile Include="..\..\cl_dll\particleman\CBaseParticle.cpp">
       <Filter>Source Files\cl_dll\particleman</Filter>
     </ClCompile>
   </ItemGroup>
@@ -593,7 +593,7 @@
     <ClInclude Include="..\..\cl_dll\particleman\pman_particlemem.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cl_dll\particleman\pman_triangleffect.h">
+    <ClInclude Include="..\..\cl_dll\particleman\CBaseParticle.h">
       <Filter>Header Files\cl_dll\particleman</Filter>
     </ClInclude>
   </ItemGroup>

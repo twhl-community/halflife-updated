@@ -21,15 +21,12 @@ class IParticleMan_Active : public IParticleMan
 {
 public:
 	void SetUp(cl_enginefunc_t* pEnginefuncs) override;
-	void Update(void) override;
+	void Update() override;
 	void SetVariables(float flGravity, Vector vViewAngles) override;
-	void ResetParticles(void) override;
+	void ResetParticles() override;
 	void ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, float flStrength, float flDuration) override;
-	void AddCustomParticleClassSize(unsigned long lSize) override;
 
 	CBaseParticle* CreateParticle(Vector org, Vector normal, model_s* sprite, float size, float brightness, const char* classname) override;
-
-	char* RequestNewMemBlock(int iSize) override;
 
 	void SetRender(int iRender) override;
 };

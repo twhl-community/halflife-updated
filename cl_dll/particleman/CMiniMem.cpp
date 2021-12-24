@@ -13,6 +13,8 @@
 *
 ****/
 
+#undef clamp
+
 #include <algorithm>
 
 #include "hud.h"
@@ -21,39 +23,28 @@
 #include "particleman_internal.h"
 #include "pman_particlemem.h"
 
-static MemList m_FreeMem;
-static MemList m_ActiveMem;
-
-CMiniMem::CMiniMem(long lMemoryPoolSize, long lMaxBlockSize)
+void* CMiniMem::Allocate(std::size_t sizeInBytes, std::size_t alignment)
 {
-	m_lMemoryPoolSize = lMemoryPoolSize;
-	m_lMemoryBlockSize = lMaxBlockSize;
-	m_lMaxBlocks = lMemoryPoolSize / 16;
+	auto particle = reinterpret_cast<CBaseParticle*>(_pool.allocate(sizeInBytes, alignment));
 
-	//Allocate all blocks.
-	for (long i = 0; i < m_lMaxBlocks; ++i)
+	if (nullptr != particle)
 	{
-		auto block = new MemoryBlock(m_lMemoryBlockSize);
-
-		m_vecMemoryPool.push_back(block);
-
-		m_FreeMem.Push(block);
+		_particles.push_back(particle);
 	}
 
-	m_pVisibleParticles = new visibleparticles_t[m_lMaxBlocks];
+	return particle;
 }
 
-CMiniMem::~CMiniMem()
+void CMiniMem::Deallocate(void* memory, std::size_t sizeInBytes, std::size_t alignment)
 {
-	for (MemoryBlock* block; (block = m_FreeMem.Pop()) != nullptr;)
+	if (!memory)
 	{
-		delete block;
+		return;
 	}
 
-	m_vecMemoryPool.clear();
+	_particles.erase(std::find(_particles.begin(), _particles.end(), memory), _particles.end());
 
-	delete[] m_pVisibleParticles;
-	m_pVisibleParticles = nullptr;
+	_pool.deallocate(memory, sizeInBytes, alignment);
 }
 
 void CMiniMem::Shutdown()
@@ -62,72 +53,11 @@ void CMiniMem::Shutdown()
 	_instance = nullptr;
 }
 
-char* CMiniMem::AllocateFreeBlock()
-{
-	if (auto block = m_FreeMem.Pop(); nullptr != block)
-	{
-		m_ActiveMem.Push(block);
-
-		return block->Memory();
-	}
-
-	return nullptr;
-}
-
-bool CMiniMem::CheckSize(int iSize)
-{
-	//Ensure instance exists
-	//TODO: this is a non-static function so this is pointless
-	Instance();
-
-	return iSize > 0 && iSize <= m_lMemoryBlockSize;
-}
-
-char* CMiniMem::newBlock()
-{
-	if (auto memory = AllocateFreeBlock(); memory)
-	{
-		return memory;
-	}
-
-	gEngfuncs.Con_DPrintf("Particleman is out of memory, too many particles");
-
-	return nullptr;
-}
-
-void CMiniMem::deleteBlock(MemoryBlock* p)
-{
-	m_ActiveMem.Delete(p);
-	m_FreeMem.Push(p);
-}
-
-long CMiniMem::PercentUsed()
-{
-	long usedBlockCount = 0;
-
-	if (nullptr != m_FreeMem.Front())
-	{
-		for (auto block = m_FreeMem.Front(); nullptr != block; block = block->next)
-		{
-			++usedBlockCount;
-		}
-
-		usedBlockCount *= 100;
-	}
-
-	return usedBlockCount / m_lMaxBlocks;
-}
-
-long CMiniMem::MaxBlockSize()
-{
-	return m_lMemoryBlockSize;
-}
-
 CMiniMem* CMiniMem::Instance()
 {
 	if (!_instance)
 	{
-		_instance = new CMiniMem(MemoryPoolSize, g_lMaxParticleClassSize);
+		_instance = new CMiniMem();
 	}
 
 	return _instance;
@@ -138,14 +68,15 @@ void CMiniMem::ProcessAll()
 	const float time = gEngfuncs.GetClientTime();
 
 	//Clear list of visible particles.
-	m_iTotalParticles = 0;
-	m_iParticlesDrawn = 0;
+	_visibleParticles = 0;
 
-	std::memset(m_pVisibleParticles, 0, sizeof(m_pVisibleParticles[0]) * m_lMaxBlocks);
+	//Divide the particle list in two: the list of visible particles and the list of invisible particles.
+	//Remove any particles that have died.
+	std::size_t invisibleCount = 0;
 
-	for (auto particle = m_ActiveMem.Front(); nullptr != particle;)
+	for (std::size_t i = 0; i < (_particles.size() - invisibleCount);)
 	{
-		auto effect = reinterpret_cast<CCoreTriangleEffect*>(particle->Memory());
+		auto effect = _particles[i];
 
 		if (!effect)
 		{
@@ -155,48 +86,57 @@ void CMiniMem::ProcessAll()
 			}
 		}
 
-		++m_iTotalParticles;
+		if (!IsGamePaused())
+		{
+			effect->Think(time);
+		}
+
+		if (0 != effect->m_flDieTime && time >= effect->m_flDieTime)
+		{
+			effect->Die();
+			delete effect;
+
+			//Don't do this! operator delete removes the effect from the list.
+			//_particles.erase(_particles.begin() + i);
+			continue;
+		}
 
 		if (effect->CheckVisibility())
 		{
 			auto player = gEngfuncs.GetLocalPlayer();
 			effect->SetPlayerDistance((player->origin - effect->m_vOrigin).LengthSquared());
 
-			m_pVisibleParticles[m_iParticlesDrawn++].pVisibleParticle = effect;
+			++_visibleParticles;
 		}
-
-		if (!IsGamePaused())
+		else
 		{
-			effect->Think(time);
+			if (i + invisibleCount < _particles.size())
+			{
+				//There is an effect we haven't checked yet.
+				//Put the invisible effect at the end of the list and check the other effect next.
+				std::swap(_particles[i], _particles[_particles.size() - 1 - invisibleCount]);
+				++invisibleCount;
+				continue;
+			}
+			//No more unchecked effects in the list.
 		}
 
-		auto next = particle->next;
-
-		if (0 != effect->m_flDieTime && time >= effect->m_flDieTime)
-		{
-			effect->Die();
-
-			//TODO: call destructor
-			//TODO: remove from visible particles list (or remove before adding it)
-
-			deleteBlock(particle);
-		}
-
-		particle = next;
+		++i;
 	}
 
-	std::sort(m_pVisibleParticles, m_pVisibleParticles + m_iParticlesDrawn, [](const visibleparticles_t& lhs, const visibleparticles_t& rhs)
+	std::sort(_particles.begin(), _particles.begin() + _visibleParticles, [](const auto& lhs, const auto& rhs)
 		{
 			//Particles are ordered farthest to nearest so they can be drawn in order.
-			const float lhsDistance = lhs.pVisibleParticle->GetPlayerDistance();
-			const float rhsDistance = rhs.pVisibleParticle->GetPlayerDistance();
+			const float lhsDistance = lhs->GetPlayerDistance();
+			const float rhsDistance = rhs->GetPlayerDistance();
 
 			return lhsDistance > rhsDistance;
 		});
 
-	for (int i = 0; i < m_iParticlesDrawn; ++i)
+	for (std::size_t i = 0; i < _visibleParticles; ++i)
 	{
-		m_pVisibleParticles[i].pVisibleParticle->Draw();
+		auto effect = _particles[i];
+		effect->Draw();
 	}
 
 	g_flOldTime = time;
@@ -206,10 +146,8 @@ int CMiniMem::ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, floa
 {
 	const float radiusSquared = flRadius * flRadius;
 	
-	for (auto particle = m_ActiveMem.Front(); particle; particle = particle->next)
+	for (auto effect : _particles)
 	{
-		auto effect = reinterpret_cast<CCoreTriangleEffect*>(particle->Memory());
-
 		if (!effect)
 		{
 			//TODO: bad error handling?
@@ -286,12 +224,18 @@ int CMiniMem::ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, floa
 
 void CMiniMem::Reset()
 {
-	m_ActiveMem.Reset();
-	m_FreeMem.Reset();
+	_visibleParticles = 0;
 
-	//Initialize the free list.
-	for (auto block : m_vecMemoryPool)
+	for (auto particle : _particles)
 	{
-		m_FreeMem.Push(block);
+		particle->Die();
+		delete particle;
 	}
+
+	//Cleared by CBaseParticle::operator delete
+	//_particles.clear();
+
+	//Wipe away previously allocated memory so maps with loads of particles don't eat up memory forever.
+	_pool.release();
+	_particles.shrink_to_fit();
 }

@@ -16,17 +16,21 @@
 #include "hud.h"
 #include "cl_util.h"
 
+#undef clamp
+
+#include <algorithm>
+
 #include "event_api.h"
 #include "triangleapi.h"
 
 #include "particleman.h"
 #include "particleman_internal.h"
-#include "pman_triangleffect.h"
+#include "CBaseParticle.h"
 
 #include "pm_defs.h"
 #include "pmtrace.h"
 
-void CCoreTriangleEffect::InitializeSprite(Vector org, Vector normal, model_s* sprite, float size, float brightness)
+void CBaseParticle::InitializeSprite(Vector org, Vector normal, model_s* sprite, float size, float brightness)
 {
 	m_flSize = m_flOriginalSize = 10;
 
@@ -99,7 +103,7 @@ void CCoreTriangleEffect::InitializeSprite(Vector org, Vector normal, model_s* s
 	m_vTopLeft = m_vLowLeft + scaledUp + scaledUp;
 }
 
-bool CCoreTriangleEffect::CheckVisibility()
+bool CBaseParticle::CheckVisibility()
 {
 	const float radius = m_flSize / 5.0;
 
@@ -144,7 +148,7 @@ bool CCoreTriangleEffect::CheckVisibility()
 	return true;
 }
 
-void CCoreTriangleEffect::Draw()
+void CBaseParticle::Draw()
 {
 	if (m_flDieTime == gEngfuncs.GetClientTime())
 	{
@@ -234,7 +238,7 @@ void CCoreTriangleEffect::Draw()
 	gEngfuncs.pTriAPI->CullFace(TRI_FRONT);
 }
 
-void CCoreTriangleEffect::Animate(float time)
+void CBaseParticle::Animate(float time)
 {
 	if (0 != m_iFramerate && 0 != m_iNumFrames)
 	{
@@ -242,7 +246,7 @@ void CCoreTriangleEffect::Animate(float time)
 	}
 }
 
-void CCoreTriangleEffect::AnimateAndDie(float time)
+void CBaseParticle::AnimateAndDie(float time)
 {
 	if (0 != m_iFramerate && 0 != m_iNumFrames)
 	{
@@ -264,7 +268,7 @@ void CCoreTriangleEffect::AnimateAndDie(float time)
 	}
 }
 
-void CCoreTriangleEffect::Expand(float time)
+void CBaseParticle::Expand(float time)
 {
 	if (m_flScaleSpeed != 0)
 	{
@@ -277,7 +281,7 @@ void CCoreTriangleEffect::Expand(float time)
 	}
 }
 
-void CCoreTriangleEffect::Contract(float time)
+void CBaseParticle::Contract(float time)
 {
 	if (m_flContractSpeed != 0)
 	{
@@ -290,7 +294,7 @@ void CCoreTriangleEffect::Contract(float time)
 	}
 }
 
-void CCoreTriangleEffect::Fade(float time)
+void CBaseParticle::Fade(float time)
 {
 	if (m_flFadeSpeed >= -0.5)
 	{
@@ -311,7 +315,7 @@ void CCoreTriangleEffect::Fade(float time)
 	}
 }
 
-void CCoreTriangleEffect::Spin(float time)
+void CBaseParticle::Spin(float time)
 {
 	if (m_vAVelocity == g_vecZero)
 	{
@@ -328,7 +332,7 @@ void CCoreTriangleEffect::Spin(float time)
 	m_vAngles = m_vOriginalAngles + m_vAVelocity * length;
 }
 
-void CCoreTriangleEffect::CalculateVelocity(float time)
+void CBaseParticle::CalculateVelocity(float time)
 {
 	const float deltaTime = time - g_flOldTime;
 	const float gravity = -deltaTime * g_flGravity * m_flGravity;
@@ -353,7 +357,7 @@ void CCoreTriangleEffect::CalculateVelocity(float time)
 	m_vVelocity.z = m_vVelocity.z + gravity;
 }
 
-void CCoreTriangleEffect::CheckCollision(float time)
+void CBaseParticle::CheckCollision(float time)
 {
 	if (m_iCollisionFlags == 0)
 	{
@@ -477,22 +481,22 @@ void CCoreTriangleEffect::CheckCollision(float time)
 	m_vPrevOrigin = m_vOrigin;
 }
 
-void CCoreTriangleEffect::Touch(Vector pos, Vector normal, int index)
+void CBaseParticle::Touch(Vector pos, Vector normal, int index)
 {
 	//Nothing.
 }
 
-void CCoreTriangleEffect::Die()
+void CBaseParticle::Die()
 {
 	//Nothing.
 }
 
-void CCoreTriangleEffect::Force()
+void CBaseParticle::Force()
 {
 	//Nothing.
 }
 
-void CCoreTriangleEffect::Think(float time)
+void CBaseParticle::Think(float time)
 {
 	if ((m_iCollisionFlags & TRI_ANIMATEDIE) != 0)
 	{
