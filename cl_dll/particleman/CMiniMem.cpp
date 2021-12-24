@@ -24,14 +24,6 @@
 static MemList m_FreeMem;
 static MemList m_ActiveMem;
 
-//TODO: convert these to inline
-VectorOfMemoryBlocks CMiniMem::m_vecMemoryPool;
-
-long CMiniMem::m_lMemoryBlockSize = 0;
-long CMiniMem::m_lMaxBlocks = 0;
-long CMiniMem::m_lMemoryPoolSize = 0;
-CMiniMem* CMiniMem::_instance = nullptr;
-
 CMiniMem::CMiniMem(long lMemoryPoolSize, long lMaxBlockSize)
 {
 	m_lMemoryPoolSize = lMemoryPoolSize;

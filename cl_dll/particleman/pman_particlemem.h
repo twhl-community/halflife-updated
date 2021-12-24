@@ -138,12 +138,12 @@ class CMiniMem
 private:
 	// Main memory pool.  Array is fine, but vectors are
 	//  easier. :)
-	static VectorOfMemoryBlocks m_vecMemoryPool;
+	static inline VectorOfMemoryBlocks m_vecMemoryPool;
 	// Size of memory blocks in pool.
-	static long m_lMemoryBlockSize;
-	static long m_lMaxBlocks;
-	static long m_lMemoryPoolSize;
-	static CMiniMem* _instance;
+	static inline long m_lMemoryBlockSize = 0;
+	static inline long m_lMaxBlocks = 0;
+	static inline long m_lMemoryPoolSize = 0;
+	static inline CMiniMem* _instance = nullptr;
 
 	int m_iTotalParticles;
 	int m_iParticlesDrawn;
