@@ -4,11 +4,13 @@
 #
 
 HL_SRC_DIR=$(SOURCE_DIR)/cl_dll
+HL_PARTICLEMAN_DIR=$(SOURCE_DIR)/cl_dll/particleman
 HL_SERVER_SRC_DIR=$(SOURCE_DIR)/dlls
 GAME_SHARED_SRC_DIR=$(SOURCE_DIR)/game_shared
 PM_SHARED_SRC_DIR=$(SOURCE_DIR)/pm_shared
 
 HL1_OBJ_DIR=$(BUILD_OBJ_DIR)/hl1_client
+HL1_PARTICLEMAN_OBJ_DIR=$(BUILD_OBJ_DIR)/particleman
 PUBLIC_OBJ_DIR=$(HL1_OBJ_DIR)/public
 COMMON_OBJ_DIR=$(HL1_OBJ_DIR)/common
 GAME_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/game_shared
@@ -17,7 +19,7 @@ PM_SHARED_OBJ_DIR=$(HL1_OBJ_DIR)/pm_shared
 
 CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) -DCLIENT_DLL -DCLIENT_WEAPONS -I/usr/include/malloc
 
-INCLUDEDIRS=-I$(HL_SRC_DIR) -I../dlls -I$(COMMON_SRC_DIR) -I$(PUBLIC_SRC_DIR) -I../pm_shared -I../engine -I../utils/vgui/include -I ../game_shared -I../external
+INCLUDEDIRS=-I$(HL_SRC_DIR) -I$(HL_PARTICLEMAN_DIR) -I../dlls -I$(COMMON_SRC_DIR) -I$(PUBLIC_SRC_DIR) -I../pm_shared -I../engine -I../utils/vgui/include -I ../game_shared -I../external
 
 ifeq ($(OS),Darwin)
 	LDFLAGS=$(SHLIBLDFLAGS) $(CPP_LIB) -framework Carbon $(CFG)/vgui.dylib -L. -lSDL2-2.0.0
@@ -85,6 +87,12 @@ HL1_OBJS = \
 	$(HL1_OBJ_DIR)/vgui_teammenu.o \
 	$(HL1_OBJ_DIR)/voice_status.o \
 
+HL1_PARTICLEMAN_OBJS = \
+	$(HL1_PARTICLEMAN_OBJ_DIR)/CBaseParticle.o \
+	$(HL1_PARTICLEMAN_OBJ_DIR)/CFrustum.o \
+	$(HL1_PARTICLEMAN_OBJ_DIR)/CMiniMem.o \
+	$(HL1_PARTICLEMAN_OBJ_DIR)/IParticleMan_Active.o \
+	
 DLL_OBJS = \
 	$(HL1_SERVER_OBJ_DIR)/crossbow.o \
 	$(HL1_SERVER_OBJ_DIR)/crowbar.o \
@@ -135,6 +143,7 @@ client.$(SHLIBEXT): $(HL1_OBJS) $(PUBLIC_OBJS) $(COMMON_OBJS) $(GAME_SHARED_OBJS
 
 $(HL1_OBJ_DIR):
 	mkdir -p $(HL1_OBJ_DIR)
+	mkdir -p $(HL1_PARTICLEMAN_OBJ_DIR)
 	mkdir -p $(HL1_OBJ_DIR)/hl
 	mkdir -p $(HL1_OBJ_DIR)/dlls/wpn_shared
 	mkdir -p $(HL1_OBJ_DIR)/VGUI
@@ -156,6 +165,9 @@ $(PM_SHARED_OBJ_DIR):
 	mkdir -p $(PM_SHARED_OBJ_DIR)
 
 $(HL1_OBJ_DIR)/%.o: $(HL_SRC_DIR)/%.cpp $(filter-out $(wildcard  $(HL1_OBJ_DIR)),  $(HL1_OBJ_DIR))
+	$(DO_CC)
+
+$(HL1_PARTICLEMAN_OBJ_DIR)/%.o: $(HL_PARTICLEMAN_DIR)/%.cpp $(filter-out $(wildcard  $(HL1_OBJ_DIR)),  $(HL1_OBJ_DIR))
 	$(DO_CC)
 
 $(HL1_SERVER_OBJ_DIR)/%.o: $(HL_SERVER_SRC_DIR)/%.cpp $(filter-out $(wildcard  $(HL1_SERVER_OBJ_DIR)),  $(HL1_SERVER_OBJ_DIR))
