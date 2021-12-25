@@ -823,9 +823,9 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 			pto->m_fNextAimBonus = -1.0;
 		}
 
-		if (pto->m_flNextPrimaryAttack < -1.0)
+		if (pto->m_flNextPrimaryAttack < -1.1)
 		{
-			pto->m_flNextPrimaryAttack = -1.0;
+			pto->m_flNextPrimaryAttack = -1.1;
 		}
 
 		if (pto->m_flNextSecondaryAttack < -0.001)
