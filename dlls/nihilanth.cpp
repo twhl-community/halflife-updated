@@ -964,8 +964,7 @@ void CNihilanth::Flight()
 	}
 	else if (m_flForce > -100 && vecEst.z > m_posDesired.z)
 	{
-		if (vecEst.z > m_posDesired.z)
-			m_flForce -= 10;
+		m_flForce -= 10;
 	}
 
 	UTIL_SetOrigin(pev, pev->origin + m_velocity * 0.1);

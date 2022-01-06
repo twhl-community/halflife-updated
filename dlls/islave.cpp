@@ -644,10 +644,13 @@ Schedule_t* CISlave::GetSchedule()
 
 		ASSERT(pSound != NULL);
 
-		if (pSound && (pSound->m_iType & bits_SOUND_DANGER) != 0)
-			return GetScheduleOfType(SCHED_TAKE_COVER_FROM_BEST_SOUND);
-		if ((pSound->m_iType & bits_SOUND_COMBAT) != 0)
-			m_afMemory |= bits_MEMORY_PROVOKED;
+		if (pSound)
+		{
+			if ((pSound->m_iType & bits_SOUND_DANGER) != 0)
+				return GetScheduleOfType(SCHED_TAKE_COVER_FROM_BEST_SOUND);
+			if ((pSound->m_iType & bits_SOUND_COMBAT) != 0)
+				m_afMemory |= bits_MEMORY_PROVOKED;
+		}
 	}
 
 	switch (m_MonsterState)

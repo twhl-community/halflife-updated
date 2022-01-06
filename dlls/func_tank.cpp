@@ -404,7 +404,7 @@ void CFuncTank::ControllerPostFrame()
 {
 	ASSERT(m_pController != NULL);
 
-	if (gpGlobals->time < m_flNextAttack)
+	if (gpGlobals->time < m_flNextAttack || !m_pController)
 		return;
 
 	if ((m_pController->pev->button & IN_ATTACK) != 0)
@@ -417,7 +417,7 @@ void CFuncTank::ControllerPostFrame()
 		Fire(BarrelPosition(), vecForward, m_pController->pev);
 
 		// HACKHACK -- make some noise (that the AI can hear)
-		if (m_pController && m_pController->IsPlayer())
+		if (m_pController->IsPlayer())
 			((CBasePlayer*)m_pController)->m_iWeaponVolume = LOUD_GUN_VOLUME;
 
 		m_flNextAttack = gpGlobals->time + (1 / m_fireRate);

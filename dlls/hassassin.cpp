@@ -868,6 +868,7 @@ Schedule_t* CHAssassin::GetSchedule()
 				if (m_MonsterState == MONSTERSTATE_COMBAT)
 					return GetScheduleOfType(SCHED_ASSASSIN_JUMP);
 				else
+					// FIXME: in this case, this code not executed, because m_MonsterState is MONSTERSTATE_COMBAT.
 					return GetScheduleOfType(SCHED_ASSASSIN_JUMP_ATTACK);
 			}
 		}

@@ -1417,7 +1417,7 @@ void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirS
 			{
 			case BULLET_MONSTER_MP5:
 			case BULLET_MONSTER_9MM:
-			case BULLET_MONSTER_12MM:
+			case BULLET_MONSTER_12MM: // FIXME: what you can do with these bullets?
 			default:
 				MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, vecTracerSrc);
 				WRITE_BYTE(TE_TRACER);

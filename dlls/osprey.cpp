@@ -426,7 +426,7 @@ void COsprey::Flight()
 	float flSpeed = DotProduct(gpGlobals->v_forward, m_velocity);
 
 	// float flSpeed = DotProduct( gpGlobals->v_forward, pev->velocity );
-
+	// FIXME: This is this->m_flIdealtilt or local variable ?
 	float m_flIdealtilt = (160 - flSpeed) / 10.0;
 
 	// ALERT( at_console, "%f %f\n", flSpeed, flIdealtilt );

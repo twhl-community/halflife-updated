@@ -846,11 +846,11 @@ void CFlockingFlyer::SquadRemove(CFlockingFlyer* pRemove)
 		{
 			CFlockingFlyer* pLeader = m_pSquadNext;
 
-			// copy the enemy LKP to the new leader
-			pLeader->m_vecEnemyLKP = m_vecEnemyLKP;
-
 			if (pLeader)
 			{
+				// copy the enemy LKP to the new leader
+				pLeader->m_vecEnemyLKP = m_vecEnemyLKP;
+
 				CFlockingFlyer* pList = pLeader;
 
 				while (pList)
