@@ -84,8 +84,8 @@ DLLEXPORT IBaseInterface* CreateInterface(const char* pName, int* pReturnCode)
 	return NULL;
 }
 
-//Local version of CreateInterface, marked hidden so that it is never merged with the version in other libraries
-static DLLHIDDEN IBaseInterface* CreateInterfaceLocal(const char* pName, int* pReturnCode)
+//Local version of CreateInterface, marked static so that it is never merged with the version in other libraries
+static IBaseInterface* CreateInterfaceLocal(const char* pName, int* pReturnCode)
 {
 	InterfaceReg* pCur;
 
