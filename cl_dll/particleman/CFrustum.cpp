@@ -15,7 +15,7 @@
 
 //The triangle API uses OpenGL constants for certain functions.
 #include "PlatformHeaders.h"
-#include <gl/GL.h>
+#include <GL/gl.h>
 
 #include "hud.h"
 #include "cl_util.h"
