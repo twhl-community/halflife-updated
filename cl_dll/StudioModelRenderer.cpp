@@ -475,9 +475,14 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 			f = 0;
 		}
 
-		for (i = 0; i < 3; i++)
+		const auto pseqdesc = (mstudioseqdesc_t*)((byte*)m_pStudioHeader + m_pStudioHeader->seqindex) + m_pCurrentEntity->curstate.sequence;
+
+		if ((pseqdesc->motiontype & STUDIO_LX) != 0 || (m_pCurrentEntity->curstate.eflags & EFLAG_SLERP) != 0)
 		{
-			modelpos[i] += (m_pCurrentEntity->origin[i] - m_pCurrentEntity->latched.prevorigin[i]) * f;
+			for (i = 0; i < 3; i++)
+			{
+				modelpos[i] += (m_pCurrentEntity->origin[i] - m_pCurrentEntity->latched.prevorigin[i]) * f;
+			}
 		}
 
 		// NOTE:  Because multiplayer lag can be relatively large, we don't want to cap
