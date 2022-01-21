@@ -23,6 +23,11 @@ void PM_Init(struct playermove_s* ppmove);
 void PM_Move(struct playermove_s* ppmove, int server);
 char PM_FindTextureType(char* name);
 
+/**
+*	@brief Engine calls this to enumerate player collision hulls, for prediction. Return false if the hullnumber doesn't exist.
+*/
+bool PM_GetHullBounds(int hullnumber, float* mins, float* maxs);
+
 // Spectator Movement modes (stored in pev->iuser1, so the physics code can get at them)
 #define OBS_NONE 0
 #define OBS_CHASE_LOCKED 1

@@ -637,6 +637,8 @@
 // volume values
 #define VOL_NORM 1.0
 
+constexpr int NUM_HULLS = 4;
+
 // plats
 #define PLAT_LOW_TRIGGER 1
 

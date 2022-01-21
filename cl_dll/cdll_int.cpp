@@ -60,30 +60,7 @@ HUD_GetHullBounds
 */
 int DLLEXPORT HUD_GetHullBounds(int hullnumber, float* mins, float* maxs)
 {
-	//	RecClGetHullBounds(hullnumber, mins, maxs);
-
-	int iret = 0;
-
-	switch (hullnumber)
-	{
-	case 0: // Normal player
-		memcpy(mins, &VEC_HULL_MIN, sizeof(VEC_HULL_MIN));
-		memcpy(maxs, &VEC_HULL_MAX, sizeof(VEC_HULL_MAX));
-		iret = 1;
-		break;
-	case 1: // Crouched player
-		memcpy(mins, &VEC_DUCK_HULL_MIN, sizeof(VEC_DUCK_HULL_MIN));
-		memcpy(maxs, &VEC_DUCK_HULL_MAX, sizeof(VEC_DUCK_HULL_MAX));
-		iret = 1;
-		break;
-	case 2: // Point based hull
-		memcpy(mins, &g_vecZero, sizeof(g_vecZero));
-		memcpy(maxs, &g_vecZero, sizeof(g_vecZero));
-		iret = 1;
-		break;
-	}
-
-	return iret;
+	return static_cast<int>(PM_GetHullBounds(hullnumber, mins, maxs));
 }
 
 /*

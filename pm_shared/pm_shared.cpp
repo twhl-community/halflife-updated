@@ -36,7 +36,7 @@ float vJumpOrigin[3];
 float vJumpAngles[3];
 #endif
 
-static int pm_shared_initialized = 0;
+static bool pm_shared_initialized = false;
 
 #pragma warning(disable : 4305)
 
@@ -3413,5 +3413,36 @@ void PM_Init(struct playermove_s* ppmove)
 	PM_CreateStuckTable();
 	PM_InitTextureTypes();
 
-	pm_shared_initialized = 1;
+	//The engine copies the hull sizes initialized by PM_GetHullBounds *before* PM_GetHullBounds is actually called, so manually initialize these.
+	for (int i = 0; i < NUM_HULLS; ++i)
+	{
+		if (!PM_GetHullBounds(i, pmove->player_mins[i], pmove->player_maxs[i]))
+		{
+			//Matches the engine's behavior in ignoring the remaining hull sizes if any hull isn't provided.
+			break;
+		}
+	}
+
+	pm_shared_initialized = true;
+}
+
+bool PM_GetHullBounds(int hullnumber, float* mins, float* maxs)
+{
+	switch (hullnumber)
+	{
+	case 0: // Normal player
+		VEC_HULL_MIN.CopyToArray(mins);
+		VEC_HULL_MAX.CopyToArray(maxs);
+		return true;
+	case 1: // Crouched player
+		VEC_DUCK_HULL_MIN.CopyToArray(mins);
+		VEC_DUCK_HULL_MAX.CopyToArray(maxs);
+		return true;
+	case 2: // Point based hull
+		g_vecZero.CopyToArray(mins);
+		g_vecZero.CopyToArray(maxs);
+		return true;
+	}
+
+	return false;
 }
