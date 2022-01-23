@@ -555,3 +555,12 @@ float UTIL_SharedRandomFloat(unsigned int seed, float low, float high);
 float UTIL_WeaponTimeBase();
 
 CBaseEntity* UTIL_FindEntityForward(CBaseEntity* pMe);
+
+inline bool UTIL_IsServer()
+{
+#ifndef CLIENT_DLL
+	return false;
+#else
+	return true;
+#endif
+}
