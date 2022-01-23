@@ -1408,14 +1408,12 @@ void EV_EgonStop(event_args_t* args)
 	idx = args->entindex;
 	VectorCopy(args->origin, origin);
 
-	const bool isFromLocalPlayer = 0 == args->bparam1;
-
 	gEngfuncs.pEventAPI->EV_StopSound(idx, CHAN_STATIC, EGON_SOUND_RUN);
 
 	//Only stop the sound if the event was sent by the same source as the owner of the egon.
 	//If the local player owns the egon then only the local event should play this sound.
 	//If another player owns it, only the server event should play it.
-	if ((EV_IsLocal(idx) == isFromLocalPlayer) && 0 != args->iparam1)
+	if (0 != args->iparam1)
 		gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, EGON_SOUND_OFF, 0.98, ATTN_NORM, 0, 100);
 
 	if (EV_IsLocal(idx))
