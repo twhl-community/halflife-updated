@@ -177,9 +177,12 @@ bool CCrowbar::Swing(bool fFirst)
 	}
 #endif
 
-	PLAYBACK_EVENT_FULL(FEV_NOTHOST, m_pPlayer->edict(), m_usCrowbar,
-		0.0, g_vecZero, g_vecZero, 0, 0, 0,
-		0.0, 0, 0.0);
+	if (fFirst)
+	{
+		PLAYBACK_EVENT_FULL(FEV_NOTHOST, m_pPlayer->edict(), m_usCrowbar,
+			0.0, g_vecZero, g_vecZero, 0, 0, 0,
+			0.0, 0, 0.0);
+	}
 
 
 	if (tr.flFraction >= 1.0)
