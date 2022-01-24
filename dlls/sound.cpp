@@ -23,6 +23,8 @@
 #include "player.h"
 #include "talkmonster.h"
 #include "gamerules.h"
+#include "pm_defs.h"
+#include "pm_shared.h"
 
 static char* memfgets(byte* pMemFile, int fileSize, int& filePos, char* pBuffer, int bufferSize);
 
@@ -1455,6 +1457,20 @@ void EMIT_SOUND_DYN(edict_t* entity, int channel, const char* sample, float volu
 	}
 	else
 		EMIT_SOUND_DYN2(entity, channel, sample, volume, attenuation, flags, pitch);
+}
+
+void EMIT_SOUND_PREDICTED(edict_t* entity, int channel, const char* sample, float volume, float attenuation,
+	int flags, int pitch)
+{
+	//If entity is not a player this will return false.
+	if (0 != g_engfuncs.pfnCanSkipPlayer(entity))
+	{
+		pmove->PM_PlaySound(channel, sample, volume, attenuation, flags, pitch);
+	}
+	else
+	{
+		EMIT_SOUND_DYN(entity, channel, sample, volume, attenuation, flags, pitch);
+	}
 }
 
 // play a specific sentence over the HEV suit speaker - just pass player entity, and !sentencename

@@ -512,6 +512,13 @@ inline void STOP_SOUND(edict_t* entity, int channel, const char* sample)
 	EMIT_SOUND_DYN(entity, channel, sample, 0, 0, SND_STOP, PITCH_NORM);
 }
 
+/**
+*	@brief Just like @see EMIT_SOUND_DYN, but will skip the current host player if they have cl_lw turned on.
+*	@details entity must be the current host entity for this to work, and must be called only inside a player's PostThink method.
+*/
+void EMIT_SOUND_PREDICTED(edict_t* entity, int channel, const char* sample, float volume, float attenuation,
+	int flags, int pitch);
+
 void EMIT_SOUND_SUIT(edict_t* entity, const char* sample);
 void EMIT_GROUPID_SUIT(edict_t* entity, int isentenceg);
 void EMIT_GROUPNAME_SUIT(edict_t* entity, const char* groupname);

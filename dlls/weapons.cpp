@@ -30,8 +30,6 @@
 #include "decals.h"
 #include "gamerules.h"
 #include "UserMessages.h"
-#include "pm_defs.h"
-#include "pm_shared.h"
 
 #define NOT_USED 255
 
@@ -832,7 +830,7 @@ bool CBasePlayerWeapon::PlayEmptySound()
 {
 	if (m_iPlayEmptySound)
 	{
-		pmove->PM_PlaySound(CHAN_WEAPON, "weapons/357_cock1.wav", 0.8, ATTN_NORM, 0, PITCH_NORM);
+		EMIT_SOUND_PREDICTED(ENT(m_pPlayer->pev), CHAN_WEAPON, "weapons/357_cock1.wav", 0.8, ATTN_NORM, 0, PITCH_NORM);
 		m_iPlayEmptySound = false;
 		return false;
 	}
