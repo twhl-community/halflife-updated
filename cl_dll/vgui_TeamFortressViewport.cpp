@@ -766,8 +766,8 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 			// Get the button text
 			pfile = gEngfuncs.COM_ParseFile(pfile, token);
-			strncpy(cText, token, 32);
-			cText[31] = '\0';
+
+			CHudTextMessage::LocaliseTextString(token, cText, sizeof(cText));
 
 			// save off the last button text we've come across (for error reporting)
 			strcpy(szLastButtonText, cText);
