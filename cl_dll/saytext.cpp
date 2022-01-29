@@ -57,6 +57,7 @@ bool CHudSayText::Init()
 
 	m_HUD_saytext = gEngfuncs.pfnRegisterVariable("hud_saytext", "1", 0);
 	m_HUD_saytext_time = gEngfuncs.pfnRegisterVariable("hud_saytext_time", "5", 0);
+	m_con_color = gEngfuncs.pfnGetCvarPointer("con_color");
 
 	m_iFlags |= HUD_INTERMISSION; // is always drawn during an intermission
 
@@ -120,6 +121,13 @@ bool CHudSayText::Draw(float flTime)
 		{ // buffer is empty,  just disable drawing of this section
 			m_iFlags &= ~HUD_ACTIVE;
 		}
+	}
+
+	//Set text color to con_color cvar value before drawing to ensure consistent color.
+	//The engine resets this color to that value after drawing a single string.
+	if (int r, g, b; sscanf(m_con_color->string, "%i %i %i", &r, &g, &b) == 3)
+	{
+		gEngfuncs.pfnDrawSetTextColor(r / 255.0f, g / 255.0f, b / 255.0f);
 	}
 
 	char line[MAX_CHARS_PER_LINE]{};
