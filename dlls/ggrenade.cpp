@@ -59,7 +59,7 @@ void CGrenade::Explode(TraceResult* pTrace, int bitsDamageType)
 	// Pull out of the wall a bit
 	if (pTrace->flFraction != 1.0)
 	{
-		pev->origin = pTrace->vecEndPos + (pTrace->vecPlaneNormal * (pev->dmg - 24) * 0.6);
+		pev->origin = pTrace->vecEndPos + (pTrace->vecPlaneNormal * 0.6);
 	}
 
 	int iContents = UTIL_PointContents(pev->origin);
