@@ -240,7 +240,9 @@ void CTripmineGrenade::MakeBeam()
 	Vector vecTmpEnd = pev->origin + m_vecDir * 2048 * m_flBeamLength;
 
 	m_pBeam = CBeam::BeamCreate(g_pModelNameLaser, 10);
-	m_pBeam->PointEntInit(vecTmpEnd, entindex());
+	//PointEntInit causes clients to use the position of whatever the previous entity to use this edict had until the server updates them.
+	//m_pBeam->PointEntInit(vecTmpEnd, entindex());
+	m_pBeam->PointsInit(pev->origin, vecTmpEnd);
 	m_pBeam->SetColor(0, 214, 198);
 	m_pBeam->SetScrollRate(255);
 	m_pBeam->SetBrightness(64);
