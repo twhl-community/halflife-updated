@@ -409,7 +409,9 @@ void CHornet::DartTouch(CBaseEntity* pOther)
 
 void CHornet::DieTouch(CBaseEntity* pOther)
 {
-	if (pOther && 0 != pOther->pev->takedamage)
+	//Only deal damage if the owner exists in this map.
+	//Hornets that transition without their owner (e.g. Alien Grunt) will otherwise pass a null pointer down to TakeDamage.
+	if (pOther && 0 != pOther->pev->takedamage && nullptr != pev->owner)
 	{ // do the damage
 
 		switch (RANDOM_LONG(0, 2))
