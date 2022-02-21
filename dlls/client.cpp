@@ -1629,6 +1629,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 						item->iuser2 = gun->m_fInAttack;
 						item->iuser3 = gun->m_fireState;
 
+						gun->GetWeaponData(*item);
 
 						//						item->m_flPumpTime				= V_max( gun->m_flPumpTime, -0.001 );
 					}

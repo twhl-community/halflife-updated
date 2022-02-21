@@ -16,6 +16,7 @@
 #pragma once
 
 #include "effects.h"
+#include "weaponinfo.h"
 
 class CBasePlayer;
 
@@ -243,6 +244,10 @@ public:
 	virtual bool UpdateClientData(CBasePlayer* pPlayer) { return false; }
 
 	virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
+
+	virtual void GetWeaponData(weapon_data_t& data) {}
+
+	virtual void SetWeaponData(const weapon_data_t& data) {}
 
 	static inline ItemInfo ItemInfoArray[MAX_WEAPONS];
 	static inline AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
