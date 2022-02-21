@@ -249,6 +249,8 @@ public:
 
 	virtual void SetWeaponData(const weapon_data_t& data) {}
 
+	virtual void DecrementTimers() {}
+
 	static inline ItemInfo ItemInfoArray[MAX_WEAPONS];
 	static inline AmmoInfo AmmoInfoArray[MAX_AMMO_SLOTS];
 

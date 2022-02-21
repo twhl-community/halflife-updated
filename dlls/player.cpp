@@ -2613,6 +2613,8 @@ pt_end:
 						gun->pev->fuser1 = V_max(gun->pev->fuser1 - gpGlobals->frametime, -0.001);
 					}
 
+					gun->DecrementTimers();
+
 					// Only decrement if not flagged as NO_DECREMENT
 					//					if ( gun->m_flPumpTime != 1000 )
 					//	{
