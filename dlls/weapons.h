@@ -886,6 +886,9 @@ public:
 	}
 
 private:
+	void SendStopEvent(bool sendToHost);
+
+private:
 	unsigned short m_usGaussFire;
 	unsigned short m_usGaussSpin;
 };
