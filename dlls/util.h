@@ -563,9 +563,9 @@ float UTIL_WeaponTimeBase();
 
 CBaseEntity* UTIL_FindEntityForward(CBaseEntity* pMe);
 
-inline bool UTIL_IsServer()
+constexpr bool UTIL_IsServer()
 {
-#ifndef CLIENT_DLL
+#ifdef CLIENT_DLL
 	return false;
 #else
 	return true;
