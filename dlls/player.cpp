@@ -3789,19 +3789,34 @@ void CBasePlayer::SendAmmoUpdate()
 {
 	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
 	{
-		if (m_rgAmmo[i] != m_rgAmmoLast[i])
-		{
-			m_rgAmmoLast[i] = m_rgAmmo[i];
+		InternalSendSingleAmmoUpdate(i);
+	}
+}
 
-			ASSERT(m_rgAmmo[i] >= 0);
-			ASSERT(m_rgAmmo[i] < 255);
+void CBasePlayer::SendSingleAmmoUpdate(int ammoIndex)
+{
+	if (ammoIndex < 0 || ammoIndex >= MAX_AMMO_SLOTS)
+	{
+		return;
+	}
 
-			// send "Ammo" update message
-			MESSAGE_BEGIN(MSG_ONE, gmsgAmmoX, NULL, pev);
-			WRITE_BYTE(i);
-			WRITE_BYTE(V_max(V_min(m_rgAmmo[i], 254), 0)); // clamp the value to one byte
-			MESSAGE_END();
-		}
+	InternalSendSingleAmmoUpdate(ammoIndex);
+}
+
+void CBasePlayer::InternalSendSingleAmmoUpdate(int ammoIndex)
+{
+	if (m_rgAmmo[ammoIndex] != m_rgAmmoLast[ammoIndex])
+	{
+		m_rgAmmoLast[ammoIndex] = m_rgAmmo[ammoIndex];
+
+		ASSERT(m_rgAmmo[ammoIndex] >= 0);
+		ASSERT(m_rgAmmo[ammoIndex] < 255);
+
+		// send "Ammo" update message
+		MESSAGE_BEGIN(MSG_ONE, gmsgAmmoX, NULL, pev);
+		WRITE_BYTE(ammoIndex);
+		WRITE_BYTE(V_max(V_min(m_rgAmmo[ammoIndex], 254), 0)); // clamp the value to one byte
+		MESSAGE_END();
 	}
 }
 
