@@ -633,10 +633,25 @@ bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 		m_iSecondaryAmmoType = pPlayer->GetAmmoIndex(pszAmmo2());
 	}
 
+	if (!bResult)
+	{
+		return false;
+	}
 
-	if (bResult)
-		return AddWeapon();
-	return false;
+	if (!AddWeapon())
+	{
+		return false;
+	}
+
+	//Don't show weapon pickup if we're spawning or if it's an exhaustible weapon (will show ammo pickup instead).
+	if (!m_pPlayer->m_bIsSpawning && (iFlags() & ITEM_FLAG_EXHAUSTIBLE) == 0)
+	{
+		MESSAGE_BEGIN(MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev);
+		WRITE_BYTE(m_iId);
+		MESSAGE_END();
+	}
+
+	return true;
 }
 
 bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer)

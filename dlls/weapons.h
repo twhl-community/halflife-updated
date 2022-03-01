@@ -570,7 +570,6 @@ public:
 	void Precache() override;
 	int iItemSlot() override { return 2; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
 	bool Deploy() override;
@@ -610,7 +609,6 @@ public:
 	void Precache() override;
 	int iItemSlot() override { return 3; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -662,7 +660,6 @@ public:
 	void FireSniperBolt();
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 	bool Deploy() override;
 	void Holster() override;
 	void Reload() override;
@@ -710,7 +707,6 @@ public:
 	void Precache() override;
 	int iItemSlot() override { return 3; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
@@ -778,7 +774,6 @@ public:
 	void Reload() override;
 	int iItemSlot() override { return 4; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	bool CanHolster() override;
@@ -855,7 +850,6 @@ public:
 	void Precache() override;
 	int iItemSlot() override { return 4; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;
@@ -940,7 +934,6 @@ public:
 	void Precache() override;
 	int iItemSlot() override { return 4; }
 	bool GetItemInfo(ItemInfo* p) override;
-	bool AddToPlayer(CBasePlayer* pPlayer) override;
 
 	bool Deploy() override;
 	void Holster() override;

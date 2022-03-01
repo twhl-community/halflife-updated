@@ -78,18 +78,6 @@ void CGauss::Precache()
 	m_usGaussSpin = PRECACHE_EVENT(1, "events/gaussspin.sc");
 }
 
-bool CGauss::AddToPlayer(CBasePlayer* pPlayer)
-{
-	if (CBasePlayerWeapon::AddToPlayer(pPlayer))
-	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgWeapPickup, NULL, pPlayer->pev);
-		WRITE_BYTE(m_iId);
-		MESSAGE_END();
-		return true;
-	}
-	return false;
-}
-
 bool CGauss::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
