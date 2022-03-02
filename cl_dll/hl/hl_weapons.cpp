@@ -521,7 +521,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	HUD_InitClientWeapons();
 
 	// Get current clock
-	gpGlobals->time = time;
+	//Use actual time instead of prediction frame time because that time value breaks anything that uses absolute time values.
+	gpGlobals->time = gEngfuncs.GetClientTime(); //time;
 
 	// Fill in data based on selected weapon
 	// FIXME, make this a method in each weapon?  where you pass in an entity_state_t *?
