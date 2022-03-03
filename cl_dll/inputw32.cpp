@@ -63,7 +63,6 @@ extern cvar_t* cl_movespeedkey;
 static double s_flRawInputUpdateTime = 0.0f;
 static bool m_bRawInput = false;
 static bool m_bMouseThread = false;
-extern globalvars_t* gpGlobals;
 
 // mouse variables
 cvar_t* m_filter;
@@ -384,9 +383,11 @@ void IN_ResetMouse()
 {
 	// no work to do in SDL
 #ifdef WIN32
-	if (gpGlobals && (gpGlobals->time - s_flRawInputUpdateTime > 1.0f || s_flRawInputUpdateTime == 0.0f))
+	const float currentTime = gEngfuncs.GetClientTime();
+
+	if ((currentTime - s_flRawInputUpdateTime) > 1.0f || s_flRawInputUpdateTime == 0.0f)
 	{
-		s_flRawInputUpdateTime = gpGlobals->time;
+		s_flRawInputUpdateTime = currentTime;
 		m_bRawInput = CVAR_GET_FLOAT("m_rawinput") != 0;
 
 		if (m_bRawInput)
