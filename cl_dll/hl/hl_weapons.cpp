@@ -518,8 +518,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 	memset(&nulldata, 0, sizeof(nulldata));
 
-	HUD_InitClientWeapons();
-
 	// Get current clock
 	//Use actual time instead of prediction frame time because that time value breaks anything that uses absolute time values.
 	gpGlobals->time = gEngfuncs.GetClientTime(); //time;
@@ -901,6 +899,9 @@ void DLLEXPORT HUD_PostRunCmd(struct local_state_s* from, struct local_state_s* 
 	//	RecClPostRunCmd(from, to, cmd, runfuncs, time, random_seed);
 
 	g_runfuncs = runfuncs != 0;
+
+	//Event code depends on this stuff, so always initialize it.
+	HUD_InitClientWeapons();
 
 #if defined(CLIENT_WEAPONS)
 	if (cl_lw && 0 != cl_lw->value)
