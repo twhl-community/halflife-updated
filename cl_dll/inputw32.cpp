@@ -61,7 +61,6 @@ extern cvar_t* cl_movespeedkey;
 
 
 static cvar_t* m_rawinput = nullptr;
-static bool m_cached_rawinput = false;
 
 static bool IN_UseRawInput()
 {
@@ -389,9 +388,8 @@ void IN_ResetMouse()
 {
 	// no work to do in SDL
 #ifdef WIN32
-	if (m_cached_rawinput != IN_UseRawInput())
+	if (IN_UseRawInput())
 	{
-		m_cached_rawinput = IN_UseRawInput();
 		mouseRelative = SDL_TRUE;
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
@@ -1130,7 +1128,6 @@ void IN_Init()
 
 #ifdef WIN32
 	m_rawinput = gEngfuncs.pfnGetCvarPointer("m_rawinput");
-	m_cached_rawinput = IN_UseRawInput();
 	m_bMouseThread = gEngfuncs.CheckParm("-mousethread", NULL) != NULL;
 	m_mousethread_sleep = gEngfuncs.pfnRegisterVariable("m_mousethread_sleep", "10", FCVAR_ARCHIVE);
 
