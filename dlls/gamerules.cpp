@@ -29,6 +29,75 @@
 
 extern edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer);
 
+CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon)
+{
+	if (!pCurrentWeapon->CanHolster())
+	{
+		// can't put this gun away right now, so can't switch.
+		return nullptr;
+	}
+
+	CBasePlayerItem* pBest = nullptr; // this will be used in the event that we don't find a weapon in the same category.
+
+	int iBestWeight = -1; // no weapon lower than -1 can be autoswitched to
+
+	for (int i = 0; i < MAX_ITEM_TYPES; i++)
+	{
+		for (auto pCheck = pPlayer->m_rgpPlayerItems[i]; pCheck; pCheck = pCheck->m_pNext)
+		{
+			// don't reselect the weapon we're trying to get rid of
+			if (pCheck == pCurrentWeapon)
+			{
+				continue;
+			}
+
+			if (pCheck->iWeight() > -1 && pCheck->iWeight() == pCurrentWeapon->iWeight())
+			{
+				// this weapon is from the same category.
+				if (pCheck->CanDeploy())
+				{
+					if (pPlayer->SwitchWeapon(pCheck))
+					{
+						return pCheck;
+					}
+				}
+			}
+			else if (pCheck->iWeight() > iBestWeight)
+			{
+				//ALERT ( at_console, "Considering %s\n", STRING( pCheck->pev->classname ) );
+				// we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
+				// that the player was using. This will end up leaving the player with his heaviest-weighted
+				// weapon.
+				if (pCheck->CanDeploy())
+				{
+					// if this weapon is useable, flag it as the best
+					iBestWeight = pCheck->iWeight();
+					pBest = pCheck;
+				}
+			}
+		}
+	}
+
+	// if we make it here, we've checked all the weapons and found no useable
+	// weapon in the same catagory as the current weapon.
+
+	// if pBest is nullptr, we didn't find ANYTHING. Shouldn't be possible- should always
+	// at least get the crowbar, but ya never know.
+
+	return pBest;
+}
+
+bool CGameRules::GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon)
+{
+	if (auto pBest = FindNextBestWeapon(pPlayer, pCurrentWeapon); pBest != nullptr)
+	{
+		pPlayer->SwitchWeapon(pBest);
+		return true;
+	}
+
+	return false;
+}
+
 //=========================================================
 //=========================================================
 bool CGameRules::CanHaveAmmo(CBasePlayer* pPlayer, const char* pszAmmoName, int iMaxCarry)

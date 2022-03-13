@@ -67,7 +67,7 @@ public:
 
 	virtual bool FAllowFlashlight() = 0;													   // Are players allowed to switch on their flashlight?
 	virtual bool FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) = 0;	   // should the player switch to this weapon?
-	virtual bool GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon) = 0; // I can't use this weapon anymore, get me the next best one.
+	virtual bool GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon); // I can't use this weapon anymore, get me the next best one.
 
 	// Functions to verify the single/multiplayer status of a game
 	virtual bool IsMultiplayer() = 0;								 // is this a multiplayer game? (either coop or deathmatch)
@@ -159,6 +159,9 @@ public:
 
 	// Immediately end a multiplayer game
 	virtual void EndMultiplayerGame() {}
+
+protected:
+	CBasePlayerItem* FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon);
 };
 
 extern CGameRules* InstallGameRules();
@@ -266,7 +269,6 @@ public:
 	bool FAllowFlashlight() override;
 
 	bool FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon) override;
-	bool GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon) override;
 
 	// Functions to verify the single/multiplayer status of a game
 	bool IsMultiplayer() override;
