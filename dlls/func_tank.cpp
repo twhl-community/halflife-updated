@@ -385,8 +385,7 @@ void CFuncTank::StopControl()
 	if (!m_pController)
 		return;
 
-	if (m_pController->m_pActiveItem)
-		m_pController->m_pActiveItem->Deploy();
+	m_pController->EquipWeapon();
 
 	ALERT(at_console, "stopped using TANK\n");
 

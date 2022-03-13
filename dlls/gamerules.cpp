@@ -31,11 +31,13 @@ extern edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer);
 
 CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon)
 {
-	if (!pCurrentWeapon->CanHolster())
+	if (pCurrentWeapon != nullptr && !pCurrentWeapon->CanHolster())
 	{
 		// can't put this gun away right now, so can't switch.
 		return nullptr;
 	}
+
+	const int currentWeight = pCurrentWeapon != nullptr ? pCurrentWeapon->iWeight() : -1;
 
 	CBasePlayerItem* pBest = nullptr; // this will be used in the event that we don't find a weapon in the same category.
 
@@ -51,7 +53,7 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 				continue;
 			}
 
-			if (pCheck->iWeight() > -1 && pCheck->iWeight() == pCurrentWeapon->iWeight())
+			if (pCheck->iWeight() > -1 && pCheck->iWeight() == currentWeight)
 			{
 				// this weapon is from the same category.
 				if (pCheck->CanDeploy())
@@ -87,7 +89,7 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 	return pBest;
 }
 
-bool CGameRules::GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon)
+bool CGameRules::GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon, bool alwaysSearch)
 {
 	if (auto pBest = FindNextBestWeapon(pPlayer, pCurrentWeapon); pBest != nullptr)
 	{

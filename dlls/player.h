@@ -236,6 +236,11 @@ public:
 	void RemoveAllItems(bool removeSuit);
 	bool SwitchWeapon(CBasePlayerItem* pWeapon);
 
+	/**
+	*	@brief Equips an appropriate weapon for the player if they don't have one equipped already.
+	*/
+	void EquipWeapon();
+
 	void SetWeaponBit(int id);
 	void ClearWeaponBit(int id);
 
