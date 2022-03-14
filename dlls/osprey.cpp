@@ -395,17 +395,17 @@ void COsprey::FlyThink()
 	if (gpGlobals->time > m_startTime + m_dTime)
 	{
 		if (m_pGoalEnt != nullptr)
-	{
-		if (m_pGoalEnt->pev->speed == 0)
 		{
-			SetThink(&COsprey::DeployThink);
+			if (m_pGoalEnt->pev->speed == 0)
+			{
+				SetThink(&COsprey::DeployThink);
+			}
+			do
+			{
+				m_pGoalEnt = CBaseEntity::Instance(FIND_ENTITY_BY_TARGETNAME(NULL, STRING(m_pGoalEnt->pev->target)));
+			} while (m_pGoalEnt->pev->speed < 400 && !HasDead());
+			UpdateGoal();
 		}
-		do
-		{
-			m_pGoalEnt = CBaseEntity::Instance(FIND_ENTITY_BY_TARGETNAME(NULL, STRING(m_pGoalEnt->pev->target)));
-		} while (m_pGoalEnt->pev->speed < 400 && !HasDead());
-		UpdateGoal();
-	}
 	}
 
 	Flight();
@@ -416,16 +416,22 @@ void COsprey::FlyThink()
 void COsprey::Flight()
 {
 	float t = (gpGlobals->time - m_startTime);
-	float scale = 1.0 / m_dTime;
 
-	float f = UTIL_SplineFraction(t * scale, 1.0);
+	//Only update if delta time is non-zero. It's zero if we're not moving at all (usually because we have no target).
+	if (m_dTime != 0)
+	{
+		float scale = 1.0 / m_dTime;
 
-	Vector pos = (m_pos1 + m_vel1 * t) * (1.0 - f) + (m_pos2 - m_vel2 * (m_dTime - t)) * f;
-	Vector ang = (m_ang1) * (1.0 - f) + (m_ang2)*f;
-	m_velocity = m_vel1 * (1.0 - f) + m_vel2 * f;
+		float f = UTIL_SplineFraction(t * scale, 1.0);
 
-	UTIL_SetOrigin(pev, pos);
-	pev->angles = ang;
+		Vector pos = (m_pos1 + m_vel1 * t) * (1.0 - f) + (m_pos2 - m_vel2 * (m_dTime - t)) * f;
+		Vector ang = (m_ang1) * (1.0 - f) + (m_ang2)*f;
+		m_velocity = m_vel1 * (1.0 - f) + m_vel2 * f;
+
+		UTIL_SetOrigin(pev, pos);
+		pev->angles = ang;
+	}
+
 	UTIL_MakeAimVectors(pev->angles);
 	float flSpeed = DotProduct(gpGlobals->v_forward, m_velocity);
 
