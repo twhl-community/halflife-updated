@@ -4601,7 +4601,7 @@ bool CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
 
 void CBasePlayer::EquipWeapon()
 {
-	if (m_pActiveItem && (!FStringNull(pev->viewmodel) || !FStringNull(pev->weaponmodel)))
+	if (m_pActiveItem)
 	{
 		if ((!FStringNull(pev->viewmodel) || !FStringNull(pev->weaponmodel)))
 		{
