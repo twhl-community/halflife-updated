@@ -12,7 +12,8 @@
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glaux.h>
+
+#include <SDL2/SDL.h>
 
 #include "csg.h"
 
@@ -25,11 +26,31 @@ vec3_t	draw_mins, draw_maxs;
 
 #define	WIN_SIZE	512
 
+SDL_Window* g_pWindow = NULL;
+
+SDL_GLContext g_GLContext = NULL;
+
 void InitWindow (void)
 {
-    auxInitDisplayMode (AUX_SINGLE | AUX_RGB);
-    auxInitPosition (0, 0, WIN_SIZE, WIN_SIZE);
-    auxInitWindow ("qcsg");
+	if (SDL_Init(SDL_INIT_VIDEO))
+	{
+		printf("Couldn't initialize SDL2\n");
+		exit(EXIT_FAILURE);
+	}
+
+	g_pWindow = SDL_CreateWindow("qcsg", 0, 0, WIN_SIZE, WIN_SIZE, SDL_WINDOW_OPENGL);
+
+	if (!g_pWindow)
+	{
+		printf("Failed to create SDL Window\n");
+		exit(EXIT_FAILURE);
+	}
+
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, false);
+
+	g_GLContext = SDL_GL_CreateContext(g_pWindow);
+
+	SDL_GL_MakeCurrent(g_pWindow, g_GLContext);
 }
 
 void Draw_ClearWindow (void)
