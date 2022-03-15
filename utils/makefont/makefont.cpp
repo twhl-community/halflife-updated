@@ -415,7 +415,7 @@ int main(int argc, char* argv[])
 		{
 			if ( i + 3 >= argc )
 			{
-				Error( "Makefont:  Insufficient point sizes specified\n" );
+				Error( (char*)"Makefont:  Insufficient point sizes specified\n" );
 			}
 			pointsize[0] = atoi( argv[i+1] );
 			pointsize[1] = atoi( argv[i+2] );
@@ -439,7 +439,7 @@ int main(int argc, char* argv[])
 		}
 		else if ( argv[i][0] == '-' )
 		{
-			Error ("Unknown option \"%s\"", argv[i]);
+			Error ((char*)"Unknown option \"%s\"", argv[i]);
 		}
 		else
 			break;
@@ -447,7 +447,7 @@ int main(int argc, char* argv[])
 
 	if ( i != argc - 1 )
 	{
-		Error ("usage: makefont [-font \"fontname\"] [-italic] [-underline] [-bold] [-pointsizes sm med lg] outfile");
+		Error ((char*)"usage: makefont [-font \"fontname\"] [-italic] [-underline] [-bold] [-pointsizes sm med lg] outfile");
 	}
 
 	printf( "Creating %i, %i, and %i point %s fonts\n", pointsize[0], pointsize[1], pointsize[2], fontname );
@@ -463,7 +463,7 @@ int main(int argc, char* argv[])
 	// Create wad file
 	strcpy (destfile, argv[argc - 1]);
 	StripExtension (destfile);
-	DefaultExtension (destfile, ".wad");
+	DefaultExtension (destfile, (char*)".wad");
 
 	NewWad( destfile, false );
 
