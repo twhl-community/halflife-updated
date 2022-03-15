@@ -21,11 +21,6 @@
 #include <time.h>
 #include <stdarg.h>
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 #ifndef __CMDUTIL__
 #define __CMDUTIL__
 typedef int qboolean;
@@ -142,8 +137,5 @@ typedef struct
 
 void ListPak(const char* pakname);
 
-#endif
-#ifdef __cplusplus
-}
 #endif
 
