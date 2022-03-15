@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -74,7 +74,7 @@ copy $(TargetPath) ..\..\utils\procinfo\lib\win32_vc6\procinfo.lib</Command>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4244;4305</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
