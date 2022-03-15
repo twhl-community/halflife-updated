@@ -50,8 +50,11 @@ extern int myargc;
 extern char **myargv;
 
 void COM_FixSlashes( char *pname );
+
+#ifndef WIN32
 char *strupr (char *in);
-char *strlower (char *in);
+char* strlwr(char* in);
+#endif
 int Q_strncasecmp (char *s1, char *s2, int n);
 int Q_strcasecmp (char *s1, char *s2);
 void Q_getwd (char *out);
