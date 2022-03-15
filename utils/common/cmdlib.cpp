@@ -64,7 +64,7 @@ Error
 For abnormal program terminations
 =================
 */
-void Error (char *error, ...)
+void Error(const char* error, ...)
 {
 	va_list argptr;
 
@@ -80,7 +80,7 @@ void Error (char *error, ...)
 
 // only printf if in verbose mode
 qboolean verbose = false;
-void qprintf (char *format, ...)
+void qprintf(const char* format, ...)
 {
 	va_list argptr;
 
@@ -107,7 +107,7 @@ char		qproject[ 1024 ]={'\0'};
 char		qdir[1024]={'\0'};
 char		gamedir[1024]={'\0'};
 
-void SetQdirFromPath (char *path)
+void SetQdirFromPath(const char* path)
 {
 #ifndef OLD_BOGUS_PATH_CODE
 
@@ -134,7 +134,7 @@ void SetQdirFromPath (char *path)
 
 #else
 	char	temp[1024];
-	char	*c;
+	const char* c;
 
 	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
 	{	// path is partial
@@ -195,7 +195,7 @@ try_again:
 }
 
 
-char *ExpandArg (char *path)
+char* ExpandArg(char* path)
 {
 	static char full[1024];
 
@@ -209,9 +209,9 @@ char *ExpandArg (char *path)
 	return full;
 }
 
-char *ExpandPath (char *path)
+char* ExpandPath(char* path)
 {
-	char *psz;
+	const char* psz;
 	static char full[1024];
 	if (!qdir)
 		Error ("ExpandPath called without qdir set");
@@ -226,9 +226,9 @@ char *ExpandPath (char *path)
 	return full;
 }
 
-char *ExpandPathAndArchive (char *path)
+char* ExpandPathAndArchive(char* path)
 {
-	char	*expanded;
+	char* expanded;
 	char	archivename[1024];
 
 	expanded = ExpandPath (path);
@@ -242,7 +242,7 @@ char *ExpandPathAndArchive (char *path)
 }
 
 
-char *copystring(char *s)
+char* copystring(const char* s)
 {
 	char	*b;
 	b = reinterpret_cast<char*>(malloc(strlen(s)+1));
@@ -293,7 +293,7 @@ void Q_getwd (char *out)
 }
 
 
-void Q_mkdir (char *path)
+void Q_mkdir(const char* path)
 {
 #ifdef WIN32
 	if (_mkdir (path) != -1)
@@ -313,7 +313,7 @@ FileTime
 returns -1 if not present
 ============
 */
-int	FileTime (char *path)
+int FileTime(const char* path)
 {
 	struct	stat	buf;
 	
@@ -406,7 +406,7 @@ skipwhite:
 }
 
 
-int Q_strncasecmp (char *s1, char *s2, int n)
+int Q_strncasecmp(const char* s1, const char* s2, int n)
 {
 	int		c1, c2;
 	
@@ -434,13 +434,13 @@ int Q_strncasecmp (char *s1, char *s2, int n)
 	return -1;
 }
 
-int Q_strcasecmp (char *s1, char *s2)
+int Q_strcasecmp(const char* s1, const char* s2)
 {
 	return Q_strncasecmp (s1, s2, 99999);
 }
 
 #ifndef WIN32
-char *strupr (char *start)
+char* strupr(char* start)
 {
 	char	*in;
 	in = start;
@@ -482,7 +482,7 @@ Checks for the given parameter in the program's command line arguments
 Returns the argument number (1 to argc-1) or 0 if not present
 =================
 */
-int CheckParm (char *check)
+int CheckParm(const char* check)
 {
 	int             i;
 
@@ -516,7 +516,7 @@ int filelength (FILE *f)
 }
 
 
-FILE *SafeOpenWrite (char *filename)
+FILE* SafeOpenWrite(const char* filename)
 {
 	FILE	*f;
 
@@ -528,7 +528,7 @@ FILE *SafeOpenWrite (char *filename)
 	return f;
 }
 
-FILE *SafeOpenRead (char *filename)
+FILE* SafeOpenRead(const char* filename)
 {
 	FILE	*f;
 
@@ -561,7 +561,7 @@ void SafeWrite (FILE *f, void *buffer, int count)
 LoadFile
 ==============
 */
-int    LoadFile (char *filename, void **bufferptr)
+int LoadFile(const char* filename, void** bufferptr)
 {
 	FILE	*f;
 	int    length;
@@ -584,7 +584,7 @@ int    LoadFile (char *filename, void **bufferptr)
 SaveFile
 ==============
 */
-void    SaveFile (char *filename, void *buffer, int count)
+void SaveFile(const char* filename, void* buffer, int count)
 {
 	FILE	*f;
 
@@ -595,7 +595,7 @@ void    SaveFile (char *filename, void *buffer, int count)
 
 
 
-void DefaultExtension (char *path, char *extension)
+void DefaultExtension (char *path, const char *extension)
 {
 	char    *src;
 //
@@ -658,9 +658,9 @@ void    StripExtension (char *path)
 Extract file parts
 ====================
 */
-void ExtractFilePath (char *path, char *dest)
+void ExtractFilePath(const char* path, char* dest)
 {
-	char    *src;
+	const char* src;
 
 	src = path + strlen(path) - 1;
 
@@ -674,9 +674,9 @@ void ExtractFilePath (char *path, char *dest)
 	dest[src-path] = 0;
 }
 
-void ExtractFileBase (char *path, char *dest)
+void ExtractFileBase(const char* path, char* dest)
 {
-	char    *src;
+	const char* src;
 
 	src = path + strlen(path) - 1;
 
@@ -693,9 +693,9 @@ void ExtractFileBase (char *path, char *dest)
 	*dest = 0;
 }
 
-void ExtractFileExtension (char *path, char *dest)
+void ExtractFileExtension(const char* path, char* dest)
 {
-	char    *src;
+	const char* src;
 
 	src = path + strlen(path) - 1;
 
@@ -719,9 +719,9 @@ void ExtractFileExtension (char *path, char *dest)
 ParseNum / ParseHex
 ==============
 */
-int ParseHex (char *hex)
+int ParseHex(const char* hex)
 {
-	char    *str;
+	const char* str;
 	int    num;
 
 	num = 0;
@@ -745,7 +745,7 @@ int ParseHex (char *hex)
 }
 
 
-int ParseNum (char *str)
+int ParseNum(const char* str)
 {
 	if (str[0] == '$')
 		return ParseHex (str+1);
@@ -994,7 +994,7 @@ ListPak
 ============
 */
 
-void ListPak(char* pakname)
+void ListPak(const char* pakname)
 {
 	FILE* f = SafeOpenRead(pakname);
 	packheader_t head;

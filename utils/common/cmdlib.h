@@ -48,49 +48,49 @@ extern char **myargv;
 void COM_FixSlashes( char *pname );
 
 #ifndef WIN32
-char *strupr (char *in);
+char* strupr(char* in);
 char* strlwr(char* in);
 #endif
-int Q_strncasecmp (char *s1, char *s2, int n);
-int Q_strcasecmp (char *s1, char *s2);
+int Q_strncasecmp(const char* s1, const char* s2, int n);
+int Q_strcasecmp(const char* s1, const char* s2);
 void Q_getwd (char *out);
 
 int filelength (FILE *f);
-int	FileTime (char *path);
+int FileTime(const char* path);
 
-void	Q_mkdir (char *path);
+void Q_mkdir(const char* path);
 
 extern	char		qdir[1024];
 extern	char		gamedir[1024];
-void SetQdirFromPath (char *path);
-char *ExpandArg (char *path);	// from cmd line
-char *ExpandPath (char *path);	// from scripts
-char *ExpandPathAndArchive (char *path);
+void SetQdirFromPath(const char* path);
+char* ExpandArg(char* path); // from cmd line
+char* ExpandPath(char* path); // from scripts
+char* ExpandPathAndArchive(char* path);
 
 
 double I_FloatTime (void);
 
-void	Error (char *error, ...);
-int		CheckParm (char *check);
+void	Error (const char *error, ...);
+int		CheckParm (const char *check);
 
-FILE	*SafeOpenWrite (char *filename);
-FILE	*SafeOpenRead (char *filename);
+FILE* SafeOpenWrite(const char* filename);
+FILE* SafeOpenRead(const char* filename);
 void	SafeRead (FILE *f, void *buffer, int count);
 void	SafeWrite (FILE *f, void *buffer, int count);
 
-int		LoadFile (char *filename, void **bufferptr);
-void	SaveFile (char *filename, void *buffer, int count);
+int LoadFile(const char* filename, void** bufferptr);
+void SaveFile(const char* filename, void* buffer, int count);
 
-void 	DefaultExtension (char *path, char *extension);
+void DefaultExtension(char* path, const char* extension);
 void 	DefaultPath (char *path, char *basepath);
 void 	StripFilename (char *path);
 void 	StripExtension (char *path);
 
-void 	ExtractFilePath (char *path, char *dest);
-void 	ExtractFileBase (char *path, char *dest);
-void	ExtractFileExtension (char *path, char *dest);
+void ExtractFilePath(const char* path, char* dest);
+void ExtractFileBase(const char* path, char* dest);
+void ExtractFileExtension(const char* path, char* dest);
 
-int 	ParseNum (char *str);
+int ParseNum(const char* str);
 
 short	BigShort (short l);
 short	LittleShort (short l);
@@ -108,22 +108,22 @@ char *COM_Parse (char *data);
 extern	char		com_token[1024];
 extern	qboolean	com_eof;
 
-char *copystring(char *s);
+char* copystring(const char* s);
 
 
 void CRC_Init(unsigned short *crcvalue);
 void CRC_ProcessByte(unsigned short *crcvalue, byte data);
 unsigned short CRC_Value(unsigned short crcvalue);
 
-void	CreatePath (char *path);
-void	QCopyFile (char *from, char *to);
+void CreatePath(char* path);
+void QCopyFile(char* from, char* to);
 
 extern	qboolean		archive;
 extern	char			archivedir[1024];
 
 
 extern	qboolean verbose;
-void qprintf (char *format, ...);
+void qprintf(const char* format, ...);
 
 
 typedef struct
@@ -140,7 +140,7 @@ typedef struct
 } packheader_t;
 
 
-void ListPak(char* pakname);
+void ListPak(const char* pakname);
 
 #endif
 #ifdef __cplusplus
