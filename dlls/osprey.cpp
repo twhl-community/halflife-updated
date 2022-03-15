@@ -63,9 +63,10 @@ public:
 	void EXPORT DyingThink();
 	void EXPORT CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-	// int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
+	bool TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType ) override;
 	void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType) override;
 	void ShowDamage();
+	void Update();
 
 	CBaseEntity* m_pGoalEnt;
 	Vector m_vel1;
@@ -158,6 +159,7 @@ void COsprey::Spawn()
 	m_flRightHealth = 200;
 	m_flLeftHealth = 200;
 	pev->health = 400;
+	pev->max_health = pev->health;
 
 	m_flFieldOfView = 0; // 180 degrees
 
@@ -341,7 +343,7 @@ void COsprey::HoverThink()
 
 	pev->nextthink = gpGlobals->time + 0.1;
 	UTIL_MakeAimVectors(pev->angles);
-	ShowDamage();
+	Update();
 }
 
 
@@ -409,7 +411,7 @@ void COsprey::FlyThink()
 	}
 
 	Flight();
-	ShowDamage();
+	Update();
 }
 
 
@@ -532,6 +534,7 @@ void COsprey::Killed(entvars_t* pevAttacker, int iGib)
 	pev->nextthink = gpGlobals->time + 0.1;
 	pev->health = 0;
 	pev->takedamage = DAMAGE_NO;
+	pev->deadflag = DEAD_DYING;
 
 	m_startTime = gpGlobals->time + 4.0;
 }
@@ -560,7 +563,7 @@ void COsprey::DyingThink()
 	if (m_startTime > gpGlobals->time)
 	{
 		UTIL_MakeAimVectors(pev->angles);
-		ShowDamage();
+		Update();
 
 		Vector vecSpot = pev->origin + pev->velocity * 0.2;
 
@@ -772,6 +775,29 @@ void COsprey::ShowDamage()
 	}
 }
 
+void COsprey::Update()
+{
+	//Look around so AI triggers work.
+	Look(4092);
+
+	//Listen for sounds so AI triggers work.
+	Listen();
+
+	ShowDamage();
+	FCheckAITrigger();
+}
+
+bool COsprey::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
+{
+	//Set enemy to last attacker.
+	//Ospreys are not capable of fighting so they'll get angry at whatever shoots at them, not whatever looks like an enemy.
+	m_hEnemy = Instance(pevAttacker);
+
+	//It's on now!
+	m_MonsterState = MONSTERSTATE_COMBAT;
+
+	return CBaseMonster::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
+}
 
 void COsprey::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
