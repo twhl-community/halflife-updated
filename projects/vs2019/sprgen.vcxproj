@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\lbmlib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\sprgen\sprgen.c" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\sprgen\sprgen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\cmdlib.h" />

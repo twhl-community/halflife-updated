@@ -85,10 +85,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\bspinfo\bspinfo.c" />
-    <ClCompile Include="..\..\utils\common\bspfile.c" />
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
+    <ClCompile Include="..\..\utils\bspinfo\bspinfo.cpp" />
+    <ClCompile Include="..\..\utils\common\bspfile.cpp" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\bspfile.h" />

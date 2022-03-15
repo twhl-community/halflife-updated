@@ -1,3 +1,10 @@
+//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//
+// Purpose: 
+//
+// $NoKeywords: $
+//=============================================================================
+
 // trace.c
 
 #include "light.h"
@@ -61,7 +68,7 @@ void MakeTnodes (dmodel_t *bm)
 {
 	if (!numnodes)
 		Error ("Map has no nodes\n");
-	tnode_p = tnodes = malloc(numnodes * sizeof(tnode_t));
+	tnode_p = tnodes = reinterpret_cast<tnode_t*>(malloc(numnodes * sizeof(tnode_t)));
 	
 	MakeTnode (0);
 }
@@ -162,15 +169,15 @@ qboolean TestLine (vec3_t start, vec3_t stop)
 			break;
 		}
 
-		if (front > -ON_EPSILON && back > -ON_EPSILON)
-//		if (front > 0 && back > 0)
+		if (front > -LIGHT_ON_EPSILON && back > -LIGHT_ON_EPSILON)
+		//		if (front > 0 && back > 0)
 		{
 			node = tnode->children[0];
 			continue;
 		}
 		
-		if (front < ON_EPSILON && back < ON_EPSILON)
-//		if (front <= 0 && back <= 0)
+		if (front < LIGHT_ON_EPSILON && back < LIGHT_ON_EPSILON)
+		//		if (front <= 0 && back <= 0)
 		{
 			node = tnode->children[1];
 			continue;

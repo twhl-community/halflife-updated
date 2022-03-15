@@ -37,7 +37,6 @@ int		bitbytes;				// (portalleafs+63)>>3
 int		bitlongs;
 
 qboolean		fastvis;
-qboolean		verbose;
 
 //=============================================================================
 
@@ -68,7 +67,7 @@ winding_t *NewWinding (int points)
 		Error ("NewWinding: %i points", points);
 	
 	size = (int)((winding_t *)0)->points[points];
-	w = malloc (size);
+	w = reinterpret_cast<winding_t*>(malloc (size));
 	memset (w, 0, size);
 	
 	return w;
@@ -361,10 +360,10 @@ void LoadPortals (char *name)
 	bitlongs = bitbytes/sizeof(long);
 	
 // each file portal is split into two memory portals
-	portals = malloc(2*numportals*sizeof(portal_t));
+	portals = reinterpret_cast<portal_t*>(malloc(2*numportals*sizeof(portal_t)));
 	memset (portals, 0, 2*numportals*sizeof(portal_t));
 	
-	leafs = malloc(portalleafs*sizeof(leaf_t));
+	leafs = reinterpret_cast<leaf_t*>(malloc(portalleafs*sizeof(leaf_t)));
 	memset (leafs, 0, portalleafs*sizeof(leaf_t));
 
 	originalvismapsize = portalleafs*((portalleafs+7)/8);
@@ -501,7 +500,7 @@ int main (int argc, char **argv)
 	
 	LoadPortals (portalfile);
 	
-	uncompressed = malloc(bitbytes*portalleafs);
+	uncompressed = reinterpret_cast<byte*>(malloc(bitbytes*portalleafs));
 	memset (uncompressed, 0, bitbytes*portalleafs);
 
 	CalcVis ();

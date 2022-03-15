@@ -11,10 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\lbmlib.c" />
-    <ClCompile Include="..\..\utils\common\wadlib.c" />
-    <ClCompile Include="..\..\utils\xwad\xwad.c" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp" />
+    <ClCompile Include="..\..\utils\common\wadlib.cpp" />
+    <ClCompile Include="..\..\utils\xwad\xwad.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8A13BDB4-772F-4D03-B343-B56A6D412149}</ProjectGuid>

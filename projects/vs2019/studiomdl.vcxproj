@@ -11,15 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\lbmlib.c" />
-    <ClCompile Include="..\..\utils\common\mathlib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\common\trilib.c" />
-    <ClCompile Include="..\..\utils\studiomdl\bmpread.c" />
-    <ClCompile Include="..\..\utils\studiomdl\studiomdl.c" />
-    <ClCompile Include="..\..\utils\studiomdl\tristrip.c" />
-    <ClCompile Include="..\..\utils\studiomdl\write.c" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp" />
+    <ClCompile Include="..\..\utils\common\mathlib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\common\trilib.cpp" />
+    <ClCompile Include="..\..\utils\studiomdl\bmpread.cpp" />
+    <ClCompile Include="..\..\utils\studiomdl\studiomdl.cpp" />
+    <ClCompile Include="..\..\utils\studiomdl\tristrip.cpp" />
+    <ClCompile Include="..\..\utils\studiomdl\write.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\cmdlib.h" />

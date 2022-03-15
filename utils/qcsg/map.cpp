@@ -296,7 +296,7 @@ qboolean	ParseMapEntity (void)
 		newbrushes = mapent->numbrushes;
 		worldbrushes = entities[0].numbrushes;
 
-		temp = malloc(newbrushes*sizeof(brush_t));
+		temp = reinterpret_cast<brush_t*>(malloc(newbrushes*sizeof(brush_t)));
 		memcpy (temp, mapbrushes + mapent->firstbrush, newbrushes*sizeof(brush_t));
 
 		for (i=0 ; i<newbrushes ; i++)

@@ -27,7 +27,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\mkmovie\mkmovie.c">
+    <ClCompile Include="..\..\utils\mkmovie\mkmovie.cpp">
       <Filter>Source Files\utils\mkmovie</Filter>
     </ClCompile>
   </ItemGroup>

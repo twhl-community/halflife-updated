@@ -46,7 +46,7 @@ winding_t	*AllocWinding (int points)
 	s = sizeof(vec_t)*3*points + sizeof(int);
 	s += sizeof(vec_t) - sizeof(w->numpoints);		// padding
 
-	w = malloc (s);
+	w = reinterpret_cast<winding_t*>(malloc (s));
 	memset (w, 0, s); 
 
 	return w;
@@ -257,7 +257,7 @@ winding_t	*CopyWinding (winding_t *w)
 	winding_t	*c;
 	
 	size = (int)((winding_t *)0)->p[w->numpoints];
-	c = malloc (size);
+	c = reinterpret_cast<winding_t*>(malloc (size));
 	memcpy (c, w, size);
 	return c;
 }

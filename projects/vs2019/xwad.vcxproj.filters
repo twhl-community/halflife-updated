@@ -33,16 +33,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\wadlib.c">
+    <ClCompile Include="..\..\utils\common\wadlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\lbmlib.c">
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\xwad\xwad.c">
+    <ClCompile Include="..\..\utils\xwad\xwad.cpp">
       <Filter>Source Files\utils\xwad</Filter>
     </ClCompile>
   </ItemGroup>

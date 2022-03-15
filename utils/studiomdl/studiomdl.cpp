@@ -18,6 +18,7 @@
 #pragma warning( disable : 4237 )
 #pragma warning( disable : 4305 )
 
+#include <algorithm>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -459,8 +460,8 @@ void SimplifyModel (void)
 					bonetable[k].bonecontroller	= 0;
 					bonetable[k].flags		= 0;
 					// set defaults
-					defaultpos[k] = kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) );
-					defaultrot[k] = kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) );
+					defaultpos[k] = reinterpret_cast<vec3_t*>(kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) ));
+					defaultrot[k] = reinterpret_cast<vec3_t*>(kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) ));
 					for (n = 0; n < MAXSTUDIOANIMATIONS; n++)
 					{
 						VectorCopy( model[i]->skeleton[j].pos, defaultpos[k][n] );
@@ -1018,7 +1019,7 @@ void SimplifyModel (void)
 						}
 						else
 						{
-							sequence[i].panim[q]->anim[j][k] = kalloc( pvalue - data, sizeof( mstudioanimvalue_t ) );
+							sequence[i].panim[q]->anim[j][k] = reinterpret_cast<mstudioanimvalue_t*>(kalloc( pvalue - data, sizeof( mstudioanimvalue_t ) ));
 							memmove( sequence[i].panim[q]->anim[j][k], data, (pvalue - data) * sizeof( mstudioanimvalue_t ) );
 						}
 						// printf("%d(%d) ", sequence[i].panim[q]->numanim[j][k], n );
@@ -1176,7 +1177,7 @@ s_mesh_t *lookup_mesh( s_model_t *pmodel, char *texturename )
 	}
 
 	pmodel->nummesh = i + 1;
-	pmodel->pmesh[i] = kalloc( 1, sizeof( s_mesh_t ) );
+	pmodel->pmesh[i] = reinterpret_cast<s_mesh_t*>(kalloc( 1, sizeof( s_mesh_t ) ));
 	pmodel->pmesh[i]->skinref = j;
 	
 
@@ -1192,11 +1193,11 @@ s_trianglevert_t *lookup_triangle( s_mesh_t *pmesh, int index )
 		int start = pmesh->alloctris;
 		pmesh->alloctris = index + 256;
 		if (pmesh->triangle) {
-			pmesh->triangle = realloc( pmesh->triangle, pmesh->alloctris * sizeof( *pmesh->triangle ) );
+			pmesh->triangle = reinterpret_cast<s_trianglevert_t(*)[3]>(realloc( pmesh->triangle, pmesh->alloctris * sizeof( *pmesh->triangle ) ));
 			kmemset( &pmesh->triangle[start], 0, (pmesh->alloctris - start) * sizeof( *pmesh->triangle ) );
 		} 
 		else {
-			pmesh->triangle = kalloc( pmesh->alloctris, sizeof( *pmesh->triangle ) );
+			pmesh->triangle = reinterpret_cast<s_trianglevert_t(*)[3]>(kalloc( pmesh->alloctris, sizeof( *pmesh->triangle ) ));
 		}
 	}
 
@@ -1331,8 +1332,8 @@ void TextureCoordRanges( s_mesh_t *pmesh, s_texture_t *ptexture  )
 			for (i=0 ; i<pmesh->numtris ; i++) 
 			{
 				float local_min, local_max;
-				local_min = min( pmesh->triangle[i][0].u, min( pmesh->triangle[i][1].u, pmesh->triangle[i][2].u ));
-				local_max = max( pmesh->triangle[i][0].u, max( pmesh->triangle[i][1].u, pmesh->triangle[i][2].u ));
+				local_min = std::min( pmesh->triangle[i][0].u, std::min( pmesh->triangle[i][1].u, pmesh->triangle[i][2].u ));
+				local_max = std::max( pmesh->triangle[i][0].u, std::max( pmesh->triangle[i][1].u, pmesh->triangle[i][2].u ));
 				if (local_min < min_u) { min_u = local_min; k = i; k_max_u = local_max; }
 				if (local_max > max_u) { max_u = local_max; n = i; n_min_u = local_min; }
 			}
@@ -1364,8 +1365,8 @@ void TextureCoordRanges( s_mesh_t *pmesh, s_texture_t *ptexture  )
 			for (i=0 ; i<pmesh->numtris ; i++) 
 			{
 				float local_min, local_max;
-				local_min = min( pmesh->triangle[i][0].v, min( pmesh->triangle[i][1].v, pmesh->triangle[i][2].v ));
-				local_max = max( pmesh->triangle[i][0].v, max( pmesh->triangle[i][1].v, pmesh->triangle[i][2].v ));
+				local_min = std::min( pmesh->triangle[i][0].v, std::min( pmesh->triangle[i][1].v, pmesh->triangle[i][2].v ));
+				local_max = std::max( pmesh->triangle[i][0].v, std::max( pmesh->triangle[i][1].v, pmesh->triangle[i][2].v ));
 				if (local_min < min_v) { min_v = local_min; k = i; k_max_v = local_max; }
 				if (local_max > max_v) { max_v = local_max; n = i; n_min_v = local_min; }
 			}
@@ -1415,10 +1416,10 @@ void TextureCoordRanges( s_mesh_t *pmesh, s_texture_t *ptexture  )
 	{
 		for (i=0 ; i<pmesh->numtris ; i++) {
 			for (j = 0; j < 3; j++) {
-				ptexture->max_s = max( pmesh->triangle[i][j].s, ptexture->max_s );
-				ptexture->min_s = min( pmesh->triangle[i][j].s, ptexture->min_s );
-				ptexture->max_t = max( pmesh->triangle[i][j].t, ptexture->max_t );
-				ptexture->min_t = min( pmesh->triangle[i][j].t, ptexture->min_t );
+				ptexture->max_s = std::max( static_cast<float>(pmesh->triangle[i][j].s), ptexture->max_s );
+				ptexture->min_s = std::min( static_cast<float>(pmesh->triangle[i][j].s), ptexture->min_s );
+				ptexture->max_t = std::max( static_cast<float>(pmesh->triangle[i][j].t), ptexture->max_t );
+				ptexture->min_t = std::min( static_cast<float>(pmesh->triangle[i][j].t), ptexture->min_t );
 			}
 		}
 	}
@@ -1540,7 +1541,7 @@ void ResizeTexture( s_texture_t *ptexture )
 		printf("%.0f %.0f %.0f %.0f\n", ptexture->min_s, ptexture->max_s, ptexture->min_t, ptexture->max_t );
 		Error("texture too large\n");
 	}
-	pdest = malloc( ptexture->size );
+	pdest = reinterpret_cast<byte*>(malloc( ptexture->size ));
 	ptexture->pdata = pdest;
 
 	// data is saved as a multiple of 4
@@ -2181,7 +2182,7 @@ void Option_Studio( )
 {
 	if (!GetToken (false)) return;
 
-	model[nummodels] = kalloc( 1, sizeof( s_model_t ) );
+	model[nummodels] = reinterpret_cast<s_model_t*>(kalloc( 1, sizeof( s_model_t ) ));
 	bodypart[numbodyparts].pmodel[bodypart[numbodyparts].nummodels] = model[nummodels];
 
 	strcpyn( model[nummodels]->name, token );
@@ -2215,7 +2216,7 @@ void Option_Studio( )
 
 int Option_Blank( )
 {
-	model[nummodels] = kalloc( 1, sizeof( s_model_t ) );
+	model[nummodels] = reinterpret_cast<s_model_t*>(kalloc( 1, sizeof( s_model_t ) ));
 	bodypart[numbodyparts].pmodel[bodypart[numbodyparts].nummodels] = model[nummodels];
 
 	strcpyn( model[nummodels]->name, "blank" );
@@ -2299,8 +2300,8 @@ void Grab_Animation( s_animation_t *panim)
 
 	for (index = 0; index < panim->numbones; index++) 
 	{
-		panim->pos[index] = kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) );
-		panim->rot[index] = kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) );
+		panim->pos[index] = reinterpret_cast<vec3_t*>(kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) ));
+		panim->rot[index] = reinterpret_cast<vec3_t*>(kalloc( MAXSTUDIOANIMATIONS, sizeof( vec3_t ) ));
 	}
 
 	cz = cos( zrotation );
@@ -2382,8 +2383,8 @@ void Shift_Animation( s_animation_t *panim)
 		k_memtotal -= MAXSTUDIOANIMATIONS * sizeof( vec3_t ) * 2;
 		k_memtotal += size * 2;
 
-		ppos = kalloc( 1, size );
-		prot = kalloc( 1, size );
+		ppos = reinterpret_cast<vec3_t*>(kalloc( 1, size ));
+		prot = reinterpret_cast<vec3_t*>(kalloc( 1, size ));
 
 		memmove( ppos, &panim->pos[j][panim->startframe], size );
 		memmove( prot, &panim->rot[j][panim->startframe], size );
@@ -2802,7 +2803,7 @@ int Cmd_Sequence( )
 	}
 	for (i = 0; i < numblends; i++)
 	{
-		panimation[numani] = kalloc( 1, sizeof( s_animation_t ) );
+		panimation[numani] = reinterpret_cast<s_animation_t*>(kalloc( 1, sizeof( s_animation_t ) ));
 		sequence[numseq].panim[i] = panimation[numani];
 		sequence[numseq].panim[i]->startframe = start;
 		sequence[numseq].panim[i]->endframe = end;

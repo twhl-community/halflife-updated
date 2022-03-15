@@ -158,7 +158,7 @@ winding_t	*CopyWinding (winding_t *w)
 	winding_t	*c;
 	
 	size = (int)((winding_t *)0)->points[w->numpoints];
-	c = malloc (size);
+	c = reinterpret_cast<winding_t*>(malloc (size));
 	memcpy (c, w, size);
 	return c;
 }
@@ -573,7 +573,7 @@ winding_t *NewWinding (int points)
 		c_peakwindings = c_activewindings;
 
 	size = (int)((winding_t *)0)->points[points];
-	w = malloc (size);
+	w = reinterpret_cast<winding_t*>(malloc (size));
 	memset (w, 0, size);
 	
 	return w;
@@ -601,7 +601,7 @@ face_t *AllocFace (void)
 	if (c_activefaces > c_peakfaces)
 		c_peakfaces = c_activefaces;
 		
-	f = malloc (sizeof(face_t));
+	f = reinterpret_cast<face_t*>(malloc (sizeof(face_t)));
 	memset (f, 0, sizeof(face_t));
 	f->planenum = -1;
 
@@ -625,7 +625,7 @@ surface_t *AllocSurface (void)
 {
 	surface_t	*s;
 	
-	s = malloc (sizeof(surface_t));
+	s = reinterpret_cast<surface_t*>(malloc (sizeof(surface_t)));
 	memset (s, 0, sizeof(surface_t));
 	
 	c_activesurfaces++;
@@ -654,7 +654,7 @@ portal_t *AllocPortal (void)
 	if (c_activeportals > c_peakportals)
 		c_peakportals = c_activeportals;
 	
-	p = malloc (sizeof(portal_t));
+	p = reinterpret_cast<portal_t*>(malloc (sizeof(portal_t)));
 	memset (p, 0, sizeof(portal_t));
 	
 	return p;
@@ -676,7 +676,7 @@ node_t *AllocNode (void)
 {
 	node_t	*n;
 	
-	n = malloc (sizeof(node_t));
+	n = reinterpret_cast<node_t*>(malloc (sizeof(node_t)));
 	memset (n, 0, sizeof(node_t));
 	
 	return n;
@@ -710,7 +710,7 @@ surfchain_t *SurflistFromValidFaces (void)
 	face_t		*f, *next;
 	surfchain_t	*sc;
 
-	sc = malloc(sizeof(*sc));
+	sc = reinterpret_cast<surfchain_t*>(malloc(sizeof(*sc)));
 	ClearBounds (sc->mins, sc->maxs);
 	sc->surfaces = NULL;	
 

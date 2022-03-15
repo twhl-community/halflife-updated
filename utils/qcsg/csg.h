@@ -101,8 +101,8 @@ extern	side_t	brushsides[MAX_MAP_SIDES];
 extern	qboolean	noclip;
 extern	qboolean	wadtextures;
 
-int			nWadInclude;
-char		*pszWadInclude[];
+extern int		nWadInclude;
+extern char		*pszWadInclude[];
 
 void 	LoadMapFile (char *filename);
 

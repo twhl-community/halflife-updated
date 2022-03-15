@@ -152,7 +152,7 @@ triangulation_t	*AllocTriangulation (dplane_t *plane)
     HANDLE h;
 	if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, sizeof(triangulation_t) ) )
 	{
-		t = GlobalLock( h );
+		t = reinterpret_cast<triangulation_t*>(GlobalLock( h ));
 
 		t->numpoints = 0;
 		t->numedges = 0;
@@ -850,7 +850,7 @@ void CreateDirectLights (void)
 		if( VectorAvg( p->totallight ) >= dlight_threshold )
 			{
 			numdlights++;
-			dl = calloc(1, sizeof(directlight_t));
+			dl = reinterpret_cast<directlight_t*>(calloc(1, sizeof(directlight_t)));
 
 			VectorCopy (p->origin, dl->origin);
 
@@ -886,7 +886,7 @@ void CreateDirectLights (void)
 			continue;
 
 		numdlights++;
-		dl = calloc(1, sizeof(directlight_t));
+		dl = reinterpret_cast<directlight_t*>(calloc(1, sizeof(directlight_t)));
 
 		GetVectorForKey (e, "origin", dl->origin);
 
@@ -1412,7 +1412,7 @@ void BuildFacelights (int facenum)
 	facelight[facenum].numsamples = l.numsurfpt;
 
 	for (k=0 ; k<MAXLIGHTMAPS; k++)
-		facelight[facenum].samples[k] = calloc(l.numsurfpt, sizeof(sample_t));
+		facelight[facenum].samples[k] = reinterpret_cast<sample_t*>(calloc(l.numsurfpt, sizeof(sample_t)));
 
 	spot = l.surfpt[0];
 	for (i=0 ; i<l.numsurfpt ; i++, spot += 3)

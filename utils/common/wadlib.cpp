@@ -69,7 +69,7 @@ void W_OpenWad (char *filename)
 	numlumps = header.numlumps;
 
 	length = numlumps*sizeof(lumpinfo_t);
-	lumpinfo = malloc (length);
+	lumpinfo = reinterpret_cast<lumpinfo_t*>(malloc (length));
 	lump_p = lumpinfo;
 	
 	fseek (wadhandle, header.infotableofs, SEEK_SET);

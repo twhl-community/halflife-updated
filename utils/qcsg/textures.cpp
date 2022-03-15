@@ -153,8 +153,8 @@ qboolean	TEX_InitFromWad (char *path)
 		wadinfo.numlumps = LittleLong(wadinfo.numlumps);
 		wadinfo.infotableofs = LittleLong(wadinfo.infotableofs);
 		fseek (texfile, wadinfo.infotableofs, SEEK_SET);
-		lumpinfo = realloc(lumpinfo, (nTexLumps + wadinfo.numlumps) 
-			* sizeof(lumpinfo_t));
+		lumpinfo = reinterpret_cast<lumpinfo_t*>(realloc(lumpinfo, (nTexLumps + wadinfo.numlumps) 
+			* sizeof(lumpinfo_t)));
 
 		for(i = 0; i < wadinfo.numlumps; i++)
 		{
@@ -187,7 +187,7 @@ lumpinfo_t *
 FindTexture (lumpinfo_t *source )
 {
 	lumpinfo_t *found = NULL;
-	if ( !( found = bsearch( source, (void *)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name ) ) )
+	if ( !( found = reinterpret_cast<lumpinfo_t*>(bsearch( source, (void *)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name ) )) )
 		printf ("WARNING: texture %s not found in BSP's wad file list!\n", source->name);
 
 	return found;

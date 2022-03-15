@@ -401,7 +401,7 @@ void AddBrushPlane (expand_t *ex, plane_t *plane)
 			return;
 	}
 
-	nf = malloc(sizeof(*nf));
+	nf = reinterpret_cast<bface_t*>(malloc(sizeof(*nf)));
 	memset (nf, 0, sizeof(*nf));
 	nf->planenum = FindIntPlane (plane->inormal, plane->iorigin);
 	nf->plane = &mapplanes[nf->planenum];
@@ -477,7 +477,7 @@ void TestAddPlane (expand_t *ex, plane_t *plane)
 	}
 
 	
-	nf = malloc(sizeof(*nf));
+	nf = reinterpret_cast<bface_t*>(malloc(sizeof(*nf)));
 	memset (nf, 0, sizeof(*nf));
 	nf->planenum = FindIntPlane (plane->inormal, plane->iorigin);
 	nf->plane = &mapplanes[nf->planenum];
@@ -650,7 +650,7 @@ void ExpandBrush (brush_t *b, int hullnum)
 				corner = 0;
 			iorigin[x] += p->normal[x]*corner;
 		}
-		nf = malloc(sizeof(*nf));
+		nf = reinterpret_cast<bface_t*>(malloc(sizeof(*nf)));
 		memset (nf, 0, sizeof(*nf));
 
 		nf->planenum = FindIntPlane (inormal, iorigin);
@@ -845,7 +845,7 @@ qboolean MakeBrushPlanes (brush_t *b)
 			}
 		}
 
-		f = malloc(sizeof(*f));
+		f = reinterpret_cast<bface_t*>(malloc(sizeof(*f)));
 		memset (f, 0, sizeof(*f));
 
 		f->planenum = planenum;

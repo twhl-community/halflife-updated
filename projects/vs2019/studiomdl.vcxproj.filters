@@ -33,31 +33,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\trilib.c">
+    <ClCompile Include="..\..\utils\common\trilib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\lbmlib.c">
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\studiomdl\write.c">
+    <ClCompile Include="..\..\utils\studiomdl\write.cpp">
       <Filter>Source Files\utils\studiomdl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\studiomdl\bmpread.c">
+    <ClCompile Include="..\..\utils\studiomdl\bmpread.cpp">
       <Filter>Source Files\utils\studiomdl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\studiomdl\studiomdl.c">
+    <ClCompile Include="..\..\utils\studiomdl\studiomdl.cpp">
       <Filter>Source Files\utils\studiomdl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\studiomdl\tristrip.c">
+    <ClCompile Include="..\..\utils\studiomdl\tristrip.cpp">
       <Filter>Source Files\utils\studiomdl</Filter>
     </ClCompile>
   </ItemGroup>

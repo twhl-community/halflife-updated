@@ -30,29 +30,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\threads.c">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\common\bspfile.c">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\light\trace.c">
+    <ClCompile Include="..\..\utils\light\ltface.cpp">
       <Filter>Source Files\utils\light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\light\light.c">
+    <ClCompile Include="..\..\utils\light\trace.cpp">
       <Filter>Source Files\utils\light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\light\ltface.c">
+    <ClCompile Include="..\..\utils\light\light.cpp">
       <Filter>Source Files\utils\light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\bspfile.cpp">
+      <Filter>Source Files\utils\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
+      <Filter>Source Files\utils\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
+      <Filter>Source Files\utils\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
+      <Filter>Source Files\utils\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\threads.cpp">
+      <Filter>Source Files\utils\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

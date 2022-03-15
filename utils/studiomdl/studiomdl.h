@@ -106,7 +106,7 @@ typedef struct
 } s_bonefixup_t;
 EXTERN	s_bonefixup_t bonefixup[MAXSTUDIOSRCBONES];
 
-int numbones;
+EXTERN int numbones;
 typedef struct 
 {
 	char			name[32];	// bone name for symbolic links
@@ -123,7 +123,7 @@ typedef struct
 } s_bonetable_t;
 EXTERN	s_bonetable_t bonetable[MAXSTUDIOSRCBONES];
 
-int numrenamedbones;
+EXTERN int numrenamedbones;
 typedef struct 
 {
 	char			from[32];
@@ -131,7 +131,7 @@ typedef struct
 } s_renamebone_t;
 EXTERN s_renamebone_t renamedbone[MAXSTUDIOSRCBONES];
 
-int numhitboxes;
+EXTERN int numhitboxes;
 typedef struct
 {
 	char			name[32];	// bone name
@@ -142,7 +142,7 @@ typedef struct
 } s_bbox_t;
 EXTERN s_bbox_t hitbox[MAXSTUDIOSRCBONES];
 
-int numhitgroups;
+EXTERN int numhitgroups;
 typedef struct
 {
 	int				models;
@@ -162,8 +162,8 @@ typedef struct
 	float	end;
 } s_bonecontroller_t;
 
-s_bonecontroller_t bonecontroller[MAXSTUDIOSRCBONES];
-int numbonecontrollers;
+EXTERN s_bonecontroller_t bonecontroller[MAXSTUDIOSRCBONES];
+EXTERN int numbonecontrollers;
 
 typedef struct 
 {
@@ -175,8 +175,8 @@ typedef struct
 	vec3_t	org;
 } s_attachment_t;
 
-s_attachment_t attachment[MAXSTUDIOSRCBONES];
-int numattachments;
+EXTERN s_attachment_t attachment[MAXSTUDIOSRCBONES];
+EXTERN int numattachments;
 
 typedef struct 
 {

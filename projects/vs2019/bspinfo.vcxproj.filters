@@ -30,16 +30,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\bspinfo\bspinfo.c">
+    <ClCompile Include="..\..\utils\bspinfo\bspinfo.cpp">
       <Filter>Source Files\utils\bspinfo</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\bspfile.c">
+    <ClCompile Include="..\..\utils\common\bspfile.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
   </ItemGroup>

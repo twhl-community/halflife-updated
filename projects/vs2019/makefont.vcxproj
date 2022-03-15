@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\wadlib.c" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\wadlib.cpp" />
     <ClCompile Include="..\..\utils\makefont\makefont.cpp" />
   </ItemGroup>
   <ItemGroup>

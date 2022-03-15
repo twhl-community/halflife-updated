@@ -377,13 +377,13 @@ int main (int argc, char **argv)
 {
 	int		i;
 	
-	printf ("\nqlumpy "VERSION" by John Carmack, copyright (c) 1994 Id Software.\n");
+	printf ("\nqlumpy " VERSION " by John Carmack, copyright (c) 1994 Id Software.\n");
 	printf ("Portions copyright (c) 1998 Valve LLC (%s)\n", __DATE__ );
 
 	if (argc == 1)
 		Error ("qlumpy [-archive directory] [-8bit] [-proj <project>] scriptfile [scriptfile ...]");
 
-	lumpbuffer = malloc (MAXLUMP);
+	lumpbuffer = reinterpret_cast<byte*>(malloc (MAXLUMP));
 	do16bit = true;
 
 	for( i=1; i<argc; i++ )

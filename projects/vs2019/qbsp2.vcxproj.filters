@@ -53,46 +53,46 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bsplib.c">
+    <ClCompile Include="..\..\utils\common\bsplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\gldraw.c">
+    <ClCompile Include="..\..\utils\qbsp2\gldraw.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\portals.c">
+    <ClCompile Include="..\..\utils\qbsp2\portals.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\merge.c">
+    <ClCompile Include="..\..\utils\qbsp2\merge.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\outside.c">
+    <ClCompile Include="..\..\utils\qbsp2\outside.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\qbsp.c">
+    <ClCompile Include="..\..\utils\qbsp2\qbsp.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\surfaces.c">
+    <ClCompile Include="..\..\utils\qbsp2\surfaces.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\solidbsp.c">
+    <ClCompile Include="..\..\utils\qbsp2\solidbsp.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\threads.c">
+    <ClCompile Include="..\..\utils\common\threads.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\writebsp.c">
+    <ClCompile Include="..\..\utils\qbsp2\writebsp.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qbsp2\tjunc.c">
+    <ClCompile Include="..\..\utils\qbsp2\tjunc.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
     </ClCompile>
   </ItemGroup>

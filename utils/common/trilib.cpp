@@ -86,7 +86,7 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 		exit(0);
 	}
 
-	ptri = malloc (MAXTRIANGLES * sizeof(triangle_t));
+	ptri = reinterpret_cast<triangle_t*>(malloc (MAXTRIANGLES * sizeof(triangle_t)));
 
 	*pptri = ptri;
 

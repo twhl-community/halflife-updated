@@ -97,7 +97,7 @@ void WriteSprite (FILE *spriteouthandle)
 	spritetemp.height = LittleLong (framesmaxs[1]);
 	spritetemp.numframes = LittleLong (sprite.numframes);
 	spritetemp.beamlength = LittleFloat (sprite.beamlength);
-	spritetemp.synctype = LittleFloat (sprite.synctype);
+	spritetemp.synctype = static_cast<synctype_t>(LittleFloat (sprite.synctype));
 	spritetemp.version = LittleLong (SPRITE_VERSION);
 	spritetemp.ident = LittleLong (IDSPRITEHEADER);
 
@@ -510,7 +510,7 @@ void Cmd_Spritename (void)
 	framesmaxs[1] = -9999999;
 
 	if ( !lumpbuffer )
-		lumpbuffer = malloc (MAX_BUFFER_SIZE * 2);	// *2 for padding
+		lumpbuffer = reinterpret_cast<byte*>(malloc (MAX_BUFFER_SIZE * 2));	// *2 for padding
 
 	if (!lumpbuffer)
 		Error ("Couldn't get buffer memory");

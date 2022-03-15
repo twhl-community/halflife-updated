@@ -1,6 +1,6 @@
 /***
 *
-*	Copyright (c) 1996-2002, Valve LLC. All rights reserved.
+*	Copyright (c) 1998, Valve LLC. All rights reserved.
 *	
 *	This product contains software technology licensed from Id 
 *	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
@@ -10,7 +10,7 @@
 
 #include "cmdlib.h"
 #include "mathlib.h"
-#include "bspfile.h"
+#include "bsplib.h"
 #include "scriplib.h"
 
 //=============================================================================
@@ -86,10 +86,12 @@ FastChecksum
 
 int FastChecksum(void *buffer, int bytes)
 {
-	int	checksum = 0;
+	char* byteBuffer = reinterpret_cast<char*>(buffer);
 
-	while( bytes-- )  
-		checksum = _rotl(checksum, 4) ^ *((char *)buffer)++;
+	int checksum = 0;
+
+	while (bytes--)
+		checksum = _rotl(checksum, 4) ^ *byteBuffer++;
 
 	return checksum;
 }
@@ -465,7 +467,7 @@ void	WriteBSPFile (char *filename)
 #define ENTRIES(a)		(sizeof(a)/sizeof(*(a)))
 #define ENTRYSIZE(a)	(sizeof(*(a)))
 
-ArrayUsage( char *szItem, int items, int maxitems, int itemsize )
+int ArrayUsage( char *szItem, int items, int maxitems, int itemsize )
 {
 	float	percentage = maxitems ? items * 100.0 / maxitems : 0.0;
 
@@ -482,7 +484,7 @@ ArrayUsage( char *szItem, int items, int maxitems, int itemsize )
 	return items * itemsize;
 }
 
-GlobUsage( char *szItem, int itemstorage, int maxstorage )
+int GlobUsage( char *szItem, int itemstorage, int maxstorage )
 {
 	float	percentage = maxstorage ? itemstorage * 100.0 / maxstorage : 0.0;
     printf("%-12s     [variable]    %7i/%-7i  (%4.1f%%)", 
@@ -544,7 +546,7 @@ epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 	
-	e = malloc (sizeof(epair_t));
+	e = reinterpret_cast<epair_t*>(malloc (sizeof(epair_t)));
 	memset (e, 0, sizeof(epair_t));
 	
 	if (strlen(token) >= MAX_KEY-1)
@@ -668,7 +670,7 @@ void 	SetKeyValue (entity_t *ent, char *key, char *value)
 			ep->value = copystring(value);
 			return;
 		}
-	ep = malloc (sizeof(*ep));
+	ep = reinterpret_cast<epair_t*>(malloc (sizeof(*ep)));
 	ep->next = ent->epairs;
 	ent->epairs = ep;
 	ep->key = copystring(key);

@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\lbmlib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\common\wadlib.c" />
-    <ClCompile Include="..\..\utils\qlumpy\qlumpy.c" />
-    <ClCompile Include="..\..\utils\qlumpy\quakegrb.c" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\lbmlib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\common\wadlib.cpp" />
+    <ClCompile Include="..\..\utils\qlumpy\qlumpy.cpp" />
+    <ClCompile Include="..\..\utils\qlumpy\quakegrb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\cmdlib.h" />

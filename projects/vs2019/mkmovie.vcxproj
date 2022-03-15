@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\mkmovie\mkmovie.c" />
+    <ClCompile Include="..\..\utils\mkmovie\mkmovie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\cmdlib.h" />

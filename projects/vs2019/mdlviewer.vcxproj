@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\mathlib.c" />
+    <ClCompile Include="..\..\utils\common\mathlib.cpp" />
     <ClCompile Include="..\..\utils\mdlviewer\mdlviewer.cpp" />
     <ClCompile Include="..\..\utils\mdlviewer\studio_render.cpp" />
     <ClCompile Include="..\..\utils\mdlviewer\studio_utils.cpp" />

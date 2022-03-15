@@ -11,16 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bspfile.c" />
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\mathlib.c" />
-    <ClCompile Include="..\..\utils\common\polylib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\common\threads.c" />
-    <ClCompile Include="..\..\utils\qrad\lightmap.c" />
-    <ClCompile Include="..\..\utils\qrad\qrad.c" />
-    <ClCompile Include="..\..\utils\qrad\trace.c" />
-    <ClCompile Include="..\..\utils\qrad\vismat.c" />
+    <ClCompile Include="..\..\utils\common\bspfile.cpp" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\mathlib.cpp" />
+    <ClCompile Include="..\..\utils\common\polylib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\common\threads.cpp" />
+    <ClCompile Include="..\..\utils\qrad\lightmap.cpp" />
+    <ClCompile Include="..\..\utils\qrad\qrad.cpp" />
+    <ClCompile Include="..\..\utils\qrad\trace.cpp" />
+    <ClCompile Include="..\..\utils\qrad\vismat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\bspfile.h" />

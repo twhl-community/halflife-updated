@@ -11,18 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bspfile.c" />
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\mathlib.c" />
-    <ClCompile Include="..\..\utils\common\polylib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\common\threads.c" />
-    <ClCompile Include="..\..\utils\qcsg\brush.c" />
-    <ClCompile Include="..\..\utils\qcsg\gldraw.c" />
-    <ClCompile Include="..\..\utils\qcsg\hullfile.c" />
-    <ClCompile Include="..\..\utils\qcsg\map.c" />
-    <ClCompile Include="..\..\utils\qcsg\qcsg.c" />
-    <ClCompile Include="..\..\utils\qcsg\textures.c" />
+    <ClCompile Include="..\..\utils\common\bspfile.cpp" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\mathlib.cpp" />
+    <ClCompile Include="..\..\utils\common\polylib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\common\threads.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\brush.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\gldraw.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\hullfile.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\map.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\qcsg.cpp" />
+    <ClCompile Include="..\..\utils\qcsg\textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\bspfile.h" />

@@ -5,6 +5,8 @@
 // $NoKeywords: $
 //=============================================================================
 
+#include <algorithm>
+
 #include "light.h"
 
 extern qboolean hicolor;
@@ -646,9 +648,9 @@ void LightFace (int surfnum)
 #endif
 					if ( divisor > 1.0 )
 						VectorScale( total, 1/divisor, total );
-					total[0] = max(total[0],0.0);
-					total[1] = max(total[1],0.0);
-					total[2] = max(total[2],0.0);
+					total[0] = std::max(total[0],vec_t(0.0));
+					total[1] = std::max(total[1],vec_t(0.0));
+					total[2] = std::max(total[2],vec_t(0.0));
 				}
 				else
 					VectorCopy( light[ c ], total );

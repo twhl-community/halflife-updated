@@ -290,7 +290,7 @@ getfiledata(char *filename, char *buffer, int buffersize)
 {
 	long			size = 0;
 	int				handle;
-	long			start,end;
+	time_t			start,end;
 	time(&start);
 
 	if ( (handle = _open( filename, _O_RDONLY | _O_BINARY )) != -1 )
@@ -304,7 +304,7 @@ getfiledata(char *filename, char *buffer, int buffersize)
 		}
 		_close( handle );
 		time(&end);
-		printf("%10.3fMB] (%d)\n",size/(1024.0*1024.0), end-start);
+		printf("%10.3fMB] (%d)\n",size/(1024.0*1024.0), static_cast<int>(end-start));
 	}
 
 	if (buffersize != size)
@@ -485,7 +485,7 @@ void BuildVisMatrix (void)
 	qprintf ("visibility matrix: %5.1f megs\n", c/(1024*1024.0));
 
     if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, c ) )
-		vismatrix = GlobalLock( h );
+		vismatrix = reinterpret_cast<byte*>(GlobalLock( h ));
 	else
 		Error ("vismatrix too big");
 	
@@ -496,7 +496,7 @@ void BuildVisMatrix (void)
 	if ( !incremental
 	  || !IsIncremental(incrementfile)
 	  || getfilesize(vismatfile) != c
-	  || getfiledata(vismatfile,vismatrix, c) != c )
+	  || getfiledata(vismatfile,reinterpret_cast<char*>(vismatrix), c) != c )
 	{
 		// memset (vismatrix, 0, c);
 		RunThreadsOn (numleafs-1, true, BuildVisLeafs);

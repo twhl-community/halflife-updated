@@ -17,11 +17,8 @@
 
 #include <windows.h>
 
-extern "C" 
-{
-	#include "cmdlib.h"
-	#include "wadlib.h"
-}
+#include "cmdlib.h"
+#include "wadlib.h"
 #include "qfont.h"
 
 #define DEFAULT_FONT "Arial"

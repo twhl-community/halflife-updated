@@ -300,7 +300,7 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 		{ rc = -6; goto GetOut; }
 
 	// convert to a packed 768 byte palette
-	pbPal = malloc(768);
+	pbPal = reinterpret_cast<byte*>(malloc(768));
 	if (pbPal == NULL)
 		{ rc = -7; goto GetOut; }
 
@@ -324,11 +324,11 @@ int LoadBMP (const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 
 	// Read bitmap bits (remainder of file)
 	cbBmpBits = bmfh.bfSize - ftell(pfile);
-	pb = malloc(cbBmpBits);
+	pb = reinterpret_cast<byte*>(malloc(cbBmpBits));
 	if (fread(pb, cbBmpBits, 1/*count*/, pfile) != 1)
 		{ rc = -7; goto GetOut; }
 
-	pbBmpBits = malloc(cbBmpBits);
+	pbBmpBits = reinterpret_cast<BYTE*>(malloc(cbBmpBits));
 
 	// data is actually stored with the width being rounded up to a multiple of 4
 	biTrueWidth = (bmih.biWidth + 3) & ~3;
@@ -439,7 +439,7 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 		{ rc = -6; goto GetOut; }
 
 
-	pbBmpBits = malloc(cbBmpBits);
+	pbBmpBits = reinterpret_cast<BYTE*>(malloc(cbBmpBits));
 
 	pb = pbBits;
 	// reverse the order of the data.
@@ -538,7 +538,7 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 			break;
 
 		case CMAPID:
-			cmapbuffer = malloc (768);
+			cmapbuffer = reinterpret_cast<byte*>(malloc (768));
 			memset (cmapbuffer, 0, 768);
 			memcpy (cmapbuffer, LBM_P, chunklength);
 			break;
@@ -546,7 +546,7 @@ void LoadLBM (char *filename, byte **picture, byte **palette)
 		case BODYID:
 			body_p = LBM_P;
 
-			pic_p = picbuffer = malloc (bmhd.w*bmhd.h);
+			pic_p = picbuffer = reinterpret_cast<byte*>(malloc (bmhd.w*bmhd.h));
 			if (formtype == PBMID)
 			{
 			//
@@ -643,7 +643,7 @@ void WriteLBMfile (char *filename, byte *data, int width, int height, byte *pale
 	int    length;
 	bmhd_t  basebmhd;
 
-	lbm = lbmptr = malloc (width*height+1000);
+	lbm = lbmptr = reinterpret_cast<byte*>(malloc (width*height+1000));
 
 //
 // start FORM

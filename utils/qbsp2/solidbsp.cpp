@@ -613,7 +613,7 @@ void LinkLeafFaces (surface_t *planelist, node_t *leafnode)
 		markfaces[nummarkfaces] = NULL;	// end marker
 		nummarkfaces++;
 
-		leafnode->markfaces = malloc(nummarkfaces * sizeof(*leafnode->markfaces));
+		leafnode->markfaces = reinterpret_cast<face_t**>(malloc(nummarkfaces * sizeof(*leafnode->markfaces)));
 		memcpy (leafnode->markfaces, markfaces, nummarkfaces * sizeof(*leafnode->markfaces));
 	}
 

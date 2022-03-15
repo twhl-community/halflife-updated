@@ -33,34 +33,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bspfile.c">
+    <ClCompile Include="..\..\utils\common\bspfile.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\cmdlib.c">
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\polylib.c">
+    <ClCompile Include="..\..\utils\common\polylib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\scriplib.c">
+    <ClCompile Include="..\..\utils\common\scriplib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\common\threads.c">
+    <ClCompile Include="..\..\utils\common\threads.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qrad\vismat.c">
+    <ClCompile Include="..\..\utils\qrad\vismat.cpp">
       <Filter>Source Files\utils\qrad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qrad\lightmap.c">
+    <ClCompile Include="..\..\utils\qrad\lightmap.cpp">
       <Filter>Source Files\utils\qrad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qrad\qrad.c">
+    <ClCompile Include="..\..\utils\qrad\qrad.cpp">
       <Filter>Source Files\utils\qrad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\qrad\trace.c">
+    <ClCompile Include="..\..\utils\qrad\trace.cpp">
       <Filter>Source Files\utils\qrad</Filter>
     </ClCompile>
   </ItemGroup>

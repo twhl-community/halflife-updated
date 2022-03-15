@@ -33,7 +33,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\mathlib.c">
+    <ClCompile Include="..\..\utils\common\mathlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\utils\mdlviewer\studio_utils.cpp">

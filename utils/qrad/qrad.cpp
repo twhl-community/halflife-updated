@@ -774,7 +774,7 @@ void MakeScales (int threadnum)
 		{
 			transfer_t	*t, *t2;
 
-			patch->transfers = calloc (patch->numtransfers, sizeof(transfer_t));
+			patch->transfers = reinterpret_cast<transfer_t*>(calloc (patch->numtransfers, sizeof(transfer_t)));
 
 			if (!patch->transfers)
 				Error ("Memory allocation failure");
@@ -1086,7 +1086,7 @@ readtransfers(char *transferfile, long numpatches)
 {
 	int		handle;
 	long	readpatches = 0, readtransfers = 0, totalbytes = 0;
-	long	start, end;
+	time_t	start, end;
 	time(&start);
 	if ( (handle = _open( transferfile, _O_RDONLY | _O_BINARY )) != -1 )
 	{
@@ -1109,7 +1109,7 @@ readtransfers(char *transferfile, long numpatches)
 					if ( (bytesread = _read(handle, &patch->numtransfers, sizeof(patch->numtransfers)))
 					  == sizeof(patch->numtransfers) )
 					{
-						if ( patch->transfers = calloc(patch->numtransfers, sizeof(patch->transfers[0])) )
+						if ( patch->transfers = reinterpret_cast<transfer_t*>(calloc(patch->numtransfers, sizeof(patch->transfers[0]))) )
 						{
 							totalbytes += bytesread;
 
@@ -1148,7 +1148,7 @@ readtransfers(char *transferfile, long numpatches)
 		}
 		_close( handle );
 		time(&end);
-		printf("%10.3fMB] (%d)\n",totalbytes/(1024.0*1024.0), end-start);
+		printf("%10.3fMB] (%d)\n",totalbytes/(1024.0*1024.0), static_cast<int>(end-start));
 	}
 
 	if (readpatches != numpatches )

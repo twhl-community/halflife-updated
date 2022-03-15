@@ -19,20 +19,20 @@
     <ClInclude Include="..\..\utils\qbsp2\bsp5.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bsplib.c" />
-    <ClCompile Include="..\..\utils\common\cmdlib.c" />
-    <ClCompile Include="..\..\utils\common\mathlib.c" />
-    <ClCompile Include="..\..\utils\common\scriplib.c" />
-    <ClCompile Include="..\..\utils\common\threads.c" />
-    <ClCompile Include="..\..\utils\qbsp2\gldraw.c" />
-    <ClCompile Include="..\..\utils\qbsp2\merge.c" />
-    <ClCompile Include="..\..\utils\qbsp2\outside.c" />
-    <ClCompile Include="..\..\utils\qbsp2\portals.c" />
-    <ClCompile Include="..\..\utils\qbsp2\qbsp.c" />
-    <ClCompile Include="..\..\utils\qbsp2\solidbsp.c" />
-    <ClCompile Include="..\..\utils\qbsp2\surfaces.c" />
-    <ClCompile Include="..\..\utils\qbsp2\tjunc.c" />
-    <ClCompile Include="..\..\utils\qbsp2\writebsp.c" />
+    <ClCompile Include="..\..\utils\common\bsplib.cpp" />
+    <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
+    <ClCompile Include="..\..\utils\common\mathlib.cpp" />
+    <ClCompile Include="..\..\utils\common\scriplib.cpp" />
+    <ClCompile Include="..\..\utils\common\threads.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\gldraw.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\merge.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\outside.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\portals.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\qbsp.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\solidbsp.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\surfaces.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\tjunc.cpp" />
+    <ClCompile Include="..\..\utils\qbsp2\writebsp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{415A5B85-BEA0-4F96-BBB6-5447E4CF726F}</ProjectGuid>

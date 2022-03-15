@@ -278,7 +278,7 @@ face_t	*newlist;
 void SplitFaceForTjunc (face_t *f, face_t *original)
 {
 	int			i;
-	face_t		*new, *chain;
+	face_t		*newFace, *chain;
 	vec3_t		dir, test;
 	vec_t		v;
 	int			firstcorner, lastcorner;
@@ -343,33 +343,33 @@ restart:
 	// cut off as big a piece as possible, less than MAXPOINTS, and not
 	// past lastcorner
 			
-		new = NewFaceFromFace (f);
+		newFace = NewFaceFromFace(f);
 		if (f->original)
 			Error ("SplitFaceForTjunc: f->original");
 			
-		new->original = chain;
-		chain = new;
-		new->next = newlist;
-		newlist = new;
+		newFace->original = chain;
+		chain = newFace;
+		newFace->next = newlist;
+		newlist = newFace;
 		if (f->numpoints - firstcorner <= MAXPOINTS)
-			new->numpoints = firstcorner+2;
+			newFace->numpoints = firstcorner + 2;
 		else if (lastcorner+2 < MAXPOINTS &&
 		f->numpoints - lastcorner <= MAXPOINTS)
-			new->numpoints = lastcorner+2;
+			newFace->numpoints = lastcorner + 2;
 		else
-			new->numpoints = MAXPOINTS;
+			newFace->numpoints = MAXPOINTS;
 
-		for (i=0 ; i<new->numpoints ; i++)
+		for (i = 0; i < newFace->numpoints; i++)
 		{
-			VectorCopy (f->pts[i], new->pts[i]);
+			VectorCopy(f->pts[i], newFace->pts[i]);
 		}
 		
 		
-		for (i=new->numpoints-1 ; i<f->numpoints ; i++)
+		for (i = newFace->numpoints - 1; i < f->numpoints; i++)
 		{
-			VectorCopy (f->pts[i], f->pts[i-(new->numpoints-2)]);
+			VectorCopy(f->pts[i], f->pts[i - (newFace->numpoints - 2)]);
 		}
-		f->numpoints -= (new->numpoints-2);
+		f->numpoints -= (newFace->numpoints - 2);
 	} while (1);
 
 }
