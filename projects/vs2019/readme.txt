@@ -22,8 +22,7 @@ Installing GLUT and GLAUX
 =========================
 
 Some projects in utils.sln use the GLUT (mdlviwer) and the GLAUX (qbsp2, qcsg)
-libraries, which are not shipped with Visual C++ 2019 / Windows SDK
-v7.0A.
+libraries, which are not shipped with Visual C++ 2019
 
 Thus you need to install the GLUT and GLAUX libraries manually:
 
@@ -32,6 +31,8 @@ Installing GLUT library
 -----------------------
 
 Required by: mdlviewer
+
+GLUT library is outdated and is not recommended for use anymore. FreeGLUT is recommended since it is the lastest implementation of GLUT.
 
 There are several ways to do this, an example can be found here:
 http://stackoverflow.com/a/10467488
@@ -47,9 +48,10 @@ Required by: qbsp2, qcsg
 Obtaining the library:
 http://stackoverflow.com/a/6211119
 
-Copy glaux.h into 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\GL\'
+\Community\VC\Tools\MSVC\14.31.31103\include
+Copy glaux.h into 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\(version)\include\GL\'
 (You might need to create the GL directory.).
-Copy glaux.lib into 'C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\'.
+Copy glaux.lib into 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\(version)\lib\'.
 
 
 TODO
@@ -105,24 +107,7 @@ Installing MFC
 
 Required by: serverctrl
 
-If you are not using an Express edition, you can most likely skip this step.
-
-The MFC is also shipped as part of the Windows Driver Kit for Windows XP.
-
-Download Windows Driver Kit Version 7.1.0:
-http://www.microsoft.com/en-us/download/details.aspx?id=11800
-
-Burn it to a CD and start KitSetup.exe.
-It's enough to select "Build Environment" in the options you want to install.
-
-Now we need to point Visual C++ 2019 to the folders for the MFC/ATL
-includes and libraries:
-
-To do this open utils.sln and right click the serverctrl project and select
-Properties. Select Configuration: All Configurations, then select
-Configuration -> VC++ Directories in the tree. Adjust the Include and
-Library Directories settings to match your WDK installation (click on the lines
-and then click on the drop-down selector that appears and select edit).
+Using Visual Studio Installer, install C++ MFC from "Individual Components".
 
 
 
@@ -137,7 +122,21 @@ The MAX 4.2 SDK needs adjustment:
 Comment out the following line in max.h
 #include <ctl3d.h>
 So that it reads
-//#include <ctl3d.h
+//#include <ctl3d.h>
+.
+
+For C:\3dsmax42\maxsdk\Include\polyobj.h, line 109 should be changed from:
+	for (i=0; i<mm.numv; i++) if (!mm.v[i].GetFlag (MN_DEAD)) numVerts++;
+to:
+	for (int i=0; i<mm.numv; i++) if (!mm.v[i].GetFlag (MN_DEAD)) numVerts++;
+.
+
+For C:\3dsmax42\maxsdk\Include\imtl.h, line 1390 should be added:
+	int i;
+and line 1392 (originally line 1391) should be change from:
+	for( int i = 0; i < nUserIllumOut; ++i ){ 
+to:
+	for( i = 0; i < nUserIllumOut; ++i ){
 .
 
 You also need the phyexp.h from Character Studio, which you should place in
