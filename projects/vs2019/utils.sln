@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bspinfo", "bspinfo.vcxproj", "{B1227C36-C02C-4914-9675-C6D243D8B36E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "light", "light.vcxproj", "{1D9A402B-C7AB-4DAA-AD3F-42195F283E64}"
@@ -86,9 +88,7 @@ Global
 		{A015F691-DF6B-4E05-AB3B-4B0A55C13EDC}.Release|Win32.ActiveCfg = Release|Win32
 		{A015F691-DF6B-4E05-AB3B-4B0A55C13EDC}.Release|Win32.Build.0 = Release|Win32
 		{4BFEAD42-DBED-40F0-B30E-E5AF9EBA59A8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{4BFEAD42-DBED-40F0-B30E-E5AF9EBA59A8}.Debug|Win32.Build.0 = Debug|Win32
 		{4BFEAD42-DBED-40F0-B30E-E5AF9EBA59A8}.Release|Win32.ActiveCfg = Release|Win32
-		{4BFEAD42-DBED-40F0-B30E-E5AF9EBA59A8}.Release|Win32.Build.0 = Release|Win32
 		{2ADCE88F-5117-4D09-BE30-C8CBE902203E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2ADCE88F-5117-4D09-BE30-C8CBE902203E}.Debug|Win32.Build.0 = Debug|Win32
 		{2ADCE88F-5117-4D09-BE30-C8CBE902203E}.Release|Win32.ActiveCfg = Release|Win32
@@ -112,5 +112,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DA54E62-1905-4622-90DF-F9853A1B2966}
 	EndGlobalSection
 EndGlobal
