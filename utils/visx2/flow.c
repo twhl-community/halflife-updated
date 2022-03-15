@@ -9,6 +9,7 @@
 ****/
 
 #include "vis.h"
+#include "threads.h"
 
 int		c_fullskip;
 int		c_chains;

@@ -112,7 +112,8 @@ void 	LoadMapFile (char *filename);
 
 extern int nummiptex;
 void WriteMiptex (void);
-int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin);
+int FindMiptex(char* name);
+int TexinfoForBrushTexture(plane_t* plane, brush_texture_t* bt, vec3_t origin);
 
 //=============================================================================
 
@@ -124,6 +125,8 @@ brush_t *Brush_LoadEntity (entity_t *ent, int hullnum);
 int	PlaneTypeForNormal (vec3_t normal);
 
 void CreateBrush (int brushnum);
+
+int BrushContents(brush_t* b);
 
 //=============================================================================
 
@@ -142,3 +145,14 @@ extern	qboolean	drawflag;
 void Draw_ClearWindow (void);
 void DrawWinding (winding_t *w);
 
+//=============================================================================
+
+// map.c
+
+void TextureAxisFromPlane(plane_t* pln, vec3_t xv, vec3_t yv);
+
+//=============================================================================
+
+// hullfile.c
+
+void CheckHullFile(qboolean hullfile, char* filename);

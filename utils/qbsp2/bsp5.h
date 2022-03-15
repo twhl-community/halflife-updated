@@ -108,6 +108,7 @@ typedef struct node_s
 
 face_t *NewFaceFromFace (face_t *in);
 void SplitFace (face_t *in, dplane_t *split, face_t **front, face_t **back);
+void SplitFaceTmp(face_t* in, dplane_t* split, face_t** front, face_t** back);
 
 //=============================================================================
 
@@ -117,6 +118,7 @@ void DivideFacet (face_t *in, dplane_t *split, face_t **front, face_t **back);
 void CalcSurfaceInfo (surface_t *surf);
 void SubdivideFace (face_t *f, face_t **prevptr);
 node_t *SolidBSP (surfchain_t *surfhead);
+int FaceSide(face_t* in, dplane_t* split);
 
 //=============================================================================
 
@@ -143,6 +145,7 @@ void SubdivideFaces (surface_t *surfhead);
 surfchain_t *GatherNodeFaces (node_t *headnode);
 
 void MakeFaceEdges (node_t *headnode);
+int GetEdge(vec3_t p1, vec3_t p2, face_t* f);
 
 //=============================================================================
 
@@ -162,6 +165,7 @@ extern	node_t	outside_node;		// portals outside the world face this
 void AddPortalToNodes (portal_t *p, node_t *front, node_t *back);
 void RemovePortalFromNode (portal_t *portal, node_t *l);
 void MakeHeadnodePortals (node_t *node, vec3_t mins, vec3_t maxs);
+void FreePortals(node_t* node);
 
 void WritePortalfile (node_t *headnode);
 
