@@ -15,6 +15,8 @@
 #include <gl\glut.h>
 
 #include "mathlib.h"
+#undef DotProduct
+#include "../../dlls/vector.h"
 #include "../../public/steam/steamtypes.h" // defines int32, required by studio.h
 #include "..\..\engine\studio.h"
 #include "mdlviewer.h"

@@ -29,6 +29,7 @@
 #include "lbmlib.h"
 #include "scriplib.h"
 #include "mathlib.h"
+#define Vector vec3_t
 #define EXTERN
 #include "../../engine/studio.h"
 #include "studiomdl.h"
