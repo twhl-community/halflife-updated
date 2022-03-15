@@ -169,15 +169,15 @@ qboolean TestLine (vec3_t start, vec3_t stop)
 			break;
 		}
 
-		if (front > -ON_EPSILON && back > -ON_EPSILON)
-//		if (front > 0 && back > 0)
+		if (front > -LIGHT_ON_EPSILON && back > -LIGHT_ON_EPSILON)
+		//		if (front > 0 && back > 0)
 		{
 			node = tnode->children[0];
 			continue;
 		}
 		
-		if (front < ON_EPSILON && back < ON_EPSILON)
-//		if (front <= 0 && back <= 0)
+		if (front < LIGHT_ON_EPSILON && back < LIGHT_ON_EPSILON)
+		//		if (front <= 0 && back <= 0)
 		{
 			node = tnode->children[1];
 			continue;
