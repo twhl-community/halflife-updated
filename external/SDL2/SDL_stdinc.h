@@ -349,9 +349,7 @@ SDL_FORCE_INLINE void SDL_memset4(void *dst, int val, size_t len)
         return;
     switch (len % 4)
     {
-        case 0:
-            [[fallthrough]];
-            do {    *_p++ = _val;
+        case 0: do {    *_p++ = _val;
 			[[fallthrough]];
         case 3:         *_p++ = _val;
 			[[fallthrough]];
