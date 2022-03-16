@@ -781,7 +781,7 @@ void SimplifyModel (void)
 				{
 					for (n = 0; n < sequence[i].numframes; n++)
 					{
-						float v;
+						float v = 0;
 						switch(k)
 						{
 						case 0: 
@@ -1580,7 +1580,7 @@ void ResizeTexture( s_texture_t *ptexture )
 void Grab_Skin ( s_texture_t *ptexture )
 {
 	char	file1[1024];
-	int		time1;
+	int		time1 = 0;
 
 	sprintf (file1, "%s/%s", cdpartial, ptexture->name);
 	ExpandPathAndArchive (file1);

@@ -211,7 +211,7 @@ int BuildTris (s_trianglevert_t (*x)[3], s_mesh_t *y, byte **ppdata )
 {
 	int		i, j, k, m;
 	int		startv;
-	int		len, bestlen, besttype;
+	int		len, bestlen, besttype = 0;
 	int		bestverts[MAXSTUDIOTRIANGLES];
 	int		besttris[MAXSTUDIOTRIANGLES];
 	int		peak[MAXSTUDIOTRIANGLES];

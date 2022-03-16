@@ -153,7 +153,7 @@ int PROC_GetSpeed(void)
 int PROC_IsMMX(void)
 {
     int retval = 1;
-    DWORD RegEDX;
+    DWORD RegEDX = 0;
 
     __try
 	{

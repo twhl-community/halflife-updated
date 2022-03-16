@@ -146,24 +146,21 @@ AllocTriangulation
 */
 triangulation_t	*AllocTriangulation (dplane_t *plane)
 {
-	triangulation_t	*t = NULL;
-
-
-    HANDLE h;
-	if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, sizeof(triangulation_t) ); h != nullptr )
+	if ( HANDLE h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, sizeof(triangulation_t) ); h != nullptr )
 	{
-		t = reinterpret_cast<triangulation_t*>(GlobalLock( h ));
+		if (auto t = reinterpret_cast<triangulation_t*>(GlobalLock(h)); t != nullptr)
+		{
+			t->numpoints = 0;
+			t->numedges = 0;
+			t->numtris = 0;
 
-		t->numpoints = 0;
-		t->numedges = 0;
-		t->numtris = 0;
+			t->plane = plane;
 
-		t->plane = plane;
+			return t;
+		}
 	}
-	else
-		Error("Cannot alloc triangulation memory!");
 
-	return t;
+	Error("Cannot alloc triangulation memory!");
 }
 
 /*
@@ -244,7 +241,7 @@ TriEdge_r
 */
 void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
-	int		i, bestp;
+	int		i, bestp = 0;
 	vec3_t	v1, v2;
 	vec_t	*p0, *p1, *p;
 	vec_t	best, ang;
