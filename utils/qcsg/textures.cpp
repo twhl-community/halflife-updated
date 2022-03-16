@@ -8,6 +8,7 @@
 *
 ****/
 
+#include <chrono>
 
 #include "csg.h"
 
@@ -279,12 +280,14 @@ WriteMiptex
 */
 void WriteMiptex(void)
 {
+	using clock = std::chrono::high_resolution_clock;
+
 	int		i, len, texsize, totaltexsize = 0;
 	byte	*data;
 	dmiptexlump_t	*l;
 	char	*path;
 	char	fullpath[1024];
-	int		start;
+	clock::time_point start;
 
 	texdatasize = 0;
 
@@ -301,15 +304,15 @@ void WriteMiptex(void)
 	
 	strcpy(fullpath, path);
 
-	start = GetTickCount();
+	start = clock::now();
 	{
 		if (!TEX_InitFromWad (fullpath))
 			return;
 		AddAnimatingTextures ();
 	}
-	qprintf( "TEX_InitFromWad & AddAnimatingTextures elapsed time = %ldms\n", GetTickCount()-start );
+	qprintf("TEX_InitFromWad & AddAnimatingTextures elapsed time = %ldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(clock::now() - start).count());
 
-	start = GetTickCount();
+	start = clock::now();
 	{
 		for (i=0; i<nummiptex; i++ )
 		{
@@ -322,9 +325,9 @@ void WriteMiptex(void)
 			}
 		}
 	}
-	qprintf( "FindTextures elapsed time = %ldms\n", GetTickCount()-start );
+	qprintf("FindTextures elapsed time = %ldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(clock::now() - start).count());
 
-	start = GetTickCount();
+	start = clock::now();
 	{
 		int			i;
 		texinfo_t	*tx = texinfo;
@@ -342,9 +345,9 @@ void WriteMiptex(void)
 			free( miptex_name );
 		}
 	}
-	qprintf( "qsort(miptex) elapsed time = %ldms\n", GetTickCount()-start );
+	qprintf("qsort(miptex) elapsed time = %ldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(clock::now() - start).count());
 
-	start = GetTickCount();
+	start = clock::now();
 	{
 		// Now setup to get the miptex data (or just the headers if using -wadtextures) from the wadfile
 		l = (dmiptexlump_t *)dtexdata;
@@ -368,7 +371,7 @@ void WriteMiptex(void)
 		}
 		texdatasize = data - dtexdata;
 	}
-	qprintf( "LoadLump() elapsed time = %ldms\n", GetTickCount()-start );
+	qprintf("LoadLump() elapsed time = %ldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(clock::now() - start).count());
 }
 
 //==========================================================================
