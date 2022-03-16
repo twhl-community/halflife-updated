@@ -8,7 +8,7 @@ projects.sln
 utils.sln
   Solution file containing projects for the utilities.
   Special user interaction is required in order to compile a share of the
-  projects, see "Installing GLUT and GLAUX" bellow.
+  projects, see "Installing SDL2" bellow.
   Special user interaction is also required for the smdlexp project, see
   "smdlexp project" bellow.
   The serverctrl project is problematic, see "serverctrl project" bellow.
@@ -17,6 +17,7 @@ utils.sln
 [other required files]
 
 
+<<<<<<< Updated upstream
 
 Installing GLUT and GLAUX
 =========================
@@ -60,7 +61,15 @@ TODO
 In the future the projects using GLUT and GLAUX could be ported to use the SDL2
 library shipped with the SDK, this should be fairly easy, however this might
 be beyond the scope of the main repository.
+=======
+Installing SDL2 library:
+-------------------------
 
+Required by: mdlviewer, qbsp2, qcsg
+>>>>>>> Stashed changes
+
+SDL2(specifically SDL 2.0.0) is required for these projects.
+SDL2.lib contained in this repository is used to link with it, while the executables need the SDL2.dll file from the game installation in order to run. 
 
 
 Other
