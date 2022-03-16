@@ -1323,7 +1323,7 @@ void TextureCoordRanges( s_mesh_t *pmesh, s_texture_t *ptexture  )
 		{
 			float min_u = 10;
 			float max_u = -10;
-			float k_max_u, n_min_u;
+			float k_max_u = max_u, n_min_u = min_u;
 			k = -1;
 			n = -1;
 			for (i=0 ; i<pmesh->numtris ; i++) 
@@ -1356,7 +1356,7 @@ void TextureCoordRanges( s_mesh_t *pmesh, s_texture_t *ptexture  )
 		{
 			float min_v = 10;
 			float max_v = -10;
-			float k_max_v, n_min_v;
+			float k_max_v = max_v, n_min_v = min_v;
 			k = -1;
 			n = -1;
 			for (i=0 ; i<pmesh->numtris ; i++) 
@@ -1585,7 +1585,7 @@ void Grab_Skin ( s_texture_t *ptexture )
 	sprintf (file1, "%s/%s", cdpartial, ptexture->name);
 	ExpandPathAndArchive (file1);
 
-	if (cdtextureset)
+	if (cdtextureset > 0)
 	{
 		int i;
 		for (i = 0; i < cdtextureset; i++)

@@ -280,6 +280,8 @@ void	ClipWinding (winding_t *in, vec3_t normal, vec_t dist,
 	winding_t	*f, *b;
 	int		maxpts;
 	
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 // determine sides for each point
@@ -393,6 +395,8 @@ void	ClipWindingNoCopy (winding_t *in, vec3_t normal, vec_t dist,
 	winding_t	*f, *b;
 	int		maxpts;
 	
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 // determine sides for each point
@@ -504,6 +508,8 @@ winding_t	*ChopWindingNoFree (winding_t *in, vec3_t normal, vec_t dist)
 	winding_t	*f;
 	int		maxpts;
 
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 // determine sides for each point

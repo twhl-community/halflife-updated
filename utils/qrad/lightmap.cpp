@@ -297,25 +297,24 @@ TriangulatePoints
 */
 void TriangulatePoints (triangulation_t *trian)
 {
-	vec_t	d, bestd;
-	vec3_t	v1;
-	int		bp1, bp2, i, j;
-	vec_t	*p1, *p2;
-	triedge_t	*e, *e2;
-
 	if (trian->numpoints < 2)
 		return;
 
+	vec3_t v1;
+	int bp1 = 0, bp2 = 1;
+	vec_t *p1, *p2;
+	triedge_t *e, *e2;
+
 	// find the two closest points
-	bestd = 9999;
-	for (i=0 ; i<trian->numpoints ; i++)
+	vec_t bestd = 9999;
+	for (int i=0 ; i<trian->numpoints ; i++)
 	{
 		p1 = trian->points[i]->origin;
-		for (j=i+1 ; j<trian->numpoints ; j++)
+		for (int j=i+1 ; j<trian->numpoints ; j++)
 		{
 			p2 = trian->points[j]->origin;
 			VectorSubtract (p2, p1, v1);
-			d = (float)VectorLength (v1);
+			const vec_t d = (float)VectorLength (v1);
 			if (d < bestd)
 			{
 				bestd = d;

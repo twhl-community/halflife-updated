@@ -186,6 +186,8 @@ winding_t *ClipWinding (winding_t *in, dplane_t *split, qboolean keepon)
 	winding_t	*neww;
 	int		maxpts;
 	
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 	// determine sides for each point
@@ -296,6 +298,8 @@ void	DivideWinding (winding_t *in, dplane_t *split, winding_t **front, winding_t
 	winding_t	*f, *b;
 	int		maxpts;
 	
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 // determine sides for each point
@@ -427,6 +431,9 @@ void SplitFaceTmp( face_t *in, dplane_t *split, face_t **front, face_t **back )
 	
 	if (in->numpoints < 0)
 		Error ("SplitFace: freed face");
+
+	sides[0] = SIDE_FRONT;
+	dists[0] = 0;
 	counts[0] = counts[1] = counts[2] = 0;
 
 // determine sides for each point
