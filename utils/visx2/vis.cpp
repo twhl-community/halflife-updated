@@ -378,8 +378,8 @@ void LoadPortals (char *name)
 			Error ("LoadPortals: reading portal %i", i);
 		if (numpoints > MAX_POINTS_ON_WINDING)
 			Error ("LoadPortals: portal %i has too many points", i);
-		if ( (unsigned)leafnums[0] > portalleafs
-		|| (unsigned)leafnums[1] > portalleafs)
+		if ((leafnums[0] < 0 || leafnums[0] > portalleafs)
+			|| (leafnums[1] < 0 || leafnums[1] > portalleafs))
 			Error ("LoadPortals: reading portal %i", i);
 		
 		w = p->winding = NewWinding (numpoints);
