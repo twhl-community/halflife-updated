@@ -3369,7 +3369,7 @@ int main (int argc, char **argv)
 					strcpy ( sourcetexture[numrep], argv[i]);
 					printf ("Replaceing %s with %s\n", sourcetexture[numrep], defaulttexture[numrep] );
 				}
-				printf ("Using default texture: %s\n", defaulttexture);
+				printf ("Using default texture: %s\n", defaulttexture[numrep]);
 				numrep++;
 				break;
 			case 'r':
