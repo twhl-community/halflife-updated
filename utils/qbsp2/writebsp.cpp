@@ -99,9 +99,10 @@ void WriteDrawLeaf (node_t *node)
 		f = *fp;
 		do
 		{
-			dmarksurfaces[nummarksurfaces] =  f->outputnumber;
 			if (nummarksurfaces >= MAX_MAP_MARKSURFACES)
-				Error ("nummarksurfaces == MAX_MAP_MARKSURFACES");
+				Error("nummarksurfaces == MAX_MAP_MARKSURFACES");
+
+			dmarksurfaces[nummarksurfaces] =  f->outputnumber;
 			nummarksurfaces++;
 			f=f->original;		// grab tjunction split faces
 		} while (f);
