@@ -1258,7 +1258,6 @@ void adjust_vertex( float *org )
 
 void scale_vertex( float *org )
 {
-	float tmp = org[0];
 	org[0] = org[0] * scale_up;
 	org[1] = org[1] * scale_up;
 	org[2] = org[2] * scale_up;
@@ -2261,8 +2260,6 @@ void Cmd_Bodygroup( )
 
 void Cmd_Body( )
 {
-	int is_started = 0;
-
 	if (!GetToken(false)) return;
 
 	if (numbodyparts == 0) {

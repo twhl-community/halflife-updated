@@ -147,7 +147,7 @@ void ReadLightFile (char *filename)
 	FILE	*f;
 	char	scan[128];
 	short	argCnt;
-	int		i = 1.0, j, file_texlights = 0;
+	int		j, file_texlights = 0;
 
 	f = fopen (filename, "r");
 	if (!f)
@@ -293,8 +293,6 @@ void BaseLightForFace( dface_t *f, vec3_t light, vec3_t /*reflectivity*/ )
 	miptex_t	*mt;
 	int			ofs;
 
-	long		samples = 0;
-
 	//
 	// check for light emited by texture
 	//
@@ -306,6 +304,7 @@ void BaseLightForFace( dface_t *f, vec3_t light, vec3_t /*reflectivity*/ )
 	LightForTexture (mt->name, light);
 
 #ifdef TEXTURE_REFLECTIVITY
+	long samples = 0;
 	long sum[3];
 
 	// Average up the texture pixels' color for an average reflectivity
@@ -399,7 +398,7 @@ void MakePatchForFace (int fn, winding_t *w)
 		for (j=0 ; j<f->numedges ; j++)
 		{
 			int edge = dsurfedges[ f->firstedge + j ];
-			int edge2 = dsurfedges[ j==f->numedges-1 ? f->firstedge : f->firstedge + j + 1 ];
+			//int edge2 = dsurfedges[ j==f->numedges-1 ? f->firstedge : f->firstedge + j + 1 ];
 
 			if (edge > 0)
 			{

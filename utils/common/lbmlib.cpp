@@ -367,7 +367,7 @@ int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPal
 	RGBQUAD rgrgbPalette[256];
 	ULONG cbBmpBits;
 	BYTE* pbBmpBits;
-	byte  *pb, *pbPal = NULL;
+	byte  *pb;
 	ULONG cbPalBytes;
 	ULONG biTrueWidth;
 

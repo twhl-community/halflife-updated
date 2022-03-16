@@ -123,7 +123,7 @@ QWORD GetRDTSC(void)
 int PROC_GetSpeed(void)
 {
 	QWORD StartClock, ElapClock;
-	DWORD StartTime, times = 0;
+	DWORD StartTime;
 	int RetVal;
 
 	if (!HasTsc())

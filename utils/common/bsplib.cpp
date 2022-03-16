@@ -509,7 +509,7 @@ Dumps info about current file
 */
 void PrintBSPFileSizes (void)
 {
-	int	numtextures = texdatasize ? ((dmiptexlump_t*)dtexdata)->nummiptex : 0;
+	//int	numtextures = texdatasize ? ((dmiptexlump_t*)dtexdata)->nummiptex : 0;
 	int	totalmemory = 0;
 
 	printf("\n");
