@@ -21,7 +21,6 @@ Installing SDL2 library:
 -------------------------
 
 Required by: mdlviewer, qbsp2, qcsg
->>>>>>> Stashed changes
 
 SDL2(specifically SDL 2.0.0) is required for these projects.
 SDL2.lib contained in this repository is used to link with it, while the executables need the SDL2.dll file from the game installation in order to run. 
