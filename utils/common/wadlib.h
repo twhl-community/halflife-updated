@@ -42,7 +42,6 @@ typedef struct
 
 extern	lumpinfo_t		*lumpinfo;		// location of each lump on disk
 extern	int				numlumps;
-extern	wadinfo_t		header;
 
 void	W_OpenWad (char *filename);
 int		W_CheckNumForName (char *name);

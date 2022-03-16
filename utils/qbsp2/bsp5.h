@@ -237,7 +237,7 @@ void qprintf (char *fmt, ...);	// only prints if verbose
 extern	int		valid;
 
 extern	char	portfilename[1024];
-extern	char	bspfilename[1024];
+extern	char	g_bspfilename[1024];
 extern	char	pointfilename[1024];
 
 extern	qboolean	worldmodel;

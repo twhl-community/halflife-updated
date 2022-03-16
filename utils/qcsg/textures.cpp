@@ -213,10 +213,10 @@ int LoadLump (lumpinfo_t *source, byte *dest, int *texsize)
 			// Just read the miptex header and zero out the data offsets.
 			// We will load the entire texture from the WAD at engine runtime
 			int			i;
-			miptex_t	*miptex = (miptex_t *)dest;
+			miptex_t	*newMiptex = (miptex_t *)dest;
 			SafeRead (texfiles[source->iTexFile], dest, sizeof(miptex_t) );
 			for( i=0; i<MIPLEVELS; i++ )
-				miptex->offsets[i] = 0;
+				newMiptex->offsets[i] = 0;
 			return sizeof(miptex_t);
 		}
 		else
@@ -282,7 +282,7 @@ void WriteMiptex(void)
 {
 	using clock = std::chrono::high_resolution_clock;
 
-	int		i, len, texsize, totaltexsize = 0;
+	int		len, texsize, totaltexsize = 0;
 	byte	*data;
 	dmiptexlump_t	*l;
 	char	*path;
@@ -314,7 +314,7 @@ void WriteMiptex(void)
 
 	start = clock::now();
 	{
-		for (i=0; i<nummiptex; i++ )
+		for (int i=0; i<nummiptex; i++ )
 		{
 			lumpinfo_t	*found;
 			if ( found = FindTexture( miptex + i ); found != nullptr )
@@ -329,14 +329,13 @@ void WriteMiptex(void)
 
 	start = clock::now();
 	{
-		int			i;
 		texinfo_t	*tx = texinfo;
 
 		// Sort them FIRST by wadfile and THEN by name for most efficient loading in the engine.
 		qsort( (void *)miptex, (size_t)nummiptex, sizeof(miptex[0]), lump_sorter_by_wad_and_name );
 
 		// Sleazy Hack 104 Pt 2 - After sorting the miptex array, reset the texinfos to point to the right miptexs
-		for(i=0; i<numtexinfo; i++, tx++)
+		for(int i=0; i<numtexinfo; i++, tx++)
 		{
 			char *miptex_name = (char *)tx->miptex;
 			tx->miptex = FindMiptex( miptex_name );
@@ -353,7 +352,7 @@ void WriteMiptex(void)
 		l = (dmiptexlump_t *)dtexdata;
 		data = (byte *)&l->dataofs[nummiptex];
 		l->nummiptex = nummiptex;
-		for (i=0 ; i<nummiptex ; i++)
+		for (int i=0 ; i<nummiptex ; i++)
 		{
 			l->dataofs[i] = data - (byte *)l;
 			len = LoadLump (miptex+i, data, &texsize);

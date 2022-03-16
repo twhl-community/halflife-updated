@@ -283,6 +283,6 @@ void FinishBSPFile (void)
 
 	if (verbose)
 		PrintBSPFileSizes ();
-	WriteBSPFile (bspfilename);
+	WriteBSPFile (g_bspfilename);
 }
 

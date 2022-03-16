@@ -26,7 +26,7 @@ qboolean	watervis;
 
 int		subdivide_size = 240;
 
-char	bspfilename[1024];
+char	g_bspfilename[1024];
 char	pointfilename[1024];
 char	portfilename[1024];
 
@@ -770,7 +770,7 @@ ReadSurfs
 surfchain_t	*ReadSurfs (FILE *file)
 {
 	int		r;
-	int		planenum, texinfo, contents, numpoints;
+	int		planenum, texturenum, contents, numpoints;
 	face_t	*f;
 	int		i;
 	double	v[3];
@@ -778,7 +778,7 @@ surfchain_t	*ReadSurfs (FILE *file)
 	// read in the polygons
 	while (1)
 	{
-		r = fscanf (file, "%i %i %i %i\n", &planenum, &texinfo, &contents, &numpoints);
+		r = fscanf(file, "%i %i %i %i\n", &planenum, &texturenum, &contents, &numpoints);
 		if (r == 0 || r == -1)
 			return NULL;
 		if (planenum == -1)	// end of model
@@ -789,13 +789,13 @@ surfchain_t	*ReadSurfs (FILE *file)
 			Error ("ReadSurfs: %i > MAXPOINTS", numpoints);
 		if (planenum > numplanes)
 			Error ("ReadSurfs: %i > numplanes", planenum);
-		if (texinfo > numtexinfo)
-			Error ("ReadSurfs: %i > numtexinfo", texinfo);
+		if (texturenum > numtexinfo)
+			Error("ReadSurfs: %i > numtexinfo", texturenum);
 
 
 		f = AllocFace ();
 		f->planenum = planenum;
-		f->texturenum = texinfo;
+		f->texturenum = texturenum;
 		f->contents = contents;
 		f->numpoints = numpoints;
 		f->next = validfaces[planenum];
@@ -1002,15 +1002,15 @@ int main (int argc, char **argv)
 	ThreadSetDefault ();
 
 	SetQdirFromPath ();	
-	strcpy (bspfilename, ExpandArg(argv[i]));
-	StripExtension (bspfilename);
+	strcpy(g_bspfilename, ExpandArg(argv[i]));
+	StripExtension(g_bspfilename);
 
 //
 // do it!
 //
 	start = I_FloatTime ();
 
-	ProcessFile (bspfilename);
+	ProcessFile(g_bspfilename);
 
 	end = I_FloatTime ();
 	printf ("%5.0f seconds elapsed\n", end-start);

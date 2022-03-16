@@ -53,7 +53,7 @@ char		global_lights[MAX_PATH] = "";
 char		designer_lights[MAX_PATH] = "";
 char		level_lights[MAX_PATH] = "";
 
-char		transferfile[MAX_PATH] = "";
+char		g_transferfile[MAX_PATH] = "";
 char		vismatfile[_MAX_PATH] = "";
 char		incrementfile[_MAX_PATH] = "";
 qboolean	incremental = 0;
@@ -1161,22 +1161,22 @@ readtransfers(char *transferfile, long numpatches)
 
 void MakeAllScales (void)
 {
-	strcpy(transferfile, source);
-	StripExtension( transferfile );
-	DefaultExtension( transferfile, ".r2" );
+	strcpy(g_transferfile, source);
+	StripExtension(g_transferfile);
+	DefaultExtension(g_transferfile, ".r2");
 
 	if ( !incremental
 	  || !IsIncremental(incrementfile)
-	  || (unsigned)readtransfers(transferfile, num_patches) != num_patches )
+	  || (unsigned)readtransfers(g_transferfile, num_patches) != num_patches )
 	{
 		// determine visibility between patches
 		BuildVisMatrix ();
 
 		RunThreadsOn (num_patches, true, MakeScales);
 		if ( incremental )
-			writetransfers(transferfile, num_patches);
+			writetransfers(g_transferfile, num_patches);
 		else
-			unlink(transferfile);
+			unlink(g_transferfile);
 
 		// release visibility matrix
 		FreeVisMatrix ();

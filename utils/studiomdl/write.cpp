@@ -276,7 +276,7 @@ void WriteSequenceInfo( )
 }
 
 
-byte *WriteAnimations( byte *pData, byte *pStart, int group )
+byte *WriteAnimations( byte *pAnimData, byte *pAnimStart, int group )
 {
 	int i, j, k;
 	int	q, n;
@@ -285,19 +285,19 @@ byte *WriteAnimations( byte *pData, byte *pStart, int group )
 	mstudioanimvalue_t	*panimvalue;
 
 	// hack for seqgroup 0
-	// pseqgroup->data = (pData - pStart);
+	// pseqgroup->data = (pAnimData - pAnimStart);
 
 	for (i = 0; i < numseq; i++) 
 	{
 		if (sequence[i].seqgroup == group)
 		{
 			// save animations
-			panim					= (mstudioanim_t *)pData;
-			sequence[i].animindex	= (pData - pStart);
-			pData += sequence[i].numblends * numbones * sizeof( mstudioanim_t );
-			ALIGN( pData );
+			panim = (mstudioanim_t*)pAnimData;
+			sequence[i].animindex = (pAnimData - pAnimStart);
+			pAnimData += sequence[i].numblends * numbones * sizeof(mstudioanim_t);
+			ALIGN(pAnimData);
 			
-			panimvalue					= (mstudioanimvalue_t *)pData;
+			panimvalue = (mstudioanimvalue_t*)pAnimData;
 			for (q = 0; q < sequence[i].numblends; q++)
 			{
 				// save animation value info
@@ -325,12 +325,12 @@ byte *WriteAnimations( byte *pData, byte *pStart, int group )
 				}
 			}
 
-			// printf("raw bone data %d : %s\n", (byte *)panimvalue - pData, sequence[i].name);
-			pData = (byte *)panimvalue;
-			ALIGN( pData );
+			// printf("raw bone data %d : %s\n", (byte *)panimvalue - pAnimData, sequence[i].name);
+			pAnimData = (byte*)panimvalue;
+			ALIGN(pAnimData);
 		}
 	}
-	return pData;
+	return pAnimData;
 }
 	
 void WriteTextures( )

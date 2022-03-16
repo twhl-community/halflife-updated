@@ -1357,7 +1357,6 @@ void BuildFacelights (int facenum)
 	vec3_t		sampled[MAXLIGHTMAPS];
 	lightinfo_t	l;
 	int			i, j, k;
-	sample_t	*s;
 	float		*spot;
 	patch_t		*patch;
 	byte		pvs[(MAX_MAP_LEAFS+7)/8];
@@ -1518,7 +1517,7 @@ void BuildFacelights (int facenum)
 		{
 			if ( f->styles[j] == 0 )
 			{
-				s = facelight[facenum].samples[j];
+				auto s = facelight[facenum].samples[j];
 				for (i=0 ; i<l.numsurfpt ; i++, s++)
 					VectorAdd(s->light, ambient, s->light);
 				break;
@@ -1536,7 +1535,7 @@ void BuildFacelights (int facenum)
 		{
 			if ( f->styles[j] == 0 )
 			{
-				s = facelight[facenum].samples[j];
+				auto s = facelight[facenum].samples[j];
 				for (i=0 ; i<l.numsurfpt ; i++, s++)
 					VectorAdd( s->light, face_patches[facenum]->baselight, s->light ); 
 				break;

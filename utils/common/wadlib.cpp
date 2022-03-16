@@ -38,7 +38,6 @@
 lumpinfo_t		*lumpinfo;		// location of each lump on disk
 int				numlumps;
 
-wadinfo_t		header;
 FILE			*wadhandle;
 
 
@@ -49,6 +48,7 @@ W_OpenWad
 */
 void W_OpenWad (char *filename)
 {
+	wadinfo_t header;
 	lumpinfo_t		*lump_p;
 	int				length;
 	

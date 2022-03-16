@@ -25,10 +25,6 @@
 
 #define FONT_TAG	6  // Font's are the 6th tag after the TYP_LUMPY base ( 64 )...i.e., type == 70
 
-BOOL		bItalic = FALSE;
-BOOL		bBold   = FALSE;
-BOOL		bUnderline = FALSE;
-
 char		fontname[ 256 ];
 int			pointsize[3] = { 9, 11, 15 };
 
@@ -394,6 +390,10 @@ int main(int argc, char* argv[])
 	int		outsize[ 3 ];
 
 	qfont_t *fonts[ 3 ];
+
+	BOOL bItalic = FALSE;
+	BOOL bBold = FALSE;
+	BOOL bUnderline = FALSE;
 
 	strcpy( fontname, DEFAULT_FONT );
 

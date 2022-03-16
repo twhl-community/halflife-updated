@@ -812,9 +812,9 @@ int main (int argc, char **argv)
 	//
 	if (onlyents  && !glview)
 	{
-		char out[1024];
-		sprintf (out, "%s.bsp", source);
-		LoadBSPFile (out);
+		char outFileName[1024];
+		sprintf(outFileName, "%s.bsp", source);
+		LoadBSPFile(outFileName);
 
 		// Get the new entity data from the map file
 		LoadMapFile (name);
@@ -840,15 +840,15 @@ int main (int argc, char **argv)
 
 	for (i=0 ; i<NUM_HULLS ; i++)
 	{
-		char	name[1024];
+		char	hullName[1024];
 
 		if (glview)
-			sprintf (name, "%s.gl%i",source, i);
+			sprintf(hullName, "%s.gl%i", source, i);
 		else
-			sprintf (name, "%s.p%i",source, i);
-		out[i] = fopen (name, "w");
+			sprintf(hullName, "%s.p%i", source, i);
+		out[i] = fopen(hullName, "w");
 		if (!out[i])
-			Error ("Couldn't open %s",name);
+			Error("Couldn't open %s", hullName);
 	}
 
 	ProcessModels ();
