@@ -44,18 +44,17 @@ BaseWindingForPlane
 */
 winding_t *BaseWindingForPlane (dplane_t *p)
 {
-	int		i, x;
-	vec_t	max, v;
 	vec3_t	org, vright, vup;
 	winding_t	*w;
 	vec3_t	temp;
 
 #if 0
 // find the major axis
+	vec_t v;
 
-	max = -BOGUS_RANGE;
-	x = -1;
-	for (i=0 ; i<3; i++)
+	vec_t max = -BOGUS_RANGE;
+	int x = -1;
+	for (int i=0 ; i<3; i++)
 	{
 		v = fabs(p->normal[i]);
 		if (v > max)
@@ -763,7 +762,6 @@ ReadSurfs
 */
 surfchain_t	*ReadSurfs (FILE *file)
 {
-	int		nump;
 	int		r;
 	int		planenum, texinfo, contents, numpoints;
 	face_t	*f;
@@ -815,11 +813,9 @@ ProcessModel
 */
 qboolean ProcessModel (void)
 {
-	char	mod[80];
 	surfchain_t	*surfs;
 	node_t		*nodes;
 	dmodel_t	*model;
-	int			i;
 	int			startleafs;
 
 	surfs = ReadSurfs (polyfiles[0]);

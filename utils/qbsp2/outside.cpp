@@ -61,7 +61,6 @@ WindingCenter
 void	WindingCenter (winding_t *w, vec3_t center)
 {
 	int		i;
-	vec3_t	d1, d2, cross;
 	float	scale;
 
 	VectorCopy (vec3_origin, center);
@@ -81,7 +80,7 @@ portal_t	*prevleaknode;
 FILE	*pointfile, *linefile;
 void MarkLeakTrail (portal_t *n2)
 {
-	int		i, j;
+	int		i;
 	vec3_t	p1, p2, dir;
 	float	len;
 	portal_t *n1;
@@ -288,7 +287,6 @@ FillOutside
 node_t *FillOutside (node_t *node, qboolean leakfile)
 {
 	int			s;
-	vec_t		*v;
 	int			i;
 	qboolean	inside;
 	qboolean	ret;

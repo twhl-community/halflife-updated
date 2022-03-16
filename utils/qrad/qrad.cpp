@@ -147,7 +147,6 @@ void ReadLightFile (char *filename)
 	FILE	*f;
 	char	scan[128];
 	short	argCnt;
-	vec_t	intensity;
 	int		i = 1.0, j, file_texlights = 0;
 
 	f = fopen (filename, "r");
@@ -294,9 +293,7 @@ void BaseLightForFace( dface_t *f, vec3_t light, vec3_t reflectivity )
 	miptex_t	*mt;
 	int			ofs;
 
-	long		sum[3];
 	long		samples = 0;
-	int			x, y, i;
 
 	//
 	// check for light emited by texture
@@ -309,15 +306,17 @@ void BaseLightForFace( dface_t *f, vec3_t light, vec3_t reflectivity )
 	LightForTexture (mt->name, light);
 
 #ifdef TEXTURE_REFLECTIVITY
+	long sum[3];
+
 	// Average up the texture pixels' color for an average reflectivity
-	for ( x = 0; x < ; x++ )
-		for ( y = 0; y < ; y++ )
+	for ( int x = 0; x < ; x++ )
+		for ( int y = 0; y < ; y++ )
 			{
 			samples++;
 			for(i=0; i < 3; i++)
 				sum[i] += mt[][x][y][i] // FIXME later
 			}
-	for(i=0; i < 3; i++)
+	for(int i=0; i < 3; i++)
 		reflectivity[i] = samples ? (BYTE)(sum[i] / samples) : 0;
 #endif
 }
@@ -542,9 +541,8 @@ void	SubdividePatch (patch_t *patch)
 	vec3_t	split;
 	vec_t	dist;
 	vec_t	widest = -1;
-	int		i, j, widest_axis = -1;
+	int		i, widest_axis = -1;
 	int		subdivide_it = 0;
-	vec_t	v;
 	patch_t	*newp;
 
 	w = patch->winding;

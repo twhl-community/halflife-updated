@@ -417,7 +417,6 @@ byte AveragePixels (int count)
 	float 	dr, dg, db;
 	float 	bestdistortion, distortion;
 	int		bestcolor;
-	byte	*pal;
 	
 	vis = 0;
 	r = g = b = 0;
@@ -658,8 +657,6 @@ PALETTE GRABBING
 
 void GrabPalette16( void )
 {
-	int i;
-
 	// Write out palette in 16bit mode
 	*(unsigned short *) lump_p = 256;	// palette size
 	lump_p += sizeof(short);
@@ -690,7 +687,6 @@ void GrabFont( void )
 {
 	int		x, y, y2, xl, x2, yl, xh, yh, i, j;
 	int		index, offset;
-	int		width;
 	int		iCurX;	// current x in destination
 	int		iMaxX;  // max x in destination
 	

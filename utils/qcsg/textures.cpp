@@ -326,7 +326,7 @@ void WriteMiptex(void)
 
 	start = GetTickCount();
 	{
-		int			final_miptex, i;
+		int			i;
 		texinfo_t	*tx = texinfo;
 
 		// Sort them FIRST by wadfile and THEN by name for most efficient loading in the engine.

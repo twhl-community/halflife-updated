@@ -133,10 +133,7 @@ int TexelSize( face_t *f )
 	float		mins, maxs;
 	vec_t		v;
 	int			i, smax, tmax;
-	dplane_t	plane;
-	face_t		*front, *back, *next;
 	texinfo_t	*tex;
-	vec3_t		temp;
 
 // special (non-surface cached) faces don't need subdivision
 	if ( f->texturenum > numtexinfo )

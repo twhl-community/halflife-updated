@@ -268,7 +268,7 @@ returns NULL if the surface list can not be divided any more (a leaf)
 */
 surface_t *SelectPartition (surface_t *surfaces, node_t *node, qboolean usemidsplit)
 {
-	int			i,j;
+	int			i;
 	surface_t	*p, *bestsurface;
 
 	//
@@ -944,7 +944,6 @@ The original surface chain will be completely freed.
 */
 node_t *SolidBSP (surfchain_t *surfhead)
 {
-	int		i;
 	node_t	*headnode;
 	
 	qprintf ("----- SolidBSP -----\n");

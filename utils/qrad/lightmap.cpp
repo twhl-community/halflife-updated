@@ -1286,7 +1286,7 @@ GetPhongNormal( int facenum, vec3_t spot, vec3_t phongnormal )
 			edgeshare_t	*es1 = &edgeshare[abs(e1)];
 			edgeshare_t	*es2 = &edgeshare[abs(e2)];
 			dface_t	*f2;
-			float		a, a1, a2, d1, d2, aa, bb, ab;
+			float		a1, a2, aa, bb, ab;
 
 			if ( es->coplanar && es1->coplanar && es2->coplanar 
 			|| VectorCompare(es->interface_normal, vec3_origin)
@@ -1574,7 +1574,6 @@ PrecompLightmapOffsets()
 {
 int			facenum;
 dface_t		*f;
-patch_t		*patch;
 facelight_t	*fl;
 int			lightstyles;
 

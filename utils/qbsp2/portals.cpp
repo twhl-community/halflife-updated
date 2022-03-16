@@ -281,7 +281,7 @@ void WritePortalFile_r (node_t *node)
 	int		i;	
 	portal_t	*p;
 	winding_t	*w;
-	dplane_t		*pl, plane2;
+	dplane_t	plane2;
 
 	if (!node->contents)
 	{

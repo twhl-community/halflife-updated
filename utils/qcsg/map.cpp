@@ -66,12 +66,7 @@ ParseBrush
 void ParseBrush (entity_t *mapent)
 {
 	brush_t		*b;
-	bface_t		*f, *f2;
-	int			planepts[3][3];
-	vec3_t			t1, t2, t3;
 	int			i,j;
-	vec_t		d;
-	int			planenum;
 	side_t		*side;
 	int			contents;
 

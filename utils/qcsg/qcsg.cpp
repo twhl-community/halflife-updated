@@ -88,9 +88,7 @@ bface_t *ClipFace (brush_t *b, bface_t *f, bface_t **outside,
 {
 	bface_t		*front;
 	winding_t	*fw, *bw;
-	vec_t		d;
 	plane_t		*split;
-	int			i, count[3];
 
 	// handle exact plane matches special
 
@@ -114,8 +112,11 @@ bface_t *ClipFace (brush_t *b, bface_t *f, bface_t **outside,
 
 	split = &mapplanes[splitplane];
 #if 0
-	count[0] = count[1] = count[2] = 0;
-	for (i=0 ; i<f->w->numpoints ; i++)
+	int count[3] = {0, 0, 0};
+
+	vec_t d;
+
+	for (int i=0 ; i<f->w->numpoints ; i++)
 	{
 		d = DotProduct (f->w->p[i], split->normal) - split->dist;
 		if (d < -SPLIT_EPSILON)
@@ -171,7 +172,7 @@ WriteFace
 */
 void WriteFace (int hull, bface_t *f)
 {
-	int		i, j;
+	int		i;
 	winding_t	*w;
 	static	int	level = 128;
 	vec_t		light;
@@ -232,7 +233,6 @@ void SaveOutside (brush_t *b, int hull, bface_t *outside, int mirrorcontents)
 {
 	bface_t	*f , *next, *f2;
 	int		i;
-	int		planenum;
 	vec3_t	temp;
 
 	for (f=outside ; f ; f=next)
@@ -633,7 +633,6 @@ void ProcessModels (void)
 	int		placed;
 	int		first, contents;
 	brush_t	temp;
-	vec3_t	origin;
 
 	for (i=0 ; i<num_entities ; i++)
 	{
@@ -724,9 +723,7 @@ extern char qproject[];
 
 int main (int argc, char **argv)
 {
-	int		i, j;
-	int		hull;
-	entity_t	*ent;
+	int		i;
 	char	source[1024];
 	char	name[1024];
 	double		start, end;
@@ -816,7 +813,6 @@ int main (int argc, char **argv)
 	if (onlyents  && !glview)
 	{
 		char out[1024];
-		int	old_entities;
 		sprintf (out, "%s.bsp", source);
 		LoadBSPFile (out);
 

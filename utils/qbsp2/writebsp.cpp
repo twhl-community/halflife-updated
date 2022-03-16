@@ -153,7 +153,7 @@ void WriteDrawNodes_r (node_t *node)
 {
 	dnode_t	*n;
 	int		i;
-	face_t	*f, *next;
+	face_t	*f;
 
 // emit a node	
 	if (numnodes == MAX_MAP_NODES)
@@ -278,8 +278,6 @@ FinishBSPFile
 */
 void FinishBSPFile (void)
 {
-	int		i;
-
 	qprintf ("--- FinishBSPFile ---\n");
 
 	if (verbose)
