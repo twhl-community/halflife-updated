@@ -126,7 +126,7 @@ portal_t *GetNextPortal (void)
 	
 	for (j=0, tp = portals ; j<numportals*2 ; j++, tp++)
 	{
-		if (tp->nummightsee < min && tp->status == stat_none)
+		if (tp->nummightsee < min && tp->status == vstatus_t::none)
 		{
 			min = tp->nummightsee;
 			p = tp;
@@ -134,7 +134,7 @@ portal_t *GetNextPortal (void)
 	}
 
 	if (p)
-		p->status = stat_working;
+		p->status = vstatus_t::working;
 
 	ThreadUnlock();
 
@@ -225,7 +225,7 @@ void LeafFlow (int leafnum)
 	for (i=0 ; i<leaf->numportals ; i++)
 	{
 		p = leaf->portals[i];
-		if (p->status != stat_done)
+		if (p->status != vstatus_t::done)
 			Error ("portal not done");
 		for (j=0 ; j<bitbytes ; j++)
 			outbuffer[j] |= p->visbits[j];
@@ -281,7 +281,7 @@ void CalcPortalVis (void)
 		for (i=0 ; i<numportals*2 ; i++)
 		{
 			portals[i].visbits = portals[i].mightsee;
-			portals[i].status = stat_done;
+			portals[i].status = vstatus_t::done;
 		}
 		return;
 	}

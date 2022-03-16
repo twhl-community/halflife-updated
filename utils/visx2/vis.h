@@ -42,7 +42,13 @@ winding_t *ClipWinding (winding_t *in, plane_t *split, qboolean keepon);
 winding_t	*CopyWinding (winding_t *w);
 
 
-typedef enum {stat_none, stat_working, stat_done} vstatus_t;
+enum class vstatus_t
+{
+	none,
+	working,
+	done
+};
+
 typedef struct
 {
 	plane_t		plane;	// normal pointing into neighbor

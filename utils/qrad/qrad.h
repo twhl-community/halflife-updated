@@ -32,13 +32,13 @@
 #include <direct.h>
 #include <ctype.h>
 
-typedef enum
+enum class emittype_t
 {
-	emit_surface,
-	emit_point,
-	emit_spotlight,
-	emit_skylight
-} emittype_t;
+	surface,
+	point,
+	spotlight,
+	skylight
+};
 
 
 

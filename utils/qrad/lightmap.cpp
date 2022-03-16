@@ -860,7 +860,7 @@ void CreateDirectLights (void)
 			dl->next = directlights[leafnum];
 			directlights[leafnum] = dl;
 
-			dl->type = emit_surface;
+			dl->type = emittype_t::surface;
 			VectorCopy (p->normal, dl->normal);
 			VectorCopy( p->totallight, dl->intensity );
 			VectorScale( dl->intensity, p->area, dl->intensity );
@@ -936,7 +936,7 @@ void CreateDirectLights (void)
 		{
 			if (!VectorAvg( dl->intensity ))
 				VectorFill( dl->intensity, 500 );
-			dl->type = emit_spotlight;
+			dl->type = emittype_t::spotlight;
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
@@ -1003,7 +1003,7 @@ void CreateDirectLights (void)
 			}
 			if (FloatForKey( e, "_sky" ) || !strcmp(name, "light_environment")) 
 			{
-				dl->type = emit_skylight;
+				dl->type = emittype_t::skylight;
 				dl->stopdot2 = FloatForKey( e, "_sky" ); // hack stopdot2 to a sky key number
 			}
 		}
@@ -1011,10 +1011,10 @@ void CreateDirectLights (void)
 		{
 			if (!VectorAvg( dl->intensity ))
 				VectorFill( dl->intensity, 300 );
-			dl->type = emit_point;
+			dl->type = emittype_t::point;
 		}
 
-		if (dl->type != emit_skylight)
+		if (dl->type != emittype_t::skylight)
 		{
 			l1 = max( dl->intensity[0], max( dl->intensity[1], dl->intensity[2] ) );
 			l1 = l1 * l1 / 10;
@@ -1080,7 +1080,7 @@ void GatherSampleLight (vec3_t pos, byte *pvs, vec3_t normal, vec3_t *sample, by
 			for (; l ; l=l->next)
 			{
 				// skylights work fundamentally differently than normal lights
-				if (l->type == emit_skylight)
+				if (l->type == emittype_t::skylight)
 				{
 					// only allow one of each sky type to hit any given point
 					if (sky_used)
@@ -1113,12 +1113,12 @@ void GatherSampleLight (vec3_t pos, byte *pvs, vec3_t normal, vec3_t *sample, by
 
 					switch (l->type)
 					{
-						case emit_point:
+					case emittype_t::point:
 							ratio = dot / (dist * dist);
 							VectorScale(l->intensity, ratio, add);
 							break;
 
-						case emit_surface:
+						case emittype_t::surface:
 							dot2 = -DotProduct (delta, l->normal);
 							if (dot2 <= ON_EPSILON/10)
 								continue; // behind light surface
@@ -1126,7 +1126,7 @@ void GatherSampleLight (vec3_t pos, byte *pvs, vec3_t normal, vec3_t *sample, by
 							VectorScale(l->intensity, ratio, add);
 							break;
 
-						case emit_spotlight:
+						case emittype_t::spotlight:
 							dot2 = -DotProduct (delta, l->normal);
 							if (dot2 <= l->stopdot2)
 								continue; // outside light cone
@@ -1142,7 +1142,7 @@ void GatherSampleLight (vec3_t pos, byte *pvs, vec3_t normal, vec3_t *sample, by
 
 				if( VectorMaximum( add ) > ( l->style ? coring : 0 ) )
 				{
-					if ( l->type != emit_skylight && TestLine_r (0, pos, l->origin) != CONTENTS_EMPTY )
+					if (l->type != emittype_t::skylight && TestLine_r(0, pos, l->origin) != CONTENTS_EMPTY)
 						continue;	// occluded
 
 
