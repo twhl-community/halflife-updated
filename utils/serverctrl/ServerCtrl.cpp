@@ -15,9 +15,9 @@ static char THIS_FILE[] = __FILE__;
 // CServerCtrlApp
 
 BEGIN_MESSAGE_MAP(CServerCtrlApp, CWinApp)
-	//{{AFX_MSG_MAP(CServerCtrlApp)
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+//{{AFX_MSG_MAP(CServerCtrlApp)
+//}}AFX_MSG
+ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

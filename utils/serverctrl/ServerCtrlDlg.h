@@ -13,39 +13,42 @@
 
 class CServerCtrlDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CServerCtrlDlg( CWnd* pParent = NULL );	// standard constructor
-	~CServerCtrlDlg( void );
+	CServerCtrlDlg(CWnd* pParent = NULL); // standard constructor
+	~CServerCtrlDlg(void);
 
-	void			CloseHandles( void );
+	void CloseHandles(void);
 
-	virtual int		RMLPreIdle(void);
+	virtual int RMLPreIdle(void);
 
-	int				RunModalLoop(DWORD dwFlags);
-	int				DoModal( void );
+	int RunModalLoop(DWORD dwFlags);
+	int DoModal(void);
 
-	void			SetPumpIfQueued( BOOL bValue );
+	void SetPumpIfQueued(BOOL bValue);
 
-	void			RefreshText( void );
+	void RefreshText(void);
 
-	int				ProcessMappedResponse( void );
-	LPVOID			GetMappedBuffer ( HANDLE hfileBuffer );
-	void			ReleaseMappedBuffer ( LPVOID pBuffer );
+	int ProcessMappedResponse(void);
+	LPVOID GetMappedBuffer(HANDLE hfileBuffer);
+	void ReleaseMappedBuffer(LPVOID pBuffer);
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CServerCtrlDlg)
-	enum { IDD = IDD_SERVERCTRL_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	enum
+	{
+		IDD = IDD_SERVERCTRL_DIALOG
+	};
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CServerCtrlDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 
@@ -61,16 +64,15 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
+	PROCESS_INFORMATION PI; // Information about the HLDS process ( mostly the HANDLE )
+	HANDLE m_hMappedFile;	// Shared file for sending/receiving commands to HLDS
+	HANDLE m_hSend;			// Event that will be signaled when we have written commands into mapped file
+	HANDLE m_hReceive;		// Engine will set this when it has readied response to our commands
 
-	PROCESS_INFORMATION		PI;								// Information about the HLDS process ( mostly the HANDLE )
-	HANDLE					m_hMappedFile;					// Shared file for sending/receiving commands to HLDS
-	HANDLE					m_hSend;						// Event that will be signaled when we have written commands into mapped file
-	HANDLE					m_hReceive;						// Engine will set this when it has readied response to our commands
+	int m_nPendingRequest; // The last request we issued
+	int m_nPendingLines;   // Number of console lines we want to receive
 
-	int						m_nPendingRequest;				// The last request we issued
-	int						m_nPendingLines;				// Number of console lines we want to receive
-
-	BOOL					m_bOnlyPumpIfMessageInQueue;	// TRUE if we should only go into PumpMessage ( which blocks ) if we have seen a message in the MSG queue using PeekMessage
+	BOOL m_bOnlyPumpIfMessageInQueue; // TRUE if we should only go into PumpMessage ( which blocks ) if we have seen a message in the MSG queue using PeekMessage
 };
 
 //{{AFX_INSERT_LOCATION}}

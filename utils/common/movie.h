@@ -24,7 +24,7 @@ typedef struct
 } movieblockheader_t;
 
 
-typedef struct	
+typedef struct
 {
 	short width;
 	short height;
