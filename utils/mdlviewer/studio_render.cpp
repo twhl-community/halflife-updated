@@ -669,7 +669,7 @@ void StudioModel::DrawPoints ( )
 
 		if (ptexture[pskinref[pmesh->skinref]].flags & STUDIO_NF_CHROME)
 		{
-			while (i = *(ptricmds++))
+			while ((i = *(ptricmds++)) != 0)
 			{
 				if (i < 0)
 				{
@@ -698,7 +698,7 @@ void StudioModel::DrawPoints ( )
 		} 
 		else 
 		{
-			while (i = *(ptricmds++))
+			while ((i = *(ptricmds++)) != 0)
 			{
 				if (i < 0)
 				{

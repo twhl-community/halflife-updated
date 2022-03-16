@@ -150,7 +150,7 @@ triangulation_t	*AllocTriangulation (dplane_t *plane)
 
 
     HANDLE h;
-	if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, sizeof(triangulation_t) ) )
+	if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, sizeof(triangulation_t) ); h != nullptr )
 	{
 		t = reinterpret_cast<triangulation_t*>(GlobalLock( h ));
 
@@ -1042,7 +1042,7 @@ int					l;
 directlight_t		*dl;
 
 for ( l = 0; l < numleafs; l++ )
-	while ( dl = directlights[l] )
+	while ( (dl = directlights[l]) != nullptr )
 	{
 		directlights[l] = dl->next;
 		free(dl);
@@ -1075,7 +1075,7 @@ void GatherSampleLight (vec3_t pos, byte *pvs, vec3_t normal, vec3_t *sample, by
 
 	for (i = 1 ; i<numleafs ; i++)
 	{
-		if ( (l = directlights[i]) && (pvs[ (i-1)>>3] & (1<<((i-1)&7))) )
+		if ( l = directlights[i]; l != nullptr && (pvs[ (i-1)>>3] & (1<<((i-1)&7))) )
 		{
 			for (; l ; l=l->next)
 			{

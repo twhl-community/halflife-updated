@@ -187,7 +187,7 @@ lumpinfo_t *
 FindTexture (lumpinfo_t *source )
 {
 	lumpinfo_t *found = NULL;
-	if ( !( found = reinterpret_cast<lumpinfo_t*>(bsearch( source, (void *)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name ) )) )
+	if ( ( found = reinterpret_cast<lumpinfo_t*>(bsearch( source, (void *)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name ) )) == nullptr)
 		printf ("WARNING: texture %s not found in BSP's wad file list!\n", source->name);
 
 	return found;
@@ -314,7 +314,7 @@ void WriteMiptex(void)
 		for (i=0; i<nummiptex; i++ )
 		{
 			lumpinfo_t	*found;
-			if ( found = FindTexture( miptex + i ) )
+			if ( found = FindTexture( miptex + i ); found != nullptr )
 				miptex[i] = *found;
 			else
 			{

@@ -1106,7 +1106,7 @@ readtransfers(char *transferfile, long numpatches)
 					if ( (bytesread = _read(handle, &patch->numtransfers, sizeof(patch->numtransfers)))
 					  == sizeof(patch->numtransfers) )
 					{
-						if ( patch->transfers = reinterpret_cast<transfer_t*>(calloc(patch->numtransfers, sizeof(patch->transfers[0]))) )
+						if ( patch->transfers = reinterpret_cast<transfer_t*>(calloc(patch->numtransfers, sizeof(patch->transfers[0]))); patch->transfers != nullptr )
 						{
 							totalbytes += bytesread;
 

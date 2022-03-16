@@ -484,7 +484,7 @@ void BuildVisMatrix (void)
 
 	qprintf ("visibility matrix: %5.1f megs\n", c/(1024*1024.0));
 
-    if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, c ) )
+    if ( h = GlobalAlloc( GMEM_FIXED | GMEM_ZEROINIT, c ); h != nullptr )
 		vismatrix = reinterpret_cast<byte*>(GlobalLock( h ));
 	else
 		Error ("vismatrix too big");
