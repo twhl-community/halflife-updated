@@ -17,51 +17,6 @@ utils.sln
 [other required files]
 
 
-<<<<<<< Updated upstream
-
-Installing GLUT and GLAUX
-=========================
-
-Some projects in utils.sln use the GLUT (mdlviwer) and the GLAUX (qbsp2, qcsg)
-libraries, which are not shipped with Visual C++ 2019
-
-Thus you need to install the GLUT and GLAUX libraries manually:
-
-
-Installing GLUT library
------------------------
-
-Required by: mdlviewer
-
-GLUT library is outdated and is not recommended for use anymore. FreeGLUT is recommended since it is the lastest implementation of GLUT.
-
-There are several ways to do this, an example can be found here:
-http://stackoverflow.com/a/10467488
-
-For alternate implementations check the web (i.e. freeglut).
-
-
-Installing GLAUX library:
--------------------------
-
-Required by: qbsp2, qcsg
-
-Obtaining the library:
-http://stackoverflow.com/a/6211119
-
-\Community\VC\Tools\MSVC\14.31.31103\include
-Copy glaux.h into 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\(version)\include\GL\'
-(You might need to create the GL directory.).
-Copy glaux.lib into 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\(version)\lib\'.
-
-
-TODO
-----
-
-In the future the projects using GLUT and GLAUX could be ported to use the SDL2
-library shipped with the SDK, this should be fairly easy, however this might
-be beyond the scope of the main repository.
-=======
 Installing SDL2 library:
 -------------------------
 
