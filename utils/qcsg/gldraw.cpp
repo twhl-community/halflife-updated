@@ -51,6 +51,11 @@ void InitWindow (void)
 	g_GLContext = SDL_GL_CreateContext(g_pWindow);
 
 	SDL_GL_MakeCurrent(g_pWindow, g_GLContext);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearIndex(0);
+	glLoadIdentity();
+	glDrawBuffer(GL_FRONT);
 }
 
 void Draw_ClearWindow (void)
