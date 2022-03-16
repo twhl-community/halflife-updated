@@ -214,7 +214,7 @@ int main (int argc, char **argv)
 	LoadBSPFile (source);
 	LoadEntities ();
 		
-	MakeTnodes (&dmodels[0]);
+	MakeTnodes ();
 
 	LightWorld ();
 

@@ -610,7 +610,7 @@ void SimpleFlood (portal_t *srcportal, int leafnum, byte *portalsee, int *c_leaf
 BasePortalVis
 ==============
 */
-void BasePortalVis (int threadnum)
+void BasePortalVis (int /*threadnum*/)
 {
 	int			i, j, k;
 	portal_t	*tp, *p;

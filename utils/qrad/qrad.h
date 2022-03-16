@@ -137,7 +137,7 @@ extern  float	gamma;
 extern	float	indirect_sun;
 extern	float	smoothing_threshold;
 
-void MakeTnodes (dmodel_t *bm);
+void MakeTnodes ();
 void PairEdges (void);
 qboolean IsIncremental(char *filename);
 int SaveIncremental(char *filename);

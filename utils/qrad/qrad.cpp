@@ -287,7 +287,7 @@ winding_t	*WindingFromFace (dface_t *f)
 BaseLightForFace
 =============
 */
-void BaseLightForFace( dface_t *f, vec3_t light, vec3_t reflectivity )
+void BaseLightForFace( dface_t *f, vec3_t light, vec3_t /*reflectivity*/ )
 {
 	texinfo_t	*tx;
 	miptex_t	*mt;
@@ -684,7 +684,7 @@ MakeScales
 */
 int	total_transfer;
 
-void MakeScales (int threadnum)
+void MakeScales (int /*threadnum*/)
 {
 	int		i;
 	unsigned j;
@@ -951,7 +951,7 @@ Get light from other patches
   Run multi-threaded
 =============
 */
-void GatherLight (int threadnum)
+void GatherLight (int /*threadnum*/)
 {
 	int			j, k;
 	transfer_t	*trans;
@@ -1198,7 +1198,7 @@ void RadWorld (void)
 
 	MakeBackplanes ();
 	MakeParents (0, -1);
-	MakeTnodes (&dmodels[0]);
+	MakeTnodes ();
 
 	// turn each face into a single patch
 	MakePatches ();

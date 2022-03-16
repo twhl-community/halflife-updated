@@ -83,7 +83,7 @@ Precedence is necesary to handle overlapping coplanar faces.
 =================
 */
 #define	SPLIT_EPSILON	0.3
-bface_t *ClipFace (brush_t *b, bface_t *f, bface_t **outside,
+bface_t *ClipFace (brush_t */*b*/, bface_t *f, bface_t **outside,
 				 int splitplane, qboolean precedence)
 {
 	bface_t		*front;

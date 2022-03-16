@@ -37,7 +37,7 @@ qboolean TestLine (vec3_t start, vec3_t stop);
 void LightFace (int surfnum);
 void LightLeaf (dleaf_t *leaf);
 
-void MakeTnodes (dmodel_t *bm);
+void MakeTnodes ();
 
 extern	float		scaledist;
 extern	float		scalecos;

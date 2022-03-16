@@ -144,7 +144,7 @@ void SubdivideFaces (surface_t *surfhead);
 
 surfchain_t *GatherNodeFaces (node_t *headnode);
 
-void MakeFaceEdges (node_t *headnode);
+void MakeFaceEdges ();
 int GetEdge(vec3_t p1, vec3_t p2, face_t* f);
 
 //=============================================================================
@@ -199,13 +199,11 @@ void FinishBSPFile (void);
 extern	vec3_t	draw_mins, draw_maxs;
 
 void Draw_ClearBounds (void);
-void Draw_AddToBounds (vec3_t v);
 void Draw_DrawFace (face_t *f);
 void Draw_ClearWindow (void);
 void Draw_SetRed (void);
 void Draw_SetGrey (void);
 void Draw_SetBlack (void);
-void DrawPoint (vec3_t v);
 
 void Draw_SetColor (int c);
 void SetColor (int c);
@@ -213,7 +211,6 @@ void DrawPortal (portal_t *p);
 void DrawLeaf (node_t *l, int color);
 
 void DrawWinding (winding_t *w);
-void DrawTri (vec3_t p1, vec3_t p2, vec3_t p3);
 
 //=============================================================================
 

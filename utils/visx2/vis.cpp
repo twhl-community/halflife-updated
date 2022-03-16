@@ -146,7 +146,7 @@ portal_t *GetNextPortal (void)
 LeafThread
 ==============
 */
-void LeafThread (int thread)
+void LeafThread (int /*thread*/)
 {
 	portal_t	*p;
 		

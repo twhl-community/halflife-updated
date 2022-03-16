@@ -459,7 +459,7 @@ void CheckEdges (void)
 MakeFaceEdges
 ================
 */
-void MakeFaceEdges (node_t *headnode)
+void MakeFaceEdges ()
 {
 	InitHash ();
 	c_tryedges = 0;

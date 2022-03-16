@@ -129,7 +129,7 @@ void pan(int x, int y)
     //glutPostRedisplay();
 }
 
-void zoom(int x, int y) 
+void zoom(int x, int /*y*/)
 {
     transz +=  (x-ox)/20.;
     ox = x;
@@ -233,7 +233,7 @@ void reshape(int w, int h)
 }
 
 /*ARGSUSED1*/
-void key(unsigned char key, int x, int y) 
+void key(unsigned char key, int /*x*/, int /*y*/)
 {
     switch(key) 
 	{

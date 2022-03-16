@@ -40,8 +40,6 @@
 
 static int force_powerof2_textures = 0;
 
-void Sys_Error (char *error, ...) {};
-
 void clip_rotations( vec3_t rot );
 
 #define strcpyn( a, b ) strncpy( a, b, sizeof( a ) )
@@ -2449,7 +2447,7 @@ void Option_Animation ( char *name, s_animation_t *panim )
 }
 
 
-int Option_Deform ( s_sequence_t *psequence )
+int Option_Deform ( s_sequence_t */*psequence*/ )
 {
 	return 0;
 }

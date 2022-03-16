@@ -853,7 +853,7 @@ qboolean ProcessModel (void)
 	// fix tjunctions
 	tjunc (nodes);
 
-	MakeFaceEdges (nodes);
+	MakeFaceEdges ();
 
 	// emit the faces for the bsp file
 	model->headnode[0] = numnodes;

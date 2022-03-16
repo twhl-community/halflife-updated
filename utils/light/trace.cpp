@@ -64,7 +64,7 @@ MakeTnodes
 Loads the node structure out of a .bsp file to be used for light occlusion
 =============
 */
-void MakeTnodes (dmodel_t *bm)
+void MakeTnodes ()
 {
 	if (!numnodes)
 		Error ("Map has no nodes\n");

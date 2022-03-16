@@ -165,7 +165,7 @@ BuildVisLeafs
   This is run by multiple threads
 ===========
 */
-void BuildVisLeafs (int threadnum)
+void BuildVisLeafs (int /*threadnum*/)
 {
 	int		i;
 	int		lface, facenum, facenum2;

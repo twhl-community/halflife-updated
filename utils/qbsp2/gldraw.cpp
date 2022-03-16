@@ -22,10 +22,6 @@ void Draw_ClearBounds (void)
 {
 }
 
-void Draw_AddToBounds (vec3_t v)
-{
-}
-
 void Draw_DrawFace (face_t *f)
 {
 	int		i;
@@ -153,11 +149,7 @@ void Draw_SetBlack (void)
 	glColor3f (0,0,0);
 }
 
-void DrawPoint (vec3_t v)
-{
-}
-
-void DrawLeaf (node_t *l, int color)
+void DrawLeaf (node_t */*l*/, int /*color*/)
 {
 }
 
@@ -173,10 +165,6 @@ void DrawWinding (winding_t *w)
 		glVertex3f (w->points[i][0], w->points[i][1], w->points[i][2]);
 	glEnd ();
 	glFlush ();
-}
-
-void DrawTri (vec3_t p1, vec3_t p2, vec3_t p3)
-{
 }
 
 void DrawPortal (portal_t *portal)

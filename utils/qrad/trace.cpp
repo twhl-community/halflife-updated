@@ -72,7 +72,7 @@ MakeTnodes
 Loads the node structure out of a .bsp file to be used for light occlusion
 =============
 */
-void MakeTnodes (dmodel_t *bm)
+void MakeTnodes ()
 {
 	// 32 byte align the structs
 	tnodes = reinterpret_cast<tnode_t*>(calloc( (numnodes+1), sizeof(tnode_t)));
