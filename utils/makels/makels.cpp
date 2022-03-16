@@ -168,6 +168,6 @@ write_error:
 
 	CloseHandle(hScriptFile);
 	free(pszdir);
-	exit(0);
+
 	return 0;
 }

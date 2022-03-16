@@ -511,7 +511,6 @@ int RankForContents (int contents)
 	default:
 		Error ("RankForContents: bad contents %i", contents);
 	}
-	return -1;
 }
 
 int ContentsForRank (int rank)
@@ -535,7 +534,6 @@ int ContentsForRank (int rank)
 	default:
 		Error ("ContentsForRank: bad rank %i", rank);
 	}
-	return -1;
 }
 
 /*

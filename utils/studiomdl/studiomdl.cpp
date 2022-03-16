@@ -2054,7 +2054,6 @@ int Grab_Nodes( s_node_t *pnodes )
 		}
 	}
 	Error( "Unexpected EOF at line %d\n", linecount );
-	return 0;
 }
 
 

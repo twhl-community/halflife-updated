@@ -46,8 +46,6 @@ winding_t *AllocStackWinding (pstack_t *stack)
 	}
 
 	Error ("AllocStackWinding: failed");
-
-	return NULL;
 }
 
 void FreeStackWinding (winding_t *w, pstack_t *stack)
