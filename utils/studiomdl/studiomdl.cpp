@@ -3417,7 +3417,7 @@ int main (int argc, char **argv)
 //
 	strcpy (path, argv[i]);
 	DefaultExtension (path, ".qc");
-	// SetQdirFromPath (path);
+	// SetQdirFromPath ();
 	LoadScriptFile (path);
 	
 //

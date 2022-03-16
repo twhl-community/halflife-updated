@@ -601,7 +601,7 @@ int main (int argc, char **argv)
 			break;
 	}
 
-	// SetQdirFromPath (argv[i]);
+	// SetQdirFromPath ();
 	ExtractFilePath (argv[i], spritedir);	// chop the filename
 
 //

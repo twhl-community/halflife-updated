@@ -798,7 +798,7 @@ int main (int argc, char **argv)
 	CheckHullFile( hullfile, qhullfile );
 
 	ThreadSetDefault ();
-	SetQdirFromPath (argv[i]);
+	SetQdirFromPath ();
 
 	strcpy (source, ExpandArg (argv[i]));
 	COM_FixSlashes(source);

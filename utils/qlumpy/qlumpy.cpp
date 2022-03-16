@@ -422,7 +422,7 @@ int main (int argc, char **argv)
 			strcat (szTemp, pszPath);
 			pszPath = szTemp;
 		}
-		SetQdirFromPath(pszPath);
+		SetQdirFromPath();
 		ProcessLumpyScript(pszPath);
 	}
 		

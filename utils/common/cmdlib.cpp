@@ -107,10 +107,8 @@ char		qproject[ 1024 ]={'\0'};
 char		qdir[1024]={'\0'};
 char		gamedir[1024]={'\0'};
 
-void SetQdirFromPath(const char* path)
+void SetQdirFromPath()
 {
-#ifndef OLD_BOGUS_PATH_CODE
-
 	if ( qproject[0]=='\0' )
 		{
 		if ( getenv("QPROJECT") )
@@ -131,67 +129,6 @@ void SetQdirFromPath(const char* path)
 	strcat( qdir, qproject );
 	strcpy( gamedir, qdir );
 	strcat( gamedir, "\\valve\\" );
-
-#else
-	char	temp[1024];
-	const char* c;
-
-	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
-	{	// path is partial
-		Q_getwd (temp);
-		strcat (temp, path);
-		path = temp;
-	}
-
-// search for "quake" or quiver in path
-	if( !qproject[0] ) {
-		char *pszProj;
-
-		pszProj = getenv("QPROJECT");
-
-		if (pszProj != NULL)
-			strcpy(qproject, pszProj);
-		else
-			strcpy(qproject, "quiver");
-	}
-
-try_again:
-
-	for (c=path ; *c ; c++)
-	{
-		int iSize = 0;
-
-		if (!Q_strncasecmp( c, qproject, strlen( qproject ) ) )
-			iSize = strlen( qproject ) + 1;
-
-		if (iSize > 0) 
-		{
-			strncpy (qdir, path, c + iSize - path);
-			printf ("qdir: %s\n", qdir);
-			c += iSize;
-			while (*c)
-			{
-				if (*c == '/' || *c == '\\')
-				{
-					strncpy (gamedir, path, c+1-path);
-					printf ("gamedir: %s\n", gamedir);
-					return;
-				}
-				c++;
-			}
-			Error ("No gamedir in %s", path);
-			return;
-		}
-	}
-
-	if (!strcmp(qproject, "quiver"))
-	{
-		strcpy(qproject, "prospero");
-		goto try_again;
-	}
-
-	Error ("SetQdirFromPath: no '%s' in %s", qproject, path);
-#endif
 }
 
 
