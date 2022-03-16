@@ -2072,7 +2072,7 @@ void Grab_Studio ( s_model_t *pmodel )
 	printf ("grabbing %s\n", filename);
 
 	if ((input = fopen(filename, "r")) == 0) {
-		fprintf(stderr,"reader: could not open file '%s'\n", filename);
+		Error("reader: could not open file '%s'\n", filename);
 	}
 	linecount = 0;
 
