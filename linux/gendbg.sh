@@ -1,11 +1,5 @@
 #!/bin/bash
 
-UNAME=`uname`
-if [ "$UNAME" == "Darwin" ]; then
-	dsymutil $1
-	exit 0;
-fi
-
 OBJCOPY=objcopy
 
 function usage {
