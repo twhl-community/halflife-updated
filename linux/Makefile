@@ -26,38 +26,10 @@ BUILD_OBJ_DIR=$(BUILD_DIR)/obj
 ARCH=i386
 ELF-GC-DYNSTR=./elf-gc-dynstr
 
-ifeq ($(OS),Linux)
-	CPLUS="g++ -m32"
-	CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstdc++ -ldl -lpthread
-endif
 
-ifeq ($(OS),Darwin)
-	OSXVER := $(shell sw_vers -productVersion)
-	DEVELOPER_DIR := $(shell /usr/bin/xcode-select -print-path)
-	ifeq (,$(findstring 10.7, $(OSXVER))) 
-		BUILDING_ON_LION := 0
-		COMPILER_BIN_DIR := $(DEVELOPER_DIR)/usr/bin
-		SDK_DIR := $(DEVELOPER_DIR)/SDKs
-	else
-		BUILDING_ON_LION := 1
-		COMPILER_BIN_DIR := $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/bin
-		SDK_DIR := $(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs
-	endif
+CPLUS="g++ -m32"
+CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstdc++ -ldl -lpthread
 
-	#SDKROOT ?= $(SDK_DIR)/MacOSX10.6.sdk
-	SDKROOT ?= $(SDK_DIR)/MacOSX10.8.sdk
-
-	ARCH_FLAGS ?= -arch i386 -m32 -march=prescott -gdwarf-2 -g2  -Wno-typedef-redefinition -momit-leaf-frame-pointer -mtune=core2
-	CPP_LIB=-lstdc++ -lpthread
-
-	ifeq ($(origin AR), default)
-		AR = libtool -static -o
-	endif
-	ifeq ($(origin CXX), default)
-		CPLUS ="$(COMPILER_BIN_DIR)/clang++ -Qunused-arguments -isysroot $(SDKROOT) -mmacosx-version-min=10.5 -fasm-blocks -I$(SDKROOT)/usr/include/malloc $(ARCH_FLAGS)"
-	endif
-	LINK ?= $(CXX)
-endif
 
 CLINK=$(CPLUS)
 
@@ -73,48 +45,25 @@ else
 	ARCH_CFLAGS_AMD64=-m64 -gdwarf-2 -g2 
 endif
 
-ifeq ($(OS),Linux)
-	ARCH_CFLAGS_I486+=-march=pentium-m -mfpmath=387
-	ARCH_CFLAGS_I686+=-march=pentium-m -mfpmath=387
-	ARCH_CFLAGS_AMD+=-march=k6 -mfpmath=387
-endif
-
-ifeq ($(OS),Darwin)
-	# force 387 for FP math so the precision between win32 and linux and osx match
-	ARCH_CFLAGS_I486+=-march=pentium-m -mfpmath=387
-	ARCH_CFLAGS_I686+=-march=pentium-m -mfpmath=387
-	ARCH_CFLAGS_AMD+=-mfpmath=387
-endif
-
+ARCH_CFLAGS_I486+=-march=pentium-m -mfpmath=387
+ARCH_CFLAGS_I686+=-march=pentium-m -mfpmath=387
+ARCH_CFLAGS_AMD+=-march=k6 -mfpmath=387
 
 ARCH_CFLAGS="$(ARCH_CFLAGS_I486)"
 
 BASE_CFLAGS=-std=c++17 -fpermissive -fno-strict-aliasing -DNDEBUG -DPOSIX -D_POSIX -DLINUX -D_LINUX -DGNUC -DNO_MALLOC_OVERRIDE -fno-exceptions -fexpensive-optimizations -Werror=return-type
 BASE_CFLAGS+=-w
 
-ifeq ($(OS),Darwin)
-	BASE_CFLAGS += -DOSX -D_OSX -fvisibility=hidden
+BASE_CFLAGS+= -DLINUX -D_LINUX
+
+SHLIBEXT=so
+SHLIBCFLAGS=
+ifeq "$(CFG)" "release"
+	SHLIBLDFLAGS="-shared -Wl,-Map,$@_map.txt"
 else
-	BASE_CFLAGS+= -DLINUX -D_LINUX
+	SHLIBLDFLAGS="-shared -gdwarf-2 -g2 -Wl,-Map,$@_map.txt"
 endif
 
-ifeq ($(OS),Darwin)
-	SHLIBEXT=dylib
-	SHLIBCFLAGS=
-	ifeq "$(CFG)" "release"
-		SHLIBLDFLAGS="-shared"
-	else
-		SHLIBLDFLAGS="-shared -gdwarf-2 -g2"
-	endif
-else
-	SHLIBEXT=so
-	SHLIBCFLAGS=
-	ifeq "$(CFG)" "release"
-		SHLIBLDFLAGS="-shared -Wl,-Map,$@_map.txt"
-	else
-		SHLIBLDFLAGS="-shared -gdwarf-2 -g2 -Wl,-Map,$@_map.txt"
-	endif
-endif
 AR=ar
 LIBEXT=a
 MAKE+= -j8
