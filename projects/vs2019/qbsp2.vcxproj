@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\utils\common\bsplib.h" />
+    <ClInclude Include="..\..\utils\common\bspfile.h" />
     <ClInclude Include="..\..\utils\common\cmdlib.h" />
     <ClInclude Include="..\..\utils\common\mathlib.h" />
     <ClInclude Include="..\..\utils\common\scriplib.h" />
@@ -19,7 +19,7 @@
     <ClInclude Include="..\..\utils\qbsp2\bsp5.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bsplib.cpp" />
+    <ClCompile Include="..\..\utils\common\bspfile.cpp" />
     <ClCompile Include="..\..\utils\common\cmdlib.cpp" />
     <ClCompile Include="..\..\utils\common\mathlib.cpp" />
     <ClCompile Include="..\..\utils\common\scriplib.cpp" />

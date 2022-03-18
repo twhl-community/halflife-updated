@@ -36,9 +36,6 @@
     <ClInclude Include="..\..\utils\qbsp2\bsp5.h">
       <Filter>Header Files\utils\qbsp2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\utils\common\bsplib.h">
-      <Filter>Header Files\utils\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\utils\common\threads.h">
       <Filter>Header Files\utils\common</Filter>
     </ClInclude>
@@ -51,11 +48,11 @@
     <ClInclude Include="..\..\utils\common\scriplib.h">
       <Filter>Header Files\utils\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\utils\common\bspfile.h">
+      <Filter>Header Files\utils\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\common\bsplib.cpp">
-      <Filter>Source Files\utils\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\utils\common\cmdlib.cpp">
       <Filter>Source Files\utils\common</Filter>
     </ClCompile>
@@ -94,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="..\..\utils\qbsp2\tjunc.cpp">
       <Filter>Source Files\utils\qbsp2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\common\bspfile.cpp">
+      <Filter>Source Files\utils\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

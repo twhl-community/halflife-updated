@@ -10,7 +10,7 @@
 
 #include "cmdlib.h"
 #include "mathlib.h"
-#include "bsplib.h"
+#include "bspfile.h"
 
 void main(int argc, char** argv)
 {
