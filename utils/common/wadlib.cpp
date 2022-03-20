@@ -156,7 +156,6 @@ int W_GetNumForName(char* name)
 		return i;
 
 	Error("W_GetNumForName: %s not found!", name);
-	return -1;
 }
 
 
