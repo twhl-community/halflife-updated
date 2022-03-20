@@ -11,7 +11,8 @@
 !libSDL2-2.0.0.dylib
 !libSDL2-2.0.0.dylib.dSYM/Contents/Resources/DWARF/libsdl2-2.0.0.dylib
 !libSDL2-2.0.so.0
-!libSDL2-2.0.so.0.dbg
+!libSDL2-2.0.so.0.4.1
+!libSDL2-2.0.so.0.4.1.dbg
 !vgui.so
 !release/vgui.dylib
 !release/vgui.so
