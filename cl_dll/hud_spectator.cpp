@@ -806,7 +806,7 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 		break;
 
 	case DRC_CMD_STUFFTEXT:
-		EngineClientCmd(READ_STRING());
+		gEngfuncs.pfnFilteredClientCmd(READ_STRING());
 		break;
 
 	case DRC_CMD_CAMPATH:
