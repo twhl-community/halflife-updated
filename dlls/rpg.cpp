@@ -84,6 +84,15 @@ void CLaserSpot::Precache()
 
 LINK_ENTITY_TO_CLASS(rpg_rocket, CRpgRocket);
 
+CRpgRocket::~CRpgRocket()
+{
+	if (m_pLauncher)
+	{
+		// my launcher is still around, tell it I'm dead.
+		static_cast<CRpg*>(static_cast<CBaseEntity*>(m_pLauncher))->m_cActiveRockets--;
+	}
+}
+
 //=========================================================
 //=========================================================
 CRpgRocket* CRpgRocket::CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher)
@@ -135,12 +144,6 @@ void CRpgRocket::Spawn()
 //=========================================================
 void CRpgRocket::RocketTouch(CBaseEntity* pOther)
 {
-	if (m_pLauncher)
-	{
-		// my launcher is still around, tell it I'm dead.
-		static_cast<CRpg*>(static_cast<CBaseEntity*>(m_pLauncher))->m_cActiveRockets--;
-	}
-
 	STOP_SOUND(edict(), CHAN_VOICE, "weapons/rocket1.wav");
 	ExplodeTouch(pOther);
 }
