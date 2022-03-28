@@ -2325,8 +2325,9 @@ bool CGraph::FLoadGraph(const char* szMapName)
 
 	const std::string fileName{std::string{"maps/graphs/"} + szMapName + ".nod"};
 
-	//Note: no path ID to allow loading graphs from addon content.
-	const auto buffer = FileSystem_LoadFileIntoBuffer(fileName.c_str());
+	//Note: "GAME" path ID to allow loading graphs from addon content.
+	//Do not allow loading from other games since they may have a different graph format.
+	const auto buffer = FileSystem_LoadFileIntoBuffer(fileName.c_str(), "GAME");
 
 	if (buffer.empty())
 	{
