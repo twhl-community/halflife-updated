@@ -936,6 +936,7 @@ public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 	void EXPORT DoorMoveDone();
+	void EXPORT StopMoveSound();
 
 	byte m_bMoveSnd; // sound a door makes while moving
 };
@@ -1083,6 +1084,15 @@ void CMomentaryDoor::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 // The door has reached needed position.
 //
 void CMomentaryDoor::DoorMoveDone()
+{
+	// Stop sounds at the next think, rather than here as another
+	// Use call might immediately follow the end of this move
+	//This think function will be replaced by LinearMove if that happens.
+	SetThink(&CMomentaryDoor::StopMoveSound);
+	pev->nextthink = pev->ltime + 0.1f;
+}
+
+void CMomentaryDoor::StopMoveSound()
 {
 	STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving));
 	EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), 1, ATTN_NORM);
