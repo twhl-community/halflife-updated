@@ -152,6 +152,11 @@ public:
 	CBaseEntity* m_pGoalEnt; // path corner we are heading towards
 	CBaseEntity* m_pLink;	 // used for temporary link-list operations.
 
+	/**
+	*	@brief Entity flags sent to the client in ::AddToFullPack
+	*/
+	byte m_EFlags = 0;
+
 	virtual ~CBaseEntity() {}
 
 	// initialization functions

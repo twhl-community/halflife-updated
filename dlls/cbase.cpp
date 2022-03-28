@@ -617,6 +617,7 @@ CBaseEntity* CBaseEntity::GetNextTarget()
 TYPEDESCRIPTION CBaseEntity::m_SaveData[] =
 	{
 		DEFINE_FIELD(CBaseEntity, m_pGoalEnt, FIELD_CLASSPTR),
+		DEFINE_FIELD(CBaseEntity, m_EFlags, FIELD_CHARACTER),
 
 		DEFINE_FIELD(CBaseEntity, m_pfnThink, FIELD_FUNCTION), // UNDONE: Build table of these!!!
 		DEFINE_FIELD(CBaseEntity, m_pfnTouch, FIELD_FUNCTION),
