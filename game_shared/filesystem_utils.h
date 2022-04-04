@@ -34,20 +34,28 @@ inline IFileSystem* g_pFileSystem = nullptr;
 bool FileSystem_LoadFileSystem();
 void FileSystem_FreeFileSystem();
 
+enum class FileContentFormat
+{
+	Binary = 0,
+	Text = 1
+};
+
 /**
 *	@brief Loads a file from disk into a buffer.
 *
-*	@details If the returned buffer contains text data it is safe to cast the data pointer to char*:
+*	@details If the returned buffer contains text data and @p format is @c FileContentFormat::Text it is safe to cast the data pointer to char*:
 *	@code{.cpp}
 *	auto text = reinterpret_cast<char*>(buffer.data());
 *	@endcode
 *
 *	@param fileName Name of the file to load.
+*	@param format If @c FileContentFormat::Text, a null terminator will be appended.
 *	@param pathID If not null, only looks for the file in this search path.
-*	@return If the file was successfully loaded, the contents of the buffer, with a zero byte (null terminator) appended to it in case it's a text file.
+*	@return If the file was successfully loaded the contents of the buffer,
+*		with a zero byte (null terminator) appended to it if @p format is @c FileContentFormat::Text.
 *		If the file could not be loaded an empty buffer is returned.
 */
-std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, const char* pathID = nullptr);
+std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileContentFormat format, const char* pathID = nullptr);
 
 /**
 *	@brief Writes a text file to disk.
