@@ -77,4 +77,5 @@ using qboolean = int;
 #define V_min(a, b) (((a) < (b)) ? (a) : (b))
 #define V_max(a, b) (((a) > (b)) ? (a) : (b))
 
-#define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
+// Clamp macro is deprecated. Use std::clamp instead.
+// #define clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
