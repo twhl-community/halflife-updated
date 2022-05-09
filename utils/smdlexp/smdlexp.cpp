@@ -4,12 +4,12 @@
 *
 ****/
 
-#include "MAX.H"
-#include "DECOMP.H"
-#include "STDMAT.H"
-#include "ANIMTBL.H"
-#include "istdplug.h"
-#include "phyexp.h"
+#include <max.h>
+#include <decomp.h>
+#include <stdmat.h>
+#include <animtbl.h>
+#include <istdplug.h>
+#include <CS/phyexp.h>
 #include "smexprc.h"
 #include "smedefs.h"
 
@@ -36,7 +36,7 @@ static HINSTANCE hInstance;
 static SmdExportClassDesc SmdExportCD;
 
 // For OutputDebugString and misc sprintf's
-static char st_szDBG[300];
+static wchar_t st_szDBG[300];
 
 // INode mapping table
 static int g_inmMac = 0;
@@ -45,9 +45,9 @@ static int g_inmMac = 0;
 // Utility functions
 //
 
-static int AssertFailedFunc(char* sz)
+static int AssertFailedFunc(wchar_t* sz)
 {
-	MessageBox(GetActiveWindow(), sz, "Assert failure", MB_OK);
+	MessageBox(GetActiveWindow(), sz, _T("Assert failure"), MB_OK);
 	int Set_Your_Breakpoint_Here = 1;
 	return 1;
 }
@@ -122,12 +122,12 @@ int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, 
 	// Reset the name-map property manager
 	g_inmMac = 0;
 
-	if (hasStringPropertyValue("referenceFrame", "YES", i))
+	if (hasStringPropertyValue(_T("referenceFrame"), _T("YES"), i))
 	{
 		m_fReferenceFrame = TRUE;
 		suppressPrompts = TRUE;
 	}
-	else if (hasStringPropertyValue("referenceFrame", "NO", i))
+	else if (hasStringPropertyValue(_T("referenceFrame"), _T("NO"), i))
 	{
 		m_fReferenceFrame = FALSE;
 		suppressPrompts = TRUE;
@@ -144,7 +144,7 @@ int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, 
 	TSTR strPath, strFile, strExt;
 	TCHAR szFile[MAX_PATH];
 	SplitFilename(TSTR(name), &strPath, &strFile, &strExt);
-	sprintf(szFile, "%s\\%s.%s", (char*)strPath, (char*)strFile, DEFAULT_EXT);
+	swprintf(szFile, MAX_PATH, _T("%s\\%s.%s"), strPath.ToMCHAR(), strFile.ToMCHAR(), DEFAULT_EXT);
 
 	/*
 	if (m_fReferenceFrame)
@@ -152,10 +152,10 @@ int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, 
 	*/
 
 	FILE* pFile;
-	if ((pFile = fopen(szFile, "w")) == NULL)
+	if ((pFile = _wfopen(szFile, _T("w"))) == NULL)
 		return FALSE /*failure*/;
 
-	fprintf(pFile, "version %d\n", 1);
+	fwprintf(pFile, _T("version %d\n"), 1);
 
 	// Get animation metrics
 	m_intervalOfAnimation = piface->GetAnimRange();
@@ -186,9 +186,9 @@ int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, 
 	if (!suppressPrompts)
 	{
 		// Tell user that exporting is finished (it can take a while with no feedback)
-		char szExportComplete[300];
-		sprintf(szExportComplete, "Exported %s.", szFile);
-		MessageBox(GetActiveWindow(), szExportComplete, "Status", MB_OK);
+		wchar_t szExportComplete[300];
+		swprintf(szExportComplete, 300, _T("Exported %s."), szFile);
+		MessageBox(GetActiveWindow(), szExportComplete, _T("Status"), MB_OK);
 	}
 
 	fclose(pFile);
@@ -204,12 +204,12 @@ BOOL SmdExportClass::CollectNodes(ExpInterface* pexpiface)
 	CountNodesTEP procCountNodes;
 	procCountNodes.m_cNodes = 0;
 	(void)pexpiface->theScene->EnumTree(&procCountNodes);
-	ASSERT_MBOX(procCountNodes.m_cNodes > 0, "No nodes!");
+	ASSERT_MBOX(procCountNodes.m_cNodes > 0, _T("No nodes!"));
 
 	// Alloc and fill array
 	m_imaxnodeMac = procCountNodes.m_cNodes;
 	m_rgmaxnode = new MaxNode[m_imaxnodeMac];
-	ASSERT_MBOX(m_rgmaxnode != NULL, "new failed");
+	ASSERT_MBOX(m_rgmaxnode != NULL, _T("new failed"));
 
 
 	CollectNodesTEP procCollectNodes;
@@ -293,7 +293,7 @@ int CountNodesTEP::callback(INode* node)
 {
 	INode* pnode = node; // Hungarian
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FUndesirableNode(pnode))
 	{
@@ -318,18 +318,18 @@ int CollectNodesTEP::callback(INode* node)
 {
 	INode* pnode = node; // Hungarian
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
 
 	// Get pre-stored "index"
 	int iNode = ::GetIndexOfINode(pnode);
-	ASSERT_MBOX(iNode >= 0 && iNode <= m_phec->m_imaxnodeMac - 1, "Bogus iNode");
+	ASSERT_MBOX(iNode >= 0 && iNode <= m_phec->m_imaxnodeMac - 1, _T("Bogus iNode"));
 
 	// Get name, store name in array
 	TSTR strNodeName(pnode->GetName());
-	strcpy(m_phec->m_rgmaxnode[iNode].szNodeName, (char*)strNodeName);
+	wcscpy(m_phec->m_rgmaxnode[iNode].szNodeName, strNodeName.ToMCHAR());
 
 	// Get Node's time-zero Transformation Matrices
 	m_phec->m_rgmaxnode[iNode].mat3NodeTM = pnode->GetNodeTM(0 /*TimeValue*/);
@@ -351,7 +351,7 @@ int CollectNodesTEP::callback(INode* node)
 //
 int DumpNodesTEP::callback(INode* pnode)
 {
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
@@ -375,9 +375,9 @@ int DumpNodesTEP::callback(INode* pnode)
 		iNodeParent = -1;
 
 	// Dump node description
-	fprintf(m_pfile, "%3d \"%s\" %3d\n",
+	fwprintf(m_pfile, _T("%3d \"%s\" %3d\n"),
 		iNode,
-		strNodeName,
+		strNodeName.ToMCHAR(),
 		iNodeParent);
 
 	return TREE_CONTINUE;
@@ -390,7 +390,7 @@ int DumpNodesTEP::callback(INode* pnode)
 //
 int DumpFrameRotationsTEP::callback(INode* pnode)
 {
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
@@ -492,7 +492,7 @@ int DumpModelTEP::callback(INode* pnode)
 	m_phyExport = NULL;
 	m_phyMod = NULL;
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
@@ -501,7 +501,7 @@ int DumpModelTEP::callback(INode* pnode)
 	TSTR strNodeName(pnode->GetName());
 
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
-	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
+	if (FStrEq(strNodeName.ToMCHAR(), _T("Bip01 Footsteps")))
 		return TREE_CONTINUE;
 
 	// Helper nodes don't have meshes
@@ -541,7 +541,7 @@ int DumpModelTEP::callback(INode* pnode)
 	// Shouldn't have gotten this far if it's a helper object
 	if (pobj->SuperClassID() == HELPER_CLASS_ID)
 	{
-		sprintf(st_szDBG, "ERROR--Helper node %s has an attached mesh, and it shouldn't.", (char*)strNodeName);
+		swprintf(st_szDBG, 300, _T("ERROR--Helper node %s has an attached mesh, and it shouldn't."), strNodeName.ToMCHAR());
 		ASSERT_AND_ABORT(FALSE, st_szDBG);
 	}
 
@@ -584,9 +584,9 @@ int DumpModelTEP::callback(INode* pnode)
 		DWORD iVertex0 = pface->getVert(0);
 		DWORD iVertex1 = pface->getVert(1);
 		DWORD iVertex2 = pface->getVert(2);
-		ASSERT_AND_ABORT((int)iVertex0 < pmesh->getNumVerts(), "Bogus Vertex 0 index");
-		ASSERT_AND_ABORT((int)iVertex1 < pmesh->getNumVerts(), "Bogus Vertex 1 index");
-		ASSERT_AND_ABORT((int)iVertex2 < pmesh->getNumVerts(), "Bogus Vertex 2 index");
+		ASSERT_AND_ABORT((int)iVertex0 < pmesh->getNumVerts(), _T("Bogus Vertex 0 index"));
+		ASSERT_AND_ABORT((int)iVertex1 < pmesh->getNumVerts(), _T("Bogus Vertex 1 index"));
+		ASSERT_AND_ABORT((int)iVertex2 < pmesh->getNumVerts(), _T("Bogus Vertex 2 index"));
 
 		// Get the 3 Vertex's for this face
 		Point3 pt3Vertex0 = pmesh->getVert(iVertex0);
@@ -617,40 +617,40 @@ int DumpModelTEP::callback(INode* pnode)
 			pt3Vertex1Normal = pmesh->getFaceNormal(iFace);
 			pt3Vertex2Normal = pmesh->getFaceNormal(iFace);
 		}
-		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, "bogus orig normal 0");
-		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, "bogus orig normal 1");
-		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, "bogus orig normal 2");
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus orig normal 0"));
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus orig normal 1"));
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus orig normal 2"));
 
 		// Get Face's sub-material from node's material, to get the bitmap name.
 		// And no, there isn't a simpler way to get the bitmap name, you have to
 		// dig down through all these levels.
-		TCHAR szBitmapName[256] = "null.bmp";
+		TCHAR szBitmapName[256] = _T("null.bmp");
 		if (fHasMat)
 		{
 			MtlID mtlidFace = pface->getMatID();
 			if (mtlidFace >= pmtlNode->NumSubMtls())
 			{
-				sprintf(st_szDBG, "ERROR--Bogus sub-material index %d in node %s; highest valid index is %d",
-					mtlidFace, (char*)strNodeName, pmtlNode->NumSubMtls() - 1);
+				swprintf(st_szDBG, 300, _T("ERROR--Bogus sub-material index %d in node %s; highest valid index is %d"),
+					mtlidFace, strNodeName.ToMCHAR(), pmtlNode->NumSubMtls() - 1);
 				// ASSERT_AND_ABORT(FALSE, st_szDBG);
 				mtlidFace = 0;
 			}
 			Mtl* pmtlFace = pmtlNode->GetSubMtl(mtlidFace);
-			ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
+			ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
 
 			if ((pmtlFace->ClassID() == Class_ID(MULTI_CLASS_ID, 0) && pmtlFace->IsMultiMtl()))
 			{
 				// it's a sub-sub material.  Gads.
 				pmtlFace = pmtlFace->GetSubMtl(mtlidFace);
-				ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
+				ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
 			}
 
 			if (!(pmtlFace->ClassID() == Class_ID(DMTL_CLASS_ID, 0)))
 			{
 
-				sprintf(st_szDBG,
-					"ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x].",
-					mtlidFace, (char*)strNodeName, pmtlFace->ClassID());
+				swprintf(st_szDBG, 300,
+					_T("ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x]."),
+					mtlidFace, strNodeName.ToMCHAR(), pmtlFace->ClassID());
 				ASSERT_AND_ABORT(FALSE, st_szDBG);
 			}
 			StdMat* pstdmtlFace = (StdMat*)pmtlFace;
@@ -660,16 +660,16 @@ int DumpModelTEP::callback(INode* pnode)
 			{
 				if (!(ptexmap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)))
 				{
-					sprintf(st_szDBG,
-						"ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture.",
-						mtlidFace, (char*)strNodeName);
+					swprintf(st_szDBG, 300,
+						_T("ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture."),
+						mtlidFace, strNodeName.ToMCHAR());
 					ASSERT_AND_ABORT(FALSE, st_szDBG);
 				}
 				BitmapTex* pbmptex = (BitmapTex*)ptexmap;
-				strcpy(szBitmapName, pbmptex->GetMapName());
+				wcscpy(szBitmapName, pbmptex->GetMapName());
 				TSTR strPath, strFile;
 				SplitPathFile(TSTR(szBitmapName), &strPath, &strFile);
-				strcpy(szBitmapName, strFile);
+				wcscpy(szBitmapName, strFile);
 			}
 		}
 
@@ -735,27 +735,27 @@ int DumpModelTEP::callback(INode* pnode)
 
 		Matrix3 mat3ObjectNTM = mat3ObjectTM;
 		mat3ObjectNTM.NoScale();
-		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, "bogus pre normal 0");
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus pre normal 0"));
 		pt3Vertex0Normal = VectorTransform(mat3ObjectNTM, pt3Vertex0Normal);
-		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, "bogus post normal 0");
-		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, "bogus pre normal 1");
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus post normal 0"));
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus pre normal 1"));
 		pt3Vertex1Normal = VectorTransform(mat3ObjectNTM, pt3Vertex1Normal);
-		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, "bogus post normal 1");
-		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, "bogus pre normal 2");
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus post normal 1"));
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus pre normal 2"));
 		pt3Vertex2Normal = VectorTransform(mat3ObjectNTM, pt3Vertex2Normal);
-		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, "bogus post normal 2");
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus post normal 2"));
 
 		// Finally dump the bitmap name and 3 lines of face info
-		fprintf(m_pfile, "%s\n", szBitmapName);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
+		fwprintf(m_pfile, _T("%s\n"), szBitmapName);
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
 			iNodeV0, v0.x, v0.y, v0.z,
 			pt3Vertex0Normal.x, pt3Vertex0Normal.y, pt3Vertex0Normal.z,
 			UVvertex0.x, UVvertex0.y);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
 			iNodeV1, v1.x, v1.y, v1.z,
 			pt3Vertex1Normal.x, pt3Vertex1Normal.y, pt3Vertex1Normal.z,
 			UVvertex1.x, UVvertex1.y);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
 			iNodeV2, v2.x, v2.y, v2.z,
 			pt3Vertex2Normal.x, pt3Vertex2Normal.y, pt3Vertex2Normal.z,
 			UVvertex2.x, UVvertex2.y);
@@ -817,7 +817,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex* prvertex, DWORD smGroupFace)
 
 	ASSERT_MBOX((cNormals == 1 && prvertex->ern == NULL) ||
 					(cNormals > 1 && prvertex->ern != NULL),
-		"BOGUS RVERTEX");
+		_T("BOGUS RVERTEX"));
 
 	if (cNormals == 1)
 		return prvertex->rn.getNormal();
@@ -844,7 +844,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex* prvertex, DWORD smGroupFace)
 //===========================================================
 // Dialog proc for export options
 //
-static BOOL CALLBACK ExportOptionsDlgProc(
+static INT_PTR CALLBACK ExportOptionsDlgProc(
 	HWND hDlg,
 	UINT message,
 	WPARAM wParam,
@@ -889,7 +889,7 @@ static BOOL CALLBACK ExportOptionsDlgProc(
 
 typedef struct
 {
-	char szNodeName[SmdExportClass::MAX_NAME_CHARS];
+	wchar_t szNodeName[SmdExportClass::MAX_NAME_CHARS];
 	int iNode;
 } NAMEMAP;
 const int MAX_NAMEMAP = 512;
@@ -899,10 +899,10 @@ int GetIndexOfINode(INode* pnode, BOOL fAssertPropExists)
 {
 	TSTR strNodeName(pnode->GetName());
 	for (int inm = 0; inm < g_inmMac; inm++)
-		if (FStrEq(g_rgnm[inm].szNodeName, (char*)strNodeName))
+		if (FStrEq(g_rgnm[inm].szNodeName, strNodeName.ToMCHAR()))
 			return g_rgnm[inm].iNode;
 	if (fAssertPropExists)
-		ASSERT_MBOX(FALSE, "No NODEINDEXSTR property");
+		ASSERT_MBOX(FALSE, _T("No NODEINDEXSTR property"));
 	return -7777;
 }
 
@@ -913,15 +913,15 @@ void SetIndexOfINode(INode* pnode, int inode)
 	NAMEMAP* pnm;
 	int inm;
 	for (inm = 0; inm < g_inmMac; inm++)
-		if (FStrEq(g_rgnm[inm].szNodeName, (char*)strNodeName))
+		if (FStrEq(g_rgnm[inm].szNodeName, strNodeName.ToMCHAR()))
 			break;
 	if (inm < g_inmMac)
 		pnm = &g_rgnm[inm];
 	else
 	{
-		ASSERT_MBOX(g_inmMac < MAX_NAMEMAP, "NAMEMAP is full");
+		ASSERT_MBOX(g_inmMac < MAX_NAMEMAP, _T("NAMEMAP is full"));
 		pnm = &g_rgnm[g_inmMac++];
-		strcpy(pnm->szNodeName, (char*)strNodeName);
+		wcscpy(pnm->szNodeName, strNodeName.ToMCHAR());
 	}
 	pnm->iNode = inode;
 }
@@ -989,8 +989,8 @@ static float FlReduceRotation(float fl)
 //
 //===============================================================
 bool SmdExportClass::hasStringPropertyValue(
-	const char* propertyName,
-	const char* propertyValue,
+	const wchar_t* propertyName,
+	const wchar_t* propertyValue,
 	Interface* ip)
 {
 	const PROPVARIANT* propertyVariant = getPropertyVariant(propertyName, ip);
@@ -1000,7 +1000,7 @@ bool SmdExportClass::hasStringPropertyValue(
 	TCHAR buffer[80];
 	VariantToString(propertyVariant, buffer, 80);
 
-	if (strcmp(buffer, propertyValue) == 0)
+	if (wcscmp(buffer, propertyValue) == 0)
 		return true;
 	return false;
 }
@@ -1020,7 +1020,7 @@ bool SmdExportClass::hasStringPropertyValue(
 //
 //===============================================================
 const PROPVARIANT* SmdExportClass::getPropertyVariant(
-	const char* propertyName,
+	const wchar_t* propertyName,
 	Interface* ip)
 {
 	TCHAR szBuf[80];
@@ -1036,7 +1036,7 @@ const PROPVARIANT* SmdExportClass::getPropertyVariant(
 			continue;
 		_tcscpy(szBuf, TSTR(pPropSpec->lpwstr));
 
-		if (strcmp(propertyName, szBuf) == 0)
+		if (wcscmp((wchar_t*)propertyName, szBuf) == 0)
 			return pPropVar;
 	}
 
@@ -1046,7 +1046,7 @@ const PROPVARIANT* SmdExportClass::getPropertyVariant(
 
 // Convert (well, copy) a PROPVARIANT into a string
 //
-void SmdExportClass::VariantToString(const PROPVARIANT* pProp, TCHAR* szString, int bufSize)
+void SmdExportClass::VariantToString(const PROPVARIANT* pProp, WCHAR* szString, int bufSize)
 {
 	switch (pProp->vt)
 	{
@@ -1054,19 +1054,19 @@ void SmdExportClass::VariantToString(const PROPVARIANT* pProp, TCHAR* szString, 
 		_tcscpy(szString, TSTR(pProp->pwszVal));
 		break;
 	case VT_LPSTR:
-		_tcscpy(szString, TSTR(pProp->pszVal));
+		_tcscpy(szString, TSTR((wchar_t*)pProp->pszVal));
 		break;
 	case VT_I4:
-		_stprintf(szString, "%ld", pProp->lVal);
+		_stprintf(szString, _T("%ld"), pProp->lVal);
 		break;
 	case VT_R4:
-		_stprintf(szString, "%f", pProp->fltVal);
+		_stprintf(szString, _T("%f"), pProp->fltVal);
 		break;
 	case VT_R8:
-		_stprintf(szString, "%lf", pProp->dblVal);
+		_stprintf(szString, _T("%lf"), pProp->dblVal);
 		break;
 	case VT_BOOL:
-		_stprintf(szString, "%s", pProp->boolVal ? "YES" : "NO");
+		_stprintf(szString, _T("%s"), pProp->boolVal ? _T("YES") : _T("NO"));
 		break;
 	case VT_FILETIME:
 		SYSTEMTIME sysTime;
@@ -1079,7 +1079,7 @@ void SmdExportClass::VariantToString(const PROPVARIANT* pProp, TCHAR* szString, 
 			bufSize);
 		break;
 	default:
-		_tcscpy(szString, "");
+		_tcscpy(szString, _T(""));
 		break;
 	}
 }
