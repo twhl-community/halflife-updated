@@ -889,7 +889,7 @@ void CBaseButton::ButtonBackHome()
 	if (!FClassnameIs(pev, "func_rot_button") && FBitSet(pev->spawnflags, SF_BUTTON_SPARK_IF_OFF))
 	{
 		SetThink(&CBaseButton::ButtonSpark);
-		pev->nextthink = gpGlobals->time + 0.5; // no hurry.
+		pev->nextthink = pev->ltime + 0.5; // no hurry.
 	}
 }
 
