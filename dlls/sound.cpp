@@ -1346,7 +1346,7 @@ void SENTENCEG_Init()
 		if ('\0' == buffer[j])
 			continue;
 
-		if (gcallsentences > CVOXFILESENTENCEMAX)
+		if (gcallsentences >= CVOXFILESENTENCEMAX)
 		{
 			ALERT(at_error, "Too many sentences in sentences.txt!\n");
 			break;
