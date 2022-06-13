@@ -704,7 +704,7 @@ void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax)
 			continue;
 
 		// Clients aren't necessarily initialized until ClientPutInServer()
-		if (i < clientMax || !pEdictList[i].pvPrivateData)
+		if ((i > 0 && i <= clientMax) || !pEdictList[i].pvPrivateData)
 			continue;
 
 		pClass = CBaseEntity::Instance(&pEdictList[i]);
