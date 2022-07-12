@@ -201,7 +201,7 @@ typedef struct playermove_s
 	int (*PM_GetModelType)(model_t* mod);
 	void (*PM_GetModelBounds)(model_t* mod, float* mins, float* maxs);
 	void* (*PM_HullForBsp)(physent_t* pe, float* offset);
-	float (*PM_TraceModel)(physent_t* pEnt, float* start, float* end, trace_t* trace);
+	float (*PM_TraceModel)(physent_t* pEnt, const float* start, const float* end, trace_t* trace);
 	int (*COM_FileSize)(const char* filename);
 	byte* (*COM_LoadFile)(const char* path, int usehunk, int* pLength);
 	void (*COM_FreeFile)(void* buffer);

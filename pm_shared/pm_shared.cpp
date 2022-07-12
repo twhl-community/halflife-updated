@@ -145,6 +145,20 @@ static char grgchTextureType[CTEXTURESMAX];
 
 bool g_onladder = false;
 
+static void PM_InitTrace(trace_t* trace, const Vector& end)
+{
+	memset(trace, 0, sizeof(*trace));
+	VectorCopy(end, trace->endpos);
+	trace->allsolid = 1;
+	trace->fraction = 1.0f;
+}
+
+static void PM_TraceModel(physent_t* pEnt, const Vector& start, const Vector& end, trace_t* trace)
+{
+	PM_InitTrace(trace, end);
+	pmove->PM_TraceModel(pEnt, start, end, trace);
+}
+
 void PM_SwapTextures(int i, int j)
 {
 	char chTemp;
@@ -2147,7 +2161,7 @@ void PM_LadderMove(physent_t* pLadder)
 	const bool onFloor = pmove->PM_PointContents(floor, NULL) == CONTENTS_SOLID;
 
 	pmove->gravity = 0;
-	pmove->PM_TraceModel(pLadder, pmove->origin, ladderCenter, &trace);
+	PM_TraceModel(pLadder, pmove->origin, ladderCenter, &trace);
 	if (trace.fraction != 1.0)
 	{
 		float forward = 0, right = 0;
