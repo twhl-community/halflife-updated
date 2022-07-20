@@ -735,7 +735,7 @@ bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer)
 
 void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 {
-	const bool skiplocal = UseDecrement() != false;
+	const bool skiplocal = !m_ForceSendAnimations && UseDecrement() != false;
 
 	m_pPlayer->pev->weaponanim = iAnim;
 

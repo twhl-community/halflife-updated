@@ -358,6 +358,9 @@ public:
 	// hle time creep vars
 	float m_flPrevPrimaryAttack;
 	float m_flLastFireTime;
+
+	//Hack so deploy animations work when weapon prediction is enabled.
+	bool m_ForceSendAnimations = false;
 };
 
 
