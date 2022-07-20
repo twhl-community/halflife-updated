@@ -3216,24 +3216,57 @@ void CBloodSplat::Spray()
 
 //==============================================
 
-
-
-void CBasePlayer::GiveNamedItem(const char* pszName)
+static edict_t* GiveNamedItem_Common(entvars_t* pev, const char* pszName)
 {
-	edict_t* pent;
-
 	int istr = MAKE_STRING(pszName);
 
-	pent = CREATE_NAMED_ENTITY(istr);
+	edict_t* pent = CREATE_NAMED_ENTITY(istr);
 	if (FNullEnt(pent))
 	{
 		ALERT(at_console, "NULL Ent in GiveNamedItem!\n");
-		return;
+		return nullptr;
 	}
 	VARS(pent)->origin = pev->origin;
 	pent->v.spawnflags |= SF_NORESPAWN;
 
 	DispatchSpawn(pent);
+
+	return pent;
+}
+
+void CBasePlayer::GiveNamedItem(const char* szName)
+{
+	auto pent = GiveNamedItem_Common(pev, szName);
+
+	if (!pent)
+	{
+		return;
+	}
+
+	DispatchTouch(pent, ENT(pev));
+}
+
+void CBasePlayer::GiveNamedItem(const char* szName, int defaultAmmo)
+{
+	auto pent = GiveNamedItem_Common(pev, szName);
+
+	if (!pent)
+	{
+		return;
+	}
+
+	auto entity = CBaseEntity::Instance(pent);
+
+	if (!entity)
+	{
+		return;
+	}
+
+	if (auto weapon = dynamic_cast<CBasePlayerWeapon*>(entity); weapon)
+	{
+		weapon->m_iDefaultAmmo = defaultAmmo;
+	}
+
 	DispatchTouch(pent, ENT(pev));
 }
 
@@ -3692,6 +3725,16 @@ int CBasePlayer::GiveAmmo(int iCount, const char* szName, int iMax)
 	int iAdd = V_min(iCount, iMax - m_rgAmmo[i]);
 	if (iAdd < 1)
 		return i;
+
+	// If this is an exhaustible weapon make sure the player has it.
+	if (const auto& ammoType = CBasePlayerItem::AmmoInfoArray[i]; ammoType.WeaponName != nullptr)
+	{
+		if (!HasNamedPlayerItem(ammoType.WeaponName))
+		{
+			//Note: this must set default ammo to 0 or we'll end up in an infinite loop.
+			GiveNamedItem(ammoType.WeaponName, 0);
+		}
+	}
 
 	m_rgAmmo[i] += iAdd;
 
