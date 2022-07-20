@@ -2943,6 +2943,8 @@ bool CBasePlayer::Restore(CRestore& restore)
 
 	pev->fixangle = 1; // turn this way immediately
 
+	m_iClientFOV = -1; // Make sure the client gets the right FOV value.
+
 	// Copied from spawn() for now
 	m_bloodColor = BLOOD_COLOR_RED;
 
