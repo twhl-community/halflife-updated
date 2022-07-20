@@ -623,6 +623,7 @@ bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal)
 
 bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 {
+	/*
 	if ((iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && m_iDefaultAmmo == 0 && m_iClip <= 0)
 	{
 		//This is an exhaustible weapon that has no ammo left. Don't add it, queue it up for destruction instead.
@@ -630,6 +631,7 @@ bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 		pev->nextthink = gpGlobals->time + 0.1;
 		return false;
 	}
+	*/
 
 	bool bResult = CBasePlayerItem::AddToPlayer(pPlayer);
 
