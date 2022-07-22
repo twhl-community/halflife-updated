@@ -297,12 +297,6 @@ public:
 	virtual bool ExtractAmmo(CBasePlayerWeapon* pWeapon);	  //{ return true; }			// Return true if you can add ammo to yourself when picked up
 	virtual bool ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return true; }			// Return true if you can add ammo to yourself when picked up
 
-	virtual bool AddWeapon()
-	{
-		ExtractAmmo(this);
-		return true;
-	} // Return true if you want to add yourself to the player
-
 	// generic "shared" ammo handlers
 	bool AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
 	bool AddSecondaryAmmo(int iCount, char* szName, int iMaxCarry);
