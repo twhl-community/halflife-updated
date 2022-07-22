@@ -568,11 +568,9 @@ void CBasePlayerItem::DestroyItem()
 	Kill();
 }
 
-bool CBasePlayerItem::AddToPlayer(CBasePlayer* pPlayer)
+void CBasePlayerItem::AddToPlayer(CBasePlayer* pPlayer)
 {
 	m_pPlayer = pPlayer;
-
-	return true;
 }
 
 void CBasePlayerItem::Drop()
@@ -623,7 +621,7 @@ bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal)
 }
 
 
-bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
+void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 {
 	/*
 	if ((iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && m_iDefaultAmmo == 0 && m_iClip <= 0)
@@ -635,7 +633,7 @@ bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 	}
 	*/
 
-	bool bResult = CBasePlayerItem::AddToPlayer(pPlayer);
+	CBasePlayerItem::AddToPlayer(pPlayer);
 
 	pPlayer->SetWeaponBit(m_iId);
 
@@ -644,13 +642,6 @@ bool CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 		m_iPrimaryAmmoType = pPlayer->GetAmmoIndex(pszAmmo1());
 		m_iSecondaryAmmoType = pPlayer->GetAmmoIndex(pszAmmo2());
 	}
-
-	if (!bResult)
-	{
-		return false;
-	}
-
-	return true;
 }
 
 bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer)

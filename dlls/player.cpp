@@ -3632,8 +3632,10 @@ bool CBasePlayer::AddPlayerItem(CBasePlayerItem* pItem)
 	}
 
 
-	if (pItem->AddToPlayer(this))
+	if (pItem->CanAddToPlayer(this))
 	{
+		pItem->AddToPlayer(this);
+
 		g_pGameRules->PlayerGotWeapon(this, pItem);
 		pItem->CheckRespawn();
 
