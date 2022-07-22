@@ -224,7 +224,7 @@ void CBasePlayer::SelectLastItem()
 	m_pActiveItem = m_pLastItem;
 	m_pLastItem = pTemp;
 
-	auto weapon = static_cast<CBasePlayerWeapon*>(m_pActiveItem->GetWeaponPtr());
+	auto weapon = m_pActiveItem->GetWeaponPtr();
 
 	if (weapon)
 	{

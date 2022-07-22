@@ -19,6 +19,7 @@
 #include "weaponinfo.h"
 
 class CBasePlayer;
+class CBasePlayerWeapon;
 
 void DeactivateSatchels(CBasePlayer* pOwner);
 
@@ -248,7 +249,7 @@ public:
 
 	virtual bool UpdateClientData(CBasePlayer* pPlayer) { return false; }
 
-	virtual CBasePlayerItem* GetWeaponPtr() { return NULL; }
+	virtual CBasePlayerWeapon* GetWeaponPtr() { return NULL; }
 
 	virtual void GetWeaponData(weapon_data_t& data) {}
 
@@ -338,7 +339,7 @@ public:
 
 	void PrintState();
 
-	CBasePlayerItem* GetWeaponPtr() override { return (CBasePlayerItem*)this; }
+	CBasePlayerWeapon* GetWeaponPtr() override { return this; }
 	float GetNextAttackDelay(float delay);
 
 	float m_flPumpTime;
