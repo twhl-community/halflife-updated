@@ -92,16 +92,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\include</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>COMCTL32.LIB;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>C:\Program Files\Autodesk\3ds Max 2023\Plugins\smdlexp.dle</OutputFile>
       <ModuleDefinitionFile>$(ProjectDir)..\..\utils\smdlexp\smdlexp.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -120,16 +119,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\include</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>COMCTL32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>C:\Program Files\Autodesk\3ds Max 2023\Plugins\smdlexp.dle</OutputFile>
       <ModuleDefinitionFile>$(ProjectDir)..\..\utils\smdlexp\smdlexp.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -147,16 +145,15 @@
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\include</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>COMCTL32.LIB;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>C:\Program Files\Autodesk\3ds Max 2023\Plugins\smdlexp.dle</OutputFile>
       <ModuleDefinitionFile>$(ProjectDir)..\..\utils\smdlexp\smdlexp.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -172,16 +169,15 @@
       <WarningLevel>Level4</WarningLevel>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\include</AdditionalIncludeDirectories>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4244;4305;26451</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>USER32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;maxutil.lib;geom.lib;mesh.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\3ds Max 2023 SDK\maxsdk\lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>C:\Program Files\Autodesk\3ds Max 2023\Plugins\smdlexp.dle</OutputFile>
       <ModuleDefinitionFile>$(ProjectDir)..\..\utils\smdlexp\smdlexp.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
