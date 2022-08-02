@@ -4,6 +4,11 @@
 *
 ****/
 
+#ifndef UNICODE
+// If you get this error you've incorrectly configured the Visual Studio project.
+#error "3DS Max plugins must use the Unicode character set"
+#endif
+
 #include <max.h>
 #include <decomp.h>
 #include <stdmat.h>
