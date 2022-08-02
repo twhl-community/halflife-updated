@@ -14,7 +14,7 @@
 
 #define DEFAULT_EXT _T("smd")
 
-#define FStrEq(sz1, sz2) (strcmp((sz1), (sz2)) == 0)
+#define FStrEq(sz1, sz2) (wcscmp((sz1), (sz2)) == 0)
 
 
 //===================================================================
@@ -22,7 +22,7 @@
 //
 class SmdExportClass : public SceneExport
 {
-	friend BOOL CALLBACK ExportOptionsDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	friend INT_PTR CALLBACK ExportOptionsDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	friend class DumpModelTEP;
 	friend class DumpDeformsTEP;
 
@@ -31,18 +31,18 @@ public:
 	DESTRUCTOR ~SmdExportClass(void);
 
 	// Required by classes derived from SceneExport
-	virtual int ExtCount(void) { return 1; }
-	virtual const TCHAR* Ext(int i) { return DEFAULT_EXT; }
-	virtual const TCHAR* LongDesc(void) { return _T("Valve Skeletal Model Exporter for 3D Studio Max"); }
-	virtual const TCHAR* ShortDesc(void) { return _T("Valve SMD"); }
-	virtual const TCHAR* AuthorName(void) { return _T("Valve, LLC"); }
-	virtual const TCHAR* CopyrightMessage(void) { return _T("Copyright (c) 1998, Valve LLC"); }
-	virtual const TCHAR* OtherMessage1(void) { return _T(""); }
-	virtual const TCHAR* OtherMessage2(void) { return _T(""); }
-	virtual unsigned int Version(void) { return 201; }
-	virtual void ShowAbout(HWND hWnd) { return; }
+	int ExtCount(void) { return 1; }
+	const TCHAR* Ext(int i) { return DEFAULT_EXT; }
+	const TCHAR* LongDesc(void) { return _T("Valve Skeletal Model Exporter for 3D Studio Max"); }
+	const TCHAR* ShortDesc(void) { return _T("Valve SMD"); }
+	const TCHAR* AuthorName(void) { return _T("Valve, LLC"); }
+	const TCHAR* CopyrightMessage(void) { return _T("Copyright (c) 1998, Valve LLC"); }
+	const TCHAR* OtherMessage1(void) { return _T(""); }
+	const TCHAR* OtherMessage2(void) { return _T(""); }
+	unsigned int Version(void) { return 201; }
+	void ShowAbout(HWND hWnd) { return; }
 	// virtual int				DoExport		(const TCHAR *name, ExpInterface *ei, Interface *i);
-	virtual int DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, BOOL suppressPrompts = FALSE, DWORD options = 0); // Export	file
+	int DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, BOOL suppressPrompts = FALSE, DWORD options = 0); // Export file
 
 	// Integer constants for this class
 	enum
@@ -54,7 +54,7 @@ public:
 	// For keeping info about each (non-ignored) 3dsMax node in the tree
 	typedef struct
 	{
-		char szNodeName[MAX_NAME_CHARS]; // usefull for lookups
+		wchar_t szNodeName[MAX_NAME_CHARS]; // usefull for lookups
 		Matrix3 mat3NodeTM;				 // node's transformation matrix (at time zero)
 		Matrix3 mat3ObjectTM;			 // object-offset transformation matrix (at time zero)
 		int imaxnodeParent;				 // cached index of parent node
@@ -73,9 +73,9 @@ public:
 
 protected:
 	// Property stuff
-	bool hasStringPropertyValue(const char* propertyName, const char* propertyValue, Interface* ip);
-	const PROPVARIANT* getPropertyVariant(const char* propertyName, Interface* ip);
-	void VariantToString(const PROPVARIANT* propertyVariant, TCHAR* buffer, int bufferSize);
+	bool hasStringPropertyValue(const wchar_t* propertyName, const wchar_t* propertyValue, Interface* ip);
+	const PROPVARIANT* getPropertyVariant(const wchar_t* propertyName, Interface* ip);
+	void VariantToString(const PROPVARIANT* propertyVariant, WCHAR* buffer, int bufferSize);
 
 private:
 	BOOL CollectNodes(ExpInterface* expiface);
@@ -101,6 +101,7 @@ public:
 	int IsPublic(void) { return TRUE; }
 	void* Create(BOOL loading = FALSE) { return new SmdExportClass; }
 	const TCHAR* ClassName(void) { return _T("SmdExport"); }
+	const TCHAR* NonLocalizedClassName(void) { return _T("SmdExport"); }
 	SClass_ID SuperClassID(void) { return SCENE_EXPORT_CLASS_ID; }
 	Class_ID ClassID(void) { return Class_ID(0x774a43fd, 0x794d2210); }
 	const TCHAR* Category(void) { return _T(""); }

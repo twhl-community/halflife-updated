@@ -77,33 +77,7 @@ Using Visual Studio Installer, install C++ MFC from "Individual Components".
 smdlexp project
 ===============
 
-Please note that this project requires the 3D Studio Max 4.2 SDK.
+Please note that this project requires the 3DS Max 2023 SDK.
+3DS Max 2023 SDK can be downloaded from https://www.autodesk.com/developer-network/platform-technologies/3ds-max.
 You might need to adjust Include and Additional Library Directories according
 to your intallation in C++ and Linker settings.
-
-The MAX 4.2 SDK needs adjustment:
-Comment out the following line in max.h
-#include <ctl3d.h>
-So that it reads
-//#include <ctl3d.h>
-.
-
-For C:\3dsmax42\maxsdk\Include\polyobj.h, line 109 should be changed from:
-	for (i=0; i<mm.numv; i++) if (!mm.v[i].GetFlag (MN_DEAD)) numVerts++;
-to:
-	for (int i=0; i<mm.numv; i++) if (!mm.v[i].GetFlag (MN_DEAD)) numVerts++;
-.
-
-For C:\3dsmax42\maxsdk\Include\imtl.h, line 1390 should be added:
-	int i;
-and line 1392 (originally line 1391) should be change from:
-	for( int i = 0; i < nUserIllumOut; ++i ){ 
-to:
-	for( i = 0; i < nUserIllumOut; ++i ){
-.
-
-You also need the phyexp.h from Character Studio, which you should place in
-c:\3dsmax42\cstudio\sdk or adjust the Include Directories accordingly.
-
-Someone should port that project to a newer MAX SDK Version, but that is
-really beyond the current scope.
