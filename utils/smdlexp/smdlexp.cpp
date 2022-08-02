@@ -4,6 +4,10 @@
 *
 ****/
 
+#ifndef _WIN64
+#error "3DS Max plugins can only be built as 64 bit"
+#endif
+
 #ifndef UNICODE
 // If you get this error you've incorrectly configured the Visual Studio project.
 #error "3DS Max plugins must use the Unicode character set"
