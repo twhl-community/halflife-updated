@@ -22,7 +22,7 @@ int GetIndexOfINode(INode* pnode, BOOL fAssertPropExists = TRUE);
 void SetIndexOfINode(INode* pnode, int inode);
 BOOL FUndesirableNode(INode* pnode);
 BOOL FNodeMarkedToSkip(INode* pnode);
-float FlReduceRotation(float fl);
+static float FlReduceRotation(float fl);
 
 
 //===================================================================
@@ -30,7 +30,7 @@ float FlReduceRotation(float fl);
 //
 
 // Save for use with dialogs
-static HINSTANCE hInstance;
+HINSTANCE hInstance;
 
 // We just need one of these to hand off to 3DSMAX.
 static SmdExportClassDesc SmdExportCD;
@@ -844,7 +844,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex* prvertex, DWORD smGroupFace)
 //===========================================================
 // Dialog proc for export options
 //
-static INT_PTR CALLBACK ExportOptionsDlgProc(
+INT_PTR CALLBACK ExportOptionsDlgProc(
 	HWND hDlg,
 	UINT message,
 	WPARAM wParam,
