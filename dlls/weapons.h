@@ -280,6 +280,9 @@ public:
 
 	// int		m_iIdPrimary;										// Unique Id for primary ammo
 	// int		m_iIdSecondary;										// Unique Id for secondary ammo
+
+	//Hack so deploy animations work when weapon prediction is enabled.
+	bool m_ForceSendAnimations = false;
 };
 
 
@@ -355,9 +358,6 @@ public:
 	// hle time creep vars
 	float m_flPrevPrimaryAttack;
 	float m_flLastFireTime;
-
-	//Hack so deploy animations work when weapon prediction is enabled.
-	bool m_ForceSendAnimations = false;
 };
 
 
