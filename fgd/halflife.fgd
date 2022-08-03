@@ -180,6 +180,12 @@
 		256: "Pre-Disaster" 	: 0
 		512: "Fade Corpse"	: 0
 	]
+	
+	allow_item_dropping(choices) : "Allow Item Dropping" : 1 : "This controls whether this NPC will drop items on death" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 ]
 
 @BaseClass = TalkMonster
