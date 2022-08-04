@@ -83,9 +83,7 @@ bool CHalfLifeRules::FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* 
 bool CHalfLifeRules::GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon, bool alwaysSearch)
 {
 	//If this is an exhaustible weapon and it's out of ammo, always try to switch even in singleplayer.
-	if (alwaysSearch || ((pCurrentWeapon->iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0
-		&& pCurrentWeapon->PrimaryAmmoIndex() != -1
-		&& pPlayer->m_rgAmmo[pCurrentWeapon->PrimaryAmmoIndex()] == 0))
+	if (alwaysSearch || ((pCurrentWeapon->iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && pCurrentWeapon->PrimaryAmmoIndex() != -1 && pPlayer->m_rgAmmo[pCurrentWeapon->PrimaryAmmoIndex()] == 0))
 	{
 		return CGameRules::GetNextBestWeapon(pPlayer, pCurrentWeapon);
 	}

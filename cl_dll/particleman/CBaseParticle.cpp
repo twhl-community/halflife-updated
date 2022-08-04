@@ -300,8 +300,7 @@ void CBaseParticle::Fade(float time)
 	{
 		if (m_flFadeSpeed == 0)
 		{
-			m_flBrightness = (1.0 - (time - m_flTimeCreated) / (m_flDieTime - m_flTimeCreated))
-				* m_flOriginalBrightness;
+			m_flBrightness = (1.0 - (time - m_flTimeCreated) / (m_flDieTime - m_flTimeCreated)) * m_flOriginalBrightness;
 		}
 		else
 		{
@@ -423,9 +422,7 @@ void CBaseParticle::CheckCollision(float time)
 
 		bool dead = false;
 
-		if (trace.plane.normal.z <= 0.9
-			|| m_vVelocity.z > 0
-			|| (m_vVelocity.z < -frametime * g_flGravity * m_flGravity * 3.0))
+		if (trace.plane.normal.z <= 0.9 || m_vVelocity.z > 0 || (m_vVelocity.z < -frametime * g_flGravity * m_flGravity * 3.0))
 		{
 			if ((m_iCollisionFlags & TRI_COLLIDEKILL) != 0)
 			{
@@ -512,4 +509,3 @@ void CBaseParticle::Think(float time)
 	CalculateVelocity(time);
 	CheckCollision(time);
 }
-

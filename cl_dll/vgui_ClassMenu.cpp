@@ -187,7 +187,7 @@ void CClassMenuPanel::Initialize()
 void CClassMenuPanel::SetActiveInfo(int iInput)
 {
 	// Remove all the Info panels and bring up the specified one
-		iInput = 0;
+	iInput = 0;
 
 	m_pButtons[iInput]->setArmed(true);
 	m_pClassInfoPanel[iInput]->setVisible(true);

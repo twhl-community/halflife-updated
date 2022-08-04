@@ -198,11 +198,9 @@ Point GetMousePosition()
 	POINT mouse_pos;
 	GetCursorPos(&mouse_pos);
 
-	return
-	{
+	return {
 		static_cast<int>(mouse_pos.x),
-		static_cast<int>(mouse_pos.y)
-	};
+		static_cast<int>(mouse_pos.y)};
 }
 
 void MousePos_ThreadFunction()
@@ -214,9 +212,10 @@ void MousePos_ThreadFunction()
 
 			//TODO: accessing the cvar value is a race condition
 			if (s_MouseThread.Condition.wait_for(
-				lock,
-				std::chrono::milliseconds{(int)m_mousethread_sleep->value},
-				[]() { return s_MouseThread.QuittingTime; }))
+					lock,
+					std::chrono::milliseconds{(int)m_mousethread_sleep->value},
+					[]()
+					{ return s_MouseThread.QuittingTime; }))
 			{
 				break;
 			}
@@ -229,11 +228,9 @@ void MousePos_ThreadFunction()
 			const auto oldPos = old_mouse_pos.load();
 			const auto delta = s_mouseDelta.load();
 
-			const Point pos
-			{
+			const Point pos{
 				mouse_pos.x - oldPos.x + delta.x,
-				mouse_pos.y - oldPos.y + delta.y
-			};
+				mouse_pos.y - oldPos.y + delta.y};
 
 			old_mouse_pos = mouse_pos;
 			s_mouseDelta = pos;

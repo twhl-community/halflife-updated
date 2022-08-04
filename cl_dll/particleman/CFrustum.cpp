@@ -133,10 +133,10 @@ bool CFrustum::SphereInsideFrustum(float x, float y, float z, float radius)
 bool CFrustum::PlaneInsideFrustum(float x, float y, float z, float size)
 {
 	const float sizes[3][2] =
-	{
-		{x - size, x + size},
-		{y - size, y + size},
-		{z - size, z + size}};
+		{
+			{x - size, x + size},
+			{y - size, y + size},
+			{z - size, z + size}};
 
 	for (int i = 0; i < 6; ++i)
 	{

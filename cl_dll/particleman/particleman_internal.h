@@ -49,4 +49,3 @@ struct ForceMember
 	float m_flStrength;
 	float m_flDieTime;
 };
-

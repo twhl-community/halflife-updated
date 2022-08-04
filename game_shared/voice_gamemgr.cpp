@@ -24,11 +24,11 @@ CPlayerBitVec g_PlayerModEnable; // Set to 1 for each player if the player wants
 								 // player can't hear anyone).
 
 CPlayerBitVec g_BanMasks[MAX_PLAYERS]; // Tells which players don't want to hear each other.
-											 // These are indexed as clients and each bit represents a client
-											 // (so player entity is bit+1).
+									   // These are indexed as clients and each bit represents a client
+									   // (so player entity is bit+1).
 
 CPlayerBitVec g_SentGameRulesMasks[MAX_PLAYERS]; // These store the masks we last sent to each client so we can determine if
-CPlayerBitVec g_SentBanMasks[MAX_PLAYERS];	   // we need to resend them.
+CPlayerBitVec g_SentBanMasks[MAX_PLAYERS];		 // we need to resend them.
 CPlayerBitVec g_bWantModEnable;
 
 cvar_t voice_serverdebug = {"voice_serverdebug", "0"};

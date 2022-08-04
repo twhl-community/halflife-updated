@@ -950,7 +950,6 @@ CommandButton* TeamFortressViewport::CreateCustomButton(char* pButtonText, char*
 		pMenu = CreateSubMenu(pButton, m_pCurrentCommandMenu, iYOffset);
 		m_pCommandMenus[m_iNumMenus] = pMenu;
 		m_iNumMenus++;
-
 	}
 
 	return pButton;

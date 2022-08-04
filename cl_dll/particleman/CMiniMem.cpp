@@ -137,7 +137,7 @@ void CMiniMem::ProcessAll()
 int CMiniMem::ApplyForce(Vector vOrigin, Vector vDirection, float flRadius, float flStrength)
 {
 	const float radiusSquared = flRadius * flRadius;
-	
+
 	for (auto effect : _particles)
 	{
 		if (!effect->m_bAffectedByForce)

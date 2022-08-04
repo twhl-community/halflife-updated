@@ -218,7 +218,7 @@ public:
 
 	virtual bool CanAddToPlayer(CBasePlayer* player) { return true; } // return true if the item you want the item added to the player inventory
 
-	virtual void AddToPlayer(CBasePlayer* pPlayer);						
+	virtual void AddToPlayer(CBasePlayer* pPlayer);
 	virtual bool AddDuplicate(CBasePlayerItem* pItem) { return false; } // return true if you want your duplicate removed from world
 	void EXPORT DestroyItem();
 	void EXPORT DefaultTouch(CBaseEntity* pOther); // default weapon touch
