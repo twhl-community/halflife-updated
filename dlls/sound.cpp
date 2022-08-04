@@ -940,12 +940,12 @@ void CEnvSound::Think()
 				else
 				{
 					// current sound entity affecting player is no longer valid,
-					// flag this state by clearing room_type and range.
+					// flag this state by clearing sound handle and range.
 					// NOTE: we do not actually change the player's room_type
 					// NOTE: until we have a new valid room_type to change it to.
 
+					pPlayer->m_SndLast = nullptr;
 					pPlayer->m_flSndRange = 0;
-					pPlayer->m_SndRoomtype = 0;
 				}
 			}
 
@@ -965,12 +965,7 @@ void CEnvSound::Think()
 				pPlayer->m_SndRoomtype = m_Roomtype;
 				pPlayer->m_flSndRange = flRange;
 
-				// send room_type command to player's server.
-				// this should be a rare event - once per change of room_type only!
-
-				MESSAGE_BEGIN(MSG_ONE, SVC_ROOMTYPE, NULL, pentPlayer);
-				WRITE_SHORT((short)m_Roomtype); // sequence number
-				MESSAGE_END();
+				// New room type is sent to player in CBasePlayer::UpdateClientData.
 
 				// crank up nextthink rate for new active sound entity
 			}
