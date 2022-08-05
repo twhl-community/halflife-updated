@@ -62,8 +62,6 @@ extern edict_t* EntSelectSpawnPoint(CBaseEntity* pPlayer);
 // Global Savedata for player
 TYPEDESCRIPTION CBasePlayer::m_playerSaveData[] =
 	{
-		DEFINE_FIELD(CBasePlayer, m_MapName, FIELD_STRING),
-
 		DEFINE_FIELD(CBasePlayer, m_flFlashLightTime, FIELD_TIME),
 		DEFINE_FIELD(CBasePlayer, m_iFlashBattery, FIELD_INTEGER),
 
@@ -2909,8 +2907,6 @@ bool CBasePlayer::Save(CSave& save)
 	if (!CBaseMonster::Save(save))
 		return false;
 
-	m_MapName = ALLOC_STRING(STRING(gpGlobals->mapname));
-
 	return save.WriteFields("PLAYER", this, m_playerSaveData, ARRAYSIZE(m_playerSaveData));
 }
 
@@ -2950,11 +2946,9 @@ bool CBasePlayer::Restore(CRestore& restore)
 	m_ClientSndRoomtype = -1;
 
 	// Reset room type on level change.
-	if (!FStrEq(STRING(m_MapName), STRING(gpGlobals->mapname)))
+	if (!FStrEq(restore.GetData().szCurrentMapName, STRING(gpGlobals->mapname)))
 	{
 		m_SndRoomtype = 0;
-
-		m_MapName = ALLOC_STRING(STRING(gpGlobals->mapname));
 	}
 
 	// Copied from spawn() for now

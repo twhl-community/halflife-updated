@@ -36,6 +36,8 @@ public:
 
 	unsigned short TokenHash(const char* pszToken);
 
+	const SAVERESTOREDATA& GetData() const { return m_data; }
+
 	//Data is only valid if it's a valid pointer and if it has a token list
 	[[nodiscard]] static bool IsValidSaveRestoreData(SAVERESTOREDATA* data)
 	{
