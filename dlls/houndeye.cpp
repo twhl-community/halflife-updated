@@ -33,7 +33,8 @@
 #define HOUNDEYE_MAX_ATTACK_RADIUS 384
 #define HOUNDEYE_SQUAD_BONUS (float)1.1
 
-#define HOUNDEYE_EYE_FRAMES 4 // how many different switchable maps for the eye
+// Marphy Fact Files Fix - Fix various instances of Houndeye not correctly blinking/closing eyes
+#define HOUNDEYE_EYE_FRAMES 3 // how many different switchable maps for the eye
 
 #define HOUNDEYE_SOUND_STARTLE_VOLUME 128 // how loud a sound has to be to badly scare a sleeping houndeye
 
@@ -894,10 +895,11 @@ void CHoundeye::PrescheduleThink()
 //=========================================================
 // AI Schedules Specific to this monster
 //=========================================================
+// Marphy Fact Files Fix - Fix freeze stutter after leaderlook sequence
 Task_t tlHoundGuardPack[] =
 	{
 		{TASK_STOP_MOVING, (float)0},
-		{TASK_GUARD, (float)0},
+		{TASK_PLAY_SEQUENCE, (float)ACT_GUARD},
 };
 
 Schedule_t slHoundGuardPack[] =
@@ -1174,6 +1176,11 @@ Schedule_t* CHoundeye::GetScheduleOfType(int Type)
 		if (InSquad() && !IsLeader() && !m_fAsleep && RANDOM_LONG(0, 29) < 1)
 		{
 			return &slHoundSleep[0];
+		}
+		// Marphy Fact Files Fix - Restore squad leader leaderlook animation
+		if (InSquad() && IsLeader() && !m_fAsleep && RANDOM_LONG(0, 14) < 1)
+		{
+			return &slHoundGuardPack[0];
 		}
 		else
 		{

@@ -332,8 +332,10 @@ void CFlockingFlyer::SpawnCommonCode()
 	pev->classname = MAKE_STRING("monster_flyer");
 	pev->solid = SOLID_SLIDEBOX;
 	pev->movetype = MOVETYPE_FLY;
-	pev->takedamage = DAMAGE_NO;
-	pev->health = 1;
+	pev->takedamage = DAMAGE_YES;
+	pev->health = 10;
+
+	m_bloodColor = BLOOD_COLOR_GREEN;
 
 	m_fPathBlocked = false; // obstacles will be detected
 	m_flFieldOfView = 0.2;
