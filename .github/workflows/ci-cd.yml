@@ -16,7 +16,7 @@ jobs:
       - name: Install G++ Multilib, Clang++ & OpenGL library
         run: |
           sudo apt update
-          sudo apt install -y g++-multilib clang++ libgl1-mesa-dev
+          sudo apt install -y g++-multilib clang libgl1-mesa-dev
       
       - name: Build
         run: |
