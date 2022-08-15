@@ -141,12 +141,12 @@ COMMON_OBJS = \
 all: dirs hl.$(SHLIBEXT)
 
 dirs:
-	-mkdir $(BUILD_OBJ_DIR)
-	-mkdir $(HLDLL_OBJ_DIR)
-	-mkdir $(PM_OBJ_DIR)
-	-mkdir $(GAME_SHARED_OBJ_DIR)
-	-mkdir $(PUBLIC_OBJ_DIR)
-	-mkdir $(COMMON_OBJ_DIR)
+	-mkdir -p $(BUILD_OBJ_DIR)
+	-mkdir -p $(HLDLL_OBJ_DIR)
+	-mkdir -p $(PM_OBJ_DIR)
+	-mkdir -p $(GAME_SHARED_OBJ_DIR)
+	-mkdir -p $(PUBLIC_OBJ_DIR)
+	-mkdir -p $(COMMON_OBJ_DIR)
 
 hl.$(SHLIBEXT): $(HLDLL_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(PUBLIC_OBJS) $(COMMON_OBJS)
 	$(CPLUS) $(LDFLAGS) $(CPP_LIB) $(SHLIBLDFLAGS) -o $(BUILD_DIR)/$@ $(HLDLL_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(PUBLIC_OBJS) $(COMMON_OBJS)

@@ -66,7 +66,7 @@ TARGETS+= \
 	hl_cdll \
 
 build_dir:
-	-mkdir $(BUILD_DIR);
+	-mkdir -p $(BUILD_DIR);
 	cd $(BUILD_DIR)
 
 targets: $(TARGETS)
