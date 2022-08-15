@@ -24,10 +24,14 @@ BUILD_OBJ_DIR=$(BUILD_DIR)/obj
 ARCH=i386
 ELF-GC-DYNSTR=./elf-gc-dynstr
 
-CPLUS="g++ -m32"
+ifeq "$(COMPILER)" ""
+	COMPILER=g++
+endif
+
+CPLUS="$(COMPILER) -m32"
 CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstdc++ -ldl -lpthread
 
-ARCH_CFLAGS=-march=pentium-m -mfpmath=387
+ARCH_CFLAGS=-march=pentium-m -mfpmath=387 -mno-sse
 
 ifeq "$(CFG)" "release"
 	ARCH_CFLAGS+=-O3 
