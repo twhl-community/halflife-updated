@@ -1765,8 +1765,8 @@ void CSaveRestoreBuffer::BufferRewind(int size)
 extern "C" {
 unsigned _rotr(unsigned val, int shift)
 {
-	register unsigned lobit;	 /* non-zero means lo bit set */
-	register unsigned num = val; /* number to rotate */
+	unsigned lobit;	 /* non-zero means lo bit set */
+	unsigned num = val; /* number to rotate */
 
 	shift &= 0x1f; /* modulo 32 -- this will also make
 										   negative shifts work */
