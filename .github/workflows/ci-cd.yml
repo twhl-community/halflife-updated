@@ -1,0 +1,44 @@
+name: CI/CD
+
+on: [push, pull_request]
+
+jobs:
+  linux:
+    name: Linux-x86
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      
+      - name: Install G++ Multilib & 32 bit OpenGL library
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y g++-multilib libgl1-mesa-dev:i386
+      
+      - name: Build
+        run: |
+          cd linux
+          make -j2
+      
+  win32:
+    name: Win32
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x86
+      
+      - name: Build
+        run: |
+          cd projects/vs2019
+          msbuild projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
+      
