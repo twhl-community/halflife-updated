@@ -9,19 +9,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
       
-      - name: Install G++ Multilib & 32 bit OpenGL library
+      - name: Install G++ Multilib & OpenGL library
         run: |
-          sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y g++-multilib libgl1-mesa-dev:i386
+          sudo apt install -y g++-multilib libgl1-mesa-dev
       
       - name: Build
         run: |
           cd linux
-          make -j2
+          make CFG=release -j2
+      
+      - name: Deploy
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: Linux-x86
+          path: |
+            linux/release/client.so
+            linux/release/client.so.dbg
+            linux/release/hl.so
+            linux/release/hl.so.dbg
       
   win32:
     name: Win32
@@ -29,8 +36,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
       
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -38,7 +43,15 @@ jobs:
           msbuild-architecture: x86
       
       - name: Build
-        run: |
-          cd projects/vs2019
-          msbuild projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
+        run: msbuild projects/vs2019/projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
+      
+      - name: Deploy
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: Win32
+          path: |
+            projects/vs2019/Release/client/client.dll
+            projects/vs2019/Release/client/client.pdb
+            projects/vs2019/Release/hl/hl.dll
+            projects/vs2019/Release/hl/hl.pdb
       
