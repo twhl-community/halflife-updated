@@ -6,24 +6,27 @@ jobs:
   linux:
     name: Linux-x86
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [g++, clang++]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Install G++ Multilib & OpenGL library
+      - name: Install G++ Multilib, Clang++ & OpenGL library
         run: |
           sudo apt update
-          sudo apt install -y g++-multilib libgl1-mesa-dev
+          sudo apt install -y g++-multilib clang++ libgl1-mesa-dev
       
       - name: Build
         run: |
           cd linux
-          make CFG=release -j2
+          make COMPILER=${{ matrix.compiler }} CFG=release -j2
       
       - name: Deploy
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: Linux-x86
+          name: Linux-x86-${{ matrix.compiler }}
           path: |
             linux/release/client.so
             linux/release/client.so.dbg
