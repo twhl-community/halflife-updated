@@ -42,3 +42,5 @@ bool PM_GetHullBounds(int hullnumber, float* mins, float* maxs);
 #define OBS_MAP_CHASE 6
 
 extern playermove_s* pmove;
+
+inline bool g_CheckForPlayerStuck = false;

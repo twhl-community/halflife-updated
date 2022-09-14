@@ -1708,14 +1708,44 @@ allow for the cut precision of the net coordinates
 */
 #define PM_CHECKSTUCK_MINTIME 0.05 // Don't check again too quickly.
 
+bool PM_TryToUnstuck(Vector base)
+{
+	float x, y, z;
+	float xystep = 8.0;
+	float zstep = 18.0;
+	float xyminmax = xystep;
+	float zminmax = 4 * zstep;
+	Vector test;
+
+	for (z = 0; z <= zminmax; z += zstep)
+	{
+		for (x = -xyminmax; x <= xyminmax; x += xystep)
+		{
+			for (y = -xyminmax; y <= xyminmax; y += xystep)
+			{
+				test = base;
+				test[0] += x;
+				test[1] += y;
+				test[2] += z;
+
+				if (pmove->PM_TestPlayerPosition(test, NULL) == -1)
+				{
+					VectorCopy(test, pmove->origin);
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
 bool PM_CheckStuck()
 {
 	Vector base;
 	Vector offset;
 	Vector test;
 	int hitent;
-	int idx;
-	float fTime;
 	int i;
 	pmtrace_t traceresult;
 
@@ -1761,19 +1791,21 @@ bool PM_CheckStuck()
 
 	// Only an issue on the client.
 
-	if (0 != pmove->server)
-		idx = 0;
-	else
-		idx = 1;
-
-	fTime = pmove->Sys_FloatTime();
-	// Too soon?
-	if (rgStuckCheckTime[pmove->player_index][idx] >=
-		(fTime - PM_CHECKSTUCK_MINTIME))
+	// Always check if we've just changed levels.
+	if (!(pmove->server != 0 && g_CheckForPlayerStuck))
 	{
-		return true;
+		// TODO: not really necessary to have separate arrays for client and server since the code is separate anyway.
+		const int idx = 0 != pmove->server ? 0 : 1;
+
+		const float fTime = pmove->Sys_FloatTime();
+		// Too soon?
+		if (rgStuckCheckTime[pmove->player_index][idx] >=
+			(fTime - PM_CHECKSTUCK_MINTIME))
+		{
+			return true;
+		}
+		rgStuckCheckTime[pmove->player_index][idx] = fTime;
 	}
-	rgStuckCheckTime[pmove->player_index][idx] = fTime;
 
 	pmove->PM_StuckTouch(hitent, &traceresult);
 
@@ -1792,34 +1824,29 @@ bool PM_CheckStuck()
 		return false;
 	}
 
+	// Try to unstuck the player after a level change.
+	// This only works in singleplayer. In multiplayer there it's too unreliable to try, so only the first player gets unstuck.
+	if (pmove->server != 0 && g_CheckForPlayerStuck)
+	{
+		g_CheckForPlayerStuck = false;
+
+		// Are we stuck inside the world?
+		if (hitent == 0)
+		{
+			if (!PM_TryToUnstuck(base))
+			{
+				return false;
+			}
+		}
+	}
+
 	// If player is flailing while stuck in another player ( should never happen ), then see
 	//  if we can't "unstick" them forceably.
 	if ((pmove->cmd.buttons & (IN_JUMP | IN_DUCK | IN_ATTACK)) != 0 && (pmove->physents[hitent].player != 0))
 	{
-		float x, y, z;
-		float xystep = 8.0;
-		float zstep = 18.0;
-		float xyminmax = xystep;
-		float zminmax = 4 * zstep;
-
-		for (z = 0; z <= zminmax; z += zstep)
+		if (!PM_TryToUnstuck(base))
 		{
-			for (x = -xyminmax; x <= xyminmax; x += xystep)
-			{
-				for (y = -xyminmax; y <= xyminmax; y += xystep)
-				{
-					VectorCopy(base, test);
-					test[0] += x;
-					test[1] += y;
-					test[2] += z;
-
-					if (pmove->PM_TestPlayerPosition(test, NULL) == -1)
-					{
-						VectorCopy(test, pmove->origin);
-						return false;
-					}
-				}
-			}
+			return false;
 		}
 	}
 

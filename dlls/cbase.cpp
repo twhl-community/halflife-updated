@@ -466,6 +466,9 @@ void SaveReadFields(SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseDa
 		return;
 	}
 
+	// Always check if the player is stuck when loading a save game.
+	g_CheckForPlayerStuck = true;
+
 	CRestore restoreHelper(*pSaveData);
 	restoreHelper.ReadFields(pname, pBaseData, pFields, fieldCount);
 }
