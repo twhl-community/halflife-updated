@@ -21,12 +21,9 @@
 #include "decals.h"
 #include "gamerules.h"
 #include "game.h"
+#include "pm_shared.h"
 
 void EntvarsKeyvalue(entvars_t* pev, KeyValueData* pkvd);
-
-void PM_Move(struct playermove_s* ppmove, qboolean server);
-void PM_Init(struct playermove_s* ppmove);
-char PM_FindTextureType(char* name);
 
 void OnFreeEntPrivateData(edict_s* pEdict);
 
