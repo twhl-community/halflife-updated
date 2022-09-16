@@ -1367,7 +1367,6 @@ This version is used by Monsters.
 void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t* pevAttacker)
 {
 	static int tracerCount;
-	bool tracer;
 	TraceResult tr;
 	Vector vecRight = gpGlobals->v_right;
 	Vector vecUp = gpGlobals->v_up;
@@ -1397,7 +1396,6 @@ void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirS
 		vecEnd = vecSrc + vecDir * flDistance;
 		UTIL_TraceLine(vecSrc, vecEnd, dont_ignore_monsters, ENT(pev) /*pentIgnore*/, &tr);
 
-		tracer = false;
 		if (iTracerFreq != 0 && (tracerCount++ % iTracerFreq) == 0)
 		{
 			Vector vecTracerSrc;
@@ -1411,8 +1409,6 @@ void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirS
 				vecTracerSrc = vecSrc;
 			}
 
-			if (iTracerFreq != 1) // guns that always trace also always decal
-				tracer = true;
 			switch (iBulletType)
 			{
 			case BULLET_MONSTER_MP5:
@@ -1473,11 +1469,8 @@ void CBaseEntity::FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirS
 
 				case BULLET_MONSTER_12MM:
 					pEntity->TraceAttack(pevAttacker, gSkillData.monDmg12MM, vecDir, &tr, DMG_BULLET);
-					if (!tracer)
-					{
-						TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
-						DecalGunshot(&tr, iBulletType);
-					}
+					TEXTURETYPE_PlaySound(&tr, vecSrc, vecEnd, iBulletType);
+					DecalGunshot(&tr, iBulletType);
 					break;
 
 				case BULLET_NONE: // FIX

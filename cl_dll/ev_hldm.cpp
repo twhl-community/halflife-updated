@@ -293,9 +293,8 @@ void EV_HLDM_DecalGunshot(pmtrace_t* pTrace, int iBulletType)
 	}
 }
 
-bool EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, float* right, int iBulletType, int iTracerFreq, int* tracerCount)
+void EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, float* right, int iBulletType, int iTracerFreq, int* tracerCount)
 {
-	bool tracer = false;
 	int i;
 	bool player = idx >= 1 && idx <= gEngfuncs.GetMaxClients();
 
@@ -318,9 +317,6 @@ bool EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, flo
 			VectorCopy(vecSrc, vecTracerSrc);
 		}
 
-		if (iTracerFreq != 1) // guns that always trace also always decal
-			tracer = true;
-
 		switch (iBulletType)
 		{
 		case BULLET_PLAYER_MP5:
@@ -332,8 +328,6 @@ bool EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, flo
 			break;
 		}
 	}
-
-	return tracer;
 }
 
 
@@ -349,7 +343,6 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 	int i;
 	pmtrace_t tr;
 	int iShot;
-	bool tracer;
 
 	for (iShot = 1; iShot <= cShots; iShot++)
 	{
@@ -393,7 +386,7 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 		gEngfuncs.pEventAPI->EV_SetTraceHull(2);
 		gEngfuncs.pEventAPI->EV_PlayerTrace(vecSrc, vecEnd, PM_STUDIO_BOX, -1, &tr);
 
-		tracer = EV_HLDM_CheckTracer(idx, vecSrc, tr.endpos, forward, right, iBulletType, iTracerFreq, tracerCount);
+		EV_HLDM_CheckTracer(idx, vecSrc, tr.endpos, forward, right, iBulletType, iTracerFreq, tracerCount);
 
 		// do damage, paint decals
 		if (tr.fraction != 1.0)
@@ -409,11 +402,8 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 				break;
 			case BULLET_PLAYER_MP5:
 
-				if (!tracer)
-				{
-					EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
-					EV_HLDM_DecalGunshot(&tr, iBulletType);
-				}
+				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
+				EV_HLDM_DecalGunshot(&tr, iBulletType);
 				break;
 			case BULLET_PLAYER_BUCKSHOT:
 
