@@ -635,22 +635,27 @@ void CFuncTank::TrackTarget()
 // If barrel is offset, add in additional rotation
 void CFuncTank::AdjustAnglesForBarrel(Vector& angles, float distance)
 {
-	float r2, d2;
-
-
 	if (m_barrelPos.y != 0 || m_barrelPos.z != 0)
 	{
 		distance -= m_barrelPos.z;
-		d2 = distance * distance;
+		const float d2 = distance * distance;
 		if (0 != m_barrelPos.y)
 		{
-			r2 = m_barrelPos.y * m_barrelPos.y;
-			angles.y += (180.0 / M_PI) * atan2(m_barrelPos.y, sqrt(d2 - r2));
+			const float r2 = m_barrelPos.y * m_barrelPos.y;
+
+			if (d2 > r2)
+			{
+				angles.y += (180.0 / M_PI) * atan2(m_barrelPos.y, sqrt(d2 - r2));
+			}
 		}
 		if (0 != m_barrelPos.z)
 		{
-			r2 = m_barrelPos.z * m_barrelPos.z;
-			angles.x += (180.0 / M_PI) * atan2(-m_barrelPos.z, sqrt(d2 - r2));
+			const float r2 = m_barrelPos.z * m_barrelPos.z;
+
+			if (d2 > r2)
+			{
+				angles.x += (180.0 / M_PI) * atan2(-m_barrelPos.z, sqrt(d2 - r2));
+			}
 		}
 	}
 }
