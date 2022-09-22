@@ -196,7 +196,7 @@ bool CBaseMonster::FindLateralCover(const Vector& vecThreat, const Vector& vecVi
 Vector CBaseMonster::ShootAtEnemy(const Vector& shootOrigin) { return g_vecZero; }
 bool CBaseMonster::FacingIdeal() { return false; }
 bool CBaseMonster::FCanActiveIdle() { return false; }
-void CBaseMonster::PlaySentence(const char* pszSentence, float duration, float volume, float attenuation) {}
+void CBaseMonster::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation) {}
 void CBaseMonster::PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener) {}
 void CBaseMonster::SentenceStop() {}
 void CBaseMonster::CorpseFallThink() {}

@@ -1126,11 +1126,8 @@ void CTalkMonster::PlayScriptedSentence(const char* pszSentence, float duration,
 	m_hTalkTarget = pListener;
 }
 
-void CTalkMonster::PlaySentence(const char* pszSentence, float duration, float volume, float attenuation)
+void CTalkMonster::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation)
 {
-	if (!pszSentence)
-		return;
-
 	Talk(duration);
 
 	CTalkMonster::g_talkWaitTime = gpGlobals->time + duration + 2.0;
