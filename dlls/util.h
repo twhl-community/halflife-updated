@@ -23,6 +23,8 @@
 #include "activity.h"
 #include "enginecallback.h"
 
+class CBaseEntity;
+
 inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float* pOrigin, entvars_t* ent); // implementation later in this file
 
 inline globalvars_t* gpGlobals = nullptr;
@@ -86,6 +88,16 @@ typedef int EOFFSET;
 	extern "C" DLLEXPORT void mapClassName(entvars_t* pev); \
 	void mapClassName(entvars_t* pev) { GetClassPtr((DLLClassName*)pev); }
 
+/**
+*	@brief Gets the list of entities.
+*	Will return @c nullptr if there is no map loaded.
+*/
+edict_t* UTIL_GetEntityList();
+
+/**
+*	@brief Gets the local player in singleplayer, or @c nullptr in multiplayer.
+*/
+CBaseEntity* UTIL_GetLocalPlayer();
 
 //
 // Conversion among the three types of "entity", including identity-conversions.
@@ -104,7 +116,6 @@ inline edict_t* ENT(edict_t* pent)
 	return pent;
 }
 inline edict_t* ENT(EOFFSET eoffset) { return (*g_engfuncs.pfnPEntityOfEntOffset)(eoffset); }
-inline EOFFSET OFFSET(EOFFSET eoffset) { return eoffset; }
 inline EOFFSET OFFSET(const edict_t* pent)
 {
 #if _DEBUG
@@ -121,7 +132,6 @@ inline EOFFSET OFFSET(entvars_t* pev)
 #endif
 	return OFFSET(ENT(pev));
 }
-inline entvars_t* VARS(entvars_t* pev) { return pev; }
 
 inline entvars_t* VARS(edict_t* pent)
 {
@@ -131,7 +141,6 @@ inline entvars_t* VARS(edict_t* pent)
 	return &pent->v;
 }
 
-inline entvars_t* VARS(EOFFSET eoffset) { return VARS(ENT(eoffset)); }
 inline int ENTINDEX(edict_t* pEdict) { return (*g_engfuncs.pfnIndexOfEdict)(pEdict); }
 inline edict_t* INDEXENT(int iEdictNum) { return (*g_engfuncs.pfnPEntityOfEntIndex)(iEdictNum); }
 inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float* pOrigin, entvars_t* ent)
@@ -208,8 +217,6 @@ inline bool FClassnameIs(entvars_t* pev, const char* szClassname)
 {
 	return FStrEq(STRING(pev->classname), szClassname);
 }
-
-class CBaseEntity;
 
 // Misc. Prototypes
 extern void UTIL_SetSize(entvars_t* pev, const Vector& vecMin, const Vector& vecMax);

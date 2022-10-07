@@ -480,7 +480,7 @@ void CTalkMonster::RunTask(Task_t* pTask)
 	case TASK_TLK_LOOK_AT_CLIENT:
 	{
 		// Get edict for one player
-		edict_t* pPlayer = g_engfuncs.pfnPEntityOfEntIndex(1);
+		CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
 
 		// track head to the client for a while.
 		if (pPlayer &&
@@ -488,7 +488,7 @@ void CTalkMonster::RunTask(Task_t* pTask)
 			!IsMoving() &&
 			!IsTalking())
 		{
-			IdleHeadTurn(pPlayer->v.origin);
+			IdleHeadTurn(pPlayer->pev->origin);
 		}
 		else
 		{
@@ -500,14 +500,14 @@ void CTalkMonster::RunTask(Task_t* pTask)
 		if (pTask->iTask == TASK_TLK_CLIENT_STARE)
 		{
 			// fail out if the player looks away or moves away.
-			if ((pPlayer->v.origin - pev->origin).Length2D() > TLK_STARE_DIST)
+			if ((pPlayer->pev->origin - pev->origin).Length2D() > TLK_STARE_DIST)
 			{
 				// player moved away.
 				TaskFail();
 			}
 
-			UTIL_MakeVectors(pPlayer->v.angles);
-			if (UTIL_DotPoints(pPlayer->v.origin, pev->origin, gpGlobals->v_forward) < m_flFieldOfView)
+			UTIL_MakeVectors(pPlayer->pev->angles);
+			if (UTIL_DotPoints(pPlayer->pev->origin, pev->origin, gpGlobals->v_forward) < m_flFieldOfView)
 			{
 				// player looked away
 				TaskFail();
@@ -524,13 +524,13 @@ void CTalkMonster::RunTask(Task_t* pTask)
 	case TASK_FACE_PLAYER:
 	{
 		// Get edict for one player
-		edict_t* pPlayer = g_engfuncs.pfnPEntityOfEntIndex(1);
+		CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
 
 		if (pPlayer)
 		{
-			MakeIdealYaw(pPlayer->v.origin);
+			MakeIdealYaw(pPlayer->pev->origin);
 			ChangeYaw(pev->yaw_speed);
-			IdleHeadTurn(pPlayer->v.origin);
+			IdleHeadTurn(pPlayer->pev->origin);
 			if (gpGlobals->time > m_flWaitFinished && FlYawDiff() < 10)
 			{
 				TaskComplete();
@@ -1243,14 +1243,14 @@ Schedule_t* CTalkMonster::GetScheduleOfType(int Type)
 
 		if (!IsTalking() && HasConditions(bits_COND_SEE_CLIENT) && RANDOM_LONG(0, 6) == 0)
 		{
-			edict_t* pPlayer = g_engfuncs.pfnPEntityOfEntIndex(1);
+			CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
 
 			if (pPlayer)
 			{
 				// watch the client.
-				UTIL_MakeVectors(pPlayer->v.angles);
-				if ((pPlayer->v.origin - pev->origin).Length2D() < TLK_STARE_DIST &&
-					UTIL_DotPoints(pPlayer->v.origin, pev->origin, gpGlobals->v_forward) >= m_flFieldOfView)
+				UTIL_MakeVectors(pPlayer->pev->angles);
+				if ((pPlayer->pev->origin - pev->origin).Length2D() < TLK_STARE_DIST &&
+					UTIL_DotPoints(pPlayer->pev->origin, pev->origin, gpGlobals->v_forward) >= m_flFieldOfView)
 				{
 					// go into the special STARE schedule if the player is close, and looking at me too.
 					return &slTlkIdleWatchClient[1];

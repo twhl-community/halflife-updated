@@ -695,10 +695,8 @@ void CTriggerCDAudio::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYP
 
 void PlayCDTrack(int iTrack)
 {
-	edict_t* pClient;
-
 	// manually find the single player.
-	pClient = g_engfuncs.pfnPEntityOfEntIndex(1);
+	CBaseEntity* pClient = UTIL_GetLocalPlayer();
 
 	// Can't play if the client is not connected!
 	if (!pClient)
@@ -712,14 +710,14 @@ void PlayCDTrack(int iTrack)
 
 	if (iTrack == -1)
 	{
-		CLIENT_COMMAND(pClient, "cd stop\n");
+		CLIENT_COMMAND(pClient->edict(), "cd stop\n");
 	}
 	else
 	{
 		char string[64];
 
 		sprintf(string, "cd play %3d\n", iTrack);
-		CLIENT_COMMAND(pClient, string);
+		CLIENT_COMMAND(pClient->edict(), string);
 	}
 }
 
@@ -776,10 +774,8 @@ void CTargetCDAudio::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 // only plays for ONE client, so only use in single play!
 void CTargetCDAudio::Think()
 {
-	edict_t* pClient;
-
 	// manually find the single player.
-	pClient = g_engfuncs.pfnPEntityOfEntIndex(1);
+	CBaseEntity* pClient = UTIL_GetLocalPlayer();
 
 	// Can't play if the client is not connected!
 	if (!pClient)
@@ -787,7 +783,7 @@ void CTargetCDAudio::Think()
 
 	pev->nextthink = gpGlobals->time + 0.5;
 
-	if ((pClient->v.origin - pev->origin).Length() <= pev->scale)
+	if ((pClient->pev->origin - pev->origin).Length() <= pev->scale)
 		Play();
 }
 
@@ -1495,7 +1491,7 @@ void CChangeLevel::ChangeLevelNow(CBaseEntity* pActivator)
 	pev->dmgtime = gpGlobals->time;
 
 
-	CBaseEntity* pPlayer = CBaseEntity::Instance(g_engfuncs.pfnPEntityOfEntIndex(1));
+	CBaseEntity* pPlayer = UTIL_GetLocalPlayer();
 	if (!InTransitionVolume(pPlayer, m_szLandmarkName))
 	{
 		ALERT(at_aiconsole, "Player isn't in the transition volume %s, aborting\n", m_szLandmarkName);
@@ -2248,7 +2244,12 @@ void CTriggerCamera::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE
 	}
 	if (!pActivator || !pActivator->IsPlayer())
 	{
-		pActivator = CBaseEntity::Instance(g_engfuncs.pfnPEntityOfEntIndex(1));
+		pActivator = UTIL_GetLocalPlayer();
+
+		if (!pActivator)
+		{
+			return;
+		}
 	}
 
 	auto player = static_cast<CBasePlayer*>(pActivator);

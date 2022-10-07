@@ -46,17 +46,13 @@ static CBasePlayer* FindPlayerByName(const char* pTestName)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(i);
-		if (pEdict)
+		CBaseEntity* pEnt = UTIL_PlayerByIndex(i);
+		if (pEnt)
 		{
-			CBaseEntity* pEnt = CBaseEntity::Instance(pEdict);
-			if (pEnt && pEnt->IsPlayer())
+			const char* pNetName = STRING(pEnt->pev->netname);
+			if (stricmp(pNetName, pTestName) == 0)
 			{
-				const char* pNetName = STRING(pEnt->pev->netname);
-				if (stricmp(pNetName, pTestName) == 0)
-				{
-					return (CBasePlayer*)pEnt;
-				}
+				return (CBasePlayer*)pEnt;
 			}
 		}
 	}

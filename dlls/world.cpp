@@ -472,6 +472,27 @@ LINK_ENTITY_TO_CLASS(worldspawn, CWorld);
 #define SF_WORLD_TITLE 0x0002	  // Display game title at startup
 #define SF_WORLD_FORCETEAM 0x0004 // Force teams
 
+CWorld::CWorld()
+{
+	if (Instance)
+	{
+		ALERT(at_error, "Do not create multiple instances of worldspawn\n");
+		return;
+	}
+
+	Instance = this;
+}
+
+CWorld::~CWorld()
+{
+	if (Instance != this)
+	{
+		return;
+	}
+
+	Instance = nullptr;
+}
+
 void CWorld::Spawn()
 {
 	g_fGameOver = false;
@@ -480,6 +501,13 @@ void CWorld::Spawn()
 
 void CWorld::Precache()
 {
+	// Flag this entity for removal if it's not the actual world entity.
+	if (Instance != this)
+	{
+		UTIL_Remove(this);
+		return;
+	}
+
 	g_pLastSpawn = NULL;
 
 #if 1

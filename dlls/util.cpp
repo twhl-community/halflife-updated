@@ -321,6 +321,15 @@ TYPEDESCRIPTION gEntvarsDescription[] =
 
 #define ENTVARS_COUNT (sizeof(gEntvarsDescription) / sizeof(gEntvarsDescription[0]))
 
+edict_t* UTIL_GetEntityList()
+{
+	return g_engfuncs.pfnPEntityOfEntOffset(0);
+}
+
+CBaseEntity* UTIL_GetLocalPlayer()
+{
+	return UTIL_PlayerByIndex(1);
+}
 
 #ifdef DEBUG
 edict_t* DBG_EntOfVars(const entvars_t* pev)
@@ -408,7 +417,7 @@ void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist, int i
 
 int UTIL_EntitiesInBox(CBaseEntity** pList, int listMax, const Vector& mins, const Vector& maxs, int flagMask)
 {
-	edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(1);
+	edict_t* pEdict = UTIL_GetEntityList();
 	CBaseEntity* pEntity;
 	int count;
 
@@ -416,6 +425,9 @@ int UTIL_EntitiesInBox(CBaseEntity** pList, int listMax, const Vector& mins, con
 
 	if (!pEdict)
 		return count;
+
+	// Ignore world.
+	++pEdict;
 
 	for (int i = 1; i < gpGlobals->maxEntities; i++, pEdict++)
 	{
@@ -450,7 +462,7 @@ int UTIL_EntitiesInBox(CBaseEntity** pList, int listMax, const Vector& mins, con
 
 int UTIL_MonstersInSphere(CBaseEntity** pList, int listMax, const Vector& center, float radius)
 {
-	edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(1);
+	edict_t* pEdict = UTIL_GetEntityList();
 	CBaseEntity* pEntity;
 	int count;
 	float distance, delta;
@@ -460,6 +472,9 @@ int UTIL_MonstersInSphere(CBaseEntity** pList, int listMax, const Vector& center
 
 	if (!pEdict)
 		return count;
+
+	// Ignore world.
+	++pEdict;
 
 	for (int i = 1; i < gpGlobals->maxEntities; i++, pEdict++)
 	{

@@ -1522,7 +1522,7 @@ void CTestHull::DropDelay()
 {
 	//	UTIL_CenterPrintAll( "Node Graph out of Date. Rebuilding..." );
 
-	UTIL_SetOrigin(VARS(pev), WorldGraph.m_pNodes[0].m_vecOrigin);
+	UTIL_SetOrigin(pev, WorldGraph.m_pNodes[0].m_vecOrigin);
 
 	SetThink(&CTestHull::CallBuildNodeGraph);
 
