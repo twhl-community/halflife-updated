@@ -202,7 +202,7 @@ void GetSequenceInfo(void* pmodel, entvars_t* pev, float* pflFrameRate, float* p
 
 	mstudioseqdesc_t* pseqdesc;
 
-	if (pev->sequence >= pstudiohdr->numseq)
+	if (pev->sequence < 0 || pev->sequence >= pstudiohdr->numseq)
 	{
 		*pflFrameRate = 0.0;
 		*pflGroundSpeed = 0.0;
@@ -230,7 +230,7 @@ int GetSequenceFlags(void* pmodel, entvars_t* pev)
 	studiohdr_t* pstudiohdr;
 
 	pstudiohdr = (studiohdr_t*)pmodel;
-	if (!pstudiohdr || pev->sequence >= pstudiohdr->numseq)
+	if (!pstudiohdr || pev->sequence < 0 || pev->sequence >= pstudiohdr->numseq)
 		return 0;
 
 	mstudioseqdesc_t* pseqdesc;
@@ -245,7 +245,7 @@ int GetAnimationEvent(void* pmodel, entvars_t* pev, MonsterEvent_t* pMonsterEven
 	studiohdr_t* pstudiohdr;
 
 	pstudiohdr = (studiohdr_t*)pmodel;
-	if (!pstudiohdr || pev->sequence >= pstudiohdr->numseq || !pMonsterEvent)
+	if (!pstudiohdr || pev->sequence < 0 || pev->sequence >= pstudiohdr->numseq || !pMonsterEvent)
 		return 0;
 
 	int events = 0;
@@ -349,7 +349,7 @@ float SetBlending(void* pmodel, entvars_t* pev, int iBlender, float flValue)
 	studiohdr_t* pstudiohdr;
 
 	pstudiohdr = (studiohdr_t*)pmodel;
-	if (!pstudiohdr)
+	if (!pstudiohdr || pev->sequence < 0 || pev->sequence >= pstudiohdr->numseq)
 		return flValue;
 
 	mstudioseqdesc_t* pseqdesc;
