@@ -51,6 +51,8 @@ typedef struct
 	Vector vecLandmarkOffset;
 } globalvars_t;
 
+constexpr int NUM_ENT_CONTROLLERS = 4;
+constexpr int NUM_ENT_BLENDERS = 2;
 
 typedef struct entvars_s
 {
@@ -109,13 +111,13 @@ typedef struct entvars_s
 
 	int light_level;
 
-	int sequence;		// animation sequence
-	int gaitsequence;	// movement animation sequence for player (0 for none)
-	float frame;		// % playback position in animation sequences (0..255)
-	float animtime;		// world time when frame was set
-	float framerate;	// animation playback rate (-8x to 8x)
-	byte controller[4]; // bone controller setting (0..255)
-	byte blending[2];	// blending amount between sub-sequences (0..255)
+	int sequence;							// animation sequence
+	int gaitsequence;						// movement animation sequence for player (0 for none)
+	float frame;							// % playback position in animation sequences (0..255)
+	float animtime;							// world time when frame was set
+	float framerate;						// animation playback rate (-8x to 8x)
+	byte controller[NUM_ENT_CONTROLLERS];	// bone controller setting (0..255)
+	byte blending[NUM_ENT_BLENDERS];		// blending amount between sub-sequences (0..255)
 
 	float scale; // sprite rendering scale (0..255)
 

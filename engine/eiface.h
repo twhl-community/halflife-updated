@@ -384,6 +384,7 @@ typedef enum _fieldtypes
 #define DEFINE_FIELD(type, name, fieldtype) _FIELD(type, name, fieldtype, 1, 0)
 #define DEFINE_ARRAY(type, name, fieldtype, count) _FIELD(type, name, fieldtype, count, 0)
 #define DEFINE_ENTITY_FIELD(name, fieldtype) _FIELD(entvars_t, name, fieldtype, 1, 0)
+#define DEFINE_ENTITY_ARRAY(name, fieldtype, count) _FIELD(entvars_t, name, fieldtype, count, 0)
 #define DEFINE_ENTITY_GLOBAL_FIELD(name, fieldtype) _FIELD(entvars_t, name, fieldtype, 1, FTYPEDESC_GLOBAL)
 #define DEFINE_GLOBAL_FIELD(type, name, fieldtype) _FIELD(type, name, fieldtype, 1, FTYPEDESC_GLOBAL)
 
