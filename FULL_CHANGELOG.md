@@ -368,7 +368,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Linux compilation fixes (Thanks Shepard and LogicAndTrick)
 * Made Half-Life client dll depend on server dll to ensure server is built when launching a client debug session
 *  Update Linux makefiles to use g++ instead of gcc to compile and link all code (Thanks MegaBrutal for bringing this to my attention) [#33](https://github.com/SamVanheer/halflife-updated/issues/33)
-* Moved DMC & Ricochet source code, projects, makefiles and fgds to their own repositories. See About page for more information: https://github.com/SamVanheer/halflife-updated/wiki/About
+* Moved DMC & Ricochet source code, projects, makefiles and fgds to their own repositories. See [README.md](README.md) for more information
 * Enabled multiprocessor compilation for Windows builds [#39](https://github.com/SamVanheer/halflife-updated/issues/39)
 * Changed default toolset to non-XP compatible one and set Windows SDK version to Windows 10 [#44](https://github.com/SamVanheer/halflife-updated/issues/44)
 * Set C++ standard to 17 [#85](https://github.com/SamVanheer/halflife-updated/issues/85)
@@ -390,11 +390,6 @@ Fixes for bugs introduced in beta builds are not included in this list.
 ## Git repository changes
 
 * Added Github Actions CI configuration file based on Half-Life Unified SDK's version. Continuous Integration provides pre-built binaries for Windows and Linux. (Thanks to [JoelTroch](https://github.com/JoelTroch) for providing the original file and providing the basis for this file)
-
-## Github wiki changes
-
-* Explicitly specified the scope of the projects
-* Added links to TWHL website, Discord server, SDK setup tutorial and Half-Life Updated status thread
 
 ## Game installation
 
