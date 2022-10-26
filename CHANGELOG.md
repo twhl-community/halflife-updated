@@ -1,3 +1,5 @@
+# Half-Life Updated changelog
+
 ## Changes in V1.0.0 Beta 014
 
 > **Note:** This beta has not been released yet.
