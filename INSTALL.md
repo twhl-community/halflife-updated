@@ -9,7 +9,7 @@ System requirements:
 
 You will need to install the following dependencies before you can install the mods themselves:
 
-1. Install the Visual Studio 2019 re-distributable. You can find it [[here|https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170]]. Make sure to install the x86 version. The re-distributable for 2019 is also used for several other versions, this should be noted on the download page.
+1. Install the Visual Studio 2019 re-distributable. You can find it [here](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170). Make sure to install the x86 version. The re-distributable for 2019 is also used for several other versions, this should be noted on the download page.
 
 2. Set up dotnet script. You can find out how to do that here: https://github.com/SamVanheer/halflife-unified-sdk/wiki/Setting-up-and-using-dotnet-script
 
@@ -18,9 +18,9 @@ You will need to install the following dependencies before you can install the m
 1. Install the game you are downloading the updated mod of and run it once. Make sure to start a new game to ensure that all of the game assets have been downloaded and installed. The original game assets are required by the mods, and the singleplayer maps will be copied, converted and updated on installation.
 
 2. Download the latest version from the Releases page:
-* [[Half-Life Updated|https://github.com/SamVanheer/halflife-updated/releases]]
-* [[Half-Life: Opposing Force Updated|https://github.com/SamVanheer/halflife-op4-updated/releases]]
-* [[Half-Life: Blue Shift Updated|https://github.com/SamVanheer/halflife-bs-updated/releases]]
+* [Half-Life Updated](https://github.com/SamVanheer/halflife-updated/releases)
+* [Half-Life: Opposing Force Updated](https://github.com/SamVanheer/halflife-op4-updated/releases)
+* [Half-Life: Blue Shift Updated](https://github.com/SamVanheer/halflife-bs-updated/releases)
 
 For the instructions below, replace `mod_name` and `original_game_name` with the following mod directory name and game name depending on which mod you are installing:
 | Mod | Mod directory name | Original game name |
