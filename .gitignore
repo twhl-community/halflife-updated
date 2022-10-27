@@ -1,3 +1,5 @@
+.vs/
+
 # Allow Half-Life-specific files that would otherwise be ignored
 !lib/public/game_controls.lib
 !lib/public/SDL2.lib
