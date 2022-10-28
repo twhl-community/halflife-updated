@@ -530,7 +530,7 @@ public:
 
 	bool HasAnyWeapons() const
 	{
-		return (m_iWeaponBits & ~static_cast<std::uint64_t>(WEAPON_SUIT)) != 0;
+		return (m_iWeaponBits & ~(1ULL << WEAPON_SUIT)) != 0;
 	}
 
 private:

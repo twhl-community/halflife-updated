@@ -145,7 +145,7 @@ bool CHud::MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf)
 	const std::uint64_t lowerBits = READ_LONG();
 	const std::uint64_t upperBits = READ_LONG();
 
-	m_iWeaponBits = lowerBits | (upperBits << 32ULL);
+	m_iWeaponBits = (lowerBits & 0XFFFFFFFF) | ((upperBits & 0XFFFFFFFF) << 32ULL);
 
 	return true;
 }
