@@ -9,6 +9,7 @@
 * Correctly save and restore controller and blending variables [#175](https://github.com/SamVanheer/halflife-updated/issues/175) (Thanks vasiavasiavasia95)
 * Set activity before SetYawSpeed so it has the right activity [#176](https://github.com/SamVanheer/halflife-updated/issues/176) (Thanks [FreeSlave](https://github.com/FreeSlave) and vasiavasiavasia95)
 * Fixed animation code accessing invalid sequence descriptor (halflife issue [#3308](https://github.com/ValveSoftware/halflife/issues/3308)) (Thanks [FreeSlave](https://github.com/FreeSlave))
+* Fixed weapon bits being incorrectly set and checked in HasAnyWeapons [#178](https://github.com/SamVanheer/halflife-updated/issues/178) (Thanks jay!)
 
 ## Changes in V1.0.0 Beta 013
 
