@@ -11,7 +11,7 @@ You will need to install the following dependencies before you can install the m
 
 1. Install the Visual Studio 2019 re-distributable. You can find it [here](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170). Make sure to install the x86 version. The re-distributable for 2019 is also used for several other versions, this should be noted on the download page.
 
-2. Set up dotnet script. You can find out how to do that here: https://github.com/SamVanheer/halflife-unified-sdk/wiki/Setting-up-and-using-dotnet-script
+2. Set up dotnet script. You can find out how to do that here: [Setting up and using dotnet script](/docs/tutorials/setting-up-and-using-dotnet-script.md)
 
 ## Installing one of the Half-Life Updated projects
 
@@ -31,7 +31,7 @@ For the instructions below, replace `mod_name` and `original_game_name` with the
 
 3. Extract the archive to your Half-Life directory. It should place a directory called `mod_name` and another called `mod_name_hd` in the `Half-Life` directory.
 
-4. Run the script `mod_name/scripts/installer/Install.csx` with the parameter `--game original_game_name`. See this page for more information on how to run scripts: https://github.com/SamVanheer/halflife-unified-sdk/wiki/Setting-up-and-using-dotnet-script#using-dotnet-script
+4. Run the script `mod_name/scripts/installer/Install.csx` with the parameter `--game original_game_name`. See this page for more information on how to run scripts: [Setting up and using dotnet script](/docs/tutorials/setting-up-and-using-dotnet-script.md#using-dotnet-script)
 
 <details>
 <summary>
