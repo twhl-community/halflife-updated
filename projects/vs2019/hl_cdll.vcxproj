@@ -76,8 +76,8 @@
       </BaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>cmd /c $(ProjectDir)..\..\filecopy.bat "$(OutDir)" "cl_dlls" "$(TargetFileName)"
-cmd /c $(ProjectDir)..\..\filecopy.bat "$(OutDir)" "cl_dlls" "$(TargetName).pdb"</Command>
+      <Command>cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetFileName)""
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""</Command>
       <Message>Installing client files</Message>
     </PostBuildEvent>
     <PostBuildEvent />
@@ -108,8 +108,8 @@ cmd /c $(ProjectDir)..\..\filecopy.bat "$(OutDir)" "cl_dlls" "$(TargetName).pdb"
       </BaseAddress>
     </Link>
     <PostBuildEvent>
-      <Command>cmd /c $(ProjectDir)..\..\filecopy.bat "$(OutDir)" "cl_dlls" "$(TargetFileName)"
-cmd /c $(ProjectDir)..\..\filecopy.bat "$(OutDir)" "cl_dlls" "$(TargetName).pdb"</Command>
+      <Command>cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetFileName)""
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""</Command>
       <Message>Installing client files</Message>
     </PostBuildEvent>
     <PostBuildEvent />
