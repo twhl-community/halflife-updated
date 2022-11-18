@@ -294,7 +294,7 @@ bool CHudAmmo::Init()
 	gHR.Init();
 
 	return true;
-};
+}
 
 void CHudAmmo::Reset()
 {

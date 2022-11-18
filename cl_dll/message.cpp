@@ -42,7 +42,7 @@ bool CHudMessage::Init()
 	Reset();
 
 	return true;
-};
+}
 
 bool CHudMessage::VidInit()
 {
@@ -50,7 +50,7 @@ bool CHudMessage::VidInit()
 	m_HUD_title_life = gHUD.GetSpriteIndex("title_life");
 
 	return true;
-};
+}
 
 
 void CHudMessage::Reset()
