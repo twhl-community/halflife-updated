@@ -1,4 +1,4 @@
-// nav_node.h
+﻿// nav_node.h
 // AI Navigation Nodes
 // Author: Michael S. Booth (mike@turtlerockstudios.com), January 2003
 

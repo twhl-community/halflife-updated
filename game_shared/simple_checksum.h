@@ -1,4 +1,4 @@
-// simple_checksum.h
+﻿// simple_checksum.h
 // Functions to compute a simple checksum value for a file
 // Author: Michael S. Booth, Turtle Rock Studios (www.turtlerockstudios.com), September 2003
 

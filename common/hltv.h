@@ -1,4 +1,4 @@
-// hltv.h
+﻿// hltv.h
 // all shared consts between server, clients and proxy
 
 #pragma once

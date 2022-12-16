@@ -1,4 +1,4 @@
-/*
+﻿/*
 	meter.c
 
 	Implements a dorky progess meter

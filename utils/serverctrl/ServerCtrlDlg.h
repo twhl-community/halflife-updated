@@ -1,4 +1,4 @@
-// ServerCtrlDlg.h : header file
+﻿// ServerCtrlDlg.h : header file
 //
 
 #if !defined(AFX_ServerCtrlDLG_H__E2974CA8_EF9F_11D3_A4D9_00105A1727F3__INCLUDED_)

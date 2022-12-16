@@ -1,4 +1,4 @@
-#ifndef __WXDEBUG__
+﻿#ifndef __WXDEBUG__
 #define __WXDEBUG__
 
 // This library provides fairly straight forward debugging functionality, this

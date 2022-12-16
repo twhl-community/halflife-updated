@@ -1,4 +1,4 @@
-// vgui_SpectatorPanel.h: interface for the SpectatorPanel class.
+﻿// vgui_SpectatorPanel.h: interface for the SpectatorPanel class.
 //
 //////////////////////////////////////////////////////////////////////
 

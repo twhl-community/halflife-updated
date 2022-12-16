@@ -1,4 +1,4 @@
-
+﻿
 // This header defines the interface convention used in the valve engine.
 // To make an interface and expose it:
 //    1. Derive from IBaseInterface.

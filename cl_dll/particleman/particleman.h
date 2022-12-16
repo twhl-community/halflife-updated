@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "interface.h"
 #include "CBaseParticle.h"

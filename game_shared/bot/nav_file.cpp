@@ -1,4 +1,4 @@
-// nav_file.cpp
+﻿// nav_file.cpp
 // Reading and writing nav files
 // Author: Michael S. Booth (mike@turtlerockstudios.com), January-September 2003
 
