@@ -1,4 +1,4 @@
-/* include/SDL_config.h.  Generated from SDL_config.h.in by configure.  */
+﻿/* include/SDL_config.h.  Generated from SDL_config.h.in by configure.  */
 /*
   Simple DirectMedia Layer
   Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>

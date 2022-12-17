@@ -1,4 +1,4 @@
-// cl.input.c  -- builds an intended movement command to send to the server
+﻿// cl.input.c  -- builds an intended movement command to send to the server
 
 //xxxxxx Move bob and pitch drifting code here and other stuff from view if needed
 

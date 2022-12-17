@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define TRI_COLLIDEWORLD 0x00000020
 #define TRI_COLLIDEALL 0x00001000  // will collide with world and slideboxes

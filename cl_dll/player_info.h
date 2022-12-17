@@ -1,4 +1,4 @@
-/***
+﻿/***
 *
 *	Copyright (c) 2003', Valve LLC. All rights reserved.
 *	

@@ -1,4 +1,4 @@
-// simple_state_machine.h
+﻿// simple_state_machine.h
 // Simple finite state machine encapsulation
 // Author: Michael S. Booth (mike@turtlerockstudios.com), November 2003
 

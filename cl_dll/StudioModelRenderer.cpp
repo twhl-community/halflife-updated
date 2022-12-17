@@ -1,4 +1,4 @@
-// studio_model.cpp
+﻿// studio_model.cpp
 // routines for setting up to draw 3DStudio models
 
 #include "hud.h"

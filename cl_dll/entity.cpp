@@ -1,4 +1,4 @@
-// Client side entity management functions
+﻿// Client side entity management functions
 
 #include <memory.h>
 

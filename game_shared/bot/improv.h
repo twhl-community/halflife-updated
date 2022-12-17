@@ -1,4 +1,4 @@
-// improv.h
+﻿// improv.h
 // Improv interface
 // Author: Michael S. Booth (mike@turtlerockstudios.com), November 2003
 

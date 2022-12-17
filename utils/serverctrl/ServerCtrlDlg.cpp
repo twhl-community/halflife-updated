@@ -1,4 +1,4 @@
-// ServerCtrlDlg.cpp : implementation file
+﻿// ServerCtrlDlg.cpp : implementation file
 //
 
 #include "stdafx.h"

@@ -1,4 +1,4 @@
-// nav_area.h
+﻿// nav_area.h
 // Navigation areas
 // Author: Michael S. Booth (mike@turtlerockstudios.com), January 2003
 

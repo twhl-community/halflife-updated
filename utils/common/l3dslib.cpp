@@ -1,4 +1,4 @@
-//
+﻿//
 // l3dslib.c: library for loading triangles from an Alias triangle file
 //
 

@@ -1,4 +1,4 @@
-// ServerCtrl.h : main header file for the ServerCtrl application
+﻿// ServerCtrl.h : main header file for the ServerCtrl application
 //
 
 #if !defined(AFX_ServerCtrl_H__E2974CA6_EF9F_11D3_A4D9_00105A1727F3__INCLUDED_)
