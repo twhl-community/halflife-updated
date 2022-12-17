@@ -1,4 +1,4 @@
-﻿// nav_path.h
+// nav_path.h
 // Navigation Path encapsulation
 // Author: Michael S. Booth (mike@turtlerockstudios.com), November 2003
 

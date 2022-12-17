@@ -1,4 +1,4 @@
-﻿// vgui_SpectatorPanel.cpp: implementation of the SpectatorPanel class.
+// vgui_SpectatorPanel.cpp: implementation of the SpectatorPanel class.
 //
 //////////////////////////////////////////////////////////////////////
 

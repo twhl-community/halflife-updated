@@ -1,4 +1,4 @@
-﻿// steam_util.h
+// steam_util.h
 // Steam utility classes
 // Author: Michael S. Booth (mike@turtlerockstudios.com), April 2003
 

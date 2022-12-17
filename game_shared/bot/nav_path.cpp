@@ -1,4 +1,4 @@
-﻿// nav_path.cpp
+// nav_path.cpp
 // Encapsulation of a path through space
 // Author: Michael S. Booth (mike@turtlerockstudios.com), November 2003
 

@@ -1,4 +1,4 @@
-﻿// nav.h
+// nav.h
 // AI Navigation data structures
 // Author: Michael S. Booth (mike@turtlerockstudios.com), January 2003
 

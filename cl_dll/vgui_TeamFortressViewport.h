@@ -1,4 +1,4 @@
-﻿
+
 #pragma once
 
 #include<VGUI_Panel.h>

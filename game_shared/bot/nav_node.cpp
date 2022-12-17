@@ -1,4 +1,4 @@
-﻿// nav_node.cpp
+// nav_node.cpp
 // AI Navigation Nodes
 // Author: Michael S. Booth (mike@turtlerockstudios.com), January 2003
 

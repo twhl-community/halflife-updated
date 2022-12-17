@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define STUDIO_INTERFACE_VERSION 1
 

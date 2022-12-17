@@ -1,4 +1,4 @@
-﻿#ifndef _METER_H_
+#ifndef _METER_H_
 #define _METER_H_
 
 /*
