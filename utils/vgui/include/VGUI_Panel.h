@@ -1,13 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_PANEL_H
-#define VGUI_PANEL_H
-
+#pragma once
 
 /*
 
@@ -224,5 +222,3 @@ friend class SurfaceBase;
 friend class Image;
 };
 }
-
-#endif

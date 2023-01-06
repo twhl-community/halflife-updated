@@ -1,12 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_ACTIONSIGNAL_H
-#define VGUI_ACTIONSIGNAL_H
+#pragma once
 
 #include<VGUI.h>
 
@@ -78,7 +77,3 @@ public:
 };
 
 }
-
-#endif
-
-

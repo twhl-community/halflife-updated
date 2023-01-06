@@ -14,13 +14,12 @@
 #include "wadlib.h"
 
 
-extern  byte    *byteimage, *lbmpalette;
-extern  int     byteimagewidth, byteimageheight;
+extern byte *byteimage, *lbmpalette;
+extern int byteimagewidth, byteimageheight;
 
-#define SCRN(x,y)       (*(byteimage+(y)*byteimagewidth+x))
+#define SCRN(x, y) (*(byteimage + (y)*byteimagewidth + x))
 
-extern  byte    *lump_p;
-extern  byte	*lumpbuffer;
+extern byte* lump_p;
+extern byte* lumpbuffer;
 
-extern	char	lumpname[];
-
+extern char lumpname[];

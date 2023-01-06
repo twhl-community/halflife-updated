@@ -12,32 +12,30 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#ifndef PLANE_H
-#define PLANE_H
+
+#pragma once
 
 //=========================================================
 // Plane
 //=========================================================
-class CPlane 
+class CPlane
 {
 public:
-	CPlane ( void );
+	CPlane();
 
 	//=========================================================
 	// InitializePlane - Takes a normal for the plane and a
-	// point on the plane and 
+	// point on the plane and
 	//=========================================================
-	void InitializePlane ( const Vector &vecNormal, const Vector &vecPoint );
+	void InitializePlane(const Vector& vecNormal, const Vector& vecPoint);
 
 	//=========================================================
-	// PointInFront - determines whether the given vector is 
-	// in front of the plane. 
+	// PointInFront - determines whether the given vector is
+	// in front of the plane.
 	//=========================================================
-	BOOL PointInFront ( const Vector &vecPoint );
+	bool PointInFront(const Vector& vecPoint);
 
-	Vector	m_vecNormal;
-	float	m_flDist;
-	BOOL	m_fInitialized;
+	Vector m_vecNormal;
+	float m_flDist;
+	bool m_fInitialized;
 };
-
-#endif // PLANE_H

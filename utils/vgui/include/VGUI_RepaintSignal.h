@@ -1,14 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_REPAINTSIGNAL_H
-#define VGUI_REPAINTSIGNAL_H
-
-
+#pragma once
 
 namespace vgui
 {
@@ -21,6 +18,3 @@ public:
 };
 
 }
-
-
-#endif

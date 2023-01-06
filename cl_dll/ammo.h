@@ -13,50 +13,44 @@
 *
 ****/
 
-#ifndef __AMMO_H__
-#define __AMMO_H__
+#pragma once
 
 #define MAX_WEAPON_NAME 128
 
 
-#define WEAPON_FLAGS_SELECTONEMPTY	1
+#define WEAPON_FLAGS_SELECTONEMPTY 1
 
 #define WEAPON_IS_ONTARGET 0x40
 
 struct WEAPON
 {
-	char	szName[MAX_WEAPON_NAME];
-	int		iAmmoType;
-	int		iAmmo2Type;
-	int		iMax1;
-	int		iMax2;
-	int		iSlot;
-	int		iSlotPos;
-	int		iFlags;
-	int		iId;
-	int		iClip;
+	char szName[MAX_WEAPON_NAME];
+	int iAmmoType;
+	int iAmmo2Type;
+	int iMax1;
+	int iMax2;
+	int iSlot;
+	int iSlotPos;
+	int iFlags;
+	int iId;
+	int iClip;
 
-	int		iCount;		// # of itesm in plist
+	int iCount; // # of itesm in plist
 
 	HSPRITE hActive;
-	wrect_t rcActive;
+	Rect rcActive;
 	HSPRITE hInactive;
-	wrect_t rcInactive;
-	HSPRITE	hAmmo;
-	wrect_t rcAmmo;
+	Rect rcInactive;
+	HSPRITE hAmmo;
+	Rect rcAmmo;
 	HSPRITE hAmmo2;
-	wrect_t rcAmmo2;
+	Rect rcAmmo2;
 	HSPRITE hCrosshair;
-	wrect_t rcCrosshair;
+	Rect rcCrosshair;
 	HSPRITE hAutoaim;
-	wrect_t rcAutoaim;
+	Rect rcAutoaim;
 	HSPRITE hZoomedCrosshair;
-	wrect_t rcZoomedCrosshair;
+	Rect rcZoomedCrosshair;
 	HSPRITE hZoomedAutoaim;
-	wrect_t rcZoomedAutoaim;
+	Rect rcZoomedAutoaim;
 };
-
-typedef int AMMO;
-
-
-#endif

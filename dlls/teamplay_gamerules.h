@@ -16,42 +16,44 @@
 // teamplay_gamerules.h
 //
 
-#define MAX_TEAMNAME_LENGTH	16
-#define MAX_TEAMS			32
+#pragma once
 
-#define TEAMPLAY_TEAMLISTLENGTH		MAX_TEAMS*MAX_TEAMNAME_LENGTH
+#define MAX_TEAMNAME_LENGTH 16
+#define MAX_TEAMS 32
+
+#define TEAMPLAY_TEAMLISTLENGTH MAX_TEAMS* MAX_TEAMNAME_LENGTH
 
 class CHalfLifeTeamplay : public CHalfLifeMultiplay
 {
 public:
 	CHalfLifeTeamplay();
 
-	virtual BOOL ClientCommand( CBasePlayer *pPlayer, const char *pcmd );
-	virtual void ClientUserInfoChanged( CBasePlayer *pPlayer, char *infobuffer );
-	virtual BOOL IsTeamplay( void );
-	virtual BOOL FPlayerCanTakeDamage( CBasePlayer *pPlayer, CBaseEntity *pAttacker );
-	virtual int PlayerRelationship( CBaseEntity *pPlayer, CBaseEntity *pTarget );
-	virtual const char *GetTeamID( CBaseEntity *pEntity );
-	virtual BOOL ShouldAutoAim( CBasePlayer *pPlayer, edict_t *target );
-	virtual int IPointsForKill( CBasePlayer *pAttacker, CBasePlayer *pKilled );
-	virtual void InitHUD( CBasePlayer *pl );
-	virtual void DeathNotice( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pevInflictor );
-	virtual const char *GetGameDescription( void ) { return "HL Teamplay"; }  // this is the game name that gets seen in the server browser
-	virtual void UpdateGameMode( CBasePlayer *pPlayer );  // the client needs to be informed of the current game mode
-	virtual void PlayerKilled( CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor );
-	virtual void Think ( void );
-	virtual int GetTeamIndex( const char *pTeamName );
-	virtual const char *GetIndexedTeamName( int teamIndex );
-	virtual BOOL IsValidTeam( const char *pTeamName );
-	const char *SetDefaultPlayerTeam( CBasePlayer *pPlayer );
-	virtual void ChangePlayerTeam( CBasePlayer *pPlayer, const char *pTeamName, BOOL bKill, BOOL bGib );
+	bool ClientCommand(CBasePlayer* pPlayer, const char* pcmd) override;
+	void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer) override;
+	bool IsTeamplay() override;
+	bool FPlayerCanTakeDamage(CBasePlayer* pPlayer, CBaseEntity* pAttacker) override;
+	int PlayerRelationship(CBaseEntity* pPlayer, CBaseEntity* pTarget) override;
+	const char* GetTeamID(CBaseEntity* pEntity) override;
+	bool ShouldAutoAim(CBasePlayer* pPlayer, edict_t* target) override;
+	int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled) override;
+	void InitHUD(CBasePlayer* pl) override;
+	void DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pevInflictor) override;
+	const char* GetGameDescription() override { return "HL Teamplay"; } // this is the game name that gets seen in the server browser
+	void UpdateGameMode(CBasePlayer* pPlayer) override;					// the client needs to be informed of the current game mode
+	void PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor) override;
+	void Think() override;
+	int GetTeamIndex(const char* pTeamName) override;
+	const char* GetIndexedTeamName(int teamIndex) override;
+	bool IsValidTeam(const char* pTeamName) override;
+	const char* SetDefaultPlayerTeam(CBasePlayer* pPlayer) override;
+	void ChangePlayerTeam(CBasePlayer* pPlayer, const char* pTeamName, bool bKill, bool bGib) override;
 
 private:
-	void RecountTeams( bool bResendInfo = FALSE );
-	const char *TeamWithFewestPlayers( void );
+	void RecountTeams(bool bResendInfo = false);
+	const char* TeamWithFewestPlayers();
 
-	BOOL m_DisableDeathMessages;
-	BOOL m_DisableDeathPenalty;
-	BOOL m_teamLimit;				// This means the server set only some teams as valid
+	bool m_DisableDeathMessages;
+	bool m_DisableDeathPenalty;
+	bool m_teamLimit; // This means the server set only some teams as valid
 	char m_szTeamList[TEAMPLAY_TEAMLISTLENGTH];
 };

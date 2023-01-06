@@ -5,20 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-// There are hud.h's coming out of the woodwork so this ensures that we get the right one.
-#if defined(THREEWAVE) || defined(DMC_BUILD)
-	#include "../dmc/cl_dll/hud.h"
-#elif defined(CZERO)
-	#include "../czero/cl_dll/hud.h"
-#elif defined(CSTRIKE)
-	#include "../cstrike/cl_dll/hud.h"
-#elif defined(DOD)
-	#include "../dod/cl_dll/hud.h"
-#elif defined(BLUESHIFT)
-	#include "../blueshift/cl_dll/hud.h"
-#else
-	#include "../cl_dll/hud.h"
-#endif
+#include "../cl_dll/hud.h"
 
 #include "cl_util.h"
 #include <assert.h>

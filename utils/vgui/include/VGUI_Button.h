@@ -1,12 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_BUTTON_H
-#define VGUI_BUTTON_H
+#pragma once
 
 #include<VGUI.h>
 #include<VGUI_Label.h>
@@ -57,5 +56,3 @@ protected:
 };
 
 }
-
-#endif

@@ -1,12 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_TEXTGRID_H
-#define VGUI_TEXTGRID_H
+#pragma once
 
 #include<stdarg.h>
 #include<VGUI.h>
@@ -38,5 +37,3 @@ protected:
 };
 
 }
-
-#endif

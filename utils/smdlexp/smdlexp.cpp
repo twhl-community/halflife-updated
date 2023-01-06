@@ -4,12 +4,21 @@
 *
 ****/
 
-#include "MAX.H"
-#include "DECOMP.H"
-#include "STDMAT.H"
-#include "ANIMTBL.H"
-#include "istdplug.h"
-#include "phyexp.h"
+#ifndef _WIN64
+#error "3DS Max plugins can only be built as 64 bit"
+#endif
+
+#ifndef UNICODE
+// If you get this error you've incorrectly configured the Visual Studio project.
+#error "3DS Max plugins must use the Unicode character set"
+#endif
+
+#include <max.h>
+#include <decomp.h>
+#include <stdmat.h>
+#include <animtbl.h>
+#include <istdplug.h>
+#include <CS/phyexp.h>
 #include "smexprc.h"
 #include "smedefs.h"
 
@@ -18,11 +27,11 @@
 //===================================================================
 // Prototype declarations
 //
-int GetIndexOfINode(INode *pnode,BOOL fAssertPropExists = TRUE);
-void SetIndexOfINode(INode *pnode, int inode);
-BOOL FUndesirableNode(INode *pnode);
-BOOL FNodeMarkedToSkip(INode *pnode);
-float FlReduceRotation(float fl);
+int GetIndexOfINode(INode* pnode, BOOL fAssertPropExists = TRUE);
+void SetIndexOfINode(INode* pnode, int inode);
+BOOL FUndesirableNode(INode* pnode);
+BOOL FNodeMarkedToSkip(INode* pnode);
+static float FlReduceRotation(float fl);
 
 
 //===================================================================
@@ -30,13 +39,13 @@ float FlReduceRotation(float fl);
 //
 
 // Save for use with dialogs
-static HINSTANCE hInstance;
+HINSTANCE hInstance;
 
 // We just need one of these to hand off to 3DSMAX.
 static SmdExportClassDesc SmdExportCD;
 
 // For OutputDebugString and misc sprintf's
-static char st_szDBG[300];
+static wchar_t st_szDBG[300];
 
 // INode mapping table
 static int g_inmMac = 0;
@@ -45,9 +54,9 @@ static int g_inmMac = 0;
 // Utility functions
 //
 
-static int AssertFailedFunc(char *sz)
+static int AssertFailedFunc(wchar_t* sz)
 {
-	MessageBox(GetActiveWindow(), sz, "Assert failure", MB_OK);
+	MessageBox(GetActiveWindow(), sz, _T("Assert failure"), MB_OK);
 	int Set_Your_Breakpoint_Here = 1;
 	return 1;
 }
@@ -57,8 +66,8 @@ static int AssertFailedFunc(char *sz)
 //===================================================================
 // Required plug-in export functions
 //
-BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved) 
-{	
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
+{
 	static int fFirstTimeHere = TRUE;
 	if (fFirstTimeHere)
 	{
@@ -68,29 +77,29 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, ULONG fdwReason, LPVOID lpvReserved)
 	return TRUE;
 }
 
-	
+
 EXPORT_THIS int LibNumberClasses(void)
 {
 	return 1;
 }
 
-	
-EXPORT_THIS ClassDesc *LibClassDesc(int iWhichClass)
+
+EXPORT_THIS ClassDesc* LibClassDesc(int iWhichClass)
 {
-	switch(iWhichClass)
+	switch (iWhichClass)
 	{
-		case 0: return &SmdExportCD;
-		default: return 0;
+	case 0: return &SmdExportCD;
+	default: return 0;
 	}
 }
 
-	
-EXPORT_THIS const TCHAR *LibDescription()
+
+EXPORT_THIS const TCHAR* LibDescription()
 {
 	return _T("Valve SMD Plug-in.");
 }
 
-	
+
 EXPORT_THIS ULONG LibVersion()
 {
 	return VERSION_3DSMAX;
@@ -103,7 +112,7 @@ EXPORT_THIS ULONG LibVersion()
 
 CONSTRUCTOR SmdExportClass::SmdExportClass(void)
 {
-	m_rgmaxnode		= NULL;
+	m_rgmaxnode = NULL;
 }
 
 
@@ -114,48 +123,48 @@ DESTRUCTOR SmdExportClass::~SmdExportClass(void)
 }
 
 
-int SmdExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts, DWORD options) 
+int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, BOOL suppressPrompts, DWORD options)
 {
-	ExpInterface	*pexpiface = ei;	// Hungarian
-	Interface		*piface = i;		// Hungarian
-	
+	ExpInterface* pexpiface = ei; // Hungarian
+	Interface* piface = i;		  // Hungarian
+
 	// Reset the name-map property manager
 	g_inmMac = 0;
 
-	if ( hasStringPropertyValue( "referenceFrame", "YES", i ) )
+	if (hasStringPropertyValue(_T("referenceFrame"), _T("YES"), i))
 	{
-		m_fReferenceFrame	= TRUE ;
-		suppressPrompts		= TRUE ;
+		m_fReferenceFrame = TRUE;
+		suppressPrompts = TRUE;
 	}
-	else if ( hasStringPropertyValue( "referenceFrame", "NO", i ) )
+	else if (hasStringPropertyValue(_T("referenceFrame"), _T("NO"), i))
 	{
-		m_fReferenceFrame	= FALSE ;
-		suppressPrompts		= TRUE ;
+		m_fReferenceFrame = FALSE;
+		suppressPrompts = TRUE;
 	}
 
 	// Present the user with the Export Options dialog if desired
-	if ( !suppressPrompts )
+	if (!suppressPrompts)
 	{
-		if (DialogBoxParam( hInstance, MAKEINTRESOURCE(IDD_EXPORTOPTIONS), GetActiveWindow(), ExportOptionsDlgProc, (LPARAM)this) <= 0)
-			return 0;		// error or cancel
+		if (DialogBoxParam(hInstance, MAKEINTRESOURCE(IDD_EXPORTOPTIONS), GetActiveWindow(), ExportOptionsDlgProc, (LPARAM)this) <= 0)
+			return 0; // error or cancel
 	}
 
 	// Break up filename, re-assemble longer versions
 	TSTR strPath, strFile, strExt;
 	TCHAR szFile[MAX_PATH];
 	SplitFilename(TSTR(name), &strPath, &strFile, &strExt);
-		sprintf(szFile,  "%s\\%s.%s",  (char*)strPath, (char*)strFile, DEFAULT_EXT);
+	swprintf(szFile, MAX_PATH, _T("%s\\%s.%s"), strPath.ToMCHAR(), strFile.ToMCHAR(), DEFAULT_EXT);
 
 	/*
 	if (m_fReferenceFrame)
 		sprintf(szFile,  "%s\\%s_model.%s",  (char*)strPath, (char*)strFile, DEFAULT_EXT);
 	*/
 
-	FILE *pFile;
-	if ((pFile = fopen(szFile, "w")) == NULL)
-		return FALSE/*failure*/;
+	FILE* pFile;
+	if ((pFile = _wfopen(szFile, _T("w"))) == NULL)
+		return FALSE /*failure*/;
 
-	fprintf( pFile, "version %d\n", 1 );
+	fwprintf(pFile, _T("version %d\n"), 1);
 
 	// Get animation metrics
 	m_intervalOfAnimation = piface->GetAnimRange();
@@ -165,13 +174,13 @@ int SmdExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BO
 
 	// Count nodes, label them, collect into array
 	if (!CollectNodes(pexpiface))
-		return 0;	/*fail*/
-	
+		return 0; /*fail*/
+
 	// Output nodes
 	if (!DumpBones(pFile, pexpiface))
 	{
-		fclose( pFile );
-		return 0;	/*fail*/
+		fclose(pFile);
+		return 0; /*fail*/
 	}
 
 	// Output bone rotations, for each frame. Do only first frame if this is the reference frame MAX file
@@ -183,92 +192,92 @@ int SmdExportClass::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BO
 		DumpModel(pFile, pexpiface);
 	}
 
-	if ( !suppressPrompts )
+	if (!suppressPrompts)
 	{
 		// Tell user that exporting is finished (it can take a while with no feedback)
-		char szExportComplete[300];
-		sprintf(szExportComplete, "Exported %s.", szFile);
-		MessageBox(GetActiveWindow(), szExportComplete, "Status", MB_OK);
+		wchar_t szExportComplete[300];
+		swprintf(szExportComplete, 300, _T("Exported %s."), szFile);
+		MessageBox(GetActiveWindow(), szExportComplete, _T("Status"), MB_OK);
 	}
 
-	fclose( pFile );
+	fclose(pFile);
 
-	return 1/*success*/;
+	return 1 /*success*/;
 }
-	
-	
-BOOL SmdExportClass::CollectNodes( ExpInterface *pexpiface)
+
+
+BOOL SmdExportClass::CollectNodes(ExpInterface* pexpiface)
 {
 	// Count total nodes in the model, so I can alloc array
 	// Also "brands" each node with node index, or with "skip me" marker.
 	CountNodesTEP procCountNodes;
 	procCountNodes.m_cNodes = 0;
-	(void) pexpiface->theScene->EnumTree(&procCountNodes);
-	ASSERT_MBOX(procCountNodes.m_cNodes > 0, "No nodes!");
+	(void)pexpiface->theScene->EnumTree(&procCountNodes);
+	ASSERT_MBOX(procCountNodes.m_cNodes > 0, _T("No nodes!"));
 
 	// Alloc and fill array
 	m_imaxnodeMac = procCountNodes.m_cNodes;
 	m_rgmaxnode = new MaxNode[m_imaxnodeMac];
-	ASSERT_MBOX(m_rgmaxnode != NULL, "new failed");
+	ASSERT_MBOX(m_rgmaxnode != NULL, _T("new failed"));
 
 
 	CollectNodesTEP procCollectNodes;
 	procCollectNodes.m_phec = this;
-	(void) pexpiface->theScene->EnumTree(&procCollectNodes);
-	
+	(void)pexpiface->theScene->EnumTree(&procCollectNodes);
+
 	return TRUE;
 }
 
 
-BOOL SmdExportClass::DumpBones(FILE *pFile, ExpInterface *pexpiface)
+BOOL SmdExportClass::DumpBones(FILE* pFile, ExpInterface* pexpiface)
 {
 	// Dump bone names
 	DumpNodesTEP procDumpNodes;
 	procDumpNodes.m_pfile = pFile;
 	procDumpNodes.m_phec = this;
-	fprintf(pFile, "nodes\n" );
-	(void) pexpiface->theScene->EnumTree(&procDumpNodes);
-	fprintf(pFile, "end\n" );
+	fprintf(pFile, "nodes\n");
+	(void)pexpiface->theScene->EnumTree(&procDumpNodes);
+	fprintf(pFile, "end\n");
 
 	return TRUE;
 }
 
-	
-BOOL SmdExportClass::DumpRotations(FILE *pFile, ExpInterface *pexpiface)
+
+BOOL SmdExportClass::DumpRotations(FILE* pFile, ExpInterface* pexpiface)
 {
 	// Dump bone-rotation info, for each frame
 	// Also dumps root-node translation info (the model's world-position at each frame)
 	DumpFrameRotationsTEP procDumpFrameRotations;
-	procDumpFrameRotations.m_pfile	= pFile;
-	procDumpFrameRotations.m_phec	= this;
+	procDumpFrameRotations.m_pfile = pFile;
+	procDumpFrameRotations.m_phec = this;
 
 	TimeValue m_tvTill = (m_fReferenceFrame) ? m_tvStart : m_tvEnd;
 
-	fprintf(pFile, "skeleton\n" );
+	fprintf(pFile, "skeleton\n");
 	for (TimeValue tv = m_tvStart; tv <= m_tvTill; tv += m_tpf)
 	{
-		fprintf(pFile, "time %d\n", tv / GetTicksPerFrame() );
+		fprintf(pFile, "time %d\n", tv / GetTicksPerFrame());
 		procDumpFrameRotations.m_tvToDump = tv;
-		(void) pexpiface->theScene->EnumTree(&procDumpFrameRotations);
+		(void)pexpiface->theScene->EnumTree(&procDumpFrameRotations);
 	}
-	fprintf(pFile, "end\n" );
+	fprintf(pFile, "end\n");
 
 	return TRUE;
 }
-	
-	
-BOOL SmdExportClass::DumpModel( FILE *pFile, ExpInterface *pexpiface)
+
+
+BOOL SmdExportClass::DumpModel(FILE* pFile, ExpInterface* pexpiface)
 {
 	// Dump mesh info: vertices, normals, UV texture map coords, bone assignments
 	DumpModelTEP procDumpModel;
-	procDumpModel.m_pfile	= pFile;
-	procDumpModel.m_phec	= this;
-	fprintf(pFile, "triangles\n" );
+	procDumpModel.m_pfile = pFile;
+	procDumpModel.m_phec = this;
+	fprintf(pFile, "triangles\n");
 	procDumpModel.m_tvToDump = m_tvStart;
-	(void) pexpiface->theScene->EnumTree(&procDumpModel);
-	fprintf(pFile, "end\n" );
+	(void)pexpiface->theScene->EnumTree(&procDumpModel);
+	fprintf(pFile, "end\n");
 	return TRUE;
-}	
+}
 
 
 
@@ -277,23 +286,23 @@ BOOL SmdExportClass::DumpModel( FILE *pFile, ExpInterface *pexpiface)
 //							TREE-ENUMERATION PROCEDURES
 //=============================================================================
 
-#define ASSERT_AND_ABORT(f, sz)							\
-	if (!(f))											\
-	{													\
-		ASSERT_MBOX(FALSE, sz);							\
-		cleanup( );										\
-		return TREE_ABORT;								\
+#define ASSERT_AND_ABORT(f, sz) \
+	if (!(f))                   \
+	{                           \
+		ASSERT_MBOX(FALSE, sz); \
+		cleanup();              \
+		return TREE_ABORT;      \
 	}
 
 
 //=================================================================
 // Methods for CountNodesTEP
 //
-int CountNodesTEP::callback( INode *node)
+int CountNodesTEP::callback(INode* node)
 {
-	INode *pnode = node; // Hungarian
+	INode* pnode = node; // Hungarian
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FUndesirableNode(pnode))
 	{
@@ -301,12 +310,12 @@ int CountNodesTEP::callback( INode *node)
 		::SetIndexOfINode(pnode, SmdExportClass::UNDESIRABLE_NODE_MARKER);
 		return TREE_CONTINUE;
 	}
-	
+
 	// Establish "node index"--just ascending ints
 	::SetIndexOfINode(pnode, m_cNodes);
 
 	m_cNodes++;
-	
+
 	return TREE_CONTINUE;
 }
 
@@ -314,29 +323,29 @@ int CountNodesTEP::callback( INode *node)
 //=================================================================
 // Methods for CollectNodesTEP
 //
-int CollectNodesTEP::callback(INode *node)
+int CollectNodesTEP::callback(INode* node)
 {
-	INode *pnode = node; // Hungarian
+	INode* pnode = node; // Hungarian
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
 
 	// Get pre-stored "index"
 	int iNode = ::GetIndexOfINode(pnode);
-	ASSERT_MBOX(iNode >= 0 && iNode <= m_phec->m_imaxnodeMac-1, "Bogus iNode");
-	
+	ASSERT_MBOX(iNode >= 0 && iNode <= m_phec->m_imaxnodeMac - 1, _T("Bogus iNode"));
+
 	// Get name, store name in array
 	TSTR strNodeName(pnode->GetName());
-	strcpy(m_phec->m_rgmaxnode[iNode].szNodeName, (char*)strNodeName);
+	wcscpy(m_phec->m_rgmaxnode[iNode].szNodeName, strNodeName.ToMCHAR());
 
 	// Get Node's time-zero Transformation Matrices
-	m_phec->m_rgmaxnode[iNode].mat3NodeTM		= pnode->GetNodeTM(0/*TimeValue*/);
-	m_phec->m_rgmaxnode[iNode].mat3ObjectTM		= pnode->GetObjectTM(0/*TimeValue*/);
+	m_phec->m_rgmaxnode[iNode].mat3NodeTM = pnode->GetNodeTM(0 /*TimeValue*/);
+	m_phec->m_rgmaxnode[iNode].mat3ObjectTM = pnode->GetObjectTM(0 /*TimeValue*/);
 
 	// I'll calculate this later
-	m_phec->m_rgmaxnode[iNode].imaxnodeParent	= SmdExportClass::UNDESIRABLE_NODE_MARKER;
+	m_phec->m_rgmaxnode[iNode].imaxnodeParent = SmdExportClass::UNDESIRABLE_NODE_MARKER;
 
 	return TREE_CONTINUE;
 }
@@ -349,23 +358,23 @@ int CollectNodesTEP::callback(INode *node)
 //=================================================================
 // Methods for DumpNodesTEP
 //
-int DumpNodesTEP::callback(INode *pnode)
+int DumpNodesTEP::callback(INode* pnode)
 {
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
 
 	// Get node's parent
-	INode *pnodeParent;
+	INode* pnodeParent;
 	pnodeParent = pnode->GetParentNode();
-	
+
 	// The model's root is a child of the real "scene root"
 	TSTR strNodeName(pnode->GetName());
-	BOOL fNodeIsRoot = pnodeParent->IsRootNode( );
-	
+	BOOL fNodeIsRoot = pnodeParent->IsRootNode();
+
 	int iNode = ::GetIndexOfINode(pnode);
-	int iNodeParent = ::GetIndexOfINode(pnodeParent, !fNodeIsRoot/*fAssertPropExists*/);
+	int iNodeParent = ::GetIndexOfINode(pnodeParent, !fNodeIsRoot /*fAssertPropExists*/);
 
 	// Convenient time to cache this
 	m_phec->m_rgmaxnode[iNode].imaxnodeParent = fNodeIsRoot ? SmdExportClass::UNDESIRABLE_NODE_MARKER : iNodeParent;
@@ -373,12 +382,12 @@ int DumpNodesTEP::callback(INode *pnode)
 	// Root node has no parent, thus no translation
 	if (fNodeIsRoot)
 		iNodeParent = -1;
-		
+
 	// Dump node description
-	fprintf(m_pfile, "%3d \"%s\" %3d\n", 
-		iNode, 
-		strNodeName, 
-		iNodeParent );
+	fwprintf(m_pfile, _T("%3d \"%s\" %3d\n"),
+		iNode,
+		strNodeName.ToMCHAR(),
+		iNodeParent);
 
 	return TREE_CONTINUE;
 }
@@ -388,9 +397,9 @@ int DumpNodesTEP::callback(INode *pnode)
 //=================================================================
 // Methods for DumpFrameRotationsTEP
 //
-int DumpFrameRotationsTEP::callback(INode *pnode)
+int DumpFrameRotationsTEP::callback(INode* pnode)
 {
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
@@ -400,15 +409,15 @@ int DumpFrameRotationsTEP::callback(INode *pnode)
 	TSTR strNodeName(pnode->GetName());
 
 	// The model's root is a child of the real "scene root"
-	INode *pnodeParent = pnode->GetParentNode();
-	BOOL fNodeIsRoot = pnodeParent->IsRootNode( );
+	INode* pnodeParent = pnode->GetParentNode();
+	BOOL fNodeIsRoot = pnodeParent->IsRootNode();
 
 	// Get Node's "Local" Transformation Matrix
-	Matrix3 mat3NodeTM		= pnode->GetNodeTM(m_tvToDump);
-	Matrix3 mat3ParentTM	= pnodeParent->GetNodeTM(m_tvToDump);
-	mat3NodeTM.NoScale();		// Clear these out because they apparently
-	mat3ParentTM.NoScale();		// screw up the following calculation.
-	Matrix3 mat3NodeLocalTM	= mat3NodeTM * Inverse(mat3ParentTM);
+	Matrix3 mat3NodeTM = pnode->GetNodeTM(m_tvToDump);
+	Matrix3 mat3ParentTM = pnodeParent->GetNodeTM(m_tvToDump);
+	mat3NodeTM.NoScale();	// Clear these out because they apparently
+	mat3ParentTM.NoScale(); // screw up the following calculation.
+	Matrix3 mat3NodeLocalTM = mat3NodeTM * Inverse(mat3ParentTM);
 	Point3 rowTrans = mat3NodeLocalTM.GetTrans();
 
 	// Get the rotation (via decomposition into "affine parts", then quaternion-to-Euler)
@@ -419,20 +428,20 @@ int DumpFrameRotationsTEP::callback(INode *pnode)
 	decomp_affine(mat3NodeLocalTM, &affparts);
 	QuatToEuler(affparts.q, rgflXYZRotations);
 
-	float xRot = rgflXYZRotations[0];		// in radians
-	float yRot = rgflXYZRotations[1];		// in radians
-	float zRot = rgflXYZRotations[2];		// in radians
+	float xRot = rgflXYZRotations[0]; // in radians
+	float yRot = rgflXYZRotations[1]; // in radians
+	float zRot = rgflXYZRotations[2]; // in radians
 
 	// Get rotations in the -2pi...2pi range
 	xRot = ::FlReduceRotation(xRot);
 	yRot = ::FlReduceRotation(yRot);
 	zRot = ::FlReduceRotation(zRot);
-	
+
 	// Print rotations
-	//fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n", 
-	fprintf(m_pfile, "%3d %f %f %f %f %f %f\n", 
-			// Node:%-15s Rotation (x,y,z)\n",
-			iNode, rowTrans.x, rowTrans.y, rowTrans.z, xRot, yRot, zRot);
+	//fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
+	fprintf(m_pfile, "%3d %f %f %f %f %f %f\n",
+		// Node:%-15s Rotation (x,y,z)\n",
+		iNode, rowTrans.x, rowTrans.y, rowTrans.z, xRot, yRot, zRot);
 
 	return TREE_CONTINUE;
 }
@@ -442,27 +451,28 @@ int DumpFrameRotationsTEP::callback(INode *pnode)
 //=================================================================
 // Methods for DumpModelTEP
 //
-Modifier *FindPhysiqueModifier (INode *nodePtr)
+Modifier* FindPhysiqueModifier(INode* nodePtr)
 {
 	// Get object from node. Abort if no object.
-	Object *ObjectPtr = nodePtr->GetObjectRef();
-	if (!ObjectPtr) return NULL;
+	Object* ObjectPtr = nodePtr->GetObjectRef();
+	if (!ObjectPtr)
+		return NULL;
 
 	// Is derived object ?
 	if (ObjectPtr->SuperClassID() == GEN_DERIVOB_CLASS_ID)
 	{
 		// Yes -> Cast.
-		IDerivedObject *DerivedObjectPtr = static_cast<IDerivedObject*>(ObjectPtr);
+		IDerivedObject* DerivedObjectPtr = static_cast<IDerivedObject*>(ObjectPtr);
 
 		// Iterate over all entries of the modifier stack.
 		int ModStackIndex = 0;
 		while (ModStackIndex < DerivedObjectPtr->NumModifiers())
 		{
 			// Get current modifier.
-			Modifier *ModifierPtr = DerivedObjectPtr->GetModifier(ModStackIndex);
+			Modifier* ModifierPtr = DerivedObjectPtr->GetModifier(ModStackIndex);
 
 			// Is this Physique ?
-			if (ModifierPtr->ClassID() == Class_ID(	PHYSIQUE_CLASS_ID_A, PHYSIQUE_CLASS_ID_B) )
+			if (ModifierPtr->ClassID() == Class_ID(PHYSIQUE_CLASS_ID_A, PHYSIQUE_CLASS_ID_B))
 			{
 				// Yes -> Exit.
 				return ModifierPtr;
@@ -481,26 +491,26 @@ Modifier *FindPhysiqueModifier (INode *nodePtr)
 //=================================================================
 // Methods for DumpModelTEP
 //
-int DumpModelTEP::callback(INode *pnode)
+int DumpModelTEP::callback(INode* pnode)
 {
-	Object*	pobj;
-	int	fHasMat = TRUE;
+	Object* pobj;
+	int fHasMat = TRUE;
 
 	// clear physique export parameters
 	m_mcExport = NULL;
 	m_phyExport = NULL;
-    m_phyMod = NULL;
+	m_phyMod = NULL;
 
-	ASSERT_MBOX(!(pnode)->IsRootNode(), "Encountered a root node!");
+	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
 	if (::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
-	
+
 	int iNode = ::GetIndexOfINode(pnode);
 	TSTR strNodeName(pnode->GetName());
-	
+
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
-	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
+	if (FStrEq(strNodeName.ToMCHAR(), _T("Bip01 Footsteps")))
 		return TREE_CONTINUE;
 
 	// Helper nodes don't have meshes
@@ -509,11 +519,11 @@ int DumpModelTEP::callback(INode *pnode)
 		return TREE_CONTINUE;
 
 	// The model's root is a child of the real "scene root"
-	INode *pnodeParent = pnode->GetParentNode();
-	BOOL fNodeIsRoot = pnodeParent->IsRootNode( );
+	INode* pnodeParent = pnode->GetParentNode();
+	BOOL fNodeIsRoot = pnodeParent->IsRootNode();
 
 	// Get node's material: should be a multi/sub (if it has a material at all)
-	Mtl *pmtlNode = pnode->GetMtl();
+	Mtl* pmtlNode = pnode->GetMtl();
 	if (pmtlNode == NULL)
 	{
 		return TREE_CONTINUE;
@@ -525,22 +535,22 @@ int DumpModelTEP::callback(INode *pnode)
 		// ASSERT_AND_ABORT(FALSE, st_szDBG);
 		fHasMat = FALSE;
 	}
-	
+
 	// Get Node's object, convert to a triangle-mesh object, so I can access the Faces
 	ObjectState os = pnode->EvalWorldState(m_tvToDump);
 	pobj = os.obj;
-	TriObject *ptriobj;
-	BOOL fConvertedToTriObject = 
+	TriObject* ptriobj;
+	BOOL fConvertedToTriObject =
 		pobj->CanConvertToType(triObjectClassID) &&
 		(ptriobj = (TriObject*)pobj->ConvertToType(m_tvToDump, triObjectClassID)) != NULL;
 	if (!fConvertedToTriObject)
 		return TREE_CONTINUE;
-	Mesh *pmesh = &ptriobj->mesh;
+	Mesh* pmesh = &ptriobj->mesh;
 
 	// Shouldn't have gotten this far if it's a helper object
 	if (pobj->SuperClassID() == HELPER_CLASS_ID)
 	{
-		sprintf(st_szDBG, "ERROR--Helper node %s has an attached mesh, and it shouldn't.", (char*)strNodeName);
+		swprintf(st_szDBG, 300, _T("ERROR--Helper node %s has an attached mesh, and it shouldn't."), strNodeName.ToMCHAR());
 		ASSERT_AND_ABORT(FALSE, st_szDBG);
 	}
 
@@ -552,22 +562,22 @@ int DumpModelTEP::callback(INode *pnode)
 
 
 	// initialize physique export parameters
-    m_phyMod = FindPhysiqueModifier(pnode);
-    if (m_phyMod)
+	m_phyMod = FindPhysiqueModifier(pnode);
+	if (m_phyMod)
 	{
 		// Physique Modifier exists for given Node
-	    m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
+		m_phyExport = (IPhysiqueExport*)m_phyMod->GetInterface(I_PHYINTERFACE);
 
-        if (m_phyExport)
-        {
-            // create a ModContext Export Interface for the specific node of the Physique Modifier
-           m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
+		if (m_phyExport)
+		{
+			// create a ModContext Export Interface for the specific node of the Physique Modifier
+			m_mcExport = (IPhyContextExport*)m_phyExport->GetContextInterface(pnode);
 
-		   if (m_mcExport)
-		   {
-		       // convert all vertices to Rigid 
-                m_mcExport->ConvertToRigid(TRUE);
-		   }
+			if (m_mcExport)
+			{
+				// convert all vertices to Rigid
+				m_mcExport->ConvertToRigid(TRUE);
+			}
 		}
 	}
 
@@ -575,18 +585,18 @@ int DumpModelTEP::callback(INode *pnode)
 	int cFaces = pmesh->getNumFaces();
 	for (int iFace = 0; iFace < cFaces; iFace++)
 	{
-		Face*	pface		= &pmesh->faces[iFace];
-		TVFace*	ptvface		= &pmesh->tvFace[iFace];
-		DWORD	smGroupFace	= pface->getSmGroup();
+		Face* pface = &pmesh->faces[iFace];
+		TVFace* ptvface = &pmesh->tvFace[iFace];
+		DWORD smGroupFace = pface->getSmGroup();
 
 		// Get face's 3 indexes into the Mesh's vertex array(s).
 		DWORD iVertex0 = pface->getVert(0);
 		DWORD iVertex1 = pface->getVert(1);
 		DWORD iVertex2 = pface->getVert(2);
-		ASSERT_AND_ABORT((int)iVertex0 < pmesh->getNumVerts(), "Bogus Vertex 0 index");
-		ASSERT_AND_ABORT((int)iVertex1 < pmesh->getNumVerts(), "Bogus Vertex 1 index");
-		ASSERT_AND_ABORT((int)iVertex2 < pmesh->getNumVerts(), "Bogus Vertex 2 index");
-		
+		ASSERT_AND_ABORT((int)iVertex0 < pmesh->getNumVerts(), _T("Bogus Vertex 0 index"));
+		ASSERT_AND_ABORT((int)iVertex1 < pmesh->getNumVerts(), _T("Bogus Vertex 1 index"));
+		ASSERT_AND_ABORT((int)iVertex2 < pmesh->getNumVerts(), _T("Bogus Vertex 2 index"));
+
 		// Get the 3 Vertex's for this face
 		Point3 pt3Vertex0 = pmesh->getVert(iVertex0);
 		Point3 pt3Vertex1 = pmesh->getVert(iVertex1);
@@ -594,99 +604,99 @@ int DumpModelTEP::callback(INode *pnode)
 
 		// Get the 3 RVertex's for this face
 		// NOTE: I'm using getRVertPtr instead of getRVert to work around a 3DSMax bug
-		RVertex *prvertex0 = pmesh->getRVertPtr(iVertex0);
-		RVertex *prvertex1 = pmesh->getRVertPtr(iVertex1);
-		RVertex *prvertex2 = pmesh->getRVertPtr(iVertex2);
-		
+		RVertex* prvertex0 = pmesh->getRVertPtr(iVertex0);
+		RVertex* prvertex1 = pmesh->getRVertPtr(iVertex1);
+		RVertex* prvertex2 = pmesh->getRVertPtr(iVertex2);
+
 		// Find appropriate normals for each RVertex
 		// A vertex can be part of multiple faces, so the "smoothing group"
 		// is used to locate the normal for this face's use of the vertex.
 		Point3 pt3Vertex0Normal;
 		Point3 pt3Vertex1Normal;
 		Point3 pt3Vertex2Normal;
-		if (smGroupFace) 
+		if (smGroupFace)
 		{
 			pt3Vertex0Normal = Pt3GetRVertexNormal(prvertex0, smGroupFace);
 			pt3Vertex1Normal = Pt3GetRVertexNormal(prvertex1, smGroupFace);
 			pt3Vertex2Normal = Pt3GetRVertexNormal(prvertex2, smGroupFace);
 		}
-		else 
+		else
 		{
-			pt3Vertex0Normal = pmesh->getFaceNormal( iFace );
-			pt3Vertex1Normal = pmesh->getFaceNormal( iFace );
-			pt3Vertex2Normal = pmesh->getFaceNormal( iFace );
+			pt3Vertex0Normal = pmesh->getFaceNormal(iFace);
+			pt3Vertex1Normal = pmesh->getFaceNormal(iFace);
+			pt3Vertex2Normal = pmesh->getFaceNormal(iFace);
 		}
-		ASSERT_AND_ABORT( Length( pt3Vertex0Normal ) <= 1.1, "bogus orig normal 0" );
-		ASSERT_AND_ABORT( Length( pt3Vertex1Normal ) <= 1.1, "bogus orig normal 1" );
-		ASSERT_AND_ABORT( Length( pt3Vertex2Normal ) <= 1.1, "bogus orig normal 2" );
-	
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus orig normal 0"));
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus orig normal 1"));
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus orig normal 2"));
+
 		// Get Face's sub-material from node's material, to get the bitmap name.
 		// And no, there isn't a simpler way to get the bitmap name, you have to
 		// dig down through all these levels.
-		TCHAR szBitmapName[256] = "null.bmp";
+		TCHAR szBitmapName[256] = _T("null.bmp");
 		if (fHasMat)
 		{
 			MtlID mtlidFace = pface->getMatID();
 			if (mtlidFace >= pmtlNode->NumSubMtls())
 			{
-				sprintf(st_szDBG, "ERROR--Bogus sub-material index %d in node %s; highest valid index is %d",
-					mtlidFace, (char*)strNodeName, pmtlNode->NumSubMtls()-1);
+				swprintf(st_szDBG, 300, _T("ERROR--Bogus sub-material index %d in node %s; highest valid index is %d"),
+					mtlidFace, strNodeName.ToMCHAR(), pmtlNode->NumSubMtls() - 1);
 				// ASSERT_AND_ABORT(FALSE, st_szDBG);
 				mtlidFace = 0;
 			}
-			Mtl *pmtlFace = pmtlNode->GetSubMtl(mtlidFace);
-			ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
- 
+			Mtl* pmtlFace = pmtlNode->GetSubMtl(mtlidFace);
+			ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
+
 			if ((pmtlFace->ClassID() == Class_ID(MULTI_CLASS_ID, 0) && pmtlFace->IsMultiMtl()))
 			{
 				// it's a sub-sub material.  Gads.
-				pmtlFace = pmtlFace->GetSubMtl(mtlidFace);			
-				ASSERT_AND_ABORT(pmtlFace != NULL, "NULL Sub-material returned");
+				pmtlFace = pmtlFace->GetSubMtl(mtlidFace);
+				ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
 			}
 
 			if (!(pmtlFace->ClassID() == Class_ID(DMTL_CLASS_ID, 0)))
 			{
 
-				sprintf(st_szDBG,
-					"ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x].",
-					mtlidFace, (char*)strNodeName, pmtlFace->ClassID());
+				swprintf(st_szDBG, 300,
+					_T("ERROR--Sub-material with index %d (used in node %s) isn't a 'default/standard' material [%x]."),
+					mtlidFace, strNodeName.ToMCHAR(), pmtlFace->ClassID());
 				ASSERT_AND_ABORT(FALSE, st_szDBG);
 			}
-			StdMat *pstdmtlFace = (StdMat*)pmtlFace;
-			Texmap *ptexmap = pstdmtlFace->GetSubTexmap(ID_DI);
+			StdMat* pstdmtlFace = (StdMat*)pmtlFace;
+			Texmap* ptexmap = pstdmtlFace->GetSubTexmap(ID_DI);
 			// ASSERT_AND_ABORT(ptexmap != NULL, "NULL diffuse texture")
-			if (ptexmap != NULL) 
+			if (ptexmap != NULL)
 			{
 				if (!(ptexmap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)))
 				{
-					sprintf(st_szDBG,
-						"ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture.",
-						mtlidFace, (char*)strNodeName);
+					swprintf(st_szDBG, 300,
+						_T("ERROR--Sub-material with index %d (used in node %s) doesn't have a bitmap as its diffuse texture."),
+						mtlidFace, strNodeName.ToMCHAR());
 					ASSERT_AND_ABORT(FALSE, st_szDBG);
 				}
-				BitmapTex *pbmptex = (BitmapTex*)ptexmap;
-				strcpy(szBitmapName, pbmptex->GetMapName());
+				BitmapTex* pbmptex = (BitmapTex*)ptexmap;
+				wcscpy(szBitmapName, pbmptex->GetMapName());
 				TSTR strPath, strFile;
 				SplitPathFile(TSTR(szBitmapName), &strPath, &strFile);
-				strcpy(szBitmapName,strFile);
+				wcscpy(szBitmapName, strFile);
 			}
 		}
 
-		UVVert UVvertex0( 0, 0, 0 );
-		UVVert UVvertex1( 1, 0, 0 );
-		UVVert UVvertex2( 0, 1, 0 );
-		
+		UVVert UVvertex0(0, 0, 0);
+		UVVert UVvertex1(1, 0, 0);
+		UVVert UVvertex2(0, 1, 0);
+
 		int numberMaps = pmesh->getNumMaps();
-		for (int mapIdx = 1; mapIdx < numberMaps; ++mapIdx) 
+		for (int mapIdx = 1; mapIdx < numberMaps; ++mapIdx)
 		{
-			if (pmesh->getNumMapVerts(mapIdx) ) 
+			if (pmesh->getNumMapVerts(mapIdx))
 			{
-				UVvertex0 = pmesh->mapVerts( mapIdx )[pmesh->mapFaces(mapIdx)[iFace].getTVert( 0 )];
-				UVvertex1 = pmesh->mapVerts( mapIdx )[pmesh->mapFaces(mapIdx)[iFace].getTVert( 1 )];
-				UVvertex2 = pmesh->mapVerts( mapIdx )[pmesh->mapFaces(mapIdx)[iFace].getTVert( 2 )];
+				UVvertex0 = pmesh->mapVerts(mapIdx)[pmesh->mapFaces(mapIdx)[iFace].getTVert(0)];
+				UVvertex1 = pmesh->mapVerts(mapIdx)[pmesh->mapFaces(mapIdx)[iFace].getTVert(1)];
+				UVvertex2 = pmesh->mapVerts(mapIdx)[pmesh->mapFaces(mapIdx)[iFace].getTVert(2)];
 				break;
 			}
-		}		
+		}
 
 
 		/*
@@ -714,9 +724,9 @@ int DumpModelTEP::callback(INode *pnode)
 		if (m_mcExport)
 		{
 			// The Physique add-in allows vertices to be assigned to bones arbitrarily
-			iNodeV0 = InodeOfPhyVectex( iVertex0 );
-			iNodeV1 = InodeOfPhyVectex( iVertex1 );
-			iNodeV2 = InodeOfPhyVectex( iVertex2 );
+			iNodeV0 = InodeOfPhyVectex(iVertex0);
+			iNodeV1 = InodeOfPhyVectex(iVertex1);
+			iNodeV2 = InodeOfPhyVectex(iVertex2);
 		}
 		else
 		{
@@ -725,7 +735,7 @@ int DumpModelTEP::callback(INode *pnode)
 			iNodeV1 = iNode;
 			iNodeV2 = iNode;
 		}
-		
+
 		// Rotate the face vertices out of object-space, and into world-space space
 		Point3 v0 = pt3Vertex0 * mat3ObjectTM;
 		Point3 v1 = pt3Vertex1 * mat3ObjectTM;
@@ -733,34 +743,34 @@ int DumpModelTEP::callback(INode *pnode)
 
 
 		Matrix3 mat3ObjectNTM = mat3ObjectTM;
-		mat3ObjectNTM.NoScale( );
-		ASSERT_AND_ABORT( Length( pt3Vertex0Normal ) <= 1.1, "bogus pre normal 0" );
+		mat3ObjectNTM.NoScale();
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus pre normal 0"));
 		pt3Vertex0Normal = VectorTransform(mat3ObjectNTM, pt3Vertex0Normal);
-		ASSERT_AND_ABORT( Length( pt3Vertex0Normal ) <= 1.1, "bogus post normal 0" );
-		ASSERT_AND_ABORT( Length( pt3Vertex1Normal ) <= 1.1, "bogus pre normal 1" );
+		ASSERT_AND_ABORT(Length(pt3Vertex0Normal) <= 1.1, _T("bogus post normal 0"));
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus pre normal 1"));
 		pt3Vertex1Normal = VectorTransform(mat3ObjectNTM, pt3Vertex1Normal);
-		ASSERT_AND_ABORT( Length( pt3Vertex1Normal ) <= 1.1, "bogus post normal 1" );
-		ASSERT_AND_ABORT( Length( pt3Vertex2Normal ) <= 1.1, "bogus pre normal 2" );
+		ASSERT_AND_ABORT(Length(pt3Vertex1Normal) <= 1.1, _T("bogus post normal 1"));
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus pre normal 2"));
 		pt3Vertex2Normal = VectorTransform(mat3ObjectNTM, pt3Vertex2Normal);
-		ASSERT_AND_ABORT( Length( pt3Vertex2Normal ) <= 1.1, "bogus post normal 2" );
+		ASSERT_AND_ABORT(Length(pt3Vertex2Normal) <= 1.1, _T("bogus post normal 2"));
 
 		// Finally dump the bitmap name and 3 lines of face info
-		fprintf(m_pfile, "%s\n", szBitmapName);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
-				iNodeV0, v0.x, v0.y, v0.z,
-				pt3Vertex0Normal.x, pt3Vertex0Normal.y, pt3Vertex0Normal.z,
-				UVvertex0.x, UVvertex0.y);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
-				iNodeV1, v1.x, v1.y, v1.z,
-				pt3Vertex1Normal.x, pt3Vertex1Normal.y, pt3Vertex1Normal.z,
-				UVvertex1.x, UVvertex1.y);
-		fprintf(m_pfile, "%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n",
-				iNodeV2, v2.x, v2.y, v2.z,
-				pt3Vertex2Normal.x, pt3Vertex2Normal.y, pt3Vertex2Normal.z,
-				UVvertex2.x, UVvertex2.y);
+		fwprintf(m_pfile, _T("%s\n"), szBitmapName);
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
+			iNodeV0, v0.x, v0.y, v0.z,
+			pt3Vertex0Normal.x, pt3Vertex0Normal.y, pt3Vertex0Normal.z,
+			UVvertex0.x, UVvertex0.y);
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
+			iNodeV1, v1.x, v1.y, v1.z,
+			pt3Vertex1Normal.x, pt3Vertex1Normal.y, pt3Vertex1Normal.z,
+			UVvertex1.x, UVvertex1.y);
+		fwprintf(m_pfile, _T("%3d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f\n"),
+			iNodeV2, v2.x, v2.y, v2.z,
+			pt3Vertex2Normal.x, pt3Vertex2Normal.y, pt3Vertex2Normal.z,
+			UVvertex2.x, UVvertex2.y);
 	}
 
-	cleanup( );	
+	cleanup();
 	return TREE_CONTINUE;
 }
 
@@ -773,8 +783,8 @@ void DumpModelTEP::cleanup(void)
 		{
 			m_phyExport->ReleaseContextInterface(m_mcExport);
 			m_mcExport = NULL;
-        }
-        m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
+		}
+		m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
 		m_phyExport = NULL;
 		m_phyMod = NULL;
 	}
@@ -786,18 +796,18 @@ int DumpModelTEP::InodeOfPhyVectex(int iVertex)
 {
 	int iNode = 0;
 
-	IPhyVertexExport *vtxExport = m_mcExport->GetVertexInterface(iVertex);
+	IPhyVertexExport* vtxExport = m_mcExport->GetVertexInterface(iVertex);
 
 	if (vtxExport)
 	{
 		//need to check if vertex has blending
 		if (vtxExport->GetVertexType() & BLENDED_TYPE)
 		{
-			// 
+			//
 		}
-		else 
+		else
 		{
-			INode *Bone = ((IPhyRigidVertex *)vtxExport)->GetNode();
+			INode* Bone = ((IPhyRigidVertex*)vtxExport)->GetNode();
 
 			iNode = GetIndexOfINode(Bone);
 		}
@@ -809,14 +819,15 @@ int DumpModelTEP::InodeOfPhyVectex(int iVertex)
 
 
 
-Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace)
+Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex* prvertex, DWORD smGroupFace)
 {
 	// Lookup the appropriate vertex normal, based on smoothing group.
 	int cNormals = prvertex->rFlags & NORCT_MASK;
 
 	ASSERT_MBOX((cNormals == 1 && prvertex->ern == NULL) ||
-				(cNormals > 1 && prvertex->ern != NULL), "BOGUS RVERTEX");
-	
+					(cNormals > 1 && prvertex->ern != NULL),
+		_T("BOGUS RVERTEX"));
+
 	if (cNormals == 1)
 		return prvertex->rn.getNormal();
 	else
@@ -826,7 +837,7 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace)
 			if (prvertex->ern[irn].getSmGroup() & smGroupFace)
 				break;
 
-		if (irn >= cNormals) 
+		if (irn >= cNormals)
 		{
 			irn = 0;
 			// ASSERT_MBOX(irn < cNormals, "unknown smoothing group\n");
@@ -842,17 +853,17 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace)
 //===========================================================
 // Dialog proc for export options
 //
-static BOOL CALLBACK ExportOptionsDlgProc(
-	HWND	hDlg,
-	UINT	message,
-	WPARAM	wParam,
-	LPARAM	lParam)
+INT_PTR CALLBACK ExportOptionsDlgProc(
+	HWND hDlg,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam)
 {
-	static SmdExportClass *pexp;
+	static SmdExportClass* pexp;
 	switch (message)
 	{
 	case WM_INITDIALOG:
-		pexp = (SmdExportClass*) lParam;
+		pexp = (SmdExportClass*)lParam;
 		CheckRadioButton(hDlg, IDC_CHECK_SKELETAL, IDC_CHECK_REFFRAME, IDC_CHECK_SKELETAL);
 		return FALSE;
 	case WM_DESTROY:
@@ -861,10 +872,10 @@ static BOOL CALLBACK ExportOptionsDlgProc(
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
-			pexp->m_fReferenceFrame	= IsDlgButtonChecked(hDlg, IDC_CHECK_REFFRAME);
-			EndDialog(hDlg, 1);		// 1 indicates "ok to export"
+			pexp->m_fReferenceFrame = IsDlgButtonChecked(hDlg, IDC_CHECK_REFFRAME);
+			EndDialog(hDlg, 1); // 1 indicates "ok to export"
 			return TRUE;
-		case IDCANCEL:				// 0 indicates "cancel export"
+		case IDCANCEL: // 0 indicates "cancel export"
 			EndDialog(hDlg, 0);
 			return TRUE;
 		case IDC_CHECK_SKELETAL:
@@ -887,39 +898,39 @@ static BOOL CALLBACK ExportOptionsDlgProc(
 
 typedef struct
 {
-	char	szNodeName[SmdExportClass::MAX_NAME_CHARS];
-	int		iNode;
+	wchar_t szNodeName[SmdExportClass::MAX_NAME_CHARS];
+	int iNode;
 } NAMEMAP;
 const int MAX_NAMEMAP = 512;
 static NAMEMAP g_rgnm[MAX_NAMEMAP];
 
-int GetIndexOfINode(INode *pnode, BOOL fAssertPropExists)
+int GetIndexOfINode(INode* pnode, BOOL fAssertPropExists)
 {
 	TSTR strNodeName(pnode->GetName());
 	for (int inm = 0; inm < g_inmMac; inm++)
-		if (FStrEq(g_rgnm[inm].szNodeName, (char*)strNodeName))
+		if (FStrEq(g_rgnm[inm].szNodeName, strNodeName.ToMCHAR()))
 			return g_rgnm[inm].iNode;
 	if (fAssertPropExists)
-		ASSERT_MBOX(FALSE, "No NODEINDEXSTR property");
+		ASSERT_MBOX(FALSE, _T("No NODEINDEXSTR property"));
 	return -7777;
 }
 
-	
-void SetIndexOfINode(INode *pnode, int inode)
+
+void SetIndexOfINode(INode* pnode, int inode)
 {
 	TSTR strNodeName(pnode->GetName());
-	NAMEMAP *pnm;
+	NAMEMAP* pnm;
 	int inm;
 	for (inm = 0; inm < g_inmMac; inm++)
-		if (FStrEq(g_rgnm[inm].szNodeName, (char*)strNodeName))
+		if (FStrEq(g_rgnm[inm].szNodeName, strNodeName.ToMCHAR()))
 			break;
 	if (inm < g_inmMac)
 		pnm = &g_rgnm[inm];
 	else
 	{
-		ASSERT_MBOX(g_inmMac < MAX_NAMEMAP, "NAMEMAP is full");
+		ASSERT_MBOX(g_inmMac < MAX_NAMEMAP, _T("NAMEMAP is full"));
 		pnm = &g_rgnm[g_inmMac++];
-		strcpy(pnm->szNodeName, (char*)strNodeName);
+		wcscpy(pnm->szNodeName, strNodeName.ToMCHAR());
 	}
 	pnm->iNode = inode;
 }
@@ -928,10 +939,10 @@ void SetIndexOfINode(INode *pnode, int inode)
 //=============================================================
 // Returns TRUE if a node should be ignored during tree traversal.
 //
-BOOL FUndesirableNode(INode *pnode)
+BOOL FUndesirableNode(INode* pnode)
 {
 	// Get Node's underlying object, and object class name
-	Object *pobj = pnode->GetObjectRef();
+	Object* pobj = pnode->GetObjectRef();
 
 	// Don't care about lights, dummies, and cameras
 	if (pobj->SuperClassID() == CAMERA_CLASS_ID)
@@ -951,12 +962,12 @@ BOOL FUndesirableNode(INode *pnode)
 //=============================================================
 // Returns TRUE if a node has been marked as skippable
 //
-BOOL FNodeMarkedToSkip(INode *pnode)
+BOOL FNodeMarkedToSkip(INode* pnode)
 {
 	return (::GetIndexOfINode(pnode) == SmdExportClass::UNDESIRABLE_NODE_MARKER);
 }
 
-	
+
 //=============================================================
 // Reduces a rotation to within the -2PI..2PI range.
 //
@@ -973,111 +984,111 @@ static float FlReduceRotation(float fl)
 
 //===============================================================
 // Name:		hasStringPropertyValue
-// Class:		
+// Class:
 //
 // Description: Determines if a Custom Property has been set on
 //				the scene to the specified value.
-// 
+//
 // Parameters:	const char* -- the property
 //				const char* -- the expected value
 //				Interface*	-- the max interface pointer
 //
 // Returns:		bool -- true if the property is there and has the
 //						specified value.
-// 
+//
 //===============================================================
-bool SmdExportClass::hasStringPropertyValue
-(
-	const char	*propertyName,
-	const char	*propertyValue,
-	Interface	*ip
-)
+bool SmdExportClass::hasStringPropertyValue(
+	const wchar_t* propertyName,
+	const wchar_t* propertyValue,
+	Interface* ip)
 {
-	const PROPVARIANT *propertyVariant = getPropertyVariant( propertyName, ip );
-	if ( !propertyVariant ) return false ;
+	const PROPVARIANT* propertyVariant = getPropertyVariant(propertyName, ip);
+	if (!propertyVariant)
+		return false;
 
-	TCHAR buffer[80] ;
-	VariantToString( propertyVariant, buffer, 80 );
+	TCHAR buffer[80];
+	VariantToString(propertyVariant, buffer, 80);
 
-	if ( strcmp( buffer, propertyValue )==0)
-		return true ;
-	return false ;
+	if (wcscmp(buffer, propertyValue) == 0)
+		return true;
+	return false;
 }
 
 //===============================================================
 // Name:		getPropertyVariant
-// Class:		
+// Class:
 //
 // Description: Retrieves the specified property variant by name.
 //				Returns 0 (NULL) if not found.
-// 
+//
 // Parameters:	const char* -- the property's name
 //				Interface*	-- the max interface pointer
 //
 // Returns:		const PROPVARIANT* -- the property.  Returns 0
 //										(NULL) if not found.
-// 
+//
 //===============================================================
-const PROPVARIANT* SmdExportClass::getPropertyVariant
-(
-	const char	*propertyName,
-	Interface	*ip
-)
+const PROPVARIANT* SmdExportClass::getPropertyVariant(
+	const wchar_t* propertyName,
+	Interface* ip)
 {
-	TCHAR	szBuf[80];
-	int		bufSize		= 80;
-	int		numProps	= ip->GetNumProperties(PROPSET_USERDEFINED);
+	TCHAR szBuf[80];
+	int bufSize = 80;
+	int numProps = ip->GetNumProperties(PROPSET_USERDEFINED);
 
-	for (int i=0; i<numProps; i++) {
-		const PROPSPEC		*pPropSpec	= ip->GetPropertySpec(PROPSET_USERDEFINED, i);
-		const PROPVARIANT	*pPropVar	= ip->GetPropertyVariant(PROPSET_USERDEFINED, i);
+	for (int i = 0; i < numProps; i++)
+	{
+		const PROPSPEC* pPropSpec = ip->GetPropertySpec(PROPSET_USERDEFINED, i);
+		const PROPVARIANT* pPropVar = ip->GetPropertyVariant(PROPSET_USERDEFINED, i);
 
-		if ( pPropSpec->ulKind == PRSPEC_PROPID ) continue ;
+		if (pPropSpec->ulKind == PRSPEC_PROPID)
+			continue;
 		_tcscpy(szBuf, TSTR(pPropSpec->lpwstr));
 
-		if ( strcmp( propertyName, szBuf ) == 0 )
-			return pPropVar ;
+		if (wcscmp((wchar_t*)propertyName, szBuf) == 0)
+			return pPropVar;
 	}
 
-	return 0 ;
+	return 0;
 }
 
 
 // Convert (well, copy) a PROPVARIANT into a string
 //
-void SmdExportClass::VariantToString(const PROPVARIANT* pProp, TCHAR* szString, int bufSize)
+void SmdExportClass::VariantToString(const PROPVARIANT* pProp, WCHAR* szString, int bufSize)
+{
+	switch (pProp->vt)
 	{
-	switch (pProp->vt) {
-		case VT_LPWSTR:
-			_tcscpy(szString, TSTR(pProp->pwszVal));
-			break;
-		case VT_LPSTR:
-			_tcscpy(szString, TSTR(pProp->pszVal));
-			break;
-		case VT_I4:
-			_stprintf(szString, "%ld", pProp->lVal);
-			break;
-		case VT_R4:
-			_stprintf(szString, "%f", pProp->fltVal);
-			break;
-		case VT_R8:
-			_stprintf(szString, "%lf", pProp->dblVal);
-			break;
-		case VT_BOOL:
-			_stprintf(szString, "%s", pProp->boolVal ? "YES" : "NO" );
-			break;
-		case VT_FILETIME:
-			SYSTEMTIME sysTime;
-			FileTimeToSystemTime(&pProp->filetime, &sysTime);
-			GetDateFormat(LOCALE_SYSTEM_DEFAULT,
-						  DATE_SHORTDATE,
-						  &sysTime,
-						  NULL,
-						  szString,
-						  bufSize);
-			break;
-		default:
-			_tcscpy(szString, "");	
-			break;
-		}
+	case VT_LPWSTR:
+		_tcscpy(szString, TSTR(pProp->pwszVal));
+		break;
+	case VT_LPSTR:
+		_tcscpy(szString, TSTR((wchar_t*)pProp->pszVal));
+		break;
+	case VT_I4:
+		_stprintf(szString, _T("%ld"), pProp->lVal);
+		break;
+	case VT_R4:
+		_stprintf(szString, _T("%f"), pProp->fltVal);
+		break;
+	case VT_R8:
+		_stprintf(szString, _T("%lf"), pProp->dblVal);
+		break;
+	case VT_BOOL:
+		_stprintf(szString, _T("%s"), pProp->boolVal ? _T("YES") : _T("NO"));
+		break;
+	case VT_FILETIME:
+		SYSTEMTIME sysTime;
+		FileTimeToSystemTime(&pProp->filetime, &sysTime);
+		GetDateFormat(LOCALE_SYSTEM_DEFAULT,
+			DATE_SHORTDATE,
+			&sysTime,
+			NULL,
+			szString,
+			bufSize);
+		break;
+	default:
+		_tcscpy(szString, _T(""));
+		break;
 	}
+}

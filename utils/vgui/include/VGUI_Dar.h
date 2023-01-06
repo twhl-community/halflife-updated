@@ -1,18 +1,15 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_DAR_H
-#define VGUI_DAR_H
+#pragma once
 
 #include<stdlib.h>
 #include<string.h>
 #include<VGUI.h>
-
-
 
 namespace vgui
 {
@@ -166,7 +163,7 @@ protected:
 	ELEMTYPE* _data;
 };
 
-#ifdef _WIN32
+#ifdef WIN32
 //forward referencing all the template types used so they get exported
 template class VGUIAPI Dar<char>;
 template class VGUIAPI Dar<char*>;
@@ -189,6 +186,3 @@ template class VGUIAPI Dar<class RepaintSignal*>;
 #endif
 
 }
-
-
-#endif

@@ -1,12 +1,11 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VGUI_FILEINPUTSTREAM_H
-#define VGUI_FILEINPUTSTREAM_H
+#pragma once
 
 //TODO : figure out how to get stdio out of here, I think std namespace is broken for FILE for forward declaring does not work in vc6
 
@@ -34,5 +33,3 @@ public:
 };
 
 }
-
-#endif

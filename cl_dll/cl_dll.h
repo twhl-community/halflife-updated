@@ -16,6 +16,8 @@
 //  cl_dll.h
 //
 
+#pragma once
+
 // 4-23-98  JOHN
 
 //
@@ -25,17 +27,12 @@
 //		- Drawing the HUD graphics every frame
 //		- Handling the custum HUD-update packets
 //
-typedef unsigned char byte;
-typedef unsigned short word;
-typedef float vec_t;
-typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 
-#include "util_vector.h"
-#ifdef _WIN32
-#define EXPORT	_declspec( dllexport )
-#else
-#define EXPORT	__attribute__ ((visibility("default")))
-#endif
+#include "Platform.h"
+
+typedef int (*pfnUserMsgHook)(const char* pszName, int iSize, void* pbuf);
+
+#include "mathlib.h"
 
 #include "../engine/cdll_int.h"
 #include "../dlls/cdll_dll.h"

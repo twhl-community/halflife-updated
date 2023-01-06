@@ -1,4 +1,4 @@
-LIBRARY smdlexp
+LIBRARY smdlexp.dle
 EXPORTS
 	LibDescription		@1
 	LibNumberClasses	@2

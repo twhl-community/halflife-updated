@@ -34,7 +34,7 @@
 
 #include "windows.h"
 
-typedef unsigned __int64	QWORD;
+typedef unsigned __int64 QWORD;
 
 #define RDTSC _asm _emit 0fh _asm _emit 031h
 #define CPUID _asm _emit 0fh _asm _emit 0a2h
@@ -73,7 +73,7 @@ unsigned int HasTsc()
 {
 	unsigned int supported = 0;
 
-	if(! HasCpuid())
+	if (!HasCpuid())
 		return 0;
 
 	_asm {
@@ -123,7 +123,7 @@ QWORD GetRDTSC(void)
 int PROC_GetSpeed(void)
 {
 	QWORD StartClock, ElapClock;
-	DWORD StartTime, times = 0;
+	DWORD StartTime;
 	int RetVal;
 
 	if (!HasTsc())
@@ -144,46 +144,54 @@ int PROC_GetSpeed(void)
 	while (timeGetTime() < StartTime + 1000)
 		;
 	ElapClock = GetRDTSC() - StartClock + 500000;
-	RetVal = (DWORD)(ElapClock/1000000);
+	RetVal = (DWORD)(ElapClock / 1000000);
 	return RetVal;
 }
 
-#pragma optimize( "", off )
+#pragma optimize("", off)
 // --------------------------------------------------------------------------
 int PROC_IsMMX(void)
 {
-    int retval = 1;
-    DWORD RegEDX;
+	int retval = 1;
+	DWORD RegEDX = 0;
 
-    __try
+	__try
 	{
-        _asm
+		_asm
 		{
-            mov eax, 1      // set up CPUID to return processor version and features
-                            //      0 = vendor string, 1 = version info, 2 = cache info
-            CPUID           // code bytes = 0fh,  0a2h
+            mov eax, 1	// set up CPUID to return processor version and features
+			//      0 = vendor string, 1 = version info, 2 = cache info
+            CPUID // code bytes = 0fh,  0a2h
             mov RegEDX, edx // features returned in edx
 		}
-    } __except(EXCEPTION_EXECUTE_HANDLER) { retval = FALSE; }
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		retval = FALSE;
+	}
 
-    if (retval == FALSE)
-            return 0;           // processor does not support CPUID
+	if (retval == FALSE)
+		return 0; // processor does not support CPUID
 
-    if (RegEDX & 0x800000)          // bit 23 is set for MMX technology
-    {
-       __try { 
-		   EMMS // _asm emms 
-	   }          // try executing the MMX instruction "emms"
-       __except(EXCEPTION_EXECUTE_HANDLER) { retval = FALSE; }
-    }
+	if (RegEDX & 0x800000) // bit 23 is set for MMX technology
+	{
+		__try
+		{
+			EMMS // _asm emms
+		}		 // try executing the MMX instruction "emms"
+		__except (EXCEPTION_EXECUTE_HANDLER)
+		{
+			retval = FALSE;
+		}
+	}
 
-    else
-            return 0;           // processor supports CPUID but does not support MMX technology
+	else
+		return 0; // processor supports CPUID but does not support MMX technology
 
-    // if retval == 0 here, it means the processor has MMX technology but
-    // floating-point emulation is on; so MMX technology is unavailable
+	// if retval == 0 here, it means the processor has MMX technology but
+	// floating-point emulation is on; so MMX technology is unavailable
 
-    return retval;
+	return retval;
 }
 // --------------------------------------------------------------------------
-#pragma optimize( "", on )
+#pragma optimize("", on)

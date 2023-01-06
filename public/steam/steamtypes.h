@@ -1,14 +1,10 @@
-//========= Copyright � 1996-2008, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2008, Valve LLC, All rights reserved. ============
 //
 // Purpose:
 //
 //=============================================================================
 
-#ifndef STEAMTYPES_H
-#define STEAMTYPES_H
-#ifdef _WIN32
 #pragma once
-#endif
 
 // Steam-specific types. Defined here so this header file can be included in other code bases.
 #if defined( __GNUC__ ) && !defined(POSIX)
@@ -30,7 +26,7 @@
 typedef unsigned char uint8;
 typedef signed char int8;
 
-#if defined( _WIN32 )
+#if defined( WIN32 )
 
 typedef __int16 int16;
 typedef unsigned __int16 uint16;
@@ -47,7 +43,7 @@ typedef __int32 intp;
 typedef unsigned __int32 uintp;
 #endif
 
-#else // _WIN32
+#else // WIN32
 
 typedef short int16;
 typedef unsigned short uint16;
@@ -63,7 +59,7 @@ typedef int intp;
 typedef unsigned int uintp;
 #endif
 
-#endif // else _WIN32
+#endif // else WIN32
 
 #ifdef __cplusplus
 const int k_cubSaltSize   = 8;
@@ -173,5 +169,3 @@ const PartnerId_t k_uPartnerIdInvalid = 0;
 #else
 #define k_uPartnerIdInvalid 0x0;
 #endif
-
-#endif // STEAMTYPES_H

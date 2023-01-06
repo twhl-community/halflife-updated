@@ -12,7 +12,6 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
-#if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
 /*
 
@@ -20,64 +19,65 @@
 
 */
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"weapons.h"
-#include	"soundent.h"
+#include "extdll.h"
+#include "util.h"
+#include "cbase.h"
+#include "monsters.h"
+#include "weapons.h"
+#include "soundent.h"
 
 
-#define ACT_T_IDLE		1010
-#define ACT_T_TAP			1020
-#define ACT_T_STRIKE		1030
-#define ACT_T_REARIDLE	1040
+#define ACT_T_IDLE 1010
+#define ACT_T_TAP 1020
+#define ACT_T_STRIKE 1030
+#define ACT_T_REARIDLE 1040
 
 class CTentacle : public CBaseMonster
 {
 public:
-	CTentacle( void );
+	CTentacle();
 
-	void Spawn( );
-	void Precache( );
-	void KeyValue( KeyValueData *pkvd );
+	void Spawn() override;
+	void Precache() override;
+	bool KeyValue(KeyValueData* pkvd) override;
 
-	int		Save( CSave &save );
-	int		Restore( CRestore &restore );
-	static	TYPEDESCRIPTION m_SaveData[];
+	bool Save(CSave& save) override;
+	bool Restore(CRestore& restore) override;
+	static TYPEDESCRIPTION m_SaveData[];
 
 	// Don't allow the tentacle to go across transitions!!!
-	virtual int	ObjectCaps( void ) { return CBaseMonster :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	int ObjectCaps() override { return CBaseMonster::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
-	void SetObjectCollisionBox( void )
+	void SetObjectCollisionBox() override
 	{
 		pev->absmin = pev->origin + Vector(-400, -400, 0);
 		pev->absmax = pev->origin + Vector(400, 400, 850);
 	}
 
-	void EXPORT Cycle( void );
-	void EXPORT CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT Start( void );
-	void EXPORT DieThink( void );
+	void EXPORT Cycle();
+	void EXPORT CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void EXPORT Start();
+	void EXPORT DieThink();
 
-	void EXPORT Test( void );
+	void EXPORT Test();
 
-	void EXPORT HitTouch( CBaseEntity *pOther );
+	void EXPORT HitTouch(CBaseEntity* pOther);
 
-	float HearingSensitivity( void ) { return 2.0; };
+	float HearingSensitivity() override { return 2.0; }
 
-	int TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
-	void HandleAnimEvent( MonsterEvent_t *pEvent );
-	void Killed( entvars_t *pevAttacker, int iGib );
+	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
+	void HandleAnimEvent(MonsterEvent_t* pEvent) override;
+	void Killed(entvars_t* pevAttacker, int iGib) override;
 
-	MONSTERSTATE GetIdealState ( void ) { return MONSTERSTATE_IDLE; };
-	int CanPlaySequence( BOOL fDisregardState ) { return TRUE; };
+	MONSTERSTATE GetIdealState() override { return MONSTERSTATE_IDLE; }
+	//TODO: should override base, but has different signature
+	bool CanPlaySequence(bool fDisregardState) { return true; }
 
-	int Classify( void );
+	int Classify() override;
 
-	int Level( float dz );
-	int MyLevel( void );
-	float MyHeight( void );
+	int Level(float dz);
+	int MyLevel();
+	float MyHeight();
 
 	float m_flInitialYaw;
 	int m_iGoalAnim;
@@ -94,8 +94,8 @@ public:
 	float m_flTapRadius;
 
 	float m_flNextSong;
-	static int g_fFlySound;
-	static int g_fSquirmSound;
+	static bool g_fFlySound;
+	static bool g_fSquirmSound;
 
 	float m_flMaxYaw;
 	int m_iTapSound;
@@ -103,17 +103,17 @@ public:
 	Vector m_vecPrevSound;
 	float m_flPrevSoundTime;
 
-	static const char *pHitSilo[];
-	static const char *pHitDirt[];
-	static const char *pHitWater[];
+	static const char* pHitSilo[];
+	static const char* pHitDirt[];
+	static const char* pHitWater[];
 };
 
 
 
-int CTentacle :: g_fFlySound;
-int CTentacle :: g_fSquirmSound;
+bool CTentacle::g_fFlySound;
+bool CTentacle::g_fSquirmSound;
 
-LINK_ENTITY_TO_CLASS( monster_tentacle, CTentacle );
+LINK_ENTITY_TO_CLASS(monster_tentacle, CTentacle);
 
 // stike sounds
 #define TE_NONE -1
@@ -121,53 +121,53 @@ LINK_ENTITY_TO_CLASS( monster_tentacle, CTentacle );
 #define TE_DIRT 1
 #define TE_WATER 2
 
-const char *CTentacle::pHitSilo[] = 
-{
-	"tentacle/te_strike1.wav",
-	"tentacle/te_strike2.wav",
+const char* CTentacle::pHitSilo[] =
+	{
+		"tentacle/te_strike1.wav",
+		"tentacle/te_strike2.wav",
 };
 
-const char *CTentacle::pHitDirt[] = 
-{
-	"player/pl_dirt1.wav",
-	"player/pl_dirt2.wav",
-	"player/pl_dirt3.wav",
-	"player/pl_dirt4.wav",
+const char* CTentacle::pHitDirt[] =
+	{
+		"player/pl_dirt1.wav",
+		"player/pl_dirt2.wav",
+		"player/pl_dirt3.wav",
+		"player/pl_dirt4.wav",
 };
 
-const char *CTentacle::pHitWater[] = 
-{
-	"player/pl_slosh1.wav",
-	"player/pl_slosh2.wav",
-	"player/pl_slosh3.wav",
-	"player/pl_slosh4.wav",
+const char* CTentacle::pHitWater[] =
+	{
+		"player/pl_slosh1.wav",
+		"player/pl_slosh2.wav",
+		"player/pl_slosh3.wav",
+		"player/pl_slosh4.wav",
 };
 
 
-TYPEDESCRIPTION	CTentacle::m_SaveData[] = 
-{
-	DEFINE_FIELD( CTentacle, m_flInitialYaw, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_iGoalAnim, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_iLevel, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_iDir, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_flFramerateAdj, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_flSoundYaw, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_iSoundLevel, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_flSoundTime, FIELD_TIME ),
-	DEFINE_FIELD( CTentacle, m_flSoundRadius, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_iHitDmg, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_flHitTime, FIELD_TIME ),
-	DEFINE_FIELD( CTentacle, m_flTapRadius, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_flNextSong, FIELD_TIME ),
-	DEFINE_FIELD( CTentacle, m_iTapSound, FIELD_INTEGER ),
-	DEFINE_FIELD( CTentacle, m_flMaxYaw, FIELD_FLOAT ),
-	DEFINE_FIELD( CTentacle, m_vecPrevSound, FIELD_POSITION_VECTOR ),
-	DEFINE_FIELD( CTentacle, m_flPrevSoundTime, FIELD_TIME ),
+TYPEDESCRIPTION CTentacle::m_SaveData[] =
+	{
+		DEFINE_FIELD(CTentacle, m_flInitialYaw, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_iGoalAnim, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_iLevel, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_iDir, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_flFramerateAdj, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_flSoundYaw, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_iSoundLevel, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_flSoundTime, FIELD_TIME),
+		DEFINE_FIELD(CTentacle, m_flSoundRadius, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_iHitDmg, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_flHitTime, FIELD_TIME),
+		DEFINE_FIELD(CTentacle, m_flTapRadius, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_flNextSong, FIELD_TIME),
+		DEFINE_FIELD(CTentacle, m_iTapSound, FIELD_INTEGER),
+		DEFINE_FIELD(CTentacle, m_flMaxYaw, FIELD_FLOAT),
+		DEFINE_FIELD(CTentacle, m_vecPrevSound, FIELD_POSITION_VECTOR),
+		DEFINE_FIELD(CTentacle, m_flPrevSoundTime, FIELD_TIME),
 };
-IMPLEMENT_SAVERESTORE( CTentacle, CBaseMonster );
+IMPLEMENT_SAVERESTORE(CTentacle, CBaseMonster);
 
 
-// animation sequence aliases 
+// animation sequence aliases
 typedef enum
 {
 	TENTACLE_ANIM_Pit_Idle,
@@ -236,50 +236,53 @@ typedef enum
 
 
 //=========================================================
-// Classify - indicates this monster's place in the 
+// Classify - indicates this monster's place in the
 // relationship table.
 //=========================================================
-int	CTentacle :: Classify ( void )
+int CTentacle::Classify()
 {
-	return	CLASS_ALIEN_MONSTER;
+	return CLASS_ALIEN_MONSTER;
 }
 
 //
 // Tentacle Spawn
 //
-void CTentacle :: Spawn( )
+void CTentacle::Spawn()
 {
-	Precache( );
+	Precache();
 
-	pev->solid			= SOLID_BBOX;
-	pev->movetype		= MOVETYPE_FLY;
-	pev->effects		= 0;
-	pev->health			= 75;
-	pev->sequence		= 0;
+	pev->solid = SOLID_BBOX;
+	pev->movetype = MOVETYPE_FLY;
+	pev->effects = 0;
+	pev->health = 75;
+	pev->sequence = 0;
+
+	//Always interpolate tentacles since they don't actually move.
+	m_EFlags |= EFLAG_SLERP;
 
 	SET_MODEL(ENT(pev), "models/tentacle2.mdl");
-	UTIL_SetSize( pev, Vector( -32, -32, 0 ), Vector( 32, 32, 64 ) );
+	UTIL_SetSize(pev, Vector(-32, -32, 0), Vector(32, 32, 64));
 
-	pev->takedamage		= DAMAGE_AIM;
-	pev->flags			|= FL_MONSTER;
-	
-	m_bloodColor		= BLOOD_COLOR_GREEN;
+	pev->takedamage = DAMAGE_AIM;
+	pev->flags |= FL_MONSTER;
 
-	SetThink( &CTentacle::Start );
-	SetTouch( &CTentacle::HitTouch );
-	SetUse( &CTentacle::CommandUse );
+	m_bloodColor = BLOOD_COLOR_GREEN;
+
+	SetThink(&CTentacle::Start);
+	SetTouch(&CTentacle::HitTouch);
+	SetUse(&CTentacle::CommandUse);
 
 	pev->nextthink = gpGlobals->time + 0.2;
 
-	ResetSequenceInfo( );
+	ResetSequenceInfo();
 	m_iDir = 1;
 
 	pev->yaw_speed = 18;
 	m_flInitialYaw = pev->angles.y;
 	pev->ideal_yaw = m_flInitialYaw;
 
-	g_fFlySound = FALSE;
-	g_fSquirmSound = FALSE;
+	g_fFlySound = false;
+	g_fSquirmSound = false;
 
 	m_iHitDmg = 20;
 
@@ -289,10 +292,10 @@ void CTentacle :: Spawn( )
 	m_MonsterState = MONSTERSTATE_IDLE;
 
 	// SetThink( Test );
-	UTIL_SetOrigin( pev, pev->origin );
+	UTIL_SetOrigin(pev, pev->origin);
 }
 
-void CTentacle :: Precache( )
+void CTentacle::Precache()
 {
 	PRECACHE_MODEL("models/tentacle2.mdl");
 
@@ -316,38 +319,37 @@ void CTentacle :: Precache( )
 	PRECACHE_SOUND("tentacle/te_swing1.wav");
 	PRECACHE_SOUND("tentacle/te_swing2.wav");
 
-	PRECACHE_SOUND_ARRAY( pHitSilo );
-	PRECACHE_SOUND_ARRAY( pHitDirt );
-	PRECACHE_SOUND_ARRAY( pHitWater );
+	PRECACHE_SOUND_ARRAY(pHitSilo);
+	PRECACHE_SOUND_ARRAY(pHitDirt);
+	PRECACHE_SOUND_ARRAY(pHitWater);
 }
 
 
-CTentacle::CTentacle( )
+CTentacle::CTentacle()
 {
 	m_flMaxYaw = 65;
 	m_iTapSound = 0;
 }
 
-void CTentacle::KeyValue( KeyValueData *pkvd )
+bool CTentacle::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "sweeparc"))
 	{
 		m_flMaxYaw = atof(pkvd->szValue) / 2.0;
-		pkvd->fHandled = TRUE;
+		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "sound"))
 	{
 		m_iTapSound = atoi(pkvd->szValue);
-		pkvd->fHandled = TRUE;
-
+		return true;
 	}
-	else
-		CBaseMonster::KeyValue( pkvd );
+
+	return CBaseMonster::KeyValue(pkvd);
 }
 
 
 
-int CTentacle :: Level( float dz )
+int CTentacle::Level(float dz)
 {
 	if (dz < 216)
 		return 0;
@@ -359,9 +361,9 @@ int CTentacle :: Level( float dz )
 }
 
 
-float CTentacle :: MyHeight( )
+float CTentacle::MyHeight()
 {
-	switch ( MyLevel( ) )
+	switch (MyLevel())
 	{
 	case 1:
 		return 256;
@@ -374,11 +376,11 @@ float CTentacle :: MyHeight( )
 }
 
 
-int CTentacle :: MyLevel( )
+int CTentacle::MyLevel()
 {
-	switch( pev->sequence )
+	switch (pev->sequence)
 	{
-	case TENTACLE_ANIM_Pit_Idle: 
+	case TENTACLE_ANIM_Pit_Idle:
 		return -1;
 
 	case TENTACLE_ANIM_rise_to_Temp1:
@@ -443,11 +445,11 @@ int CTentacle :: MyLevel( )
 }
 
 
-void CTentacle :: Test( void )
+void CTentacle::Test()
 {
 	pev->sequence = TENTACLE_ANIM_Floor_Strike;
 	pev->framerate = 0;
-	StudioFrameAdvance( );
+	StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
@@ -456,39 +458,39 @@ void CTentacle :: Test( void )
 //
 // TentacleThink
 //
-void CTentacle :: Cycle( void )
+void CTentacle::Cycle()
 {
 	// ALERT( at_console, "%s %.2f %d %d\n", STRING( pev->targetname ), pev->origin.z, m_MonsterState, m_IdealMonsterState );
-	pev->nextthink = gpGlobals-> time + 0.1;
+	pev->nextthink = gpGlobals->time + 0.1;
 
 	// ALERT( at_console, "%s %d %d %d %f %f\n", STRING( pev->targetname ), pev->sequence, m_iGoalAnim, m_iDir, pev->framerate, pev->health );
 
 	if (m_MonsterState == MONSTERSTATE_SCRIPT || m_IdealMonsterState == MONSTERSTATE_SCRIPT)
 	{
 		pev->angles.y = m_flInitialYaw;
-		pev->ideal_yaw = m_flInitialYaw;	
-		ClearConditions( IgnoreConditions() );
-		MonsterThink( );
+		pev->ideal_yaw = m_flInitialYaw;
+		ClearConditions(IgnoreConditions());
+		MonsterThink();
 		m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
 		return;
 	}
 
-	DispatchAnimEvents( );
-	StudioFrameAdvance( );
+	DispatchAnimEvents();
+	StudioFrameAdvance();
 
-	ChangeYaw( pev->yaw_speed );
+	ChangeYaw(pev->yaw_speed);
 
-	CSound *pSound;
+	CSound* pSound;
 
-	Listen( );
+	Listen();
 
 	// Listen will set this if there's something in my sound list
-	if ( HasConditions( bits_COND_HEAR_SOUND ) )
+	if (HasConditions(bits_COND_HEAR_SOUND))
 		pSound = PBestSound();
 	else
 		pSound = NULL;
 
-	if ( pSound )
+	if (pSound)
 	{
 		Vector vecDir;
 		if (gpGlobals->time - m_flPrevSoundTime < 0.5)
@@ -503,8 +505,8 @@ void CTentacle :: Cycle( void )
 		m_flPrevSoundTime = gpGlobals->time;
 		m_vecPrevSound = pSound->m_vecOrigin;
 
-		m_flSoundYaw = UTIL_VecToYaw ( vecDir ) - m_flInitialYaw;
-		m_iSoundLevel = Level( vecDir.z );
+		m_flSoundYaw = UTIL_VecToYaw(vecDir) - m_flInitialYaw;
+		m_iSoundLevel = Level(vecDir.z);
 
 		if (m_flSoundYaw < -180)
 			m_flSoundYaw += 360;
@@ -515,22 +517,26 @@ void CTentacle :: Cycle( void )
 		if (m_flSoundTime < gpGlobals->time)
 		{
 			// play "I hear new something" sound
-			char *sound;	
+			const char* sound;
 
-			switch( RANDOM_LONG(0,1) )
+			switch (RANDOM_LONG(0, 1))
 			{
-			case 0: sound = "tentacle/te_alert1.wav"; break;
-			case 1: sound = "tentacle/te_alert2.wav"; break;
+			case 0:
+				sound = "tentacle/te_alert1.wav";
+				break;
+			case 1:
+				sound = "tentacle/te_alert2.wav";
+				break;
 			}
 
 			// UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
 		}
-		m_flSoundTime = gpGlobals->time + RANDOM_FLOAT( 5.0, 10.0 );
+		m_flSoundTime = gpGlobals->time + RANDOM_FLOAT(5.0, 10.0);
 	}
 
 	// clip ideal_yaw
 	float dy = m_flSoundYaw;
-	switch( pev->sequence )
+	switch (pev->sequence)
 	{
 	case TENTACLE_ANIM_Floor_Rear:
 	case TENTACLE_ANIM_Floor_Rear_Idle:
@@ -564,22 +570,22 @@ void CTentacle :: Cycle( void )
 				pev->health = 75;
 			}
 		}
-		else if ( m_flSoundTime > gpGlobals->time )
+		else if (m_flSoundTime > gpGlobals->time)
 		{
 			if (m_flSoundYaw >= -(m_flMaxYaw + 30) && m_flSoundYaw <= (m_flMaxYaw + 30))
 			{
 				// strike
-				m_iGoalAnim = LookupActivity( ACT_T_STRIKE + m_iSoundLevel );
+				m_iGoalAnim = LookupActivity(ACT_T_STRIKE + m_iSoundLevel);
 			}
-			else if (m_flSoundYaw >= -m_flMaxYaw * 2 && m_flSoundYaw <= m_flMaxYaw * 2) 
+			else if (m_flSoundYaw >= -m_flMaxYaw * 2 && m_flSoundYaw <= m_flMaxYaw * 2)
 			{
 				// tap
-				m_iGoalAnim = LookupActivity( ACT_T_TAP + m_iSoundLevel );
+				m_iGoalAnim = LookupActivity(ACT_T_TAP + m_iSoundLevel);
 			}
 			else
 			{
 				// go into rear idle
-				m_iGoalAnim = LookupActivity( ACT_T_REARIDLE + m_iSoundLevel );
+				m_iGoalAnim = LookupActivity(ACT_T_REARIDLE + m_iSoundLevel);
 			}
 		}
 		else if (pev->sequence == TENTACLE_ANIM_Pit_Idle)
@@ -591,62 +597,66 @@ void CTentacle :: Cycle( void )
 		{
 			if (MyLevel() >= 0 && gpGlobals->time < m_flSoundTime)
 			{
-				if (RANDOM_LONG(0,9) < m_flSoundTime - gpGlobals->time)
+				if (RANDOM_LONG(0, 9) < m_flSoundTime - gpGlobals->time)
 				{
 					// continue stike
-					m_iGoalAnim = LookupActivity( ACT_T_STRIKE + m_iSoundLevel );
+					m_iGoalAnim = LookupActivity(ACT_T_STRIKE + m_iSoundLevel);
 				}
 				else
 				{
 					// tap
-					m_iGoalAnim = LookupActivity( ACT_T_TAP + m_iSoundLevel );
+					m_iGoalAnim = LookupActivity(ACT_T_TAP + m_iSoundLevel);
 				}
 			}
-			else if (MyLevel( ) < 0)
+			else if (MyLevel() < 0)
 			{
-				m_iGoalAnim = LookupActivity( ACT_T_IDLE + 0 );
+				m_iGoalAnim = LookupActivity(ACT_T_IDLE + 0);
 			}
 			else
 			{
 				if (m_flNextSong < gpGlobals->time)
 				{
 					// play "I hear new something" sound
-					char *sound;	
+					const char* sound;
 
-					switch( RANDOM_LONG(0,1) )
+					switch (RANDOM_LONG(0, 1))
 					{
-					case 0: sound = "tentacle/te_sing1.wav"; break;
-					case 1: sound = "tentacle/te_sing2.wav"; break;
+					case 0:
+						sound = "tentacle/te_sing1.wav";
+						break;
+					case 1:
+						sound = "tentacle/te_sing2.wav";
+						break;
 					}
 
 					EMIT_SOUND(ENT(pev), CHAN_VOICE, sound, 1.0, ATTN_NORM);
 
-					m_flNextSong = gpGlobals->time + RANDOM_FLOAT( 10, 20 );
+					m_flNextSong = gpGlobals->time + RANDOM_FLOAT(10, 20);
 				}
 
-				if (RANDOM_LONG(0,15) == 0)
+				if (RANDOM_LONG(0, 15) == 0)
 				{
 					// idle on new level
-					m_iGoalAnim = LookupActivity( ACT_T_IDLE + RANDOM_LONG(0,3) );
+					m_iGoalAnim = LookupActivity(ACT_T_IDLE + RANDOM_LONG(0, 3));
 				}
-				else if (RANDOM_LONG(0,3)  == 0)
+				else if (RANDOM_LONG(0, 3) == 0)
 				{
 					// tap
-					m_iGoalAnim = LookupActivity( ACT_T_TAP + MyLevel( ) );
+					m_iGoalAnim = LookupActivity(ACT_T_TAP + MyLevel());
 				}
 				else
 				{
 					// idle
-					m_iGoalAnim = LookupActivity( ACT_T_IDLE + MyLevel( ) );
+					m_iGoalAnim = LookupActivity(ACT_T_IDLE + MyLevel());
 				}
 			}
 			if (m_flSoundYaw < 0)
-				m_flSoundYaw += RANDOM_FLOAT( 2, 8 );
+				m_flSoundYaw += RANDOM_FLOAT(2, 8);
 			else
-				m_flSoundYaw -= RANDOM_FLOAT( 2, 8 );
+				m_flSoundYaw -= RANDOM_FLOAT(2, 8);
 		}
 
-		pev->sequence = FindTransition( pev->sequence, m_iGoalAnim, &m_iDir );
+		pev->sequence = FindTransition(pev->sequence, m_iGoalAnim, &m_iDir);
 
 		if (m_iDir > 0)
 		{
@@ -657,39 +667,39 @@ void CTentacle :: Cycle( void )
 			m_iDir = -1; // just to safe
 			pev->frame = 255;
 		}
-		ResetSequenceInfo( );
+		ResetSequenceInfo();
 
-		m_flFramerateAdj = RANDOM_FLOAT( -0.2, 0.2 );
+		m_flFramerateAdj = RANDOM_FLOAT(-0.2, 0.2);
 		pev->framerate = m_iDir * 1.0 + m_flFramerateAdj;
 
-		switch( pev->sequence)
+		switch (pev->sequence)
 		{
 		case TENTACLE_ANIM_Floor_Tap:
 		case TENTACLE_ANIM_Lev1_Tap:
 		case TENTACLE_ANIM_Lev2_Tap:
 		case TENTACLE_ANIM_Lev3_Tap:
-			{
-				Vector vecSrc;
-				UTIL_MakeVectors( pev->angles );
+		{
+			Vector vecSrc;
+			UTIL_MakeVectors(pev->angles);
 
-				TraceResult tr1, tr2;
+			TraceResult tr1, tr2;
 
-				vecSrc = pev->origin + Vector( 0, 0, MyHeight() - 4);
-				UTIL_TraceLine( vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, ENT( pev ), &tr1 );
+			vecSrc = pev->origin + Vector(0, 0, MyHeight() - 4);
+			UTIL_TraceLine(vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, ENT(pev), &tr1);
 
-				vecSrc = pev->origin + Vector( 0, 0, MyHeight() + 8);
-				UTIL_TraceLine( vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, ENT( pev ), &tr2 );
+			vecSrc = pev->origin + Vector(0, 0, MyHeight() + 8);
+			UTIL_TraceLine(vecSrc, vecSrc + gpGlobals->v_forward * 512, ignore_monsters, ENT(pev), &tr2);
 
-				// ALERT( at_console, "%f %f\n", tr1.flFraction * 512, tr2.flFraction * 512 );
+			// ALERT( at_console, "%f %f\n", tr1.flFraction * 512, tr2.flFraction * 512 );
 
-				m_flTapRadius = SetBlending( 0, RANDOM_FLOAT( tr1.flFraction * 512, tr2.flFraction * 512 ) );
-			}
-			break;
+			m_flTapRadius = SetBlending(0, RANDOM_FLOAT(tr1.flFraction * 512, tr2.flFraction * 512));
+		}
+		break;
 		default:
 			m_flTapRadius = 336; // 400 - 64
 			break;
 		}
-		pev->view_ofs.z = MyHeight( );
+		pev->view_ofs.z = MyHeight();
 		// ALERT( at_console, "seq %d\n", pev->sequence );
 	}
 
@@ -707,67 +717,66 @@ void CTentacle :: Cycle( void )
 
 
 
-void CTentacle::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CTentacle::CommandUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	// ALERT( at_console, "%s triggered %d\n", STRING( pev->targetname ), useType ); 
-	switch( useType )
+	// ALERT( at_console, "%s triggered %d\n", STRING( pev->targetname ), useType );
+	switch (useType)
 	{
 	case USE_OFF:
 		pev->takedamage = DAMAGE_NO;
-		SetThink( &CTentacle::DieThink );
+		SetThink(&CTentacle::DieThink);
 		m_iGoalAnim = TENTACLE_ANIM_Engine_Death1;
 		break;
 	case USE_ON:
 		if (pActivator)
 		{
 			// ALERT( at_console, "insert sound\n");
-			CSoundEnt::InsertSound ( bits_SOUND_WORLD, pActivator->pev->origin, 1024, 1.0 );
+			CSoundEnt::InsertSound(bits_SOUND_WORLD, pActivator->pev->origin, 1024, 1.0);
 		}
 		break;
 	case USE_SET:
 		break;
 	case USE_TOGGLE:
 		pev->takedamage = DAMAGE_NO;
-		SetThink( &CTentacle::DieThink );
+		SetThink(&CTentacle::DieThink);
 		m_iGoalAnim = TENTACLE_ANIM_Engine_Idle;
 		break;
 	}
-
 }
 
 
 
-void CTentacle :: DieThink( void )
+void CTentacle::DieThink()
 {
-	pev->nextthink = gpGlobals-> time + 0.1;
+	pev->nextthink = gpGlobals->time + 0.1;
 
-	DispatchAnimEvents( );
-	StudioFrameAdvance( );
+	DispatchAnimEvents();
+	StudioFrameAdvance();
 
-	ChangeYaw( 24 );
+	ChangeYaw(24);
 
 	if (m_fSequenceFinished)
 	{
 		if (pev->sequence == m_iGoalAnim)
 		{
-			switch( m_iGoalAnim )
+			switch (m_iGoalAnim)
 			{
 			case TENTACLE_ANIM_Engine_Idle:
 			case TENTACLE_ANIM_Engine_Sway:
 			case TENTACLE_ANIM_Engine_Swat:
 			case TENTACLE_ANIM_Engine_Bob:
-				m_iGoalAnim = TENTACLE_ANIM_Engine_Sway + RANDOM_LONG( 0, 2 );
+				m_iGoalAnim = TENTACLE_ANIM_Engine_Sway + RANDOM_LONG(0, 2);
 				break;
 			case TENTACLE_ANIM_Engine_Death1:
 			case TENTACLE_ANIM_Engine_Death2:
 			case TENTACLE_ANIM_Engine_Death3:
-				UTIL_Remove( this );
+				UTIL_Remove(this);
 				return;
 			}
 		}
 
 		// ALERT( at_console, "%d : %d => ", pev->sequence, m_iGoalAnim );
-		pev->sequence = FindTransition( pev->sequence, m_iGoalAnim, &m_iDir );
+		pev->sequence = FindTransition(pev->sequence, m_iGoalAnim, &m_iDir);
 		// ALERT( at_console, "%d\n", pev->sequence );
 
 		if (m_iDir > 0)
@@ -778,10 +787,10 @@ void CTentacle :: DieThink( void )
 		{
 			pev->frame = 255;
 		}
-		ResetSequenceInfo( );
+		ResetSequenceInfo();
 
 		float dy;
-		switch( pev->sequence )
+		switch (pev->sequence)
 		{
 		case TENTACLE_ANIM_Floor_Rear:
 		case TENTACLE_ANIM_Floor_Rear_Idle:
@@ -798,7 +807,7 @@ void CTentacle :: DieThink( void )
 		case TENTACLE_ANIM_Engine_Death1:
 		case TENTACLE_ANIM_Engine_Death2:
 		case TENTACLE_ANIM_Engine_Death3:
-			pev->framerate = RANDOM_FLOAT( m_iDir - 0.2, m_iDir + 0.2 );
+			pev->framerate = RANDOM_FLOAT(m_iDir - 0.2, m_iDir + 0.2);
 			dy = 180;
 			break;
 		default:
@@ -811,38 +820,38 @@ void CTentacle :: DieThink( void )
 }
 
 
-void CTentacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
+void CTentacle::HandleAnimEvent(MonsterEvent_t* pEvent)
 {
-	char *sound;
+	const char* sound;
 
-	switch( pEvent->event )
+	switch (pEvent->event)
 	{
-	case 1:	// bang 
+	case 1: // bang
+	{
+		Vector vecSrc, vecAngles;
+		GetAttachment(0, vecSrc, vecAngles);
+
+		// Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (3.14192653 / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
+
+		// vecSrc.z += MyHeight( );
+
+		switch (m_iTapSound)
 		{
-			Vector vecSrc, vecAngles;
-			GetAttachment( 0, vecSrc, vecAngles );
-
-			// Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (3.14192653 / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
-
-			// vecSrc.z += MyHeight( );
-
-			switch( m_iTapSound )
-			{
-			case TE_SILO:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitSilo ), 1.0, ATTN_NORM, 0, 100);
-				break;
-			case TE_NONE:
-				break;
-			case TE_DIRT:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitDirt ), 1.0, ATTN_NORM, 0, 100);
-				break;
-			case TE_WATER:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitWater ), 1.0, ATTN_NORM, 0, 100);
-				break;
-			}
-          gpGlobals->force_retouch++;
+		case TE_SILO:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitSilo), 1.0, ATTN_NORM, 0, 100);
+			break;
+		case TE_NONE:
+			break;
+		case TE_DIRT:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitDirt), 1.0, ATTN_NORM, 0, 100);
+			break;
+		case TE_WATER:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitWater), 1.0, ATTN_NORM, 0, 100);
+			break;
 		}
-		break;
+		gpGlobals->force_retouch++;
+	}
+	break;
 
 	case 3: // start killing swing
 		m_iHitDmg = 200;
@@ -857,65 +866,80 @@ void CTentacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
 		// UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector( 0, 0, MyHeight()), "tentacle/te_swing2.wav", 1.0, ATTN_NORM, 0, 100);
 		break;
 
-	case 2:	// tap scrape
+	case 2: // tap scrape
 	case 6: // light tap
+	{
+		Vector vecSrc = pev->origin + m_flTapRadius * Vector(cos(pev->angles.y * (M_PI / 180.0)), sin(pev->angles.y * (M_PI / 180.0)), 0.0);
+
+		vecSrc.z += MyHeight();
+
+		float flVol = RANDOM_FLOAT(0.3, 0.5);
+
+		switch (m_iTapSound)
 		{
-			Vector vecSrc = pev->origin + m_flTapRadius * Vector( cos( pev->angles.y * (M_PI / 180.0) ), sin( pev->angles.y * (M_PI / 180.0) ), 0.0 );
-
-			vecSrc.z += MyHeight( );
-
-			float flVol = RANDOM_FLOAT( 0.3, 0.5 );
-
-			switch( m_iTapSound )
-			{
-			case TE_SILO:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitSilo ), flVol, ATTN_NORM, 0, 100);
-				break;
-			case TE_NONE:
-				break;
-			case TE_DIRT:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitDirt ), flVol, ATTN_NORM, 0, 100);
-				break;
-			case TE_WATER:
-				UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY( pHitWater ), flVol, ATTN_NORM, 0, 100);
-				break;
-			}
+		case TE_SILO:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitSilo), flVol, ATTN_NORM, 0, 100);
+			break;
+		case TE_NONE:
+			break;
+		case TE_DIRT:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitDirt), flVol, ATTN_NORM, 0, 100);
+			break;
+		case TE_WATER:
+			UTIL_EmitAmbientSound(ENT(pev), vecSrc, RANDOM_SOUND_ARRAY(pHitWater), flVol, ATTN_NORM, 0, 100);
+			break;
 		}
-		break;
+	}
+	break;
 
 
 	case 7: // roar
-		switch( RANDOM_LONG(0,1) )
+		switch (RANDOM_LONG(0, 1))
 		{
-		case 0: sound = "tentacle/te_roar1.wav"; break;
-		case 1: sound = "tentacle/te_roar2.wav"; break;
+		default:
+		case 0:
+			sound = "tentacle/te_roar1.wav";
+			break;
+		case 1:
+			sound = "tentacle/te_roar2.wav";
+			break;
 		}
 
-		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
+		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector(0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
 		break;
 
 	case 8: // search
-		switch( RANDOM_LONG(0,1) )
+		switch (RANDOM_LONG(0, 1))
 		{
-		case 0: sound = "tentacle/te_search1.wav"; break;
-		case 1: sound = "tentacle/te_search2.wav"; break;
+		default:
+		case 0:
+			sound = "tentacle/te_search1.wav";
+			break;
+		case 1:
+			sound = "tentacle/te_search2.wav";
+			break;
 		}
 
-		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
+		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector(0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
 		break;
 
 	case 9: // swing
-		switch( RANDOM_LONG(0,1) )
+		switch (RANDOM_LONG(0, 1))
 		{
-		case 0: sound = "tentacle/te_move1.wav"; break;
-		case 1: sound = "tentacle/te_move2.wav"; break;
+		default:
+		case 0:
+			sound = "tentacle/te_move1.wav";
+			break;
+		case 1:
+			sound = "tentacle/te_move2.wav";
+			break;
 		}
 
-		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector( 0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
+		UTIL_EmitAmbientSound(ENT(pev), pev->origin + Vector(0, 0, MyHeight()), sound, 1.0, ATTN_NORM, 0, 100);
 		break;
 
 	default:
-		CBaseMonster::HandleAnimEvent( pEvent );
+		CBaseMonster::HandleAnimEvent(pEvent);
 	}
 }
 
@@ -923,32 +947,32 @@ void CTentacle :: HandleAnimEvent( MonsterEvent_t *pEvent )
 //
 // TentacleStart
 //
-// void CTentacle :: Start( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-void CTentacle :: Start( void )
+// void CTentacle:: Start( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CTentacle::Start()
 {
-	SetThink( &CTentacle::Cycle );
+	SetThink(&CTentacle::Cycle);
 
-	if ( !g_fFlySound )
+	if (!g_fFlySound)
 	{
-		EMIT_SOUND (ENT(pev), CHAN_BODY, "ambience/flies.wav", 1, ATTN_NORM );
-		g_fFlySound = TRUE;
-//		pev->nextthink = gpGlobals-> time + 0.1;
+		EMIT_SOUND(ENT(pev), CHAN_BODY, "ambience/flies.wav", 1, ATTN_NORM);
+		g_fFlySound = true;
+		//		pev->nextthink = gpGlobals-> time + 0.1;
 	}
-	else if ( !g_fSquirmSound )
+	else if (!g_fSquirmSound)
 	{
-		EMIT_SOUND (ENT(pev), CHAN_BODY, "ambience/squirm2.wav", 1, ATTN_NORM );
-		g_fSquirmSound = TRUE;
+		EMIT_SOUND(ENT(pev), CHAN_BODY, "ambience/squirm2.wav", 1, ATTN_NORM);
+		g_fSquirmSound = true;
 	}
-	
+
 	pev->nextthink = gpGlobals->time + 0.1;
 }
 
 
 
 
-void CTentacle :: HitTouch( CBaseEntity *pOther )
+void CTentacle::HitTouch(CBaseEntity* pOther)
 {
-	TraceResult tr = UTIL_GetGlobalTrace( );
+	TraceResult tr = UTIL_GetGlobalTrace();
 
 	if (pOther->pev->modelindex == pev->modelindex)
 		return;
@@ -962,12 +986,12 @@ void CTentacle :: HitTouch( CBaseEntity *pOther )
 
 	if (tr.iHitgroup >= 3)
 	{
-		pOther->TakeDamage( pev, pev, m_iHitDmg, DMG_CRUSH );
+		pOther->TakeDamage(pev, pev, m_iHitDmg, DMG_CRUSH);
 		// ALERT( at_console, "wack %3d : ", m_iHitDmg );
 	}
 	else if (tr.iHitgroup != 0)
 	{
-		pOther->TakeDamage( pev, pev, 20, DMG_CRUSH );
+		pOther->TakeDamage(pev, pev, 20, DMG_CRUSH);
 		// ALERT( at_console, "tap  %3d : ", 20 );
 	}
 	else
@@ -983,7 +1007,7 @@ void CTentacle :: HitTouch( CBaseEntity *pOther )
 }
 
 
-int CTentacle::TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType )
+bool CTentacle::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (flDamage > pev->health)
 	{
@@ -993,13 +1017,13 @@ int CTentacle::TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 	{
 		pev->health -= flDamage;
 	}
-	return 1;
+	return true;
 }
 
 
 
 
-void CTentacle :: Killed( entvars_t *pevAttacker, int iGib )
+void CTentacle::Killed(entvars_t* pevAttacker, int iGib)
 {
 	m_iGoalAnim = TENTACLE_ANIM_Pit_Idle;
 	return;
@@ -1010,35 +1034,33 @@ void CTentacle :: Killed( entvars_t *pevAttacker, int iGib )
 class CTentacleMaw : public CBaseMonster
 {
 public:
-	void Spawn( );
-	void Precache( );
+	void Spawn() override;
+	void Precache() override;
 };
 
-LINK_ENTITY_TO_CLASS( monster_tentaclemaw, CTentacleMaw );
+LINK_ENTITY_TO_CLASS(monster_tentaclemaw, CTentacleMaw);
 
 //
 // Tentacle Spawn
 //
-void CTentacleMaw :: Spawn( )
+void CTentacleMaw::Spawn()
 {
-	Precache( );
+	Precache();
 	SET_MODEL(ENT(pev), "models/maw.mdl");
 	UTIL_SetSize(pev, Vector(-32, -32, 0), Vector(32, 32, 64));
 
-	pev->solid			= SOLID_NOT;
-	pev->movetype		= MOVETYPE_STEP;
-	pev->effects		= 0;
-	pev->health			= 75;
-	pev->yaw_speed		= 8;
-	pev->sequence		= 0;
-	
-	pev->angles.x		= 90;
+	pev->solid = SOLID_NOT;
+	pev->movetype = MOVETYPE_STEP;
+	pev->effects = 0;
+	pev->health = 75;
+	pev->yaw_speed = 8;
+	pev->sequence = 0;
+
+	pev->angles.x = 90;
 	// ResetSequenceInfo( );
 }
 
-void CTentacleMaw :: Precache( )
+void CTentacleMaw::Precache()
 {
 	PRECACHE_MODEL("models/maw.mdl");
 }
-
-#endif

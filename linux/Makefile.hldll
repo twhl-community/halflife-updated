@@ -5,28 +5,20 @@
 #
 
 HLDLL_SRC_DIR=$(SOURCE_DIR)/dlls
-HLWPN_SRC_DIR=$(HLDLL_SRC_DIR)/wpn_shared
 
 HLDLL_OBJ_DIR=$(BUILD_OBJ_DIR)/hldll
-HLWPN_OBJ_DIR=$(HLDLL_OBJ_DIR)/wpn_shared
 PM_OBJ_DIR=$(HLDLL_OBJ_DIR)/pm_shared
 GAME_SHARED_OBJ_DIR=$(HLDLL_OBJ_DIR)/game_shared
+PUBLIC_OBJ_DIR=$(HLDLL_OBJ_DIR)/public
+COMMON_OBJ_DIR=$(HLDLL_OBJ_DIR)/common
 
-#CFLAGS=$(BASE_CFLAGS) $(ARCH_CFLAGS) $(SHLIBCFLAGS) -DCLIENT_WEAPONS
-CFLAGS=$(BASE_CFLAGS)  $(ARCH_CFLAGS)  -DCLIENT_WEAPONS
-#-O3 -ffast-math -fno-strength-reduce
+CFLAGS=$(BASE_CFLAGS)  $(ARCH_CFLAGS)
 
-HLDLL_INCLUDEDIRS=-I$(ENGINE_SRC_DIR) -I$(COMMON_SRC_DIR) -I$(PM_SRC_DIR) -I$(GAME_SHARED_SRC_DIR) -I$(PUBLIC_SRC_DIR)
-HLWPN_INCLUDEDIRS=-I$(HLDLL_SRC_DIR) -I$(ENGINE_SRC_DIR) -I$(COMMON_SRC_DIR) -I$(PM_SRC_DIR) -I$(PUBLIC_SRC_DIR)
-PM_INCLUDEDIRS=-I$(COMMON_SRC_DIR)  -I$(PUBLIC_SRC_DIR)
-GAME_SHARED_INCLUDEDIRS=-I$(HLDLL_SRC_DIR) -I$(ENGINE_SRC_DIR) -I$(COMMON_SRC_DIR) -I$(PM_SRC_DIR) -I$(PUBLIC_SRC_DIR)
+INCLUDEDIRS=-I$(HLDLL_SRC_DIR) -I$(ENGINE_SRC_DIR) -I$(COMMON_SRC_DIR) -I$(PM_SRC_DIR) -I$(GAME_SHARED_SRC_DIR) -I$(PUBLIC_SRC_DIR)
 
-LDFLAGS= -lm -lstdc++
+LDFLAGS= $(CPP_LIB)
 
-DO_HLDLL_CC=$(CC) $(HLDLL_INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
-DO_HLWPN_CC=$(CC) $(HLWPN_INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
-DO_PM_CC=$(CC) $(PM_INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
-DO_GAME_SHARED_CC=$(CC) $(GAME_SHARED_INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
+DO_CC=$(CPLUS) $(INCLUDEDIRS) $(CFLAGS) -o $@ -c $<
 
 #####################################################################
 
@@ -64,7 +56,7 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/gauss.o \
 	$(HLDLL_OBJ_DIR)/genericmonster.o \
 	$(HLDLL_OBJ_DIR)/ggrenade.o \
-	$(HLDLL_OBJ_DIR)/globals.o \
+	$(HLDLL_OBJ_DIR)/glock.o \
 	$(HLDLL_OBJ_DIR)/gman.o \
 	$(HLDLL_OBJ_DIR)/h_ai.o \
 	$(HLDLL_OBJ_DIR)/h_battery.o \
@@ -123,14 +115,13 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/triggers.o \
 	$(HLDLL_OBJ_DIR)/tripmine.o \
 	$(HLDLL_OBJ_DIR)/turret.o \
+	$(HLDLL_OBJ_DIR)/UserMessages.o \
 	$(HLDLL_OBJ_DIR)/util.o \
 	$(HLDLL_OBJ_DIR)/weapons.o \
+	$(HLDLL_OBJ_DIR)/weapons_shared.o \
 	$(HLDLL_OBJ_DIR)/world.o \
 	$(HLDLL_OBJ_DIR)/xen.o \
 	$(HLDLL_OBJ_DIR)/zombie.o
-
-HLWPN_OBJS = \
-	$(HLWPN_OBJ_DIR)/hl_wpn_glock.o
 
 PM_OBJS = \
 	$(PM_OBJ_DIR)/pm_shared.o \
@@ -138,38 +129,47 @@ PM_OBJS = \
 	$(PM_OBJ_DIR)/pm_debug.o
 
 GAME_SHARED_OBJS = \
+	$(GAME_SHARED_OBJ_DIR)/filesystem_utils.o \
 	$(GAME_SHARED_OBJ_DIR)/voice_gamemgr.o
+
+PUBLIC_OBJS = \
+	$(PUBLIC_OBJ_DIR)/interface.o \
+	
+COMMON_OBJS = \
+	$(COMMON_OBJ_DIR)/mathlib.o
 
 all: dirs hl.$(SHLIBEXT)
 
 dirs:
-	-mkdir $(BUILD_OBJ_DIR)
-	-mkdir $(HLDLL_OBJ_DIR)
-	-mkdir $(HLWPN_OBJ_DIR)
-	-mkdir $(PM_OBJ_DIR)
-	-mkdir $(GAME_SHARED_OBJ_DIR)
+	-mkdir -p $(BUILD_OBJ_DIR)
+	-mkdir -p $(HLDLL_OBJ_DIR)
+	-mkdir -p $(PM_OBJ_DIR)
+	-mkdir -p $(GAME_SHARED_OBJ_DIR)
+	-mkdir -p $(PUBLIC_OBJ_DIR)
+	-mkdir -p $(COMMON_OBJ_DIR)
 
-hl.$(SHLIBEXT): $(HLDLL_OBJS) $(HLWPN_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS)
-	$(CC) $(LDFLAGS) $(SHLIBLDFLAGS) -o $(BUILD_DIR)/$@ $(HLDLL_OBJS) $(HLWPN_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS)
-	p4 edit ../../game/mod/dlls/hl.$(SHLIBEXT)
-	cp $(BUILD_DIR)/$@  ../../game/mod/dlls/hl.$(SHLIBEXT)
-	./gendbg.sh ../../game/mod/dlls/hl.$(SHLIBEXT)
-	
-$(HLWPN_OBJ_DIR)/%.o : $(HLWPN_SRC_DIR)/%.cpp
-	$(DO_HLWPN_CC)
+hl.$(SHLIBEXT): $(HLDLL_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(PUBLIC_OBJS) $(COMMON_OBJS)
+	$(CPLUS) $(LDFLAGS) $(CPP_LIB) $(SHLIBLDFLAGS) -o $(BUILD_DIR)/$@ $(HLDLL_OBJS) $(PM_OBJS) $(GAME_SHARED_OBJS) $(PUBLIC_OBJS) $(COMMON_OBJS)
+	./gendbg.sh $(BUILD_DIR)/hl.$(SHLIBEXT)
 
 $(HLDLL_OBJ_DIR)/%.o : $(HLDLL_SRC_DIR)/%.cpp
-	$(DO_HLDLL_CC)
+	$(DO_CC)
 
-$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.c
-	$(DO_PM_CC)
+$(PM_OBJ_DIR)/%.o : $(PM_SRC_DIR)/%.cpp
+	$(DO_CC)
 
 $(GAME_SHARED_OBJ_DIR)/%.o : $(GAME_SHARED_SRC_DIR)/%.cpp
-	$(DO_GAME_SHARED_CC)
+	$(DO_CC)
+
+$(PUBLIC_OBJ_DIR)/%.o : $(PUBLIC_SRC_DIR)/%.cpp
+	$(DO_CC)
+	
+$(COMMON_OBJ_DIR)/%.o : $(COMMON_SRC_DIR)/%.cpp
+	$(DO_CC)
 
 clean:
+	-rm -rf $(COMMON_OBJ_DIR)
 	-rm -rf $(GAME_SHARED_OBJ_DIR)
 	-rm -rf $(PM_OBJ_DIR)
-	-rm -rf $(HLWPN_OBJ_DIR)
 	-rm -rf $(HLDLL_OBJ_DIR)
 	-rm -f hl_$(ARCH).$(SHLIBEXT)

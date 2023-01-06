@@ -21,7 +21,7 @@ clientdata_t none
 	DEFINE_DELTA( ammo_cells, DT_SIGNED | DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( ammo_rockets, DT_SIGNED | DT_INTEGER, 10, 1.0 ),
 
-	DEFINE_DELTA( m_iId, DT_INTEGER, 5, 1.0 ),
+	DEFINE_DELTA( m_iId, DT_INTEGER, 6, 1.0 ),
 
 	DEFINE_DELTA( punchangle[2], DT_SIGNED | DT_FLOAT, 16, 8.0 ),
 	DEFINE_DELTA( flags, DT_INTEGER, 32, 1.0 ), // Cut to 3 bits?
@@ -43,6 +43,9 @@ clientdata_t none
 	DEFINE_DELTA( flSwimTime, DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( waterjumptime, DT_INTEGER, 15, 1.0 ),
 	DEFINE_DELTA( waterlevel, DT_INTEGER, 2, 1.0 ),
+	
+	DEFINE_DELTA( iuser1, DT_INTEGER, 3, 1.0 ),
+	DEFINE_DELTA( iuser2, DT_INTEGER, 6, 1.0 ),
 
 	DEFINE_DELTA( vuser1[0], DT_SIGNED | DT_FLOAT, 10, 1.0 ),
 	DEFINE_DELTA( vuser1[1], DT_SIGNED | DT_FLOAT, 10, 1.0 ),
@@ -102,7 +105,7 @@ entity_state_t gamedll Entity_Encode
 	DEFINE_DELTA( angles[2], DT_ANGLE, 16, 1.0 ),
 	DEFINE_DELTA( colormap, DT_INTEGER, 16, 1.0 ),
 	DEFINE_DELTA( framerate, DT_SIGNED | DT_FLOAT, 8, 16.0 ),
-	DEFINE_DELTA( skin, DT_SHORT | DT_SIGNED, 9, 1.0 ),
+	DEFINE_DELTA( skin, DT_SHORT | DT_SIGNED, 12, 1.0 ),
 	DEFINE_DELTA( controller[0], DT_BYTE, 8, 1.0 ),
 	DEFINE_DELTA( controller[1], DT_BYTE, 8, 1.0 ),
 	DEFINE_DELTA( controller[2], DT_BYTE, 8, 1.0 ),

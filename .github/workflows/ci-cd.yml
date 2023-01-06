@@ -1,0 +1,60 @@
+name: CI/CD
+
+on: [push, pull_request]
+
+jobs:
+  linux:
+    name: Linux-x86
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [g++, clang++]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install G++ Multilib, Clang++ & OpenGL library
+        run: |
+          sudo apt update
+          sudo apt install -y g++-multilib clang libgl1-mesa-dev
+      
+      - name: Build
+        run: |
+          cd linux
+          make COMPILER=${{ matrix.compiler }} CFG=release -j2
+      
+      - name: Deploy
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: Linux-x86-${{ matrix.compiler }}
+          path: |
+            linux/release/client.so
+            linux/release/client.so.dbg
+            linux/release/hl.so
+            linux/release/hl.so.dbg
+      
+  win32:
+    name: Win32
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x86
+      
+      - name: Build
+        run: msbuild projects/vs2019/projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
+      
+      - name: Deploy
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: Win32
+          path: |
+            projects/vs2019/Release/hl_cdll/client.dll
+            projects/vs2019/Release/hl_cdll/client.pdb
+            projects/vs2019/Release/hldll/hl.dll
+            projects/vs2019/Release/hldll/hl.pdb
+      

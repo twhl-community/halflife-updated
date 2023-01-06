@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2002, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2002, Valve LLC, All rights reserved. ============
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -20,7 +20,7 @@
 
 #include "particleman.h"
 #include "tri.h"
-extern IParticleMan *g_pParticleMan;
+extern IParticleMan* g_pParticleMan;
 
 /*
 =================
@@ -29,16 +29,13 @@ HUD_DrawNormalTriangles
 Non-transparent triangles-- add them here
 =================
 */
-void CL_DLLEXPORT HUD_DrawNormalTriangles( void )
+void DLLEXPORT HUD_DrawNormalTriangles()
 {
-//	RecClDrawNormalTriangles();
+	//	RecClDrawNormalTriangles();
 
 	gHUD.m_Spectator.DrawOverview();
 }
 
-#if defined( _TFC )
-void RunEventList( void );
-#endif
 
 /*
 =================
@@ -47,14 +44,11 @@ HUD_DrawTransparentTriangles
 Render any triangles with transparent rendermode needs here
 =================
 */
-void CL_DLLEXPORT HUD_DrawTransparentTriangles( void )
+void DLLEXPORT HUD_DrawTransparentTriangles()
 {
-//	RecClDrawTransparentTriangles();
+	//	RecClDrawTransparentTriangles();
 
-#if defined( _TFC )
-	RunEventList();
-#endif
 
-	if ( g_pParticleMan )
-		 g_pParticleMan->Update();
+	if (g_pParticleMan)
+		g_pParticleMan->Update();
 }

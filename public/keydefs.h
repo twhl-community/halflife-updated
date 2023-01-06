@@ -1,9 +1,6 @@
 // keydefs.h
-#ifndef KEYDEFS_H
-#define KEYDEFS_H
-#ifdef _WIN32
+
 #pragma once
-#endif
 
 //
 // these are the key numbers that should be passed to Key_Event
@@ -120,5 +117,3 @@
 #define	K_MOUSE3		243
 #define K_MOUSE4		244
 #define K_MOUSE5		245
-
-#endif // KEYDEFS_H

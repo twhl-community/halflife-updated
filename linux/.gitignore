@@ -1,0 +1,17 @@
+# Don't commit compiled mod libraries
+*.so
+*.so.*
+*.dylib
+*.o
+*_map.txt
+
+# Allow Half-Life-specific files that would otherwise be ignored
+!libSDL2.dylib
+!libSDL2.so
+!libSDL2-2.0.0.dylib
+!libSDL2-2.0.0.dylib.dSYM/Contents/Resources/DWARF/libsdl2-2.0.0.dylib
+!libSDL2-2.0.so.0
+!libSDL2-2.0.so.0.dbg
+!vgui.so
+!release/vgui.dylib
+!release/vgui.so

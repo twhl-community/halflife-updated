@@ -1,14 +1,11 @@
-//========= Copyright © 1996-2001, Valve LLC, All rights reserved. ============
+//========= Copyright Â© 1996-2001, Valve LLC, All rights reserved. ============
 //
 // Purpose: 
 //
 // $NoKeywords: $
 //=============================================================================
 
-#ifndef VOICE_STATUS_H
-#define VOICE_STATUS_H
 #pragma once
-
 
 #include "VGUI_Label.h"
 #include "VGUI_LineBorder.h"
@@ -89,7 +86,7 @@ public:
 		vgui::Panel **pParentPanel);
 	
 	// ackPosition is the bottom position of where CVoiceStatus will draw the voice acknowledgement labels.
-	virtual int VidInit();
+	virtual bool VidInit();
 
 
 public:
@@ -101,7 +98,7 @@ public:
 	// entindex is -1 to represent the local client talking (before the data comes back from the server). 
 	// When the server acknowledges that the local client is talking, then entindex will be gEngfuncs.GetLocalPlayer().
 	// entindex is -2 to represent the local client's voice being acked by the server.
-	void	UpdateSpeakerStatus(int entindex, qboolean bTalking);
+	void	UpdateSpeakerStatus(int entindex, bool bTalking);
 
 	// sets the correct image in the label for the player
 	void	UpdateSpeakerImage(vgui::Label *pLabel, int iPlayer);
@@ -172,7 +169,7 @@ public:
 	// It is checked periodically, and the server is told to squelch or unsquelch the appropriate players.
 	CPlayerBitVec	m_ServerBannedPlayers;
 
-	cl_entity_s		m_VoiceHeadModels[VOICE_MAX_PLAYERS];			// These aren't necessarily in the order of players. They are just
+	cl_entity_s		m_VoiceHeadModels[MAX_PLAYERS];			// These aren't necessarily in the order of players. They are just
 																	// a place for it to put data in during CreateEntities.
 
 	IVoiceStatusHelper	*m_pHelper;		// Each mod provides an implementation of this.
@@ -187,7 +184,7 @@ public:
 	vgui::BitmapTGA	*m_pScoreboardSquelch;
 	vgui::BitmapTGA	*m_pScoreboardBanned;
 	
-	vgui::Label		   *m_pBanButtons[VOICE_MAX_PLAYERS];		// scoreboard buttons.
+	vgui::Label		   *m_pBanButtons[MAX_PLAYERS];		// scoreboard buttons.
 
 	// Squelch mode stuff.
 	bool				m_bInSquelchMode;
@@ -223,6 +220,3 @@ public:
 
 // Get the (global) voice manager. 
 CVoiceStatus* GetClientVoiceMgr();
-
-
-#endif // VOICE_STATUS_H
