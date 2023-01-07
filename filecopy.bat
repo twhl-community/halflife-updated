@@ -1,7 +1,7 @@
 @echo off
 
 rem Set this path to your mod directory. You can use environment variables to avoid hardcoding the path if your team members have different install locations.
-set mod_directory=C:/Program Files (x86)/Steam/steamapps/common/Half-Life/mymod
+set mod_directory="C:/Program Files (x86)/Steam/steamapps/common/Half-Life/mymod"
 
 rem Input paths may end with a backslash which will be interpreted as an escape character when passed into robocopy, so this needs to be escaped.
 set source=%~1
