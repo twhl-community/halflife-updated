@@ -1,3 +1,15 @@
+# CUSTOM
+hldll 
+=
+VS 2019 Project was ported to CMake.
+
+hl_cdll
+=
+This VS 2019 project porting to CMake is progress. 
+I don't understand how to fix errors "unresolved external symbol", related to VGUI library. 
+Any help would be appreciated.
+
+# ORIGINAL 
 About
 ======================
 
