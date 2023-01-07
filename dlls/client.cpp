@@ -1585,7 +1585,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 {
 	memset(info, 0, MAX_WEAPONS * sizeof(weapon_data_t));
 
-#if defined(CLIENT_WEAPONS)
+    #if defined(CLIENT_WEAPONS)
 	int i;
 	weapon_data_t* item;
 	entvars_t* pev = &player->v;
@@ -1642,7 +1642,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 			}
 		}
 	}
-#endif
+    #endif
 	return 1;
 }
 
