@@ -834,15 +834,12 @@ void CGamePlayerEquip::Touch(CBaseEntity* pOther)
 
 void CGamePlayerEquip::EquipPlayer(CBaseEntity* pEntity)
 {
-	CBasePlayer* pPlayer = NULL;
-
-	if (pEntity->IsPlayer())
+	if (!pEntity || !pEntity->IsPlayer())
 	{
-		pPlayer = (CBasePlayer*)pEntity;
+		return;
 	}
 
-	if (!pPlayer)
-		return;
+	CBasePlayer* pPlayer = (CBasePlayer*)pEntity;
 
 	for (int i = 0; i < MAX_EQUIP; i++)
 	{
