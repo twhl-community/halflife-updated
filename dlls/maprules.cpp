@@ -772,12 +772,25 @@ public:
 
 	inline bool UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) != 0; }
 
+	bool Save(CSave& save) override;
+	bool Restore(CRestore& restore) override;
+
+	static TYPEDESCRIPTION m_SaveData[];
+
 private:
 	void EquipPlayer(CBaseEntity* pPlayer);
 
 	string_t m_weaponNames[MAX_EQUIP];
 	int m_weaponCount[MAX_EQUIP];
 };
+
+TYPEDESCRIPTION CGamePlayerEquip::m_SaveData[] =
+	{
+		DEFINE_ARRAY(CGamePlayerEquip, m_weaponNames, FIELD_STRING, MAX_EQUIP),
+		DEFINE_ARRAY(CGamePlayerEquip, m_weaponCount, FIELD_INTEGER, MAX_EQUIP),
+};
+
+IMPLEMENT_SAVERESTORE(CGamePlayerEquip, CRulePointEntity);
 
 LINK_ENTITY_TO_CLASS(game_player_equip, CGamePlayerEquip);
 

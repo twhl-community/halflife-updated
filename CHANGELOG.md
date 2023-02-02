@@ -17,6 +17,10 @@
 * Renamed `CWorld::Instance` to `CWorld::World` to avoid conflicting with `CBaseEntity::Instance` function name
 * Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world  [#187](https://github.com/SamVanheer/halflife-updated/issues/187)(Thanks FreeSlave)
 
+### New features
+
+* Save and restore game_player_equip [#188](https://github.com/SamVanheer/halflife-updated/issues/188)
+
 ## Changes in V1.0.0 Beta 013
 
 ### Bug fixes
