@@ -14,6 +14,7 @@
 * Fixed NPCs not being able to speak scripted sentences while in scripted death [#180](https://github.com/SamVanheer/halflife-updated/issues/180) (Thanks λλλλλλ)
 * Removed unnecessary semicolons (Thanks Shepard)
 * Updated source file encoding to UTF-8 [#183](https://github.com/SamVanheer/halflife-updated/issues/183) (Thanks anchurcn)
+* Renamed `CWorld::Instance` to `CWorld::World` to avoid conflicting with `CBaseEntity::Instance` function name
 
 ## Changes in V1.0.0 Beta 013
 

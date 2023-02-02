@@ -474,23 +474,23 @@ LINK_ENTITY_TO_CLASS(worldspawn, CWorld);
 
 CWorld::CWorld()
 {
-	if (Instance)
+	if (World)
 	{
 		ALERT(at_error, "Do not create multiple instances of worldspawn\n");
 		return;
 	}
 
-	Instance = this;
+	World = this;
 }
 
 CWorld::~CWorld()
 {
-	if (Instance != this)
+	if (World != this)
 	{
 		return;
 	}
 
-	Instance = nullptr;
+	World = nullptr;
 }
 
 void CWorld::Spawn()
@@ -502,7 +502,7 @@ void CWorld::Spawn()
 void CWorld::Precache()
 {
 	// Flag this entity for removal if it's not the actual world entity.
-	if (Instance != this)
+	if (World != this)
 	{
 		UTIL_Remove(this);
 		return;

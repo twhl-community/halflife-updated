@@ -748,7 +748,7 @@ public:
 	void Precache() override;
 	bool KeyValue(KeyValueData* pkvd) override;
 
-	static inline CWorld* Instance = nullptr;
+	static inline CWorld* World = nullptr;
 };
 
 inline DLL_GLOBAL edict_t* g_pBodyQueueHead = nullptr;
@@ -756,14 +756,14 @@ inline DLL_GLOBAL edict_t* g_pBodyQueueHead = nullptr;
 inline CBaseEntity* CBaseEntity::Instance(edict_t* pent)
 {
 	if (!pent)
-		return CWorld::Instance;
+		return CWorld::World;
 	return (CBaseEntity*)GET_PRIVATE(pent);
 }
 
 inline CBaseEntity* CBaseEntity::Instance(entvars_t* pev)
 {
 	if (!pev)
-		return CWorld::Instance;
+		return CWorld::World;
 
 	return Instance(ENT(pev));
 }
