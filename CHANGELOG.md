@@ -21,6 +21,7 @@
 ### New features
 
 * Save and restore game_player_equip [#188](https://github.com/SamVanheer/halflife-updated/issues/188)
+* Moved IsFacing function from barney.cpp to h_ai.cpp to help prevent linker errors when copy pasting source file
 
 ## Changes in V1.0.0 Beta 013
 
