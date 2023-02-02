@@ -22,6 +22,8 @@
 
 * Save and restore game_player_equip [#188](https://github.com/SamVanheer/halflife-updated/issues/188)
 * Moved IsFacing function from barney.cpp to h_ai.cpp to help prevent linker errors when copy pasting source file
+* When using `impulse 107` to get the name of a texture the texture type (as used in `materials.txt`) will also be printed
+* Made `PM_FindTextureType` const correct
 
 ## Changes in V1.0.0 Beta 013
 

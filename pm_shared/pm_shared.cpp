@@ -264,7 +264,7 @@ void PM_InitTextureTypes()
 	bTextureTypeInit = true;
 }
 
-char PM_FindTextureType(char* name)
+char PM_FindTextureType(const char* name)
 {
 	int left, right, pivot;
 	int val;
