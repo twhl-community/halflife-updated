@@ -15,6 +15,7 @@
 * Removed unnecessary semicolons (Thanks Shepard)
 * Updated source file encoding to UTF-8 [#183](https://github.com/SamVanheer/halflife-updated/issues/183) (Thanks anchurcn)
 * Renamed `CWorld::Instance` to `CWorld::World` to avoid conflicting with `CBaseEntity::Instance` function name
+* Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world  [#187](https://github.com/SamVanheer/halflife-updated/issues/187)(Thanks FreeSlave)
 
 ## Changes in V1.0.0 Beta 013
 
