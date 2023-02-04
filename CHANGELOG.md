@@ -2,8 +2,6 @@
 
 ## Changes in V1.0.0 Beta 014
 
-> **Note:** This beta has not been released yet.
-
 ### Bug fixes
 
 * Correctly save and restore controller and blending variables [#175](https://github.com/SamVanheer/halflife-updated/issues/175) (Thanks vasiavasiavasia95)
@@ -29,6 +27,11 @@
 * Made `PM_FindTextureType` const correct
 * Added `WRITE_FLOAT` function corresponding to the client's `READ_FLOAT` function
 * Set maximum edicts to 2048 in liblist.gam [#181](https://github.com/SamVanheer/halflife-updated/issues/181)
+
+### Project changes
+
+* Added `delta.lst` to the archive again (was accidentally removed in the previous beta)
+* Added game icons to the archive
 
 ## Changes in V1.0.0 Beta 013
 
