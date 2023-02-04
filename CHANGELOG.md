@@ -19,6 +19,7 @@
 * Fixed game_player_equip crashing when given a null activator [#189](https://github.com/SamVanheer/halflife-updated/issues/189)
 * Fixed Hornet gun recharging to full ammo after loading a save game [#190](https://github.com/SamVanheer/halflife-updated/issues/190)
 * Fixed explosives that impact the underside of a brush dealing damage to entities on the other side of that brush (halflife issue [#3244](https://github.com/ValveSoftware/halflife/issues/3244))
+* Fixed entities with an index greater than 2047 corrupting the client's heap if sent over the network [#191](https://github.com/SamVanheer/halflife-updated/issues/191)
 
 ### New features
 
@@ -27,6 +28,7 @@
 * When using `impulse 107` to get the name of a texture the texture type (as used in `materials.txt`) will also be printed
 * Made `PM_FindTextureType` const correct
 * Added `WRITE_FLOAT` function corresponding to the client's `READ_FLOAT` function
+* Set maximum edicts to 2048 in liblist.gam [#181](https://github.com/SamVanheer/halflife-updated/issues/181)
 
 ## Changes in V1.0.0 Beta 013
 

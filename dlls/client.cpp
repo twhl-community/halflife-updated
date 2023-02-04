@@ -26,6 +26,7 @@
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
+#include "com_model.h"
 #include "saverestore.h"
 #include "player.h"
 #include "spectator.h"
@@ -1084,6 +1085,15 @@ we could also use the pas/ pvs that we set in SetupVisibility, if we wanted to. 
 */
 int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* host, int hostflags, int player, unsigned char* pSet)
 {
+	// Entities with an index greater than this will corrupt the client's heap because 
+	// the index is sent with only 11 bits of precision (2^11 == 2048).
+	// So we don't send them, just like having too many entities would result
+	// in the entity not being sent.
+	if (e >= MAX_EDICTS)
+	{
+		return 0;
+	}
+
 	int i;
 
 	auto entity = reinterpret_cast<CBaseEntity*>(GET_PRIVATE(ent));
