@@ -269,6 +269,8 @@ void CTripmineGrenade::BeamBreakThink()
 	{
 		// Use the same trace parameters as the original trace above so the right entity is hit.
 		TraceResult tr2;
+		// Clear out old owner so it can be hit by traces.
+		pev->owner = nullptr;
 		UTIL_TraceLine(pev->origin + m_vecDir * 8, pev->origin - m_vecDir * 32, dont_ignore_monsters, ENT(pev), &tr2);
 		MakeBeam();
 		if (tr2.pHit)
