@@ -3406,8 +3406,8 @@ void PM_Move(struct playermove_s* ppmove, qboolean server)
 		pmove->flags &= ~FL_ONGROUND;
 	}
 
-	// In single player, reset friction after each movement to FrictionModifier Triggers work still.
-	if (0 == pmove->multiplayer && (pmove->movetype == MOVETYPE_WALK))
+	// Reset friction after each movement so FrictionModifier Triggers work still.
+	if (pmove->movetype == MOVETYPE_WALK)
 	{
 		pmove->friction = 1.0f;
 	}
