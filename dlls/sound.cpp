@@ -24,6 +24,7 @@
 #include "talkmonster.h"
 #include "gamerules.h"
 #include "pm_defs.h"
+#include "pm_materials.h"
 #include "pm_shared.h"
 
 static char* memfgets(byte* pMemFile, int fileSize, int& filePos, char* pBuffer, int bufferSize);
@@ -1490,8 +1491,6 @@ void EMIT_GROUPNAME_SUIT(edict_t* entity, const char* groupname)
 // on material type.
 
 bool fTextureTypeInit = false;
-
-#define CTEXTURESMAX 512 // max number of textures loaded
 
 int gcTextures = 0;
 char grgszTextureName[CTEXTURESMAX][CBTEXTURENAMEMAX]; // texture names
