@@ -8,6 +8,7 @@
 
 * Fixed tripmines not detonating if placed on breakable and a save game is loaded [#192](https://github.com/SamVanheer/halflife-updated/issues/192) (Thanks forklift.mdl)
 * Fixed func_friction not working properly in multiplayer (halflife issue [#1542](https://github.com/ValveSoftware/halflife/issues/1542)) (Thanks L453rh4wk)
+* Fixed spray logo using wrong decal after save game load when not using custom spray [#193](https://github.com/SamVanheer/halflife-updated/issues/193) (Thanks Ronin4862)
 
 ## Changes in V1.0.0 Beta 014
 
