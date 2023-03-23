@@ -200,7 +200,7 @@ public:
 
 	int m_lastx, m_lasty; // These are the previous update's crosshair angles, DON"T SAVE/RESTORE
 
-	int m_nCustomSprayFrames; // Custom clan logo frames for this player
+	int m_nCustomSprayFrames = -1; // Custom clan logo frames for this player
 	float m_flNextDecalTime;  // next time this player can spray a decal
 
 	char m_szTeamName[TEAM_NAME_LENGTH];
