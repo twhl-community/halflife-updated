@@ -303,7 +303,7 @@ public:
 	virtual bool ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return true; }			// Return true if you can add ammo to yourself when picked up
 
 	// generic "shared" ammo handlers
-	bool AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
+	bool AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, char* szName, int iMaxClip, int iMaxCarry);
 	bool AddSecondaryAmmo(int iCount, char* szName, int iMaxCarry);
 
 	void UpdateItemInfo() override {} // updates HUD state
