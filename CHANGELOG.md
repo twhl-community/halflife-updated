@@ -10,6 +10,7 @@
 * Fixed func_friction not working properly in multiplayer (halflife issue [#1542](https://github.com/ValveSoftware/halflife/issues/1542)) (Thanks L453rh4wk)
 * Fixed spray logo using wrong decal after save game load when not using custom spray [#193](https://github.com/SamVanheer/halflife-updated/issues/193) (Thanks Ronin4862)
 * Fixed ammo pickup sound playing when picking up a weapon for the first time (bug introduced by [#153](https://github.com/SamVanheer/halflife-updated/issues/153) in Beta 12)
+* Fixed Gauss gun sometimes settting player uranium ammo to -1 (halflife issue [#3343](https://github.com/ValveSoftware/halflife/issues/3343))
 
 ## Changes in V1.0.0 Beta 014
 

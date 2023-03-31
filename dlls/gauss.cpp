@@ -199,22 +199,25 @@ void CGauss::SecondaryAttack()
 	}
 	else
 	{
-		// during the charging process, eat one bit of ammo every once in a while
-		if (UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000)
+		if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] > 0)
 		{
+			// during the charging process, eat one bit of ammo every once in a while
+			if (UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000)
+			{
 #ifdef CLIENT_DLL
-			if (bIsMultiplayer())
+				if (bIsMultiplayer())
 #else
-			if (g_pGameRules->IsMultiplayer())
+				if (g_pGameRules->IsMultiplayer())
 #endif
-			{
-				m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
-				m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
-			}
-			else
-			{
-				m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
-				m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.3;
+				{
+					m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
+					m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.1;
+				}
+				else
+				{
+					m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
+					m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.3;
+				}
 			}
 		}
 
