@@ -12,6 +12,7 @@
 * Fixed ammo pickup sound playing when picking up a weapon for the first time (bug introduced by [#153](https://github.com/SamVanheer/halflife-updated/issues/153) in Beta 12)
 * Fixed Gauss gun sometimes settting player uranium ammo to -1 (halflife issue [#3343](https://github.com/ValveSoftware/halflife/issues/3343))
 * Fixed pistol not playing empty sound when using secondary attack
+* Fixed user interface coordinates and sizes being incorrectly adjusted for resolution (halflife issue [#3344](https://github.com/ValveSoftware/halflife/issues/3344))
 
 ## Changes in V1.0.0 Beta 014
 
