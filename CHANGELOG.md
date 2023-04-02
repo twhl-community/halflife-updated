@@ -16,6 +16,7 @@
 * Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
 * Fixed alien slave beams staying forever if they exist during a level change (halflife issue [#3104](https://github.com/ValveSoftware/halflife/issues/3104))
 * Fixed cycler_wreckage storing time value in int instead of float
+* Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
 
 ## Changes in V1.0.0 Beta 014
 
