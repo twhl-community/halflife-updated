@@ -18,6 +18,7 @@
 * Fixed cycler_wreckage storing time value in int instead of float
 * Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
 * Fixed shotgun starting idle animations too quickly after exhausting all ammo using primary attack [#195](https://github.com/SamVanheer/halflife-updated/issues/195) (Thanks Ronin4862)
+* Fixed RPG not playing empty sound when attempting to fire with no ammo left [#196](https://github.com/SamVanheer/halflife-updated/issues/196) (Thanks Ronin4862)
 
 ## Changes in V1.0.0 Beta 014
 
