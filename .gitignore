@@ -3,3 +3,4 @@
 !lib/public/SDL2.lib
 !utils/procinfo/lib/win32_vc6/procinfo.lib
 !utils/vgui/lib/win32_vc6/vgui.lib
+modelsrc/
