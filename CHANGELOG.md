@@ -21,6 +21,7 @@
 * Fixed RPG not playing empty sound when attempting to fire with no ammo left [#196](https://github.com/SamVanheer/halflife-updated/issues/196) (Thanks Ronin4862)
 * Fixed Human Grunts dropping weapons again if the game is saved and loaded while the grunt is dying (Thanks Oxofemple.)
 * Added missing monster state name to ReportAIState (halflife issue [#3220](https://github.com/ValveSoftware/halflife/issues/3220)) (Thanks Shepard)
+* Fixed mouse movement during map load affecting initial view angles
 
 ## Changes in V1.0.0 Beta 014
 

@@ -36,6 +36,11 @@
 // Set this to 1 to show mouse cursor.  Experimental
 bool g_iVisibleMouse = false;
 
+/**
+*	@brief Tells the input code to reset the mouse position to center.
+*/
+bool g_ResetMousePosition = false;
+
 extern cl_enginefunc_t gEngfuncs;
 extern bool iMouseInUse;
 
@@ -1080,6 +1085,12 @@ IN_Move
 */
 void IN_Move(float frametime, usercmd_t* cmd)
 {
+	if (g_ResetMousePosition)
+	{
+		IN_ResetMouse();
+		g_ResetMousePosition = false;
+	}
+
 	if (!iMouseInUse && mouseactive)
 	{
 		IN_MouseMove(frametime, cmd);
