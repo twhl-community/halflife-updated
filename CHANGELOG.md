@@ -23,6 +23,7 @@
 * Added missing monster state name to ReportAIState (halflife issue [#3220](https://github.com/ValveSoftware/halflife/issues/3220)) (Thanks Shepard)
 * Fixed mouse movement during map load affecting initial view angles
 * Fixed being able to break scripted_sequence by +using friendly NPCs to make them follow player [#200](https://github.com/SamVanheer/halflife-updated/issues/200) (Thanks Oxofemple. for reporting this and FreeSlave for finding the solution)
+* Fixed potential incorrect facing in scripted sequence (Thanks FreeSlave)
 
 ## Changes in V1.0.0 Beta 014
 
