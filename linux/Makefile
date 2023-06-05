@@ -29,7 +29,7 @@ ifeq "$(COMPILER)" ""
 endif
 
 CPLUS="$(COMPILER) -m32"
-CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstdc++ -ldl -lpthread
+CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstdc++ -ldl -lpthread -static-libstdc++ -static-libgcc
 
 ARCH_CFLAGS=-march=pentium-m -mfpmath=387 -mno-sse
 
