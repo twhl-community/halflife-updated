@@ -1440,6 +1440,8 @@ void EV_EgonStop(event_args_t* args)
 
 			pFlare = NULL;
 		}
+
+		gEngfuncs.pEventAPI->EV_WeaponAnimation(EGON_IDLE1, 0);
 	}
 }
 //======================

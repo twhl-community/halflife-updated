@@ -459,22 +459,7 @@ void CEgon::WeaponIdle()
 {
 	if ((m_pPlayer->m_afButtonPressed & IN_ATTACK2) == 0 && (m_pPlayer->pev->button & IN_ATTACK) != 0)
 	{
-		// Immediately stop attack animation even when holding down attack.
-		if (m_pPlayer->ammo_uranium > 0)
-		{
-			return;
-		}
-
-#ifdef CLIENT_DLL
-		// HACK: force the idle animation to start now if it isn't already.
-		// This fixes cases where race conditions cause the fire animation to start again or continue.
-		const int anim = HUD_GetWeaponAnim();
-
-		if (anim != EGON_IDLE1 && anim != EGON_FIDGET1)
-		{
-			m_flTimeWeaponIdle = 0;
-		}
-#endif
+		return;
 	}
 
 	ResetEmptySound();
@@ -516,15 +501,7 @@ void CEgon::EndAttack()
 	PLAYBACK_EVENT_FULL(FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0,
 		static_cast<int>(bMakeNoise), 0, 0, 0);
 
-	if (m_pPlayer->ammo_uranium > 0)
-	{
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
-	}
-	else
-	{
-		// Immediately run idle.
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase();
-	}
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
 
