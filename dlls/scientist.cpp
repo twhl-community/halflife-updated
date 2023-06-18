@@ -461,14 +461,15 @@ void CScientist::StartTask(Task_t* pTask)
 	case TASK_SAY_FEAR:
 		// Marphy Fact FIles Fix - This speech check always fails during combat, so removing
 		//if ( FOkToSpeak() )
-		//{
-		Talk(2);
-		m_hTalkTarget = m_hEnemy;
-		if (m_hEnemy->IsPlayer())
-			PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
-		else
-			PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
-		//}
+		if (m_hEnemy)
+		{
+			Talk(2);
+			m_hTalkTarget = m_hEnemy;
+			if (m_hEnemy->IsPlayer())
+				PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
+			else
+				PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
+		}
 		TaskComplete();
 		break;
 

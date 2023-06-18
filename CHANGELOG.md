@@ -26,6 +26,7 @@
 * Fixed potential incorrect facing in scripted sequence (Thanks FreeSlave)
 * Made the Linux version link statically to the C++ runtime to help avoid problems when running mods on older systems (Thanks a1ba and FreeSlave)
 * Fixed Egon not stopping its attack animation if the attack button is held down and ammo runs out
+* Fixed scientists crashing when speaking fear dialogue when enemy has been removed
 
 ## Changes in V1.0.0 Beta 014
 
