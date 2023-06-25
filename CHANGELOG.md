@@ -29,6 +29,7 @@
 * Fixed scientists crashing when speaking fear dialogue when enemy has been removed
 * Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
 * Disabled jump sounds while player is frozen (e.g. trigger_camera, trigger_playerfreeze)
+* Fixed node graph code incorrectly flagging node graphs as out of date if an outdated graph exists in a search path other than the mod directory (e.g. a graph in `halflife_updated_addon/map/graphs`)
 
 ## Changes in V1.0.0 Beta 014
 

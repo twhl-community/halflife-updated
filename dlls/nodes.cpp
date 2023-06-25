@@ -2612,7 +2612,7 @@ bool CGraph::CheckNODFile(const char* szMapName)
 	bool retValue = true;
 
 	int iCompare;
-	if (COMPARE_FILE_TIME(bspFileName.c_str(), graphFileName.c_str(), &iCompare))
+	if (FileSystem_CompareFileTime(bspFileName.c_str(), graphFileName.c_str(), &iCompare))
 	{
 		if (iCompare > 0)
 		{ // BSP file is newer.
