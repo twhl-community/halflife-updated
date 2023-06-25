@@ -71,9 +71,9 @@ static bool FileSystem_InitializeGameDirectory()
 	}
 #else
 	const std::size_t BufferSize = PATH_MAX + 1;
-	directory.resize(BufferSize);
+	gameDirectory.resize(BufferSize);
 
-	const ssize_t charactersWritten = readlink("/proc/self/exe", directory.data(), BufferSize);
+	const ssize_t charactersWritten = readlink("/proc/self/exe", gameDirectory.data(), BufferSize);
 
 	if (charactersWritten < 0 || charactersWritten == BufferSize)
 	{
