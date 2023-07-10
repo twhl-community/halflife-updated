@@ -15,7 +15,7 @@
 
 #pragma once
 
-typedef enum
+enum ptype_t
 {
 	pt_static,
 	pt_grav,
@@ -28,7 +28,7 @@ typedef enum
 	pt_vox_slowgrav,
 	pt_vox_grav,
 	pt_clientcustom // Must have callback function specified
-} ptype_t;
+};
 
 // !!! if this is changed, it must be changed in d_ifacea.h too !!!
 typedef struct particle_s

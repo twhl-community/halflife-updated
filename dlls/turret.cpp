@@ -41,7 +41,7 @@ extern Vector VecBModelOrigin(entvars_t* pevBModel);
 #define TURRET_MAXSPIN 5   // seconds turret barrel will spin w/o a target
 #define TURRET_MACHINE_VOLUME 0.5
 
-typedef enum
+enum TURRET_ANIM
 {
 	TURRET_ANIM_NONE = 0,
 	TURRET_ANIM_FIRE,
@@ -49,7 +49,7 @@ typedef enum
 	TURRET_ANIM_DEPLOY,
 	TURRET_ANIM_RETIRE,
 	TURRET_ANIM_DIE,
-} TURRET_ANIM;
+};
 
 class CBaseTurret : public CBaseMonster
 {

@@ -15,7 +15,7 @@
 
 #pragma once
 
-typedef enum
+enum Activity
 {
 	ACT_RESET = 0, // Set m_Activity to this invalid value to force a reset to m_IdealActivity
 	ACT_IDLE = 1,
@@ -94,7 +94,7 @@ typedef enum
 	ACT_FLINCH_RIGHTARM,
 	ACT_FLINCH_LEFTLEG,
 	ACT_FLINCH_RIGHTLEG,
-} Activity;
+};
 
 
 typedef struct

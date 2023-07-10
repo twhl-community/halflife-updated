@@ -15,9 +15,9 @@
 
 #pragma once
 
-typedef enum netsrc_s
+enum netsrc_t
 {
 	NS_CLIENT,
 	NS_SERVER,
 	NS_MULTICAST // xxxMO
-} netsrc_t;
+};

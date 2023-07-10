@@ -29,11 +29,11 @@ class CGrenade : public CBaseMonster
 public:
 	void Spawn() override;
 
-	typedef enum
+    enum SATCHELCODE
 	{
 		SATCHEL_DETONATE = 0,
 		SATCHEL_RELEASE
-	} SATCHELCODE;
+	};
 
 	static CGrenade* ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecVelocity, float time);
 	static CGrenade* ShootContact(entvars_t* pevOwner, Vector vecStart, Vector vecVelocity);
@@ -152,7 +152,7 @@ public:
 #define AMMO_SNARKBOX_GIVE 5
 
 // bullet types
-typedef enum
+enum Bullet
 {
 	BULLET_NONE = 0,
 	BULLET_PLAYER_9MM,		// glock
@@ -164,7 +164,7 @@ typedef enum
 	BULLET_MONSTER_9MM,
 	BULLET_MONSTER_MP5,
 	BULLET_MONSTER_12MM,
-} Bullet;
+};
 
 
 #define ITEM_FLAG_SELECTONEMPTY 1

@@ -24,7 +24,7 @@
 // Customization
 // passed to pfnPlayerCustomization
 // For automatic downloading.
-typedef enum
+enum resourcetype_t
 {
 	t_sound = 0,
 	t_skin,
@@ -33,7 +33,7 @@ typedef enum
 	t_generic,
 	t_eventscript,
 	t_world, // Fake type for world, is really t_model
-} resourcetype_t;
+};
 
 
 typedef struct

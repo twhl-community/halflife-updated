@@ -41,13 +41,13 @@ static bool pm_shared_initialized = false;
 
 #pragma warning(disable : 4305)
 
-typedef enum
+enum modtype_t
 {
 	mod_brush,
 	mod_sprite,
 	mod_alias,
 	mod_studio
-} modtype_t;
+};
 
 playermove_t* pmove = NULL;
 

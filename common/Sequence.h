@@ -36,7 +36,7 @@ typedef struct client_textmessage_s
 // Enumerated list of possible modifiers for a command.  This enumeration
 // is used in a bitarray controlling what modifiers are specified for a command.
 //---------------------------------------------------------------------------
-enum sequenceModifierBits
+enum sequenceModifierBits_e
 {
 	SEQUENCE_MODIFIER_EFFECT_BIT = (1 << 1),
 	SEQUENCE_MODIFIER_POSITION_BIT = (1 << 2),
@@ -50,7 +50,6 @@ enum sequenceModifierBits
 	SEQUENCE_MODIFIER_LISTENER_BIT = (1 << 10),
 	SEQUENCE_MODIFIER_TEXTCHANNEL_BIT = (1 << 11),
 };
-typedef enum sequenceModifierBits sequenceModifierBits_e;
 
 
 //---------------------------------------------------------------------------
@@ -58,7 +57,7 @@ typedef enum sequenceModifierBits sequenceModifierBits_e;
 //
 // Enumerated sequence command types.
 //---------------------------------------------------------------------------
-enum sequenceCommandEnum_
+enum sequenceCommandEnum_e
 {
 	SEQUENCE_COMMAND_ERROR = -1,
 	SEQUENCE_COMMAND_PAUSE = 0,
@@ -86,7 +85,6 @@ enum sequenceCommandEnum_
 	SEQUENCE_MODIFIER_LISTENER,
 	SEQUENCE_MODIFIER_TEXTCHANNEL,
 };
-typedef enum sequenceCommandEnum_ sequenceCommandEnum_e;
 
 
 //---------------------------------------------------------------------------
@@ -94,12 +92,11 @@ typedef enum sequenceCommandEnum_ sequenceCommandEnum_e;
 //
 // Typeerated sequence command types.
 //---------------------------------------------------------------------------
-enum sequenceCommandType_
+enum sequenceCommandType_e
 {
 	SEQUENCE_TYPE_COMMAND,
 	SEQUENCE_TYPE_MODIFIER,
 };
-typedef enum sequenceCommandType_ sequenceCommandType_e;
 
 
 //---------------------------------------------------------------------------

@@ -31,7 +31,7 @@
 // This is conveniently done for them in extdll.h
 //
 
-typedef enum
+enum ALERT_TYPE
 {
 	at_notice,
 	at_console,	  // same as at_notice, but forces a ConPrintf, not a message box
@@ -39,24 +39,24 @@ typedef enum
 	at_warning,
 	at_error,
 	at_logged // Server print to console ( only in multiplayer games ).
-} ALERT_TYPE;
+};
 
 // 4-22-98  JOHN: added for use in pfnClientPrintf
-typedef enum
+enum PRINT_TYPE
 {
 	print_console,
 	print_center,
 	print_chat,
-} PRINT_TYPE;
+};
 
 // For integrity checking of content on clients
-typedef enum
+enum FORCE_TYPE
 {
 	force_exactfile,					// File on client must exactly match server's file
 	force_model_samebounds,				// For model files only, the geometry must fit in the same bbox
 	force_model_specifybounds,			// For model files only, the geometry must fit in the specified bbox
 	force_model_specifybounds_if_avail, // For Steam model files only, the geometry must fit in the specified bbox (if the file is available)
-} FORCE_TYPE;
+};
 
 // Returned by TraceLine
 typedef struct
@@ -349,7 +349,7 @@ typedef struct saverestore_s
 
 } SAVERESTOREDATA;
 
-typedef enum _fieldtypes
+enum FIELDTYPE
 {
 	FIELD_FLOAT = 0,	   // Any floating point value
 	FIELD_STRING,		   // A string ID (return from ALLOC_STRING)
@@ -375,7 +375,7 @@ typedef enum _fieldtypes
 	FIELD_INT64 = FIELD_ENGINETYPECOUNT, //64 bit integer
 
 	FIELD_TYPECOUNT, // MUST BE LAST
-} FIELDTYPE;
+};
 
 #define _FIELD(type, name, fieldtype, count, flags)                            \
 	{                                                                          \

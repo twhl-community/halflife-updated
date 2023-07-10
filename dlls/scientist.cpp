@@ -1235,14 +1235,14 @@ TYPEDESCRIPTION CSittingScientist::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CSittingScientist, CScientist);
 
 // animation sequence aliases
-typedef enum
+enum SITTING_ANIM
 {
 	SITTING_ANIM_sitlookleft,
 	SITTING_ANIM_sitlookright,
 	SITTING_ANIM_sitscared,
 	SITTING_ANIM_sitting2,
 	SITTING_ANIM_sitting3
-} SITTING_ANIM;
+};
 
 
 //

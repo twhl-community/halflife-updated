@@ -21,19 +21,19 @@ typedef short WORD;
 using UWORD = unsigned short;
 typedef long LONG;
 
-typedef enum
+enum mask_t
 {
 	ms_none,
 	ms_mask,
 	ms_transcolor,
 	ms_lasso
-} mask_t;
+};
 
-typedef enum
+enum compress_t
 {
 	cm_none,
 	cm_rle1
-} compress_t;
+};
 
 typedef struct
 {

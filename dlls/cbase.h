@@ -79,13 +79,13 @@ extern void SaveGlobalState(SAVERESTOREDATA* pSaveData);
 extern void RestoreGlobalState(SAVERESTOREDATA* pSaveData);
 extern void ResetGlobalState();
 
-typedef enum
+enum USE_TYPE
 {
 	USE_OFF = 0,
 	USE_ON = 1,
 	USE_SET = 2,
 	USE_TOGGLE = 3
-} USE_TYPE;
+};
 
 extern void FireTargets(const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 

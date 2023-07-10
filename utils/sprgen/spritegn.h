@@ -51,11 +51,11 @@
 constexpr int SPRITE_VERSION = 2;
 
 // must match definition in modelgen.h
-typedef enum
+enum synctype_t
 {
 	ST_SYNC = 0,
 	ST_RAND
-} synctype_t;
+};
 
 // TODO: shorten these?
 typedef struct
@@ -106,11 +106,11 @@ typedef struct
 	float interval;
 } dspriteinterval_t;
 
-typedef enum
+enum spriteframetype_t
 {
 	SPR_SINGLE = 0,
 	SPR_GROUP
-} spriteframetype_t;
+};
 
 typedef struct
 {

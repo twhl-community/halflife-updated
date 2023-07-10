@@ -37,7 +37,7 @@
 
 #define TLK_CFRIENDS 3
 
-typedef enum
+enum TALKGROUPNAMES
 {
 	TLK_ANSWER = 0,
 	TLK_QUESTION,
@@ -59,7 +59,7 @@ typedef enum
 	TLK_MORTAL,
 
 	TLK_CGROUPS, // MUST be last entry
-} TALKGROUPNAMES;
+};
 
 
 enum

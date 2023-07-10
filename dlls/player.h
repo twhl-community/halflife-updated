@@ -61,7 +61,7 @@
 
 #define TEAM_NAME_LENGTH 16
 
-typedef enum
+enum PLAYER_ANIM
 {
 	PLAYER_IDLE,
 	PLAYER_WALK,
@@ -69,7 +69,7 @@ typedef enum
 	PLAYER_SUPERJUMP,
 	PLAYER_DIE,
 	PLAYER_ATTACK1,
-} PLAYER_ANIM;
+};
 
 #define MAX_ID_RANGE 2048
 #define SBAR_STRING_SIZE 128

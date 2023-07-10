@@ -28,7 +28,7 @@
 //=========================================================
 // These are the schedule types
 //=========================================================
-typedef enum
+enum SCHEDULE_TYPE
 {
 	SCHED_NONE = 0,
 	SCHED_IDLE_STAND,
@@ -74,12 +74,12 @@ typedef enum
 	SCHED_FAIL,
 
 	LAST_COMMON_SCHEDULE // Leave this at the bottom
-} SCHEDULE_TYPE;
+};
 
 //=========================================================
 // These are the shared tasks
 //=========================================================
-typedef enum
+enum SHARED_TASKS
 {
 	TASK_INVALID = 0,
 	TASK_WAIT,
@@ -172,7 +172,7 @@ typedef enum
 	TASK_FORGET,
 	TASK_WAIT_FOR_MOVEMENT, // wait until MovementIsComplete()
 	LAST_COMMON_TASK,		// LEAVE THIS AT THE BOTTOM!! (sjb)
-} SHARED_TASKS;
+};
 
 
 // These go in the flData member of the TASK_WALK_TO_TARGET, TASK_RUN_TO_TARGET
