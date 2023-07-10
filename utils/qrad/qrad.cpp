@@ -62,7 +62,7 @@ bool incremental = 0;
 float gamma = 0.5;
 float indirect_sun = 1.0;
 bool extra = false;
-float smoothing_threshold = 0; // default: cos(45.0*(std::numbers::pi_v<float>/180));
+float smoothing_threshold = 0; // default: cos(45.0*(std::numbers::pi/180));
 // Cosine of smoothing angle(in radians)
 float coring = 1.0; // Light threshold to force to blackness(minimizes lightmaps)
 bool texscale = true;
@@ -1242,7 +1242,7 @@ int main(int argc, char* argv[])
 	printf("----- Radiosity ----\n");
 
 	verbose = true;									// Originally FALSE
-	smoothing_threshold = cos(45.0 * (std::numbers::pi_v<float> / 180)); // Originally zero.
+	smoothing_threshold = cos(45.0 * (std::numbers::pi / 180)); // Originally zero.
 
 	for (i = 1; i < argc; i++)
 	{
@@ -1441,7 +1441,7 @@ int main(int argc, char* argv[])
 		{
 			if (++i < argc)
 			{
-				smoothing_threshold = (float)cos(atof(argv[i]) * (std::numbers::pi_v<float> / 180.0));
+				smoothing_threshold = (float)cos(atof(argv[i]) * (std::numbers::pi / 180.0));
 			}
 			else
 			{

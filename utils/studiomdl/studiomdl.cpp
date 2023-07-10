@@ -779,8 +779,8 @@ void SimplifyModel(void)
 			}
 			else
 			{
-				minv = -std::numbers::pi_v<float> / 8.0;
-				maxv = std::numbers::pi_v<float> / 8.0;
+				minv = -std::numbers::pi / 8.0;
+				maxv = std::numbers::pi / 8.0;
 			}
 
 			for (i = 0; i < numseq; i++)
@@ -801,10 +801,10 @@ void SimplifyModel(void)
 						case 4:
 						case 5:
 							v = (sequence[i].panim[q]->rot[j][n][k - 3] - bonetable[j].rot[k - 3]);
-							if (v >= std::numbers::pi_v<float>)
-								v -= std::numbers::pi_v<float> * 2;
-							if (v < -std::numbers::pi_v<float>)
-								v += std::numbers::pi_v<float> * 2;
+							if (v >= std::numbers::pi)
+								v -= std::numbers::pi * 2;
+							if (v < -std::numbers::pi)
+								v += std::numbers::pi * 2;
 							break;
 						}
 						if (v < minv)
@@ -873,9 +873,9 @@ void SimplifyModel(void)
 					vec3_t angle;
 
 					// convert to degrees
-					angle[0] = sequence[i].panim[q]->rot[j][n][0] * (180.0 / std::numbers::pi_v<float>);
-					angle[1] = sequence[i].panim[q]->rot[j][n][1] * (180.0 / std::numbers::pi_v<float>);
-					angle[2] = sequence[i].panim[q]->rot[j][n][2] * (180.0 / std::numbers::pi_v<float>);
+					angle[0] = sequence[i].panim[q]->rot[j][n][0] * (180.0 / std::numbers::pi);
+					angle[1] = sequence[i].panim[q]->rot[j][n][1] * (180.0 / std::numbers::pi);
+					angle[2] = sequence[i].panim[q]->rot[j][n][2] * (180.0 / std::numbers::pi);
 
 					AngleMatrix(angle, bonematrix);
 
@@ -958,10 +958,10 @@ void SimplifyModel(void)
 							case 4:
 							case 5:
 								v = (sequence[i].panim[q]->rot[j][n][k - 3] - bonetable[j].rot[k - 3]);
-								if (v >= std::numbers::pi_v<float>)
-									v -= std::numbers::pi_v<float> * 2;
-								if (v < -std::numbers::pi_v<float>)
-									v += std::numbers::pi_v<float> * 2;
+								if (v >= std::numbers::pi)
+									v -= std::numbers::pi * 2;
+								if (v < -std::numbers::pi)
+									v += std::numbers::pi * 2;
 
 								value[n] = v / bonetable[j].rotscale[k - 3];
 								break;
@@ -1138,7 +1138,8 @@ int lookupControl(char* string)
 // search case-insensitive for string2 in string
 char* stristr(const char* string, const char* string2)
 {
-	int c, len;
+	int c;
+    std::size_t len;
 	c = tolower(*string2);
 	len = strlen(string2);
 
@@ -1821,9 +1822,9 @@ void Build_Reference(s_model_t* pmodel)
 		vec3_t p;
 
 		// convert to degrees
-		angle[0] = pmodel->skeleton[i].rot[0] * (180.0 / std::numbers::pi_v<float>);
-		angle[1] = pmodel->skeleton[i].rot[1] * (180.0 / std::numbers::pi_v<float>);
-		angle[2] = pmodel->skeleton[i].rot[2] * (180.0 / std::numbers::pi_v<float>);
+		angle[0] = pmodel->skeleton[i].rot[0] * (180.0 / std::numbers::pi);
+		angle[1] = pmodel->skeleton[i].rot[1] * (180.0 / std::numbers::pi);
+		angle[2] = pmodel->skeleton[i].rot[2] * (180.0 / std::numbers::pi);
 
 		parent = pmodel->node[i].parent;
 		if (parent == -1)
@@ -2218,14 +2219,14 @@ void Grab_Studio(s_model_t* pmodel)
 void clip_rotations(vec3_t rot)
 {
 	int j;
-	// clip everything to : -std::numbers::pi_v<float> <= x < std::numbers::pi_v<float>
+	// clip everything to : -std::numbers::pi <= x < std::numbers::pi
 
 	for (j = 0; j < 3; j++)
 	{
-		while (rot[j] >= std::numbers::pi_v<float>)
-			rot[j] -= std::numbers::pi_v<float> * 2;
-		while (rot[j] < -std::numbers::pi_v<float>)
-			rot[j] += std::numbers::pi_v<float> * 2;
+		while (rot[j] >= std::numbers::pi)
+			rot[j] -= std::numbers::pi * 2;
+		while (rot[j] < -std::numbers::pi)
+			rot[j] += std::numbers::pi * 2;
 	}
 }
 
@@ -2677,7 +2678,7 @@ void Cmd_Origin(void)
 	if (TokenAvailable())
 	{
 		GetToken(false);
-		defaultzrotation = (atof(token) + 90) * (std::numbers::pi_v<float> / 180.0);
+		defaultzrotation = (atof(token) + 90) * (std::numbers::pi / 180.0);
 	}
 }
 
@@ -2697,7 +2698,7 @@ void Option_Origin(void)
 void Option_Rotate(void)
 {
 	GetToken(false);
-	zrotation = (atof(token) + 90) * (std::numbers::pi_v<float> / 180.0);
+	zrotation = (atof(token) + 90) * (std::numbers::pi / 180.0);
 }
 
 /*
@@ -3468,7 +3469,7 @@ int main(int argc, char* argv[])
 	char path[1024];
 
 	default_scale = 1.0;
-	defaultzrotation = std::numbers::pi_v<float> / 2;
+	defaultzrotation = std::numbers::pi / 2;
 
 	numrep = 0;
 	tag_reversed = 0;
@@ -3476,7 +3477,7 @@ int main(int argc, char* argv[])
 	flip_triangles = 1;
 	maxseqgroupsize = 1024 * 1024;
 
-	normal_blend = cos(2.0 * (std::numbers::pi_v<float> / 180.0));
+	normal_blend = cos(2.0 * (std::numbers::pi / 180.0));
 
 	gamma = 1.8;
 
@@ -3512,7 +3513,7 @@ int main(int argc, char* argv[])
 				break;
 			case 'a':
 				i++;
-				normal_blend = cos(atof(argv[i]) * (std::numbers::pi_v<float> / 180.0));
+				normal_blend = cos(atof(argv[i]) * (std::numbers::pi / 180.0));
 				break;
 			case 'h':
 				dump_hboxes = 1;

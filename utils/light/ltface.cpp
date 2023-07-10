@@ -369,9 +369,9 @@ void SingleLightFace(lightentity_t* light, lightinfo_t* l)
 		VectorSubtract(light->targetorigin, light->origin, spotvec);
 		VectorNormalize(spotvec);
 		if (!light->angle)
-			falloff = -cos(20 * std::numbers::pi_v<float> / 180);
+			falloff = -cos(20 * std::numbers::pi / 180);
 		else
-			falloff = -cos(light->angle / 2 * std::numbers::pi_v<float> / 180);
+			falloff = -cos(light->angle / 2 * std::numbers::pi / 180);
 	}
 	else
 		falloff = 0; // shut up compiler warnings

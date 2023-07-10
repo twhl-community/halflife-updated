@@ -97,7 +97,7 @@ void StudioModel::CalcBoneAdj()
 		case STUDIO_XR:
 		case STUDIO_YR:
 		case STUDIO_ZR:
-			m_adj[j] = value * (std::numbers::pi_v<float> / 180.0);
+			m_adj[j] = value * (std::numbers::pi / 180.0);
 			break;
 		case STUDIO_X:
 		case STUDIO_Y:
