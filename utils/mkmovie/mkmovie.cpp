@@ -237,7 +237,7 @@ void ProcessMovieFile(const char* pFilename)
 
 
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	int i;
 
@@ -269,4 +269,6 @@ void main(int argc, char* argv[])
 	framecnt = 0;
 
 	ProcessMovieFile(argv[argc - 1]);
+
+	return 0;
 }

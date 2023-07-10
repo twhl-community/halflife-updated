@@ -12,7 +12,7 @@
 #include "mathlib.h"
 #include "bspfile.h"
 
-void main(int argc, char** argv)
+int main(int argc, char** argv)
 {
 	int i;
 	char source[1024];
@@ -45,4 +45,6 @@ void main(int argc, char** argv)
 		PrintBSPFileSizes();
 		std::cout << "---------------------\n";
 	}
+
+	return 0;
 }
