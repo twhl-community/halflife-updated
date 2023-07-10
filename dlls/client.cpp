@@ -216,11 +216,11 @@ extern CVoiceGameMgr g_VoiceGameMgr;
 
 
 #if defined(_MSC_VER) || defined(WIN32)
-typedef wchar_t uchar16;
-typedef unsigned int uchar32;
+using uchar16 = wchar_t;
+using uchar32 = unsigned int;
 #else
-typedef unsigned short uchar16;
-typedef wchar_t uchar32;
+using uchar16 = unsigned short;
+using uchar32 = wchar_t;
 #endif
 
 //-----------------------------------------------------------------------------

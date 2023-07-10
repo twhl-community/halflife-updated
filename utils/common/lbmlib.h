@@ -10,13 +10,13 @@
 
 // lbmlib.h
 
-typedef unsigned char UBYTE;
+using UBYTE = unsigned char;
 
 #ifndef _WINDOWS_
 typedef short WORD;
 #endif
 
-typedef unsigned short UWORD;
+using UWORD = unsigned short;
 typedef long LONG;
 
 typedef enum

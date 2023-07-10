@@ -31,10 +31,10 @@
 ;
 ;***************************************************************************/
 
-
+#include <cstdint>
 #include "windows.h"
 
-typedef unsigned __int64 QWORD;
+using QWORD = std::uint64_t;
 
 #define RDTSC _asm _emit 0fh _asm _emit 031h
 #define CPUID _asm _emit 0fh _asm _emit 0a2h

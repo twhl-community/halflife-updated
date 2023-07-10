@@ -8,7 +8,7 @@
 
 
 #ifndef _DEF_BYTE_
-typedef unsigned char byte;
+using byte = unsigned char;
 #endif
 
 //---------------------------------------------------------------------------

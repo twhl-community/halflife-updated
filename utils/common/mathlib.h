@@ -13,15 +13,15 @@
 
 // mathlib.h
 
-#include <math.h>
+#include <array>
 
 #ifdef DOUBLEVEC_T
-typedef double vec_t;
+using vec_t = double;
 #else
-typedef float vec_t;
+using vec_t = float;
 #endif
-typedef vec_t vec3_t[3]; // x,y,z
-typedef vec_t vec4_t[4]; // x,y,z,w
+using vec3_t = vec_t[3]; // x,y,z
+using vec4_t = vec_t[4]; // x,y,z,w
 
 #define SIDE_FRONT 0
 #define SIDE_ON 2
