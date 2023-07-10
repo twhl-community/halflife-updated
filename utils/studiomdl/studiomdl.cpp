@@ -535,8 +535,8 @@ void SimplifyModel(void)
 			}
 			else
 			{
-				char* szAnim = "ROOT";
-				char* szNode = "ROOT";
+				const char* szAnim = "ROOT";
+				const char* szNode = "ROOT";
 
 				// whoa, check parent connections!
 				if (sequence[i].panim[0]->node[j].parent != -1)
@@ -1167,7 +1167,7 @@ char* stristr(const char* string, const char* string2)
 */
 
 
-int lookup_texture(char* texturename)
+int lookup_texture(const char* texturename)
 {
 	int i;
 
@@ -1194,7 +1194,7 @@ int lookup_texture(char* texturename)
 }
 
 
-s_mesh_t* lookup_mesh(s_model_t* pmodel, char* texturename)
+s_mesh_t* lookup_mesh(s_model_t* pmodel, const char* texturename)
 {
 	int i, j;
 

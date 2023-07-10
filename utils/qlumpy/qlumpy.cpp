@@ -52,7 +52,7 @@ void GrabFont(void);
 
 typedef struct
 {
-	char* name;
+	const char* name;
 	void (*function)(void);
 } command_t;
 

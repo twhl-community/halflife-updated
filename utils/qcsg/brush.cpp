@@ -768,7 +768,7 @@ restart:
 		if (h->mins[i] < -BOGUS_RANGE / 2 || h->maxs[i] > BOGUS_RANGE / 2)
 		{
 			vec3_t eorigin = {0, 0, 0};
-			char* pszClass = "Unknown Class";
+			const char* pszClass = "Unknown Class";
 			if (b->entitynum)
 			{
 				entity_t* e = entities + b->entitynum;
@@ -827,7 +827,7 @@ bool MakeBrushPlanes(brush_t* b)
 		{
 			if (f->planenum == planenum || f->planenum == (planenum ^ 1))
 			{
-				char* pszClass = "Unknown Class";
+				const char* pszClass = "Unknown Class";
 				if (b->entitynum)
 				{
 					entity_t* e = entities + b->entitynum;
