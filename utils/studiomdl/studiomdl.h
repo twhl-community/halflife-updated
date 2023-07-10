@@ -8,11 +8,7 @@
 *
 ****/
 
-/*
-
-
-*/
-
+#pragma once
 
 #define STUDIO_VERSION 10
 

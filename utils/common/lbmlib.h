@@ -10,6 +10,8 @@
 
 // lbmlib.h
 
+#pragma once
+
 using UBYTE = unsigned char;
 
 #ifndef _WINDOWS_

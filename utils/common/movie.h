@@ -8,8 +8,7 @@
 *
 ****/
 
-#ifndef _MOVIE_H_
-#define _MOVIE_H_
+#pragma once
 
 /*
 	movie.h
@@ -30,7 +29,3 @@ typedef struct
 	short height;
 	short depth;
 } movieframe_t;
-
-
-
-#endif _MOVIE_H_

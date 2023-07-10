@@ -10,6 +10,8 @@
 
 // wadlib.h
 
+#pragma once
+
 //
 // wad reading
 //

@@ -8,6 +8,7 @@
 *
 ****/
 
+#pragma once
 
 typedef struct
 {

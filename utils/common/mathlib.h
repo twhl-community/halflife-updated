@@ -8,8 +8,7 @@
 *
 ****/
 
-#ifndef __MATHLIB__
-#define __MATHLIB__
+#pragma once
 
 // mathlib.h
 
@@ -99,5 +98,3 @@ void VectorTransform(const vec3_t in1, const float in2[3][4], vec3_t out);
 void AngleQuaternion(const vec3_t angles, vec4_t quaternion);
 void QuaternionMatrix(const vec4_t quaternion, float (*matrix)[4]);
 void QuaternionSlerp(const vec4_t p, vec4_t q, float t, vec4_t qt);
-
-#endif

@@ -10,6 +10,8 @@
 
 // vis.h
 
+#pragma once
+
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "bspfile.h"

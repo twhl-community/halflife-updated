@@ -10,9 +10,9 @@
 
 // scriplib.h
 
-#ifndef __CMDLIB__
+#pragma once
+
 #include "cmdlib.h"
-#endif
 
 #define MAXTOKEN 512
 

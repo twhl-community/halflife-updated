@@ -8,6 +8,7 @@
 *
 ****/
 
+#pragma once
 
 // upper design bounds
 

@@ -8,6 +8,8 @@
 *
 ****/
 
+#pragma once
+
 extern int numthreads;
 
 void ThreadSetDefault(void);

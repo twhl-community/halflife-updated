@@ -30,7 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\utils\common\bspfile.h" />
-    <ClInclude Include="..\..\utils\common\bsplib.h" />
     <ClInclude Include="..\..\utils\common\cmdlib.h" />
     <ClInclude Include="..\..\utils\common\mathlib.h" />
     <ClInclude Include="..\..\utils\common\scriplib.h" />

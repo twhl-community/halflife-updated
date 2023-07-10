@@ -65,9 +65,6 @@
     <ClInclude Include="..\..\utils\common\threads.h">
       <Filter>Header Files\utils\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\utils\common\bsplib.h">
-      <Filter>Header Files\utils\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\utils\visx2\vis.h">
       <Filter>Header Files\utils\vis</Filter>
     </ClInclude>
