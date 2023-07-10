@@ -1109,7 +1109,7 @@ long readtransfers(char* transferfile, long numpatches)
 								}
 								else
 								{
-									printf("\nMissing transfer count!  Save file will now be rebuilt.");
+								std::cout << "\nMissing transfer count!  Save file will now be rebuilt.";
 									break;
 								}
 							}
@@ -1117,8 +1117,7 @@ long readtransfers(char* transferfile, long numpatches)
 						}
 						else
 						{
-							printf("\nMemory allocation failure creating transfer lists(%d*%d)!\n",
-								patch->numtransfers, sizeof(transfer_t));
+							std::cout << "\nMemory allocation failure creating transfer lists(" << patch->numtransfers << "*" << sizeof(transfer_t) << ")!\n";
 							break;
 						}
 					}
