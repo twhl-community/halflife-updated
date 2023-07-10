@@ -19,8 +19,8 @@ void main(int argc, char** argv)
 	int size;
 	FILE* f;
 
-	printf("bspinfo.exe v2.1 (%s)\n", __DATE__);
-	printf("---- bspinfo ----\n");
+	std::cout << std::format("bspinfo.exe v2.1 (%s)\n", __DATE__);
+	std::cout << "---- bspinfo ----\n";
 
 
 	if (argc == 1)
@@ -28,7 +28,7 @@ void main(int argc, char** argv)
 
 	for (i = 1; i < argc; i++)
 	{
-		printf("---------------------\n");
+		std::cout << "---------------------\n";
 		strcpy(source, argv[i]);
 		DefaultExtension(source, ".bsp");
 		f = fopen(source, "rb");
@@ -39,10 +39,10 @@ void main(int argc, char** argv)
 		}
 		else
 			size = 0;
-		printf("%s: %i\n", source, size);
+		std::cout << std::format("%s: %i\n", source, size);
 
 		LoadBSPFile(source);
 		PrintBSPFileSizes();
-		printf("---------------------\n");
+		std::cout << "---------------------\n";
 	}
 }

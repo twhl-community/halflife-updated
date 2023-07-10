@@ -31,12 +31,12 @@ void CheckHullFile(bool hullfile, char* filename)
 	f = fopen(filename, "r");
 	if (!f)
 	{
-		printf("WARNING: Couldn't open hullfile %s, using default hulls", filename);
+		std::cout << std::format("WARNING: Couldn't open hullfile %s, using default hulls", filename);
 		return;
 	}
 	else
 	{
-		printf("[Reading hulls from '%s']\n", filename);
+		std::cout << std::format("[Reading hulls from '%s']\n", filename);
 	}
 
 	for (i = 0; i < NUM_HULLS; i++)
@@ -48,7 +48,7 @@ void CheckHullFile(bool hullfile, char* filename)
 
 		if (!fgets(scan, sizeof(scan), f))
 		{
-			printf("WARNING: Error parsing %s, couln't read hull line %i, using default hulls", filename, i);
+			std::cout << std::format("WARNING: Error parsing %s, couln't read hull line %i, using default hulls", filename, i);
 			read_error = true;
 			break;
 		}
@@ -56,7 +56,7 @@ void CheckHullFile(bool hullfile, char* filename)
 		argCnt = sscanf(scan, "( %f %f %f ) ( %f %f %f ) ", &x1, &y1, &z1, &x2, &y2, &z2);
 		if (argCnt != 6)
 		{
-			printf("WARNING: Error parsing %s, expeciting '( x y z ) ( x y z )' using default hulls", filename);
+			std::cout << std::format("WARNING: Error parsing %s, expeciting '( x y z ) ( x y z )' using default hulls", filename);
 			read_error = true;
 			break;
 		}
@@ -76,7 +76,7 @@ void CheckHullFile(bool hullfile, char* filename)
 
 	if (read_error)
 	{
-		printf("WARNING: Error parsing %s, using default hulls", filename);
+		std::cout << std::format("WARNING: Error parsing %s, using default hulls", filename);
 	}
 	else
 	{

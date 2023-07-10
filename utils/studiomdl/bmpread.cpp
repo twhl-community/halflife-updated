@@ -8,9 +8,9 @@
 *
 ****/
 
-
+#include <format>
+#include <iostream>
 #include <windows.h>
-#include <STDIO.H>
 
 
 int ReadBmpFile(
@@ -120,7 +120,7 @@ int ReadBmpFile(
 	*pwidth = bmih.biWidth;
 	*pheight = bmih.biHeight;
 
-	printf("w %d h %d s %d\n", bmih.biWidth, bmih.biHeight, cbBmpBits);
+	std::cout << std::format("w %d h %d s %d\n", bmih.biWidth, bmih.biHeight, cbBmpBits);
 
 GetOut:
 	if (pfile)

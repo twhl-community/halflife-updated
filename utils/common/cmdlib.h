@@ -13,6 +13,8 @@
 #pragma once
 
 #include <cstdint>
+#include <format>
+#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

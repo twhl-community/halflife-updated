@@ -385,7 +385,7 @@ void SingleLightFace(lightentity_t* light, lightinfo_t* l)
 	{ // init a new light map
 		if (mapnum == MAXLIGHTMAPS)
 		{
-			printf("WARNING: Too many light styles on a face\n");
+			std::cout << "WARNING: Too many light styles on a face\n";
 			return;
 		}
 		size = (l->texsize[1] + 1) * (l->texsize[0] + 1);

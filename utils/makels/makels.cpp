@@ -9,6 +9,8 @@
 ****/
 
 #include <windows.h>
+#include <format>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,8 +29,8 @@ int string_comparator(const void* string1, const void* string2)
 
 void PrintUsage(char* pname)
 {
-	printf("\n\tusage:%s <source directory> <wadfile name> <script name> \n\n", pname);
-	printf("\t%s.exe is used to generate a bitmap name sorted 'qlumpy script'.\n", pname);
+	std::cout << std::format("\n\tusage:%s <source directory> <wadfile name> <script name> \n\n", pname);
+	std::cout << std::format("\t%s.exe is used to generate a bitmap name sorted 'qlumpy script'.\n", pname);
 }
 
 int main(int argc, void** argv)
@@ -43,7 +45,7 @@ int main(int argc, void** argv)
 	BOOL fContinue = TRUE;
 	DWORD dwWritten;
 
-	printf("makels Copyright (c) 1998 Valve L.L.C., %s\n", __DATE__);
+	std::cout << std::format("makels Copyright (c) 1998 Valve L.L.C., %s\n", __DATE__);
 
 	pszdir = (char*)argv[1];
 
@@ -68,8 +70,8 @@ int main(int argc, void** argv)
 
 	if (hScriptFile == INVALID_HANDLE_VALUE)
 	{
-		printf("\n---------- ERROR ------------------\n");
-		printf(" Could not open the script file: %s\n", pszScriptName);
+		std::cout << "\n---------- ERROR ------------------\n";
+		std::cout << std::format(" Could not open the script file: %s\n", pszScriptName);
 		Beep(800, 500);
 		exit(EXIT_FAILURE);
 	}
@@ -79,8 +81,8 @@ int main(int argc, void** argv)
 	if (!fWrite || (dwWritten != strlen(szBuf)))
 	{
 	write_error:
-		printf("\n---------- ERROR ------------------\n");
-		printf(" Could not write to the script file: %s\n", pszScriptName);
+		std::cout << "\n---------- ERROR ------------------\n";
+		std::cout << std::format(" Could not write to the script file: %s\n", pszScriptName);
 		Beep(800, 500);
 		CloseHandle(hScriptFile);
 		exit(EXIT_FAILURE);
@@ -105,7 +107,7 @@ int main(int argc, void** argv)
 				if ((szShort[1] == '_') && ((szShort[0] == 'N') || (szShort[0] == 'F')))
 				{
 
-					printf("Skipping %s.\n", FindData.cFileName);
+					std::cout << std::format("Skipping %s.\n", FindData.cFileName);
 				}
 				else
 				{
@@ -116,8 +118,8 @@ int main(int argc, void** argv)
 						ppszFiles = (char**)realloc(ppszFiles, nMaxFiles * sizeof(*ppszFiles));
 						if (!ppszFiles)
 						{
-							printf("\n---------- ERROR ------------------\n");
-							printf(" Could not realloc more filename pointer storage\n");
+							std::cout << "\n---------- ERROR ------------------\n";
+							std::cout << " Could not realloc more filename pointer storage\n";
 							Beep(800, 500);
 							exit(EXIT_FAILURE);
 						}
@@ -164,7 +166,7 @@ int main(int argc, void** argv)
 		}
 	}
 
-	printf("Processed %d files specified by %s\n", nFiles, pszdir);
+	std::cout << std::format("Processed %d files specified by %s\n", nFiles, pszdir);
 
 	CloseHandle(hScriptFile);
 	free(pszdir);

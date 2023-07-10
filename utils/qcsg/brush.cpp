@@ -776,9 +776,9 @@ restart:
 				GetVectorForKey(e, "origin", eorigin);
 			}
 
-			printf("Entity %i, Brush %i: A '%s' @(%.0f,%.0f,%.0f)\n",
+			std::cout << std::format("Entity %i, Brush %i: A '%s' @(%.0f,%.0f,%.0f)\n",
 				b->entitynum, b->brushnum, pszClass, eorigin[0], eorigin[1], eorigin[2]);
-			printf("\toutside world(+/-%d): (%.0f, %.0f, %.0f)-(%.0f,%.0f,%.0f)\n",
+			std::cout << std::format("\toutside world(+/-%d): (%.0f, %.0f, %.0f)-(%.0f,%.0f,%.0f)\n",
 				BOGUS_RANGE / 2, h->mins[0], h->mins[1], h->mins[2], h->maxs[0], h->maxs[1], h->maxs[2]);
 			break;
 		}
@@ -816,7 +816,7 @@ bool MakeBrushPlanes(brush_t* b)
 		planenum = PlaneFromPoints(s->planepts[0], s->planepts[1], s->planepts[2]);
 		if (planenum == -1)
 		{
-			printf("Entity %i, Brush %i: plane with no normal\n", b->entitynum, b->brushnum);
+			std::cout << std::format("Entity %i, Brush %i: plane with no normal\n", b->entitynum, b->brushnum);
 			continue;
 		}
 
@@ -834,7 +834,7 @@ bool MakeBrushPlanes(brush_t* b)
 					pszClass = ValueForKey(e, "classname");
 				}
 
-				printf("Entity %i, Brush %i: A '%s' @(%.0f,%.0f,%.0f) has a coplanar plane at (%.0f, %.0f, %.0f), texture %s\n",
+				std::cout << std::format("Entity %i, Brush %i: A '%s' @(%.0f,%.0f,%.0f) has a coplanar plane at (%.0f, %.0f, %.0f), texture %s\n",
 					b->entitynum, b->brushnum, pszClass, origin[0], origin[1], origin[2], s->planepts[0][0] + origin[0], s->planepts[0][1] + origin[1], s->planepts[0][2] + origin[2], s->td.name);
 				return false;
 			}
@@ -917,7 +917,7 @@ int BrushContents(brush_t* b)
 	{
 		if (TextureContents(s->td.name) != contents)
 		{
-			printf("Entity %i, Brush %i: mixed face contents", b->entitynum, b->brushnum);
+			std::cout << std::format("Entity %i, Brush %i: mixed face contents", b->entitynum, b->brushnum);
 			break;
 		}
 	}

@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 
+#include <iostream>
 #include <stdio.h>
 
 #include <windows.h>
@@ -190,8 +191,8 @@ void mouse(const SDL_MouseButtonEvent& event)
 
 void help(void)
 {
-	printf("left mouse     - pan\n");
-	printf("right mouse    - rotate\n");
+	std::cout << "left mouse     - pan\n";
+	std::cout << "right mouse    - rotate\n";
 }
 
 void init(char* arg)
@@ -248,7 +249,7 @@ void key(unsigned char key, int /*x*/, int /*y*/)
 		break;
 
 	case 'p':
-		printf("Translation: %f, %f %f\n", transx, transy, transz);
+		std::cout << std::format("Translation: %f, %f %f\n", transx, transy, transz);
 		break;
 
 	case '\033': // Escape
@@ -272,13 +273,13 @@ int main(int argc, char** argv)
 {
 	if (argc != 2)
 	{
-		printf("usage : %s <filename>\n", argv[0]);
+		std::cout << std::format("usage : %s <filename>\n", argv[0]);
 		exit(1);
 	}
 
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
-		printf("Couldn't initialize SDL2\n");
+		std::cout << "Couldn't initialize SDL2\n";
 		exit(EXIT_FAILURE);
 	}
 
@@ -286,7 +287,7 @@ int main(int argc, char** argv)
 
 	if (!g_pWindow)
 	{
-		printf("Failed to create SDL Window\n");
+		std::cout << "Failed to create SDL Window\n";
 		exit(EXIT_FAILURE);
 	}
 

@@ -69,12 +69,12 @@ void Error(const char* error, ...)
 {
 	va_list argptr;
 
-	printf("\n************ ERROR ************\n");
+	std::cout << "\n************ ERROR ************\n";
 
 	va_start(argptr, error);
 	vprintf(error, argptr);
 	va_end(argptr);
-	printf("\n");
+	std::cout << "\n";
 
 	exit(1);
 }
@@ -962,10 +962,10 @@ void ListPak(const char* pakname)
 
 	for (i; i < imax; i++)
 	{
-		printf("%64s : %7i\n", pdir[i].name, pdir[i].filelen);
+		std::cout << std::format("%64s : %7i\n", pdir[i].name, pdir[i].filelen);
 	}
 
-	printf("Total Length: %li bytes\n", totlen);
+	std::cout << std::format("Total Length: %li bytes\n", totlen);
 }
 
 

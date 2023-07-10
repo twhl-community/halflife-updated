@@ -41,7 +41,7 @@ void* zeromalloc(size_t size)
 	pbuffer = (unsigned char*)malloc(size);
 	if (!pbuffer)
 	{
-		printf("Failed on allocation of %i bytes", size);
+		std::cout << std::format("Failed on allocation of %i bytes", size);
 		exit(-1);
 	}
 
@@ -397,9 +397,9 @@ int main(int argc, char* argv[])
 
 	strcpy(fontname, DEFAULT_FONT);
 
-	printf("makefont.exe Version 1.0 by valve (%s)\n", __DATE__);
+	std::cout << std::format("makefont.exe Version 1.0 by valve (%s)\n", __DATE__);
 
-	printf("----- Creating Console Font ----\n");
+	std::cout << "----- Creating Console Font ----\n";
 
 	for (i = 1; i < argc; i++)
 	{
@@ -422,17 +422,17 @@ int main(int argc, char* argv[])
 		else if (!strcmp(argv[i], "-italic"))
 		{
 			bItalic = TRUE;
-			printf("italic set\n");
+			std::cout << "italic set\n";
 		}
 		else if (!strcmp(argv[i], "-bold"))
 		{
 			bBold = TRUE;
-			printf("bold set\n");
+			std::cout << "bold set\n";
 		}
 		else if (!strcmp(argv[i], "-underline"))
 		{
 			bUnderline = TRUE;
-			printf("underline set\n");
+			std::cout << "underline set\n";
 		}
 		else if (argv[i][0] == '-')
 		{
@@ -447,7 +447,7 @@ int main(int argc, char* argv[])
 		Error("usage: makefont [-font \"fontname\"] [-italic] [-underline] [-bold] [-pointsizes sm med lg] outfile");
 	}
 
-	printf("Creating %i, %i, and %i point %s fonts\n", pointsize[0], pointsize[1], pointsize[2], fontname);
+	std::cout << std::format("Creating %i, %i, and %i point %s fonts\n", pointsize[0], pointsize[1], pointsize[2], fontname);
 
 	start = timeGetTime();
 
@@ -483,7 +483,7 @@ int main(int argc, char* argv[])
 
 	end = timeGetTime();
 
-	printf("%5.5f seconds elapsed\n", (float)(end - start) / 1000.0);
+	std::cout << std::format("%5.5f seconds elapsed\n", (float)(end - start) / 1000.0);
 
 	// Display for a second since it might not be running from command prompt
 	Sleep(1000);

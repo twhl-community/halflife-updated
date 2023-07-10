@@ -103,7 +103,7 @@ void LoadEntities(void)
 			}
 		}
 		if (j == num_entities)
-			printf("WARNING: entity %i has unmatched target %s\n", i, s);
+			std::cout << std::format("WARNING: entity %i has unmatched target %s\n", i, s);
 	}
 
 	qprintf("%d lightentities\n", numlightentities);
@@ -140,7 +140,7 @@ void LightWorld(void)
 
 	lightdatasize = file_p - filebase;
 
-	printf("lightdatasize: %i\n", lightdatasize);
+	std::cout << std::format("lightdatasize: %i\n", lightdatasize);
 }
 
 
@@ -157,8 +157,8 @@ int main(int argc, char** argv)
 	double start, end;
 	char source[1024];
 
-	printf("Light.exe Version 1.3 Id Software and valve (%s)\n", __DATE__);
-	printf("----- LightFaces ----\n");
+	std::cout << std::format("Light.exe Version 1.3 Id Software and valve (%s)\n", __DATE__);
+	std::cout << "----- LightFaces ----\n";
 
 	// default to 24-bit light info
 	hicolor = true;
@@ -173,7 +173,7 @@ int main(int argc, char** argv)
 		else if (!strcmp(argv[i], "-extra"))
 		{
 			extrasamples = true;
-			printf("extra sampling enabled\n");
+			std::cout << "extra sampling enabled\n";
 		}
 		else if (!strcmp(argv[i], "-dist"))
 		{
@@ -220,7 +220,7 @@ int main(int argc, char** argv)
 	WriteBSPFile(source);
 
 	end = I_FloatTime();
-	printf("%5.1f seconds elapsed\n", end - start);
+	std::cout << std::format("%5.1f seconds elapsed\n", end - start);
 
 	return 0;
 }

@@ -470,32 +470,32 @@ int ArrayUsage(const char* szItem, int items, int maxitems, int itemsize)
 {
 	float percentage = maxitems ? items * 100.0 / maxitems : 0.0;
 
-	printf("%-12s  %7i/%-7i  %7i/%-7i  (%4.1f%%)",
+	std::cout << std::format("%-12s  %7i/%-7i  %7i/%-7i  (%4.1f%%)",
 		szItem, items, maxitems, items * itemsize, maxitems * itemsize, percentage);
 	if (percentage > 80.0)
-		printf("VERY FULL!\n");
+		std::cout << "VERY FULL!\n";
 	else if (percentage > 95.0)
-		printf("SIZE DANGER!\n");
+		std::cout << "SIZE DANGER!\n";
 	else if (percentage > 99.9)
-		printf("SIZE OVERFLOW!!!\n");
+		std::cout << "SIZE OVERFLOW!!!\n";
 	else
-		printf("\n");
+		std::cout << "\n";
 	return items * itemsize;
 }
 
 int GlobUsage(const char* szItem, int itemstorage, int maxstorage)
 {
 	float percentage = maxstorage ? itemstorage * 100.0 / maxstorage : 0.0;
-	printf("%-12s     [variable]    %7i/%-7i  (%4.1f%%)",
+	std::cout << std::format("%-12s     [variable]    %7i/%-7i  (%4.1f%%)",
 		szItem, itemstorage, maxstorage, percentage);
 	if (percentage > 80.0)
-		printf("VERY FULL!\n");
+		std::cout << "VERY FULL!\n";
 	else if (percentage > 95.0)
-		printf("SIZE DANGER!\n");
+		std::cout << "SIZE DANGER!\n";
 	else if (percentage > 99.9)
-		printf("SIZE OVERFLOW!!!\n");
+		std::cout << "SIZE OVERFLOW!!!\n";
 	else
-		printf("\n");
+		std::cout << "\n";
 	return itemstorage;
 }
 
@@ -511,9 +511,9 @@ void PrintBSPFileSizes(void)
 	//int	numtextures = texdatasize ? ((dmiptexlump_t*)dtexdata)->nummiptex : 0;
 	int totalmemory = 0;
 
-	printf("\n");
-	printf("Object names  Objects/Maxobjs  Memory / Maxmem  Fullness\n");
-	printf("------------  ---------------  ---------------  --------\n");
+	std::cout << "\n";
+	std::cout << "Object names  Objects/Maxobjs  Memory / Maxmem  Fullness\n";
+	std::cout << "------------  ---------------  ---------------  --------\n";
 
 	totalmemory += ArrayUsage("models", nummodels, ENTRIES(dmodels), ENTRYSIZE(dmodels));
 	totalmemory += ArrayUsage("planes", numplanes, ENTRIES(dplanes), ENTRYSIZE(dplanes));
@@ -532,7 +532,7 @@ void PrintBSPFileSizes(void)
 	totalmemory += GlobUsage("visdata", visdatasize, sizeof(dvisdata));
 	totalmemory += GlobUsage("entdata", entdatasize, sizeof(dentdata));
 
-	printf("=== Total BSP file data space used: %d bytes ===\n", totalmemory);
+	std::cout << std::format("=== Total BSP file data space used: %d bytes ===\n", totalmemory);
 }
 
 

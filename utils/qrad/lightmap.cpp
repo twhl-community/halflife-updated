@@ -916,7 +916,7 @@ void CreateDirectLights(void)
 		}
 		else
 		{
-			printf("entity at (%f,%f,%f) has bad '_light' value : '%s'\n",
+			std::cout << std::format("entity at (%f,%f,%f) has bad '_light' value : '%s'\n",
 				dl->origin[0], dl->origin[1], dl->origin[2], pLight);
 			continue;
 		}
@@ -943,7 +943,7 @@ void CreateDirectLights(void)
 			{ // point towards target
 				e2 = FindTargetEntity(target);
 				if (!e2)
-					printf("WARNING: light at (%i %i %i) has missing target\n",
+					std::cout << std::format("WARNING: light at (%i %i %i) has missing target\n",
 						(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
 				else
 				{
@@ -1141,7 +1141,7 @@ void GatherSampleLight(vec3_t pos, byte* pvs, vec3_t normal, vec3_t* sample, byt
 
 					if (style_index == MAXLIGHTMAPS)
 					{
-						printf("WARNING: Too many direct light styles on a face(%f,%f,%f)\n",
+						std::cout << std::format("WARNING: Too many direct light styles on a face(%f,%f,%f)\n",
 							pos[0], pos[1], pos[2]);
 						continue;
 					}
@@ -1187,7 +1187,7 @@ void GatherSampleLight(vec3_t pos, byte* pvs, vec3_t normal, vec3_t* sample, byt
 
 			if (style_index == MAXLIGHTMAPS)
 			{
-				printf("WARNING: Too many direct light styles on a face(%f,%f,%f)\n",
+				std::cout << std::format("WARNING: Too many direct light styles on a face(%f,%f,%f)\n",
 					pos[0], pos[1], pos[2]);
 				return;
 			}

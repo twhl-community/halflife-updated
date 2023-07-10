@@ -147,7 +147,7 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 
 	// Create the output file
 	sprintf(outfilename, "%s%04d.bmp", basename, framecnt++);
-	printf("Creating bitmap %s.\n", outfilename);
+	std::cout << std::format("Creating bitmap %s.\n", outfilename);
 	hout = CreateFile(outfilename, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hout == INVALID_HANDLE_VALUE)
 		PrintError("Couldn't create bitmap file for frame.");
@@ -199,7 +199,7 @@ void ProcessMovieFile(const char* pFilename)
 	movieblockheader_t header;
 	bool eof = false;
 
-	printf("Processing movie %s:\n", pFilename);
+	std::cout << std::format("Processing movie %s:\n", pFilename);
 
 	hf = CreateFile(pFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hf == INVALID_HANDLE_VALUE)
@@ -230,7 +230,7 @@ void ProcessMovieFile(const char* pFilename)
 	if (!CloseHandle(hf))
 		PrintError("Error closing movie file.\n");
 
-	printf("Done processing movie.\n");
+	std::cout << "Done processing movie.\n";
 }
 
 
@@ -239,7 +239,7 @@ void main(int argc, char* argv[])
 {
 	int i;
 
-	printf("mkmovie v%d.%d (%s) Copyright 1997, valve software L.L.C\n", MAJOR_VERSION, MINOR_VERSION, __DATE__);
+	std::cout << std::format("mkmovie v%d.%d (%s) Copyright 1997, valve software L.L.C\n", MAJOR_VERSION, MINOR_VERSION, __DATE__);
 	if (argc < 2)
 		PrintError(formatStr);
 

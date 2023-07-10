@@ -34,7 +34,7 @@ void InitWindow(void)
 {
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
-		printf("Couldn't initialize SDL2\n");
+		std::cout << "Couldn't initialize SDL2\n";
 		exit(EXIT_FAILURE);
 	}
 
@@ -42,7 +42,7 @@ void InitWindow(void)
 
 	if (!g_pWindow)
 	{
-		printf("Failed to create SDL Window\n");
+		std::cout << "Failed to create SDL Window\n";
 		exit(EXIT_FAILURE);
 	}
 

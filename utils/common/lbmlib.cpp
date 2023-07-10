@@ -255,7 +255,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// Bogus parameter check
 	if (!(ppbPalette != NULL && ppbBits != NULL))
 	{
-		fprintf(stderr, "invalid BMP file\n");
+		std::cerr << "invalid BMP file\n";
 		rc = -1000;
 		goto GetOut;
 	}
@@ -263,7 +263,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// File exists?
 	if ((pfile = fopen(szFile, "rb")) == NULL)
 	{
-		fprintf(stderr, "unable to open BMP file\n");
+		std::cerr << "unable to open BMP file\n";
 		rc = -1;
 		goto GetOut;
 	}
@@ -292,7 +292,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// Bogus info header check
 	if (!(bmih.biSize == sizeof bmih && bmih.biPlanes == 1))
 	{
-		fprintf(stderr, "invalid BMP file header\n");
+		std::cerr << "invalid BMP file header\n";
 		rc = -3000;
 		goto GetOut;
 	}
@@ -300,7 +300,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// Bogus bit depth?  Only 8-bit supported.
 	if (bmih.biBitCount != 8)
 	{
-		fprintf(stderr, "BMP file not 8 bit\n");
+		std::cerr << "BMP file not 8 bit\n";
 		rc = -4;
 		goto GetOut;
 	}
@@ -308,7 +308,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	// Bogus compression?  Only non-compressed supported.
 	if (bmih.biCompression != BI_RGB)
 	{
-		fprintf(stderr, "invalid BMP compression type\n");
+		std::cerr << "invalid BMP compression type\n";
 		rc = -5;
 		goto GetOut;
 	}

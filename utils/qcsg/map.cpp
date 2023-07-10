@@ -209,7 +209,7 @@ void ParseBrush(entity_t* mapent)
 
 		if (b->entitynum == 0)
 		{
-			printf("Entity %i, Brush %i: origin brushes not allowed in world", b->entitynum, b->brushnum);
+			std::cout << std::format("Entity %i, Brush %i: origin brushes not allowed in world", b->entitynum, b->brushnum);
 			return;
 		}
 		VectorAdd(b->hulls[0].mins, b->hulls[0].maxs, origin);
