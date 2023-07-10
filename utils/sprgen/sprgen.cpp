@@ -12,7 +12,7 @@
 // spritegen.c: generates a .spr file from a series of .lbm frame files.
 // Result is stored in /raid/quake/id1/sprites/<scriptname>.spr.
 //
-//#pragma warning(disable : 4244) // type conversion warning.
+#pragma warning(disable : 4244) // type conversion warning.
 #define INCLUDELIBS
 
 

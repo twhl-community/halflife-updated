@@ -26,7 +26,7 @@
 #include "..\..\engine\studio.h"
 #include "mdlviewer.h"
 
-// #pragma warning(disable : 4244) // double to float
+#pragma warning(disable : 4244) // double to float
 
 ////////////////////////////////////////////////////////////////////////
 

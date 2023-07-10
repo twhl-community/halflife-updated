@@ -16,7 +16,7 @@
 #include <gl\gl.h>
 #include <gl\glu.h>
 
-// #pragma warning(disable : 4244) // double to float
+#pragma warning(disable : 4244) // double to float
 
 
 ////////////////////////////////////////////////////////////////////////
