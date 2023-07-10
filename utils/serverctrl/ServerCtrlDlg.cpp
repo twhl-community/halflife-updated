@@ -176,7 +176,7 @@ ExitModal:
 	return m_nModalResult;
 }
 
-int CServerCtrlDlg::DoModal()
+long long CServerCtrlDlg::DoModal()
 {
 	// can be constructed with a resource template or InitModalIndirect
 	ASSERT(m_lpszTemplateName != NULL || m_hDialogTemplate != NULL ||

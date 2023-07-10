@@ -23,7 +23,7 @@ public:
 	virtual int RMLPreIdle(void);
 
 	int RunModalLoop(DWORD dwFlags);
-	int DoModal(void);
+	long long DoModal(void);
 
 	void SetPumpIfQueued(BOOL bValue);
 
