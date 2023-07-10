@@ -24,5 +24,5 @@ typedef struct dlight_s
 	float decay;	// drop this each second
 	float minlight; // don't add when contributing less
 	int key;
-	bool dark; // subtracts light instead of adding
+	qboolean dark; // subtracts light instead of adding
 } dlight_t;

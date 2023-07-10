@@ -13,7 +13,7 @@
 
 struct edict_s
 {
-	bool free;
+	qboolean free;
 	int serialnumber;
 	link_t area; // linked to a division node or leaf
 

@@ -3017,7 +3017,7 @@ Numtouch and touchindex[] will be set if any of the physents
 were contacted during the move.
 =============
 */
-void PM_PlayerMove(bool server)
+void PM_PlayerMove(qboolean server)
 {
 	physent_t* pLadder = NULL;
 
@@ -3389,7 +3389,7 @@ invoked by each side as appropriate.  There should be no distinction, internally
 and client.  This will ensure that prediction behaves appropriately.
 */
 
-void PM_Move(struct playermove_s* ppmove, bool server)
+void PM_Move(struct playermove_s* ppmove, qboolean server)
 {
 	assert(pm_shared_initialized);
 

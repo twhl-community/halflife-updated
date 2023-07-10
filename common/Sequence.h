@@ -154,7 +154,7 @@ struct sequenceEntry_
 	char* entryName;					 // Name of entry label in file
 	sequenceCommandLine_s* firstCommand; // Linked list of commands in entry
 	sequenceEntry_s* nextEntry;			 // Next loaded entry
-	bool isGlobal;					 // Is entry retained over level transitions?
+	qboolean isGlobal;					 // Is entry retained over level transitions?
 };
 
 
@@ -170,7 +170,7 @@ struct sentenceEntry_
 {
 	char* data;					// sentence data (ie "We have hostiles" )
 	sentenceEntry_s* nextEntry; // Next loaded entry
-	bool isGlobal;			// Is entry retained over level transitions?
+	qboolean isGlobal;			// Is entry retained over level transitions?
 	unsigned int index;			// this entry's position in the file.
 };
 
@@ -194,6 +194,6 @@ struct sentenceGroupEntry_
 // Function declarations
 //---------------------------------------------------------------------------
 sequenceEntry_s* SequenceGet(const char* fileName, const char* entryName);
-void Sequence_ParseFile(const char* fileName, bool isGlobal);
+void Sequence_ParseFile(const char* fileName, qboolean isGlobal);
 void Sequence_OnLevelLoad(const char* mapName);
 sentenceEntry_s* SequencePickSentence(const char* groupName, int pickMethod, int* picked);

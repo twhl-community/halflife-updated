@@ -748,9 +748,9 @@ typedef struct
 
 typedef struct
 {
-	bool allsolid;	 // if true, plane is not valid
-	bool startsolid; // if true, the initial point was in a solid area
-	bool inopen, inwater;
+	qboolean allsolid;	 // if true, plane is not valid
+	qboolean startsolid; // if true, the initial point was in a solid area
+	qboolean inopen, inwater;
 	float fraction; // time completed, 1.0 = didn't hit anything
 	Vector endpos;	// final position
 	plane_t plane;	// surface normal at impact

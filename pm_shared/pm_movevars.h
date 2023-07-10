@@ -30,7 +30,7 @@ struct movevars_s
 	float maxvelocity;	 // maximum server velocity.
 	float zmax;			 // Max z-buffer range (for GL)
 	float waveHeight;	 // Water wave height (for GL)
-	bool footsteps;	 // Play footstep sounds
+	qboolean footsteps;	 // Play footstep sounds
 	char skyName[32];	 // Name of the sky map
 	float rollangle;
 	float rollspeed;

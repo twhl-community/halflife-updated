@@ -67,7 +67,7 @@ struct cl_entity_s
 {
 	int index; // Index into cl_entities ( should match actual slot, but not necessarily )
 
-	bool player; // True if this entity is a "player"
+	qboolean player; // True if this entity is a "player"
 
 	entity_state_t baseline;  // The original state from which to delta during an uncompressed message
 	entity_state_t prevstate; // The state information from the penultimate message received from the server
