@@ -82,6 +82,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\WinDDK\7600.16385.1\inc\atl71;E:\WinDDK\7600.16385.1\inc\mfc42;$(IncludePath)</IncludePath>
     <LibraryPath>E:\WinDDK\7600.16385.1\lib\ATL\i386;E:\WinDDK\7600.16385.1\lib\Mfc\i386;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
