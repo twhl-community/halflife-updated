@@ -64,7 +64,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	vec3_t normal, delta, planenormal;
 	vec_t dot;
 	dplane_t* plane;
-	qboolean keep1, keep2;
+	bool keep1, keep2;
 
 	if (f1->numpoints == -1 || f2->numpoints == -1)
 		return NULL;
@@ -174,7 +174,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 MergeFaceToList
 ===============
 */
-qboolean mergedebug;
+bool mergedebug;
 face_t* MergeFaceToList(face_t* face, face_t* list)
 {
 	face_t *newf, *f;

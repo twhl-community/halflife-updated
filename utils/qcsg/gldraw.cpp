@@ -20,7 +20,7 @@
 // can't use the glvertex3fv functions, because the vec3_t fields
 // could be either floats or doubles, depending on DOUBLEVEC_T
 
-qboolean drawflag;
+bool drawflag;
 vec3_t draw_mins, draw_maxs;
 
 

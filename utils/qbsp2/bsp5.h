@@ -37,7 +37,7 @@ winding_t* BaseWindingForPlane(dplane_t* p);
 winding_t* NewWinding(int points);
 void FreeWinding(winding_t* w);
 winding_t* CopyWinding(winding_t* w);
-winding_t* ClipWinding(winding_t* in, dplane_t* split, qboolean keepon);
+winding_t* ClipWinding(winding_t* in, dplane_t* split, bool keepon);
 void DivideWinding(winding_t* in, dplane_t* split, winding_t** front, winding_t** back);
 
 //============================================================================
@@ -216,17 +216,17 @@ void DrawWinding(winding_t* w);
 
 // outside.c
 
-node_t* FillOutside(node_t* node, qboolean leakfile);
+node_t* FillOutside(node_t* node, bool leakfile);
 
 //=============================================================================
 
-extern qboolean drawflag;
-extern qboolean nofill;
-extern qboolean notjunc;
-extern qboolean verbose;
-extern qboolean nogfx;
-extern qboolean leakonly;
-extern qboolean watervis;
+extern bool drawflag;
+extern bool nofill;
+extern bool notjunc;
+extern bool verbose;
+extern bool nogfx;
+extern bool leakonly;
+extern bool watervis;
 
 extern int subdivide_size;
 
@@ -240,7 +240,7 @@ extern char portfilename[1024];
 extern char g_bspfilename[1024];
 extern char pointfilename[1024];
 
-extern qboolean worldmodel;
+extern bool worldmodel;
 
 extern face_t* validfaces[MAX_MAP_PLANES];
 

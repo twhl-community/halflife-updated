@@ -94,7 +94,7 @@ int FindIntPlane(int* inormal, int* iorigin)
 	plane_t *p, temp;
 	int t;
 	vec3_t origin;
-	qboolean locked;
+	bool locked;
 
 	FindGCD(inormal);
 
@@ -349,7 +349,7 @@ IPlaneEquiv
 
 =============
 */
-qboolean IPlaneEquiv(plane_t* p1, plane_t* p2)
+bool IPlaneEquiv(plane_t* p1, plane_t* p2)
 {
 	int t;
 	int j;
@@ -610,7 +610,7 @@ void ExpandBrush(brush_t* b, int hullnum)
 	int iorigin[3], inormal[3];
 	expand_t ex;
 	brushhull_t* h;
-	qboolean axial;
+	bool axial;
 
 	brush_faces = b->hulls[0].faces;
 	h = &b->hulls[hullnum];
@@ -790,7 +790,7 @@ restart:
 MakeBrushPlanes
 ===========
 */
-qboolean MakeBrushPlanes(brush_t* b)
+bool MakeBrushPlanes(brush_t* b)
 {
 	int i, j;
 	int planenum;

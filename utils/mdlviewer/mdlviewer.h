@@ -8,7 +8,9 @@
 *
 ****/
 
-typedef unsigned char byte;
+#include <cstdint>
+
+using byte = std::uint8_t;
 
 class StudioModel
 {

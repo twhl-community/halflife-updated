@@ -62,7 +62,7 @@ typedef struct bface_s
 	plane_t* plane;
 	winding_t* w;
 	int texinfo;
-	qboolean used; // just for face counting
+	bool used; // just for face counting
 	int contents, backcontents;
 	vec3_t mins, maxs;
 } bface_t;
@@ -98,8 +98,8 @@ extern plane_t planes[MAX_MAP_PLANES];
 extern int numbrushsides;
 extern side_t brushsides[MAX_MAP_SIDES];
 
-extern qboolean noclip;
-extern qboolean wadtextures;
+extern bool noclip;
+extern bool wadtextures;
 
 extern int nWadInclude;
 extern char* pszWadInclude[];
@@ -133,14 +133,14 @@ int BrushContents(brush_t* b);
 // csg.c
 
 bface_t* NewFaceFromFace(bface_t* in);
-extern qboolean onlyents;
+extern bool onlyents;
 
 //=============================================================================
 
 // draw.c
 
 extern vec3_t draw_mins, draw_maxs;
-extern qboolean drawflag;
+extern bool drawflag;
 
 void Draw_ClearWindow(void);
 void DrawWinding(winding_t* w);
@@ -155,4 +155,4 @@ void TextureAxisFromPlane(plane_t* pln, vec3_t xv, vec3_t yv);
 
 // hullfile.c
 
-void CheckHullFile(qboolean hullfile, char* filename);
+void CheckHullFile(bool hullfile, char* filename);

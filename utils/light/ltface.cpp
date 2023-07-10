@@ -9,8 +9,8 @@
 
 #include "light.h"
 
-extern qboolean hicolor;
-extern qboolean clamp192;
+extern bool hicolor;
+extern bool clamp192;
 
 /*
 ============
@@ -23,7 +23,7 @@ vec_t CastRay(vec3_t p1, vec3_t p2)
 {
 	int i;
 	vec_t t;
-	qboolean trace;
+	bool trace;
 
 	trace = TestLine(p1, p2);
 
@@ -338,7 +338,7 @@ void SingleLightFace(lightentity_t* light, lightinfo_t* l)
 	vec_t angle;
 	vec_t add;
 	vec_t* surf;
-	qboolean hit;
+	bool hit;
 	int mapnum;
 	int size;
 	int c, i;

@@ -53,14 +53,14 @@ typedef struct
 } qfont_t;
 
 
-extern qboolean fTransparent255;
+extern bool fTransparent255;
 
 
 #define SCRN(x, y) (*(byteimage + (y)*byteimagewidth + x))
 
 void GrabPalette16(void);
 
-extern qboolean do16bit;
+extern bool do16bit;
 
 /*
 ==============

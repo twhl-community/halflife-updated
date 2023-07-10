@@ -45,7 +45,7 @@ FILE* texfiles[128];
 
 int nWadInclude;
 char* pszWadInclude[128];
-qboolean wadInclude[128]; // include the textures from this WAD in the BSP
+bool wadInclude[128]; // include the textures from this WAD in the BSP
 
 void CleanupName(char* in, char* out)
 {
@@ -91,7 +91,7 @@ int lump_sorter_by_name(const void* lump1, const void* lump2)
 TEX_InitFromWad
 =================
 */
-qboolean TEX_InitFromWad(char* path)
+bool TEX_InitFromWad(char* path)
 {
 	int i;
 	wadinfo_t wadinfo;

@@ -10,9 +10,9 @@
 
 // cmdlib.h
 
-#ifndef __CMDLIB__
-#define __CMDLIB__
+#pragma once
 
+#include <cstdint>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -21,16 +21,7 @@
 #include <time.h>
 #include <stdarg.h>
 
-#ifndef __CMDUTIL__
-#define __CMDUTIL__
-typedef int qboolean;
-#undef true
-#undef false
-#define true 1
-#define false 0
-
-typedef unsigned char byte;
-#endif
+using byte = std::uint8_t;
 
 // the dec offsetof macro doesn't work very well...
 #define myoffsetof(type, identifier) ((size_t) & ((type*)0)->identifier)
@@ -101,7 +92,7 @@ long flen(FILE* f);
 char* COM_Parse(char* data);
 
 extern char com_token[1024];
-extern qboolean com_eof;
+extern bool com_eof;
 
 char* copystring(const char* s);
 
@@ -113,11 +104,11 @@ unsigned short CRC_Value(unsigned short crcvalue);
 void CreatePath(char* path);
 void QCopyFile(char* from, char* to);
 
-extern qboolean archive;
+extern bool archive;
 extern char archivedir[1024];
 
 
-extern qboolean verbose;
+extern bool verbose;
 void qprintf(const char* format, ...);
 
 
@@ -136,5 +127,3 @@ typedef struct
 
 
 void ListPak(const char* pakname);
-
-#endif

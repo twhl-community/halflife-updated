@@ -26,7 +26,7 @@
 #endif
 
 EXTERN char outname[1024];
-EXTERN qboolean cdset;
+EXTERN bool cdset;
 EXTERN char cdpartial[256];
 EXTERN char cddir[256];
 EXTERN int cdtextureset;

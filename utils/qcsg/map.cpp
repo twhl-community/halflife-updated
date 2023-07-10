@@ -225,7 +225,7 @@ void ParseBrush(entity_t* mapent)
 ParseMapEntity
 ================
 */
-qboolean ParseMapEntity(void)
+bool ParseMapEntity(void)
 {
 	entity_t* mapent;
 	epair_t* e;

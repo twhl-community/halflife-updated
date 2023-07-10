@@ -172,7 +172,7 @@ SwapBSPFile
 Byte swaps all data in a bsp file.
 =============
 */
-void SwapBSPFile(qboolean todisk)
+void SwapBSPFile(bool todisk)
 {
 	int i, j, c;
 	dmodel_t* d;
@@ -565,7 +565,7 @@ epair_t* ParseEpair(void)
 ParseEntity
 ================
 */
-qboolean ParseEntity(void)
+bool ParseEntity(void)
 {
 	epair_t* e;
 	entity_t* mapent;

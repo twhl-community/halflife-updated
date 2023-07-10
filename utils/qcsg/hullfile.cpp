@@ -16,12 +16,12 @@ extern vec3_t hull_size[NUM_HULLS][2];
 CheckHullFile
 ============
 */
-void CheckHullFile(qboolean hullfile, char* filename)
+void CheckHullFile(bool hullfile, char* filename)
 {
 	FILE* f;
 	char scan[128];
 	vec3_t new_hulls[NUM_HULLS][2];
-	qboolean read_error = false;
+	bool read_error = false;
 	int i;
 
 	if (!hullfile)

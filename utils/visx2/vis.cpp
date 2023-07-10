@@ -24,7 +24,7 @@ leaf_t* leafs;
 int c_portaltest, c_portalpass, c_portalcheck;
 
 
-qboolean showgetleaf = true;
+bool showgetleaf = true;
 
 int leafon; // the next leaf to be given to a thread to process
 
@@ -36,7 +36,7 @@ byte* uncompressed; // [bitbytes*portalleafs]
 int bitbytes; // (portalleafs+63)>>3
 int bitlongs;
 
-qboolean fastvis;
+bool fastvis;
 
 //=============================================================================
 

@@ -34,8 +34,8 @@ script_t* script;
 int scriptline;
 
 char token[MAXTOKEN];
-qboolean endofscript;
-qboolean tokenready; // only true if UnGetToken was just called
+bool endofscript;
+bool tokenready; // only true if UnGetToken was just called
 
 /*
 ==============
@@ -120,7 +120,7 @@ void UnGetToken(void)
 }
 
 
-qboolean EndOfScript(qboolean crossline)
+bool EndOfScript(bool crossline)
 {
 	if (!crossline)
 		Error("Line %i is incomplete\n", scriptline);
@@ -148,7 +148,7 @@ qboolean EndOfScript(qboolean crossline)
 GetToken
 ==============
 */
-qboolean GetToken(qboolean crossline)
+bool GetToken(bool crossline)
 {
 	char* token_p;
 
@@ -240,7 +240,7 @@ TokenAvailable
 Returns true if there is another token on the line
 ==============
 */
-qboolean TokenAvailable(void)
+bool TokenAvailable(void)
 {
 	char* search_p;
 

@@ -26,9 +26,9 @@ dmodel_t* bspmodel;
 
 vec3_t bsp_origin;
 
-qboolean extrasamples;
-qboolean hicolor;
-qboolean clamp192 = true;
+bool extrasamples;
+bool hicolor;
+bool clamp192 = true;
 
 float minlights[MAX_MAP_FACES];
 

@@ -14,7 +14,7 @@ typedef struct
 {
 	dface_t* faces[2];
 	vec3_t interface_normal;
-	qboolean coplanar;
+	bool coplanar;
 } edgeshare_t;
 
 edgeshare_t edgeshare[MAX_MAP_EDGES];
@@ -394,7 +394,7 @@ void LerpTriangle(triangulation_t* trian, triangle_t* t, vec3_t point, vec3_t re
 #endif
 }
 
-qboolean PointInTriangle(vec3_t point, triangle_t* t)
+bool PointInTriangle(vec3_t point, triangle_t* t)
 {
 	int i;
 	triedge_t* e;

@@ -250,7 +250,7 @@ order goes source, pass, target.  If the order goes pass, source, target then
 flipclip should be set.
 ==============
 */
-winding_t* ClipToSeperators(winding_t* source, winding_t* pass, winding_t* target, qboolean flipclip, pstack_t* stack)
+winding_t* ClipToSeperators(winding_t* source, winding_t* pass, winding_t* target, bool flipclip, pstack_t* stack)
 {
 	int i, j, k, l;
 	plane_t plane;
@@ -258,7 +258,7 @@ winding_t* ClipToSeperators(winding_t* source, winding_t* pass, winding_t* targe
 	float d;
 	vec_t length;
 	int counts[3];
-	qboolean fliptest;
+	bool fliptest;
 
 	// check all combinations
 	for (i = 0; i < source->numpoints; i++)

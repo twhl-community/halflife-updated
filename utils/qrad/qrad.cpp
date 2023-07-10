@@ -35,7 +35,7 @@ unsigned numbounce = 1; // 3; /* Originally this was 8 */
 
 float maxchop = 64;
 float minchop = 64;
-qboolean dumppatches;
+bool dumppatches;
 
 int TestLine(vec3_t start, vec3_t stop);
 
@@ -56,14 +56,14 @@ char level_lights[MAX_PATH] = "";
 char g_transferfile[MAX_PATH] = "";
 char vismatfile[_MAX_PATH] = "";
 char incrementfile[_MAX_PATH] = "";
-qboolean incremental = 0;
+bool incremental = 0;
 float gamma = 0.5;
 float indirect_sun = 1.0;
-qboolean extra = false;
+bool extra = false;
 float smoothing_threshold = 0; // default: cos(45.0*(Q_PI/180));
 // Cosine of smoothing angle(in radians)
 float coring = 1.0; // Light threshold to force to blackness(minimizes lightmaps)
-qboolean texscale = true;
+bool texscale = true;
 
 /*
 ===================================================================
@@ -323,7 +323,7 @@ void BaseLightForFace(dface_t* f, vec3_t light, vec3_t /*reflectivity*/)
 IsSky
 =============
 */
-qboolean IsSky(dface_t* f)
+bool IsSky(dface_t* f)
 {
 	texinfo_t* tx;
 	miptex_t* mt;

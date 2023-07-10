@@ -29,13 +29,13 @@ FILE* out[NUM_HULLS];
 int c_tiny, c_tiny_clip;
 int c_outfaces;
 
-qboolean hullfile = false;
+bool hullfile = false;
 static char qhullfile[256];
 
-qboolean glview;
-qboolean noclip;
-qboolean onlyents;
-qboolean wadtextures = true;
+bool glview;
+bool noclip;
+bool onlyents;
+bool wadtextures = true;
 
 vec3_t world_mins, world_maxs;
 
@@ -84,7 +84,7 @@ Precedence is necesary to handle overlapping coplanar faces.
 */
 #define SPLIT_EPSILON 0.3
 bface_t* ClipFace(brush_t* /*b*/, bface_t* f, bface_t** outside,
-	int splitplane, qboolean precedence)
+	int splitplane, bool precedence)
 {
 	bface_t* front;
 	winding_t *fw, *bw;
@@ -371,7 +371,7 @@ void CSGBrush(int brushnum)
 	brush_t *b1, *b2;
 	brushhull_t *bh1, *bh2;
 	int bn;
-	qboolean overwrite;
+	bool overwrite;
 	int i;
 	bface_t *f, *f2, *next, *fcopy;
 	bface_t *outside, *oldoutside;

@@ -41,7 +41,7 @@ node_t* PointInLeaf(node_t* node, vec3_t point)
 PlaceOccupant
 ===========
 */
-qboolean PlaceOccupant(int num, vec3_t point, node_t* headnode)
+bool PlaceOccupant(int num, vec3_t point, node_t* headnode)
 {
 	node_t* n;
 
@@ -122,7 +122,7 @@ Returns true if an occupied leaf is reached
 */
 int hit_occupied;
 int backdraw;
-qboolean RecursiveFillOutside(node_t* l, qboolean fill)
+bool RecursiveFillOutside(node_t* l, bool fill)
 {
 	portal_t* p;
 	int s;
@@ -282,12 +282,12 @@ FillOutside
 
 ===========
 */
-node_t* FillOutside(node_t* node, qboolean leakfile)
+node_t* FillOutside(node_t* node, bool leakfile)
 {
 	int s;
 	int i;
-	qboolean inside;
-	qboolean ret;
+	bool inside;
+	bool ret;
 	vec3_t origin;
 	char* cl;
 

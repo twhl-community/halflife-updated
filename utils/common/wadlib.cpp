@@ -247,7 +247,7 @@ NewWad
 ===============
 */
 
-void NewWad(char* pathname, qboolean bigendien)
+void NewWad(char* pathname, bool bigendien)
 {
 	outwad = SafeOpenWrite(pathname);
 	fseek(outwad, sizeof(wadinfo_t), SEEK_SET);

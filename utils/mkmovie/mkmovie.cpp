@@ -197,7 +197,7 @@ void ProcessMovieFile(const char* pFilename)
 	HANDLE hf;
 	DWORD bytesread;
 	movieblockheader_t header;
-	qboolean eof = false;
+	bool eof = false;
 
 	printf("Processing movie %s:\n", pFilename);
 

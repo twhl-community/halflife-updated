@@ -17,9 +17,9 @@
 int dispatch;
 int workcount;
 int oldf;
-qboolean pacifier;
+bool pacifier;
 
-qboolean threaded;
+bool threaded;
 
 /*
 =============
@@ -71,7 +71,7 @@ void ThreadWorkerFunction(int /*threadnum*/)
 	}
 }
 
-void RunThreadsOnIndividual(int workcnt, qboolean showpacifier, void (*func)(int))
+void RunThreadsOnIndividual(int workcnt, bool showpacifier, void (*func)(int))
 {
 	workfunction = func;
 	RunThreadsOn(workcnt, showpacifier, ThreadWorkerFunction);
@@ -136,7 +136,7 @@ void ThreadUnlock(void)
 RunThreadsOn
 =============
 */
-void RunThreadsOn(int workcnt, qboolean showpacifier, void (*func)(int))
+void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 {
 	DWORD threadid[MAX_THREADS];
 	HANDLE threadhandle[MAX_THREADS];
@@ -218,7 +218,7 @@ void ThreadUnlock(void)
 RunThreadsOn
 =============
 */
-void RunThreadsOn(int workcnt, qboolean showpacifier, void (*func)(int))
+void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 {
 	int i;
 	pthread_t work_threads[MAX_THREADS];
@@ -305,7 +305,7 @@ void ThreadUnlock(void)
 RunThreadsOn
 =============
 */
-void RunThreadsOn(int workcnt, qboolean showpacifier, void (*func)(int))
+void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 {
 	int i;
 	int start, end;

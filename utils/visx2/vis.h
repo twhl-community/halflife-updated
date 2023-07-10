@@ -31,14 +31,14 @@ typedef struct
 
 typedef struct
 {
-	qboolean original; // don't free, it's part of the portal
+	bool original; // don't free, it's part of the portal
 	int numpoints;
 	vec3_t points[MAX_POINTS_ON_FIXED_WINDING]; // variable sized
 } winding_t;
 
 winding_t* NewWinding(int points);
 void FreeWinding(winding_t* w);
-winding_t* ClipWinding(winding_t* in, plane_t* split, qboolean keepon);
+winding_t* ClipWinding(winding_t* in, plane_t* split, bool keepon);
 winding_t* CopyWinding(winding_t* w);
 
 
@@ -132,7 +132,7 @@ extern int c_chains;
 
 extern byte *vismap, *vismap_p, *vismap_end; // past visfile
 
-extern qboolean showgetleaf;
+extern bool showgetleaf;
 
 extern byte* uncompressed;
 extern int bitbytes;

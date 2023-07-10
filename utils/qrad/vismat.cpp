@@ -15,7 +15,7 @@
 extern char source[MAX_PATH];
 extern char vismatfile[_MAX_PATH];
 extern char incrementfile[_MAX_PATH];
-extern qboolean incremental;
+extern bool incremental;
 
 /*
 ===================================================================
@@ -382,10 +382,10 @@ IsIncremental
 ==============
 */
 
-qboolean
+bool
 IsIncremental(char* filename)
 {
-	qboolean status = false;
+	bool status = false;
 	int sum;
 	int handle;
 
@@ -508,7 +508,7 @@ void TouchFile(char* filename)
 CheckVisBit
 ==============
 */
-qboolean CheckVisBit(int p1, int p2)
+bool CheckVisBit(int p1, int p2)
 {
 	int t;
 	int bitpos;

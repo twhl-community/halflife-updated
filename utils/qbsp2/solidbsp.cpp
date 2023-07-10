@@ -264,7 +264,7 @@ Selects a surface from a linked list of surfaces to split the group on
 returns NULL if the surface list can not be divided any more (a leaf)
 ==================
 */
-surface_t* SelectPartition(surface_t* surfaces, node_t* node, qboolean usemidsplit)
+surface_t* SelectPartition(surface_t* surfaces, node_t* node, bool usemidsplit)
 {
 	int i;
 	surface_t *p, *bestsurface;
@@ -762,7 +762,7 @@ completely enclose the node.
  Returns true if the node should be midsplit.(very large)
 ==================
 */
-qboolean CalcNodeBounds(node_t* node)
+bool CalcNodeBounds(node_t* node)
 {
 	int i, j;
 	vec_t v;
@@ -876,7 +876,7 @@ BuildBspTree_r
 void BuildBspTree_r(node_t* node)
 {
 	surface_t* split;
-	qboolean midsplit;
+	bool midsplit;
 	surface_t* allsurfs;
 
 	midsplit = CalcNodeBounds(node);

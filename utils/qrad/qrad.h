@@ -82,7 +82,7 @@ typedef struct patch_s
 	float chop;		// smallest acceptable width of patch face
 	float scale[2]; // Scaling of texture in s & t
 
-	qboolean sky;
+	bool sky;
 
 	vec3_t totallight;	// accumulated by radiosity
 						// does NOT include light
@@ -122,12 +122,12 @@ time_t getfiletime(char* filename);
 
 void BuildVisMatrix(void);
 void FreeVisMatrix(void);
-qboolean CheckVisBit(int p1, int p2);
+bool CheckVisBit(int p1, int p2);
 void TouchVMFFile(void);
 
 //==============================================
 
-extern qboolean extra;
+extern bool extra;
 extern vec3_t ambient;
 extern float maxlight;
 extern unsigned numbounce;
@@ -139,7 +139,7 @@ extern float smoothing_threshold;
 
 void MakeTnodes();
 void PairEdges(void);
-qboolean IsIncremental(char* filename);
+bool IsIncremental(char* filename);
 int SaveIncremental(char* filename);
 int PartialHead(void);
 void BuildFacelights(int facenum);

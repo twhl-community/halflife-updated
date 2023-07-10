@@ -34,7 +34,7 @@ char spriteoutname[1024];
 int framesmaxs[2];
 int framecount;
 
-qboolean do16bit = true;
+bool do16bit = true;
 
 typedef struct
 {

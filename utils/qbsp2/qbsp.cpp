@@ -15,14 +15,14 @@
 //
 // command line flags
 //
-qboolean drawflag;
-qboolean nofill;
-qboolean notjunc;
-qboolean allverbose;
-qboolean nogfx;
-qboolean noclip;
-qboolean leakonly;
-qboolean watervis;
+bool drawflag;
+bool nofill;
+bool notjunc;
+bool allverbose;
+bool nogfx;
+bool noclip;
+bool leakonly;
+bool watervis;
 
 int subdivide_size = 240;
 
@@ -174,7 +174,7 @@ If keepon is true, an exactly on-plane winding will be saved, otherwise
 it will be clipped away.
 ==================
 */
-winding_t* ClipWinding(winding_t* in, dplane_t* split, qboolean keepon)
+winding_t* ClipWinding(winding_t* in, dplane_t* split, bool keepon)
 {
 	vec_t dists[MAX_POINTS_ON_WINDING];
 	int sides[MAX_POINTS_ON_WINDING];
@@ -817,7 +817,7 @@ surfchain_t* ReadSurfs(FILE* file)
 ProcessModel
 ===============
 */
-qboolean ProcessModel(void)
+bool ProcessModel(void)
 {
 	surfchain_t* surfs;
 	node_t* nodes;

@@ -203,7 +203,7 @@ typedef struct
 TestLine
 ==============
 */
-qboolean _TestLine(vec3_t start, vec3_t stop)
+bool _TestLine(vec3_t start, vec3_t stop)
 {
 	int node;
 	float front, back;
