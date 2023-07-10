@@ -712,7 +712,7 @@ main
 */
 extern char qproject[];
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	int i;
 	char source[1024];

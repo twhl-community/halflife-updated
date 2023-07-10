@@ -12,7 +12,7 @@
 #include "mathlib.h"
 #include "bspfile.h"
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	int i;
 	char source[1024];

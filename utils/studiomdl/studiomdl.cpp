@@ -3462,7 +3462,7 @@ void ParseScript(void)
 main
 ==============
 */
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	int i;
 	char path[1024];

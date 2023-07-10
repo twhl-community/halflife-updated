@@ -33,7 +33,7 @@ void PrintUsage(char* pname)
 	std::cout << std::format("\t%s.exe is used to generate a bitmap name sorted 'qlumpy script'.\n", pname);
 }
 
-int main(int argc, void** argv)
+int main(int argc, char* argv[])
 {
 	char* pszdir;
 	char* pszWadName;
@@ -47,24 +47,24 @@ int main(int argc, void** argv)
 
 	std::cout << std::format("makels Copyright (c) 1998 Valve L.L.C., %s\n", __DATE__);
 
-	pszdir = (char*)argv[1];
+	pszdir = argv[1];
 
 	if ((argc != 4) || (pszdir[0] == '/') || (pszdir[0] == '-'))
 	{
-		PrintUsage((char*)argv[0]);
+		PrintUsage(argv[0]);
 		exit(1);
 	}
 
 	pszdir = (char*)malloc(strlen((char*)argv[1]) + 7);
-	strcpy(pszdir, (char*)argv[1]);
+	strcpy(pszdir, argv[1]);
 	strcat(pszdir, "\\*.bmp");
 
 	pszWadName = (char*)malloc(strlen((char*)argv[2]) + 5);
-	strcpy(pszWadName, (char*)argv[2]);
+	strcpy(pszWadName, argv[2]);
 	strcat(pszWadName, ".WAD");
 
 	pszScriptName = (char*)malloc(strlen((char*)argv[3]));
-	strcpy(pszScriptName, (char*)argv[3]);
+	strcpy(pszScriptName, argv[3]);
 	hScriptFile = CreateFile(pszScriptName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL);
 

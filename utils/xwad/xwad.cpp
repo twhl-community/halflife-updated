@@ -24,7 +24,7 @@ byte outbuffer[(640 + 320) * 480];
 extern FILE* wadhandle;
 
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	int i, j;
 	miptex_t* qtex;

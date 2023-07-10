@@ -273,7 +273,7 @@ void key(unsigned char key, int /*x*/, int /*y*/)
 constexpr int WIN_SIZE = 512;
 constexpr int FRAMERATE = 60;
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	if (argc != 2)
 	{

@@ -441,7 +441,7 @@ void LoadPortals(char* name)
 main
 ===========
 */
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	char portalfile[1024];
 	char source[1024];
