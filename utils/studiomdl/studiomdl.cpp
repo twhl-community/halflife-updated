@@ -1861,7 +1861,7 @@ void Build_Reference(s_model_t* pmodel)
 
 void Grab_Triangles(s_model_t* pmodel)
 {
-	int i, j;
+	size_t i, j;
 	int tcount = 0;
 	int ncount = 0;
 	vec3_t vmin, vmax;

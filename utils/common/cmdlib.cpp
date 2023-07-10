@@ -567,7 +567,7 @@ void DefaultPath(char* path, char* basepath)
 
 void StripFilename(char* path)
 {
-	int length;
+	std::size_t length;
 
 	length = strlen(path) - 1;
 	while (length > 0 && !PATHSEPARATOR(path[length]))
@@ -577,7 +577,7 @@ void StripFilename(char* path)
 
 void StripExtension(char* path)
 {
-	int length;
+	std::size_t length;
 
 	length = strlen(path) - 1;
 	while (length > 0 && path[length] != '.')
