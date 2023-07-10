@@ -9,6 +9,7 @@
 ****/
 
 #include <chrono>
+#include <numbers>
 
 #include "csg.h"
 
@@ -447,7 +448,7 @@ int TexinfoForBrushTexture(plane_t* plane, brush_texture_t* bt, vec3_t origin)
 		}
 		else
 		{
-			ang = bt->rotate / 180 * Q_PI;
+			ang = bt->rotate / 180 * std::numbers::pi_v<float>;
 			sinv = sin(ang);
 			cosv = cos(ang);
 		}

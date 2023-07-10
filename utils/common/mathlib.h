@@ -28,8 +28,6 @@ using vec4_t = vec_t[4]; // x,y,z,w
 #define SIDE_BACK 1
 #define SIDE_CROSS -2
 
-#define Q_PI 3.14159265358979323846
-
 extern vec3_t vec3_origin;
 
 // Use this definition globally

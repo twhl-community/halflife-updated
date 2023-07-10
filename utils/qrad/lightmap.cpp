@@ -8,6 +8,8 @@
 *
 ****/
 
+#include <numbers>
+
 #include "qrad.h"
 
 typedef struct
@@ -934,8 +936,8 @@ void CreateDirectLights(void)
 				dl->stopdot2 = dl->stopdot;
 			if (dl->stopdot2 < dl->stopdot)
 				dl->stopdot2 = dl->stopdot;
-			dl->stopdot2 = (float)cos(dl->stopdot2 / 180 * Q_PI);
-			dl->stopdot = (float)cos(dl->stopdot / 180 * Q_PI);
+			dl->stopdot2 = (float)cos(dl->stopdot2 / 180 * std::numbers::pi_v<float>);
+			dl->stopdot = (float)cos(dl->stopdot / 180 * std::numbers::pi_v<float>);
 
 			if (target[0])
 			{ // point towards target
@@ -975,8 +977,8 @@ void CreateDirectLights(void)
 					}
 
 					dl->normal[2] = 0;
-					dl->normal[0] = (float)cos(angle / 180 * Q_PI);
-					dl->normal[1] = (float)sin(angle / 180 * Q_PI);
+					dl->normal[0] = (float)cos(angle / 180 * std::numbers::pi_v<float>);
+					dl->normal[1] = (float)sin(angle / 180 * std::numbers::pi_v<float>);
 				}
 
 				angle = FloatForKey(e, "pitch");
@@ -986,9 +988,9 @@ void CreateDirectLights(void)
 					angle = vAngles[0];
 				}
 
-				dl->normal[2] = (float)sin(angle / 180 * Q_PI);
-				dl->normal[0] *= (float)cos(angle / 180 * Q_PI);
-				dl->normal[1] *= (float)cos(angle / 180 * Q_PI);
+				dl->normal[2] = (float)sin(angle / 180 * std::numbers::pi_v<float>);
+				dl->normal[0] *= (float)cos(angle / 180 * std::numbers::pi_v<float>);
+				dl->normal[1] *= (float)cos(angle / 180 * std::numbers::pi_v<float>);
 			}
 			if (FloatForKey(e, "_sky") || !strcmp(name, "light_environment"))
 			{

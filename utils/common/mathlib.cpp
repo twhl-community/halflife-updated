@@ -14,6 +14,8 @@
 #pragma warning(disable : 4237)
 #pragma warning(disable : 4305)
 
+#include <numbers>
+
 #include "cmdlib.h"
 #include "mathlib.h"
 
@@ -151,13 +153,13 @@ void AngleMatrix(const vec3_t angles, float (*matrix)[4])
 	float angle;
 	float sr, sp, sy, cr, cp, cy;
 
-	angle = angles[2] * (Q_PI * 2 / 360);
+	angle = angles[2] * (std::numbers::pi_v<float> * 2 / 360);
 	sy = sin(angle);
 	cy = cos(angle);
-	angle = angles[1] * (Q_PI * 2 / 360);
+	angle = angles[1] * (std::numbers::pi_v<float> * 2 / 360);
 	sp = sin(angle);
 	cp = cos(angle);
-	angle = angles[0] * (Q_PI * 2 / 360);
+	angle = angles[0] * (std::numbers::pi_v<float> * 2 / 360);
 	sr = sin(angle);
 	cr = cos(angle);
 
@@ -181,13 +183,13 @@ void AngleIMatrix(const vec3_t angles, float matrix[3][4])
 	float angle;
 	float sr, sp, sy, cr, cp, cy;
 
-	angle = angles[2] * (Q_PI * 2 / 360);
+	angle = angles[2] * (std::numbers::pi_v<float> * 2 / 360);
 	sy = sin(angle);
 	cy = cos(angle);
-	angle = angles[1] * (Q_PI * 2 / 360);
+	angle = angles[1] * (std::numbers::pi_v<float> * 2 / 360);
 	sp = sin(angle);
 	cp = cos(angle);
-	angle = angles[0] * (Q_PI * 2 / 360);
+	angle = angles[0] * (std::numbers::pi_v<float> * 2 / 360);
 	sr = sin(angle);
 	cr = cos(angle);
 
@@ -348,8 +350,8 @@ void QuaternionSlerp(const vec4_t p, vec4_t q, float t, vec4_t qt)
 		qt[1] = p[0];
 		qt[2] = -p[3];
 		qt[3] = p[2];
-		sclp = sin((1.0 - t) * 0.5 * Q_PI);
-		sclq = sin(t * 0.5 * Q_PI);
+		sclp = sin((1.0 - t) * 0.5 * std::numbers::pi_v<float>);
+		sclq = sin(t * 0.5 * std::numbers::pi_v<float>);
 		for (i = 0; i < 3; i++)
 		{
 			qt[i] = sclp * p[i] + sclq * qt[i];
