@@ -250,8 +250,8 @@ typedef struct enginefuncs_s
 
 	// For voice communications, set which clients hear eachother.
 	// NOTE: these functions take player entity indices (starting at 1).
-	qboolean (*pfnVoice_GetClientListening)(int iReceiver, int iSender);
-	qboolean (*pfnVoice_SetClientListening)(int iReceiver, int iSender, qboolean bListen);
+	bool (*pfnVoice_GetClientListening)(int iReceiver, int iSender);
+	bool (*pfnVoice_SetClientListening)(int iReceiver, int iSender, bool bListen);
 
 	const char* (*pfnGetPlayerAuthId)(edict_t* e);
 
@@ -421,7 +421,7 @@ typedef struct
 	void (*pfnRestoreGlobalState)(SAVERESTOREDATA*);
 	void (*pfnResetGlobalState)();
 
-	qboolean (*pfnClientConnect)(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]);
+	bool (*pfnClientConnect)(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128]);
 
 	void (*pfnClientDisconnect)(edict_t* pEntity);
 	void (*pfnClientKill)(edict_t* pEntity);
@@ -453,7 +453,7 @@ typedef struct
 	// Notify game .dll that engine is going to shut down.  Allows mod authors to set a breakpoint.
 	void (*pfnSys_Error)(const char* error_string);
 
-	void (*pfnPM_Move)(struct playermove_s* ppmove, qboolean server);
+	void (*pfnPM_Move)(struct playermove_s* ppmove, bool server);
 	void (*pfnPM_Init)(struct playermove_s* ppmove);
 	char (*pfnPM_FindTextureType)(const char* name);
 	void (*pfnSetupVisibility)(struct edict_s* pViewEntity, struct edict_s* pClient, unsigned char** pvs, unsigned char** pas);

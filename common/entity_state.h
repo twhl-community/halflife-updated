@@ -80,7 +80,7 @@ struct entity_state_s
 	int team;
 	int playerclass;
 	int health;
-	qboolean spectator;
+	bool spectator;
 	int weaponmodel;
 	int gaitsequence;
 	// If standing on conveyor, e.g.

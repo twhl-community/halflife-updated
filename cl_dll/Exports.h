@@ -20,7 +20,7 @@ extern "C"
 	int DLLEXPORT HUD_ConnectionlessPacket( const struct netadr_s *net_from, const char *args, char *response_buffer, int *response_buffer_size );
 	int DLLEXPORT HUD_GetHullBounds( int hullnumber, float *mins, float *maxs );
 	void DLLEXPORT HUD_Frame( double time );
-	void DLLEXPORT HUD_VoiceStatus(int entindex, qboolean bTalking);
+	void DLLEXPORT HUD_VoiceStatus(int entindex, bool bTalking);
 	void DLLEXPORT HUD_DirectorMessage( int iSize, void *pbuf );
 	void DLLEXPORT HUD_ChatInputPosition( int *x, int *y );
 

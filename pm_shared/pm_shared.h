@@ -24,7 +24,7 @@
 struct playermove_s;
 
 void PM_Init(playermove_s* ppmove);
-void PM_Move(playermove_s* ppmove, qboolean server);
+void PM_Move(playermove_s* ppmove, bool server);
 char PM_FindTextureType(const char* name);
 
 /**

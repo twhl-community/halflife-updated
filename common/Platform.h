@@ -50,9 +50,8 @@
 #include <cstdlib>
 #include <cstring>
 
-using byte = unsigned char;
+using byte = std::uint8_t;
 using string_t = unsigned int;
-using qboolean = int;
 
 #define ARRAYSIZE(p) (sizeof(p) / sizeof(p[0]))
 

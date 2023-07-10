@@ -103,7 +103,7 @@ char DLLEXPORT HUD_PlayerMoveTexture(char* name)
 	return PM_FindTextureType(name);
 }
 
-void DLLEXPORT HUD_PlayerMove(struct playermove_s* ppmove, int server)
+void DLLEXPORT HUD_PlayerMove(struct playermove_s* ppmove, bool server)
 {
 	//	RecClClientMove(ppmove, server);
 
@@ -257,7 +257,7 @@ Called when a player starts or stops talking.
 ==========================
 */
 
-void DLLEXPORT HUD_VoiceStatus(int entindex, qboolean bTalking)
+void DLLEXPORT HUD_VoiceStatus(int entindex, bool bTalking)
 {
 	////	RecClVoiceStatus(entindex, bTalking);
 

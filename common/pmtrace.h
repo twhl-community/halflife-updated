@@ -25,9 +25,9 @@ typedef struct pmtrace_s pmtrace_t;
 
 struct pmtrace_s
 {
-	qboolean allsolid;		  // if true, plane is not valid
-	qboolean startsolid;	  // if true, the initial point was in a solid area
-	qboolean inopen, inwater; // End point is in empty space or in water
+	bool allsolid;		  // if true, plane is not valid
+	bool startsolid;	  // if true, the initial point was in a solid area
+	bool inopen, inwater; // End point is in empty space or in water
 	float fraction;			  // time completed, 1.0 = didn't hit anything
 	Vector endpos;			  // final position
 	pmplane_t plane;		  // surface normal at impact

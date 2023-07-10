@@ -221,7 +221,7 @@ typedef struct cache_user_s
 typedef struct model_s
 {
 	char name[MAX_MODEL_NAME];
-	qboolean needload; // bmodels and sprites don't cache normally
+	bool needload; // bmodels and sprites don't cache normally
 
 	modtype_t type;
 	int numframes;

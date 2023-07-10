@@ -88,9 +88,9 @@ typedef struct physent_s
 typedef struct playermove_s
 {
 	int player_index; // So we don't try to run the PM_CheckStuck nudging too quickly.
-	qboolean server;  // For debugging, are we running physics code on server side?
+	bool server;  // For debugging, are we running physics code on server side?
 
-	qboolean multiplayer; // 1 == multiplayer server
+	bool multiplayer; // 1 == multiplayer server
 	float time;			  // realtime on host, for reckoning duck timing
 	float frametime;	  // Duration of this frame
 
@@ -106,7 +106,7 @@ typedef struct playermove_s
 	// For ducking/dead
 	Vector view_ofs;  // Our eye position.
 	float flDuckTime; // Time we started duck
-	qboolean bInDuck; // In process of ducking or ducked already?
+	bool bInDuck; // In process of ducking or ducked already?
 
 	// For walking/falling
 	int flTimeStepSound; // Next time we can play a step sound
@@ -127,7 +127,7 @@ typedef struct playermove_s
 	float friction;
 	int oldbuttons;		 // Buttons last usercmd
 	float waterjumptime; // Amount of time left in jumping out of water cycle.
-	qboolean dead;		 // Are we a dead player?
+	bool dead;		 // Are we a dead player?
 	int deadflag;
 	int spectator; // Should we use spectator physics model?
 	int movetype;  // Our movement type, NOCLIP, WALK, FLY
@@ -209,7 +209,7 @@ typedef struct playermove_s
 
 	// Functions
 	// Run functions for this frame?
-	qboolean runfuncs;
+	bool runfuncs;
 	void (*PM_PlaySound)(int channel, const char* sample, float volume, float attenuation, int fFlags, int pitch);
 	const char* (*PM_TraceTexture)(int ground, float* vstart, float* vend);
 	void (*PM_PlaybackEventFull)(int flags, int clientindex, unsigned short eventindex, float delay, float* origin, float* angles, float fparam1, float fparam2, int iparam1, int iparam2, int bparam1, int bparam2);
