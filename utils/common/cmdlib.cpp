@@ -836,8 +836,8 @@ float LittleFloat(float l)
 // and the initial and final xor values shown below...  in other words, the
 // CCITT standard CRC used by XMODEM
 
-#define CRC_INIT_VALUE 0xffff
-#define CRC_XOR_VALUE 0x0000
+constexpr int CRC_INIT_VALUE = 0xffff;
+constexpr int CRC_XOR_VALUE = 0x0000;
 
 static unsigned short crctable[256] =
 	{

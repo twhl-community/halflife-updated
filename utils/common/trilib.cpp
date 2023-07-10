@@ -18,13 +18,11 @@
 #include "trilib.h"
 
 // on disk representation of a face
+constexpr float FLOAT_START = 99999.0f;
+constexpr float FLOAT_END = -FLOAT_START;
+constexpr int MAGIC = 123322;
 
-
-#define FLOAT_START 99999.0
-#define FLOAT_END -FLOAT_START
-#define MAGIC 123322
-
-//#define NOISY 1
+// constexpr int NOISY = 1;
 
 typedef struct
 {

@@ -48,17 +48,14 @@
 
 #endif
 
-#define SPRITE_VERSION 2
+constexpr int SPRITE_VERSION = 2;
 
 // must match definition in modelgen.h
-#ifndef SYNCTYPE_T
-#define SYNCTYPE_T
 typedef enum
 {
 	ST_SYNC = 0,
 	ST_RAND
 } synctype_t;
-#endif
 
 // TODO: shorten these?
 typedef struct
@@ -75,16 +72,22 @@ typedef struct
 	synctype_t synctype;
 } dsprite_t;
 
-#define SPR_VP_PARALLEL_UPRIGHT 0
-#define SPR_FACING_UPRIGHT 1
-#define SPR_VP_PARALLEL 2
-#define SPR_ORIENTED 3
-#define SPR_VP_PARALLEL_ORIENTED 4
+enum SPR_POSITION
+{
+	SPR_VP_PARALLEL_UPRIGHT = 0,
+	SPR_FACING_UPRIGHT,
+	SPR_VP_PARALLEL,
+	SPR_ORIENTED,
+	SPR_VP_PARALLEL_ORIENTED
+};
 
-#define SPR_NORMAL 0
-#define SPR_ADDITIVE 1
-#define SPR_INDEXALPHA 2
-#define SPR_ALPHTEST 3
+enum SPR
+{
+	SPR_NORMAL = 0,
+	SPR_ADDITIVE,
+	SPR_INDEXALPHA,
+	SPR_ALPHTEST
+};
 
 typedef struct
 {

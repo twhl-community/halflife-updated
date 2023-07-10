@@ -13,7 +13,7 @@
 #include "threads.h"
 
 
-#define DEFAULTLIGHTLEVEL 300
+constexpr int DEFAULTLIGHTLEVEL = 300;
 
 typedef struct entity_s
 {
@@ -29,9 +29,9 @@ typedef struct entity_s
 extern lightentity_t lightentities[MAX_MAP_ENTITIES];
 extern int numlightentities;
 
-#define LIGHT_ON_EPSILON 0.1
+constexpr int LIGHT_ON_EPSILON = 0.1;
 
-#define MAXLIGHTS 1024
+constexpr int MAXLIGHTS = 1024;
 
 void LoadNodes(char* file);
 bool TestLine(vec3_t start, vec3_t stop);

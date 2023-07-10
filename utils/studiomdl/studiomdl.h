@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define STUDIO_VERSION 10
+constexpr int STUDIO_VERSION = 10;
 
 #define IDSTUDIOHEADER (('T' << 24) + ('S' << 16) + ('D' << 8) + 'I')
 // little-endian "IDST"
@@ -58,9 +58,12 @@ EXTERN int maxseqgroupsize;
 EXTERN int split_textures;
 EXTERN int clip_texcoords;
 
-#define ROLL 2
-#define PITCH 0
-#define YAW 1
+enum ROTATE
+{
+	PITCH = 0,
+	YAW,
+	ROLL
+};
 
 
 extern vec_t Q_rint(vec_t in);

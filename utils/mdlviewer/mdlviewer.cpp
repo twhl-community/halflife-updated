@@ -118,9 +118,13 @@ static float phase = .00003;
 static int ox = -1, oy = -1;
 static int show_t = 1;
 static int mot;
-#define PAN 1
-#define ROT 2
-#define ZOOM 3
+
+enum
+{
+	PAN = 1,
+	ROT,
+	ZOOM
+};
 
 void pan(int x, int y)
 {
@@ -266,8 +270,8 @@ void key(unsigned char key, int /*x*/, int /*y*/)
 	//glutPostRedisplay();
 }
 
-#define WIN_SIZE 512
-#define FRAMERATE 60
+constexpr int WIN_SIZE = 512;
+constexpr int FRAMERATE = 60;
 
 int main(int argc, char** argv)
 {

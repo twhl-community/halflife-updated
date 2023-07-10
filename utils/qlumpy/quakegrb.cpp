@@ -34,7 +34,7 @@ typedef struct
 
 // Font stuff
 
-#define NUM_GLYPHS 256
+constexpr int NUM_GLYPHS = 256;
 const unsigned kFontMarker = 254;
 
 typedef struct

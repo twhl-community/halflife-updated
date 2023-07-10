@@ -56,8 +56,8 @@ typedef struct directlight_s
 } directlight_t;
 
 
-#define TRANSFER_SCALE (1.0f / 16384)
-#define INVERSE_TRANSFER_SCALE 16384
+constexpr double TRANSFER_SCALE = 1.0f / 16384;
+constexpr int INVERSE_TRANSFER_SCALE = 16384;
 
 typedef struct
 {
@@ -66,7 +66,7 @@ typedef struct
 } transfer_t;
 
 
-#define MAX_PATCHES 65536
+constexpr int MAX_PATCHES = 65536;
 
 typedef struct patch_s
 {

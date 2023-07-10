@@ -23,7 +23,7 @@
 #error you must add -dDOUBLEVEC_T to the project!
 #endif
 
-#define BOGUS_RANGE 8192
+constexpr int BOGUS_RANGE = 8192;
 
 typedef struct
 {
@@ -68,8 +68,8 @@ typedef struct bface_s
 	vec3_t mins, maxs;
 } bface_t;
 
-#define NUM_HULLS 4 // no larger than MAX_MAP_HULLS
-typedef struct
+constexpr int NUM_HULLS = 4; // no larger than MAX_MAP_HULLS
+	typedef struct
 {
 	vec3_t mins, maxs;
 	bface_t* faces;
@@ -91,7 +91,7 @@ typedef struct brush_s
 extern int nummapbrushes;
 extern brush_t mapbrushes[MAX_MAP_BRUSHES];
 
-#define MAX_MAP_SIDES (MAX_MAP_BRUSHES * 6)
+constexpr int MAX_MAP_SIDES = MAX_MAP_BRUSHES * 6;
 
 extern int numbrushplanes;
 extern plane_t planes[MAX_MAP_PLANES];

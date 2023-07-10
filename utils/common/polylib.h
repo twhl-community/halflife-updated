@@ -16,7 +16,7 @@ typedef struct
 	vec3_t p[8]; // variable sized
 } winding_t;
 
-#define MAX_POINTS_ON_WINDING 128
+constexpr int MAX_POINTS_ON_WINDING = 128;
 
 winding_t* AllocWinding(int points);
 vec_t WindingArea(winding_t* w);

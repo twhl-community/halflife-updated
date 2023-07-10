@@ -31,7 +31,7 @@
 #include "lbmlib.h"
 #include "scriplib.h"
 #include "mathlib.h"
-#define Vector vec3_t
+using Vector = vec3_t;
 #define EXTERN
 #include "../../engine/studio.h"
 #include "studiomdl.h"
@@ -1552,8 +1552,11 @@ void Grab_BMP(char* filename, s_texture_t* ptexture)
 	ptexture->srcheight = bmhd.h;
 }
 
-#define MIN_DIMENSION 8
-#define MAX_DIMENSION 512
+enum DIMENSION
+{
+	MIN_DIMENSION = 8,
+	MAX_DIMENSION = 512
+};
 
 int GetBestPowerOf2(int value)
 {

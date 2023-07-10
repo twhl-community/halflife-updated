@@ -12,7 +12,7 @@
 #define NO_THREAD_NAMES
 #include "threads.h"
 
-#define MAX_THREADS 64
+constexpr int MAX_THREADS = 64;
 
 int dispatch;
 int workcount;

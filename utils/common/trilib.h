@@ -14,7 +14,7 @@
 
 #pragma once
 
-#define MAXTRIANGLES 2048
+constexpr int MAXTRIANGLES = 2048;
 
 typedef struct
 {

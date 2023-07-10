@@ -564,7 +564,7 @@ Determines the contents of the leaf and creates the final list of
 original faces that have some fragment inside this leaf
 ==================
 */
-#define MAX_LEAF_FACES 1024
+constexpr int MAX_LEAF_FACES = 1024;
 void LinkLeafFaces(surface_t* planelist, node_t* leafnode)
 {
 	face_t* f;

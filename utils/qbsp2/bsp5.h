@@ -17,12 +17,12 @@
 #include "bspfile.h"
 #include "threads.h"
 
-//#define	ON_EPSILON	0.05
-#define BOGUS_RANGE 18000
+//constexpr double ON_EPSILON = 0.05;
+constexpr int BOGUS_RANGE = 18000;
 
 // the exact bounding box of the brushes is expanded some for the headnode
 // volume.  is this still needed?
-#define SIDESPACE 24
+constexpr int SIDESPACE = 24;
 
 //============================================================================
 
@@ -33,7 +33,7 @@ typedef struct
 	vec3_t points[8]; // variable sized
 } winding_t;
 
-#define MAX_POINTS_ON_WINDING 128
+constexpr int MAX_POINTS_ON_WINDING = 128;
 
 winding_t* BaseWindingForPlane(dplane_t* p);
 winding_t* NewWinding(int points);
@@ -44,9 +44,12 @@ void DivideWinding(winding_t* in, dplane_t* split, winding_t** front, winding_t*
 
 //============================================================================
 
-#define MAXEDGES 48	 // 32
-#define MAXPOINTS 28 // don't let a base face get past this \
-					 // because it can be split more later
+enum MAX_EDGES_POINTS
+{
+	MAXEDGES = 48,	// 32
+	MAXPOINTS = 28	// don't let a base face get past this \
+				    // because it can be split more later
+};
 
 typedef struct face_s
 {
@@ -83,7 +86,7 @@ typedef struct
 //
 // there is a node_t structure for every node and leaf in the bsp tree
 //
-#define PLANENUM_LEAF -1
+constexpr int PLANENUM_LEAF = -1;
 
 typedef struct node_s
 {
@@ -106,7 +109,7 @@ typedef struct node_s
 } node_t;
 
 
-#define NUM_HULLS 4
+constexpr int NUM_HULLS = 4;
 
 face_t* NewFaceFromFace(face_t* in);
 void SplitFace(face_t* in, dplane_t* split, face_t** front, face_t** back);

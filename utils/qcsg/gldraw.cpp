@@ -24,7 +24,7 @@ bool drawflag;
 vec3_t draw_mins, draw_maxs;
 
 
-#define WIN_SIZE 512
+constexpr int WIN_SIZE = 512;
 
 SDL_Window* g_pWindow = NULL;
 

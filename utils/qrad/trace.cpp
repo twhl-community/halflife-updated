@@ -15,7 +15,7 @@
 #include "bspfile.h"
 #include "polylib.h"
 
-// #define	ON_EPSILON	0.001
+// constexpr double ON_EPSILON = 0.001;
 
 typedef struct tnode_s
 {

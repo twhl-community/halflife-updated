@@ -259,7 +259,7 @@ PORTAL FILE GENERATION
 ==============================================================================
 */
 
-#define PORTALFILE "PRT1"
+constexpr const char* PORTALFILE = "PRT1";
 
 FILE* pf;
 int num_visleafs; // leafs the player can be in

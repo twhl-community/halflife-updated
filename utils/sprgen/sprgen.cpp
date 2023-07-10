@@ -22,8 +22,8 @@
 
 #include "spritegn.h"
 
-#define MAX_BUFFER_SIZE 0x100000
-#define MAX_FRAMES 1000
+constexpr int MAX_BUFFER_SIZE = 0x100000;
+constexpr int MAX_FRAMES = 1000;
 
 dsprite_t sprite;
 byte *byteimage, *lbmpalette;

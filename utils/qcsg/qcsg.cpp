@@ -82,7 +82,7 @@ frontside is the side of the plane that holds the outside list
 Precedence is necesary to handle overlapping coplanar faces.
 =================
 */
-#define SPLIT_EPSILON 0.3
+constexpr double SPLIT_EPSILON = 0.3;
 bface_t* ClipFace(brush_t* /*b*/, bface_t* f, bface_t** outside,
 	int splitplane, bool precedence)
 {
@@ -544,7 +544,7 @@ void SetModelNumbers(void)
 SetLightStyles
 ============
 */
-#define MAX_SWITCHED_LIGHTS 32
+constexpr int MAX_SWITCHED_LIGHTS = 32;
 void SetLightStyles(void)
 {
 	int stylenum;

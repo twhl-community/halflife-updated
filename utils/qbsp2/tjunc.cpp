@@ -31,8 +31,8 @@ int numwedges, numwverts;
 int tjuncs;
 int tjuncfaces;
 
-#define MAXWVERTS 0x20000
-#define MAXWEDGES 0x10000
+constexpr int MAXWVERTS = 0x20000;
+constexpr int MAXWEDGES = 0x10000;
 
 
 wvert_t wverts[MAXWVERTS];
@@ -49,7 +49,7 @@ void PrintFace(face_t* f)
 
 //============================================================================
 
-#define NUM_HASH 1024
+constexpr int NUM_HASH = 1024;
 
 wedge_t* wedge_hash[NUM_HASH];
 
@@ -197,8 +197,8 @@ AddVert
 
 ===============
 */
-// #define	T_EPSILON	0.01
-#define T_EPSILON ON_EPSILON
+// constexpr double T_EPSILON = 0.01;
+constexpr double T_EPSILON = ON_EPSILON;
 
 void AddVert(wedge_t* w, vec_t t)
 {

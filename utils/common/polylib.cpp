@@ -18,7 +18,7 @@ int c_peak_windings;
 int c_winding_allocs;
 int c_winding_points;
 
-#define BOGUS_RANGE 8192
+constexpr int BOGUS_RANGE = 8192;
 
 void pw(winding_t* w)
 {

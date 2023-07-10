@@ -28,7 +28,7 @@ typedef struct
 	int line;
 } script_t;
 
-#define MAX_INCLUDES 8
+constexpr int MAX_INCLUDES = 8;
 script_t scriptstack[MAX_INCLUDES];
 script_t* script;
 int scriptline;

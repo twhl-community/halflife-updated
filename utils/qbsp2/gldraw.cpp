@@ -44,7 +44,7 @@ void Draw_DrawFace(face_t* f)
 	glFlush();
 }
 
-#define WIN_SIZE 512
+constexpr int WIN_SIZE = 512;
 
 SDL_Window* g_pWindow = NULL;
 

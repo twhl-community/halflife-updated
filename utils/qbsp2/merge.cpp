@@ -13,8 +13,8 @@
 #include "bsp5.h"
 
 
-// #define CONTINUOUS_EPSILON	0.001
-#define CONTINUOUS_EPSILON ON_EPSILON
+// constexpr double CONTINUOUS_EPSILON = 0.001
+constexpr double CONTINUOUS_EPSILON = ON_EPSILON;
 
 /*
 ================

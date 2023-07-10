@@ -61,7 +61,7 @@ towards the center until it is valid.
 ===============================================================================
 */
 
-#define SINGLEMAP (18 * 18 * 4)
+constexpr int SINGLEMAP = 18 * 18 * 4;
 
 typedef struct
 {

@@ -125,9 +125,12 @@ typedef struct triangle_s
 	triedge_t* edges[3];
 } triangle_t;
 
-#define MAX_TRI_POINTS 2048 // Was 1024 originally.
-#define MAX_TRI_EDGES (MAX_TRI_POINTS * 6)
-#define MAX_TRI_TRIS (MAX_TRI_POINTS * 2)
+enum MAX_TRI
+{
+	MAX_TRI_POINTS = 2048, // Was 1024 originally.
+	MAX_TRI_EDGES = MAX_TRI_POINTS * 6,
+	MAX_TRI_TRIS = MAX_TRI_POINTS * 2
+};
 
 typedef struct
 {
@@ -522,7 +525,7 @@ void SampleTriangulation(vec3_t point, triangulation_t* trian, triangle_t** last
 */
 
 
-#define SINGLEMAP (18 * 18 * 4)
+constexpr int SINGLEMAP = 18 * 18 * 4;
 
 typedef struct
 {
@@ -817,7 +820,7 @@ entity_t* FindTargetEntity(char* target)
 CreateDirectLights
 =============
 */
-#define DIRECT_SCALE 0.1f
+constexpr float DIRECT_SCALE = 0.1f;
 void CreateDirectLights(void)
 {
 	unsigned i;
@@ -1043,7 +1046,7 @@ void DeleteDirectLights(void)
 GatherSampleLight
 =============
 */
-#define NUMVERTEXNORMALS 162
+constexpr int NUMVERTEXNORMALS = 162;
 float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 #include "..\..\engine\anorms.h"
 };

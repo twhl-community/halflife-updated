@@ -282,8 +282,8 @@ new windings will be created.
 ==================
 */
 
-//#define	DIVIDE_EPSILON	0.5
-#define DIVIDE_EPSILON ON_EPSILON
+//constexpr double DIVIDE_EPSILON = 0.5;
+constexpr double DIVIDE_EPSILON = ON_EPSILON;
 
 
 void DivideWinding(winding_t* in, dplane_t* split, winding_t** front, winding_t** back)

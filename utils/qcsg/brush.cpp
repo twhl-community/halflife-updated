@@ -329,8 +329,11 @@ vec3_t hull_size[NUM_HULLS][2] = {
 };
 #endif
 
-#define MAX_HULL_POINTS 32
-#define MAX_HULL_EDGES 64
+enum MAX_HULL
+{
+	MAX_HULL_POINTS = 32,
+	MAX_HULL_EDGES = 64
+};
 
 typedef struct
 {
@@ -537,9 +540,9 @@ AddHullEdge
 Creates all of the hull planes around the given edge, if not done allready
 =============
 */
-//#define	ANGLEEPSILON	0.00001
+//constexpr double ANGLEEPSILON = 0.00001;
 
-#define ANGLEEPSILON ON_EPSILON
+constexpr double ANGLEEPSILON = ON_EPSILON;
 
 void AddHullEdge(expand_t* ex, vec3_t p1, vec3_t p2)
 {

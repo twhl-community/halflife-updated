@@ -22,16 +22,19 @@ using vec_t = float;
 using vec3_t = vec_t[3]; // x,y,z
 using vec4_t = vec_t[4]; // x,y,z,w
 
-#define SIDE_FRONT 0
-#define SIDE_ON 2
-#define SIDE_BACK 1
-#define SIDE_CROSS -2
+enum SIDE
+{
+	SIDE_FRONT = 0,
+	SIDE_ON = 2,
+	SIDE_BACK = 1,
+	SIDE_CROSS = -2
+};
 
 extern vec3_t vec3_origin;
 
 // Use this definition globally
-#define ON_EPSILON 0.01
-#define EQUAL_EPSILON 0.001
+constexpr double ON_EPSILON = 0.01;
+constexpr double EQUAL_EPSILON = 0.001;
 
 int VectorCompare(vec3_t v1, vec3_t v2);
 

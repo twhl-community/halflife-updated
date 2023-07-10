@@ -21,9 +21,9 @@
 #include "wadlib.h"
 #include "qfont.h"
 
-#define DEFAULT_FONT "Arial"
+constexpr const char* DEFAULT_FONT = "Arial";
 
-#define FONT_TAG 6 // Font's are the 6th tag after the TYP_LUMPY base ( 64 )...i.e., type == 70
+constexpr int FONT_TAG = 6; // Font's are the 6th tag after the TYP_LUMPY base ( 64 )...i.e., type == 70
 
 char fontname[256];
 int pointsize[3] = {9, 11, 15};

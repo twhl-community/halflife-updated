@@ -189,8 +189,8 @@ typedef struct hashvert_s
 	int numedges;
 } hashvert_t;
 
-// #define	POINT_EPSILON	0.01
-#define POINT_EPSILON ON_EPSILON
+// constexpr double POINT_EPSILON = 0.01;
+constexpr double POINT_EPSILON = ON_EPSILON;
 
 int c_cornerverts;
 
@@ -203,7 +203,7 @@ int firstmodelface;
 
 //============================================================================
 
-#define NUM_HASH 4096
+constexpr int NUM_HASH = 4096;
 
 hashvert_t* hashverts[NUM_HASH];
 

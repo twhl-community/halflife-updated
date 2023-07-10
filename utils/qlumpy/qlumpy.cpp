@@ -8,11 +8,11 @@
 *
 ****/
 
-#define VERSION "2.2"
+constexpr const char* VERSION = "2.2";
 #include "qlumpy.h"
 
 
-#define MAXLUMP 0x50000 // biggest possible lump
+constexpr int MAXLUMP = 0x50000; // biggest possible lump
 
 extern char qproject[];
 
@@ -70,10 +70,12 @@ command_t commands[] =
 		{NULL, NULL} // list terminator
 };
 
-
-#define TRANSPARENT_R 0x0
-#define TRANSPARENT_G 0x0
-#define TRANSPARENT_B 0xFF
+enum TRANSPARENT_RGB
+{
+	TRANSPARENT_R = 0x0,
+	TRANSPARENT_G = 0x0,
+	TRANSPARENT_B = 0xFF
+};
 #define IS_TRANSPARENT(p) (p[0] == TRANSPARENT_R && p[1] == TRANSPARENT_G && p[2] == TRANSPARENT_B)
 /*
 ==============
@@ -383,8 +385,8 @@ int main(int argc, char** argv)
 {
 	int i;
 
-	printf("\nqlumpy " VERSION " by John Carmack, copyright (c) 1994 Id Software.\n");
-	printf("Portions copyright (c) 1998 Valve LLC (%s)\n", __DATE__);
+	std::cout << "\nqlumpy " << VERSION << " by John Carmack, copyright (c) 1994 Id Software.\n";
+	std::cout << std::format("Portions copyright (c) 1998 Valve LLC (%s)\n", __DATE__);
 
 	if (argc == 1)
 		Error("qlumpy [-archive directory] [-8bit] [-proj <project>] scriptfile [scriptfile ...]");

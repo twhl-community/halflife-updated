@@ -14,7 +14,7 @@
 
 #include "cmdlib.h"
 
-#define MAXTOKEN 512
+constexpr int MAXTOKEN = 512;
 
 extern char token[MAXTOKEN];
 extern char *scriptbuffer, *script_p, *scriptend_p;

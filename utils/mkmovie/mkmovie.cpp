@@ -19,10 +19,12 @@
 #include "movie.h"
 
 //------------------------------------------------------------ Globals
-
-#define MAJOR_VERSION 1
-#define MINOR_VERSION 0
-#define MAX_FILE 256
+enum GLOBAL_FILE_VERSION
+{
+	MAJOR_VERSION = 1,
+	MINOR_VERSION = 0,
+	MAX_FILE = 256
+};
 
 
 char* basename;
@@ -239,7 +241,7 @@ void main(int argc, char* argv[])
 {
 	int i;
 
-	std::cout << std::format("mkmovie v%d.%d (%s) Copyright 1997, valve software L.L.C\n", MAJOR_VERSION, MINOR_VERSION, __DATE__);
+	std::cout << "mkmovie v" << MAJOR_VERSION << "." << MINOR_VERSION << " (" << __DATE__  << ") Copyright 1997, valve software L.L.C\n";
 	if (argc < 2)
 		PrintError(formatStr);
 

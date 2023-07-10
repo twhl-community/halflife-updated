@@ -15,18 +15,21 @@ static char THIS_FILE[] = __FILE__;
 
 // Each ENGINE command token is a 32 bit integer
 
-#define ENGINE_ISSUE_COMMANDS 0x2
-// Param1 : char *		text to issue
+enum ENGINE_COMMAND_TOKEN
+{
+	ENGINE_ISSUE_COMMANDS = 0x2,
+	// Param1 : char *		text to issue
 
-#define ENGINE_RETRIEVE_CONSOLE_CONTENTS 0x3
-// Param1 : int32		Begin line
-// Param2 : int32		End line
+	ENGINE_RETRIEVE_CONSOLE_CONTENTS = 0x3,
+	// Param1 : int32		Begin line
+	// Param2 : int32		End line
 
-#define ENGINE_RETRIEVE_GET_CONSOLE_HEIGHT 0x4
-// No params
+	ENGINE_RETRIEVE_GET_CONSOLE_HEIGHT = 0x4,
+	// No params
 
-#define ENGINE_RETRIEVE_SET_CONSOLE_HEIGHT 0x5
-// Param1 : int32		Number of lines
+	ENGINE_RETRIEVE_SET_CONSOLE_HEIGHT = 0x5
+	// Param1 : int32		Number of lines
+};
 
 /////////////////////////////////////////////////////////////////////////////
 // CServerCtrlDlg dialog
