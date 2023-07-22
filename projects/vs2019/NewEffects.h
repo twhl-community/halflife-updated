@@ -16,6 +16,9 @@ class CEnvModel : public CBaseAnimating
 {
 private:
 	void Spawn(void);
+
+	// Updates the model frame-by-frame (or custom timer)
+	void EXPORT Animate(void);
 };
 
 #endif

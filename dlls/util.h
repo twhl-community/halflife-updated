@@ -598,3 +598,6 @@ struct CallOnDestroy
 		Function();
 	}
 };
+
+// Fake BBOX Collision
+void UTIL_RenderBBox(Vector origin, Vector mins, Vector maxs, int life, byte r = 0, byte g = 0, byte b = 0);
