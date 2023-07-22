@@ -558,6 +558,18 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 	(*m_protationmatrix)[0][3] = modelpos[0];
 	(*m_protationmatrix)[1][3] = modelpos[1];
 	(*m_protationmatrix)[2][3] = modelpos[2];
+
+	// Checks for change in a model's scale.
+	if (m_pCurrentEntity->curstate.scale != 0 && m_pCurrentEntity->curstate.scale != 1.0)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				(*m_protationmatrix)[i][j] *= m_pCurrentEntity->curstate.scale;
+			}
+		}
+	}
 }
 
 

@@ -14,13 +14,23 @@ ENV_MODEL
 *******************************/
 
 // Links the entity name in FGD to the class file, located in NewEffects.h
-LINK_ENTITY_TO_CLASS(env_model, CEnvModel);
+LINK_ENTITY_TO_CLASS(env_model, CEnvModel);        
 
 // Spawn function from NewEffects.h/CEnvModel
 void CEnvModel::Spawn(void)
 {
-	PRECACHE_MODEL((char*)STRING(pev->model));
-	SET_MODEL(ENT(pev), STRING(pev->model));
+	if (pev->model != 0)
+	{
+		PRECACHE_MODEL((char*)STRING(pev->model));
+		SET_MODEL(ENT(pev), STRING(pev->model));
+	}
+	else
+	{
+		ALERT(at_console, "[env_model] Error, file failed to load!\n");
+		ALERT(at_console, "[env_model] Setting model/null.mdl in its place!\n");
+		PRECACHE_MODEL("models/null.mdl");
+		SET_MODEL(ENT(pev), "models/null.mdl");
+	}
 
 	// Basic collision using BBoxing.
 	// Checks if the "IS SOLID" flag is ticked. If so, then set the BBox to be solid.
@@ -31,11 +41,18 @@ void CEnvModel::Spawn(void)
 
 		if (m_iCollisionMode == 1)
 		{
+			mins = mins * m_fModelScale;
+			maxs = maxs * m_fModelScale;
+
 			UTIL_SetSize(pev, mins, maxs);
 		}
 		else if (m_iCollisionMode == 2)
 		{
 			ExtractBbox(m_iSequence, mins, maxs);
+
+			mins = mins * m_fModelScale;
+			maxs = maxs * m_fModelScale;
+
 			UTIL_SetSize(pev, mins, maxs);
 		}
 
@@ -46,6 +63,8 @@ void CEnvModel::Spawn(void)
 		}
 	}
 
+	pev->scale = m_fModelScale;
+	
 	// User animation input through hammer.
 	if (FBitSet(pev->spawnflags, ENV_MODEL_ANIMATED))
 	{
@@ -107,6 +126,11 @@ bool CEnvModel::KeyValue(KeyValueData* pkvd)
 	else if (FStrEq(pkvd->szKeyName, "bbmaxs"))
 	{
 		UTIL_StringToVector(maxs, pkvd->szValue);
+		return true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "modelscale"))
+	{
+		m_fModelScale = atof(pkvd->szValue);
 		return true;
 	}
 	else
