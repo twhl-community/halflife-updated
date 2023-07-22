@@ -2564,7 +2564,7 @@ bool CRestore::BufferCheckZString(const char* string)
 	return false;
 }
 
-void UTIL_RenderBBox(Vector origin, Vector mins, Vector maxs, int life, byte r, byte g, byte b)
+void UTIL_RenderBBox(Vector origin, Vector mins, Vector maxs, int life, int r, int g, int b)
 {
 	// Register the bounding box
 	MESSAGE_BEGIN(MSG_BROADCAST, SVC_TEMPENTITY);

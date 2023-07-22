@@ -1711,6 +1711,12 @@ void CStudioModelRenderer::StudioRenderFinal_Hardware()
 		gEngfuncs.pTriAPI->RenderMode(kRenderNormal);
 	}
 
+	// Adds StudioRenderer to OpenGL too
+	if (m_pCvarDrawEntities->value == 5)
+	{
+		IEngineStudio.StudioDrawAbsBBox();
+	}
+
 	IEngineStudio.RestoreRenderer();
 }
 

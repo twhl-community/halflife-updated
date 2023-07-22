@@ -600,4 +600,4 @@ struct CallOnDestroy
 };
 
 // Fake BBOX Collision
-void UTIL_RenderBBox(Vector origin, Vector mins, Vector maxs, int life, byte r = 0, byte g = 0, byte b = 0);
+void UTIL_RenderBBox(Vector origin, Vector mins, Vector maxs, int life, int r = 0, int g = 0, int b = 0);
