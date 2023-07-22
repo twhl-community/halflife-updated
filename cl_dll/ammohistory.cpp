@@ -39,7 +39,7 @@ int HISTORY_DRAW_TIME = 5;
 struct ITEM_INFO
 {
 	char szName[MAX_ITEM_NAME];
-	HSPRITE spr;
+	HSPRITE_HL spr;
 	Rect rect;
 };
 
@@ -121,7 +121,7 @@ bool HistoryResource::DrawAmmoHistory(float flTime)
 			else if (rgAmmoHistory[i].type == HISTSLOT_AMMO)
 			{
 				Rect rcPic;
-				HSPRITE* spr = gWR.GetAmmoPicFromWeapon(rgAmmoHistory[i].iId, rcPic);
+				HSPRITE_HL* spr = gWR.GetAmmoPicFromWeapon(rgAmmoHistory[i].iId, rcPic);
 
 				int r, g, b;
 				UnpackRGB(r, g, b, RGB_YELLOWISH);

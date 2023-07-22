@@ -31,7 +31,7 @@
 // this file is included by both the engine and the client-dll,
 // so make sure engine declarations aren't done twice
 
-typedef int HSPRITE; // handle to a graphic
+typedef int HSPRITE_HL; // handle to a graphic
 
 #define SCRINFO_SCREENFLASH 1
 #define SCRINFO_STRETCHED 2

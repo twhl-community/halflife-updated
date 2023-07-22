@@ -137,7 +137,7 @@ private:
 
 	cl_entity_s		m_VoiceHeadModels[VOICE_MAX_PLAYERS];			// These aren't necessarily in the order of players. They are just
 																	// a place for it to put data in during CreateEntities.
-	HSPRITE				m_VoiceHeadModel;		// Voice head model (goes above players who are speaking).
+	HSPRITE_HL				m_VoiceHeadModel;		// Voice head model (goes above players who are speaking).
 	float				m_VoiceHeadModelHeight;	// Height above their head to place the model.
 
 	IVoiceStatusHelper *m_pHelper;
