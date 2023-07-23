@@ -6,7 +6,6 @@ CREDITS		:	sourcemodding.net, twhl.info
 *******************************/
 
 #include "neweffects.h"
-#include "UserMessages.h"
 
 /*******************************
 
@@ -144,53 +143,22 @@ ENV_FOG
 
 *******************************/
 
-#include "UserMessages.h"
+// Global Variables
 
-//=========================================================
-// Spawnflags
-//=========================================================
-#define SF_FOG_ACTIVE 1
-
-//=========================================================
-// Global variables for fog
-//=========================================================
 int CEnvFog::g_iCurrentEndDist = 0;
 int CEnvFog::g_iIdealEndDist = 0;
 float CEnvFog::g_flBlendDoneTime = 0;
 
-//=========================================================
-// CEnvFog
-//=========================================================
 LINK_ENTITY_TO_CLASS(env_fog, CEnvFog);
+
 TYPEDESCRIPTION CEnvFog::m_SaveData[] =
-	{
+{
 		DEFINE_FIELD(CEnvFog, m_iStartDist, FIELD_INTEGER),
 		DEFINE_FIELD(CEnvFog, m_iEndDist, FIELD_INTEGER),
 		DEFINE_FIELD(CEnvFog, m_bActive, FIELD_BOOLEAN),
-		DEFINE_FIELD(CEnvFog, m_flBlendTime, FIELD_FLOAT),
+		DEFINE_FIELD(CEnvFog, m_flBlendTime, FIELD_FLOAT)
 };
 IMPLEMENT_SAVERESTORE(CEnvFog, CBaseEntity);
-
-bool CEnvFog::KeyValue(KeyValueData* pkvd)
-{
-	if (FStrEq(pkvd->szKeyName, "startdist"))
-	{
-		m_iStartDist = atoi(pkvd->szValue);
-		return true;
-	}
-	else if (FStrEq(pkvd->szKeyName, "enddist"))
-	{
-		m_iEndDist = atoi(pkvd->szValue);
-		return true;
-	}
-	else if (FStrEq(pkvd->szKeyName, "blendtime"))
-	{
-		m_flBlendTime = atof(pkvd->szValue);
-		return true;
-	}
-	else
-		return CBaseEntity::KeyValue(pkvd);
-}
 
 void CEnvFog::Spawn(void)
 {
@@ -200,15 +168,41 @@ void CEnvFog::Spawn(void)
 	pev->effects |= EF_NODRAW;
 	pev->movetype = MOVETYPE_NONE;
 
-	if (FBitSet(pev->spawnflags, SF_FOG_ACTIVE) || FStringNull(pev->targetname))
+	if (FBitSet(pev->spawnflags, ENV_FOG_ACTIVE) || FStringNull(pev->targetname))
+	{
 		m_bActive = true;
+	}
 	else
+	{
 		m_bActive = false;
+	}
+}
+
+bool CEnvFog::KeyValue(KeyValueData* pkvd)
+{
+	if (FStrEq(pkvd->szKeyName, "startDist"))
+	{
+		m_iStartDist = atoi(pkvd->szValue);
+		return true;
+	}
+	else if (FStrEq(pkvd->szKeyName, "endDist"))
+	{
+		m_iEndDist = atoi(pkvd->szValue);
+		return true;
+	}
+	if (FStrEq(pkvd->szKeyName, "blendTime"))
+	{
+		m_flBlendTime = atof(pkvd->szValue);
+		return true;
+	}
+
+	return CBaseEntity::KeyValue(pkvd);
 }
 
 void CEnvFog::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	bool prevState = m_bActive;
+	bool prevSate = m_bActive;
+
 	switch (useType)
 	{
 	case USE_OFF:
@@ -222,15 +216,12 @@ void CEnvFog::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useTyp
 		break;
 	}
 
-	// Only update if it was changed
-	if (prevState != m_bActive)
+	if (prevSate != m_bActive)
 	{
-		// Update fog msg
-		UpdateFog(m_bActive, true, NULL);
+		UpdateFog(true, m_bActive, NULL);
 
 		if (m_bActive || !m_flBlendTime)
 		{
-			// Set globalvars for target fog
 			CEnvFog::SetCurrentEndDist(m_bActive ? m_iEndDist : 0, m_flBlendTime);
 		}
 	}
@@ -275,33 +266,37 @@ void CEnvFog::UpdateFog(bool isOn, bool doBlend, CBaseEntity* pPlayer)
 
 void CEnvFog::SendInitMessages(CBaseEntity* pPlayer)
 {
-	if (!m_bActive)
+	if (m_bActive)
+	{
 		return;
+	}
 
 	UpdateFog(true, false, pPlayer);
 
 	CEnvFog::SetCurrentEndDist(m_iEndDist, m_flBlendTime);
 }
 
-void CEnvFog::SetCurrentEndDist(int enddist, float blendtime)
+void CEnvFog::SetCurrentEndDist(int endDist, float BlendTime)
 {
-	if ((!blendtime || g_iCurrentEndDist < enddist) || !g_iCurrentEndDist)
+	if (!BlendTime || g_iCurrentEndDist < endDist || !g_iCurrentEndDist)
 	{
-		g_iCurrentEndDist = enddist;
+		g_iCurrentEndDist = endDist;
 		g_iIdealEndDist = 0;
 		g_flBlendDoneTime = 0;
 	}
 	else
 	{
-		g_iIdealEndDist = enddist;
-		g_flBlendDoneTime = gpGlobals->time + blendtime;
+		g_iIdealEndDist = endDist;
+		g_flBlendDoneTime = gpGlobals->time + BlendTime;
 	}
 }
 
 void CEnvFog::FogThink(void)
 {
 	if (!g_flBlendDoneTime || !g_iIdealEndDist)
+	{
 		return;
+	}
 
 	if (g_flBlendDoneTime <= gpGlobals->time)
 	{
@@ -311,21 +306,25 @@ void CEnvFog::FogThink(void)
 	}
 }
 
-bool CEnvFog::CheckBBox(edict_t* pplayer, edict_t* pedict)
+bool CEnvFog::CheckBBox(edict_t* pPlayer, edict_t* pEdict)
 {
 	if (!g_iCurrentEndDist)
+	{
 		return false;
+	}
 
-	// Don't let fog cull underwater
-	if (pplayer->v.waterlevel == 3)
+	// This is to make sure fog doesn't cull underwater.
+	if (pPlayer->v.waterlevel == 3)
+	{
 		return false;
+	}
 
-	// Calculate distance to edge
+	// Calculate distance to edge.
 	Vector boxTotal = Vector(g_iCurrentEndDist, g_iCurrentEndDist, g_iCurrentEndDist);
 	float edgeLength = boxTotal.Length();
 
-	// Set the fog bbox mins maxs
-	Vector viewOrigin = pplayer->v.origin + pplayer->v.view_ofs;
+	// Set the fog BBox mins and maxs
+	Vector viewOrigin = pPlayer->v.origin + pPlayer->v.view_ofs;
 	Vector fogMins, fogMaxs;
 	for (int i = 0; i < 3; i++)
 	{
@@ -333,28 +332,31 @@ bool CEnvFog::CheckBBox(edict_t* pplayer, edict_t* pedict)
 		fogMaxs[i] = viewOrigin[i] + edgeLength;
 	}
 
-	// Set the entity mins/maxs
+	
+    // Set the entity mins/maxs
 	Vector entMins, entMaxs;
-	entMins = pedict->v.origin + pedict->v.mins;
-	entMaxs = pedict->v.origin + pedict->v.maxs;
+	entMins = pEdict->v.origin + pEdict->v.mins;
+	entMaxs = pEdict->v.origin + pEdict->v.maxs;
 
 	if (fogMins[0] > entMaxs[0])
+	{
 		return true;
-
+	}
 	if (fogMins[1] > entMaxs[1])
+	{
 		return true;
-
+	}
 	if (fogMins[2] > entMaxs[2])
+	{
 		return true;
-
-	if (fogMaxs[0] < entMins[0])
+	}
+	if (fogMins[1] < entMaxs[1])
+	{
 		return true;
-
-	if (fogMaxs[1] < entMins[1])
+	}
+	if (fogMins[2] < entMaxs[2])
+	{
 		return true;
-
-	if (fogMaxs[2] < entMins[2])
-		return true;
-
+	}
 	return false;
 }

@@ -94,6 +94,9 @@ public:
 	// Process movement of player
 	virtual void StudioProcessGait(entity_state_t* pplayer);
 
+	// Sets bounding box
+	virtual void StudioGetMinsMaxs(Vector& outMins, Vector& outMaxs);
+
 public:
 	// Client clock
 	double m_clTime;

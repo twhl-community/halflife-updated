@@ -56,36 +56,73 @@ ENV_FOG
 
 *******************************/
 
+#define ENV_FOG
+
 class CEnvFog : public CBaseEntity
 {
 public:
+	// Spawn the entity.
 	void Spawn(void);
+
+	// Sends a message on initialization.
 	void SendInitMessages(CBaseEntity* pPlayer = NULL);
-	bool KeyValue(KeyValueData* pkvd);
+	
+	// A boolean for key values.
+	bool KeyValue(KeyValueData* pkvd) override;
+
+	// An update to the fog, used by other entities and triggers.
 	void UpdateFog(bool isOn, bool doBlend, CBaseEntity* pPlayer);
-	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
-	virtual bool Save(CSave& save);
-	virtual bool Restore(CRestore& restore);
+	// Makes Env_Fog usable by other entities.
+	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value) override;
 
-public:
-	static void SetCurrentEndDist(int enddist, float blendtime);
-	static int GetCurrentEndDist(void) { return g_iCurrentEndDist; }
+
+	// An integer for when the game is saved.
+	bool Save(CSave& save);
+
+	// An integer for when the game is loaded.
+	bool Restore(CRestore& restore);
+
+public: 
+	// Sets the new end distance for Env_Fog.
+	static void SetCurrentEndDist(int endDist, float blendTime);
+
+	// Gets the current end distance for Env_Fog.
+	static int GetCurrentEndDist(void)
+	{
+		return g_iCurrentEndDist;
+	}
 
 	static void FogThink(void);
-	static bool CheckBBox(edict_t* pplayer, edict_t* pedict);
+
+	static bool CheckBBox(edict_t* pPlayer, edict_t* pEdict);
 
 private:
+	// m_SaveData saves the fog data.
 	static TYPEDESCRIPTION m_SaveData[];
 
+	// m_iStartDistance is the starting distance of the fog from the player.
 	int m_iStartDist;
+
+	// m_iEndDist is the end distance of the fog from the player.
 	int m_iEndDist;
+
+	// m_flBlendTime is the amount of fog to blend together.
 	float m_flBlendTime;
+
+	// m_bActive sets whether or not env_fog is active.
 	bool m_bActive;
 
+	#define ENV_FOG_ACTIVE 1
 private:
+	// The current end distance
 	static int g_iCurrentEndDist;
+
+	// The ideal end distance
 	static int g_iIdealEndDist;
+
+	// The blend time
 	static float g_flBlendDoneTime;
 };
+
 #endif

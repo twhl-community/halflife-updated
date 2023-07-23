@@ -13,6 +13,7 @@
 #include "pmtrace.h"
 #include "pm_shared.h"
 #include "Exports.h"
+#include "fog.h"
 
 #include "particleman.h"
 extern IParticleMan* g_pParticleMan;
@@ -310,6 +311,8 @@ void DLLEXPORT HUD_CreateEntities()
 	Game_AddObjects();
 
 	GetClientVoiceMgr()->CreateEntities();
+
+	gFog.Init();
 }
 
 

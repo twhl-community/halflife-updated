@@ -33,6 +33,7 @@
 #include "decals.h"
 #include "soundent.h"
 #include "gamerules.h"
+#include "neweffects.h"
 
 #define MONSTER_CUT_CORNER_DIST 8 // 8 means the monster's bounding box is contained without the box of the node in WC
 
@@ -515,6 +516,17 @@ void CBaseMonster::MonsterThink()
 {
 	pev->nextthink = gpGlobals->time + 0.1; // keep monster thinking.
 
+	int fogEndDist = CEnvFog::GetCurrentEndDist();
+	if (fogEndDist > 0)
+	{
+		m_flDistTooFar = fogEndDist - 100;
+		m_flDistLook = fogEndDist + 300;
+	}
+	else
+	{
+		m_flDistTooFar = 1024.0;
+		m_flDistLook = 2048.0;
+	}
 
 	RunAI();
 
@@ -2029,8 +2041,9 @@ void CBaseMonster::MonsterInit()
 
 	m_hEnemy = NULL;
 
-	m_flDistTooFar = 1024.0;
-	m_flDistLook = 2048.0;
+	// These need to be commented out for the new fog code.
+//	m_flDistTooFar = 1024.0;
+//	m_flDistLook = 2048.0;
 
 	// set eye position
 	SetEyePosition();

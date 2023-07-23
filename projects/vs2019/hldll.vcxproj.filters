@@ -367,7 +367,7 @@
       <Filter>Source Files\public</Filter>
     </ClCompile>
     <ClCompile Include="NewEffects.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\dlls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -623,7 +623,7 @@
     <ClInclude Include="..\..\public\interface.h">
       <Filter>Header Files\public</Filter>
     </ClInclude>
-    <ClInclude Include="NewEffects.h">
+    <ClInclude Include="neweffects.h">
       <Filter>Header Files\dlls</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2893,6 +2893,8 @@ void CBasePlayer::Precache()
 
 	m_iTrain |= TRAIN_NEW;
 
+	m_bSendMessages = true;
+
 	// Make sure any necessary user messages have been registered
 	LinkUserMessages();
 
@@ -3930,6 +3932,12 @@ void CBasePlayer::UpdateClientData()
 {
 	const bool fullHUDInitRequired = m_fInitHUD != false;
 
+	if (m_bSendMessages)
+	{
+		InitializeEntities();
+		m_bSendMessages = false;
+	}
+
 	if (m_fInitHUD)
 	{
 		m_fInitHUD = false;
@@ -4217,6 +4225,26 @@ void CBasePlayer::UpdateClientData()
 	m_bRestored = false;
 }
 
+//=========================================================
+// InitializeEntities
+//=========================================================
+void CBasePlayer ::InitializeEntities(void)
+{
+	edict_t* pEdict = g_engfuncs.pfnPEntityOfEntIndex(1);
+	CBaseEntity* pEntity;
+
+	for (int i = 0; i < gpGlobals->maxEntities; i++, pEdict++)
+	{
+		if (pEdict->free)
+			continue;
+
+		pEntity = CBaseEntity::Instance(pEdict);
+		if (!pEntity)
+			break;
+
+		pEntity->SendInitMessages(this);
+	}
+}
 
 //=========================================================
 // FBecomeProne - Overridden for the player to set the proper

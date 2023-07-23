@@ -41,6 +41,7 @@
 #include "netadr.h"
 #include "pm_shared.h"
 #include "UserMessages.h"
+#include "neweffects.h"
 
 DLL_GLOBAL unsigned int g_ulFrameCount;
 
@@ -720,6 +721,9 @@ void ServerActivate(edict_t* pEdictList, int edictCount, int clientMax)
 		}
 	}
 
+	// Reset fog when reloading
+	CEnvFog::SetCurrentEndDist(0, 0);
+
 	// Link user messages here to make sure first client can get them...
 	LinkUserMessages();
 }
@@ -787,6 +791,8 @@ void StartFrame()
 
 	gpGlobals->teamplay = teamplay.value;
 	g_ulFrameCount++;
+
+	CEnvFog::FogThink();
 }
 
 
@@ -1118,6 +1124,11 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 	if (ent != host)
 	{
 		if (!ENGINE_CHECK_VISIBILITY((const struct edict_s*)ent, pSet))
+		{
+			return 0;
+		}
+
+		if (CEnvFog::CheckBBox(host, ent))
 		{
 			return 0;
 		}
