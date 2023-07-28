@@ -39,6 +39,10 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Cleaned up weapons code a bit [#157](https://github.com/SamVanheer/halflife-updated/issues/157)
 * Fixed incorrect body values being passed into EV_WeaponAnimation [#159](https://github.com/SamVanheer/halflife-updated/issues/159)
 * Fixed autoswitch from tripmine to RPG causing wrong animation to play when weapon prediction is off [#160](https://github.com/SamVanheer/halflife-updated/issues/160)
+* Fixed explosives that impact the underside of a brush dealing damage to entities on the other side of that brush (halflife issue [#3244](https://github.com/ValveSoftware/halflife/issues/3244))
+* Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
+* Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
+* Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
 
 ### Crowbar
 
@@ -51,6 +55,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 ### Glock
 
 * Fixed Glock fire on empty sequence not playing [#70](https://github.com/SamVanheer/halflife-updated/pull/70) (Thanks malortie)
+* Fixed Glock not playing empty sound when using secondary attack
 
 ### Python (357)
 * Fixed Python glitching animation when holding primary attack with empty magazine (halflife issue [#3028](https://github.com/ValveSoftware/halflife/issues/3028))
@@ -66,6 +71,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 ### Shotgun
 
 * Fixed Shotgun pump sound not playing when holding down attack or when shooting last shell (halflife issue [#617](https://github.com/ValveSoftware/halflife/issues/617))
+* Fixed Shotgun starting idle animations too quickly after exhausting all ammo using primary attack [#195](https://github.com/SamVanheer/halflife-updated/issues/195) (Thanks Ronin4862)
 
 ### Crossbow
 * Fixed Crossbow fire on empty sequence not playing [#68](https://github.com/SamVanheer/halflife-updated/pull/68) (Thanks malortie)
@@ -86,6 +92,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Gauss gun beams going in the wrong direction when player is viewing themselves through a camera (halflife issue [#1744](https://github.com/ValveSoftware/halflife/issues/1744))
 * Fixed Gauss gun sound not stopping when players are not in the PAS (halflife issue [#3233](https://github.com/ValveSoftware/halflife/issues/3233))
 * Fixed Gauss charge sound not always being reset (halflife issue [#3188](https://github.com/ValveSoftware/halflife/issues/3188))
+* Fixed Gauss gun sometimes settting player uranium ammo to -1 (halflife issue [#3343](https://github.com/ValveSoftware/halflife/issues/3343))
 
 ### Egon gun
 
@@ -93,11 +100,13 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Egon looping fire sound playing twice sometimes (halflife issue [#1750](https://github.com/ValveSoftware/halflife/issues/1750))
 * Fixed Egon gun beam colors being too bright (halflife issue [#3033](https://github.com/ValveSoftware/halflife/issues/3033))
 * Fixed Egon flare sprite not showing (halflife issue [#3066](https://github.com/ValveSoftware/halflife/issues/3066))
+* Fixed Egon not stopping its attack animation if the attack button is held down and ammo runs out (Thanks the man)
 
 ### Hornet gun
 
-* Implemented skill cvars sk_plr_hornet_dmg1/2/3 for player Hornet gun damage
+* Implemented skill cvars `sk_plr_hornet_dmg1/2/3` for player Hornet gun damage
 * Fixed chainsaw Hornet gun sounds and mostly fixed hornetgun not playing firing animation (halflife issue [#556](https://github.com/ValveSoftware/halflife/issues/556))
+* Fixed Hornet gun recharging to full ammo after loading a save game [#190](https://github.com/SamVanheer/halflife-updated/issues/190)
 
 ### Hand grenade
 
@@ -129,6 +138,9 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed CTalkMonster::RunTask not properly initializing variable (halflife issue [#3177](https://github.com/ValveSoftware/halflife/issues/3177))
 * Added keyvalue `allow_item_dropping` to control whether NPCs can drop items (Opposing Force Updated [#72](https://github.com/SamVanheer/halflife-op4-updated/issues/72))
 * Fixed NPCs being able to speak scripted_sentences while dying [#171](https://github.com/SamVanheer/halflife-updated/issues/171)
+* Added missing monster state name to ReportAIState (halflife issue [#3220](https://github.com/ValveSoftware/halflife/issues/3220)) (Thanks Shepard)
+* Fixed being able to break scripted_sequence by +using friendly NPCs to make them follow player [#200](https://github.com/SamVanheer/halflife-updated/issues/200) (Thanks Oxofemple. for reporting this and FreeSlave for finding the solution)
+* Fixed potential incorrect facing in scripted sequence (Thanks FreeSlave)
 
 ### Specific NPCs
 
@@ -149,6 +161,8 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Ichthyosaur restarting death sequence on save game load [#152](https://github.com/SamVanheer/halflife-updated/issues/152)
 * Fixed Alien Controllers facing in non-combat state [#155](https://github.com/SamVanheer/halflife-updated/pull/155)
 * Fixed scientist voice pitch [#156](https://github.com/SamVanheer/halflife-updated/pull/156)
+* Fixed Human Grunts dropping weapons again if the game is saved and loaded while the grunt is dying (Thanks Oxofemple.)
+* Fixed Scientists crashing when speaking fear dialogue when enemy has been removed
 
 ## User Interface
 
@@ -175,6 +189,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 
 * Fixed m_rawinput 1 getting mouse stuck in box (halflife issue [#1377](https://github.com/ValveSoftware/halflife/issues/1377))
 * Fixed m_rawinput changes not taking effect if a new map has started and less time has passed than on any previous map or if weapon prediction is disabled (halflife issue [#3255](https://github.com/ValveSoftware/halflife/issues/3255))
+* Fixed mouse movement during map load affecting initial view angles
 * Stop controlling func_tank on disconnect (prevents crashes) (halflife issue [#2594](https://github.com/ValveSoftware/halflife/issues/2594))
 * The player view entity is now restored after loading a save game, which allows trigger_camera entities to work properly if you save while they're active (halflife issue [#3031](https://github.com/ValveSoftware/halflife/issues/3031))
 * Re-implemented view roll (halflife issue [#1544](https://github.com/ValveSoftware/halflife/issues/1544))
@@ -228,6 +243,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Error in ServerCtrl [#135](https://github.com/SamVanheer/halflife-updated/pull/135) (Thanks fel1x-developer)
 * Pass director stufftext commands to filtered client command function (halflife issue [#1497](https://github.com/ValveSoftware/halflife/issues/1497))
 * Fixed node graphs being loaded from search paths other than GAMECONFIG path [#145](https://github.com/SamVanheer/halflife-updated/issues/145)
+* Fixed node graph code incorrectly flagging node graphs as out of date if an outdated graph exists in a search path other than the mod directory (e.g. a graph in `halflife_updated_addon/map/graphs`)
 * Fixed momentary_door restarting movement sound repeatedly when moving back to starting position (halflife issue [#3265](https://github.com/ValveSoftware/halflife/issues/3265))
 * Fixed "fullupdate" call making a HUD disappear [#147](https://github.com/SamVanheer/halflife-updated/issues/147)
 * Fixed STL Algorithm Header Errors When Included with Platform.h [#148](https://github.com/SamVanheer/halflife-updated/pull/148) (Thanks edgarbarney)
@@ -251,6 +267,17 @@ Fixes for bugs introduced in beta builds are not included in this list.
     * Access world through global
     * Access local player through helper function
     * Removed some obsolete utility functions
+* Fixed game_player_equip crashing when given a null activator [#189](https://github.com/SamVanheer/halflife-updated/issues/189)
+* Save and restore game_player_equip [#188](https://github.com/SamVanheer/halflife-updated/issues/188)
+* Fixed entities with an index greater than 2047 corrupting the client's heap if sent over the network [#191](https://github.com/SamVanheer/halflife-updated/issues/191)
+* When using `impulse 107` to get the name of a texture the texture type (as used in `materials.txt`) will also be printed
+* Added `WRITE_FLOAT` function corresponding to the client's `READ_FLOAT` function
+* Fixed func_friction not working properly in multiplayer (halflife issue [#1542](https://github.com/ValveSoftware/halflife/issues/1542)) (Thanks L453rh4wk)
+* Fixed spray logo using wrong decal after save game load when not using custom spray [#193](https://github.com/SamVanheer/halflife-updated/issues/193) (Thanks Ronin4862)
+* Fixed user interface coordinates and sizes being incorrectly adjusted for resolution (halflife issue [#3344](https://github.com/ValveSoftware/halflife/issues/3344))
+* Fixed Alien Slave beams staying forever if they exist during a level change (halflife issue [#3104](https://github.com/ValveSoftware/halflife/issues/3104))
+* Fixed cycler_wreckage storing time value in int instead of float
+* Disabled jump sounds while player is frozen (e.g. trigger_camera, trigger_playerfreeze)
 
 ## Code cleanup
 
@@ -359,6 +386,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
     * Day Of Defeat [#113](https://github.com/SamVanheer/halflife-updated/pull/113)
     * Blue Shift [#114](https://github.com/SamVanheer/halflife-updated/pull/114)
     * Deathmatch Classic and Threewave [#115](https://github.com/SamVanheer/halflife-updated/pull/115)
+* Moved IsFacing function from barney.cpp to h_ai.cpp to help prevent linker errors when copy pasting source file
 
 ## Project changes
 
@@ -386,6 +414,9 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed the Linux makefiles not working when using Clang++ due to missing `-mno-sse` compiler flag
 * Added game icons for program icon and Steam library icon
 * Use post build event to copy dlls instead of using output directory [#167](https://github.com/SamVanheer/halflife-updated/issues/167)
+* Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world [#187](https://github.com/SamVanheer/halflife-updated/issues/187) (Thanks FreeSlave)
+* Set maximum edicts to 2048 in liblist.gam [#181](https://github.com/SamVanheer/halflife-updated/issues/181)
+* Made the Linux version link statically to the C++ runtime to help avoid problems when running mods on older systems (Thanks a1ba and FreeSlave)
 
 ## Git repository changes
 
@@ -396,3 +427,4 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Added `delta.lst` and the `resource` directory to the game installation
 * Fixed HD Revolver model not playing the reload sound (halflife issue [#2351](https://github.com/ValveSoftware/halflife/issues/2351))
 * Rewrote the installation and packing scripts to use C#
+* Added game icons to the game installation

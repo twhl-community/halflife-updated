@@ -1,6 +1,6 @@
 # Half-Life Updated changelog
 
-## Changges in V1.0.0 Beta 015
+## Changes in V1.0.0 Beta 015
 
 > Note: this beta has not been released yet.
 
@@ -44,7 +44,7 @@
 * Removed unnecessary semicolons (Thanks Shepard)
 * Updated source file encoding to UTF-8 [#183](https://github.com/SamVanheer/halflife-updated/issues/183) (Thanks anchurcn)
 * Renamed `CWorld::Instance` to `CWorld::World` to avoid conflicting with `CBaseEntity::Instance` function name
-* Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world  [#187](https://github.com/SamVanheer/halflife-updated/issues/187)(Thanks FreeSlave)
+* Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world [#187](https://github.com/SamVanheer/halflife-updated/issues/187) (Thanks FreeSlave)
 * Fixed game_player_equip crashing when given a null activator [#189](https://github.com/SamVanheer/halflife-updated/issues/189)
 * Fixed Hornet gun recharging to full ammo after loading a save game [#190](https://github.com/SamVanheer/halflife-updated/issues/190)
 * Fixed explosives that impact the underside of a brush dealing damage to entities on the other side of that brush (halflife issue [#3244](https://github.com/ValveSoftware/halflife/issues/3244))
@@ -61,8 +61,8 @@
 
 ### Project changes
 
-* Added `delta.lst` to the archive again (was accidentally removed in the previous beta)
-* Added game icons to the archive
+* Added `delta.lst` to the game installation again (was accidentally removed in the previous beta)
+* Added game icons to the game installation
 
 ## Changes in V1.0.0 Beta 013
 
@@ -344,7 +344,7 @@
 * Reverted "Fixed multisource having off-by-one error in trigger handling" (halflife issue [[#1737|https://github.com/ValveSoftware/halflife/issues/1737]]) to avoid edge cases where entities triggering the multisource use a delayed trigger which is not supported by fixed code
 * Fixed func_breakable keyvalue "explosion" not working (#24) (Thanks ArroganceJustified)
 * Fixed saytext message handling potentially causing buffer overflow (halflife issue [[#3095|https://github.com/ValveSoftware/halflife/issues/3095]])
-* Implemented skill cvars sk_plr_hornet_dmg1/2/3 for player Hornet gun damage
+* Implemented skill cvars `sk_plr_hornet_dmg1/2/3` for player Hornet gun damage
 * Fixed memory leak in VGUI1 image loading code (halflife issue [[#3101|https://github.com/ValveSoftware/halflife/issues/3101]])
 * Fixed underwater breathing sounds playing when standing in shallow water (halflife issue [[#3110|https://github.com/ValveSoftware/halflife/issues/3110]])
 * Fixed camera not being consistently centered when raw mouse input is enabled (Thanks IntriguingTiles) [#32](https://github.com/SamVanheer/halflife-updated/pull/32)
