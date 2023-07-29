@@ -60,7 +60,7 @@ Unlike the other updated repositories these only provide basic fixes. No further
 Changelog
 ======================
 
-See [CHANGELOG.md](CHANGELOG.md) and [FULL_CHANGELOG.md](FULL_CHANGELOG.md)
+See [CHANGELOG.md](CHANGELOG.md) and [FULL_UPDATED_CHANGELOG.md](FULL_UPDATED_CHANGELOG.md)
 
 Half Life 1 SDK LICENSE
 ======================
