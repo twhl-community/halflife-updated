@@ -1,8 +1,6 @@
 # Half-Life Updated changelog
 
-## Changes in V1.0.0 Beta 015
-
-> Note: this beta has not been released yet.
+## Changes in V1.0.0 Release Candidate 001
 
 ### Bug fixes
 
