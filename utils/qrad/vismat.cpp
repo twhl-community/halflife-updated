@@ -478,7 +478,7 @@ void FreeVisMatrix(void)
 		HANDLE h = GlobalHandle(vismatrix);
 		GlobalUnlock(h);
 		GlobalFree(h);
-		vismatrix = NULL;
+		vismatrix = nullptr;
 	}
 }
 

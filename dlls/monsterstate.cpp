@@ -43,9 +43,9 @@ void CBaseMonster::SetState(MONSTERSTATE State)
 	// Drop enemy pointers when going to idle
 	case MONSTERSTATE_IDLE:
 
-		if (m_hEnemy != NULL)
+		if (m_hEnemy != nullptr)
 		{
-			m_hEnemy = NULL; // not allowed to have an enemy anymore.
+			m_hEnemy = nullptr; // not allowed to have an enemy anymore.
 			ALERT(at_aiconsole, "Stripped\n");
 		}
 		break;
@@ -91,7 +91,7 @@ void CBaseMonster::RunAI()
 		}
 
 		// do these calculations if monster has an enemy.
-		if (m_hEnemy != NULL)
+		if (m_hEnemy != nullptr)
 		{
 			CheckEnemy(m_hEnemy);
 		}
@@ -155,7 +155,7 @@ MONSTERSTATE CBaseMonster::GetIdealState()
 				CSound* pSound;
 
 				pSound = PBestSound();
-				ASSERT(pSound != NULL);
+				ASSERT(pSound != nullptr);
 				if (pSound)
 				{
 					MakeIdealYaw(pSound->m_vecOrigin);
@@ -186,7 +186,7 @@ MONSTERSTATE CBaseMonster::GetIdealState()
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 				CSound* pSound = PBestSound();
-				ASSERT(pSound != NULL);
+				ASSERT(pSound != nullptr);
 				if (pSound)
 					MakeIdealYaw(pSound->m_vecOrigin);
 			}
@@ -198,7 +198,7 @@ MONSTERSTATE CBaseMonster::GetIdealState()
 		COMBAT goes to ALERT upon death of enemy
 		*/
 		{
-			if (m_hEnemy == NULL)
+			if (m_hEnemy == nullptr)
 			{
 				m_IdealMonsterState = MONSTERSTATE_ALERT;
 				// pev->effects = EF_BRIGHTFIELD;

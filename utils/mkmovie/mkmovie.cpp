@@ -65,7 +65,7 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 	char outfilename[MAX_FILE];
 
 	// Read in header
-	if (!ReadFile(hf, (void*)&frame, sizeof(movieframe_t), &bytesread, NULL))
+	if (!ReadFile(hf, (void*)&frame, sizeof(movieframe_t), &bytesread, nullptr))
 		PrintError("Error reading MFRM header.");
 	if (!bytesread)
 		PrintError("Unexpected EOF found.");
@@ -74,7 +74,7 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 	datasize = pHeader->size - sizeof(movieframe_t);
 	data = (byte*)LocalAlloc(LPTR, datasize);
 
-	if (!ReadFile(hf, (void*)data, datasize, &bytesread, NULL))
+	if (!ReadFile(hf, (void*)data, datasize, &bytesread, nullptr))
 		PrintError("Error reading MFRM data.");
 	if (!bytesread)
 		PrintError("Unexpected EOF found.");
@@ -150,7 +150,7 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 	// Create the output file
 	sprintf(outfilename, "%s%04d.bmp", basename, framecnt++);
 	std::cout << std::format("Creating bitmap %s.\n", outfilename);
-	hout = CreateFile(outfilename, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	hout = CreateFile(outfilename, GENERIC_READ | GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (hout == INVALID_HANDLE_VALUE)
 		PrintError("Couldn't create bitmap file for frame.");
 
@@ -161,7 +161,7 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 	hdr.bfReserved2 = 0;
 	hdr.bfOffBits = (DWORD)(sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER));
 
-	if (!WriteFile(hout, (LPVOID)&hdr, sizeof(BITMAPFILEHEADER), (LPDWORD)&bytesread, NULL))
+	if (!WriteFile(hout, (LPVOID)&hdr, sizeof(BITMAPFILEHEADER), (LPDWORD)&bytesread, nullptr))
 		PrintError("Couldn't write file header to framebitmap.");
 
 	// bitmap header
@@ -177,11 +177,11 @@ void ProcessMFRMBlock(HANDLE hf, movieblockheader_t* pHeader)
 	bi.biClrUsed = 0;
 	bi.biClrImportant = 0;
 
-	if (!WriteFile(hout, (LPVOID)&bi, sizeof(BITMAPINFOHEADER), (LPDWORD)&bytesread, NULL))
+	if (!WriteFile(hout, (LPVOID)&bi, sizeof(BITMAPINFOHEADER), (LPDWORD)&bytesread, nullptr))
 		PrintError("Couldn't write bitmap header to frame bitmap.");
 
 	// bitmap data
-	if (!WriteFile(hout, (LPVOID)movie, imagesize, (LPDWORD)&bytesread, NULL))
+	if (!WriteFile(hout, (LPVOID)movie, imagesize, (LPDWORD)&bytesread, nullptr))
 		PrintError("Couldn't write bitmap data to frame bitmap.");
 
 
@@ -203,13 +203,13 @@ void ProcessMovieFile(const char* pFilename)
 
 	std::cout << std::format("Processing movie %s:\n", pFilename);
 
-	hf = CreateFile(pFilename, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	hf = CreateFile(pFilename, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 	if (hf == INVALID_HANDLE_VALUE)
 		PrintError("Couldn't open movie file.\n");
 
 	while (!eof)
 	{
-		if (!ReadFile(hf, (void*)&header, sizeof(movieblockheader_t), &bytesread, NULL))
+		if (!ReadFile(hf, (void*)&header, sizeof(movieblockheader_t), &bytesread, nullptr))
 			PrintError("Error reading from movie file.\n");
 
 		// Check for end of file
@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
 	if (argc < 2)
 		PrintError(formatStr);
 
-	basename = NULL;
+	basename = nullptr;
 
 	for (i = 0; i < argc; i++)
 	{

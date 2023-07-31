@@ -214,7 +214,7 @@ winding_t* ClipWinding(winding_t* in, dplane_t* split, bool keepon)
 	if (!counts[0])
 	{
 		FreeWinding(in);
-		return NULL;
+		return nullptr;
 	}
 	if (!counts[1])
 		return in;
@@ -321,7 +321,7 @@ void DivideWinding(winding_t* in, dplane_t* split, winding_t** front, winding_t*
 	sides[i] = sides[0];
 	dists[i] = dists[0];
 
-	*front = *back = NULL;
+	*front = *back = nullptr;
 
 	if (!counts[0])
 	{
@@ -455,14 +455,14 @@ void SplitFaceTmp(face_t* in, dplane_t* split, face_t** front, face_t** back)
 
 	if (!counts[0])
 	{
-		*front = NULL;
+		*front = nullptr;
 		*back = in;
 		return;
 	}
 	if (!counts[1])
 	{
 		*front = in;
-		*back = NULL;
+		*back = nullptr;
 		return;
 	}
 
@@ -717,7 +717,7 @@ surfchain_t* SurflistFromValidFaces(void)
 
 	sc = reinterpret_cast<surfchain_t*>(malloc(sizeof(*sc)));
 	ClearBounds(sc->mins, sc->maxs);
-	sc->surfaces = NULL;
+	sc->surfaces = nullptr;
 
 	// grab planes from both sides
 	for (i = 0; i < numplanes; i += 2)
@@ -730,7 +730,7 @@ surfchain_t* SurflistFromValidFaces(void)
 		ClearBounds(n->mins, n->maxs);
 		n->planenum = i;
 
-		n->faces = NULL;
+		n->faces = nullptr;
 		for (f = validfaces[i]; f; f = next)
 		{
 			next = f->next;
@@ -750,8 +750,8 @@ surfchain_t* SurflistFromValidFaces(void)
 		AddPointToBounds(n->mins, sc->mins, sc->maxs);
 		AddPointToBounds(n->maxs, sc->mins, sc->maxs);
 
-		validfaces[i] = NULL;
-		validfaces[i + 1] = NULL;
+		validfaces[i] = nullptr;
+		validfaces[i + 1] = nullptr;
 	}
 
 	// merge all possible polygons
@@ -779,7 +779,7 @@ surfchain_t* ReadSurfs(FILE* file)
 	{
 		r = fscanf(file, "%i %i %i %i\n", &planenum, &texturenum, &contents, &numpoints);
 		if (r == 0 || r == -1)
-			return NULL;
+			return nullptr;
 		if (planenum == -1) // end of model
 			break;
 		if (r != 4)

@@ -1157,7 +1157,7 @@ char* stristr(const char* string, const char* string2)
 		}
 		else
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 	return (char*)string;
@@ -1183,7 +1183,7 @@ int lookup_texture(const char* texturename)
 
 	strcpyn(texture[i].name, texturename);
 
-	if (stristr(texturename, "chrome") != NULL)
+	if (stristr(texturename, "chrome") != nullptr)
 	{
 		texture[i].flags = STUDIO_NF_FLATSHADE | STUDIO_NF_CHROME;
 	}
@@ -1876,7 +1876,7 @@ void Grab_Triangles(s_model_t* pmodel)
 	//
 	while (1)
 	{
-		if (fgets(line, sizeof(line), input) != NULL)
+		if (fgets(line, sizeof(line), input) != nullptr)
 		{
 			s_mesh_t* pmesh;
 			char texturename[64];
@@ -1933,7 +1933,7 @@ void Grab_Triangles(s_model_t* pmodel)
 				else
 					ptriv = lookup_triangle(pmesh, pmesh->numtris) + j;
 
-				if (fgets(line, sizeof(line), input) != NULL)
+				if (fgets(line, sizeof(line), input) != nullptr)
 				{
 					s_vertex_t p;
 					vec3_t tmp;
@@ -2079,7 +2079,7 @@ void Grab_Skeleton(s_node_t* pnodes, s_bone_t* pbones)
 	char cmd[1024];
 	int index;
 
-	while (fgets(line, sizeof(line), input) != NULL)
+	while (fgets(line, sizeof(line), input) != nullptr)
 	{
 		linecount++;
 		if (sscanf(line, "%d %f %f %f %f %f %f", &index, &x, &y, &z, &xr, &yr, &zr) == 7)
@@ -2122,7 +2122,7 @@ int Grab_Nodes(s_node_t* pnodes)
 	int numnodebones = 0;
 	int i;
 
-	while (fgets(line, sizeof(line), input) != NULL)
+	while (fgets(line, sizeof(line), input) != nullptr)
 	{
 		linecount++;
 		if (sscanf(line, "%d \"%[^\"]\" %d", &index, name, &parent) == 3)
@@ -2178,7 +2178,7 @@ void Grab_Studio(s_model_t* pmodel)
 	}
 	linecount = 0;
 
-	while (fgets(line, sizeof(line), input) != NULL)
+	while (fgets(line, sizeof(line), input) != nullptr)
 	{
 		linecount++;
 		sscanf(line, "%s %d", cmd, &option);
@@ -2417,7 +2417,7 @@ void Grab_Animation(s_animation_t* panim)
 	cz = cos(zrotation);
 	sz = sin(zrotation);
 
-	while (fgets(line, sizeof(line), input) != NULL)
+	while (fgets(line, sizeof(line), input) != nullptr)
 	{
 		linecount++;
 		if (sscanf(line, "%d %f %f %f %f %f %f", &index, &pos[0], &pos[1], &pos[2], &rot[0], &rot[1], &rot[2]) == 7)
@@ -2532,7 +2532,7 @@ void Option_Animation(char* name, s_animation_t* panim)
 	}
 	linecount = 0;
 
-	while (fgets(line, sizeof(line), input) != NULL)
+	while (fgets(line, sizeof(line), input) != nullptr)
 	{
 		linecount++;
 		sscanf(line, "%s %d", cmd, &option);
@@ -2555,7 +2555,7 @@ void Option_Animation(char* name, s_animation_t* panim)
 		else
 		{
 			printf("unknown studio command : %s\n", cmd);
-			while (fgets(line, sizeof(line), input) != NULL)
+			while (fgets(line, sizeof(line), input) != nullptr)
 			{
 				linecount++;
 				if (strncmp(line, "end", 3) == 0)

@@ -20,14 +20,14 @@ using namespace vgui;
 
 
 CCheckButton2::CCheckButton2() : m_Label(""),
-								 m_pChecked(NULL),
-								 m_pUnchecked(NULL),
-								 m_pHandler(NULL),
-								 m_CheckboxPanel(NULL)
+								 m_pChecked(nullptr),
+								 m_pUnchecked(nullptr),
+								 m_pHandler(nullptr),
+								 m_CheckboxPanel(nullptr)
 {
 	m_bOwnImages = false;
 	m_bChecked = false;
-	m_pChecked = m_pUnchecked = NULL;
+	m_pChecked = m_pUnchecked = nullptr;
 	m_bCheckboxLeft = true;
 
 	m_Label.setParent(this);
@@ -80,8 +80,8 @@ void CCheckButton2::DeleteImages()
 		delete m_pUnchecked;
 	}
 
-	m_pChecked = NULL;
-	m_pUnchecked = NULL;
+	m_pChecked = nullptr;
+	m_pUnchecked = nullptr;
 	m_bOwnImages = false;
 
 	SetupControls();

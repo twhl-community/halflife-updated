@@ -302,7 +302,7 @@ void ClipWinding(winding_t* in, vec3_t normal, vec_t dist,
 	sides[i] = sides[0];
 	dists[i] = dists[0];
 
-	*front = *back = NULL;
+	*front = *back = nullptr;
 
 	if (!counts[0])
 	{
@@ -417,7 +417,7 @@ void ClipWindingNoCopy(winding_t* in, vec3_t normal, vec_t dist,
 	sides[i] = sides[0];
 	dists[i] = dists[0];
 
-	*front = *back = NULL;
+	*front = *back = nullptr;
 
 	if (!counts[0])
 	{
@@ -531,7 +531,7 @@ winding_t* ChopWindingNoFree(winding_t* in, vec3_t normal, vec_t dist)
 	dists[i] = dists[0];
 
 	if (!counts[0])
-		return NULL;
+		return nullptr;
 	if (!counts[1])
 		return in;
 

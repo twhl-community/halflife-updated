@@ -85,7 +85,7 @@ public:
 
 	entvars_t* m_pLinkEnt; // the entity that blocks this connection (doors, etc)
 
-	// m_szLinkEntModelname is not necessarily NULL terminated (so we can store it in a more alignment-friendly 4 bytes)
+	// m_szLinkEntModelname is not necessarily nullptr terminated (so we can store it in a more alignment-friendly 4 bytes)
 	char m_szLinkEntModelname[4]; // the unique name of the brush model that blocks the connection (this is kept for save/restore)
 
 	int m_afLinkInfo; // information about this link

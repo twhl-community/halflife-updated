@@ -242,18 +242,18 @@ done:
 int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 {
 	int i, rc = 0;
-	FILE* pfile = NULL;
+	FILE* pfile = nullptr;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;
 	RGBQUAD rgrgbPalette[256];
 	ULONG cbBmpBits;
 	BYTE* pbBmpBits;
-	byte *pb, *pbPal = NULL;
+	byte *pb, *pbPal = nullptr;
 	ULONG cbPalBytes;
 	ULONG biTrueWidth;
 
 	// Bogus parameter check
-	if (!(ppbPalette != NULL && ppbBits != NULL))
+	if (!(ppbPalette != nullptr && ppbBits != nullptr))
 	{
 		std::cerr << "invalid BMP file\n";
 		rc = -1000;
@@ -261,7 +261,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 	}
 
 	// File exists?
-	if ((pfile = fopen(szFile, "rb")) == NULL)
+	if ((pfile = fopen(szFile, "rb")) == nullptr)
 	{
 		std::cerr << "unable to open BMP file\n";
 		rc = -1;
@@ -333,7 +333,7 @@ int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
 
 	// convert to a packed 768 byte palette
 	pbPal = reinterpret_cast<byte*>(malloc(768));
-	if (pbPal == NULL)
+	if (pbPal == nullptr)
 	{
 		rc = -7;
 		goto GetOut;
@@ -399,7 +399,7 @@ GetOut:
 int WriteBMPfile(char* szFile, byte* pbBits, int width, int height, byte* pbPalette)
 {
 	int i, rc = 0;
-	FILE* pfile = NULL;
+	FILE* pfile = nullptr;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;
 	RGBQUAD rgrgbPalette[256];
@@ -410,14 +410,14 @@ int WriteBMPfile(char* szFile, byte* pbBits, int width, int height, byte* pbPale
 	ULONG biTrueWidth;
 
 	// Bogus parameter check
-	if (!(pbPalette != NULL && pbBits != NULL))
+	if (!(pbPalette != nullptr && pbBits != nullptr))
 	{
 		rc = -1000;
 		goto GetOut;
 	}
 
 	// File exists?
-	if ((pfile = fopen(szFile, "wb")) == NULL)
+	if ((pfile = fopen(szFile, "wb")) == nullptr)
 	{
 		rc = -1;
 		goto GetOut;
@@ -541,9 +541,9 @@ void LoadLBM(char* filename, byte** picture, byte** palette)
 	void (*mungecall)(int, byte*);
 
 	// qiet compiler warnings
-	picbuffer = NULL;
-	cmapbuffer = NULL;
-	mungecall = NULL;
+	picbuffer = nullptr;
+	cmapbuffer = nullptr;
+	mungecall = nullptr;
 
 	//
 	// load the LBM

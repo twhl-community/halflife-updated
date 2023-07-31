@@ -106,7 +106,7 @@ surface_t* ChooseMidPlaneFromList(surface_t* surfaces, vec3_t mins, vec3_t maxs)
 	// pick the plane that splits the least
 	//
 	bestvalue = 6 * 8192 * 8192;
-	bestsurface = NULL;
+	bestsurface = nullptr;
 
 	for (p = surfaces; p; p = p->next)
 	{
@@ -179,7 +179,7 @@ surface_t* ChoosePlaneFromList(surface_t* surfaces, vec3_t mins, vec3_t maxs)
 	// pick the plane that splits the least
 	//
 	bestvalue = 99999;
-	bestsurface = NULL;
+	bestsurface = nullptr;
 	bestdistribution = 9e30;
 
 	for (p = surfaces; p; p = p->next)
@@ -261,7 +261,7 @@ surface_t* ChoosePlaneFromList(surface_t* surfaces, vec3_t mins, vec3_t maxs)
 SelectPartition
 
 Selects a surface from a linked list of surfaces to split the group on
-returns NULL if the surface list can not be divided any more (a leaf)
+returns nullptr if the surface list can not be divided any more (a leaf)
 ==================
 */
 surface_t* SelectPartition(surface_t* surfaces, node_t* node, bool usemidsplit)
@@ -273,7 +273,7 @@ surface_t* SelectPartition(surface_t* surfaces, node_t* node, bool usemidsplit)
 	// count surface choices
 	//
 	i = 0;
-	bestsurface = NULL;
+	bestsurface = nullptr;
 	for (p = surfaces; p; p = p->next)
 		if (!p->onnode)
 		{
@@ -282,7 +282,7 @@ surface_t* SelectPartition(surface_t* surfaces, node_t* node, bool usemidsplit)
 		}
 
 	if (i == 0)
-		return NULL; // this is a leafnode
+		return nullptr; // this is a leafnode
 
 	if (i == 1)
 		return bestsurface; // this is a final split
@@ -360,17 +360,17 @@ void DivideSurface(surface_t* in, dplane_t* split, surface_t** front, surface_t*
 		if (inplane->dist > split->dist)
 		{
 			*front = in;
-			*back = NULL;
+			*back = nullptr;
 		}
 		else if (inplane->dist < split->dist)
 		{
-			*front = NULL;
+			*front = nullptr;
 			*back = in;
 		}
 		else
 		{ // split the surface into front and back
-			frontlist = NULL;
-			backlist = NULL;
+			frontlist = nullptr;
+			backlist = nullptr;
 			for (facet = in->faces; facet; facet = next)
 			{
 				next = facet->next;
@@ -392,8 +392,8 @@ void DivideSurface(surface_t* in, dplane_t* split, surface_t** front, surface_t*
 
 	// do a real split.  may still end up entirely on one side
 	// OPTIMIZE: use bounding box for fast test
-	frontlist = NULL;
-	backlist = NULL;
+	frontlist = nullptr;
+	backlist = nullptr;
 
 	for (facet = in->faces; facet; facet = next)
 	{
@@ -413,18 +413,18 @@ void DivideSurface(surface_t* in, dplane_t* split, surface_t** front, surface_t*
 
 // if nothing actually got split, just move the in plane
 makesurfs:
-	if (frontlist == NULL)
+	if (frontlist == nullptr)
 	{
-		*front = NULL;
+		*front = nullptr;
 		*back = in;
 		in->faces = backlist;
 		return;
 	}
 
-	if (backlist == NULL)
+	if (backlist == nullptr)
 	{
 		*front = in;
-		*back = NULL;
+		*back = nullptr;
 		in->faces = frontlist;
 		return;
 	}
@@ -458,8 +458,8 @@ void SplitNodeSurfaces(surface_t* surfaces, node_t* node)
 
 	splitplane = &dplanes[node->planenum];
 
-	frontlist = NULL;
-	backlist = NULL;
+	frontlist = nullptr;
+	backlist = nullptr;
 
 	for (p = surfaces; p; p = next)
 	{
@@ -553,7 +553,7 @@ void FreeLeafSurfs(node_t* leaf)
 		FreeSurface(surf);
 	}
 
-	leaf->surfaces = NULL;
+	leaf->surfaces = nullptr;
 }
 
 /*
@@ -573,7 +573,7 @@ void LinkLeafFaces(surface_t* planelist, node_t* leafnode)
 	int nummarkfaces;
 	face_t* markfaces[MAX_LEAF_FACES];
 
-	leafnode->faces = NULL;
+	leafnode->faces = nullptr;
 	leafnode->planenum = -1;
 
 	rank = -1;
@@ -604,7 +604,7 @@ void LinkLeafFaces(surface_t* planelist, node_t* leafnode)
 		}
 
 		c_leaffaces += nummarkfaces;
-		markfaces[nummarkfaces] = NULL; // end marker
+		markfaces[nummarkfaces] = nullptr; // end marker
 		nummarkfaces++;
 
 		leafnode->markfaces = reinterpret_cast<face_t**>(malloc(nummarkfaces * sizeof(*leafnode->markfaces)));
@@ -612,7 +612,7 @@ void LinkLeafFaces(surface_t* planelist, node_t* leafnode)
 	}
 
 	FreeLeafSurfs(leafnode);
-	leafnode->surfaces = NULL;
+	leafnode->surfaces = nullptr;
 }
 
 
@@ -747,7 +747,7 @@ void SplitNodePortals(node_t* node)
 		}
 	}
 
-	node->portals = NULL;
+	node->portals = nullptr;
 }
 
 
@@ -833,8 +833,8 @@ void CopyFacesToNode(node_t* node, surface_t* surf)
 	}
 
 	// copy the faces to the node, and consider them the originals
-	node->surfaces = NULL;
-	node->faces = NULL;
+	node->surfaces = nullptr;
+	node->faces = nullptr;
 	for (f = surf->faces; f; f = f->next)
 	{
 		if (f->contents != CONTENTS_SOLID)
@@ -897,7 +897,7 @@ void BuildBspTree_r(node_t* node)
 	split->onnode = node; // can't use again
 	allsurfs = node->surfaces;
 	node->planenum = split->planenum;
-	node->faces = NULL;
+	node->faces = nullptr;
 	CopyFacesToNode(node, split);
 	c_splitnodes++;
 

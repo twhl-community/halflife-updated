@@ -34,7 +34,7 @@ enum ENGINE_COMMAND_TOKEN
 /////////////////////////////////////////////////////////////////////////////
 // CServerCtrlDlg dialog
 
-CServerCtrlDlg::CServerCtrlDlg(CWnd* pParent /*=NULL*/)
+CServerCtrlDlg::CServerCtrlDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(CServerCtrlDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CServerCtrlDlg)
@@ -99,7 +99,7 @@ int CServerCtrlDlg::RunModalLoop(DWORD dwFlags)
 
 		// phase1: check to see if we can do idle work
 		while (bIdle &&
-			   !::PeekMessage(pMsg, NULL, NULL, NULL, PM_NOREMOVE))
+			   !::PeekMessage(pMsg, nullptr, NULL, NULL, PM_NOREMOVE))
 		{
 			ASSERT(ContinueModal());
 
@@ -112,7 +112,7 @@ int CServerCtrlDlg::RunModalLoop(DWORD dwFlags)
 			}
 
 			// call OnIdle while in bIdle state
-			if (!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
+			if (!(dwFlags & MLF_NOIDLEMSG) && hWndParent != nullptr && lIdleCount == 0)
 			{
 				// send WM_ENTERIDLE to the parent
 				::SendMessage(hWndParent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)m_hWnd);
@@ -137,7 +137,7 @@ int CServerCtrlDlg::RunModalLoop(DWORD dwFlags)
 			{
 				// If there isn't a message, don't turn over control to PumpMessage
 				//  since it will block
-				if (!::PeekMessage(pMsg, NULL, NULL, NULL, PM_NOREMOVE))
+				if (!::PeekMessage(pMsg, nullptr, NULL, NULL, PM_NOREMOVE))
 				{
 					ShouldPump = FALSE;
 				}
@@ -172,7 +172,7 @@ int CServerCtrlDlg::RunModalLoop(DWORD dwFlags)
 				}
 			}
 
-		} while (::PeekMessage(pMsg, NULL, NULL, NULL, PM_NOREMOVE));
+		} while (::PeekMessage(pMsg, nullptr, NULL, NULL, PM_NOREMOVE));
 	}
 ExitModal:
 	m_nFlags &= ~(WF_MODALLOOP | WF_CONTINUEMODAL);
@@ -182,31 +182,31 @@ ExitModal:
 long long CServerCtrlDlg::DoModal()
 {
 	// can be constructed with a resource template or InitModalIndirect
-	ASSERT(m_lpszTemplateName != NULL || m_hDialogTemplate != NULL ||
-		   m_lpDialogTemplate != NULL);
+	ASSERT(m_lpszTemplateName != nullptr || m_hDialogTemplate != nullptr ||
+		   m_lpDialogTemplate != nullptr);
 
 	// load resource as necessary
 	LPCDLGTEMPLATE lpDialogTemplate = m_lpDialogTemplate;
 	HGLOBAL hDialogTemplate = m_hDialogTemplate;
 	HINSTANCE hInst = AfxGetResourceHandle();
-	if (m_lpszTemplateName != NULL)
+	if (m_lpszTemplateName != nullptr)
 	{
 		hInst = AfxFindResourceHandle(m_lpszTemplateName, RT_DIALOG);
 		HRSRC hResource = ::FindResource(hInst, m_lpszTemplateName, RT_DIALOG);
 		hDialogTemplate = LoadResource(hInst, hResource);
 	}
-	if (hDialogTemplate != NULL)
+	if (hDialogTemplate != nullptr)
 		lpDialogTemplate = (LPCDLGTEMPLATE)LockResource(hDialogTemplate);
 
 	// return -1 in case of failure to load the dialog template resource
-	if (lpDialogTemplate == NULL)
+	if (lpDialogTemplate == nullptr)
 		return -1;
 
 	// disable parent (before creating dialog)
 	HWND hWndParent = PreModal();
 	AfxUnhookWindowCreate();
 	BOOL bEnableParent = FALSE;
-	if (hWndParent != NULL && ::IsWindowEnabled(hWndParent))
+	if (hWndParent != nullptr && ::IsWindowEnabled(hWndParent))
 	{
 		::EnableWindow(hWndParent, FALSE);
 		bEnableParent = TRUE;
@@ -229,8 +229,8 @@ long long CServerCtrlDlg::DoModal()
 			}
 
 			// hide the window before enabling the parent, etc.
-			if (m_hWnd != NULL)
-				SetWindowPos(NULL, 0, 0, 0, 0, SWP_HIDEWINDOW | SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+			if (m_hWnd != nullptr)
+				SetWindowPos(nullptr, 0, 0, 0, 0, SWP_HIDEWINDOW | SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 		}
 	}
 	CATCH_ALL(e)
@@ -242,7 +242,7 @@ long long CServerCtrlDlg::DoModal()
 
 	if (bEnableParent)
 		::EnableWindow(hWndParent, TRUE);
-	if (hWndParent != NULL && ::GetActiveWindow() == m_hWnd)
+	if (hWndParent != nullptr && ::GetActiveWindow() == m_hWnd)
 		::SetActiveWindow(hWndParent);
 
 	// destroy modal window
@@ -250,9 +250,9 @@ long long CServerCtrlDlg::DoModal()
 	PostModal();
 
 	// unlock/free resources as necessary
-	if (m_lpszTemplateName != NULL || m_hDialogTemplate != NULL)
+	if (m_lpszTemplateName != nullptr || m_hDialogTemplate != nullptr)
 		UnlockResource(hDialogTemplate);
-	if (m_lpszTemplateName != NULL)
+	if (m_lpszTemplateName != nullptr)
 		FreeResource(hDialogTemplate);
 
 	return m_nModalResult;
@@ -452,10 +452,10 @@ void CServerCtrlDlg::OnBtnStart(void)
 
 	// HLDS must be able to inherit the handles we pass via command line so we need to mark the handle as inheritable
 	SA.bInheritHandle = TRUE;
-	SA.lpSecurityDescriptor = NULL;
+	SA.lpSecurityDescriptor = nullptr;
 
 	// Create handles && hlds process
-	m_hMappedFile = CreateFileMapping((HANDLE)0xFFFFFFFF, &SA, PAGE_READWRITE, 0, 16384, NULL);
+	m_hMappedFile = CreateFileMapping((HANDLE)0xFFFFFFFF, &SA, PAGE_READWRITE, 0, 16384, nullptr);
 	if (!m_hMappedFile)
 	{
 		AfxMessageBox("Couldn't create mapped file", MB_OK);
@@ -463,8 +463,8 @@ void CServerCtrlDlg::OnBtnStart(void)
 	}
 
 	// Uses same security attributes to make handle inheritable
-	m_hSend = CreateEvent(&SA, FALSE, FALSE, NULL);
-	m_hReceive = CreateEvent(&SA, FALSE, FALSE, NULL);
+	m_hSend = CreateEvent(&SA, FALSE, FALSE, nullptr);
+	m_hReceive = CreateEvent(&SA, FALSE, FALSE, nullptr);
 
 	memset(&SI, 0, sizeof(SI));
 	SI.cb = sizeof(SI);
@@ -480,7 +480,7 @@ void CServerCtrlDlg::OnBtnStart(void)
 	sprintf(sz, "%s\\hlds.exe +sv_lan 1 -HFILE %i -HPARENT %i -HCHILD %i", szdir, (int)m_hMappedFile, (int)m_hSend, (int)m_hReceive);
 
 	// Run it
-	if (!CreateProcess(NULL, sz, &SA, NULL, TRUE, 0, NULL, szdir, &SI, &PI))
+	if (!CreateProcess(nullptr, sz, &SA, nullptr, TRUE, 0, nullptr, szdir, &SI, &PI))
 	{
 		AfxMessageBox("Couldn't create dedicated server process?  Correct path", MB_OK);
 	}

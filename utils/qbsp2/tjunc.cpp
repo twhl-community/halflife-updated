@@ -282,7 +282,7 @@ void SplitFaceForTjunc(face_t* f, face_t* original)
 	vec_t v;
 	int firstcorner, lastcorner;
 
-	chain = NULL;
+	chain = nullptr;
 	do
 	{
 		if (f->numpoints <= MAXPOINTS)
@@ -453,7 +453,7 @@ void tjunc_fix_r(node_t* node)
 	if (node->planenum == PLANENUM_LEAF)
 		return;
 
-	newlist = NULL;
+	newlist = nullptr;
 
 	for (f = node->faces; f; f = next)
 	{

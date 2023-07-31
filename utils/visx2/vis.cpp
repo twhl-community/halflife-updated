@@ -117,12 +117,12 @@ portal_t* GetNextPortal(void)
 
 	i = GetThreadWork(); // bump the pacifier
 	if (i == -1)
-		return NULL;
+		return nullptr;
 
 	ThreadLock();
 
 	min = 99999;
-	p = NULL;
+	p = nullptr;
 
 	for (j = 0, tp = portals; j < numportals * 2; j++, tp++)
 	{

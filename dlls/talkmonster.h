@@ -141,7 +141,7 @@ public:
 	void Talk(float flDuration);
 	// For following
 	bool CanFollow();
-	bool IsFollowing() { return m_hTargetEnt != NULL && m_hTargetEnt->IsPlayer(); }
+	bool IsFollowing() { return m_hTargetEnt != nullptr && m_hTargetEnt->IsPlayer(); }
 	void StopFollowing(bool clearSchedule) override;
 	void StartFollowing(CBaseEntity* pLeader);
 	virtual void DeclineFollowing() {}

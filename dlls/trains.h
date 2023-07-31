@@ -45,7 +45,7 @@ public:
 	void Link();
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
-	CPathTrack* ValidPath(CPathTrack* ppath, bool testFlag); // Returns ppath if enabled, NULL otherwise
+	CPathTrack* ValidPath(CPathTrack* ppath, bool testFlag); // Returns ppath if enabled, nullptr otherwise
 	void Project(CPathTrack* pstart, CPathTrack* pend, Vector* origin, float dist);
 
 	static CPathTrack* Instance(edict_t* pent);

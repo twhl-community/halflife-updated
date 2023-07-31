@@ -52,7 +52,7 @@ TryMerge
 If two polygons share a common edge and the edges that meet at the
 common points are both inside the other polygons, merge them
 
-Returns NULL if the faces couldn't be merged, or the new face.
+Returns nullptr if the faces couldn't be merged, or the new face.
 The originals will NOT be freed.
 =============
 */
@@ -67,16 +67,16 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	bool keep1, keep2;
 
 	if (f1->numpoints == -1 || f2->numpoints == -1)
-		return NULL;
+		return nullptr;
 	if (f1->texturenum != f2->texturenum)
-		return NULL;
+		return nullptr;
 	if (f1->contents != f2->contents)
-		return NULL;
+		return nullptr;
 
 	//
 	// find a common edge
 	//
-	p1 = p2 = NULL; // stop compiler warning
+	p1 = p2 = nullptr; // stop compiler warning
 	j = 0;			//
 
 	for (i = 0; i < f1->numpoints; i++)
@@ -102,7 +102,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	}
 
 	if (i == f1->numpoints)
-		return NULL; // no matching edges
+		return nullptr; // no matching edges
 
 	//
 	// check slope of connected lines
@@ -120,7 +120,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	VectorSubtract(back, p1, delta);
 	dot = DotProduct(delta, normal);
 	if (dot > CONTINUOUS_EPSILON)
-		return NULL; // not a convex polygon
+		return nullptr; // not a convex polygon
 	keep1 = dot < -CONTINUOUS_EPSILON;
 
 	back = f1->pts[(i + 2) % f1->numpoints];
@@ -132,7 +132,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	VectorSubtract(back, p2, delta);
 	dot = DotProduct(delta, normal);
 	if (dot > CONTINUOUS_EPSILON)
-		return NULL; // not a convex polygon
+		return nullptr; // not a convex polygon
 	keep2 = dot < -CONTINUOUS_EPSILON;
 
 	//
@@ -141,7 +141,7 @@ face_t* TryMerge(face_t* f1, face_t* f2)
 	if (f1->numpoints + f2->numpoints > MAXEDGES)
 	{
 		//		Error ("TryMerge: too many edges!");
-		return NULL;
+		return nullptr;
 	}
 
 	newf = NewFaceFromFace(f1);
@@ -212,7 +212,7 @@ face_t* FreeMergeListScraps(face_t* merged)
 {
 	face_t *head, *next;
 
-	head = NULL;
+	head = nullptr;
 	for (; merged; merged = next)
 	{
 		next = merged->next;
@@ -239,7 +239,7 @@ void MergePlaneFaces(surface_t* plane)
 	face_t *f1, *next;
 	face_t* merged;
 
-	merged = NULL;
+	merged = nullptr;
 
 	for (f1 = plane->faces; f1; f1 = next)
 	{

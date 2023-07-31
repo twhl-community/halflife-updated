@@ -21,18 +21,18 @@ void* GetModuleHandle(const char* name)
 	void* handle;
 
 
-	if (name == NULL)
+	if (name == nullptr)
 	{
 		// hmm, how can this be handled under linux....
 		// is it even needed?
-		return NULL;
+		return nullptr;
 	}
 
-	if ((handle = dlopen(name, RTLD_NOW)) == NULL)
+	if ((handle = dlopen(name, RTLD_NOW)) == nullptr)
 	{
 		//printf("Error:%s\n",dlerror());
 		// couldn't open this file
-		return NULL;
+		return nullptr;
 	}
 
 	// read "man dlopen" for details
@@ -46,7 +46,7 @@ void* GetModuleHandle(const char* name)
 // ------------------------------------------------------------------------------------ //
 // InterfaceReg.
 // ------------------------------------------------------------------------------------ //
-InterfaceReg* InterfaceReg::s_pInterfaceRegs = NULL;
+InterfaceReg* InterfaceReg::s_pInterfaceRegs = nullptr;
 
 
 InterfaceReg::InterfaceReg(InstantiateInterfaceFn fn, const char* pName) : m_pName(pName)
@@ -81,7 +81,7 @@ DLLEXPORT IBaseInterface* CreateInterface(const char* pName, int* pReturnCode)
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;
+	return nullptr;
 }
 
 //Local version of CreateInterface, marked static so that it is never merged with the version in other libraries
@@ -105,7 +105,7 @@ static IBaseInterface* CreateInterfaceLocal(const char* pName, int* pReturnCode)
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ CSysModule* Sys_LoadModule(const char* pModuleName)
 #if defined(WIN32)
 	HMODULE hDLL = LoadLibrary(pModuleName);
 #else
-	HMODULE hDLL = NULL;
+	HMODULE hDLL = nullptr;
 	char szAbsoluteModuleName[1024];
 	szAbsoluteModuleName[0] = 0;
 	if (pModuleName[0] != '/')
@@ -204,7 +204,7 @@ void Sys_UnloadModule(CSysModule* pModule)
 CreateInterfaceFn Sys_GetFactory(CSysModule* pModule)
 {
 	if (!pModule)
-		return NULL;
+		return nullptr;
 
 	HMODULE hDLL = reinterpret_cast<HMODULE>(pModule);
 

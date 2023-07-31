@@ -159,7 +159,7 @@ int GetEdge(vec3_t p1, vec3_t p2, face_t* f);
 typedef struct portal_s
 {
 	dplane_t plane;
-	node_t* onnode;	  // NULL = outside box
+	node_t* onnode;	  // nullptr = outside box
 	node_t* nodes[2]; // [0] = front side of plane
 	struct portal_s* next[2];
 	winding_t* winding;

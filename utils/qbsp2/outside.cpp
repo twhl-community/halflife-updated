@@ -200,7 +200,7 @@ node_t* ClearOutFaces_r(node_t* node)
 
 		// free any faces not in open child leafs
 		f = node->faces;
-		node->faces = NULL;
+		node->faces = nullptr;
 
 		for (; f; f = fnext)
 		{
@@ -355,7 +355,7 @@ node_t* FillOutside(node_t* node, bool leakfile)
 	outleafs = 0;
 	valid++;
 
-	prevleaknode = NULL;
+	prevleaknode = nullptr;
 
 	if (leakfile)
 	{

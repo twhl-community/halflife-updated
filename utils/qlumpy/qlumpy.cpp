@@ -67,7 +67,7 @@ command_t commands[] =
 		{"colormap2", GrabColormap2},
 		{"font", GrabFont},
 
-		{NULL, NULL} // list terminator
+		{nullptr, nullptr} // list terminator
 };
 
 enum TRANSPARENT_RGB
@@ -162,7 +162,7 @@ void LoadScreenBMP(char* pszName)
 	if (LoadBMP(pszExpanded, &byteimage, &lbmpalette))
 		Error("Failed to load!", pszExpanded);
 
-	if (byteimage == NULL || lbmpalette == NULL)
+	if (byteimage == nullptr || lbmpalette == nullptr)
 		Error("FAIL!", pszExpanded);
 	byteimagewidth = bmhd.w;
 	byteimageheight = bmhd.h;

@@ -82,8 +82,8 @@ void CHud::MsgFunc_InitHUD(const char* pszName, int iSize, void* pbuf)
 		g_pParticleMan->ResetParticles();
 
 	//Probably not a good place to put this.
-	pBeam = pBeam2 = NULL;
-	pFlare = NULL; // Vit_amiN: clear egon's beam flare
+	pBeam = pBeam2 = nullptr;
+	pFlare = nullptr; // Vit_amiN: clear egon's beam flare
 }
 
 

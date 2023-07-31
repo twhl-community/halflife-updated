@@ -156,7 +156,7 @@ void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 	for (i = 0; i < numthreads; i++)
 	{
 		threadhandle[i] = CreateThread(
-			NULL,						  // LPSECURITY_ATTRIBUTES lpsa,
+			nullptr,						  // LPSECURITY_ATTRIBUTES lpsa,
 			0,							  // DWORD cbStack,
 			(LPTHREAD_START_ROUTINE)func, // LPTHREAD_START_ROUTINE lpStartAddr,
 			(LPVOID)i,					  // LPVOID lpvThreadParm,
@@ -235,7 +235,7 @@ void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 	threaded = true;
 
 	if (pacifier)
-		setbuf(stdout, NULL);
+		setbuf(stdout, nullptr);
 
 	if (!my_mutex)
 	{
@@ -317,7 +317,7 @@ void RunThreadsOn(int workcnt, bool showpacifier, void (*func)(int))
 	start = I_FloatTime();
 #ifdef NeXT
 	if (pacifier)
-		setbuf(stdout, NULL);
+		setbuf(stdout, nullptr);
 #endif
 	func(0);
 

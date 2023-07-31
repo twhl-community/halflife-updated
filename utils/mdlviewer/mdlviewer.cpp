@@ -39,7 +39,7 @@ float gldepthmax = 10.0;
 
 SDL_Window* g_pWindow = nullptr;
 
-SDL_GLContext g_GLContext = NULL;
+SDL_GLContext g_GLContext = nullptr;
 
 /*
 =============
@@ -386,7 +386,7 @@ int main(int argc, char* argv[])
 	}
 
 	SDL_GL_DeleteContext(g_GLContext);
-	g_GLContext = NULL;
+	g_GLContext = nullptr;
 	SDL_DestroyWindow(g_pWindow);
 	g_pWindow = nullptr;
 

@@ -675,7 +675,7 @@ constexpr int NUM_HULLS = 4;
 #define BOUNCE_SHOTSHELL 0x80
 
 // Temp entity bounce sound types
-#define TE_BOUNCE_NULL 0
+#define TE_BOUNCE_nullptr 0
 #define TE_BOUNCE_SHELL 1
 #define TE_BOUNCE_SHOTSHELL 2
 

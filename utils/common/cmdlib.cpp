@@ -279,7 +279,7 @@ char* COM_Parse(char* data)
 	com_token[0] = 0;
 
 	if (!data)
-		return NULL;
+		return nullptr;
 
 // skip whitespace
 skipwhite:
@@ -288,7 +288,7 @@ skipwhite:
 		if (c == 0)
 		{
 			com_eof = true;
-			return NULL; // end of file;
+			return nullptr; // end of file;
 		}
 		data++;
 	}

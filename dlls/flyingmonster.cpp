@@ -193,7 +193,7 @@ void CFlyingMonster::MoveExecute(CBaseEntity* pTargetEnt, const Vector& vecDir, 
 		else
 			m_flightSpeed = UTIL_Approach(20, m_flightSpeed, 300 * gpGlobals->frametime);
 
-		if (LOCALMOVE_INVALID != CheckLocalMove(pev->origin, vecMove, pTargetEnt, NULL))
+		if (LOCALMOVE_INVALID != CheckLocalMove(pev->origin, vecMove, pTargetEnt, nullptr))
 		{
 			m_vecTravel = (vecMove - pev->origin);
 			m_vecTravel = m_vecTravel.Normalize();
@@ -219,7 +219,7 @@ float CFlyingMonster::CeilingZ(const Vector& position)
 	Vector maxUp = position;
 	maxUp.z += 4096.0;
 
-	UTIL_TraceLine(position, maxUp, ignore_monsters, NULL, &tr);
+	UTIL_TraceLine(position, maxUp, ignore_monsters, nullptr, &tr);
 	if (tr.flFraction != 1.0)
 		maxUp.z = tr.vecEndPos.z;
 
@@ -283,7 +283,7 @@ float CFlyingMonster::FloorZ(const Vector& position)
 	Vector down = position;
 	down.z -= 2048;
 
-	UTIL_TraceLine(position, down, ignore_monsters, NULL, &tr);
+	UTIL_TraceLine(position, down, ignore_monsters, nullptr, &tr);
 
 	if (tr.flFraction != 1.0)
 		return tr.vecEndPos.z;

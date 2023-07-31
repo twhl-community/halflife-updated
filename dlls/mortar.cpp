@@ -134,7 +134,7 @@ void CFuncMortarField::FieldUse(CBaseEntity* pActivator, CBaseEntity* pCaller, U
 	case 0: // random
 		break;
 	case 1: // Trigger Activator
-		if (pActivator != NULL)
+		if (pActivator != nullptr)
 		{
 			vecStart.x = pActivator->pev->origin.x;
 			vecStart.y = pActivator->pev->origin.y;
@@ -146,16 +146,16 @@ void CFuncMortarField::FieldUse(CBaseEntity* pActivator, CBaseEntity* pCaller, U
 
 		if (!FStringNull(m_iszXController))
 		{
-			pController = UTIL_FindEntityByTargetname(NULL, STRING(m_iszXController));
-			if (pController != NULL)
+			pController = UTIL_FindEntityByTargetname(nullptr, STRING(m_iszXController));
+			if (pController != nullptr)
 			{
 				vecStart.x = pev->mins.x + pController->pev->ideal_yaw * (pev->size.x);
 			}
 		}
 		if (!FStringNull(m_iszYController))
 		{
-			pController = UTIL_FindEntityByTargetname(NULL, STRING(m_iszYController));
-			if (pController != NULL)
+			pController = UTIL_FindEntityByTargetname(nullptr, STRING(m_iszYController));
+			if (pController != nullptr)
 			{
 				vecStart.y = pev->mins.y + pController->pev->ideal_yaw * (pev->size.y);
 			}
@@ -178,7 +178,7 @@ void CFuncMortarField::FieldUse(CBaseEntity* pActivator, CBaseEntity* pCaller, U
 		TraceResult tr;
 		UTIL_TraceLine(vecSpot, vecSpot + Vector(0, 0, -1) * 4096, ignore_monsters, ENT(pev), &tr);
 
-		edict_t* pentOwner = NULL;
+		edict_t* pentOwner = nullptr;
 		if (pActivator)
 			pentOwner = pActivator->edict();
 
@@ -310,7 +310,7 @@ void CMortar::MortarExplode()
 #if 0
 void CMortar::ShootTimed( EVARS *pevOwner, Vector vecStart, float time )
 {
-	CMortar *pMortar = GetClassPtr( (CMortar *)NULL );
+	CMortar *pMortar = GetClassPtr( (CMortar *)nullptr );
 	pMortar->Spawn();
 
 	TraceResult tr;

@@ -14,7 +14,7 @@
 #define HLTV_LISTEN 2 // tell client to listen to a multicast stream
 
 // director command types:
-#define DRC_CMD_NONE 0		 // NULL director command
+#define DRC_CMD_NONE 0		 // nullptr director command
 #define DRC_CMD_START 1		 // start director mode
 #define DRC_CMD_EVENT 2		 // informs about director command
 #define DRC_CMD_MODE 3		 // switches camera modes

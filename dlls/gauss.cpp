@@ -83,7 +83,7 @@ bool CGauss::GetItemInfo(ItemInfo* p)
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "uranium";
 	p->iMaxAmmo1 = URANIUM_MAX_CARRY;
-	p->pszAmmo2 = NULL;
+	p->pszAmmo2 = nullptr;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
 	p->iSlot = 3;
@@ -386,7 +386,7 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 
 		CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 
-		if (pEntity == NULL)
+		if (pEntity == nullptr)
 			break;
 
 		if (fFirstBeam)
@@ -408,7 +408,7 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 		{
 			float n;
 
-			pentIgnore = NULL;
+			pentIgnore = nullptr;
 
 			n = -DotProduct(tr.vecPlaneNormal, vecDir);
 

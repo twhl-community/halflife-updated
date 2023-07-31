@@ -107,7 +107,7 @@ bface_t* ClipFace(brush_t* /*b*/, bface_t* f, bface_t** outside,
 		}
 		f->next = *outside;
 		*outside = f;
-		return NULL;
+		return nullptr;
 	}
 
 	split = &mapplanes[splitplane];
@@ -129,13 +129,13 @@ bface_t* ClipFace(brush_t* /*b*/, bface_t* f, bface_t** outside,
 
 	if (!count[0])
 	{
-		fw = NULL;
+		fw = nullptr;
 		bw = f->w;
 	}
 	else if (!count[1])
 	{
 		fw = f->w;
-		bw = NULL;
+		bw = nullptr;
 	}
 	else
 #endif
@@ -148,7 +148,7 @@ bface_t* ClipFace(brush_t* /*b*/, bface_t* f, bface_t** outside,
 	{
 		f->next = *outside;
 		*outside = f;
-		return NULL;
+		return nullptr;
 	}
 
 	FreeWinding(f->w);
@@ -342,7 +342,7 @@ bface_t* CopyFacesToOutside(brushhull_t* bh)
 	bface_t *f, *newf;
 	bface_t* outside;
 
-	outside = NULL;
+	outside = nullptr;
 
 	for (f = bh->faces; f; f = f->next)
 	{
@@ -419,7 +419,7 @@ void CSGBrush(int brushnum)
 			// fragments are inside
 
 			f = outside;
-			outside = NULL;
+			outside = nullptr;
 			for (; f; f = next)
 			{
 				next = f->next;
@@ -449,7 +449,7 @@ void CSGBrush(int brushnum)
 					qprintf("Entity %i, Brush %i: tiny penetration\n", b1->entitynum, b1->brushnum);
 					c_tiny_clip++;
 					FreeFace(f);
-					f = NULL;
+					f = nullptr;
 				}
 				if (f)
 				{

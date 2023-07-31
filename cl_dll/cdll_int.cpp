@@ -40,7 +40,7 @@ extern bool g_ResetMousePosition;
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
-TeamFortressViewport* gViewPort = NULL;
+TeamFortressViewport* gViewPort = nullptr;
 
 
 #include "particleman.h"

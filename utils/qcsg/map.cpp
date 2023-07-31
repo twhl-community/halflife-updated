@@ -204,7 +204,7 @@ void ParseBrush(entity_t* mapent)
 
 		for (i = 0; i < NUM_HULLS; i++)
 		{
-			b->hulls[i].faces = NULL;
+			b->hulls[i].faces = nullptr;
 		}
 
 		if (b->entitynum == 0)

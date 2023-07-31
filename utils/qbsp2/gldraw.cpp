@@ -46,9 +46,9 @@ void Draw_DrawFace(face_t* f)
 
 constexpr int WIN_SIZE = 512;
 
-SDL_Window* g_pWindow = NULL;
+SDL_Window* g_pWindow = nullptr;
 
-SDL_GLContext g_GLContext = NULL;
+SDL_GLContext g_GLContext = nullptr;
 
 void InitWindow(void)
 {

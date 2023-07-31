@@ -15,7 +15,7 @@ class CServerCtrlDlg : public CDialog
 {
 	// Construction
 public:
-	CServerCtrlDlg(CWnd* pParent = NULL); // standard constructor
+	CServerCtrlDlg(CWnd* pParent = nullptr); // standard constructor
 	~CServerCtrlDlg(void);
 
 	void CloseHandles(void);

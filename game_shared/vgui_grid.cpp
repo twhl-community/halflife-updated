@@ -27,7 +27,7 @@ using namespace vgui;
 
 CGrid::CGridEntry::CGridEntry()
 {
-	m_pPanel = NULL;
+	m_pPanel = nullptr;
 	m_bUnderline = false;
 }
 
@@ -97,7 +97,7 @@ bool CGrid::SetEntry(int x, int y, Panel* pPanel)
 		return false;
 
 	if (pEntry->m_pPanel)
-		pEntry->m_pPanel->setParent(NULL);
+		pEntry->m_pPanel->setParent(nullptr);
 
 	pEntry->m_pPanel = pPanel;
 	if (pPanel)
@@ -331,8 +331,8 @@ void CGrid::SetRowUnderline(int row, bool enabled, int offset, int r, int g, int
 void CGrid::Clear()
 {
 	m_xCols = m_yRows = 0;
-	m_Widths = NULL;
-	m_GridEntries = NULL;
+	m_Widths = nullptr;
+	m_GridEntries = nullptr;
 	m_xSpacing = m_ySpacing = 0;
 	m_bDirty = false;
 }

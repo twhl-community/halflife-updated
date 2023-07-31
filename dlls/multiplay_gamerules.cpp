@@ -326,7 +326,7 @@ bool CHalfLifeMultiplay::ClientConnected(edict_t* pEntity, const char* pszName, 
 
 void CHalfLifeMultiplay::UpdateGameMode(CBasePlayer* pPlayer)
 {
-	MESSAGE_BEGIN(MSG_ONE, gmsgGameMode, NULL, pPlayer->edict());
+	MESSAGE_BEGIN(MSG_ONE, gmsgGameMode, nullptr, pPlayer->edict());
 	WRITE_BYTE(0); // game mode none
 	MESSAGE_END();
 }
@@ -359,7 +359,7 @@ void CHalfLifeMultiplay::InitHUD(CBasePlayer* pl)
 
 	// sending just one score makes the hud scoreboard active;  otherwise
 	// it is just disabled for single play
-	MESSAGE_BEGIN(MSG_ONE, gmsgScoreInfo, NULL, pl->edict());
+	MESSAGE_BEGIN(MSG_ONE, gmsgScoreInfo, nullptr, pl->edict());
 	WRITE_BYTE(ENTINDEX(pl->edict()));
 	WRITE_SHORT(0);
 	WRITE_SHORT(0);
@@ -377,7 +377,7 @@ void CHalfLifeMultiplay::InitHUD(CBasePlayer* pl)
 
 		if (plr)
 		{
-			MESSAGE_BEGIN(MSG_ONE, gmsgScoreInfo, NULL, pl->edict());
+			MESSAGE_BEGIN(MSG_ONE, gmsgScoreInfo, nullptr, pl->edict());
 			WRITE_BYTE(i); // client number
 			WRITE_SHORT(plr->pev->frags);
 			WRITE_SHORT(plr->m_iDeaths);
@@ -389,7 +389,7 @@ void CHalfLifeMultiplay::InitHUD(CBasePlayer* pl)
 
 	if (g_fGameOver)
 	{
-		MESSAGE_BEGIN(MSG_ONE, SVC_INTERMISSION, NULL, pl->edict());
+		MESSAGE_BEGIN(MSG_ONE, SVC_INTERMISSION, nullptr, pl->edict());
 		MESSAGE_END();
 	}
 }
@@ -477,7 +477,7 @@ void CHalfLifeMultiplay::PlayerThink(CBasePlayer* pPlayer)
 void CHalfLifeMultiplay::PlayerSpawn(CBasePlayer* pPlayer)
 {
 	bool addDefault;
-	CBaseEntity* pWeaponEntity = NULL;
+	CBaseEntity* pWeaponEntity = nullptr;
 
 	//Ensure the player switches to the Glock on spawn regardless of setting
 	const int originalAutoWepSwitch = pPlayer->m_iAutoWepSwitch;
@@ -543,7 +543,7 @@ void CHalfLifeMultiplay::PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, 
 
 
 	FireTargets("game_playerdie", pVictim, pVictim, USE_TOGGLE, 0);
-	CBasePlayer* peKiller = NULL;
+	CBasePlayer* peKiller = nullptr;
 	CBaseEntity* ktmp = CBaseEntity::Instance(pKiller);
 	if (ktmp && (ktmp->Classify() == CLASS_PLAYER))
 		peKiller = (CBasePlayer*)ktmp;
@@ -888,7 +888,7 @@ bool CHalfLifeMultiplay::CanHavePlayerItem(CBasePlayer* pPlayer, CBasePlayerItem
 		{
 			CBasePlayerItem* it = pPlayer->m_rgpPlayerItems[i];
 
-			while (it != NULL)
+			while (it != nullptr)
 			{
 				if (it->m_iId == pItem->m_iId)
 				{
@@ -1125,8 +1125,8 @@ void DestroyMapCycle(mapcycle_t* cycle)
 
 		delete cycle->items;
 	}
-	cycle->items = NULL;
-	cycle->next_item = NULL;
+	cycle->items = nullptr;
+	cycle->next_item = nullptr;
 }
 
 static char com_token[1500];
@@ -1147,14 +1147,14 @@ char* COM_Parse(char* data)
 	com_token[0] = 0;
 
 	if (!data)
-		return NULL;
+		return nullptr;
 
 // skip whitespace
 skipwhite:
 	while ((c = *data) <= ' ')
 	{
 		if (c == 0)
-			return NULL; // end of file;
+			return nullptr; // end of file;
 		data++;
 	}
 
@@ -1249,7 +1249,7 @@ bool ReloadMapCycleFile(char* filename, mapcycle_t* cycle)
 	char* pFileList;
 	char* aFileList = pFileList = (char*)LOAD_FILE_FOR_ME(filename, &length);
 	bool hasbuffer;
-	mapcycle_item_s *item, *newlist = NULL, *next;
+	mapcycle_item_s *item, *newlist = nullptr, *next;
 
 	if (pFileList && 0 != length)
 	{
@@ -1462,7 +1462,7 @@ void CHalfLifeMultiplay::ChangeLevel()
 
 	// find the map to change to
 	char* mapcfile = (char*)CVAR_GET_STRING("mapcyclefile");
-	ASSERT(mapcfile != NULL);
+	ASSERT(mapcfile != nullptr);
 
 	szCommands[0] = '\0';
 	szRules[0] = '\0';
@@ -1498,7 +1498,7 @@ void CHalfLifeMultiplay::ChangeLevel()
 		{
 			keeplooking = false;
 
-			ASSERT(item != NULL);
+			ASSERT(item != nullptr);
 
 			if (item->minplayers != 0)
 			{
@@ -1565,7 +1565,7 @@ void CHalfLifeMultiplay::ChangeLevel()
 		ALERT(at_console, "RULES:  %s\n", szRules);
 	}
 
-	CHANGE_LEVEL(szNextMap, NULL);
+	CHANGE_LEVEL(szNextMap, nullptr);
 	if (strlen(szCommands) > 0)
 	{
 		SERVER_COMMAND(szCommands);
@@ -1583,7 +1583,7 @@ void CHalfLifeMultiplay::SendMOTDToClient(edict_t* client)
 	char* aFileList = pFileList = (char*)LOAD_FILE_FOR_ME((char*)CVAR_GET_STRING("motdfile"), &length);
 
 	// send the server name
-	MESSAGE_BEGIN(MSG_ONE, gmsgServerName, NULL, client);
+	MESSAGE_BEGIN(MSG_ONE, gmsgServerName, nullptr, client);
 	WRITE_STRING(CVAR_GET_STRING("hostname"));
 	MESSAGE_END();
 
@@ -1610,7 +1610,7 @@ void CHalfLifeMultiplay::SendMOTDToClient(edict_t* client)
 		else
 			*pFileList = 0;
 
-		MESSAGE_BEGIN(MSG_ONE, gmsgMOTD, NULL, client);
+		MESSAGE_BEGIN(MSG_ONE, gmsgMOTD, nullptr, client);
 		WRITE_BYTE(static_cast<int>('\0' == *pFileList)); // false means there is still more message to come
 		WRITE_STRING(chunk);
 		MESSAGE_END();

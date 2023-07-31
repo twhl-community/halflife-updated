@@ -235,7 +235,7 @@ LINK_ENTITY_TO_CLASS(xen_ttrigger, CXenTreeTrigger);
 
 CXenTreeTrigger* CXenTreeTrigger::TriggerCreate(edict_t* pOwner, const Vector& position)
 {
-	CXenTreeTrigger* pTrigger = GetClassPtr((CXenTreeTrigger*)NULL);
+	CXenTreeTrigger* pTrigger = GetClassPtr((CXenTreeTrigger*)nullptr);
 	pTrigger->pev->origin = position;
 	pTrigger->pev->classname = MAKE_STRING("xen_ttrigger");
 	pTrigger->pev->solid = SOLID_TRIGGER;
@@ -311,7 +311,7 @@ void CXenTree::Spawn()
 	pev->framerate = RANDOM_FLOAT(0.7, 1.4);
 
 	Vector triggerPosition;
-	UTIL_MakeVectorsPrivate(pev->angles, triggerPosition, NULL, NULL);
+	UTIL_MakeVectorsPrivate(pev->angles, triggerPosition, nullptr, nullptr);
 	triggerPosition = pev->origin + (triggerPosition * 64);
 	// Create the trigger
 	m_pTrigger = CXenTreeTrigger::TriggerCreate(edict(), triggerPosition);
@@ -371,7 +371,7 @@ void CXenTree::HandleAnimEvent(MonsterEvent_t* pEvent)
 		int count = UTIL_EntitiesInBox(pList, 8, m_pTrigger->pev->absmin, m_pTrigger->pev->absmax, FL_MONSTER | FL_CLIENT);
 		Vector forward;
 
-		UTIL_MakeVectorsPrivate(pev->angles, forward, NULL, NULL);
+		UTIL_MakeVectorsPrivate(pev->angles, forward, nullptr, nullptr);
 
 		for (int i = 0; i < count; i++)
 		{
@@ -473,7 +473,7 @@ public:
 
 CXenHull* CXenHull::CreateHull(CBaseEntity* source, const Vector& mins, const Vector& maxs, const Vector& offset)
 {
-	CXenHull* pHull = GetClassPtr((CXenHull*)NULL);
+	CXenHull* pHull = GetClassPtr((CXenHull*)nullptr);
 
 	UTIL_SetOrigin(pHull->pev, source->pev->origin + offset);
 	SET_MODEL(pHull->edict(), STRING(source->pev->model));
@@ -527,7 +527,7 @@ void CXenSporeLarge::Spawn()
 
 	Vector forward, right;
 
-	UTIL_MakeVectorsPrivate(pev->angles, forward, right, NULL);
+	UTIL_MakeVectorsPrivate(pev->angles, forward, right, nullptr);
 
 	// Rotate the leg hulls into position
 	for (int i = 0; i < ARRAYSIZE(m_hullSizes); i++)

@@ -224,7 +224,7 @@ int BuildTris(s_trianglevert_t (*x)[3], s_mesh_t* y, byte** ppdata)
 	pmesh = y;
 
 
-	t = time(NULL);
+	t = time(nullptr);
 
 	for (i = 0; i < pmesh->numtris; i++)
 	{
@@ -337,10 +337,10 @@ int BuildTris(s_trianglevert_t (*x)[3], s_mesh_t* y, byte** ppdata)
 		// printf("%d ", bestlen - 2 );
 		numcommandnodes++;
 
-		if (t != time(NULL))
+		if (t != time(nullptr))
 		{
 			printf("%2d%%\r", (total * 100) / pmesh->numtris);
-			t = time(NULL);
+			t = time(nullptr);
 		}
 	}
 

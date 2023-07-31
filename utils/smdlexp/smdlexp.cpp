@@ -112,7 +112,7 @@ EXPORT_THIS ULONG LibVersion()
 
 CONSTRUCTOR SmdExportClass::SmdExportClass(void)
 {
-	m_rgmaxnode = NULL;
+	m_rgmaxnode = nullptr;
 }
 
 
@@ -161,7 +161,7 @@ int SmdExportClass::DoExport(const TCHAR* name, ExpInterface* ei, Interface* i, 
 	*/
 
 	FILE* pFile;
-	if ((pFile = _wfopen(szFile, _T("w"))) == NULL)
+	if ((pFile = _wfopen(szFile, _T("w"))) == nullptr)
 		return FALSE /*failure*/;
 
 	fwprintf(pFile, _T("version %d\n"), 1);
@@ -218,7 +218,7 @@ BOOL SmdExportClass::CollectNodes(ExpInterface* pexpiface)
 	// Alloc and fill array
 	m_imaxnodeMac = procCountNodes.m_cNodes;
 	m_rgmaxnode = new MaxNode[m_imaxnodeMac];
-	ASSERT_MBOX(m_rgmaxnode != NULL, _T("new failed"));
+	ASSERT_MBOX(m_rgmaxnode != nullptr, _T("new failed"));
 
 
 	CollectNodesTEP procCollectNodes;
@@ -456,7 +456,7 @@ Modifier* FindPhysiqueModifier(INode* nodePtr)
 	// Get object from node. Abort if no object.
 	Object* ObjectPtr = nodePtr->GetObjectRef();
 	if (!ObjectPtr)
-		return NULL;
+		return nullptr;
 
 	// Is derived object ?
 	if (ObjectPtr->SuperClassID() == GEN_DERIVOB_CLASS_ID)
@@ -482,7 +482,7 @@ Modifier* FindPhysiqueModifier(INode* nodePtr)
 		}
 	}
 	// Not found.
-	return NULL;
+	return nullptr;
 }
 
 
@@ -497,9 +497,9 @@ int DumpModelTEP::callback(INode* pnode)
 	int fHasMat = TRUE;
 
 	// clear physique export parameters
-	m_mcExport = NULL;
-	m_phyExport = NULL;
-	m_phyMod = NULL;
+	m_mcExport = nullptr;
+	m_phyExport = nullptr;
+	m_phyMod = nullptr;
 
 	ASSERT_MBOX(!(pnode)->IsRootNode(), _T("Encountered a root node!"));
 
@@ -524,7 +524,7 @@ int DumpModelTEP::callback(INode* pnode)
 
 	// Get node's material: should be a multi/sub (if it has a material at all)
 	Mtl* pmtlNode = pnode->GetMtl();
-	if (pmtlNode == NULL)
+	if (pmtlNode == nullptr)
 	{
 		return TREE_CONTINUE;
 		fHasMat = FALSE;
@@ -542,7 +542,7 @@ int DumpModelTEP::callback(INode* pnode)
 	TriObject* ptriobj;
 	BOOL fConvertedToTriObject =
 		pobj->CanConvertToType(triObjectClassID) &&
-		(ptriobj = (TriObject*)pobj->ConvertToType(m_tvToDump, triObjectClassID)) != NULL;
+		(ptriobj = (TriObject*)pobj->ConvertToType(m_tvToDump, triObjectClassID)) != nullptr;
 	if (!fConvertedToTriObject)
 		return TREE_CONTINUE;
 	Mesh* pmesh = &ptriobj->mesh;
@@ -645,13 +645,13 @@ int DumpModelTEP::callback(INode* pnode)
 				mtlidFace = 0;
 			}
 			Mtl* pmtlFace = pmtlNode->GetSubMtl(mtlidFace);
-			ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
+			ASSERT_AND_ABORT(pmtlFace != nullptr, _T("nullptr Sub-material returned"));
 
 			if ((pmtlFace->ClassID() == Class_ID(MULTI_CLASS_ID, 0) && pmtlFace->IsMultiMtl()))
 			{
 				// it's a sub-sub material.  Gads.
 				pmtlFace = pmtlFace->GetSubMtl(mtlidFace);
-				ASSERT_AND_ABORT(pmtlFace != NULL, _T("NULL Sub-material returned"));
+				ASSERT_AND_ABORT(pmtlFace != nullptr, _T("nullptr Sub-material returned"));
 			}
 
 			if (!(pmtlFace->ClassID() == Class_ID(DMTL_CLASS_ID, 0)))
@@ -664,8 +664,8 @@ int DumpModelTEP::callback(INode* pnode)
 			}
 			StdMat* pstdmtlFace = (StdMat*)pmtlFace;
 			Texmap* ptexmap = pstdmtlFace->GetSubTexmap(ID_DI);
-			// ASSERT_AND_ABORT(ptexmap != NULL, "NULL diffuse texture")
-			if (ptexmap != NULL)
+			// ASSERT_AND_ABORT(ptexmap != nullptr, "nullptr diffuse texture")
+			if (ptexmap != nullptr)
 			{
 				if (!(ptexmap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)))
 				{
@@ -782,11 +782,11 @@ void DumpModelTEP::cleanup(void)
 		if (m_mcExport)
 		{
 			m_phyExport->ReleaseContextInterface(m_mcExport);
-			m_mcExport = NULL;
+			m_mcExport = nullptr;
 		}
 		m_phyMod->ReleaseInterface(I_PHYINTERFACE, m_phyExport);
-		m_phyExport = NULL;
-		m_phyMod = NULL;
+		m_phyExport = nullptr;
+		m_phyMod = nullptr;
 	}
 }
 
@@ -824,8 +824,8 @@ Point3 DumpModelTEP::Pt3GetRVertexNormal(RVertex* prvertex, DWORD smGroupFace)
 	// Lookup the appropriate vertex normal, based on smoothing group.
 	int cNormals = prvertex->rFlags & NORCT_MASK;
 
-	ASSERT_MBOX((cNormals == 1 && prvertex->ern == NULL) ||
-					(cNormals > 1 && prvertex->ern != NULL),
+	ASSERT_MBOX((cNormals == 1 && prvertex->ern == nullptr) ||
+					(cNormals > 1 && prvertex->ern != nullptr),
 		_T("BOGUS RVERTEX"));
 
 	if (cNormals == 1)
@@ -1019,13 +1019,13 @@ bool SmdExportClass::hasStringPropertyValue(
 // Class:
 //
 // Description: Retrieves the specified property variant by name.
-//				Returns 0 (NULL) if not found.
+//				Returns 0 (nullptr) if not found.
 //
 // Parameters:	const char* -- the property's name
 //				Interface*	-- the max interface pointer
 //
 // Returns:		const PROPVARIANT* -- the property.  Returns 0
-//										(NULL) if not found.
+//										(nullptr) if not found.
 //
 //===============================================================
 const PROPVARIANT* SmdExportClass::getPropertyVariant(
@@ -1083,7 +1083,7 @@ void SmdExportClass::VariantToString(const PROPVARIANT* pProp, WCHAR* szString, 
 		GetDateFormat(LOCALE_SYSTEM_DEFAULT,
 			DATE_SHORTDATE,
 			&sysTime,
-			NULL,
+			nullptr,
 			szString,
 			bufSize);
 		break;

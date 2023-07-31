@@ -39,7 +39,7 @@ int nummiptex;
 lumpinfo_t miptex[MAX_MAP_TEXTURES];
 
 int nTexLumps = 0;
-lumpinfo_t* lumpinfo = NULL;
+lumpinfo_t* lumpinfo = nullptr;
 
 int nTexFiles = 0;
 FILE* texfiles[128];
@@ -103,7 +103,7 @@ bool TEX_InitFromWad(char* path)
 
 	// temporary kludge so we don't have to deal with no occurances of a semicolon
 	//  in the path name ..
-	if (strchr(szTmpPath, ';') == NULL)
+	if (strchr(szTmpPath, ';') == nullptr)
 		strcat(szTmpPath, ";");
 
 	pszWadFile = strtok(szTmpPath, ";");
@@ -167,7 +167,7 @@ bool TEX_InitFromWad(char* path)
 		}
 
 		// next wad file
-		pszWadFile = strtok(NULL, ";");
+		pszWadFile = strtok(nullptr, ";");
 	}
 
 	qsort((void*)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name);
@@ -184,7 +184,7 @@ FindTexture
 lumpinfo_t*
 FindTexture(lumpinfo_t* source)
 {
-	lumpinfo_t* found = NULL;
+	lumpinfo_t* found = nullptr;
 	if ((found = reinterpret_cast<lumpinfo_t*>(bsearch(source, (void*)lumpinfo, (size_t)nTexLumps, sizeof(lumpinfo[0]), lump_sorter_by_name))) == nullptr)
 		printf("WARNING: texture %s not found in BSP's wad file list!\n", source->name);
 

@@ -102,9 +102,9 @@ CommandButton::CommandButton(const char* text, int x, int y, int wide, int tall,
 
 void CommandButton::Init()
 {
-	m_pSubMenu = NULL;
-	m_pSubLabel = NULL;
-	m_pParentMenu = NULL;
+	m_pSubMenu = nullptr;
+	m_pSubLabel = nullptr;
+	m_pParentMenu = nullptr;
 
 	// Set text color to orange
 	setFgColor(Scheme::sc_primary1);
@@ -371,7 +371,7 @@ void CImageLabel::LoadImage(const char* pImageName)
 	// Load the Image
 	m_pTGA = LoadTGAForRes(pImageName);
 
-	if (m_pTGA == NULL)
+	if (m_pTGA == nullptr)
 	{
 		// we didn't find a matching image file for this resolution
 		// try to load file resolution independent
@@ -383,7 +383,7 @@ void CImageLabel::LoadImage(const char* pImageName)
 		fis.close();
 	}
 
-	if (m_pTGA == NULL)
+	if (m_pTGA == nullptr)
 		return; // unable to load image
 
 	int w, t;

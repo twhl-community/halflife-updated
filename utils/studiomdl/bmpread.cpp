@@ -21,7 +21,7 @@ int ReadBmpFile(
 	int* pheight)
 {
 	int rc = 0;
-	FILE* pfile = NULL;
+	FILE* pfile = nullptr;
 	BITMAPFILEHEADER bmfh;
 	BITMAPINFOHEADER bmih;
 	RGBQUAD rgrgbPalette[256];
@@ -30,14 +30,14 @@ int ReadBmpFile(
 	BYTE* pbBmpBits;
 
 	// Bogus parameter check
-	if (!(ppbPalette != NULL && ppbBits != NULL))
+	if (!(ppbPalette != nullptr && ppbBits != nullptr))
 	{
 		rc = -1000;
 		goto GetOut;
 	}
 
 	// File exists?
-	if ((pfile = fopen(szFile, "rb")) == NULL)
+	if ((pfile = fopen(szFile, "rb")) == nullptr)
 	{
 		rc = -1;
 		goto GetOut;

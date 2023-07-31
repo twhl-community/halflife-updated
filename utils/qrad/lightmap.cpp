@@ -208,7 +208,7 @@ triedge_t* FindEdge(triangulation_t* trian, int p0, int p1)
 	e = &trian->edges[trian->numedges];
 	e->p0 = p0;
 	e->p1 = p1;
-	e->tri = NULL;
+	e->tri = nullptr;
 	VectorCopy(normal, e->normal);
 	e->dist = dist;
 	trian->numedges++;
@@ -217,7 +217,7 @@ triedge_t* FindEdge(triangulation_t* trian, int p0, int p1)
 	be = &trian->edges[trian->numedges];
 	be->p0 = p1;
 	be->p1 = p0;
-	be->tri = NULL;
+	be->tri = nullptr;
 	VectorSubtract(vec3_origin, normal, be->normal);
 	be->dist = -dist;
 	trian->numedges++;
@@ -497,7 +497,7 @@ void SampleTriangulation(vec3_t point, triangulation_t* trian, triangle_t** last
 
 	// search for nearest point
 	best = 99999;
-	p1 = NULL;
+	p1 = nullptr;
 	for (j = 0; j < trian->numpoints; j++)
 	{
 		p0 = trian->points[j];
@@ -812,7 +812,7 @@ entity_t* FindTargetEntity(char* target)
 			return &entities[i];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /*
@@ -1063,7 +1063,7 @@ void GatherSampleLight(vec3_t pos, byte* pvs, vec3_t normal, vec3_t* sample, byt
 	float dist;
 	float ratio;
 	int style_index;
-	directlight_t* sky_used = NULL;
+	directlight_t* sky_used = nullptr;
 
 	for (i = 1; i < numleafs; i++)
 	{
@@ -1655,7 +1655,7 @@ void FinalLightFace(int facenum)
 
 	for (k = 0; k < lightstyles; k++)
 	{
-		last_tri = NULL;
+		last_tri = nullptr;
 		samp = fl->samples[k];
 		for (j = 0; j < fl->numsamples; j++, samp++)
 		{

@@ -87,7 +87,7 @@ public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 	bool IsLeader() { return m_pSquadLeader == this; }
-	bool InSquad() { return m_pSquadLeader != NULL; }
+	bool InSquad() { return m_pSquadLeader != nullptr; }
 	int SquadCount();
 	void SquadRemove(CFlockingFlyer* pRemove);
 	void SquadUnlink();
@@ -185,11 +185,11 @@ void CFlockingFlyerFlock::SpawnFlock()
 	Vector vecSpot;
 	CFlockingFlyer *pBoid, *pLeader;
 
-	pLeader = pBoid = NULL;
+	pLeader = pBoid = nullptr;
 
 	for (iCount = 0; iCount < m_cFlockSize; iCount++)
 	{
-		pBoid = GetClassPtr((CFlockingFlyer*)NULL);
+		pBoid = GetClassPtr((CFlockingFlyer*)nullptr);
 
 		if (!pLeader)
 		{
@@ -197,7 +197,7 @@ void CFlockingFlyerFlock::SpawnFlock()
 			pLeader = pBoid;
 
 			pLeader->m_pSquadLeader = pLeader;
-			pLeader->m_pSquadNext = NULL;
+			pLeader->m_pSquadNext = nullptr;
 		}
 
 		vecSpot.x = RANDOM_FLOAT(-R, R);
@@ -319,7 +319,7 @@ void CFlockingFlyer::FallHack()
 		else
 		{
 			pev->velocity = g_vecZero;
-			SetThink(NULL);
+			SetThink(nullptr);
 		}
 	}
 }
@@ -433,12 +433,12 @@ void CFlockingFlyer::FormFlock()
 	{
 		// I am my own leader
 		m_pSquadLeader = this;
-		m_pSquadNext = NULL;
+		m_pSquadNext = nullptr;
 		int squadCount = 1;
 
-		CBaseEntity* pEntity = NULL;
+		CBaseEntity* pEntity = nullptr;
 
-		while ((pEntity = UTIL_FindEntityInSphere(pEntity, pev->origin, AFLOCK_MAX_RECRUIT_RADIUS)) != NULL)
+		while ((pEntity = UTIL_FindEntityInSphere(pEntity, pev->origin, AFLOCK_MAX_RECRUIT_RADIUS)) != nullptr)
 		{
 			CBaseMonster* pRecruit = pEntity->MyMonsterPointer();
 
@@ -810,8 +810,8 @@ void CFlockingFlyer::FlockFollowerThink()
 //=========================================================
 void CFlockingFlyer::SquadUnlink()
 {
-	m_pSquadLeader = NULL;
-	m_pSquadNext = NULL;
+	m_pSquadLeader = nullptr;
+	m_pSquadNext = nullptr;
 }
 
 //=========================================================
@@ -821,7 +821,7 @@ void CFlockingFlyer::SquadUnlink()
 //=========================================================
 void CFlockingFlyer::SquadAdd(CFlockingFlyer* pAdd)
 {
-	ASSERT(pAdd != NULL);
+	ASSERT(pAdd != nullptr);
 	ASSERT(!pAdd->InSquad());
 	ASSERT(this->IsLeader());
 
@@ -837,7 +837,7 @@ void CFlockingFlyer::SquadAdd(CFlockingFlyer* pAdd)
 //=========================================================
 void CFlockingFlyer::SquadRemove(CFlockingFlyer* pRemove)
 {
-	ASSERT(pRemove != NULL);
+	ASSERT(pRemove != nullptr);
 	ASSERT(this->IsLeader());
 	ASSERT(pRemove->m_pSquadLeader == this);
 
@@ -871,7 +871,7 @@ void CFlockingFlyer::SquadRemove(CFlockingFlyer* pRemove)
 			while (pList->m_pSquadNext != pRemove)
 			{
 				// assert to test valid list construction
-				ASSERT(pList->m_pSquadNext != NULL);
+				ASSERT(pList->m_pSquadNext != nullptr);
 				pList = pList->m_pSquadNext;
 			}
 			// List validity

@@ -186,8 +186,8 @@ public:
 	virtual int BloodColor() { return DONT_BLEED; }
 	virtual void TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
 	virtual bool IsTriggered(CBaseEntity* pActivator) { return true; }
-	virtual CBaseMonster* MyMonsterPointer() { return NULL; }
-	virtual CSquadMonster* MySquadMonsterPointer() { return NULL; }
+	virtual CBaseMonster* MyMonsterPointer() { return nullptr; }
+	virtual CSquadMonster* MySquadMonsterPointer() { return nullptr; }
 	virtual int GetToggleState() { return TS_AT_TOP; }
 	virtual void AddPoints(int score, bool bAllowNegativeScore) {}
 	virtual void AddPointsToTeam(int score, bool bAllowNegativeScore) {}
@@ -267,10 +267,10 @@ public:
 	void EXPORT SUB_FadeOut();
 	void EXPORT SUB_CallUseToggle() { this->Use(this, this, USE_TOGGLE, 0); }
 	bool ShouldToggle(USE_TYPE useType, bool currentState);
-	void FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t* pevAttacker = NULL);
-	Vector FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t* pevAttacker = NULL, int shared_rand = 0);
+	void FireBullets(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t* pevAttacker = nullptr);
+	Vector FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector vecDirShooting, Vector vecSpread, float flDistance, int iBulletType, int iTracerFreq = 4, int iDamage = 0, entvars_t* pevAttacker = nullptr, int shared_rand = 0);
 
-	virtual CBaseEntity* Respawn() { return NULL; }
+	virtual CBaseEntity* Respawn() { return nullptr; }
 
 	void SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value);
 	// Do the bounding boxes of these two intersect?
@@ -288,14 +288,14 @@ public:
 		CBaseEntity* pEntity = Instance(pevMonster);
 		if (pEntity)
 			return pEntity->MyMonsterPointer();
-		return NULL;
+		return nullptr;
 	}
 	CBaseMonster* GetMonsterPointer(edict_t* pentMonster)
 	{
 		CBaseEntity* pEntity = Instance(pentMonster);
 		if (pEntity)
 			return pEntity->MyMonsterPointer();
-		return NULL;
+		return nullptr;
 	}
 
 
@@ -342,7 +342,7 @@ public:
 
 
 	//
-	static CBaseEntity* Create(const char* szName, const Vector& vecOrigin, const Vector& vecAngles, edict_t* pentOwner = NULL);
+	static CBaseEntity* Create(const char* szName, const Vector& vecOrigin, const Vector& vecAngles, edict_t* pentOwner = nullptr);
 
 	virtual bool FBecomeProne() { return false; }
 	edict_t* edict() { return ENT(pev); }
@@ -376,7 +376,7 @@ public:
 	int m_fireState;
 };
 
-inline bool FNullEnt(CBaseEntity* ent) { return (ent == NULL) || FNullEnt(ent->edict()); }
+inline bool FNullEnt(CBaseEntity* ent) { return (ent == nullptr) || FNullEnt(ent->edict()); }
 
 
 // Ugly technique to override base member functions
@@ -687,13 +687,13 @@ T* GetClassPtr(T* a)
 	entvars_t* pev = (entvars_t*)a;
 
 	// allocate entity if necessary
-	if (pev == NULL)
+	if (pev == nullptr)
 		pev = VARS(CREATE_ENTITY());
 
 	// get the private data
 	a = (T*)GET_PRIVATE(ENT(pev));
 
-	if (a == NULL)
+	if (a == nullptr)
 	{
 		// allocate private data
 		a = new T;

@@ -29,7 +29,7 @@
 #include "ammohistory.h"
 #include "vgui_TeamFortressViewport.h"
 
-WEAPON* gpActiveSel; // NULL means off, 1 means just the menu bar, otherwise
+WEAPON* gpActiveSel; // nullptr means off, 1 means just the menu bar, otherwise
 					 // this points to the active weapon menu item
 WEAPON* gpLastSel;	 // Last weapon menu selection
 
@@ -196,7 +196,7 @@ void WeaponsResource::LoadWeaponSprites(WEAPON* pWeapon)
 // Returns the first weapon for a given slot.
 WEAPON* WeaponsResource::GetFirstPos(int iSlot)
 {
-	WEAPON* pret = NULL;
+	WEAPON* pret = nullptr;
 
 	for (int i = 0; i < MAX_WEAPON_POSITIONS; i++)
 	{
@@ -214,7 +214,7 @@ WEAPON* WeaponsResource::GetFirstPos(int iSlot)
 WEAPON* WeaponsResource::GetNextActivePos(int iSlot, int iSlotPos)
 {
 	if (iSlotPos >= MAX_WEAPON_POSITIONS || iSlot >= MAX_WEAPON_SLOTS)
-		return NULL;
+		return nullptr;
 
 	WEAPON* p = gWR.rgSlots[iSlot][iSlotPos + 1];
 
@@ -301,7 +301,7 @@ void CHudAmmo::Reset()
 	m_fFade = 0;
 	m_iFlags |= HUD_ACTIVE; //!!!
 
-	gpActiveSel = NULL;
+	gpActiveSel = nullptr;
 	gHUD.m_iHideHUDDisplay = 0;
 
 	gWR.Reset();
@@ -377,7 +377,7 @@ void CHudAmmo::Think()
 		}
 
 		gpLastSel = gpActiveSel;
-		gpActiveSel = NULL;
+		gpActiveSel = nullptr;
 		gHUD.m_iKeyBits &= ~IN_ATTACK;
 
 		PlaySound("common/wpn_select.wav", 1);
@@ -404,7 +404,7 @@ HSPRITE* WeaponsResource::GetAmmoPicFromWeapon(int iAmmoId, Rect& rect)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 
@@ -430,10 +430,10 @@ void WeaponsResource::SelectSlot(int iSlot, bool fAdvance, int iDirection)
 	if (!gHUD.HasAnyWeapons())
 		return;
 
-	WEAPON* p = NULL;
+	WEAPON* p = nullptr;
 	bool fastSwitch = CVAR_GET_FLOAT("hud_fastswitch") != 0;
 
-	if ((gpActiveSel == NULL) || (gpActiveSel == (WEAPON*)1) || (iSlot != gpActiveSel->iSlot))
+	if ((gpActiveSel == nullptr) || (gpActiveSel == (WEAPON*)1) || (iSlot != gpActiveSel->iSlot))
 	{
 		PlaySound("common/wpn_hudon.wav", 1);
 		p = GetFirstPos(iSlot);
@@ -467,7 +467,7 @@ void WeaponsResource::SelectSlot(int iSlot, bool fAdvance, int iDirection)
 		if (!fastSwitch)
 			gpActiveSel = (WEAPON*)1;
 		else
-			gpActiveSel = NULL;
+			gpActiveSel = nullptr;
 	}
 	else
 		gpActiveSel = p;
@@ -539,7 +539,7 @@ bool CHudAmmo::MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf)
 	if ((gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)
 	{
 		static Rect nullrc;
-		gpActiveSel = NULL;
+		gpActiveSel = nullptr;
 		SetCrosshair(0, nullrc, 0, 0, 0);
 	}
 	else
@@ -586,7 +586,7 @@ bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 		if ((iId == -1) && (iClip == -1))
 		{
 			gHUD.m_fPlayerDead = true;
-			gpActiveSel = NULL;
+			gpActiveSel = nullptr;
 			return true;
 		}
 		gHUD.m_fPlayerDead = false;
@@ -728,7 +728,7 @@ void CHudAmmo::UserCmd_Close()
 	if (gpActiveSel)
 	{
 		gpLastSel = gpActiveSel;
-		gpActiveSel = NULL;
+		gpActiveSel = nullptr;
 		PlaySound("common/wpn_hudoff.wav", 1);
 	}
 	else
@@ -774,7 +774,7 @@ void CHudAmmo::UserCmd_NextWeapon()
 		slot = 0; // start looking from the first slot again
 	}
 
-	gpActiveSel = NULL;
+	gpActiveSel = nullptr;
 }
 
 // Selects the previous item in the menu
@@ -815,7 +815,7 @@ void CHudAmmo::UserCmd_PrevWeapon()
 		slot = MAX_WEAPON_SLOTS - 1;
 	}
 
-	gpActiveSel = NULL;
+	gpActiveSel = nullptr;
 }
 
 
@@ -1176,7 +1176,7 @@ iCount is the number of items in the pList
 client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes, int iCount)
 {
 	if (!pList)
-		return NULL;
+		return nullptr;
 
 	int i = iCount;
 	client_sprite_t* p = pList;
@@ -1188,5 +1188,5 @@ client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes
 		p++;
 	}
 
-	return NULL;
+	return nullptr;
 }

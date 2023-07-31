@@ -57,7 +57,7 @@ static CBasePlayer* FindPlayerByName(const char* pTestName)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 static void VoiceServerDebug(char const* pFmt, ...)
@@ -223,7 +223,7 @@ void CVoiceGameMgr::UpdateMasks()
 		// Request the state of their "VModEnable" cvar.
 		if (g_bWantModEnable[iClient])
 		{
-			MESSAGE_BEGIN(MSG_ONE, m_msgRequestState, NULL, pEnt->pev);
+			MESSAGE_BEGIN(MSG_ONE, m_msgRequestState, nullptr, pEnt->pev);
 			MESSAGE_END();
 		}
 
@@ -250,7 +250,7 @@ void CVoiceGameMgr::UpdateMasks()
 			g_SentGameRulesMasks[iClient] = gameRulesMask;
 			g_SentBanMasks[iClient] = g_BanMasks[iClient];
 
-			MESSAGE_BEGIN(MSG_ONE, m_msgPlayerVoiceMask, NULL, pPlayer->pev);
+			MESSAGE_BEGIN(MSG_ONE, m_msgPlayerVoiceMask, nullptr, pPlayer->pev);
 			int dw;
 			for (dw = 0; dw < VOICE_MAX_PLAYERS_DW; dw++)
 			{

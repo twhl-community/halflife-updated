@@ -66,12 +66,12 @@ void RemovePortalFromNode(portal_t* portal, node_t* l)
 	if (portal->nodes[0] == l)
 	{
 		*pp = portal->next[0];
-		portal->nodes[0] = NULL;
+		portal->nodes[0] = nullptr;
 	}
 	else if (portal->nodes[1] == l)
 	{
 		*pp = portal->next[1];
-		portal->nodes[1] = NULL;
+		portal->nodes[1] = nullptr;
 	}
 }
 
@@ -111,7 +111,7 @@ void MakeHeadnodePortals(node_t* node, vec3_t mins, vec3_t maxs)
 	}
 
 	outside_node.contents = CONTENTS_SOLID;
-	outside_node.portals = NULL;
+	outside_node.portals = nullptr;
 
 	for (i = 0; i < 3; i++)
 		for (j = 0; j < 2; j++)

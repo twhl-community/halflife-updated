@@ -113,7 +113,7 @@ void CTripmineGrenade::Spawn()
 	pev->dmg = gSkillData.plrDmgTripmine;
 	pev->health = 1; // don't let die normally
 
-	if (pev->owner != NULL)
+	if (pev->owner != nullptr)
 	{
 		// play deploy sound
 		EMIT_SOUND(ENT(pev), CHAN_VOICE, "weapons/mine_deploy.wav", 1.0, ATTN_NORM);
@@ -153,11 +153,11 @@ void CTripmineGrenade::PowerupThink()
 {
 	TraceResult tr;
 
-	if (m_hOwner == NULL)
+	if (m_hOwner == nullptr)
 	{
 		// find an owner
 		edict_t* oldowner = pev->owner;
-		pev->owner = NULL;
+		pev->owner = nullptr;
 		UTIL_TraceLine(pev->origin + m_vecDir * 8, pev->origin - m_vecDir * 32, dont_ignore_monsters, ENT(pev), &tr);
 		if (0 != tr.fStartSolid || (oldowner && tr.pHit == oldowner))
 		{
@@ -219,7 +219,7 @@ void CTripmineGrenade::KillBeam()
 	if (m_pBeam)
 	{
 		UTIL_Remove(m_pBeam);
-		m_pBeam = NULL;
+		m_pBeam = nullptr;
 	}
 }
 
@@ -287,7 +287,7 @@ void CTripmineGrenade::BeamBreakThink()
 	}
 	else
 	{
-		if (m_hOwner == NULL)
+		if (m_hOwner == nullptr)
 			bBlowup = true;
 		else if (m_posOwner != m_hOwner->pev->origin)
 			bBlowup = true;
@@ -397,7 +397,7 @@ bool CTripmine::GetItemInfo(ItemInfo* p)
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "Trip Mine";
 	p->iMaxAmmo1 = TRIPMINE_MAX_CARRY;
-	p->pszAmmo2 = NULL;
+	p->pszAmmo2 = nullptr;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
 	p->iSlot = 4;

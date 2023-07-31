@@ -328,19 +328,19 @@ CSound* CSoundEnt::SoundPointerForIndex(int iIndex)
 {
 	if (!pSoundEnt)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (iIndex > (MAX_WORLD_SOUNDS - 1))
 	{
 		ALERT(at_console, "SoundPointerForIndex() - Index too large!\n");
-		return NULL;
+		return nullptr;
 	}
 
 	if (iIndex < 0)
 	{
 		ALERT(at_console, "SoundPointerForIndex() - Index < 0!\n");
-		return NULL;
+		return nullptr;
 	}
 
 	return &pSoundEnt->m_SoundPool[iIndex];

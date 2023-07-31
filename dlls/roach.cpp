@@ -402,7 +402,7 @@ void CRoach::Move(float flInterval)
 //=========================================================
 void CRoach::Look(int iDistance)
 {
-	CBaseEntity* pSightEnt = NULL; // the current visible entity that we're dealing with
+	CBaseEntity* pSightEnt = nullptr; // the current visible entity that we're dealing with
 	CBaseEntity* pPreviousEnt;	   // the last entity added to the link list
 	int iSighted = 0;
 
@@ -416,23 +416,23 @@ void CRoach::Look(int iDistance)
 		return;
 	}
 
-	m_pLink = NULL;
+	m_pLink = nullptr;
 	pPreviousEnt = this;
 
 	// Does sphere also limit itself to PVS?
 	// Examine all entities within a reasonable radius
 	// !!!PERFORMANCE - let's trivially reject the ent list before radius searching!
-	while ((pSightEnt = UTIL_FindEntityInSphere(pSightEnt, pev->origin, iDistance)) != NULL)
+	while ((pSightEnt = UTIL_FindEntityInSphere(pSightEnt, pev->origin, iDistance)) != nullptr)
 	{
 		// only consider ents that can be damaged. !!!temporarily only considering other monsters and clients
 		if (pSightEnt->IsPlayer() || FBitSet(pSightEnt->pev->flags, FL_MONSTER))
 		{
 			if (/*FVisible( pSightEnt ) &&*/ !FBitSet(pSightEnt->pev->flags, FL_NOTARGET) && pSightEnt->pev->health > 0)
 			{
-				// NULL the Link pointer for each ent added to the link list. If other ents follow, the will overwrite
+				// nullptr the Link pointer for each ent added to the link list. If other ents follow, the will overwrite
 				// this value. If this ent happens to be the last, the list will be properly terminated.
 				pPreviousEnt->m_pLink = pSightEnt;
-				pSightEnt->m_pLink = NULL;
+				pSightEnt->m_pLink = nullptr;
 				pPreviousEnt = pSightEnt;
 
 				// don't add the Enemy's relationship to the conditions. We only want to worry about conditions when

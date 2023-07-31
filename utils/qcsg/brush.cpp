@@ -970,7 +970,7 @@ void CreateBrush(int brushnum)
 	// clip brushes don't stay in the drawing hull
 	if (contents == CONTENTS_CLIP)
 	{
-		b->hulls[0].faces = NULL;
+		b->hulls[0].faces = nullptr;
 		b->contents = CONTENTS_SOLID;
 	}
 }

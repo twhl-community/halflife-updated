@@ -16,7 +16,7 @@
 #include <string.h>
 
 
-char** ppszFiles = NULL;
+char** ppszFiles = nullptr;
 int nFiles = 0;
 int nMaxFiles = 0;
 
@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
 
 	pszScriptName = (char*)malloc(strlen((char*)argv[3]));
 	strcpy(pszScriptName, argv[3]);
-	hScriptFile = CreateFile(pszScriptName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL);
+	hScriptFile = CreateFile(pszScriptName, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (hScriptFile == INVALID_HANDLE_VALUE)
 	{
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 	}
 
 	sprintf(szBuf, "$DEST    \"%s\"\r\n\r\n", pszWadName);
-	fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, NULL);
+	fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, nullptr);
 	if (!fWrite || (dwWritten != strlen(szBuf)))
 	{
 	write_error:
@@ -146,10 +146,10 @@ int main(int argc, char* argv[])
 			p = strchr(szShort, '*');
 			*p = '\0';
 			strcat(szShort, ppszFiles[i]);
-			GetFullPathName(szShort, MAX_PATH, szFull, NULL);
+			GetFullPathName(szShort, MAX_PATH, szFull, nullptr);
 
 			sprintf(szBuf, "$loadbmp    \"%s\"\r\n", szFull);
-			fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, NULL);
+			fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, nullptr);
 			if (!fWrite || (dwWritten != strlen(szBuf)))
 				goto write_error;
 
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
 			*p = '\0';
 
 			sprintf(szBuf, "%s  miptex -1 -1 -1 -1\r\n\r\n", ppszFiles[i]);
-			fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, NULL);
+			fWrite = WriteFile(hScriptFile, szBuf, strlen(szBuf), &dwWritten, nullptr);
 			if (!fWrite || (dwWritten != strlen(szBuf)))
 				goto write_error;
 

@@ -50,7 +50,7 @@ bool GetPointBetweenLines(Vector& p, Vector a1, Vector m1, Vector a2, Vector m2)
 	Vector t1 = CrossProduct(m1, m2);
 	Vector t2 = a2 - a1;
 
-	if (!SolveLSE(t2, m1, t1, m2, &x, NULL, &z))
+	if (!SolveLSE(t2, m1, t1, m2, &x, nullptr, &z))
 		return false;
 
 	t1 = a1 + x * m1;

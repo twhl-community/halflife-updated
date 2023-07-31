@@ -215,7 +215,7 @@ void CBarney::RunTask(Task_t* pTask)
 	switch (pTask->iTask)
 	{
 	case TASK_RANGE_ATTACK1:
-		if (m_hEnemy != NULL && (m_hEnemy->IsPlayer()))
+		if (m_hEnemy != nullptr && (m_hEnemy->IsPlayer()))
 		{
 			pev->framerate = 1.5;
 		}
@@ -259,7 +259,7 @@ int CBarney::Classify()
 //=========================================================
 void CBarney::AlertSound()
 {
-	if (m_hEnemy != NULL)
+	if (m_hEnemy != nullptr)
 	{
 		if (FOkToSpeak())
 		{
@@ -313,7 +313,7 @@ bool CBarney::CheckRangeAttack1(float flDot, float flDist)
 			Vector shootTarget = ((pEnemy->BodyTarget(shootOrigin) - pEnemy->pev->origin) + m_vecEnemyLKP);
 			UTIL_TraceLine(shootOrigin, shootTarget, dont_ignore_monsters, ENT(pev), &tr);
 			m_checkAttackTime = gpGlobals->time + 1;
-			if (tr.flFraction == 1.0 || (tr.pHit != NULL && CBaseEntity::Instance(tr.pHit) == pEnemy))
+			if (tr.flFraction == 1.0 || (tr.pHit != nullptr && CBaseEntity::Instance(tr.pHit) == pEnemy))
 				m_lastAttackCheck = true;
 			else
 				m_lastAttackCheck = false;
@@ -463,8 +463,8 @@ void CBarney::TalkInit()
 	m_szGrp[TLK_PLHURT2] = "!BA_CUREB";
 	m_szGrp[TLK_PLHURT3] = "!BA_CUREC";
 
-	m_szGrp[TLK_PHELLO] = NULL;			  //"BA_PHELLO";		// UNDONE
-	m_szGrp[TLK_PIDLE] = NULL;			  //"BA_PIDLE";			// UNDONE
+	m_szGrp[TLK_PHELLO] = nullptr;			  //"BA_PHELLO";		// UNDONE
+	m_szGrp[TLK_PIDLE] = nullptr;			  //"BA_PIDLE";			// UNDONE
 	m_szGrp[TLK_PQUESTION] = "BA_PQUEST"; // UNDONE
 
 	m_szGrp[TLK_SMELL] = "BA_SMELL";
@@ -489,7 +489,7 @@ bool CBarney::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float 
 
 		// This is a heurstic to determine if the player intended to harm me
 		// If I have an enemy, we can't establish intent (may just be crossfire)
-		if (m_hEnemy == NULL)
+		if (m_hEnemy == nullptr)
 		{
 			// If the player was facing directly at me, or I'm already suspicious, get mad
 			if ((m_afMemory & bits_MEMORY_SUSPICIOUS) != 0 || IsFacing(pevAttacker, pev->origin))
@@ -605,7 +605,7 @@ void CBarney::Killed(entvars_t* pevAttacker, int iGib)
 		CBaseEntity* pGun = DropItem("weapon_9mmhandgun", vecGunPos, vecGunAngles);
 	}
 
-	SetUse(NULL);
+	SetUse(nullptr);
 	CTalkMonster::Killed(pevAttacker, iGib);
 }
 
@@ -620,7 +620,7 @@ Schedule_t* CBarney::GetScheduleOfType(int Type)
 	switch (Type)
 	{
 	case SCHED_ARM_WEAPON:
-		if (m_hEnemy != NULL)
+		if (m_hEnemy != nullptr)
 		{
 			// face enemy, then draw.
 			return slBarneyEnemyDraw;
@@ -671,7 +671,7 @@ Schedule_t* CBarney::GetSchedule()
 		CSound* pSound;
 		pSound = PBestSound();
 
-		ASSERT(pSound != NULL);
+		ASSERT(pSound != nullptr);
 		if (pSound && (pSound->m_iType & bits_SOUND_DANGER) != 0)
 			return GetScheduleOfType(SCHED_TAKE_COVER_FROM_BEST_SOUND);
 	}
@@ -712,7 +712,7 @@ Schedule_t* CBarney::GetSchedule()
 			return GetScheduleOfType(SCHED_SMALL_FLINCH);
 		}
 
-		if (m_hEnemy == NULL && IsFollowing())
+		if (m_hEnemy == nullptr && IsFollowing())
 		{
 			if (!m_hTargetEnt->IsAlive())
 			{

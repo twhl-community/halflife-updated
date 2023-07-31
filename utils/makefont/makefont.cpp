@@ -110,7 +110,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	unsigned char* pCur;
 	int x1, y1;
 	unsigned char* pPalette;
-	qfont_t* pqf = NULL;
+	qfont_t* pqf = nullptr;
 	int fullsize;
 	int w = 16;
 	int h = (128 - 32) / 16;
@@ -121,7 +121,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	// Create the font
 	fnt = CreateFont(-nPointSize, 0, 0, 0, bBold ? FW_HEAVY : FW_MEDIUM, bItalic, bUnderline, 0, ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, VARIABLE_PITCH | FF_DONTCARE, pszFont);
 
-	bits = NULL;
+	bits = nullptr;
 
 	fullsize = sizeof(qfont_t) - 4 + (128 * w * charwidth) + sizeof(short) + 768 + 64;
 
@@ -136,7 +136,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	// Configure palette
 	Draw_SetupConsolePalette(pPalette);
 
-	hdc = GetDC(NULL);
+	hdc = GetDC(nullptr);
 	hmemDC = CreateCompatibleDC(hdc);
 
 	rc.top = 0;
@@ -144,7 +144,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	rc.right = charwidth * w;
 	rc.bottom = charheight * h;
 
-	hbm = CreateBitmap(charwidth * w, charheight * h, 1, 1, NULL);
+	hbm = CreateBitmap(charwidth * w, charheight * h, 1, 1, nullptr);
 	oldbm = (HBITMAP)SelectObject(hmemDC, hbm);
 	oldfnt = (HFONT)SelectObject(hmemDC, fnt);
 
@@ -190,7 +190,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	pbmheader->biCompression = BI_RGB;
 
 	// Find out how big the bitmap is
-	nScans = GetDIBits(hmemDC, hbm, 0, h * charheight, NULL, &tempbmi, DIB_RGB_COLORS);
+	nScans = GetDIBits(hmemDC, hbm, 0, h * charheight, nullptr, &tempbmi, DIB_RGB_COLORS);
 
 	// Allocate space for all bits
 	pbmi = (BITMAPINFO*)zeromalloc(sizeof(BITMAPINFOHEADER) + 2 * sizeof(RGBQUAD) + pbmheader->biSizeImage);
@@ -368,7 +368,7 @@ qfont_t* CreateConsoleFont(char* pszFont, int nPointSize, BOOL bItalic, BOOL bUn
 	DeleteObject(hbm);
 
 	DeleteDC(hmemDC);
-	ReleaseDC(NULL, hdc);
+	ReleaseDC(nullptr, hdc);
 
 	return pqf;
 }

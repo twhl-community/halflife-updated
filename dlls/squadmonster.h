@@ -81,7 +81,7 @@ public:
 	CSquadMonster* MySquadLeader()
 	{
 		CSquadMonster* pSquadLeader = (CSquadMonster*)((CBaseEntity*)m_hSquadLeader);
-		if (pSquadLeader != NULL)
+		if (pSquadLeader != nullptr)
 			return pSquadLeader;
 		return this;
 	}
@@ -92,7 +92,7 @@ public:
 		else
 			return (CSquadMonster*)((CBaseEntity*)m_hSquadMember[i]);
 	}
-	bool InSquad() { return m_hSquadLeader != NULL; }
+	bool InSquad() { return m_hSquadLeader != nullptr; }
 	bool IsLeader() { return m_hSquadLeader == this; }
 	int SquadJoin(int searchRadius);
 	int SquadRecruit(int searchRadius, int maxMembers);

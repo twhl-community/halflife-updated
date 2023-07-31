@@ -107,7 +107,7 @@ winding_t* ChopWinding(winding_t* in, pstack_t* stack, plane_t* split)
 	if (!counts[0])
 	{
 		FreeStackWinding(in, stack);
-		return NULL;
+		return nullptr;
 	}
 
 	sides[i] = sides[0];
@@ -376,7 +376,7 @@ winding_t* ClipToSeperators(winding_t* source, winding_t* pass, winding_t* targe
 			//
 			target = ChopWinding(target, stack, &plane);
 			if (!target)
-				return NULL; // target is not visible
+				return nullptr; // target is not visible
 		}
 	}
 
@@ -390,7 +390,7 @@ winding_t* ClipToSeperators(winding_t* source, winding_t* pass, winding_t* targe
 RecursiveLeafFlow
 
 Flood fill through the leafs
-If src_portal is NULL, this is the originating leaf
+If src_portal is nullptr, this is the originating leaf
 ==================
 */
 void RecursiveLeafFlow(int leafnum, threaddata_t* thread, pstack_t* prevstack)
@@ -416,9 +416,9 @@ void RecursiveLeafFlow(int leafnum, threaddata_t* thread, pstack_t* prevstack)
 
 	prevstack->next = &stack;
 
-	stack.next = NULL;
+	stack.next = nullptr;
 	stack.leaf = leaf;
-	stack.portal = NULL;
+	stack.portal = nullptr;
 
 	might = (long*)stack.mightsee;
 	vis = (long*)thread->leafvis;
@@ -477,7 +477,7 @@ void RecursiveLeafFlow(int leafnum, threaddata_t* thread, pstack_t* prevstack)
 		c_portalcheck++;
 
 		stack.portal = p;
-		stack.next = NULL;
+		stack.next = nullptr;
 		stack.freewindings[0] = 1;
 		stack.freewindings[1] = 1;
 		stack.freewindings[2] = 1;
@@ -506,7 +506,7 @@ void RecursiveLeafFlow(int leafnum, threaddata_t* thread, pstack_t* prevstack)
 		if (!InTheBallpark(stack.source, prevstack->pass, stack.pass))
 		{
 			FreeStackWinding(stack.pass, &stack);
-			stack.pass = NULL;
+			stack.pass = nullptr;
 			continue;
 		}
 #endif

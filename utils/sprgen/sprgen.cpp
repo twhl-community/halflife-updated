@@ -28,7 +28,7 @@ constexpr int MAX_FRAMES = 1000;
 dsprite_t sprite;
 byte *byteimage, *lbmpalette;
 int byteimagewidth, byteimageheight;
-byte *lumpbuffer = NULL, *plump;
+byte *lumpbuffer = nullptr, *plump;
 char spritedir[1024];
 char spriteoutname[1024];
 int framesmaxs[2];

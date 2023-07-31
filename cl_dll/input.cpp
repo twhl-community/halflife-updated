@@ -116,7 +116,7 @@ typedef struct kblist_s
 	char name[32];
 } kblist_t;
 
-kblist_t* g_kbkeys = NULL;
+kblist_t* g_kbkeys = nullptr;
 
 /*
 ============
@@ -139,7 +139,7 @@ bool KB_ConvertString(char* in, char** ppout)
 	if (!ppout)
 		return false;
 
-	*ppout = NULL;
+	*ppout = nullptr;
 	p = in;
 	pOut = sz;
 	while ('\0' != *p)
@@ -154,7 +154,7 @@ bool KB_ConvertString(char* in, char** ppout)
 
 			*pEnd = '\0';
 
-			pBinding = NULL;
+			pBinding = nullptr;
 			if (strlen(binding + 1) > 0)
 			{
 				// See if there is a binding for binding?
@@ -216,7 +216,7 @@ struct kbutton_s DLLEXPORT* KB_Find(const char* name)
 
 		p = p->next;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /*
@@ -255,7 +255,7 @@ Add kbutton_t definitions that the engine can query if needed
 */
 void KB_Init()
 {
-	g_kbkeys = NULL;
+	g_kbkeys = nullptr;
 
 	KB_Add("in_graph", &in_graph);
 	KB_Add("in_mlook", &in_mlook);
@@ -279,7 +279,7 @@ void KB_Shutdown()
 		free(p);
 		p = n;
 	}
-	g_kbkeys = NULL;
+	g_kbkeys = nullptr;
 }
 
 /*
