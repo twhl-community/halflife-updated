@@ -43,15 +43,18 @@ class CCrossbowBolt : public CBaseEntity
 	int m_iTrail;
 
 public:
-	static CCrossbowBolt* BoltCreate();
+	static CCrossbowBolt* BoltCreate(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner);
 };
 LINK_ENTITY_TO_CLASS(crossbow_bolt, CCrossbowBolt);
 
-CCrossbowBolt* CCrossbowBolt::BoltCreate()
+CCrossbowBolt* CCrossbowBolt::BoltCreate(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner)
 {
 	// Create a new entity with CCrossbowBolt private data
 	CCrossbowBolt* pBolt = GetClassPtr((CCrossbowBolt*)NULL);
 	pBolt->pev->classname = MAKE_STRING("bolt");
+	pBolt->pev->origin = vecOrigin;
+	pBolt->pev->angles = vecAngles;
+	pBolt->pev->owner = pOwner->edict();
 	pBolt->Spawn();
 
 	return pBolt;
@@ -385,10 +388,7 @@ void CCrossbow::FireBolt()
 	Vector vecDir = gpGlobals->v_forward;
 
 #ifndef CLIENT_DLL
-	CCrossbowBolt* pBolt = CCrossbowBolt::BoltCreate();
-	pBolt->pev->origin = vecSrc;
-	pBolt->pev->angles = anglesAim;
-	pBolt->pev->owner = m_pPlayer->edict();
+	CCrossbowBolt* pBolt = CCrossbowBolt::BoltCreate(vecSrc, anglesAim, m_pPlayer);
 
 	if (m_pPlayer->pev->waterlevel == 3)
 	{
