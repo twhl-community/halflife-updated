@@ -7,6 +7,7 @@
 ### Bug fixes
 
 * Fixed hand grenade animations not playing correctly [#209](https://github.com/SamVanheer/halflife-updated/pull/209) (Thanks Toodles2You)
+* Fixed out of bounds access in studiomodel renderer bone setup code (halflife issue [#3360](https://github.com/ValveSoftware/halflife/issues/3360))
 
 ## Changes in V1.0.0 Release Candidate 001
 
