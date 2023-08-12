@@ -12,7 +12,16 @@ The goal of the Updated repositories is to allow modders to make mods based on t
 
 This mod installation includes files that are required when making a mod based on these SDKs.
 
-The **scope** of the Updated projects is **limited to bug fixes**, **feature requests to improve the game's code** and **fixing game-breaking bugs in the game assets** (e.g. soft-locked trigger setups). Changes like **graphical upgrades**, **physics engine changes** and other **engine changes** are **out of scope**.
+The following types of changes are **in scope** for this project:
+* Bug fixes
+* Features to improve the game's code (refactoring, generalizing, simplifying). This does not include complete redesigns of systems as this makes it much harder for modders to integrate changes and get started with Half-Life modding
+* Fixing game-breaking bugs in game assets (e.g. soft-locked trigger setups)
+
+The following types of changes are **out of scope**:
+* Graphical upgrades
+* Physics engine changes
+* Other engine changes
+* Gameplay changes
 
 If you need help setting up the SDK or developing a mod please ask on the [TWHL website](https://twhl.info/) or on its [Discord server](https://discord.gg/jEw8EqD).
 
