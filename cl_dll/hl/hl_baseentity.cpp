@@ -258,6 +258,9 @@ bool CBasePlayer::Restore(CRestore& restore) { return false; }
 void CBasePlayer::SelectNextItem(int iItem) {}
 bool CBasePlayer::HasWeapons() { return false; }
 void CBasePlayer::SelectPrevItem(int iItem) {}
+CBasePlayerItem* CBasePlayer::GetNamedPlayerItem(const char* pstr) { return nullptr; }
+CBasePlayerItem* CBasePlayer::GetPlayerItem(int iId) { return nullptr; }
+void CBasePlayer::SelectItem(CBasePlayerItem* pItem) {}
 bool CBasePlayer::FlashlightIsOn() { return false; }
 void CBasePlayer::FlashlightTurnOn() {}
 void CBasePlayer::FlashlightTurnOff() {}

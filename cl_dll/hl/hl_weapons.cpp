@@ -258,39 +258,6 @@ Vector CBaseEntity::FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector
 
 /*
 =====================
-CBasePlayer::SelectItem
-
-  Switch weapons
-=====================
-*/
-void CBasePlayer::SelectItem(const char* pstr)
-{
-	if (!pstr)
-		return;
-
-	CBasePlayerItem* pItem = NULL;
-
-	if (!pItem)
-		return;
-
-
-	if (pItem == m_pActiveItem)
-		return;
-
-	if (m_pActiveItem)
-		m_pActiveItem->Holster();
-
-	m_pLastItem = m_pActiveItem;
-	m_pActiveItem = pItem;
-
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->Deploy();
-	}
-}
-
-/*
-=====================
 CBasePlayer::Killed
 
 =====================

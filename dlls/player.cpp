@@ -3047,10 +3047,10 @@ void CBasePlayer::SelectNextItem(int iItem)
 	}
 }
 
-void CBasePlayer::SelectItem(const char* pstr)
+CBasePlayerItem* CBasePlayer::GetNamedPlayerItem(const char* pstr)
 {
 	if (!pstr)
-		return;
+		return nullptr;
 
 	CBasePlayerItem* pItem = NULL;
 
@@ -3063,18 +3063,46 @@ void CBasePlayer::SelectItem(const char* pstr)
 			while (pItem)
 			{
 				if (FClassnameIs(pItem->pev, pstr))
-					break;
+					return pItem;
+				
 				pItem = pItem->m_pNext;
 			}
 		}
-
-		if (pItem)
-			break;
 	}
 
+	return nullptr;
+}
+
+CBasePlayerItem* CBasePlayer::GetPlayerItem(int iId)
+{
+	if (iId <= WEAPON_NONE)
+		return nullptr;
+
+	CBasePlayerItem* pItem = NULL;
+
+	for (int i = 0; i < MAX_ITEM_TYPES; i++)
+	{
+		if (m_rgpPlayerItems[i])
+		{
+			pItem = m_rgpPlayerItems[i];
+
+			while (pItem)
+			{
+				if (pItem->m_iId == iId)
+					return pItem;
+				
+				pItem = pItem->m_pNext;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+void CBasePlayer::SelectItem(CBasePlayerItem* pItem)
+{
 	if (!pItem)
 		return;
-
 
 	if (pItem == m_pActiveItem)
 		return;

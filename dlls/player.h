@@ -287,7 +287,9 @@ public:
 	void SelectPrevItem(int iItem);
 	void SelectNextItem(int iItem);
 	void SelectLastItem();
-	void SelectItem(const char* pstr);
+	CBasePlayerItem* GetNamedPlayerItem(const char* pstr);
+	CBasePlayerItem* GetPlayerItem(int iId);
+	void SelectItem(CBasePlayerItem* pItem);
 	void ItemPreFrame();
 	void ItemPostFrame();
 	void GiveNamedItem(const char* szName);

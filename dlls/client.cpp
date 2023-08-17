@@ -546,11 +546,21 @@ void ClientCommand(edict_t* pEntity)
 	}
 	else if (FStrEq(pcmd, "use"))
 	{
-		player->SelectItem((char*)CMD_ARGV(1));
+		auto weapon = player->GetNamedPlayerItem((char*)CMD_ARGV(1));
+		
+		if (weapon != nullptr)
+		{
+			player->SelectItem(weapon);
+		}
 	}
 	else if (((pstr = strstr(pcmd, "weapon_")) != NULL) && (pstr == pcmd))
 	{
-		player->SelectItem(pcmd);
+		auto weapon = player->GetNamedPlayerItem(pcmd);
+
+		if (weapon != nullptr)
+		{
+			player->SelectItem(weapon);
+		}
 	}
 	else if (FStrEq(pcmd, "lastinv"))
 	{
@@ -1808,6 +1818,18 @@ void CmdStart(const edict_t* player, const struct usercmd_s* cmd, unsigned int r
 
 	if (!pl)
 		return;
+	
+	if (cmd->weaponselect != 0)
+	{
+		auto weapon = pl->GetPlayerItem(cmd->weaponselect);
+
+		if (weapon != nullptr)
+		{
+			pl->SelectItem(weapon);
+		}
+		
+		((usercmd_t*)cmd)->weaponselect = 0;
+	}
 
 	if (pl->pev->groupinfo != 0)
 	{
