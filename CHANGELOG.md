@@ -10,6 +10,7 @@
 * Fixed out of bounds access in studiomodel renderer bone setup code (halflife issue [#3360](https://github.com/ValveSoftware/halflife/issues/3360))
 * Fixed mouse cursor being invisible in VGUI1 menus when raw input is enabled [#211](https://github.com/SamVanheer/halflife-updated/issues/211) (Thanks RykahKnight)
 * Removed now unnecessary workaround to stop mouse movement on the pause menu from changing in-game angles when unpausing
+* Fixed RPG being flagged as unusable while a rocket is loaded [#213](https://github.com/SamVanheer/halflife-updated/pull/213) (Thanks Toodles2You)
 
 ### Features
 
