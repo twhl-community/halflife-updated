@@ -799,8 +799,6 @@ public:
 	void UpdateSpot();
 	bool ShouldWeaponIdle() override { return true; }
 
-	bool IsUseable() override;
-
 	CLaserSpot* m_pSpot;
 	bool m_fSpotActive;
 	int m_cActiveRockets; // how many missiles in flight from this launcher right now?

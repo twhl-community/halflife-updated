@@ -547,17 +547,6 @@ void CRpg::UpdateSpot()
 #endif
 }
 
-bool CRpg::IsUseable()
-{
-	// The client needs to fall through to WeaponIdle so check the ammo here.
-	if (m_pPlayer->ammo_rockets <= 0)
-	{
-		return false;
-	}
-
-	return CBasePlayerWeapon::IsUseable();
-}
-
 class CRpgAmmo : public CBasePlayerAmmo
 {
 	void Spawn() override
