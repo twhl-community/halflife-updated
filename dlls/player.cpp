@@ -3097,6 +3097,56 @@ void CBasePlayer::SelectItem(const char* pstr)
 	}
 }
 
+void CBasePlayer::SelectItem(int iId)
+{
+	if (iId <= WEAPON_NONE)
+		return;
+
+	CBasePlayerItem* pItem = NULL;
+
+	for (int i = 0; i < MAX_ITEM_TYPES; i++)
+	{
+		if (m_rgpPlayerItems[i])
+		{
+			pItem = m_rgpPlayerItems[i];
+
+			while (pItem)
+			{
+				if (pItem->m_iId == iId)
+					break;
+				pItem = pItem->m_pNext;
+			}
+		}
+
+		if (pItem)
+			break;
+	}
+
+	if (!pItem)
+		return;
+
+
+	if (pItem == m_pActiveItem)
+		return;
+
+	ResetAutoaim();
+
+	// FIX, this needs to queue them up and delay
+	if (m_pActiveItem)
+		m_pActiveItem->Holster();
+
+	m_pLastItem = m_pActiveItem;
+	m_pActiveItem = pItem;
+
+	if (m_pActiveItem)
+	{
+		m_pActiveItem->m_ForceSendAnimations = true;
+		m_pActiveItem->Deploy();
+		m_pActiveItem->m_ForceSendAnimations = false;
+		m_pActiveItem->UpdateItemInfo();
+	}
+}
+
 //==============================================
 // HasWeapons - do I have any weapons at all?
 //==============================================

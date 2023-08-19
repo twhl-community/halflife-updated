@@ -1809,6 +1809,12 @@ void CmdStart(const edict_t* player, const struct usercmd_s* cmd, unsigned int r
 	if (!pl)
 		return;
 
+	if (cmd->weaponselect != 0)
+	{
+		pl->SelectItem(cmd->weaponselect);
+		((usercmd_t*)cmd)->weaponselect = 0;
+	}
+
 	if (pl->pev->groupinfo != 0)
 	{
 		UTIL_SetGroupTrace(pl->pev->groupinfo, GROUP_OP_AND);
