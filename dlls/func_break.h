@@ -63,6 +63,8 @@ public:
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
 
+	bool ReflectGauss() override;
+
 	inline bool Explodable() { return ExplosionMagnitude() > 0; }
 	inline int ExplosionMagnitude() { return pev->impulse; }
 	inline void ExplosionSetMagnitude(int magnitude) { pev->impulse = magnitude; }

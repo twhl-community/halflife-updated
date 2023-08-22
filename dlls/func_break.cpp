@@ -796,6 +796,14 @@ int CBreakable::DamageDecal(int bitsDamageType)
 	return CBaseEntity::DamageDecal(bitsDamageType);
 }
 
+bool CBreakable::ReflectGauss()
+{
+	if (IsBreakable())
+		return false;
+	
+	return CBaseEntity::ReflectGauss();
+}
+
 
 class CPushable : public CBreakable
 {
@@ -812,6 +820,8 @@ public:
 	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
+
+	bool ReflectGauss() override;
 
 	inline float MaxSpeed() { return m_maxSpeed; }
 
@@ -1022,4 +1032,12 @@ bool CPushable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, floa
 		return CBreakable::TakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
 
 	return true;
+}
+
+bool CPushable::ReflectGauss()
+{
+	if (!FBitSet(pev->spawnflags, SF_PUSH_BREAKABLE))
+		return true;
+	
+	return CBreakable::ReflectGauss();
 }
