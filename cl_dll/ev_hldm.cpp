@@ -209,7 +209,7 @@ char* EV_HLDM_DamageDecal(physent_t* pe)
 	static char decalname[32];
 	int idx;
 
-	if (pe->classnumber == 1)
+	if (FBitSet(pe->classnumber, kBrushGlass))
 	{
 		idx = gEngfuncs.pfnRandomLong(0, 2);
 		sprintf(decalname, "{break%i", idx + 1);
@@ -934,7 +934,8 @@ void EV_FireGauss(event_args_t* args)
 
 			n = -DotProduct(tr.plane.normal, forward);
 
-			if (n < 0.5) // 60 degrees
+			// Move the breakable test down here so that decal effects are applied to breakable objects.
+			if (!FBitSet(pEntity->classnumber, kBrushBreakable) && n < 0.5) // 60 degrees
 			{
 				// ALERT( at_console, "reflect %f\n", n );
 				// reflect
