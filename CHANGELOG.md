@@ -12,6 +12,7 @@
 * Removed now unnecessary workaround to stop mouse movement on the pause menu from changing in-game angles when unpausing
 * Fixed RPG being flagged as unusable while a rocket is loaded [#213](https://github.com/SamVanheer/halflife-updated/pull/213) (Thanks Toodles2You)
 * Have clients select weapons by ID, rather than by name [#217](https://github.com/SamVanheer/halflife-updated/pull/217) (Thanks Toodles2You)
+* Copy delta.lst when building client or server to ensure mods have correct delta.lst file (Thanks P38TaKjYzY)
 
 ### Features
 
