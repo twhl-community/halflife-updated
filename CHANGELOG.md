@@ -15,6 +15,7 @@
 * Copy delta.lst when building client or server to ensure mods have correct delta.lst file (Thanks P38TaKjYzY)
 * Reset current history icon slot when resetting item history HUD [#223](https://github.com/SamVanheer/halflife-updated/issues/223) (Thanks malortie)
 * Fixed Gauss gun dealing full damage when saving and loading right after starting a charged shot (Thanks Oxofemple.)
+* Prevent breakables from spawning multiple items when destroyed by gunfire and explosives at the same time (Thanks Oxofemple.)
 
 ### Features
 

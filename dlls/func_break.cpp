@@ -593,6 +593,12 @@ bool CBreakable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 
 void CBreakable::Die()
 {
+	// Don't allow explosives to damage this again to prevent spawning multiple copies of items and gibs.
+	if (pev->solid == SOLID_NOT)
+	{
+		return;
+	}
+
 	Vector vecSpot;		// shard origin
 	Vector vecVelocity; // shard velocity
 	CBaseEntity* pEntity = NULL;
