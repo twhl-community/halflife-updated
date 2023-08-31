@@ -31,6 +31,8 @@
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_gamecontroller.h>
 
+void IN_ResetMouse();
+
 #define MOUSE_BUTTON_COUNT 5
 
 // Set this to 1 to show mouse cursor.  Experimental
@@ -276,6 +278,9 @@ void DLLEXPORT IN_ActivateMouse()
 	{
 		IN_SetMouseRelative(true);
 	}
+
+	// Clear out accumulated mouse input from main menu movement.
+	IN_ResetMouse();
 }
 
 
