@@ -43,6 +43,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
 * Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
 * Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
+* Have clients select weapons by ID, rather than by name [#217](https://github.com/SamVanheer/halflife-updated/pull/217) (Thanks Toodles2You)
 
 ### Crowbar
 
@@ -85,6 +86,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed incorrect idle time values for RPG fidget animations (halflife issue [#2495](https://github.com/ValveSoftware/halflife/issues/2495))
 * Fixed RPG empty sound playing constantly (halflife issue [#617](https://github.com/ValveSoftware/halflife/issues/617))
 * Fixed RPG sometimes getting stuck unable to reload (halflife issue [#3264](https://github.com/ValveSoftware/halflife/issues/3264)) (Thanks Ronin4862)
+* Fixed RPG being flagged as unusable while a rocket is loaded [#213](https://github.com/SamVanheer/halflife-updated/pull/213) (Thanks Toodles2You)
 
 ### Gauss gun
 
@@ -93,6 +95,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Gauss gun sound not stopping when players are not in the PAS (halflife issue [#3233](https://github.com/ValveSoftware/halflife/issues/3233))
 * Fixed Gauss charge sound not always being reset (halflife issue [#3188](https://github.com/ValveSoftware/halflife/issues/3188))
 * Fixed Gauss gun sometimes settting player uranium ammo to -1 (halflife issue [#3343](https://github.com/ValveSoftware/halflife/issues/3343))
+* Fixed Gauss gun dealing full damage when saving and loading right after starting a charged shot (Thanks Oxofemple.)
 
 ### Egon gun
 
@@ -112,6 +115,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 
 * Fixed Hand grenade not playing deploy animation after finishing a throw (halflife issue [#2495](https://github.com/ValveSoftware/halflife/issues/2495))
 * Fixed Hand grenades staying primed when switching away or dropping the weapon (halflife issue [#3251](https://github.com/ValveSoftware/halflife/issues/3251))
+* Fixed hand grenade animations not playing correctly [#209](https://github.com/SamVanheer/halflife-updated/pull/209) (Thanks Toodles2You)
 
 ### Satchel charge
 
@@ -184,12 +188,13 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Show pickup icons in HUD for all weapons (halflife issue [#3137](https://github.com/ValveSoftware/halflife/issues/3137))
 * Fixed picking up weapons that give free/regenerating ammo sometimes showing weapon icon as red (halflife issue [#3250](https://github.com/ValveSoftware/halflife/issues/3250))
 * Fixed crash while parsing command menu with unsupported custom button (halflife issue [#1730](https://github.com/ValveSoftware/halflife/issues/1730))
+* Reset current history icon slot when resetting item history HUD [#223](https://github.com/SamVanheer/halflife-updated/issues/223) (Thanks malortie)
 
 ## Other
 
 * Fixed m_rawinput 1 getting mouse stuck in box (halflife issue [#1377](https://github.com/ValveSoftware/halflife/issues/1377))
 * Fixed m_rawinput changes not taking effect if a new map has started and less time has passed than on any previous map or if weapon prediction is disabled (halflife issue [#3255](https://github.com/ValveSoftware/halflife/issues/3255))
-* Fixed mouse movement during map load affecting initial view angles
+* Mouse movement in the main menu no longer affects in-game view angles when not using raw input
 * Stop controlling func_tank on disconnect (prevents crashes) (halflife issue [#2594](https://github.com/ValveSoftware/halflife/issues/2594))
 * The player view entity is now restored after loading a save game, which allows trigger_camera entities to work properly if you save while they're active (halflife issue [#3031](https://github.com/ValveSoftware/halflife/issues/3031))
 * Re-implemented view roll (halflife issue [#1544](https://github.com/ValveSoftware/halflife/issues/1544))
@@ -278,6 +283,9 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Alien Slave beams staying forever if they exist during a level change (halflife issue [#3104](https://github.com/ValveSoftware/halflife/issues/3104))
 * Fixed cycler_wreckage storing time value in int instead of float
 * Disabled jump sounds while player is frozen (e.g. trigger_camera, trigger_playerfreeze)
+* Fixed out of bounds access in studiomodel renderer bone setup code (halflife issue [#3360](https://github.com/ValveSoftware/halflife/issues/3360))
+* Prevent breakables from spawning multiple items when destroyed by gunfire and explosives at the same time (Thanks Oxofemple.)
+* Added cvar `sv_allowbunnyhopping` to control whether the bunny hopping limiter is enabled (halflife issue [#11](https://github.com/ValveSoftware/halflife/issues/11))
 
 ## Code cleanup
 
@@ -417,6 +425,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Added `-flifetime-dse=1` flag to Linux Makefile to disable compiler optimization that removed entity memory zero-initialization, resulting in the game crashing when any entity touches the world [#187](https://github.com/SamVanheer/halflife-updated/issues/187) (Thanks FreeSlave)
 * Set maximum edicts to 2048 in liblist.gam [#181](https://github.com/SamVanheer/halflife-updated/issues/181)
 * Made the Linux version link statically to the C++ runtime to help avoid problems when running mods on older systems (Thanks a1ba and FreeSlave)
+* Copy delta.lst when building client or server to ensure mods have correct delta.lst file (Thanks P38TaKjYzY)
 
 ## Git repository changes
 
