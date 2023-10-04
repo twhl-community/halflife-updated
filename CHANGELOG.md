@@ -16,7 +16,7 @@
 * Reset current history icon slot when resetting item history HUD [#223](https://github.com/SamVanheer/halflife-updated/issues/223) (Thanks malortie)
 * Fixed Gauss gun dealing full damage when saving and loading right after starting a charged shot (Thanks Oxofemple.)
 * Prevent breakables from spawning multiple items when destroyed by gunfire and explosives at the same time (Thanks Oxofemple.)
-* Fixed save game system not saving arrays of EHANDLEs if the first half of the array contains null handles (mainly affected Nihilanth's spheres) (Thanks Ronin4862)
+* Fixed save game system not saving arrays of EHANDLEs if the first half of the array contains null handles (mainly affected Nihilanth's spheres) [#224](https://github.com/SamVanheer/halflife-updated/issues/224) (Thanks Ronin4862)
 
 ### Features
 
