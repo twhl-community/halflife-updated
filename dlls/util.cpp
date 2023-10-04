@@ -1666,7 +1666,7 @@ static int gSizes[FIELD_TYPECOUNT] =
 		sizeof(int),	   // FIELD_STRING
 		sizeof(int),	   // FIELD_ENTITY
 		sizeof(int),	   // FIELD_CLASSPTR
-		sizeof(int),	   // FIELD_EHANDLE
+		sizeof(EHANDLE),   // FIELD_EHANDLE
 		sizeof(int),	   // FIELD_entvars_t
 		sizeof(int),	   // FIELD_EDICT
 		sizeof(float) * 3, // FIELD_VECTOR
@@ -2327,7 +2327,7 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 						break;
 					case FIELD_EHANDLE:
 						// Input and Output sizes are different!
-						pOutputData = (char*)pOutputData + j * (sizeof(EHANDLE) - gSizes[pTest->fieldType]);
+						pInputData = (char*)pData + j * sizeof(int);
 						entityIndex = *(int*)pInputData;
 						pent = EntityFromIndex(entityIndex);
 						if (pent)
