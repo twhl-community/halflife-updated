@@ -1271,6 +1271,7 @@ Schedule_t slGruntCombatFail[] =
 Task_t tlGruntVictoryDance[] =
 	{
 		{TASK_STOP_MOVING, (float)0},
+		{TASK_SET_ACTIVITY, (float)ACT_IDLE},
 		{TASK_FACE_ENEMY, (float)0},
 		{TASK_WAIT, (float)1.5},
 		{TASK_GET_PATH_TO_ENEMY_CORPSE, (float)0},
