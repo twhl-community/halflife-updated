@@ -1098,13 +1098,20 @@ void CBasePlayer::WaterMove()
 				pev->dmg += 1;
 				if (pev->dmg > 5)
 					pev->dmg = 5;
+
+				const float oldHealth = pev->health;
+
 				TakeDamage(CWorld::World->pev, CWorld::World->pev, pev->dmg, DMG_DROWN);
 				pev->pain_finished = gpGlobals->time + 1;
 
 				// track drowning damage, give it back when
 				// player finally takes a breath
 
-				m_idrowndmg += pev->dmg;
+				// Account for god mode, the unkillable flag, potential damage mitigation
+				// and gaining health from drowning to avoid counting damage not actually taken.
+				const float drownDamageTaken = std::min(0.f, std::floor(oldHealth - pev->health));
+
+				m_idrowndmg += drownDamageTaken;
 			}
 		}
 		else
