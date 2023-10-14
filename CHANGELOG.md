@@ -19,6 +19,7 @@
 * Fixed save game system not saving arrays of EHANDLEs if the first half of the array contains null handles (mainly affected Nihilanth's spheres) [#224](https://github.com/SamVanheer/halflife-updated/issues/224) (Thanks Ronin4862)
 * Fixed player gaining health when drowning with god mode enabled and recovering health after surfacing (Thanks malortie)
 * Fixed human grunts continuing to fire for a few seconds after killing the last enemy in an area [Opposing Force Updated #100](https://github.com/SamVanheer/halflife-op4-updated/issues/100) (Thanks Ronin4862 and malortie)
+* Fixed crash when +USEing NPCs that have just exited a scripted sequence (Thanks malortie)
 
 ### Features
 

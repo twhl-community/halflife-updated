@@ -1381,7 +1381,10 @@ bool CTalkMonster::CanFollow()
 {
 	if (m_MonsterState == MONSTERSTATE_SCRIPT || m_IdealMonsterState == MONSTERSTATE_SCRIPT)
 	{
-		if (!m_pCine->CanInterrupt())
+		// It's possible for m_MonsterState to still be MONSTERSTATE_SCRIPT when the script has already ended.
+		// We'll treat a null pointer as an uninterruptable script and wait for the NPC to change states
+		// before allowing players to make them follow them again.
+		if (!m_pCine || !m_pCine->CanInterrupt())
 			return false;
 	}
 
