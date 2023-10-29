@@ -15,6 +15,7 @@
 #include "extdll.h"
 #include "eiface.h"
 #include "util.h"
+#include "client.h"
 #include "game.h"
 #include "filesystem_utils.h"
 
@@ -902,6 +903,8 @@ void GameDLLInit()
 	CVAR_REGISTER(&sk_player_leg2);
 	CVAR_REGISTER(&sk_player_leg3);
 	// END REGISTER CVARS FOR SKILL LEVEL STUFF
+
+	InitMapLoadingUtils();
 
 	SERVER_COMMAND("exec skill.cfg\n");
 }

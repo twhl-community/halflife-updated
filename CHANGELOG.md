@@ -12,6 +12,10 @@
 * Fixed crash when +USEing NPCs that have just exited a scripted sequence (Thanks malortie)
 * Fixed talk monsters resetting other talk monsters' dying schedule if they are both killed at the same time (Thanks FreeSlave)
 
+### Features
+
+* Added sv_load_all_maps & sv_stop_loading_all_maps to help automate node graph generation
+
 ## Changes in V1.0.0 Release Candidate 002
 
 ### Bug fixes
