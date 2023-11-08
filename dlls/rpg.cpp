@@ -528,6 +528,12 @@ void CRpg::UpdateSpot()
 {
 
 #ifndef CLIENT_DLL
+	// Don't turn on the laser if we're in the middle of a reload.
+	if (m_fInReload)
+	{
+		return;
+	}
+
 	if (m_fSpotActive)
 	{
 		if (!m_pSpot)

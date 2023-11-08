@@ -11,6 +11,7 @@
 * Fixed human grunts continuing to fire for a few seconds after killing the last enemy in an area [Opposing Force Updated #100](https://github.com/SamVanheer/halflife-op4-updated/issues/100) (Thanks Ronin4862 and malortie)
 * Fixed crash when +USEing NPCs that have just exited a scripted sequence (Thanks malortie)
 * Fixed talk monsters resetting other talk monsters' dying schedule if they are both killed at the same time (Thanks FreeSlave)
+* Fixed RPG laser turning on when reloading immediately after equipping the weapon
 
 ### Features
 
