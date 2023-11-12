@@ -2,8 +2,6 @@
 
 ## Changes in V1.0.0 Release Candidate 003
 
-> Note: this release candidate has not been released yet.
-
 ### Bug fixes
 
 * Fixed save game system not saving arrays of EHANDLEs if the first half of the array contains null handles (mainly affected Nihilanth's spheres) [#224](https://github.com/SamVanheer/halflife-updated/issues/224) (Thanks Ronin4862)
