@@ -372,7 +372,7 @@ void CHudAmmo::Think()
 	{
 		if (gpActiveSel != (WEAPON*)1)
 		{
-			// ServerCmd(gpActiveSel->szName);
+			ServerCmd(gpActiveSel->szName);
 			g_weaponselect = gpActiveSel->iId;
 		}
 
@@ -445,7 +445,7 @@ void WeaponsResource::SelectSlot(int iSlot, bool fAdvance, int iDirection)
 			WEAPON* p2 = GetNextActivePos(p->iSlot, p->iSlotPos);
 			if (!p2)
 			{ // only one active item in bucket, so change directly to weapon
-				// ServerCmd(p->szName);
+				ServerCmd(p->szName);
 				g_weaponselect = p->iId;
 				return;
 			}

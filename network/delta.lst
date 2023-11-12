@@ -222,8 +222,7 @@ usercmd_t none
 	DEFINE_DELTA( impact_index, DT_INTEGER, 6, 1.0 ),
 	DEFINE_DELTA( impact_position[0], DT_SIGNED | DT_FLOAT, 16, 8.0 ),
 	DEFINE_DELTA( impact_position[1], DT_SIGNED | DT_FLOAT, 16, 8.0 ),
-	DEFINE_DELTA( impact_position[2], DT_SIGNED | DT_FLOAT, 16, 8.0 ),
-	DEFINE_DELTA( weaponselect, DT_BYTE, 6, 1.0 )
+	DEFINE_DELTA( impact_position[2], DT_SIGNED | DT_FLOAT, 16, 8.0 )
 }
 
 weapon_data_t none
