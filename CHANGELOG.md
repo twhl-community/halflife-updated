@@ -12,6 +12,7 @@
 * Fixed crash when +USEing NPCs that have just exited a scripted sequence (Thanks malortie)
 * Fixed talk monsters resetting other talk monsters' dying schedule if they are both killed at the same time (Thanks FreeSlave)
 * Fixed RPG laser turning on when reloading immediately after equipping the weapon
+* Reverted weapon selection using weapon IDs to prevent the game from malfunctioning when delta.lst is missing
 
 ### Features
 
