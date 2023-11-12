@@ -43,7 +43,6 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
 * Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
 * Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
-* Have clients select weapons by ID, rather than by name [#217](https://github.com/SamVanheer/halflife-updated/pull/217) (Thanks Toodles2You)
 
 ### Crowbar
 
@@ -87,6 +86,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed RPG empty sound playing constantly (halflife issue [#617](https://github.com/ValveSoftware/halflife/issues/617))
 * Fixed RPG sometimes getting stuck unable to reload (halflife issue [#3264](https://github.com/ValveSoftware/halflife/issues/3264)) (Thanks Ronin4862)
 * Fixed RPG being flagged as unusable while a rocket is loaded [#213](https://github.com/SamVanheer/halflife-updated/pull/213) (Thanks Toodles2You)
+* Fixed RPG laser turning on when reloading immediately after equipping the weapon
 
 ### Gauss gun
 
@@ -145,6 +145,8 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Added missing monster state name to ReportAIState (halflife issue [#3220](https://github.com/ValveSoftware/halflife/issues/3220)) (Thanks Shepard)
 * Fixed being able to break scripted_sequence by +using friendly NPCs to make them follow player [#200](https://github.com/SamVanheer/halflife-updated/issues/200) (Thanks Oxofemple. for reporting this and FreeSlave for finding the solution)
 * Fixed potential incorrect facing in scripted sequence (Thanks FreeSlave)
+* Fixed crash when +USEing NPCs that have just exited a scripted sequence (Thanks malortie)
+* Fixed talk monsters resetting other talk monsters' dying schedule if they are both killed at the same time (Thanks FreeSlave)
 
 ### Specific NPCs
 
@@ -154,6 +156,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Gargantua stomp attack being framerate-dependent (halflife issue [#2876](https://github.com/ValveSoftware/halflife/issues/2876))
 * Fixed Snark movetype being changed unconditionally (halflife issue [#3175](https://github.com/ValveSoftware/halflife/issues/3175))
 * Fixed Human Grunt checking enemy incorrectly in CheckMeleeAttack1 (halflife issue [#3176](https://github.com/ValveSoftware/halflife/issues/3176))
+* Fixed Human Grunts continuing to fire for a few seconds after killing the last enemy in an area [Opposing Force Updated #100](https://github.com/SamVanheer/halflife-op4-updated/issues/100) (Thanks Ronin4862 and malortie)
 * Fixed Hornets crashing the game if they hit you after a level transition (halflife issue [#1598](https://github.com/ValveSoftware/halflife/pull/1598))
 * Fixed Osprey not interpolating (halflife issue [#3228](https://github.com/ValveSoftware/halflife/issues/3228)) (Thanks Hezus)
 * Fixed Osprey crashing if it has no valid target (halflife issue [#3259](https://github.com/ValveSoftware/halflife/issues/3259))
@@ -286,6 +289,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed out of bounds access in studiomodel renderer bone setup code (halflife issue [#3360](https://github.com/ValveSoftware/halflife/issues/3360))
 * Prevent breakables from spawning multiple items when destroyed by gunfire and explosives at the same time (Thanks Oxofemple.)
 * Added cvar `sv_allowbunnyhopping` to control whether the bunny hopping limiter is enabled (halflife issue [#11](https://github.com/ValveSoftware/halflife/issues/11))
+* Added `sv_load_all_maps` & `sv_stop_loading_all_maps` to help automate node graph generation
 
 ## Code cleanup
 
@@ -357,6 +361,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Removed useless try-catch statement in command menu parsing code [#64](https://github.com/SamVanheer/halflife-updated/issues/64)
 * Reworked some uses of platform-specific code to be cross-platform [#59](https://github.com/SamVanheer/halflife-updated/issues/59)
 * Save FIELD_BOOLEAN as byte array [#65](https://github.com/SamVanheer/halflife-updated/issues/65)
+* Fixed save game system not saving arrays of EHANDLEs if the first half of the array contains null handles (mainly affected Nihilanth's spheres) [#224](https://github.com/SamVanheer/halflife-updated/issues/224) (Thanks Ronin4862)
 * Reworked operator new and delete overloads to allocate memory directly [#71](https://github.com/SamVanheer/halflife-updated/issues/71)
 * Removed identical line in conditional statement [#75](https://github.com/SamVanheer/halflife-updated/pull/75) (Thanks malortie)
 * Removed unused files (Thanks malortie):
