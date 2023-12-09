@@ -413,6 +413,7 @@ int CHud::GetSpriteIndex(const char* SpriteName)
 
 void CHud::VidInit()
 {
+    gEngfuncs.Con_Printf("HELLO FROM CLIENT HERE\n");
 	m_scrinfo.iSize = sizeof(m_scrinfo);
 	GetScreenInfo(&m_scrinfo);
 

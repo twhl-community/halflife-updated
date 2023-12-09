@@ -2,7 +2,13 @@
 setlocal EnableDelayedExpansion
 
 rem Set this path to your mod directory. You can use environment variables to avoid hardcoding the path if your team members have different install locations.
-set mod_directory=C:/Program Files (x86)/Steam/steamapps/common/Half-Life/halflife_updated
+if NOT DEFINED HL_MOD_PATH (
+	echo hl mod path not defined
+	exit 
+)
+
+set mod_directory=%HL_MOD_PATH%
+set "mod_directory=%mod_directory:\=/%"
 
 rem Input paths may end with a backslash which will be interpreted as an escape character when passed into robocopy, so this needs to be escaped.
 set source=%~1
