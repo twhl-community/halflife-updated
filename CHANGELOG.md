@@ -1,5 +1,15 @@
 # Half-Life Updated changelog
 
+## Changes in V1.0.0 Release Candidate 004
+
+### Bug fixes
+
+* Disabled GCC optimization that prevents mod dlls from unloading after engine calls dlclose
+
+### Features
+
+* Mods made with this SDK will now shut down if they detect they are being run from a Valve game directory (e.g. by placing the dlls in `Half-Life/valve/cl_dlls` and `Half-Life/valve/dlls`). This is not supported and puts users at risk of being VAC banned. Run mods from their intended location only
+
 ## Changes in V1.0.0 Release Candidate 003
 
 ### Bug fixes

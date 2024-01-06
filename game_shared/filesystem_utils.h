@@ -45,6 +45,11 @@ bool FileSystem_LoadFileSystem();
 void FileSystem_FreeFileSystem();
 
 /**
+*	@brief Returns the mod directory name. Only valid to call after calling FileSystem_LoadFileSystem.
+*/
+const std::string& FileSystem_GetModDirectoryName();
+
+/**
 *	@brief Replaces occurrences of ::AlternatePathSeparatorChar with ::DefaultPathSeparatorChar.
 */
 void FileSystem_FixSlashes(std::string& fileName);
@@ -101,6 +106,12 @@ std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileC
 *	@return True if the file was written, false if an error occurred.
 */
 bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const char* pathID = nullptr);
+
+/**
+*	@brief Returns @c true if the current game directory is that of a Valve game.
+*	Any directory whose name starts with that of a Valve game's directory name is considered to be one, matching Steam's behavior.
+*/
+bool UTIL_IsValveGameDirectory();
 
 /**
 *	@brief Helper class to automatically close the file handle associated with a file.

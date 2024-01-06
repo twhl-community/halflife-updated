@@ -53,6 +53,7 @@ static CSysModule* g_pFileSystemModule = nullptr;
 // The engine's filesystem doesn't provide functions to do this so we have to work around it.
 static std::string g_GameDirectory;
 static std::string g_ModDirectory;
+static std::string g_ModDirectoryName;
 
 static bool FileSystem_InitializeGameDirectory()
 {
@@ -97,18 +98,17 @@ static bool FileSystem_InitializeGameDirectory()
 
 	gameDirectory.shrink_to_fit();
 
-	std::string modDirectory;
-	modDirectory.resize(BufferSize);
+	g_ModDirectoryName.resize(BufferSize);
 
 #ifdef CLIENT_DLL
-	modDirectory = gEngfuncs.pfnGetGameDirectory();
+	g_ModDirectoryName = gEngfuncs.pfnGetGameDirectory();
 #else
-	g_engfuncs.pfnGetGameDir(modDirectory.data());
-	modDirectory.resize(std::strlen(modDirectory.c_str()));
+	g_engfuncs.pfnGetGameDir(g_ModDirectoryName.data());
+	g_ModDirectoryName.resize(std::strlen(g_ModDirectoryName.c_str()));
 #endif
 
 	g_GameDirectory = std::move(gameDirectory);
-	g_ModDirectory = g_GameDirectory + DefaultPathSeparatorChar + modDirectory;
+	g_ModDirectory = g_GameDirectory + DefaultPathSeparatorChar + g_ModDirectoryName;
 
 	return true;
 }
@@ -179,6 +179,11 @@ void FileSystem_FreeFileSystem()
 		Sys_UnloadModule(g_pFileSystemModule);
 		g_pFileSystemModule = nullptr;
 	}
+}
+
+const std::string& FileSystem_GetModDirectoryName()
+{
+	return g_ModDirectoryName;
 }
 
 void FileSystem_FixSlashes(std::string& fileName)
@@ -307,6 +312,33 @@ bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const ch
 	}
 
 	ALERT(at_console, "FileSystem_WriteTextToFile: couldn't open file \"%s\" for writing\n", fileName);
+
+	return false;
+}
+
+constexpr const char* ValveGameDirectoryPrefixes[] =
+	{
+		"valve",
+		"gearbox",
+		"bshift",
+		"ricochet",
+		"dmc",
+		"cstrike",
+		"czero", // Also covers Deleted Scenes (czeror)
+		"dod",
+		"tfc"};
+
+bool UTIL_IsValveGameDirectory()
+{
+	const std::string& modDirectoryName = FileSystem_GetModDirectoryName();
+
+	for (const auto prefix : ValveGameDirectoryPrefixes)
+	{
+		if (strnicmp(modDirectoryName.c_str(), prefix, strlen(prefix)) == 0)
+		{
+			return true;
+		}
+	}
 
 	return false;
 }
