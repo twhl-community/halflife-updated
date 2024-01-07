@@ -5,6 +5,7 @@
 ### Bug fixes
 
 * Disabled GCC optimization that prevents mod dlls from unloading after engine calls dlclose
+* Fixed third party libraries possibly not being linked to when building Linux server dll (Thanks a1batross)
 
 ### Features
 
