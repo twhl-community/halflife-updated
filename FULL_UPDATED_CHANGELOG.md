@@ -223,7 +223,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed func_breakable keyvalue "explosion" not working (#24) (Thanks ArroganceJustified)
 * Fixed memory leak in VGUI1 image loading code (halflife issue [#3101](https://github.com/ValveSoftware/halflife/issues/3101))
 * Fixed underwater breathing sounds playing when standing in shallow water (halflife issue [#3110](https://github.com/ValveSoftware/halflife/issues/3110))
-* Fixed camera not being consistently centered when raw mouse input is enabled (Thanks IntriguingTiles) [#32](https://github.com/SamVanheer/halflife-updated/pull/32)
+* Fixed camera not being consistently centered when raw mouse input is enabled [#32](https://github.com/SamVanheer/halflife-updated/pull/32) (Thanks IntriguingTiles)
 * Added new cvar flags added by recent engine updates [#46](https://github.com/SamVanheer/halflife-updated/issues/46)
 * Added new cvar flags for command filtering [#121](https://github.com/SamVanheer/halflife-updated/issues/121) (Thanks a1batross and vasiavasiavasia95)
 * Provided access to engine filesystem [#86](https://github.com/SamVanheer/halflife-updated/issues/86)
@@ -408,7 +408,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Updated codebase to use correct functions to allow compilation with newer versions of Visual Studio
 * Linux compilation fixes (Thanks Shepard and LogicAndTrick)
 * Made Half-Life client dll depend on server dll to ensure server is built when launching a client debug session
-*  Update Linux makefiles to use g++ instead of gcc to compile and link all code (Thanks MegaBrutal for bringing this to my attention) [#33](https://github.com/SamVanheer/halflife-updated/issues/33)
+*  Update Linux makefiles to use g++ instead of gcc to compile and link all code [#33](https://github.com/SamVanheer/halflife-updated/issues/33) (Thanks MegaBrutal for bringing this to my attention)
 * Moved DMC & Ricochet source code, projects, makefiles and fgds to their own repositories. See [README.md](README.md) for more information
 * Enabled multiprocessor compilation for Windows builds [#39](https://github.com/SamVanheer/halflife-updated/issues/39)
 * Changed default toolset to non-XP compatible one and set Windows SDK version to Windows 10 [#44](https://github.com/SamVanheer/halflife-updated/issues/44)
@@ -431,6 +431,9 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Set maximum edicts to 2048 in liblist.gam [#181](https://github.com/SamVanheer/halflife-updated/issues/181)
 * Made the Linux version link statically to the C++ runtime to help avoid problems when running mods on older systems (Thanks a1ba and FreeSlave)
 * Copy delta.lst when building client or server to ensure mods have correct delta.lst file (Thanks P38TaKjYzY)
+* Disabled GCC optimization that prevents mod dlls from unloading after engine calls dlclose
+* Fixed third party libraries possibly not being linked to when building Linux server dll (Thanks a1batross)
+* Mods made with this SDK will now shut down if they detect they are being run from a Valve game directory (e.g. by placing the dlls in `Half-Life/valve/cl_dlls` and `Half-Life/valve/dlls`). This is not supported and puts users at risk of being VAC banned. Run mods from their intended location only
 
 ## Git repository changes
 
