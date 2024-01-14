@@ -116,3 +116,67 @@ There are basic rules of conduct that should be followed at all times by everyon
 - Do not repeatedly update an open issue remarking that the issue persists.
 
 Remember: Just because the issue you reported was reported here does not mean that it is an issue with Half-Life.  As well, should your issue not be resolved immediately, it does not mean that a resolution is not being researched or tested.  Patience is always appreciated.
+
+# Contributors
+
+This is a list of everybody who contributed to these projects. Thanks for helping to make them better!
+
+If you believe your name should be on this list make sure to let us know!
+
+* Sam Vanheer
+* JoelTroch
+* malortie
+* dtugend
+* Revenant100
+* fel1x-developer
+* LogicAndTrick
+* FreeSlave
+* zpl-zak
+* edgarbarney
+* Toodles2You
+* Jengerer
+* thefoofighter
+* Maxxiii
+* johndrinkwater
+* anchurcn
+* DanielOaks
+* MegaBrutal
+* suXinjke
+* IntriguingTiles
+* Oxofemple
+* YaLTeR
+* Ronin4862
+* the man
+* vasiavasiavasia95
+* NongBenz
+* Hezus
+* Anton
+* ArroganceJustified
+* a1batross
+* zaklaus
+* Uncle Mike
+* Bacontsu
+* L453rh4wk
+* P38TaKjYzY
+* hammermaps
+* LuckNukeHunter99
+* Veinhelm
+* jay!
+* BryanHaley
+* λλλλλλ
+* Streit
+* rbar1um43
+* LambdaLuke87
+* almix
+* sabian
+
+## Special Thanks
+
+* Valve Software
+* Gearbox Software
+* Alfred Reynolds
+* mikela-valve
+* TWHL Community
+* Knockout
+* Gamebanana
+* ModDB
