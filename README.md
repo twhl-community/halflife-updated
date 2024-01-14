@@ -1,10 +1,8 @@
-About
-======================
+# About
 
 [Half-Life Updated](https://github.com/SamVanheer/halflife-updated), [Opposing Force Updated](https://github.com/SamVanheer/halflife-op4-updated) and [Blue Shift Updated](https://github.com/SamVanheer/halflife-bs-updated) are repositories that provide updated versions of the Half-Life SDK, targeted to the 3 Half-Life 1 PC games officially available.
 
-Purpose
-======================
+# Purpose
 
 Each repository provides project files compatible with Visual Studio 2019 and 2022, as well as bug fixes. The Opposing Force and Blue Shift projects are reference implementations of their respective games. This means they provide the original features, implemented as they are in the original games, including the many cases of code duplication.
 
@@ -31,23 +29,19 @@ See the `#welcome` channel for more information about the Discord server. Please
 
 See the TWHL thread for status updates about these projects: https://twhl.info/thread/view/20055
 
-Requirements to run mods built with this SDK
-======================
+# Requirements to run mods built with this SDK
 
 Only the latest Steam version of Half-Life is supported. For the Opposing Force and Blue Shift repositories you will need to own the games and have them installed to use their assets.
 
-Building this SDK
-======================
+# Building this SDK
 
 See [BUILDING.md](BUILDING.md)
 
-Mod installation instructions
-======================
+# Mod installation instructions
 
 See [INSTALL.md](INSTALL.md)
 
-What isn't supported
-======================
+# What isn't supported
 
 Backwards compatibility with WON and older versions of Steam Half-Life is not supported. Xash isn't supported, but may work. You cannot use Updated clients to play on vanilla servers, you also cannot use vanilla clients to play on Updated servers.
 
@@ -55,8 +49,7 @@ Placing Updated game dlls in vanilla installations is not supported.
 
 These repositories have a limited scope and will not have major changes applied.
 
-Deathmatch Classic and Ricochet
-======================
+# Deathmatch Classic and Ricochet
 
 The source code for Deathmatch Classic and Ricochet is in the original Half-Life SDK. The purpose of these updated repositories is to provide updated versions only for Half-Life and its expansion packs, so the source code for these mods has been removed.
 
@@ -66,13 +59,11 @@ Since the vanilla versions don't compile under newer versions of Visual Studio s
 
 Unlike the other updated repositories these only provide basic fixes. No further development and support will be provided.
 
-Changelog
-======================
+# Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) and [FULL_UPDATED_CHANGELOG.md](FULL_UPDATED_CHANGELOG.md)
 
-Half Life 1 SDK LICENSE
-======================
+# Half Life 1 SDK LICENSE
 
 Half Life 1 SDK Copyright© Valve Corp.  
 
@@ -92,15 +83,13 @@ LIMITATION OF LIABILITY.  IN NO EVENT SHALL VALVE OR ITS SUPPLIERS BE LIABLE FOR
 If you would like to use the SDK for a commercial purpose, please contact Valve at sourceengine@valvesoftware.com.
 
 
-Half-Life 1
-======================
+# Half-Life 1
 
 This is the README for the Half-Life 1 engine and its associated games.
 
 Please use this repository to report bugs and feature requests for Half-Life 1 related products.
 
-Reporting Issues
-----------------
+## Reporting Issues
 
 If you encounter an issue while using Half-Life 1 games, first search the [issue list](https://github.com/ValveSoftware/halflife/issues) to see if it has already been reported. Include closed issues in your search.
 
@@ -116,8 +105,7 @@ Please place logs either in a code block (press `M` in your browser for a GFM ch
 
 \* The preferred and easiest way to get this information is from Steam's Hardware Information viewer from the menu (`Help -> System Information`). Once your information appears: right-click within the dialog, choose `Select All`, right-click again, and then choose `Copy`. Paste this information into your report, preferably in a code block.
 
-Conduct
--------
+## Conduct
 
 
 There are basic rules of conduct that should be followed at all times by everyone participating in the discussions.  While this is generally a relaxed environment, please remember the following:
