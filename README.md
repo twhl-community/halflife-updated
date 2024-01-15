@@ -1,6 +1,6 @@
 # About
 
-[Half-Life Updated](https://github.com/SamVanheer/halflife-updated), [Opposing Force Updated](https://github.com/SamVanheer/halflife-op4-updated) and [Blue Shift Updated](https://github.com/SamVanheer/halflife-bs-updated) are repositories that provide updated versions of the Half-Life SDK, targeted to the 3 Half-Life 1 PC games officially available.
+[Half-Life Updated](https://github.com/twhl-community/halflife-updated), [Opposing Force Updated](https://github.com/twhl-community/halflife-op4-updated) and [Blue Shift Updated](https://github.com/twhl-community/halflife-bs-updated) are repositories that provide updated versions of the Half-Life SDK, targeted to the 3 Half-Life 1 PC games officially available.
 
 # Purpose
 
@@ -54,8 +54,8 @@ These repositories have a limited scope and will not have major changes applied.
 The source code for Deathmatch Classic and Ricochet is in the original Half-Life SDK. The purpose of these updated repositories is to provide updated versions only for Half-Life and its expansion packs, so the source code for these mods has been removed.
 
 Since the vanilla versions don't compile under newer versions of Visual Studio separate repositories have been made that provide the same updates to make them compile:
-* https://github.com/SamVanheer/dmc-updated
-* https://github.com/SamVanheer/ricochet-updated
+* https://github.com/twhl-community/dmc-updated
+* https://github.com/twhl-community/ricochet-updated
 
 Unlike the other updated repositories these only provide basic fixes. No further development and support will be provided.
 
