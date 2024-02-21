@@ -57,7 +57,7 @@ char* CHudTextMessage::LocaliseTextString(const char* msg, char* dst_buffer, int
 	// Subtract one so we have space for the null terminator no matter what.
 	std::size_t remainingBufferSize = buffer_size - 1;
 
-	for (const char* src = msg; *src != '\0' && remainingBufferSize > 0; --remainingBufferSize)
+	for (const char* src = msg; *src != '\0' && remainingBufferSize > 0;)
 	{
 		if (*src == '#')
 		{
@@ -90,29 +90,26 @@ char* CHudTextMessage::LocaliseTextString(const char* msg, char* dst_buffer, int
 
 			// lookup msg name in titles.txt
 			client_textmessage_t* clmsg = TextMessageGet(word_buf);
-			if (!clmsg || !(clmsg->pMessage))
+			if (clmsg && clmsg->pMessage)
 			{
-				src = word_start;
-				*dst = *src;
-				dst++;
-				src++;
+				// copy string into message over the msg name
+				const std::size_t count = std::min(remainingBufferSize, std::strlen(clmsg->pMessage));
+
+				std::strncpy(dst, clmsg->pMessage, count);
+
+				dst += count;
+				remainingBufferSize -= count;
 				continue;
 			}
 
-			// copy string into message over the msg name
-			const std::size_t count = std::min(remainingBufferSize, std::strlen(clmsg->pMessage));
-
-			std::strncpy(dst, clmsg->pMessage, count);
-
-			dst += count;
-			remainingBufferSize -= count;
+			src = word_start;
 		}
-		else
-		{
-			*dst = *src;
-			dst++;
-			src++;
-		}
+
+		*dst = *src;
+		dst++;
+		src++;
+
+		--remainingBufferSize;
 	}
 
 	*dst = '\0'; // ensure null termination
