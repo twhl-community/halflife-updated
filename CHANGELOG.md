@@ -1,5 +1,13 @@
 # Half-Life Updated changelog
 
+## Changes in V1.1.0
+
+> Note: this update has not been released yet.
+
+### Bug Fixes
+
+* Fixed potential buffer overflows in text localization (Thanks OMAM)
+
 ## Changes in V1.0.0
 
 ### Bug fixes
