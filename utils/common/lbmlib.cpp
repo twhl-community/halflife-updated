@@ -114,39 +114,6 @@ void MungeBitPlanes8(int width, byte* dest)
 {
 	*dest = width; // shut up the compiler warning
 	Error("MungeBitPlanes8 not rewritten!");
-#if 0
-asm     les     di,[dest]
-asm     mov     si,-1
-asm     mov     cx,[width]
-mungebyte:
-asm     inc     si
-asm     mov     dx,8
-mungebit:
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*7 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*6 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*5 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*4 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*3 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*2 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*1 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*0 +si],1
-asm     rcl     al,1
-asm     stosb
-asm     dec     cx
-asm     jz      done
-asm     dec     dx
-asm     jnz     mungebit
-asm     jmp     mungebyte
-
-done:
-#endif
 }
 
 
@@ -154,33 +121,6 @@ void MungeBitPlanes4(int width, byte* dest)
 {
 	*dest = width; // shut up the compiler warning
 	Error("MungeBitPlanes4 not rewritten!");
-#if 0
-
-asm     les     di,[dest]
-asm     mov     si,-1
-asm     mov     cx,[width]
-mungebyte:
-asm     inc     si
-asm     mov     dx,8
-mungebit:
-asm     xor     al,al
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*3 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*2 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*1 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*0 +si],1
-asm     rcl     al,1
-asm     stosb
-asm     dec     cx
-asm     jz      done
-asm     dec     dx
-asm     jnz     mungebit
-asm     jmp     mungebyte
-
-done:
-#endif
 }
 
 
@@ -188,28 +128,6 @@ void MungeBitPlanes2(int width, byte* dest)
 {
 	*dest = width; // shut up the compiler warning
 	Error("MungeBitPlanes2 not rewritten!");
-#if 0
-asm     les     di,[dest]
-asm     mov     si,-1
-asm     mov     cx,[width]
-mungebyte:
-asm     inc     si
-asm     mov     dx,8
-mungebit:
-asm     xor     al,al
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*1 +si],1
-asm     rcl     al,1
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*0 +si],1
-asm     rcl     al,1
-asm     stosb
-asm     dec     cx
-asm     jz      done
-asm     dec     dx
-asm     jnz     mungebit
-asm     jmp     mungebyte
-
-done:
-#endif
 }
 
 
@@ -217,26 +135,6 @@ void MungeBitPlanes1(int width, byte* dest)
 {
 	*dest = width; // shut up the compiler warning
 	Error("MungeBitPlanes1 not rewritten!");
-#if 0
-asm     les     di,[dest]
-asm     mov     si,-1
-asm     mov     cx,[width]
-mungebyte:
-asm     inc     si
-asm     mov     dx,8
-mungebit:
-asm     xor     al,al
-asm     shl     [BYTE PTR bitplanes + BPLANESIZE*0 +si],1
-asm     rcl     al,1
-asm     stosb
-asm     dec     cx
-asm     jz      done
-asm     dec     dx
-asm     jnz     mungebit
-asm     jmp     mungebyte
-
-done:
-#endif
 }
 
 int LoadBMP(const char* szFile, BYTE** ppbBits, BYTE** ppbPalette)
