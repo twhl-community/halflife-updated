@@ -716,6 +716,12 @@ enum
 	kRenderFxLightMultiplier, //CTM !!!CZERO added to tell the studiorender that the value in iuser2 is a lightmultiplier
 };
 
+enum
+{
+	kBrushGlass = 1,
+	kBrushBreakable = 2,
+};
+
 #define _DEF_BYTE_
 
 typedef struct

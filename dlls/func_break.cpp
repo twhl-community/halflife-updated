@@ -163,11 +163,16 @@ void CBreakable::Spawn()
 	m_angle = pev->angles.y;
 	pev->angles.y = 0;
 
+	if (IsBreakable())
+	{
+		pev->playerclass |= kBrushBreakable;
+	}
+
 	// HACK:  matGlass can receive decals, we need the client to know about this
 	//  so use class to store the material flag
 	if (m_Material == matGlass)
 	{
-		pev->playerclass = 1;
+		pev->playerclass |= kBrushGlass;
 	}
 
 	SET_MODEL(ENT(pev), STRING(pev->model)); //set size and link into world.
