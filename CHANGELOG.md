@@ -7,9 +7,9 @@
 ### Bug Fixes
 
 * Fixed potential buffer overflows in text localization (Thanks OMAM)
-* Reset frame to 0 when grenade bounces [#238](https://github.com/twhl-community/halflife-updated/issues/238) (thanks FreeSlave)
+* Reset frame to 0 when grenade bounces [#238](https://github.com/twhl-community/halflife-updated/issues/238) (Thanks FreeSlave)
 * Fixed weapon events not treating pushable objects as BSP models [#220](https://github.com/twhl-community/halflife-updated/pull/220) (Thanks Toodles2You)
-* Fixed crowbar applying breakable glass decals to unbreakable pushable objects [#219](https://github.com/twhl-community/halflife-updated/pull/219) (Thanks  Toodles2You)
+* Fixed crowbar applying breakable glass decals to unbreakable pushable objects [#219](https://github.com/twhl-community/halflife-updated/pull/219) (Thanks Toodles2You)
 
 ## Changes in V1.0.0
 
