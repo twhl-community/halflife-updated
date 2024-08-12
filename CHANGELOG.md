@@ -7,6 +7,7 @@
 ### Bug Fixes
 
 * Fixed potential buffer overflows in text localization (Thanks OMAM)
+* Reset frame to 0 when grenade bounces [#238](https://github.com/twhl-community/halflife-updated/issues/238) (thanks FreeSlave)
 
 ## Changes in V1.0.0
 

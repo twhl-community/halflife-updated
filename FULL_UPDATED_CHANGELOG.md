@@ -116,6 +116,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed Hand grenade not playing deploy animation after finishing a throw (halflife issue [#2495](https://github.com/ValveSoftware/halflife/issues/2495))
 * Fixed Hand grenades staying primed when switching away or dropping the weapon (halflife issue [#3251](https://github.com/ValveSoftware/halflife/issues/3251))
 * Fixed hand grenade animations not playing correctly [#209](https://github.com/twhl-community/halflife-updated/pull/209) (Thanks Toodles2You)
+* Reset frame to 0 when grenade bounces [#238](https://github.com/twhl-community/halflife-updated/issues/238) (thanks FreeSlave)
 
 ### Satchel charge
 
