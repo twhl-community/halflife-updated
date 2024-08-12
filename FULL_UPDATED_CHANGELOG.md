@@ -52,6 +52,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed crowbar not showing in weapon list if there are empty weapon slots with a lower id (halflife [#3181](https://github.com/ValveSoftware/halflife/issues/3181))
 * Fixed the Crowbar damage always being calculated halved (halflife issue [#1600](https://github.com/ValveSoftware/halflife/pull/1600) (Thanks YaLTeR)
 * Fixed Crowbar playing back swing events twice sometimes (halflife issue [#3230](https://github.com/ValveSoftware/halflife/issues/3230))
+* Fixed crowbar applying breakable glass decals to unbreakable pushable objects [#219](https://github.com/twhl-community/halflife-updated/pull/219) (Thanks  Toodles2You)
 
 ### Glock
 
