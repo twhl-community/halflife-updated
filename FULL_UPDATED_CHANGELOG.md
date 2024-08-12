@@ -43,7 +43,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed player weapons still receiving input when starting to use a func_tank (halflife issue [#3345](https://github.com/ValveSoftware/halflife/issues/3345)) (Thanks Oxofemple.)
 * Fixed limit in world weapons (e.g. Hand Grenade) respawning at wrong time if server is near edict limit
 * Disabled fall think function for weapons when the player picks it up to prevent possible double-pickup which removes the weapon and crashes the game
-* Fix weapon events not treating pushable objects as BSP models [#220](https://github.com/twhl-community/halflife-updated/pull/220) (Thanks Toodles2You)
+* Fixed weapon events not treating pushable objects as BSP models [#220](https://github.com/twhl-community/halflife-updated/pull/220) (Thanks Toodles2You)
 
 ### Crowbar
 
