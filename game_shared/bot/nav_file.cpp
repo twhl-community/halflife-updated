@@ -153,6 +153,12 @@ public:
 		for( int i=0; i<count; ++i )
 		{
 			file->Read( &len, sizeof(unsigned short) );
+			if ( len >= sizeof( placeName ) )
+			{
+				assert( false && "PlaceDirectory::Load: Invalid placeName size" );
+				return;
+			}
+
 			file->Read( placeName, len );
 			placeName[ sizeof( placeName ) - 1 ] = '\0';
 
