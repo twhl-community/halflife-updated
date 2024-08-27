@@ -73,10 +73,14 @@ void WeaponsResource::LoadWeaponSprites(WEAPON* pWeapon)
 {
 	int i, iRes;
 
-	if (ScreenWidth < 640)
-		iRes = 320;
-	else
+	if (ScreenWidth > 2560 && ScreenHeight > 1600)
+		iRes = 2560;
+	else if (ScreenWidth >= 1280 && ScreenHeight > 720)
+		iRes = 1280;
+	else if (ScreenWidth >= 640)
 		iRes = 640;
+	else
+		iRes = 320;
 
 	char sz[256];
 
@@ -323,16 +327,17 @@ bool CHudAmmo::VidInit()
 	// If we've already loaded weapons, let's get new sprites
 	gWR.LoadAllWeaponSprites();
 
-	if (ScreenWidth >= 640)
-	{
-		giABWidth = 20;
-		giABHeight = 4;
-	}
-	else
-	{
-		giABWidth = 10;
-		giABHeight = 2;
-	}
+	int nScale = 1;
+
+	if (ScreenWidth > 2560 && ScreenHeight > 1600)
+		nScale = 4;
+	else if (ScreenWidth >= 1280 && ScreenHeight > 720)
+		nScale = 3;
+	else if (ScreenWidth >= 640)
+		nScale = 2;
+
+	giABWidth = 10 * nScale;
+	giABHeight = 2 * nScale;
 
 	return true;
 }
@@ -867,8 +872,8 @@ bool CHudAmmo::Draw(float flTime)
 
 	ScaleColors(r, g, b, a);
 
-	// Does this weapon have a clip?
 	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
+	y += (int)(gHUD.m_iFontHeight * 0.2f);
 
 	// Does weapon have any ammo at all?
 	if (m_pWeapon->iAmmoType > 0)
@@ -1183,7 +1188,7 @@ client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes
 
 	while (0 != i--)
 	{
-		if ((0 == strcmp(psz, p->szName)) && (p->iRes == iRes))
+		if ((p->iRes == iRes) && (0 == strcmp(psz, p->szName)))
 			return p;
 		p++;
 	}
