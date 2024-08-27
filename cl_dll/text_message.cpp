@@ -223,7 +223,7 @@ bool CHudTextMessage::MsgFunc_TextMsg(const char* pszName, int iSize, void* pbuf
 
 	case HUD_PRINTNOTIFY:
 		psz[0] = 1; // mark this message to go into the notify buffer
-		safe_sprintf(psz + 1, MSG_BUF_SIZE, msg_text, sstr1, sstr2, sstr3, sstr4);
+		safe_sprintf(psz + 1, MSG_BUF_SIZE - 1, msg_text, sstr1, sstr2, sstr3, sstr4);
 		ConsolePrint(ConvertCRtoNL(psz));
 		break;
 

@@ -711,7 +711,7 @@ void IN_StartupJoystick()
 
 					// mark the joystick as available and advanced initialization not completed
 					// this is needed as cvars are not available during initialization
-					gEngfuncs.Con_Printf("joystick found\n\n", SDL_GameControllerName(s_pJoystick));
+					gEngfuncs.Con_Printf("joystick found %s\n\n", SDL_GameControllerName(s_pJoystick));
 					joy_avail = true;
 					joy_advancedinit = false;
 					break;

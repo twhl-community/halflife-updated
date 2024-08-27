@@ -154,6 +154,7 @@ public:
 		{
 			file->Read( &len, sizeof(unsigned short) );
 			file->Read( placeName, len );
+			placeName[ sizeof( placeName ) - 1 ] = '\0';
 
 			AddPlace( TheBotPhrases->NameToID( placeName ) );
 		}
