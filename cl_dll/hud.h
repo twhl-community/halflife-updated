@@ -436,6 +436,7 @@ private:
 
 	int m_HUD_title_life;
 	int m_HUD_title_half;
+	bool m_bEndAfterMessage;
 };
 
 //
