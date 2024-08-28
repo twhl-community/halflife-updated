@@ -2255,7 +2255,7 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 	{
 		fieldNumber = (i + startField) % fieldCount;
 		pTest = &pFields[fieldNumber];
-		if (!stricmp(pTest->fieldName, pName))
+		if (pTest->fieldName && !stricmp(pTest->fieldName, pName))
 		{
 			if (!m_global || (pTest->flags & FTYPEDESC_GLOBAL) == 0)
 			{
