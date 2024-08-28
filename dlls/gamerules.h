@@ -363,6 +363,33 @@ protected:
 	void SendMOTDToClient(edict_t* client);
 };
 
+//=========================================================
+// CMultiplayBusters
+// Rules for a multiplayer mode that makes you feel good
+//=========================================================
+class CMultiplayBusters : public CHalfLifeMultiplay
+{
+public:
+	CMultiplayBusters();
+
+	void Think();
+	int IPointsForKill(CBasePlayer* pAttacker, CBasePlayer* pKilled);
+	void PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor);
+	void DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor);
+	int WeaponShouldRespawn(CBasePlayerItem* pWeapon);
+	bool CanHavePlayerItem(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon);
+	bool CanHaveItem(CBasePlayer* pPlayer, CItem* pItem);
+	void PlayerGotWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon);
+	void ClientUserInfoChanged(CBasePlayer* pPlayer, char* infobuffer);
+	void PlayerSpawn(CBasePlayer* pPlayer);
+
+	void SetPlayerModel(CBasePlayer* pPlayer);
+
+protected:
+	float m_flEgonBustingCheckTime = -1.0f;
+	void CheckForEgons();
+};
+
 inline DLL_GLOBAL CGameRules* g_pGameRules = nullptr;
 inline DLL_GLOBAL bool g_fGameOver;
 inline bool g_teamplay = false;
