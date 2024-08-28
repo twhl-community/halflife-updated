@@ -788,7 +788,7 @@ void CBasePlayer::Killed(entvars_t* pevAttacker, int iGib)
 
 	SetAnimation(PLAYER_DIE);
 
-	m_iRespawnFrames = 0;
+	m_flRespawnTimer = 0.0f;
 
 	pev->modelindex = g_ulModelIndexPlayer; // don't use eyes
 
@@ -924,6 +924,8 @@ void CBasePlayer::SetAnimation(PLAYER_ANIM playerAnim)
 		// Already using the desired animation?
 		if (pev->sequence == animDesired)
 			return;
+
+		//ALERT(at_console, "Set die animation to %d\n", animDesired);
 
 		pev->gaitsequence = 0;
 		pev->sequence = animDesired;
@@ -1206,18 +1208,27 @@ void CBasePlayer::PlayerDeathThink()
 	{
 		StudioFrameAdvance();
 
-		m_iRespawnFrames++;			// Note, these aren't necessarily real "frames", so behavior is dependent on # of client movement commands
-		if (m_iRespawnFrames < 120) // Animations should be no longer than this
+		m_flRespawnTimer += gpGlobals->frametime;
+		if (m_flRespawnTimer < 4.0f) // 120 frames at 30 fps -- animations should be no longer than this
 			return;
+	}
+
+	if (pev->deadflag == DEAD_DYING)
+	{
+		// Once we finish animating, if we're in multiplayer just make a copy of our body right away.
+		if (m_fSequenceFinished && g_pGameRules->IsMultiplayer() && pev->movetype == MOVETYPE_NONE)
+		{
+			CopyToBodyQue(pev);
+			pev->modelindex = 0;
+		}
+
+		pev->deadflag = DEAD_DEAD;
 	}
 
 	// once we're done animating our death and we're on the ground, we want to set movetype to None so our dead body won't do collisions and stuff anymore
 	// this prevents a bug where the dead body would go to a player's head if he walked over it while the dead player was clicking their button to respawn
 	if (pev->movetype != MOVETYPE_NONE && FBitSet(pev->flags, FL_ONGROUND))
 		pev->movetype = MOVETYPE_NONE;
-
-	if (pev->deadflag == DEAD_DYING)
-		pev->deadflag = DEAD_DEAD;
 
 	StopAnimation();
 
@@ -1258,7 +1269,7 @@ void CBasePlayer::PlayerDeathThink()
 		return;
 
 	pev->button = 0;
-	m_iRespawnFrames = 0;
+	m_flRespawnTimer = 0.0f;
 
 	//ALERT(at_console, "Respawn\n");
 
