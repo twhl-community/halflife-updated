@@ -169,7 +169,7 @@ void CZombie::AlertSound()
 
 void CZombie::IdleSound()
 {
-	int pitch = 100 + RANDOM_LONG(-5, 5);
+	int pitch = 95 + RANDOM_LONG(0, 9);
 
 	// Play a random idle sound
 	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, RANDOM_SOUND_ARRAY(pIdleSounds), 1.0, ATTN_NORM, 0, pitch);
@@ -177,7 +177,7 @@ void CZombie::IdleSound()
 
 void CZombie::AttackSound()
 {
-	int pitch = 100 + RANDOM_LONG(-5, 5);
+	int pitch = 95 + RANDOM_LONG(0, 9);
 
 	// Play a random attack sound
 	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, RANDOM_SOUND_ARRAY(pAttackSounds), 1.0, ATTN_NORM, 0, pitch);
