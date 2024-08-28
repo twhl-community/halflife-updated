@@ -41,6 +41,7 @@ public:
 
 	// Don't treat as a live target
 	bool IsAlive() override { return false; }
+	bool IsAllowedToSpeak() { return true; }
 
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
