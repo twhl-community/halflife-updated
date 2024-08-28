@@ -831,9 +831,11 @@ public:
 	void EXPORT RocketTouch(CBaseEntity* pOther);
 	static CRpgRocket* CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher);
 
+	CRpg* GetLauncher();
+
 	int m_iTrail;
 	float m_flIgniteTime;
-	EHANDLE m_pLauncher; // handle back to the launcher that fired me.
+	EHANDLE m_hLauncher; // handle back to the launcher that fired me.
 };
 
 #define GAUSS_PRIMARY_CHARGE_VOLUME 256 // how loud gauss is while charging
