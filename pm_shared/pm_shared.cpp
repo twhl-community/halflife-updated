@@ -969,8 +969,10 @@ int PM_FlyMove()
 
 		// modify original_velocity so it parallels all of the clip planes
 		//
-		if (pmove->movetype == MOVETYPE_WALK &&
-			((pmove->onground == -1) || (pmove->friction != 1))) // relfect player velocity
+		// relfect player velocity
+		// Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping in place
+		//  and pressing forward and nobody was really using this bounce/reflection feature anyway...
+		if (numplanes == 1 && pmove->movetype == MOVETYPE_WALK && ((pmove->onground == -1) || (pmove->friction != 1)))
 		{
 			for (i = 0; i < numplanes; i++)
 			{
@@ -1748,9 +1750,9 @@ bool PM_CheckStuck()
 	VectorCopy(pmove->origin, base);
 
 	//
-	// Deal with precision error in network.
+	// Deal with precision error in network and cases where the player can get stuck on level transitions in singleplayer.
 	//
-	if (0 == pmove->server)
+	if (0 == pmove->server || 0 == pmove->multiplayer)
 	{
 		// World or BSP model
 		if ((hitent == 0) ||
@@ -1774,8 +1776,6 @@ bool PM_CheckStuck()
 			} while (nReps < 54);
 		}
 	}
-
-	// Only an issue on the client.
 
 	// Always check if we've just changed levels.
 	if (!(pmove->server != 0 && g_CheckForPlayerStuck))
@@ -3073,7 +3073,13 @@ void PM_PlayerMove(qboolean server)
 	{
 		if (PM_CheckStuck())
 		{
-			return; // Can't move, we're stuck
+			// Let the user try to duck to get unstuck
+			PM_Duck();
+
+			if (PM_CheckStuck())
+			{
+				return; // Can't move, we're stuck
+			}
 		}
 	}
 
