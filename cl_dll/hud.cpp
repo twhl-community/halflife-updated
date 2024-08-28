@@ -374,6 +374,11 @@ void CHud::Init()
 	m_Menu.Init();
 
 	MsgFunc_ResetHUD(0, 0, NULL);
+
+#ifdef STEAM_RICH_PRESENCE
+	gEngfuncs.pfnClientCmd("richpresence_gamemode\n"); // reset
+	gEngfuncs.pfnClientCmd("richpresence_update\n");
+#endif
 }
 
 // CHud destructor
