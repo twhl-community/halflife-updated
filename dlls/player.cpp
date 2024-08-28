@@ -2793,6 +2793,7 @@ ReturnSpot:
 
 void CBasePlayer::Spawn()
 {
+	m_flStartCharge = gpGlobals->time;
 	m_bIsSpawning = true;
 
 	//Make sure this gets reset even if somebody adds an early return or throws an exception.
