@@ -659,6 +659,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	player.m_afButtonPressed = buttonsChanged & cmd->buttons;
 	// The ones not down are "released"
 	player.m_afButtonReleased = buttonsChanged & (~cmd->buttons);
+	player.pev->v_angle = cmd->viewangles;
+	player.pev->origin = from->client.origin;
 
 	// Set player variables that weapons code might check/alter
 	player.pev->button = cmd->buttons;
