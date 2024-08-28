@@ -2527,16 +2527,19 @@ float CBaseMonster::ChangeYaw(int yawSpeed)
 	ideal = pev->ideal_yaw;
 	if (current != ideal)
 	{
-		float delta = gpGlobals->time - m_flLastYawTime;
-
-		m_flLastYawTime = gpGlobals->time;
-
-		if (delta > 0.25)
+		if (m_flLastYawTime == 0.0f)
 		{
-			delta = 0.25;
+			m_flLastYawTime = gpGlobals->time - gpGlobals->frametime;
 		}
 
-		speed = yawSpeed * delta * 2;
+		float delta = gpGlobals->time - m_flLastYawTime;
+		m_flLastYawTime = gpGlobals->time;
+
+		// Clamp delta like the engine does with frametime
+		if (delta > 0.25)
+			delta = 0.25;
+
+		speed = (float)yawSpeed * delta * 2;
 		move = ideal - current;
 
 		if (ideal > current)
