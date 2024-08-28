@@ -46,5 +46,6 @@ extern cvar_t sv_allowbunnyhopping;
 // Engine Cvars
 inline cvar_t* g_psv_gravity;
 inline cvar_t* g_psv_aim;
+inline cvar_t* g_psv_allow_autoaim;
 inline cvar_t* g_footsteps;
 inline cvar_t* g_psv_cheats;
