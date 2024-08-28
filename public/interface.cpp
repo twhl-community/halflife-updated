@@ -61,7 +61,7 @@ InterfaceReg::InterfaceReg(InstantiateInterfaceFn fn, const char* pName) : m_pNa
 // ------------------------------------------------------------------------------------ //
 // CreateInterface.
 // ------------------------------------------------------------------------------------ //
-DLLEXPORT IBaseInterface* CreateInterface(const char* pName, int* pReturnCode)
+EXPORT_FUNCTION void* CreateInterface(const char* pName, int* pReturnCode)
 {
 	InterfaceReg* pCur;
 
@@ -84,6 +84,8 @@ DLLEXPORT IBaseInterface* CreateInterface(const char* pName, int* pReturnCode)
 	return NULL;
 }
 
+// BEN-NOTE: unifying this on all platforms
+#if 0
 //Local version of CreateInterface, marked static so that it is never merged with the version in other libraries
 static IBaseInterface* CreateInterfaceLocal(const char* pName, int* pReturnCode)
 {
@@ -107,6 +109,7 @@ static IBaseInterface* CreateInterfaceLocal(const char* pName, int* pReturnCode)
 	}
 	return NULL;
 }
+#endif // 0
 
 //-----------------------------------------------------------------------------
 // Purpose: returns a pointer to a function, given a module
@@ -220,5 +223,10 @@ CreateInterfaceFn Sys_GetFactory(CSysModule* pModule)
 //-----------------------------------------------------------------------------
 CreateInterfaceFn Sys_GetFactoryThis()
 {
+	// BEN-NOTE: unifying this on all platforms
+#if 0
 	return CreateInterfaceLocal;
+#else
+	return CreateInterface;
+#endif
 }
