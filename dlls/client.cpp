@@ -1418,6 +1418,12 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 		state->health = ent->v.health;
 	}
 
+	CBaseEntity* pEntity = static_cast<CBaseEntity*>(GET_PRIVATE(ent));
+	if (pEntity && pEntity->Classify() != CLASS_NONE && pEntity->Classify() != CLASS_MACHINE)
+		state->eflags |= EFLAG_FLESH_SOUND;
+	else
+		state->eflags &= ~EFLAG_FLESH_SOUND;
+
 	return 1;
 }
 

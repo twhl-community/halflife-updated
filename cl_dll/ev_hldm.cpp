@@ -66,6 +66,7 @@ float EV_HLDM_PlayTextureSound(int idx, pmtrace_t* ptr, float* vecSrc, float* ve
 {
 	// hit the world, try to play sound based on texture material type
 	char chTextureType = CHAR_TEX_CONCRETE;
+	cl_entity_t* cl_entity = NULL;
 	float fvol;
 	float fvolbar;
 	const char* rgsz[4];
@@ -84,12 +85,7 @@ float EV_HLDM_PlayTextureSound(int idx, pmtrace_t* ptr, float* vecSrc, float* ve
 	chTextureType = 0;
 
 	// Player
-	if (entity >= 1 && entity <= gEngfuncs.GetMaxClients())
-	{
-		// hit body
-		chTextureType = CHAR_TEX_FLESH;
-	}
-	else if (entity == 0)
+	if (entity == 0)
 	{
 		// get texture from entity or world (world is ent(0))
 		pTextureName = (char*)gEngfuncs.pEventAPI->EV_TraceTexture(ptr->ent, vecSrc, vecEnd);
@@ -117,6 +113,20 @@ float EV_HLDM_PlayTextureSound(int idx, pmtrace_t* ptr, float* vecSrc, float* ve
 			// get texture type
 			chTextureType = PM_FindTextureType(szbuffer);
 		}
+	}
+	else
+	{
+		// JoshA: Look up the entity and find the EFLAG_FLESH_SOUND flag.
+		// This broke at some point then TF:C added prediction.
+		//
+		// It used to use Classify of pEntity->Classify() != CLASS_NONE && pEntity->Classify() != CLASS_MACHINE
+		// to determine what sound to play, but that's server side and isn't available on the client
+		// and got lost in the translation to that.
+		// Now the server will replicate that state via an eflag.
+		cl_entity = gEngfuncs.GetEntityByIndex(entity);
+
+		if (cl_entity && !!(cl_entity->curstate.eflags & EFLAG_FLESH_SOUND))
+			chTextureType = CHAR_TEX_FLESH;
 	}
 
 	switch (chTextureType)
