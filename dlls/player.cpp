@@ -625,8 +625,20 @@ void CBasePlayer::PackDeadPlayerItems()
 				case GR_PLR_DROP_GUN_ACTIVE:
 					if (m_pActiveItem && pPlayerItem == m_pActiveItem)
 					{
+						CBasePlayerWeapon* pWeapon = (CBasePlayerWeapon*)pPlayerItem;
+						int nIndex = iPW++;
+
 						// this is the active item. Pack it.
-						rgpPackWeapons[iPW++] = (CBasePlayerWeapon*)pPlayerItem;
+						rgpPackWeapons[nIndex] = pWeapon;
+
+						// Reload the weapon before dropping it if we have ammo
+						int j = V_min(pWeapon->iMaxClip() - pWeapon->m_iClip, m_rgAmmo[pWeapon->m_iPrimaryAmmoType]);
+
+						// Add them to the clip
+						pWeapon->m_iClip += j;
+						m_rgAmmo[pWeapon->m_iPrimaryAmmoType] -= j;
+
+						TabulateAmmo();
 					}
 					break;
 
