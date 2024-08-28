@@ -1980,7 +1980,7 @@ void CBaseMonster::MoveExecute(CBaseEntity* pTargetEnt, const Vector& vecDir, fl
 	while (flTotal > 0.001)
 	{
 		// don't walk more than 16 units or stairs stop working
-		flStep = V_min(16.0, flTotal);
+		flStep = V_min(16.0f, flTotal);
 		UTIL_MoveToOrigin(ENT(pev), m_Route[m_iRouteIndex].vecLocation, flStep, MOVE_NORMAL);
 		flTotal -= flStep;
 	}

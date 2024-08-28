@@ -890,7 +890,7 @@ void CNihilanth::HuntThink()
 		}
 		else
 		{
-			m_flAdj = V_min(m_flAdj + 10, 1000);
+			m_flAdj = V_min(m_flAdj + 10.0f, 1000.0f);
 		}
 	}
 
