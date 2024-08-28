@@ -1013,7 +1013,7 @@ void CBasePlayerWeapon::DoRetireWeapon()
 //=========================================================================
 float CBasePlayerWeapon::GetNextAttackDelay(float delay)
 {
-	if (m_flLastFireTime == 0 || m_flNextPrimaryAttack <= -1.1)
+	if (m_flLastFireTime == 0 || m_flNextPrimaryAttack == -1)
 	{
 		// At this point, we are assuming that the client has stopped firing
 		// and we are going to reset our book keeping variables.

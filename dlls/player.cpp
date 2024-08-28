@@ -2621,17 +2621,17 @@ pt_end:
 
 				if (gun && gun->UseDecrement())
 				{
-					gun->m_flNextPrimaryAttack = V_max(gun->m_flNextPrimaryAttack - gpGlobals->frametime, -1.1);
-					gun->m_flNextSecondaryAttack = V_max(gun->m_flNextSecondaryAttack - gpGlobals->frametime, -0.001);
+					gun->m_flNextPrimaryAttack = V_max(gun->m_flNextPrimaryAttack - gpGlobals->frametime, -1.0f);
+					gun->m_flNextSecondaryAttack = V_max(gun->m_flNextSecondaryAttack - gpGlobals->frametime, -0.001f);
 
 					if (gun->m_flTimeWeaponIdle != 1000)
 					{
-						gun->m_flTimeWeaponIdle = V_max(gun->m_flTimeWeaponIdle - gpGlobals->frametime, -0.001);
+						gun->m_flTimeWeaponIdle = V_max(gun->m_flTimeWeaponIdle - gpGlobals->frametime, -0.001f);
 					}
 
 					if (gun->pev->fuser1 != 1000)
 					{
-						gun->pev->fuser1 = V_max(gun->pev->fuser1 - gpGlobals->frametime, -0.001);
+						gun->pev->fuser1 = V_max(gun->pev->fuser1 - gpGlobals->frametime, -0.001f);
 					}
 
 					gun->DecrementTimers();
