@@ -1301,17 +1301,6 @@ int g_fireAnims2[] = {EGON_ALTFIRECYCLE};
 
 BEAM* pBeam;
 BEAM* pBeam2;
-TEMPENTITY* pFlare; // Vit_amiN: egon's beam flare
-
-void EV_EgonFlareCallback(struct tempent_s* ent, float frametime, float currenttime)
-{
-	float delta = currenttime - ent->tentOffset.z; // time past since the last scale
-	if (delta >= ent->tentOffset.y)
-	{
-		ent->entity.curstate.scale += ent->tentOffset.x * delta;
-		ent->tentOffset.z = currenttime;
-	}
-}
 
 void EV_EgonFire(event_args_t* args)
 {
@@ -1349,7 +1338,7 @@ void EV_EgonFire(event_args_t* args)
 	if (EV_IsLocal(idx))
 		gEngfuncs.pEventAPI->EV_WeaponAnimation(g_fireAnims1[gEngfuncs.pfnRandomLong(0, 3)], 0);
 
-	if (iStartup && EV_IsLocal(idx) && !pBeam && !pBeam2 && !pFlare && 0 != cl_lw->value) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
+	if (iStartup && EV_IsLocal(idx) && !pBeam && !pBeam2 && 0 != cl_lw->value) //Adrian: Added the cl_lw check for those lital people that hate weapon prediction.
 	{
 		Vector vecSrc, vecEnd, angles, forward, right, up;
 		pmtrace_t tr;
@@ -1399,17 +1388,7 @@ void EV_EgonFire(event_args_t* args)
 				pBeam->flags |= (FBEAM_SINENOISE);
 
 			pBeam2 = gEngfuncs.pEfxAPI->R_BeamEntPoint(idx | 0x1000, tr.endpos, iBeamModelIndex, 99999, 5.0, 0.08, 0.7, 25, 0, 0, r, g, b);
-
-			// Vit_amiN: egon beam flare
-			pFlare = gEngfuncs.pEfxAPI->R_TempSprite(tr.endpos, vec3_origin, 1.0,
-				gEngfuncs.pEventAPI->EV_FindModelIndex(EGON_FLARE_SPRITE),
-				kRenderGlow, kRenderFxNoDissipation, 1.0, 99999, FTENT_SPRCYCLE | FTENT_PERSIST);
 		}
-	}
-
-	if (pFlare) // Vit_amiN: store the last mode for EV_EgonStop()
-	{
-		pFlare->tentOffset.x = (iFireMode == FIRE_WIDE) ? 1.0f : 0.0f;
 	}
 }
 
@@ -1442,26 +1421,6 @@ void EV_EgonStop(event_args_t* args)
 		{
 			pBeam2->die = 0.0;
 			pBeam2 = NULL;
-		}
-
-		if (pFlare) // Vit_amiN: egon beam flare
-		{
-			pFlare->die = gEngfuncs.GetClientTime();
-
-			if (gEngfuncs.GetMaxClients() == 1 || (pFlare->flags & FTENT_NOMODEL) == 0)
-			{
-				if (pFlare->tentOffset.x != 0.0f) // true for iFireMode == FIRE_WIDE
-				{
-					pFlare->callback = &EV_EgonFlareCallback;
-					pFlare->fadeSpeed = 2.0;			// fade out will take 0.5 sec
-					pFlare->tentOffset.x = 10.0;		// scaling speed per second
-					pFlare->tentOffset.y = 0.1;			// min time between two scales
-					pFlare->tentOffset.z = pFlare->die; // the last callback run time
-					pFlare->flags = FTENT_FADEOUT | FTENT_CLIENTCUSTOM;
-				}
-			}
-
-			pFlare = NULL;
 		}
 
 		// HACK: only reset animation if the Egon is still equipped.

@@ -407,7 +407,9 @@ void CEgon::CreateEffect()
 	m_pSprite->pev->scale = 1.0;
 	m_pSprite->SetTransparency(kRenderGlow, 255, 255, 255, 255, kRenderFxNoDissipation);
 	m_pSprite->pev->spawnflags |= SF_SPRITE_TEMPORARY;
-	m_pSprite->pev->flags |= FL_SKIPLOCALHOST;
+	// Josh: This sprite is not predicted on the client, so was missing
+	// for many years after it got broken in an update.
+	// m_pSprite->pev->flags |= FL_SKIPLOCALHOST;
 	m_pSprite->pev->owner = m_pPlayer->edict();
 
 	if (m_fireMode == FIRE_WIDE)
