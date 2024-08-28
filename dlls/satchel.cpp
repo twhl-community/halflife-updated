@@ -163,7 +163,7 @@ LINK_ENTITY_TO_CLASS(weapon_satchel, CSatchel);
 //=========================================================
 bool CSatchel::AddDuplicate(CBasePlayerItem* pOriginal)
 {
-	CSatchel* pSatchel;
+	CSatchel* pSatchel = nullptr;
 
 #ifdef CLIENT_DLL
 	if (bIsMultiplayer())
@@ -173,7 +173,25 @@ bool CSatchel::AddDuplicate(CBasePlayerItem* pOriginal)
 	{
 		pSatchel = (CSatchel*)pOriginal;
 
-		if (pSatchel->m_chargeReady != 0)
+		if (pOriginal->m_pPlayer == NULL)
+			return true;
+
+		int nSatchelsInPocket = pSatchel->m_pPlayer->m_rgAmmo[pSatchel->PrimaryAmmoIndex()];
+		int nNumSatchels = 0;
+		CBaseEntity* pLiveSatchel = NULL;
+
+		while ((pLiveSatchel = UTIL_FindEntityInSphere(pLiveSatchel, pOriginal->m_pPlayer->pev->origin, 4096)) != NULL)
+		{
+			if (FClassnameIs(pLiveSatchel->pev, "monster_satchel"))
+			{
+				if (pLiveSatchel->pev->owner == pOriginal->m_pPlayer->edict())
+				{
+					nNumSatchels++;
+				}
+			}
+		}
+
+		if (pSatchel->m_chargeReady != 0 && (nSatchelsInPocket + nNumSatchels) >= SATCHEL_MAX_CARRY)
 		{
 			// player has some satchels deployed. Refuse to add more.
 			return false;
