@@ -117,6 +117,7 @@ HLDLL_OBJS = \
 	$(HLDLL_OBJ_DIR)/turret.o \
 	$(HLDLL_OBJ_DIR)/UserMessages.o \
 	$(HLDLL_OBJ_DIR)/util.o \
+	$(HLDLL_OBJ_DIR)/vehicle.o \
 	$(HLDLL_OBJ_DIR)/weapons.o \
 	$(HLDLL_OBJ_DIR)/weapons_shared.o \
 	$(HLDLL_OBJ_DIR)/world.o \
