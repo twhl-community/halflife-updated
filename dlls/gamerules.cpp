@@ -53,6 +53,11 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 				continue;
 			}
 
+			if ((pCheck->iFlags() & ITEM_FLAG_NOAUTOSWITCHTO) != 0)
+			{
+				continue;
+			}
+
 			if (pCheck->iWeight() > -1 && pCheck->iWeight() == currentWeight)
 			{
 				// this weapon is from the same category.

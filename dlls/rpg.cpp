@@ -410,7 +410,7 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 	p->iSlot = 3;
 	p->iPosition = 0;
 	p->iId = m_iId = WEAPON_RPG;
-	p->iFlags = 0;
+	p->iFlags = ITEM_FLAG_NOAUTOSWITCHTO;
 	p->iWeight = RPG_WEIGHT;
 
 	return true;
