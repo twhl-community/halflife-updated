@@ -1,4 +1,4 @@
-This is the changelog from Steam Half-Life to Half-Life Updated version 1.0.0.
+This is the changelog from Steam Half-Life to Half-Life Updated version 1.1.0.
 
 Fixes for bugs introduced in beta builds are not included in this list.
 

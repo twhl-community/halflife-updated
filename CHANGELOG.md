@@ -2,14 +2,60 @@
 
 ## Changes in V1.1.0
 
-> Note: this update has not been released yet.
-
 ### Bug Fixes
 
 * Fixed potential buffer overflows in text localization (Thanks OMAM)
 * Reset frame to 0 when grenade bounces [#238](https://github.com/twhl-community/halflife-updated/issues/238) (Thanks FreeSlave)
 * Fixed weapon events not treating pushable objects as BSP models [#220](https://github.com/twhl-community/halflife-updated/pull/220) (Thanks Toodles2You)
 * Fixed crowbar applying breakable glass decals to unbreakable pushable objects [#219](https://github.com/twhl-community/halflife-updated/pull/219) (Thanks Toodles2You)
+* [HL25] Fixed client/server view origin/angles sync and view bob affectation
+* [HL25] Fixed crowbar full swing logic (already fixed but reverted to use HL25's version for consistency)
+* [HL25] Fixed `func_pushable` framerate/input handling
+* [HL25] Fixed geiger counter sound at range 800 units and higher
+* [HL25] Fixed "ghost shots" syndrome (backported from Counter-Strike)
+* [HL25] Fixed Gluon gun's flare sprite (already fixed but reverted to use HL25's version for consistency)
+* [HL25] Fixed how flesh sounds are handled on entities
+* [HL25] Fixed monsters turning speed being dependant on framerate (already fixed but reverted to use HL25's version for consistency)
+* [HL25] Fixed potential null pointer on field name when restoring (loading saved game) entities
+* [HL25] Fixed some player movement cases where client can be stuck
+* [HL25] Fixed some joystick and mouse sensitivity issues
+* [HL25] Fixed some unsafe string operations
+* [HL25] Fixed some out of bounds indexes
+* [HL25] Fixed `trigger_hurt` healing dead players in multiplayer
+* [HL25] Fixed incorrect touch function reference in the unused trip beam entity
+* [HL25] Renamed extra CVAR flags including their description to HL25's SDK counterpart for consistency
+* [HL25] Reworked how multiplayer corpses are handled to fix various issues
+
+### Features
+
+* Removed some leftovers related to the Mac platform
+* [HL25] Added `EngineFilteredClientCmd` macro on the client project
+* [HL25] Added `_sv_override_scientist_mdl` CVAR functionality
+* [HL25] Added `sv_allow_autoaim` CVAR functionality
+* [HL25] Added 1280 and 2560 HUD resolutions support (including other changes to the HUD)
+* [HL25] Added changes to 9mm AR's default magazine capacity (25 if singleplayer, 50 if multiplayer)
+* [HL25] Added changes to multiplayer spawn selection logic
+* [HL25] Added changes to the Gauss gun's charging mechanic
+* [HL25] Added changes to the hand grenade throwing arc
+* [HL25] Added changes to the hive hand's (hornet gun) auto-switch weight and recharge time (faster if multiplayer)
+* [HL25] Added changes to the RPG's empty sound, rocket tracking and detonation if touching the sky
+* [HL25] Added changes to the sentences system (moved from `CBaseMonster` to `CBaseToggle`)
+* [HL25] Added changes to the snarks throw
+* [HL25] Added comments about the `netadr_s` structure
+* [HL25] Added "busters" multiplayer game mode
+* [HL25] Added `END3` message to end the game functionality
+* [HL25] Added `func_vehicle` entity
+* [HL25] Added "modern" satchel charge/radio controls (those who want the "legacy" behavior can comment the `MODERN_SATCHEL_CONTROLS` define at the beginning of `dlls/satchel.cpp`)
+* [HL25] Added multiplayer specific limit of live satchels per player
+* [HL25] Added new method to filesystem interface
+* [HL25] Added Python's damage buff in multiplayer (from 40 to 50)
+* [HL25] Added Steam Rich Presence commands calls (disabled due to being reserved to mods hosted on Steam, see `STEAM_RICH_PRESENCE` define)
+* [HL25] Increased max. sentences count from 1536 to 2048
+* [HL25] Made players non-solid upon dying in multiplayer
+* [HL25] Made dropping active weapon to be reloaded before actually dropping it
+* [HL25] Server will now execute `spserver.cfg` when initializing singleplayer game rules
+* [HL25] Updated procinfo, SDL2, Steam types and VGUI 1 dependencies
+
 
 ## Changes in V1.0.0
 
