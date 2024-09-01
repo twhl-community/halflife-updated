@@ -1,5 +1,13 @@
 # Half-Life Updated changelog
 
+## Changes in V1.1.1
+
+> Note: this update has not been released yet.
+
+### Bug fixes
+
+* Link Linux binaries with `-Wl` and `--no-undefined` flags to avoid situations where something was referenced but wasn't added in the build (Thanks a1batross)
+
 ## Changes in V1.1.0
 
 ### Bug Fixes

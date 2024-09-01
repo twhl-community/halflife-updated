@@ -54,9 +54,9 @@ endif
 SHLIBEXT=so
 SHLIBCFLAGS=
 ifeq "$(CFG)" "release"
-	SHLIBLDFLAGS="-shared -Wl,-Map,$@_map.txt"
+	SHLIBLDFLAGS="-shared -Wl,-Map,$@_map.txt -Wl,--no-undefined"
 else
-	SHLIBLDFLAGS="-shared -gdwarf-2 -g2 -Wl,-Map,$@_map.txt"
+	SHLIBLDFLAGS="-shared -gdwarf-2 -g2 -Wl,-Map,$@_map.txt -Wl,--no-undefined"
 endif
 
 AR=ar

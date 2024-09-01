@@ -437,6 +437,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Disabled GCC optimization that prevents mod dlls from unloading after engine calls dlclose
 * Fixed third party libraries possibly not being linked to when building Linux server dll (Thanks a1batross)
 * Mods made with this SDK will now shut down if they detect they are being run from a Valve game directory (e.g. by placing the dlls in `Half-Life/valve/cl_dlls` and `Half-Life/valve/dlls`). This is not supported and puts users at risk of being VAC banned. Run mods from their intended location only
+* Link Linux binaries with `-Wl` and `--no-undefined` flags to avoid situations where something was referenced but wasn't added in the build (Thanks a1batross)
 
 ## Git repository changes
 
