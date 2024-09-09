@@ -101,7 +101,7 @@ entity_state_t gamedll Entity_Encode
 	DEFINE_DELTA( weaponmodel, DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( owner, DT_INTEGER, 5, 1.0 ),
 	DEFINE_DELTA( effects, DT_INTEGER, 8, 1.0 ),
-	DEFINE_DELTA( eflags, DT_INTEGER, 1, 1.0 ),
+	DEFINE_DELTA( eflags, DT_INTEGER, 2, 1.0 ), // JoshA: Changed to 2 for EFLAG_FLESH_SOUND to fix flesh sounds on entities. If a mod ships updated DLLs and not this file, they just won't have that fix.
 	DEFINE_DELTA( angles[2], DT_ANGLE, 16, 1.0 ),
 	DEFINE_DELTA( colormap, DT_INTEGER, 16, 1.0 ),
 	DEFINE_DELTA( framerate, DT_SIGNED | DT_FLOAT, 8, 16.0 ),
