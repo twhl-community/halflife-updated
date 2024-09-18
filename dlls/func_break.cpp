@@ -574,7 +574,8 @@ bool CBreakable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, flo
 	g_vecAttackDir = vecTemp.Normalize();
 
 	// do the damage
-	pev->health -= flDamage;
+	if (pev->takedamage)
+		pev->health -= flDamage;
 	if (pev->health <= 0)
 	{
 		Killed(pevAttacker, GIB_NORMAL);
