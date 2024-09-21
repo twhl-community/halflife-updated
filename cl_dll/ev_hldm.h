@@ -35,3 +35,4 @@ void EV_SnarkFire(event_args_t* args);
 
 
 void EV_TrainPitchAdjust(event_args_t* args);
+void EV_VehiclePitchAdjust(event_args_t* args);

@@ -293,6 +293,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Prevent breakables from spawning multiple items when destroyed by gunfire and explosives at the same time (Thanks Oxofemple.)
 * Added cvar `sv_allowbunnyhopping` to control whether the bunny hopping limiter is enabled (halflife issue [#11](https://github.com/ValveSoftware/halflife/issues/11))
 * Added `sv_load_all_maps` & `sv_stop_loading_all_maps` to help automate node graph generation
+* Added missing client side event for `func_vehicle` sounds
 
 ## Code cleanup
 
