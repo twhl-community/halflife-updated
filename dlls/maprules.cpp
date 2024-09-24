@@ -109,6 +109,7 @@ class CRuleBrushEntity : public CRuleEntity
 {
 public:
 	void Spawn() override;
+	int ObjectCaps() override { return CRuleEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 private:
 };
