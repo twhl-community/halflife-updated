@@ -9,6 +9,10 @@
 * Added missing client side event for `func_vehicle` sounds
 * Link Linux binaries with `-Wl` and `--no-undefined` flags to avoid situations where something was referenced but wasn't added in the build (Thanks a1batross)
 
+### Features
+
+* [HL25] Backported changes from October 2nd 2024 update
+
 ## Changes in V1.1.0
 
 ### Bug Fixes

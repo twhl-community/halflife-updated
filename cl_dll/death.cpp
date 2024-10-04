@@ -108,6 +108,11 @@ bool CHudDeathNotice::Draw(float flTime)
 	Rect sprite = gHUD.GetSpriteRect(m_HUD_d_skull);
 	gap = sprite.bottom - sprite.top;
 
+	SCREENINFO screenInfo;
+	screenInfo.iSize = sizeof(SCREENINFO);
+	gEngfuncs.pfnGetScreenInfo(&screenInfo);
+	gap = V_max(gap, screenInfo.iCharHeight);
+
 	for (int i = 0; i < MAX_DEATHNOTICES; i++)
 	{
 		if (rgDeathNoticeList[i].iId == 0)
