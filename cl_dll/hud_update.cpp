@@ -25,8 +25,6 @@ int CL_ButtonBits(bool);
 void CL_ResetButtonBits(int bits);
 
 extern float v_idlescale;
-float in_fov;
-extern void HUD_SetCmdBits(int bits);
 
 bool CHud::UpdateClientData(client_data_t* cdata, float time)
 {
@@ -34,10 +32,6 @@ bool CHud::UpdateClientData(client_data_t* cdata, float time)
 	memcpy(m_vecAngles, cdata->viewangles, sizeof(Vector));
 
 	m_iKeyBits = CL_ButtonBits(false);
-	//Handled in MsgFunc_Weapons now.
-	//m_iWeaponBits = cdata->iWeaponBits;
-
-	in_fov = cdata->fov;
 
 	Think();
 

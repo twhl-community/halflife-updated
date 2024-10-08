@@ -9,7 +9,7 @@
 #include "entity_state.h"
 #include "cl_entity.h"
 #include "ref_params.h"
-#include "in_defs.h" // PITCH YAW ROLL
+#include "in_defs.h"
 #include "pm_movevars.h"
 #include "pm_shared.h"
 #include "pm_defs.h"
@@ -23,19 +23,12 @@
 int CL_IsThirdPerson();
 void CL_CameraOffset(float* ofs);
 
-void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams);
-
-void PM_ParticleLine(float* start, float* end, int pcolor, float life, float vert);
-int PM_GetVisEntInfo(int ent);
 int PM_GetPhysEntInfo(int ent);
-void InterpolateAngles(float* start, float* end, float* output, float frac);
 void NormalizeAngles(float* angles);
 float Distance(const float* v1, const float* v2);
-float AngleBetweenVectors(const float* v1, const float* v2);
 
 extern float vJumpOrigin[3];
 extern float vJumpAngles[3];
-
 
 void V_DropPunchAngle(float frametime, float* ev_punchangle);
 void VectorAngles(const float* forward, float* angles);
@@ -56,8 +49,6 @@ when crossing a water boudnary.
 */
 
 extern cvar_t* cl_forwardspeed;
-extern cvar_t* chase_active;
-extern cvar_t *scr_ofsx, *scr_ofsy, *scr_ofsz;
 extern cvar_t* cl_vsmoothing;
 extern cvar_t* cl_rollangle;
 extern cvar_t* cl_rollspeed;
@@ -99,64 +90,6 @@ cvar_t v_iroll_level = {"v_iroll_level", "0.1", 0, 0.1};
 cvar_t v_ipitch_level = {"v_ipitch_level", "0.3", 0, 0.3};
 
 float v_idlescale; // used by TFC for concussion grenade effect
-
-//=============================================================================
-/*
-void V_NormalizeAngles( Vector& angles )
-{
-	int i;
-	// Normalize angles
-	for ( i = 0; i < 3; i++ )
-	{
-		if ( angles[i] > 180.0 )
-		{
-			angles[i] -= 360.0;
-		}
-		else if ( angles[i] < -180.0 )
-		{
-			angles[i] += 360.0;
-		}
-	}
-}
-
-/*
-===================
-V_InterpolateAngles
-
-Interpolate Euler angles.
-FIXME:  Use Quaternions to avoid discontinuities
-Frac is 0.0 to 1.0 ( i.e., should probably be clamped, but doesn't have to be )
-===================
-
-void V_InterpolateAngles( float *start, float *end, float *output, float frac )
-{
-	int i;
-	float ang1, ang2;
-	float d;
-	
-	V_NormalizeAngles( start );
-	V_NormalizeAngles( end );
-
-	for ( i = 0 ; i < 3 ; i++ )
-	{
-		ang1 = start[i];
-		ang2 = end[i];
-
-		d = ang2 - ang1;
-		if ( d > 180 )
-		{
-			d -= 360;
-		}
-		else if ( d < -180 )
-		{	
-			d += 360;
-		}
-
-		output[i] = ang1 + d * frac;
-	}
-
-	V_NormalizeAngles( output );
-} */
 
 // Quakeworld bob code, this fixes jitters in the mutliplayer since the clock (pparams->time) isn't quite linear
 float V_CalcBob(struct ref_params_s* pparams)
@@ -696,7 +629,6 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 	V_DropPunchAngle(pparams->frametime, (float*)&ev_punchangle);
 
 	// smooth out stair step ups
-#if 1
 	if (0 == pparams->smoothing && 0 != pparams->onground && pparams->simorg[2] - oldz > 0)
 	{
 		float steptime;
@@ -718,7 +650,6 @@ void V_CalcNormalRefdef(struct ref_params_s* pparams)
 	{
 		oldz = pparams->simorg[2];
 	}
-#endif
 
 	{
 		static float lastorg[3];
@@ -956,57 +887,10 @@ void V_GetChaseOrigin(float* angles, float* origin, float distance, float* retur
 		maxLoops--;
 	}
 
-	/*	if ( ent )
-	{
-		gEngfuncs.Con_Printf("Trace loops %i , entity %i, model %s, solid %i\n",(8-maxLoops),ent->curstate.number, ent->model->name , ent->curstate.solid ); 
-	} */
-
 	VectorMA(trace->endpos, 4, trace->plane.normal, returnvec);
 
 	v_lastDistance = Distance(trace->endpos, origin); // real distance without offset
 }
-
-/*void V_GetDeathCam(cl_entity_t * ent1, cl_entity_t * ent2, float * angle, float * origin)
-{
-	float newAngle[3]; float newOrigin[3]; 
-
-	float distance = 168.0f;
-
-	v_lastDistance+= v_frametime * 96.0f;	// move unit per seconds back
-
-	if ( v_resetCamera )
-		v_lastDistance = 64.0f;
-
-	if ( distance > v_lastDistance )
-		distance = v_lastDistance;
-
-	VectorCopy(ent1->origin, newOrigin);
-
-	if ( ent1->player )
-		newOrigin[2]+= 17; // head level of living player
-
-	// get new angle towards second target
-	if ( ent2 )
-	{
-		VectorSubtract( ent2->origin, ent1->origin, newAngle );
-		VectorAngles( newAngle, newAngle );
-		newAngle[0] = -newAngle[0];
-	}
-	else
-	{
-		// if no second target is given, look down to dead player
-		newAngle[0] = 90.0f;
-		newAngle[1] = 0.0f;
-		newAngle[2] = 0;
-	}
-
-	// and smooth view
-	V_SmoothInterpolateAngles( v_lastAngles, newAngle, angle, 120.0f );
-			
-	V_GetChaseOrigin( angle, newOrigin, distance, origin );
-
-	VectorCopy(angle, v_lastAngles);
-}*/
 
 void V_GetSingleTargetCam(cl_entity_t* ent1, float* angle, float* origin)
 {
@@ -1400,9 +1284,7 @@ void V_GetMapChasePosition(int target, float* cl_angles, float* origin, float* a
 
 int V_FindViewModelByWeaponModel(int weaponindex)
 {
-
 	static const char* modelmap[][2] = {
-
 		{"models/p_crossbow.mdl", "models/v_crossbow.mdl"},
 		{"models/p_crowbar.mdl", "models/v_crowbar.mdl"},
 		{"models/p_egon.mdl", "models/v_egon.mdl"},
@@ -1629,8 +1511,6 @@ void V_CalcSpectatorRefdef(struct ref_params_s* pparams)
 
 void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 {
-	//	RecClCalcRefdef(pparams);
-
 	// intermission / finale rendering
 	if (0 != pparams->intermission)
 	{
@@ -1644,25 +1524,6 @@ void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 	{
 		V_CalcNormalRefdef(pparams);
 	}
-
-	/*
-// Example of how to overlay the whole screen with red at 50 % alpha
-#define SF_TEST
-#if defined SF_TEST
-	{
-		screenfade_t sf;
-		gEngfuncs.pfnGetScreenFade( &sf );
-
-		sf.fader = 255;
-		sf.fadeg = 0;
-		sf.fadeb = 0;
-		sf.fadealpha = 128;
-		sf.fadeFlags = FFADE_STAYOUT | FFADE_OUT;
-
-		gEngfuncs.pfnSetScreenFade( &sf );
-	}
-#endif
-*/
 }
 
 /*
@@ -1715,86 +1576,3 @@ void V_Init()
 	cl_waterdist = gEngfuncs.pfnRegisterVariable("cl_waterdist", "4", 0);
 	cl_chasedist = gEngfuncs.pfnRegisterVariable("cl_chasedist", "112", 0);
 }
-
-
-//#define TRACE_TEST
-#if defined(TRACE_TEST)
-
-extern float in_fov;
-/*
-====================
-CalcFov
-====================
-*/
-float CalcFov(float fov_x, float width, float height)
-{
-	float a;
-	float x;
-
-	if (fov_x < 1 || fov_x > 179)
-		fov_x = 90; // error, set to 90
-
-	x = width / tan(fov_x / 360 * M_PI);
-
-	a = atan(height / x);
-
-	a = a * 360 / M_PI;
-
-	return a;
-}
-
-int hitent = -1;
-
-void V_Move(int mx, int my)
-{
-	float fov;
-	float fx, fy;
-	float dx, dy;
-	float c_x, c_y;
-	float dX, dY;
-	Vector forward, up, right;
-	Vector newangles;
-
-	Vector farpoint;
-	pmtrace_t tr;
-
-	fov = CalcFov(in_fov, (float)ScreenWidth, (float)ScreenHeight);
-
-	c_x = (float)ScreenWidth / 2.0;
-	c_y = (float)ScreenHeight / 2.0;
-
-	dx = (float)mx - c_x;
-	dy = (float)my - c_y;
-
-	// Proportion we moved in each direction
-	fx = dx / c_x;
-	fy = dy / c_y;
-
-	dX = fx * in_fov / 2.0;
-	dY = fy * fov / 2.0;
-
-	newangles = v_angles;
-
-	newangles[YAW] -= dX;
-	newangles[PITCH] += dY;
-
-	// Now rotate v_forward around that point
-	AngleVectors(newangles, forward, right, up);
-
-	farpoint = v_origin + 8192 * forward;
-
-	// Trace
-	tr = *(gEngfuncs.PM_TraceLine((float*)&v_origin, (float*)&farpoint, PM_TRACELINE_PHYSENTSONLY, 2 /*point sized hull*/, -1));
-
-	if (tr.fraction != 1.0 && tr.ent != 0)
-	{
-		hitent = PM_GetPhysEntInfo(tr.ent);
-		PM_ParticleLine((float*)&v_origin, (float*)&tr.endpos, 5, 1.0, 0.0);
-	}
-	else
-	{
-		hitent = -1;
-	}
-}
-
-#endif

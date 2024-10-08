@@ -35,8 +35,6 @@
 #define DHN_3DIGITS 4
 #define MIN_ALPHA 100
 
-#define HUDELEM_ACTIVE 1
-
 typedef struct
 {
 	int x, y;

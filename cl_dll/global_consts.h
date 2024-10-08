@@ -14,7 +14,6 @@ enum
 	MAX_TEAM_NAME = 16,
 };
 
-#define MAX_SCORES					10
 #define MAX_SCOREBOARD_TEAMS		5
 
 #define NUM_ROWS		(MAX_PLAYERS_HUD + (MAX_SCOREBOARD_TEAMS * 2))

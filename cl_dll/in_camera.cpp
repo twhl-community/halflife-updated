@@ -29,11 +29,6 @@ extern cl_enginefunc_t gEngfuncs;
 #define CAM_ANGLE_SPEED 2.5
 #define CAM_MIN_DIST 30.0
 #define CAM_ANGLE_MOVE .5
-#define MAX_ANGLE_DIFF 10.0
-#define PITCH_MAX 90.0
-#define PITCH_MIN 0
-#define YAW_MAX 135.0
-#define YAW_MIN -135.0
 
 enum ECAM_Command
 {
@@ -67,13 +62,12 @@ bool cam_thirdperson;
 bool cam_mousemove; //true if we are moving the cam with the mouse, False if not
 bool iMouseInUse = false;
 bool cam_distancemove;
-extern int mouse_x, mouse_y;		  //used to determine what the current x and y values are
 int cam_old_mouse_x, cam_old_mouse_y; //holds the last ticks mouse movement
 Point cam_mouse;
 //-------------------------------------------------- Local Variables
 
 static kbutton_t cam_pitchup, cam_pitchdown, cam_yawleft, cam_yawright;
-static kbutton_t cam_in, cam_out, cam_move;
+static kbutton_t cam_in, cam_out;
 
 //-------------------------------------------------- Prototypes
 
@@ -85,7 +79,6 @@ void CAM_EndDistance();
 void SDL_GetCursorPos(Point* p)
 {
 	gEngfuncs.GetMousePosition(&p->x, &p->y);
-	//	SDL_GetMouseState( &p->x, &p->y );
 }
 
 void SDL_SetCursorPos(const int x, const int y)
@@ -135,33 +128,13 @@ float MoveToward(float cur, float goal, float maxspeed)
 
 //-------------------------------------------------- Gobal Functions
 
-typedef struct
-{
-	Vector boxmins, boxmaxs; // enclose the test object along entire move
-	float *mins, *maxs;		 // size of the moving object
-	Vector mins2, maxs2;	 // size when clipping against mosnters
-	float *start, *end;
-	trace_t trace;
-	int type;
-	edict_t* passedict;
-	qboolean monsterclip;
-} moveclip_t;
-
-extern trace_t SV_ClipMoveToEntity(edict_t* ent, Vector start, Vector mins, Vector maxs, Vector end);
-
 void DLLEXPORT CAM_Think()
 {
-	//	RecClCamThink();
-
 	Vector origin;
 	Vector ext, pnt, camForward, camRight, camUp;
-	moveclip_t clip;
 	float dist;
 	Vector camAngles;
 	float flSensitivity;
-#ifdef LATER
-	int i;
-#endif
 	Vector viewangles;
 
 	switch ((int)cam_command->value)
@@ -182,14 +155,6 @@ void DLLEXPORT CAM_Think()
 	if (!cam_thirdperson)
 		return;
 
-#ifdef LATER
-	if (cam_contain->value)
-	{
-		gEngfuncs.GetClientOrigin(origin);
-		ext[0] = ext[1] = ext[2] = 0.0;
-	}
-#endif
-
 	camAngles[PITCH] = cam_idealpitch->value;
 	camAngles[YAW] = cam_idealyaw->value;
 	dist = cam_idealdist->value;
@@ -209,7 +174,6 @@ void DLLEXPORT CAM_Think()
 			//keep the camera within certain limits around the player (ie avoid certain bad viewing angles)
 			if (cam_mouse.x > gEngfuncs.GetWindowCenterX())
 			{
-				//if ((camAngles[YAW]>=225.0)||(camAngles[YAW]<135.0))
 				if (camAngles[YAW] < c_maxyaw->value)
 				{
 					camAngles[YAW] += (CAM_ANGLE_MOVE) * ((cam_mouse.x - gEngfuncs.GetWindowCenterX()) / 2);
@@ -222,7 +186,6 @@ void DLLEXPORT CAM_Think()
 			}
 			else if (cam_mouse.x < gEngfuncs.GetWindowCenterX())
 			{
-				//if ((camAngles[YAW]<=135.0)||(camAngles[YAW]>225.0))
 				if (camAngles[YAW] > c_minyaw->value)
 				{
 					camAngles[YAW] -= (CAM_ANGLE_MOVE) * ((gEngfuncs.GetWindowCenterX() - cam_mouse.x) / 2);
@@ -331,28 +294,7 @@ void DLLEXPORT CAM_Think()
 		cam_old_mouse_y = cam_mouse.y * gHUD.GetSensitivity();
 		SDL_SetCursorPos(gEngfuncs.GetWindowCenterX(), gEngfuncs.GetWindowCenterY());
 	}
-#ifdef LATER
-	if (cam_contain->value)
-	{
-		// check new ideal
-		VectorCopy(origin, pnt);
-		AngleVectors(camAngles, camForward, camRight, camUp);
-		for (i = 0; i < 3; i++)
-			pnt[i] += -dist * camForward[i];
 
-		// check line from r_refdef.vieworg to pnt
-		memset(&clip, 0, sizeof(moveclip_t));
-		clip.trace = SV_ClipMoveToEntity(sv.edicts, r_refdef.vieworg, ext, ext, pnt);
-		if (clip.trace.fraction == 1.0)
-		{
-			// update ideal
-			cam_idealpitch->value = camAngles[PITCH];
-			cam_idealyaw->value = camAngles[YAW];
-			cam_idealdist->value = dist;
-		}
-	}
-	else
-#endif
 	{
 		// update ideal
 		cam_idealpitch->value = camAngles[PITCH];
@@ -384,26 +326,7 @@ void DLLEXPORT CAM_Think()
 		else
 			camAngles[2] += (cam_idealdist->value - camAngles[2]) / 4.0;
 	}
-#ifdef LATER
-	if (cam_contain->value)
-	{
-		// Test new position
-		dist = camAngles[ROLL];
-		camAngles[ROLL] = 0;
 
-		VectorCopy(origin, pnt);
-		AngleVectors(camAngles, camForward, camRight, camUp);
-		for (i = 0; i < 3; i++)
-			pnt[i] += -dist * camForward[i];
-
-		// check line from r_refdef.vieworg to pnt
-		memset(&clip, 0, sizeof(moveclip_t));
-		ext[0] = ext[1] = ext[2] = 0.0;
-		clip.trace = SV_ClipMoveToEntity(sv.edicts, r_refdef.vieworg, ext, ext, pnt);
-		if (clip.trace.fraction != 1.0)
-			return;
-	}
-#endif
 	cam_ofs[0] = camAngles[0];
 	cam_ofs[1] = camAngles[1];
 	cam_ofs[2] = dist;
@@ -614,14 +537,10 @@ void CAM_EndDistance()
 
 int DLLEXPORT CL_IsThirdPerson()
 {
-	//	RecClCL_IsThirdPerson();
-
 	return static_cast<int>(cam_thirdperson || (0 != g_iUser1 && (g_iUser2 == gEngfuncs.GetLocalPlayer()->index)));
 }
 
 void DLLEXPORT CL_CameraOffset(float* ofs)
 {
-	//	RecClCL_GetCameraOffsets(ofs);
-
 	VectorCopy(cam_ofs, ofs);
 }

@@ -445,18 +445,6 @@ void CTFScrollButton::paint()
 
 void CTFScrollButton::paintBackground()
 {
-	/*
-	if ( isArmed() )
-	{
-		// Orange highlight background
-		drawSetColor( Scheme::sc_primary2 );
-		drawFilledRect(0,0,_size[0],_size[1]);
-	}
-
-	// Orange Border
-	drawSetColor( Scheme::sc_secondary1 );
-	drawOutlinedRect(0,0,_size[0]-1,_size[1]);
-*/
 }
 
 void CTFSlider::paintBackground()

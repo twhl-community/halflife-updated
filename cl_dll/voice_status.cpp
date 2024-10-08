@@ -17,6 +17,7 @@
 #include "voice_status.h"
 #include "r_efx.h"
 #include "entity_types.h"
+#include "camera.h"
 #include "VGUI_ActionSignal.h"
 #include "VGUI_Scheme.h"
 #include "VGUI_TextImage.h"
@@ -24,22 +25,9 @@
 #include "vgui_helpers.h"
 #include "VGUI_MouseCode.h"
 
-
-
 using namespace vgui;
 
-
-extern bool cam_thirdperson;
-
-
-#define VOICE_MODEL_INTERVAL 0.3
 #define SCOREBOARD_BLINK_FREQUENCY 0.3 // How often to blink the scoreboard icons.
-#define SQUELCHOSCILLATE_PER_SECOND 2.0f
-
-
-extern BitmapTGA* LoadTGA(const char* pImageName);
-
-
 
 // ---------------------------------------------------------------------- //
 // The voice manager for the client.

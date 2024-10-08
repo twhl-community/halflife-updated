@@ -17,7 +17,6 @@
 
 #include <ctype.h>
 
-#define MAX_SCORES 10
 #define MAX_SCOREBOARD_TEAMS 5
 
 // Scoreboard cells

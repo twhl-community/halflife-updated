@@ -31,8 +31,6 @@ extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
 #define TEAM3_COLOR 45
 #define TEAM4_COLOR 100
 
-int m_nPlayerGaitSequences[MAX_PLAYERS];
-
 // Global engine <-> studio model rendering code interface
 engine_studio_api_t IEngineStudio;
 
@@ -144,7 +142,6 @@ void CStudioModelRenderer::StudioCalcBoneAdj(float dadt, float* adj, const byte*
 					value = 1.0;
 				value = (1.0 - value) * pbonecontroller[j].start + value * pbonecontroller[j].end;
 			}
-			// Con_DPrintf( "%d %d %f : %f\n", m_pCurrentEntity->curstate.controller[j], m_pCurrentEntity->latched.prevcontroller[j], value, dadt );
 		}
 		else
 		{
@@ -152,7 +149,6 @@ void CStudioModelRenderer::StudioCalcBoneAdj(float dadt, float* adj, const byte*
 			if (value > 1.0)
 				value = 1.0;
 			value = (1.0 - value) * pbonecontroller[j].start + value * pbonecontroller[j].end;
-			// Con_DPrintf("%d %f\n", mouthopen, value );
 		}
 		switch (pbonecontroller[j].type & STUDIO_TYPES)
 		{
@@ -274,10 +270,6 @@ void CStudioModelRenderer::StudioCalcBonePosition(int frame, float s, mstudiobon
 		if (panim->offset[j] != 0)
 		{
 			panimvalue = (mstudioanimvalue_t*)((byte*)panim + panim->offset[j]);
-			/*
-			if (i == 0 && j == 0)
-				Con_DPrintf("%d  %d:%d  %f\n", frame, panimvalue->num.valid, panimvalue->num.total, s );
-			*/
 
 			k = frame;
 			// DEBUG
@@ -434,8 +426,6 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 	Vector modelpos;
 
 	// tweek model origin
-	//for (i = 0; i < 3; i++)
-	//	modelpos[i] = m_pCurrentEntity->origin[i];
 
 	VectorCopy(m_pCurrentEntity->origin, modelpos);
 
@@ -446,8 +436,6 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 	angles[PITCH] = m_pCurrentEntity->curstate.angles[PITCH];
 	angles[YAW] = m_pCurrentEntity->curstate.angles[YAW];
 
-	//Con_DPrintf("Angles %4.2f prev %4.2f for %i\n", angles[PITCH], m_pCurrentEntity->index);
-	//Con_DPrintf("movetype %d %d\n", m_pCurrentEntity->movetype, m_pCurrentEntity->aiment );
 	if (m_pCurrentEntity->curstate.movetype == MOVETYPE_STEP)
 	{
 		float f = 0;
@@ -462,7 +450,6 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 			(m_pCurrentEntity->curstate.animtime != m_pCurrentEntity->latched.prevanimtime))
 		{
 			f = (m_clTime - m_pCurrentEntity->curstate.animtime) / (m_pCurrentEntity->curstate.animtime - m_pCurrentEntity->latched.prevanimtime);
-			//Con_DPrintf("%4.2f %.2f %.2f\n", f, m_pCurrentEntity->curstate.animtime, m_clTime);
 		}
 
 		if (m_fDoInterp)
@@ -485,11 +472,6 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 			}
 		}
 
-		// NOTE:  Because multiplayer lag can be relatively large, we don't want to cap
-		//  f at 1.5 anymore.
-		//if (f > -1.0 && f < 1.5) {}
-
-		//			Con_DPrintf("%.0f %.0f\n",m_pCurrentEntity->msg_angles[0][YAW], m_pCurrentEntity->msg_angles[1][YAW] );
 		for (i = 0; i < 3; i++)
 		{
 			float ang1, ang2;
@@ -509,15 +491,11 @@ void CStudioModelRenderer::StudioSetUpTransform(bool trivial_accept)
 
 			angles[i] += d * f;
 		}
-		//Con_DPrintf("%.3f \n", f );
 	}
 	else if (m_pCurrentEntity->curstate.movetype != MOVETYPE_NONE)
 	{
 		VectorCopy(m_pCurrentEntity->angles, angles);
 	}
-
-	//Con_DPrintf("%.0f %0.f %0.f\n", modelpos[0], modelpos[1], modelpos[2] );
-	//Con_DPrintf("%.0f %0.f %0.f\n", angles[0], angles[1], angles[2] );
 
 	angles[PITCH] = -angles[PITCH];
 	AngleMatrix(angles, (*m_protationmatrix));
@@ -612,13 +590,6 @@ void CStudioModelRenderer::StudioCalcRotations(float pos[][3], vec4_t* q, mstudi
 
 	frame = (int)f;
 
-	// Con_DPrintf("%d %.4f %.4f %.4f %.4f %d\n", m_pCurrentEntity->curstate.sequence, m_clTime, m_pCurrentEntity->animtime, m_pCurrentEntity->frame, f, frame );
-
-	// Con_DPrintf( "%f %f %f\n", m_pCurrentEntity->angles[ROLL], m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->angles[YAW] );
-
-	// Con_DPrintf("frame %d %d\n", frame1, frame2 );
-
-
 	dadt = StudioEstimateInterpolant();
 	s = (f - frame);
 
@@ -632,8 +603,6 @@ void CStudioModelRenderer::StudioCalcRotations(float pos[][3], vec4_t* q, mstudi
 		StudioCalcBoneQuaterion(frame, s, pbone, panim, adj, q[i]);
 
 		StudioCalcBonePosition(frame, s, pbone, panim, adj, pos[i]);
-		// if (0 && i == 0)
-		//	Con_DPrintf("%d %d %d %d\n", m_pCurrentEntity->curstate.sequence, frame, j, k );
 	}
 
 	if ((pseqdesc->motiontype & STUDIO_X) != 0)
@@ -804,28 +773,7 @@ void CStudioModelRenderer::StudioSetupBones()
 
 	pseqdesc = (mstudioseqdesc_t*)((byte*)m_pStudioHeader + m_pStudioHeader->seqindex) + m_pCurrentEntity->curstate.sequence;
 
-	// always want new gait sequences to start on frame zero
-	/*	if ( m_pPlayerInfo )
-	{
-		int playerNum = m_pCurrentEntity->index - 1;
-
-		// new jump gaitsequence?  start from frame zero
-		if ( m_nPlayerGaitSequences[ playerNum ] != m_pPlayerInfo->gaitsequence )
-		{
-	//		m_pPlayerInfo->gaitframe = 0.0;
-			gEngfuncs.Con_Printf( "Setting gaitframe to 0\n" );
-		}
-
-		m_nPlayerGaitSequences[ playerNum ] = m_pPlayerInfo->gaitsequence;
-//		gEngfuncs.Con_Printf( "index: %d     gaitsequence: %d\n",playerNum, m_pPlayerInfo->gaitsequence);
-	}
-*/
 	f = StudioEstimateFrame(pseqdesc);
-
-	if (m_pCurrentEntity->latched.prevframe > f)
-	{
-		//Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
-	}
 
 	panim = StudioGetAnim(m_pRenderModel, pseqdesc);
 	StudioCalcRotations(pos, q, pseqdesc, panim, f);
@@ -908,7 +856,6 @@ void CStudioModelRenderer::StudioSetupBones()
 	}
 	else
 	{
-		//Con_DPrintf("prevframe = %4.2f\n", f);
 		m_pCurrentEntity->latched.prevframe = f;
 	}
 
@@ -976,9 +923,6 @@ void CStudioModelRenderer::StudioSetupBones()
 			if (0 != IEngineStudio.IsHardware())
 			{
 				ConcatTransforms((*m_protationmatrix), bonematrix, (*m_pbonetransform)[i]);
-
-				// MatrixCopy should be faster...
-				//ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
 				MatrixCopy((*m_pbonetransform)[i], (*m_plighttransform)[i]);
 			}
 			else
@@ -1051,11 +995,6 @@ void CStudioModelRenderer::StudioMergeBones(model_t* m_pSubModel)
 
 	f = StudioEstimateFrame(pseqdesc);
 
-	if (m_pCurrentEntity->latched.prevframe > f)
-	{
-		//Con_DPrintf("%f %f\n", m_pCurrentEntity->prevframe, f );
-	}
-
 	panim = StudioGetAnim(m_pSubModel, pseqdesc);
 	StudioCalcRotations(pos, q, pseqdesc, panim, f);
 
@@ -1086,9 +1025,6 @@ void CStudioModelRenderer::StudioMergeBones(model_t* m_pSubModel)
 				if (0 != IEngineStudio.IsHardware())
 				{
 					ConcatTransforms((*m_protationmatrix), bonematrix, (*m_pbonetransform)[i]);
-
-					// MatrixCopy should be faster...
-					//ConcatTransforms ((*m_protationmatrix), bonematrix, (*m_plighttransform)[i]);
 					MatrixCopy((*m_pbonetransform)[i], (*m_plighttransform)[i]);
 				}
 				else
@@ -1137,7 +1073,7 @@ bool CStudioModelRenderer::StudioDrawModel(int flags)
 			return false;
 
 		// get copy of player
-		deadplayer = *(IEngineStudio.GetPlayerState(m_pCurrentEntity->curstate.renderamt - 1)); //cl.frames[cl.parsecount & CL_UPDATE_MASK].playerstate[m_pCurrentEntity->curstate.renderamt-1];
+		deadplayer = *(IEngineStudio.GetPlayerState(m_pCurrentEntity->curstate.renderamt - 1));
 
 		// clear weapon, movement state
 		deadplayer.number = m_pCurrentEntity->curstate.renderamt;
@@ -1323,8 +1259,6 @@ void CStudioModelRenderer::StudioProcessGait(entity_state_t* pplayer)
 	m_pCurrentEntity->latched.prevblending[0] = m_pCurrentEntity->curstate.blending[0];
 	m_pCurrentEntity->latched.prevseqblending[0] = m_pCurrentEntity->curstate.blending[0];
 
-	// Con_DPrintf("%f %d\n", m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->blending[0] );
-
 	dt = (m_clTime - m_clOldTime);
 	if (dt < 0)
 		dt = 0;
@@ -1332,8 +1266,6 @@ void CStudioModelRenderer::StudioProcessGait(entity_state_t* pplayer)
 		dt = 1;
 
 	StudioEstimateGait(pplayer);
-
-	// Con_DPrintf("%f %f\n", m_pCurrentEntity->angles[YAW], m_pPlayerInfo->gaityaw );
 
 	// calc side to side turning
 	flYaw = m_pCurrentEntity->angles[YAW] - m_pPlayerInfo->gaityaw;

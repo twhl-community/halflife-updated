@@ -68,8 +68,6 @@ inline struct cvar_s* CVAR_CREATE(const char* cv, const char* val, const int fla
 // ScreenWidth returns the width of the screen, in pixels
 #define ScreenWidth (gHUD.m_scrinfo.iWidth)
 
-#define BASE_XRES 640.f
-
 // use this to project world coordinates to screen coordinates
 #define XPROJECT(x) ((1.0f + (x)) * ScreenWidth * 0.5f)
 #define YPROJECT(y) ((1.0f - (y)) * ScreenHeight * 0.5f)
