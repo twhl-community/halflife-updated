@@ -8,7 +8,8 @@
 
 * Added missing client side event for `func_vehicle` sounds
 * Link Linux binaries with `-Wl` and `--no-undefined` flags to avoid situations where something was referenced but wasn't added in the build (Thanks a1batross)
-* Prevent game_zone_player from transitioning across levels to fix Mod_NimForName: not found issue [#241](https://github.com/twhl-community/halflife-updated/pull/241) (Thanks FreeSlave)
+* Prevented game_zone_player from transitioning across levels to fix Mod_NumForName: not found issue [#241](https://github.com/twhl-community/halflife-updated/pull/241) (Thanks FreeSlave)
+* Fixed null dereference in game_score [#246](https://github.com/twhl-community/halflife-updated/pull/246) (Thanks FreeSlave)
 
 ### Features
 
