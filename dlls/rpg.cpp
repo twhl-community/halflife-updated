@@ -480,14 +480,7 @@ void CRpg::PrimaryAttack()
 		// firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
 		// Ken signed up for this as a global change (sjb)
 
-		int flags;
-#if defined(CLIENT_WEAPONS)
-		flags = FEV_NOTHOST;
-#else
-		flags = 0;
-#endif
-
-		PLAYBACK_EVENT(flags, m_pPlayer->edict(), m_usRpg);
+		m_pPlayer->PlaybackEvent(m_usRpg);
 
 		m_iClip--;
 
