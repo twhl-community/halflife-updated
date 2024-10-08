@@ -114,6 +114,12 @@ bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const ch
 bool UTIL_IsValveGameDirectory();
 
 /**
+ * @brief Checks if the script file exists and, if not, attempts to create it.
+ * @return @c true if the script file exists or has been created
+ */
+bool UTIL_CheckEventScript(const char* const szEventScript);
+
+/**
 *	@brief Helper class to automatically close the file handle associated with a file.
 */
 class FSFile

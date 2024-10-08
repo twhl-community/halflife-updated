@@ -112,7 +112,6 @@ void DLLEXPORT HUD_PlayerMove(struct playermove_s* ppmove, int server)
 
 static bool CL_InitClient()
 {
-	EV_HookEvents();
 	CL_LoadParticleMan();
 
 	if (!FileSystem_LoadFileSystem())
@@ -127,6 +126,8 @@ static bool CL_InitClient()
 			"Run this mod from its intended location\n\nThe game will now shut down", nullptr);
 		return false;
 	}
+
+	EV_HookEvents();
 
 	// get tracker interface, if any
 	return true;
