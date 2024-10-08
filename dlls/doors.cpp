@@ -579,8 +579,6 @@ bool CBaseDoor::DoorActivate()
 
 		if (m_hActivator != NULL && m_hActivator->IsPlayer())
 		{ // give health if player opened the door (medikit)
-			// VARS( m_eoActivator )->health += m_bHealthValue;
-
 			m_hActivator->TakeHealth(m_bHealthValue, DMG_GENERIC);
 		}
 
@@ -631,7 +629,6 @@ void CBaseDoor::DoorGoUp()
 				angles.x = 0;
 				angles.z = 0;
 				UTIL_MakeVectors(angles);
-				//			Vector vnext = (pevToucher->origin + (pevToucher->velocity * 10)) - pev->origin;
 				UTIL_MakeVectors(pevActivator->angles);
 				Vector vnext = (pevActivator->origin + (gpGlobals->v_forward * 10)) - pev->origin;
 				if ((vec.x * vnext.y - vec.y * vnext.x) < 0)
@@ -1038,12 +1035,10 @@ bool CMomentaryDoor::KeyValue(KeyValueData* pkvd)
 	}
 	else if (FStrEq(pkvd->szKeyName, "stopsnd"))
 	{
-		//		m_bStopSnd = atof(pkvd->szValue);
 		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "healthvalue"))
 	{
-		//		m_bHealthValue = atof(pkvd->szValue);
 		return true;
 	}
 

@@ -760,55 +760,6 @@ void CHalfLifeMultiplay::DeathNotice(CBasePlayer* pVictim, entvars_t* pKiller, e
 		WRITE_SHORT(ENTINDEX(ENT(pKiller))); // index number of secondary entity
 	WRITE_LONG(7 | DRC_FLAG_DRAMATIC);		 // eventflags (priority and flags)
 	MESSAGE_END();
-
-	//  Print a standard message
-	// TODO: make this go direct to console
-	return; // just remove for now
-			/*
-	char	szText[ 128 ];
-
-	if ( pKiller->flags & FL_MONSTER )
-	{
-		// killed by a monster
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " was killed by a monster.\n" );
-		return;
-	}
-
-	if ( pKiller == pVictim->pev )
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " commited suicide.\n" );
-	}
-	else if ( pKiller->flags & FL_CLIENT )
-	{
-		strcpy ( szText, STRING( pKiller->netname ) );
-
-		strcat( szText, " : " );
-		strcat( szText, killer_weapon_name );
-		strcat( szText, " : " );
-
-		strcat ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, "\n" );
-	}
-	else if ( FClassnameIs ( pKiller, "worldspawn" ) )
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " fell or drowned or something.\n" );
-	}
-	else if ( pKiller->solid == SOLID_BSP )
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " was mooshed.\n" );
-	}
-	else
-	{
-		strcpy ( szText, STRING( pVictim->pev->netname ) );
-		strcat ( szText, " died mysteriously.\n" );
-	}
-
-	UTIL_ClientPrintAll( szText );
-*/
 }
 
 //=========================================================
@@ -967,9 +918,6 @@ void CHalfLifeMultiplay::PlayerGotAmmo(CBasePlayer* pPlayer, char* szName, int i
 //=========================================================
 bool CHalfLifeMultiplay::IsAllowedToSpawn(CBaseEntity* pEntity)
 {
-	//	if ( pEntity->pev->flags & FL_MONSTER )
-	//		return false;
-
 	return true;
 }
 
@@ -1733,7 +1681,6 @@ void CMultiplayBusters::PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, e
 
 		pVictim->pev->renderfx = kRenderFxNone;
 		pVictim->pev->rendercolor = g_vecZero;
-		// pVictim->pev->effects &= ~EF_BRIGHTFIELD;
 	}
 
 	CHalfLifeMultiplay::PlayerKilled(pVictim, pKiller, pInflictor);

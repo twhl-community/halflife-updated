@@ -1690,8 +1690,6 @@ float TEXTURETYPE_PlaySound(TraceResult* ptr, Vector vecSrc, Vector vecEnd, int 
 			strcpy(szbuffer, pTextureName);
 			szbuffer[CBTEXTURENAMEMAX - 1] = 0;
 
-			// ALERT ( at_console, "texture hit: %s\n", szbuffer);
-
 			// get texture type
 			chTextureType = TEXTURETYPE_Find(szbuffer);
 		}
@@ -1808,15 +1806,12 @@ float TEXTURETYPE_PlaySound(TraceResult* ptr, Vector vecSrc, Vector vecEnd, int 
 			case 1:
 				UTIL_EmitAmbientSound(CWorld::World->edict(), ptr->vecEndPos, "buttons/spark6.wav", flVolume, ATTN_NORM, 0, 100);
 				break;
-				// case 0: EMIT_SOUND(ENT(pev), CHAN_VOICE, "buttons/spark5.wav", flVolume, ATTN_NORM);	break;
-				// case 1: EMIT_SOUND(ENT(pev), CHAN_VOICE, "buttons/spark6.wav", flVolume, ATTN_NORM);	break;
 			}
 		}
 	}
 
 	// play material hit sound
 	UTIL_EmitAmbientSound(CWorld::World->edict(), ptr->vecEndPos, rgsz[RANDOM_LONG(0, cnt - 1)], fvol, fattn, 0, 96 + RANDOM_LONG(0, 0xf));
-	//EMIT_SOUND_DYN( ENT(m_pPlayer->pev), CHAN_WEAPON, rgsz[RANDOM_LONG(0,cnt-1)], fvol, ATTN_NORM, 0, 96 + RANDOM_LONG(0,0xf));
 
 	return fvolbar;
 }

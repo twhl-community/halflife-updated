@@ -246,7 +246,6 @@ void CGrenade::BounceTouch(CBaseEntity* pOther)
 	}
 
 	Vector vecTestVelocity;
-	// pev->avelocity = Vector (300, 300, 300);
 
 	// this is my heuristic for modulating the grenade velocity because grenades dropped purely vertical
 	// or thrown very far tend to slow down too quickly for me to always catch just by testing velocity.
@@ -256,8 +255,6 @@ void CGrenade::BounceTouch(CBaseEntity* pOther)
 
 	if (!m_fRegisteredSound && vecTestVelocity.Length() <= 60)
 	{
-		//ALERT( at_console, "Grenade Registered!: %f\n", vecTestVelocity.Length() );
-
 		// grenade is moving really slow. It's probably very close to where it will ultimately stop moving.
 		// go ahead and emit the danger sound.
 
@@ -297,17 +294,10 @@ void CGrenade::SlideTouch(CBaseEntity* pOther)
 	if (pOther->edict() == pev->owner)
 		return;
 
-	// pev->avelocity = Vector (300, 300, 300);
-
 	if ((pev->flags & FL_ONGROUND) != 0)
 	{
 		// add a bit of static friction
 		pev->velocity = pev->velocity * 0.95;
-
-		if (pev->velocity.x != 0 || pev->velocity.y != 0)
-		{
-			// maintain sliding sound
-		}
 	}
 	else
 	{
@@ -429,9 +419,6 @@ CGrenade* CGrenade::ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecV
 	pGrenade->pev->sequence = RANDOM_LONG(3, 6);
 	pGrenade->pev->framerate = 1.0;
 	pGrenade->ResetSequenceInfo();
-
-	// Tumble through the air
-	// pGrenade->pev->avelocity.x = -400;
 
 	pGrenade->pev->gravity = 0.5;
 	pGrenade->pev->friction = 0.8;

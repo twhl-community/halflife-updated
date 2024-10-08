@@ -51,17 +51,7 @@ int CRat::Classify()
 //=========================================================
 void CRat::SetYawSpeed()
 {
-	int ys;
-
-	switch (m_Activity)
-	{
-	case ACT_IDLE:
-	default:
-		ys = 45;
-		break;
-	}
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 45;
 }
 
 //=========================================================
@@ -92,7 +82,3 @@ void CRat::Precache()
 {
 	PRECACHE_MODEL("models/bigrat.mdl");
 }
-
-//=========================================================
-// AI Schedules Specific to this monster
-//=========================================================

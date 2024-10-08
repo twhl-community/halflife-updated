@@ -444,7 +444,6 @@ int CGraph::HullIndex(const CBaseEntity* pEntity)
 	else if (pEntity->pev->mins == Vector(-32, -32, 0))
 		return NODE_LARGE_HULL;
 
-	//	ALERT ( at_aiconsole, "Unknown Hull Mins!\n" );
 	return NODE_HUMAN_HULL;
 }
 
@@ -488,7 +487,6 @@ float CGraph::PathLength(int iStart, int iDest, int iHull, int afCapMask)
 		iNext = NextNodeInRoute(iCurrentNode, iDest, iHull, iCap);
 		if (iCurrentNode == iNext)
 		{
-			//ALERT(at_aiconsole, "SVD: Can't get there from here..\n");
 			return 0;
 		}
 
@@ -521,7 +519,7 @@ int CGraph::NextNodeInRoute(int iCurrentNode, int iDest, int iHull, int iCap)
 	while (nCount > 0)
 	{
 		char ch = *pRoute++;
-		//ALERT(at_aiconsole, "C(%d)", ch);
+
 		if (ch < 0)
 		{
 			// Sequence phrase
@@ -531,18 +529,14 @@ int CGraph::NextNodeInRoute(int iCurrentNode, int iDest, int iHull, int iCap)
 			{
 				iNext = iDest;
 				nCount = 0;
-				//ALERT(at_aiconsole, "SEQ: iNext/iDest=%d\n", iNext);
 			}
 			else
 			{
-				//ALERT(at_aiconsole, "SEQ: nCount + ch (%d + %d)\n", nCount, ch);
 				nCount = nCount - ch;
 			}
 		}
 		else
 		{
-			//ALERT(at_aiconsole, "C(%d)", *pRoute);
-
 			// Repeat phrase
 			//
 			if (nCount <= ch + 1)
@@ -553,11 +547,9 @@ int CGraph::NextNodeInRoute(int iCurrentNode, int iDest, int iHull, int iCap)
 				else if (iNext < 0)
 					iNext += m_cNodes;
 				nCount = 0;
-				//ALERT(at_aiconsole, "REP: iNext=%d\n", iNext);
 			}
 			else
 			{
-				//ALERT(at_aiconsole, "REP: nCount - ch+1 (%d - %d+1)\n", nCount, ch);
 				nCount = nCount - ch - 1;
 			}
 			pRoute++;
@@ -612,8 +604,6 @@ int CGraph::FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int 
 		iCurrentNode = iStart;
 		int iNext;
 
-		//ALERT(at_aiconsole, "GOAL: %d to %d\n", iStart, iDest);
-
 		// Until we arrive at the destination
 		//
 		while (iCurrentNode != iDest)
@@ -621,19 +611,16 @@ int CGraph::FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int 
 			iNext = NextNodeInRoute(iCurrentNode, iDest, iHull, iCap);
 			if (iCurrentNode == iNext)
 			{
-				//ALERT(at_aiconsole, "SVD: Can't get there from here..\n");
 				return 0;
 				break;
 			}
 			if (iNumPathNodes >= MAX_PATH_SIZE)
 			{
-				//ALERT(at_aiconsole, "SVD: Don't return the entire path.\n");
 				break;
 			}
 			piPath[iNumPathNodes++] = iNext;
 			iCurrentNode = iNext;
 		}
-		//ALERT( at_aiconsole, "SVD: Path with %d nodes.\n", iNumPathNodes);
 	}
 	else
 	{
@@ -687,7 +674,6 @@ int CGraph::FindShortestPath(int* piPath, int iStart, int iDest, int iHull, int 
 				iVisitNode = INodeLink(iCurrentNode, i);
 				if ((m_pLinkPool[m_pNodes[iCurrentNode].m_iFirstLink + i].m_afLinkInfo & iHullMask) != iHullMask)
 				{ // monster is too large to walk this connection
-					//ALERT ( at_aiconsole, "fat ass %d/%d\n",m_pLinkPool[ m_pNodes[ iCurrentNode ].m_iFirstLink + i ].m_afLinkInfo, iMonsterHull );
 					continue;
 				}
 				// check the connection from the current node to the node we're about to mark visited and push into the queue
@@ -880,12 +866,7 @@ int CGraph::FindNearestNode(const Vector& vecOrigin, int afNodeTypes)
 	unsigned int iHash = (CACHE_SIZE - 1) & Hash((void*)(const float*)vecOrigin, sizeof(vecOrigin));
 	if (m_Cache[iHash].v == vecOrigin)
 	{
-		//ALERT(at_aiconsole, "Cache Hit.\n");
 		return m_Cache[iHash].n;
-	}
-	else
-	{
-		//ALERT(at_aiconsole, "Cache Miss.\n");
 	}
 
 	// Mark all points as unchecked.
@@ -1889,7 +1870,6 @@ void CTestHull::BuildNodeGraph()
 
 					if (!fWalkFailed && (pev->origin - vecSpot).Length() > 64)
 					{
-						// ALERT( at_console, "bogus walk\n");
 						// we thought we
 						fWalkFailed = true;
 					}
@@ -3547,7 +3527,6 @@ void CNodeViewer::Spawn()
 		do
 		{
 			end = m_nVisited;
-			// ALERT( at_console, "%d :", m_nVisited );
 			for (end = m_nVisited; start < end; start++)
 			{
 				FindNodeConnections(m_aFrom[start]);

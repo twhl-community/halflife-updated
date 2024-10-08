@@ -189,8 +189,6 @@ void CSqueakGrenade::GibMonster()
 
 void CSqueakGrenade::HuntThink()
 {
-	// ALERT( at_console, "think\n" );
-
 	if (!IsInWorld())
 	{
 		SetTouch(NULL);
@@ -274,10 +272,6 @@ void CSqueakGrenade::HuntThink()
 		if (flAdj > 1.2)
 			flAdj = 1.2;
 
-		// ALERT( at_console, "think : enemy\n");
-
-		// ALERT( at_console, "%.0f %.2f %.2f %.2f\n", flVel, m_vecTarget.x, m_vecTarget.y, m_vecTarget.z );
-
 		pev->velocity = pev->velocity * flAdj + m_vecTarget * 300;
 	}
 
@@ -340,7 +334,6 @@ void CSqueakGrenade::SuperBounceTouch(CBaseEntity* pOther)
 			// and it's not another squeakgrenade
 			if (tr.pHit->v.modelindex != pev->modelindex)
 			{
-				// ALERT( at_console, "hit enemy\n");
 				ClearMultiDamage();
 				pOther->TraceAttack(pev, gSkillData.snarkDmgBite, gpGlobals->v_forward, &tr, DMG_SLASH);
 				if (m_hOwner != NULL)
@@ -349,16 +342,11 @@ void CSqueakGrenade::SuperBounceTouch(CBaseEntity* pOther)
 					ApplyMultiDamage(pev, pev);
 
 				pev->dmg += gSkillData.snarkDmgPop; // add more explosion damage
-				// m_flDie += 2.0; // add more life
 
 				// make bite sound
 				EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, "squeek/sqk_deploy1.wav", 1.0, ATTN_NORM, 0, (int)flpitch);
 				m_flNextAttack = gpGlobals->time + 0.5;
 			}
-		}
-		else
-		{
-			// ALERT( at_console, "been hit\n");
 		}
 	}
 

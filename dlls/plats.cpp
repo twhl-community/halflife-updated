@@ -274,9 +274,6 @@ Set "sounds" to one of the following:
 
 void CFuncPlat::Setup()
 {
-	//pev->noiseMovement = MAKE_STRING("plats/platmove1.wav");
-	//pev->noiseStopMoving = MAKE_STRING("plats/platstop1.wav");
-
 	if (m_flTLength == 0)
 		m_flTLength = 80;
 	if (m_flTWidth == 0)
@@ -309,8 +306,6 @@ void CFuncPlat::Setup()
 void CFuncPlat::Precache()
 {
 	CBasePlatTrain::Precache();
-	//PRECACHE_SOUND("plats/platmove1.wav");
-	//PRECACHE_SOUND("plats/platstop1.wav");
 	if (!IsTogglePlat())
 		PlatSpawnInsideTrigger(pev); // the "start moving" trigger
 }
@@ -638,7 +633,6 @@ class CFuncTrain : public CBasePlatTrain
 {
 public:
 	void Spawn() override;
-	void Precache() override;
 	void Activate() override;
 	void OverrideReset() override;
 
@@ -737,8 +731,6 @@ void CFuncTrain::Wait()
 		pev->nextthink = 0;
 		return;
 	}
-
-	// ALERT ( at_console, "%f\n", m_flWait );
 
 	if (m_flWait != 0)
 	{ // -1 wait will wait forever!
@@ -878,37 +870,6 @@ void CFuncTrain::Spawn()
 
 	if (m_volume == 0)
 		m_volume = 0.85;
-}
-
-
-void CFuncTrain::Precache()
-{
-	CBasePlatTrain::Precache();
-
-#if 0 // obsolete
-	// otherwise use preset sound
-	switch (m_sounds)
-	{
-	case 0:
-		pev->noise = 0;
-		pev->noise1 = 0;
-		break;
-
-	case 1:
-		PRECACHE_SOUND ("plats/train2.wav");
-		PRECACHE_SOUND ("plats/train1.wav");
-		pev->noise = MAKE_STRING("plats/train2.wav");
-		pev->noise1 = MAKE_STRING("plats/train1.wav");
-		break;
-
-	case 2:
-		PRECACHE_SOUND ("plats/platmove1.wav");
-		PRECACHE_SOUND ("plats/platstop1.wav");
-		pev->noise = MAKE_STRING("plats/platstop1.wav");
-		pev->noise1 = MAKE_STRING("plats/platmove1.wav");
-		break;
-	}
-#endif
 }
 
 
@@ -1115,9 +1076,6 @@ void CFuncTrackTrain::StopSound()
 		PLAYBACK_EVENT_FULL(FEV_RELIABLE | FEV_UPDATE, edict(), m_usAdjustPitch, 0.0,
 			g_vecZero, g_vecZero, 0.0, 0.0, us_encode, 0, 1, 0);
 
-		/*
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise));
-		*/
 		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/ttrain_brake1.wav", m_flVolume, ATTN_NORM, 0, 100);
 	}
 
@@ -1146,10 +1104,8 @@ void CFuncTrackTrain::UpdateSound()
 	}
 	else
 	{
-		/*
 		// update pitch
-		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise), m_flVolume, ATTN_NORM, SND_CHANGE_PITCH, (int) flpitch);
-*/
+
 		// volume 0.0 - 1.0 - 6 bits
 		// m_sounds 3 bits
 		// flpitch = 6 bits
@@ -1179,8 +1135,6 @@ void CFuncTrackTrain::Next()
 		return;
 	}
 
-	//	if ( !m_ppath )
-	//		m_ppath = CPathTrack::Instance(FIND_ENTITY_BY_TARGETNAME( NULL, STRING(pev->target) ));
 	if (!m_ppath)
 	{
 		ALERT(at_aiconsole, "TRAIN(%s): Lost path\n", STRING(pev->targetname));
@@ -1627,9 +1581,6 @@ void CFuncTrainControls::Spawn()
 //
 // ----------------------------------------------------------------------------
 
-#define SF_TRACK_ACTIVATETRAIN 0x00000001
-#define SF_TRACK_RELINK 0x00000002
-#define SF_TRACK_ROTMOVE 0x00000004
 #define SF_TRACK_STARTBOTTOM 0x00000008
 #define SF_TRACK_DONT_MOVE 0x00000010
 
@@ -1663,7 +1614,6 @@ public:
 	void UpdateTrain(Vector& dest);
 	void HitBottom() override;
 	void HitTop() override;
-	void Touch(CBaseEntity* pOther) override;
 	virtual void UpdateAutoTargets(int toggleState);
 	bool IsTogglePlat() override { return true; }
 
@@ -1743,18 +1693,6 @@ void CFuncTrackChange::Precache()
 
 	CFuncPlatRot::Precache();
 }
-
-
-// UNDONE: Filter touches before re-evaluating the train.
-void CFuncTrackChange::Touch(CBaseEntity* pOther)
-{
-#if 0
-	TRAIN_CODE code;
-	entvars_t *pevToucher = pOther->pev;
-#endif
-}
-
-
 
 bool CFuncTrackChange::KeyValue(KeyValueData* pkvd)
 {
@@ -2006,7 +1944,6 @@ void CFuncTrackChange::HitBottom()
 	CFuncPlatRot::HitBottom();
 	if (m_code == TRAIN_FOLLOWING)
 	{
-		//		UpdateTrain();
 		m_train->SetTrack(m_trackBottom);
 	}
 	SetThink(NULL);
@@ -2026,7 +1963,6 @@ void CFuncTrackChange::HitTop()
 	CFuncPlatRot::HitTop();
 	if (m_code == TRAIN_FOLLOWING)
 	{
-		//		UpdateTrain();
 		m_train->SetTrack(m_trackTop);
 	}
 
