@@ -4913,6 +4913,31 @@ void CBasePlayer::SetPrefsFromUserinfo(char* infobuffer)
 	}
 }
 
+void CBasePlayer::PlaybackEvent(
+	const unsigned short usEventIndex,
+	const float fparam1,
+	const float fparam2,
+	const int iparam1,
+	const int iparam2,
+	const int bparam1,
+	const int bparam2,
+	const int afFlags,
+	const bool bSendPosition,
+	const float flDelay)
+{
+	CBaseEntity::PlaybackEvent(
+		usEventIndex,
+		fparam1,
+		fparam2,
+		iparam1,
+		iparam2,
+		bparam1,
+		bparam2,
+		afFlags,
+		bSendPosition || (afFlags & FEV_RELIABLE) != 0,
+		flDelay);
+}
+
 //=========================================================
 // Dead HEV suit prop
 //=========================================================

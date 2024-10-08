@@ -158,13 +158,6 @@ void CEgon::Attack()
 	Vector vecAiming = gpGlobals->v_forward;
 	Vector vecSrc = m_pPlayer->GetGunPosition();
 
-	int flags;
-#if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
-#else
-	flags = 0;
-#endif
-
 	switch (m_fireState)
 	{
 	case FIRE_OFF:
@@ -178,7 +171,7 @@ void CEgon::Attack()
 
 		m_flAmmoUseTime = gpGlobals->time; // start using ammo ASAP.
 
-		PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usEgonFire, 0.0, g_vecZero, g_vecZero, 0.0, 0.0, 0, m_fireMode, 1, 0);
+		m_pPlayer->PlaybackEvent(m_usEgonFire, 0.0F, 0.0F, 0, m_fireMode, 1);
 
 		m_shakeTime = 0;
 
@@ -198,7 +191,7 @@ void CEgon::Attack()
 
 		if (pev->fuser1 <= UTIL_WeaponTimeBase())
 		{
-			PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usEgonFire, 0, g_vecZero, g_vecZero, 0.0, 0.0, 0, m_fireMode, 0, 0);
+			m_pPlayer->PlaybackEvent(m_usEgonFire, 0.0F, 0.0F, 0, m_fireMode);
 			pev->fuser1 = 1000;
 		}
 
@@ -516,9 +509,9 @@ void CEgon::EndAttack()
 
 	if (m_fireState != FIRE_OFF) //Checking the button just in case!.
 		bMakeNoise = true;
-
-	PLAYBACK_EVENT_FULL(FEV_GLOBAL | FEV_RELIABLE, m_pPlayer->edict(), m_usEgonStop, 0, m_pPlayer->pev->origin, m_pPlayer->pev->angles, 0.0, 0.0,
-		static_cast<int>(bMakeNoise), 0, 0, 0);
+	
+	m_pPlayer->PlaybackEvent(m_usEgonStop, 0.0F, 0.0F,
+		static_cast<int>(bMakeNoise), 0, 0, 0, FEV_GLOBAL | FEV_RELIABLE);
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 
