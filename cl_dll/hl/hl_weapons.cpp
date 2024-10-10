@@ -429,8 +429,6 @@ void HUD_InitClientWeapons()
 	// Fake functions
 	g_engfuncs.pfnPrecacheModel = stub_PrecacheModel;
 	g_engfuncs.pfnPrecacheSound = stub_PrecacheSound;
-	g_engfuncs.pfnPrecacheEvent = stub_PrecacheEvent;
-	g_engfuncs.pfnNameForFunction = stub_NameForFunction;
 	g_engfuncs.pfnSetModel = stub_SetModel;
 	g_engfuncs.pfnSetClientMaxspeed = HUD_SetMaxSpeed;
 
@@ -515,14 +513,12 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	int buttonsChanged;
 	CBasePlayerWeapon* pWeapon = NULL;
 	CBasePlayerWeapon* pCurrent;
-	weapon_data_t nulldata, *pfrom, *pto;
+	weapon_data_t *pfrom, *pto;
 	static int lasthealth;
-
-	memset(&nulldata, 0, sizeof(nulldata));
 
 	// Get current clock
 	//Use actual time instead of prediction frame time because that time value breaks anything that uses absolute time values.
-	gpGlobals->time = gEngfuncs.GetClientTime(); //time;
+	gpGlobals->time = gEngfuncs.GetClientTime();
 
 	//Lets weapons code use frametime to decrement timers and stuff.
 	gpGlobals->frametime = cmd->msec / 1000.0f;
@@ -625,7 +621,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 		pCurrent->m_fInReload = 0 != pfrom->m_fInReload;
 		pCurrent->m_fInSpecialReload = pfrom->m_fInSpecialReload;
-		//		pCurrent->m_flPumpTime			= pfrom->m_flPumpTime;
 		pCurrent->m_iClip = pfrom->m_iClip;
 		pCurrent->m_flNextPrimaryAttack = pfrom->m_flNextPrimaryAttack;
 		pCurrent->m_flNextSecondaryAttack = pfrom->m_flNextSecondaryAttack;
@@ -794,7 +789,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 		pto->m_fInReload = static_cast<int>(pCurrent->m_fInReload);
 		pto->m_fInSpecialReload = pCurrent->m_fInSpecialReload;
-		//		pto->m_flPumpTime				= pCurrent->m_flPumpTime;
 		pto->m_iClip = pCurrent->m_iClip;
 		pto->m_flNextPrimaryAttack = pCurrent->m_flNextPrimaryAttack;
 		pto->m_flNextSecondaryAttack = pCurrent->m_flNextSecondaryAttack;
@@ -822,13 +816,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		pCurrent->DecrementTimers();
 
 		pCurrent->GetWeaponData(*pto);
-
-		/*		if ( pto->m_flPumpTime != -9999 )
-		{
-			pto->m_flPumpTime -= cmd->msec / 1000.0;
-			if ( pto->m_flPumpTime < -0.001 )
-				pto->m_flPumpTime = -0.001;
-		}*/
 
 		if (pto->m_fNextAimBonus < -1.0)
 		{
@@ -900,8 +887,6 @@ be ignored
 */
 void DLLEXPORT HUD_PostRunCmd(struct local_state_s* from, struct local_state_s* to, struct usercmd_s* cmd, int runfuncs, double time, unsigned int random_seed)
 {
-	//	RecClPostRunCmd(from, to, cmd, runfuncs, time, random_seed);
-
 	g_runfuncs = runfuncs != 0;
 
 	//Event code depends on this stuff, so always initialize it.

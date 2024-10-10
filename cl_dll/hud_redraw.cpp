@@ -28,9 +28,6 @@ int grgLogoFrame[MAX_LOGO_FRAMES] =
 		16, 17, 18, 19, 20, 20, 20, 20, 20, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
 		29, 29, 29, 29, 29, 28, 27, 26, 25, 24, 30, 31};
 
-
-extern bool g_iVisibleMouse;
-
 float HUD_GetFOV();
 
 extern float IN_GetMouseSensitivity();
@@ -179,28 +176,6 @@ bool CHud::Redraw(float flTime, bool intermission)
 
 		SPR_DrawAdditive(i, x, y, NULL);
 	}
-
-	/*
-	if ( g_iVisibleMouse )
-	{
-		void IN_GetMousePos( int *mx, int *my );
-		int mx, my;
-
-		IN_GetMousePos( &mx, &my );
-		
-		if (m_hsprCursor == 0)
-		{
-			char sz[256];
-			sprintf( sz, "sprites/cursor.spr" );
-			m_hsprCursor = SPR_Load( sz );
-		}
-
-		SPR_Set(m_hsprCursor, 250, 250, 250 );
-		
-		// Draw the logo at 20 fps
-		SPR_DrawAdditive( 0, mx, my, NULL );
-	}
-	*/
 
 	return true;
 }

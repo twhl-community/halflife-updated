@@ -44,41 +44,8 @@ extern Vector v_angles;	   // last view angle
 extern Vector v_cl_angles; // last client/mouse angle
 extern Vector v_sim_org;   // last sim origin
 
-#if 0 
-const char *GetSpectatorLabel ( int iMode )
-{
-	switch ( iMode )
-	{
-		case OBS_CHASE_LOCKED:
-			return "#OBS_CHASE_LOCKED";
-
-		case OBS_CHASE_FREE:
-			return "#OBS_CHASE_FREE";
-
-		case OBS_ROAMING:
-			return "#OBS_ROAMING";
-		
-		case OBS_IN_EYE:
-			return "#OBS_IN_EYE";
-
-		case OBS_MAP_FREE:
-			return "#OBS_MAP_FREE";
-
-		case OBS_MAP_CHASE:
-			return "#OBS_MAP_CHASE";
-
-		case OBS_NONE:
-		default:
-			return "#OBS_NONE";
-	}
-}
-
-#endif
-
 void SpectatorMode()
 {
-
-
 	if (gEngfuncs.Cmd_Argc() <= 1)
 	{
 		gEngfuncs.Con_Printf("usage:  spec_mode <Main Mode> [<Inset Mode>]\n");
@@ -556,8 +523,6 @@ bool CHudSpectator::GetDirectorCamera(Vector& position, Vector& angle)
 
 	m_WayInterpolation.Interpolate(fraction, position, angle, &fov);
 
-	// gEngfuncs.Con_Printf("Interpolate time: %.2f, fraction %.2f, point : %.2f,%.2f,%.2f\n", now, fraction, position[0], position[1], position[2] );
-
 	SetCameraView(position, angle, fov);
 
 	return true;
@@ -714,7 +679,6 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 			m_ChaseEntity = 0;
 		}
 
-		// gEngfuncs.Con_Printf("Director Camera: %i %i\n", firstObject, secondObject);
 		break;
 	case DRC_CMD_MODE:
 		if (0 != m_autoDirector->value)
@@ -781,7 +745,6 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 		string = READ_STRING();
 		f1 = READ_FLOAT();
 
-		// gEngfuncs.Con_Printf("DRC_CMD_FX_SOUND: %s %.2f\n", string, value );
 		gEngfuncs.pEventAPI->EV_PlaySound(0, v_origin, CHAN_BODY, string, f1, ATTN_NORM, 0, PITCH_NORM);
 
 		break;
@@ -801,7 +764,6 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 		break;
 
 	case DRC_CMD_BANNER:
-		// gEngfuncs.Con_DPrintf("GUI: Banner %s\n",READ_STRING() ); // name of banner tga eg gfx/temp/7454562234563475.tga
 		gViewPort->m_pSpectatorPanel->m_TopBanner->LoadImage(READ_STRING());
 		gViewPort->UpdateSpectatorPanel();
 		break;
@@ -849,7 +811,6 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 			AddWaypoint(f1, v1, v2, f2, i3);
 		}
 
-		// gEngfuncs.Con_Printf("CHudSpectator::DirectorMessage: waypoints %i.\n", m_NumWayPoints );
 		if (0 == m_autoDirector->value)
 		{
 			// ignore waypoints
@@ -1013,8 +974,6 @@ void CHudSpectator::HandleButtonsDown(int ButtonPressed)
 
 	int newMainMode = g_iUser1;
 	int newInsetMode = m_pip->value;
-
-	// gEngfuncs.Con_Printf(" HandleButtons:%i\n", ButtonPressed );
 
 	if (!gViewPort)
 		return;

@@ -76,7 +76,6 @@ extern TeamFortressViewport *gViewPort;
 
 #define CMENU_TOP				(BUTTON_SIZE_Y * 4)
 
-//#define MAX_TEAMNAME_SIZE		64
 #define MAX_BUTTON_SIZE			32
 
 // Map Briefing Window

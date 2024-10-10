@@ -36,19 +36,14 @@
 #include "event_api.h"
 #include "event_args.h"
 #include "in_defs.h"
+#include "view.h"
 
 #include <string.h>
-
-#include "r_studioint.h"
-#include "com_model.h"
-
-extern engine_studio_api_t IEngineStudio;
 
 static int tracerCount[MAX_PLAYERS];
 
 #include "pm_shared.h"
 
-void V_PunchAxis(int axis, float punch);
 void VectorAngles(const float* forward, float* angles);
 
 extern cvar_t* cl_lw;
@@ -958,7 +953,6 @@ void EV_FireGauss(event_args_t* args)
 
 			if (n < 0.5) // 60 degrees
 			{
-				// ALERT( at_console, "reflect %f\n", n );
 				// reflect
 				Vector r;
 
@@ -1370,17 +1364,9 @@ void EV_EgonFire(event_args_t* args)
 
 			int iBeamModelIndex = gEngfuncs.pEventAPI->EV_FindModelIndex(EGON_BEAM_SPRITE);
 
-			float r = 50.0f;
-			float g = 50.0f;
-			float b = 125.0f;
-
-			//if ( IEngineStudio.IsHardware() )
-			{
-				r /= 255.0f;
-				g /= 255.0f;
-				b /= 255.0f;
-			}
-
+			const float r = 50.0f / 255.0f;
+			const float g = 50.0f / 255.0f;
+			const float b = 125.0f / 255.0f;
 
 			pBeam = gEngfuncs.pEfxAPI->R_BeamEntPoint(idx | 0x1000, tr.endpos, iBeamModelIndex, 99999, 3.5, 0.2, 0.7, 55, 0, 0, r, g, b);
 
