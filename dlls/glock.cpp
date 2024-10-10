@@ -42,7 +42,7 @@ void CGlock::Precache()
 	PRECACHE_MODEL("models/w_9mmhandgun.mdl");
 	PRECACHE_MODEL("models/p_9mmhandgun.mdl");
 
-	m_iShell = PRECACHE_MODEL("models/shell.mdl"); // brass shell
+	PRECACHE_MODEL("models/shell.mdl"); // brass shell
 
 	PRECACHE_SOUND("items/9mmclip1.wav");
 	PRECACHE_SOUND("items/9mmclip2.wav");
@@ -74,7 +74,6 @@ bool CGlock::GetItemInfo(ItemInfo* p)
 
 bool CGlock::Deploy()
 {
-	// pev->body = 1;
 	return DefaultDeploy("models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded");
 }
 
@@ -92,11 +91,8 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 {
 	if (m_iClip <= 0)
 	{
-		//if (m_fFireOnEmpty)
-		{
-			PlayEmptySound();
-			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.2);
-		}
+		PlayEmptySound();
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.2);
 
 		return;
 	}

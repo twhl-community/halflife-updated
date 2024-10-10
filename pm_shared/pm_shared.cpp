@@ -591,7 +591,7 @@ void PM_UpdateStepSound()
 	speed = Length(pmove->velocity);
 
 	// determine if we are on a ladder
-	const bool fLadder = (pmove->movetype == MOVETYPE_FLY); // IsOnLadder();
+	const bool fLadder = (pmove->movetype == MOVETYPE_FLY);
 
 	// UNDONE: need defined numbers for run, walk, crouch, crouch run velocities!!!!
 	if ((pmove->flags & FL_DUCKING) != 0 || fLadder)
@@ -907,7 +907,6 @@ int PM_FlyMove()
 		if (0 != trace.allsolid)
 		{ // entity is trapped in another solid
 			VectorCopy(vec3_origin, pmove->velocity);
-			//Con_DPrintf("Trapped 4\n");
 			return 4;
 		}
 
@@ -926,9 +925,6 @@ int PM_FlyMove()
 		if (trace.fraction == 1)
 			break; // moved the entire distance
 
-		//if (!trace.ent)
-		//	Sys_Error ("PM_PlayerTrace: !trace.ent");
-
 		// Save entity that blocked us (since fraction was < 1.0)
 		//  for contact
 		// Add it if it's not already in the list!!!
@@ -945,7 +941,6 @@ int PM_FlyMove()
 		if (0 == trace.plane.normal[2])
 		{
 			blocked |= 2; // step / wall
-						  //Con_DPrintf("Blocked by %i\n", trace.ent);
 		}
 
 		// Reduce amount of pmove->frametime left by total time left * fraction
@@ -957,7 +952,6 @@ int PM_FlyMove()
 		{ // this shouldn't really happen
 			//  Stop our movement if so.
 			VectorCopy(vec3_origin, pmove->velocity);
-			//Con_DPrintf("Too many planes 4\n");
 
 			break;
 		}
@@ -1018,9 +1012,7 @@ int PM_FlyMove()
 			{ // go along the crease
 				if (numplanes != 2)
 				{
-					//Con_Printf ("clip velocity, numplanes == %i\n",numplanes);
 					VectorCopy(vec3_origin, pmove->velocity);
-					//Con_DPrintf("Trapped 4\n");
 
 					break;
 				}
@@ -1035,7 +1027,6 @@ int PM_FlyMove()
 			//
 			if (DotProduct(pmove->velocity, primal_velocity) <= 0)
 			{
-				//Con_DPrintf("Back\n");
 				VectorCopy(vec3_origin, pmove->velocity);
 				break;
 			}
@@ -1045,7 +1036,6 @@ int PM_FlyMove()
 	if (allFraction == 0)
 	{
 		VectorCopy(vec3_origin, pmove->velocity);
-		//Con_DPrintf( "Don't stick\n" );
 	}
 
 	return blocked;
@@ -1162,10 +1152,6 @@ void PM_WalkMove()
 		VectorClear(pmove->velocity);
 		return;
 	}
-
-	// If we are not moving, do nothing
-	//if (!pmove->velocity[0] && !pmove->velocity[1] && !pmove->velocity[2])
-	//	return;
 
 	oldonground = pmove->onground;
 
@@ -1310,9 +1296,6 @@ void PM_Friction()
 		else
 			friction = pmove->movevars->friction;
 
-		// Grab friction value.
-		//friction = pmove->movevars->friction;
-
 		friction *= pmove->friction; // player friction?
 
 		// Bleed off some speed, but if we have less than the bleed
@@ -1323,8 +1306,6 @@ void PM_Friction()
 	}
 
 	// apply water friction
-	//	if (pmove->waterlevel)
-	//		drop += speed * pmove->movevars->waterfriction * waterlevel * pmove->frametime;
 
 	// scale the velocity
 	newspeed = speed - drop;
@@ -1800,8 +1781,6 @@ bool PM_CheckStuck()
 	VectorAdd(base, offset, test);
 	if ((hitent = pmove->PM_TestPlayerPosition(test, NULL)) == -1)
 	{
-		//Con_DPrintf("Nudged\n");
-
 		PM_ResetStuckOffsets(pmove->player_index, pmove->server);
 
 		if (i >= 27)
@@ -1835,8 +1814,6 @@ bool PM_CheckStuck()
 			return false;
 		}
 	}
-
-	//VectorCopy (base, pmove->origin);
 
 	return true;
 }
@@ -2036,7 +2013,6 @@ void PM_UnDuck()
 		if (0 != trace.startsolid)
 		{
 			// See if we are stuck?  If so, stay ducked with the duck hull until we have a clear spot
-			//Con_Printf( "unstick got stuck\n" );
 			pmove->usehull = 1;
 			return;
 		}
@@ -2223,17 +2199,11 @@ void PM_LadderMove(physent_t* pLadder)
 				Vector velocity, perp, cross, lateral, tmp;
 				float normal;
 
-				//ALERT(at_console, "pev %.2f %.2f %.2f - ",
-				//	pev->velocity.x, pev->velocity.y, pev->velocity.z);
 				// Calculate player's intended velocity
-				//Vector velocity = (forward * gpGlobals->v_forward) + (right * gpGlobals->v_right);
 				VectorScale(vpn, forward, velocity);
 				VectorMA(velocity, right, v_right, velocity);
 
-
 				// Perpendicular in the ladder plane
-				//					Vector perp = CrossProduct( Vector(0,0,1), trace.vecPlaneNormal );
-				//					perp = perp.Normalize();
 				VectorClear(tmp);
 				tmp[2] = 1;
 				CrossProduct(tmp, trace.plane.normal, perp);
@@ -2260,7 +2230,6 @@ void PM_LadderMove(physent_t* pLadder)
 				{
 					VectorMA(pmove->velocity, MAX_CLIMB_SPEED, trace.plane.normal, pmove->velocity);
 				}
-				//pev->velocity = lateral - (CrossProduct( trace.vecPlaneNormal, perp ) * normal);
 			}
 			else
 			{
@@ -2461,8 +2430,6 @@ void PM_Physics_Toss()
 		}
 
 		vel = DotProduct(pmove->velocity, pmove->velocity);
-
-		// Con_DPrintf("%f %f: %.0f %.0f %.0f\n", vel, trace.fraction, ent->velocity[0], ent->velocity[1], ent->velocity[2] );
 
 		if (vel < (30 * 30) || (pmove->movetype != MOVETYPE_BOUNCE && pmove->movetype != MOVETYPE_BOUNCEMISSILE))
 		{
@@ -2783,15 +2750,9 @@ void PM_CheckFalling()
 		{
 			// NOTE:  In the original game dll , there were no breaks after these cases, causing the first one to
 			// cascade into the second
-			//switch ( RandomLong(0,1) )
-			//{
-			//case 0:
-			//pmove->PM_PlaySound( CHAN_VOICE, "player/pl_fallpain2.wav", 1, ATTN_NORM, 0, PITCH_NORM );
-			//break;
-			//case 1:
+
 			pmove->PM_PlaySound(CHAN_VOICE, "player/pl_fallpain3.wav", 1, ATTN_NORM, 0, PITCH_NORM);
-			//	break;
-			//}
+
 			fvol = 1.0;
 		}
 		else if (pmove->flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED / 2)
@@ -2934,7 +2895,7 @@ void PM_CheckParamters()
 		  (pmove->cmd.upmove * pmove->cmd.upmove);
 	spd = sqrt(spd);
 
-	maxspeed = pmove->clientmaxspeed; //atof( pmove->PM_Info_ValueForKey( pmove->physinfo, "maxspd" ) );
+	maxspeed = pmove->clientmaxspeed;
 	if (maxspeed != 0.0)
 	{
 		pmove->maxspeed = V_min(maxspeed, pmove->maxspeed);

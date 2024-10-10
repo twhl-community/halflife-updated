@@ -150,7 +150,6 @@ Task_t tlFollow[] =
 	{
 		{TASK_SET_FAIL_SCHEDULE, (float)SCHED_CANT_FOLLOW}, // If you fail, bail out of follow
 		{TASK_MOVE_TO_TARGET_RANGE, (float)128},			// Move within 128 of target ent (client)
-															//	{ TASK_SET_SCHEDULE,		(float)SCHED_TARGET_FACE },
 };
 
 Schedule_t slFollow[] =
@@ -170,7 +169,6 @@ Task_t tlFollowScared[] =
 	{
 		{TASK_SET_FAIL_SCHEDULE, (float)SCHED_TARGET_CHASE}, // If you fail, follow normally
 		{TASK_MOVE_TO_TARGET_RANGE_SCARED, (float)128},		 // Move within 128 of target ent (client)
-															 //	{ TASK_SET_SCHEDULE,		(float)SCHED_TARGET_FACE_SCARED },
 };
 
 Schedule_t slFollowScared[] =
@@ -299,8 +297,6 @@ Schedule_t slIdleSciStand[] =
 				bits_COND_PROVOKED,
 
 			bits_SOUND_COMBAT | // sound flags
-				//bits_SOUND_PLAYER		|
-				//bits_SOUND_WORLD		|
 				bits_SOUND_DANGER |
 				bits_SOUND_MEAT | // scents
 				bits_SOUND_CARCASS |
@@ -430,12 +426,9 @@ void CScientist::DeclineFollowing()
 void CScientist::Scream()
 {
 	// Marphy Fact Files Fix - This speech check always fails during combat, so removing
-	//if ( FOkToSpeak() )
-	//{
 	Talk(10);
 	m_hTalkTarget = m_hEnemy;
 	PlaySentence("SC_SCREAM", RANDOM_FLOAT(3, 6), VOL_NORM, ATTN_NORM);
-	//}
 }
 
 
@@ -473,7 +466,6 @@ void CScientist::StartTask(Task_t* pTask)
 
 	case TASK_SAY_FEAR:
 		// Marphy Fact FIles Fix - This speech check always fails during combat, so removing
-		//if ( FOkToSpeak() )
 		if (m_hEnemy)
 		{
 			Talk(2);
@@ -522,7 +514,6 @@ void CScientist::RunTask(Task_t* pTask)
 			TaskComplete();
 
 		// Marphy Fact Files Fix - Reducing scream (which didn't work before) chance significantly
-		//if ( RANDOM_LONG(0,31) < 8 )
 		if (RANDOM_LONG(0, 63) < 1)
 			Scream();
 		break;
@@ -530,8 +521,6 @@ void CScientist::RunTask(Task_t* pTask)
 	case TASK_MOVE_TO_TARGET_RANGE_SCARED:
 	{
 		// Marphy Fact Files Fix - Removing redundant scream
-		//if ( RANDOM_LONG(0,63)< 8 )
-		//Scream();
 
 		if (m_hEnemy == NULL)
 		{
@@ -675,8 +664,6 @@ void CScientist::Spawn()
 	pev->view_ofs = Vector(0, 0, 50);  // position of the eyes relative to monster's origin.
 	m_flFieldOfView = VIEW_FIELD_WIDE; // NOTE: we need a wide field of view so scientists will notice player and say hello
 	m_MonsterState = MONSTERSTATE_NONE;
-
-	//	m_flDistTooFar		= 256.0;
 
 	m_afCapability = bits_CAP_HEAR | bits_CAP_TURN_HEAD | bits_CAP_OPEN_DOORS | bits_CAP_AUTO_DOORS | bits_CAP_USE;
 
@@ -1202,7 +1189,7 @@ void CDeadScientist::Spawn()
 	pev->effects = 0;
 	pev->sequence = 0;
 	// Corpses have less health
-	pev->health = 8; //gSkillData.scientistHealth;
+	pev->health = 8;
 
 	m_bloodColor = BLOOD_COLOR_RED;
 
@@ -1222,7 +1209,6 @@ void CDeadScientist::Spawn()
 		ALERT(at_console, "Dead scientist with bad pose\n");
 	}
 
-	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
 	MonsterInitDead();
 }
 
@@ -1414,8 +1400,6 @@ void CSittingScientist::SittingThink()
 					pev->sequence = m_baseSequence + SITTING_ANIM_sitlookleft;
 				else
 					pev->sequence = m_baseSequence + SITTING_ANIM_sitlookright;
-
-				//ALERT(at_console, "sitting speak\n");
 			}
 		}
 		else if (i < 60)
@@ -1424,7 +1408,6 @@ void CSittingScientist::SittingThink()
 			m_headTurn = RANDOM_LONG(0, 8) * 10 - 40;
 			if (RANDOM_LONG(0, 99) < 5)
 			{
-				//ALERT(at_console, "sitting speak2\n");
 				FIdleSpeak();
 			}
 		}

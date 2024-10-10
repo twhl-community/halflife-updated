@@ -48,28 +48,9 @@
 #include "pm_defs.h"
 #include "UserMessages.h"
 
-DLL_GLOBAL unsigned int g_ulFrameCount;
-
 extern void CopyToBodyQue(entvars_t* pev);
 
 void LinkUserMessages();
-
-/*
- * used by kill command and disconnect command
- * ROBIN: Moved here from player.cpp, to allow multiple player models
- */
-void set_suicide_frame(entvars_t* pev)
-{
-	if (!FStrEq(STRING(pev->model), "models/player.mdl"))
-		return; // allready gibbed
-
-	//	pev->frame		= $deatha11;
-	pev->solid = SOLID_NOT;
-	pev->movetype = MOVETYPE_TOSS;
-	pev->deadflag = DEAD_DEAD;
-	pev->nextthink = -1;
-}
-
 
 /*
 ===========
@@ -81,10 +62,6 @@ called when a player connects to a server
 qboolean ClientConnect(edict_t* pEntity, const char* pszName, const char* pszAddress, char szRejectReason[128])
 {
 	return static_cast<qboolean>(g_pGameRules->ClientConnected(pEntity, pszName, pszAddress, szRejectReason));
-
-	// a client connecting during an intermission can cause problems
-	//	if (intermission_running)
-	//		ExitIntermission ();
 }
 
 
@@ -166,8 +143,6 @@ void respawn(entvars_t* pev, bool fCopyCorpse)
 ClientKill
 
 Player entered the suicide command
-
-GLOBALS ASSUMED SET:  g_ulModelIndexPlayer
 ============
 */
 void ClientKill(edict_t* pEntity)
@@ -184,10 +159,6 @@ void ClientKill(edict_t* pEntity)
 	// have the player kill themself
 	pev->health = 0;
 	pl->Killed(pev, GIB_NEVER);
-
-	//	pev->modelindex = g_ulModelIndexPlayer;
-	//	pev->frags -= 2;		// extra penalty
-	//	respawn( pev );
 }
 
 /*
@@ -883,9 +854,6 @@ void InitMapLoadingUtils()
 
 static bool g_LastAllowBunnyHoppingState = false;
 
-//
-// GLOBALS ASSUMED SET:  g_ulFrameCount
-//
 void StartFrame()
 {
 	if (g_pGameRules)
@@ -895,7 +863,6 @@ void StartFrame()
 		return;
 
 	gpGlobals->teamplay = teamplay.value;
-	g_ulFrameCount++;
 
 	const bool allowBunnyHopping = sv_allowbunnyhopping.value != 0;
 
@@ -929,8 +896,6 @@ void ClientPrecache()
 {
 	// setup precaches always needed
 	PRECACHE_SOUND("player/sprayer.wav"); // spray paint sound for PreAlpha
-
-	// PRECACHE_SOUND("player/pl_jumpland2.wav");		// UNDONE: play 2x step sound
 
 	PRECACHE_SOUND("player/pl_fallpain2.wav");
 	PRECACHE_SOUND("player/pl_fallpain3.wav");
@@ -1327,19 +1292,6 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 	state->skin = ent->v.skin;
 	state->effects = ent->v.effects;
 
-	// This non-player entity is being moved by the game .dll and not the physics simulation system
-	//  make sure that we interpolate it's position on the client if it moves
-	/*
-	if (0 == player &&
-		0 != ent->v.animtime &&
-		ent->v.velocity[0] == 0 &&
-		ent->v.velocity[1] == 0 &&
-		ent->v.velocity[2] == 0)
-	{
-		state->eflags |= EFLAG_SLERP;
-	}
-	*/
-
 	if ((ent->v.flags & FL_FLY) != 0)
 	{
 		state->eflags |= EFLAG_SLERP;
@@ -1413,8 +1365,7 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 		state->friction = ent->v.friction;
 
 		state->gravity = ent->v.gravity;
-		//		state->team			= ent->v.team;
-		//
+
 		state->usehull = (ent->v.flags & FL_DUCKING) != 0 ? 1 : 0;
 		state->health = ent->v.health;
 	}
@@ -1786,8 +1737,6 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 						item->iuser3 = gun->m_fireState;
 
 						gun->GetWeaponData(*item);
-
-						//						item->m_flPumpTime				= V_max( gun->m_flPumpTime, -0.001f );
 					}
 				}
 				pPlayerItem = pPlayerItem->m_pNext;
@@ -2009,10 +1958,8 @@ void CreateInstancedBaselines()
 	memset(&state, 0, sizeof(state));
 
 	// Create any additional baselines here for things like grendates, etc.
-	// iret = ENGINE_INSTANCE_BASELINE( pc->pev->classname, &state );
 
 	// Destroy objects.
-	//UTIL_Remove( pc );
 }
 
 /*

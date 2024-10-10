@@ -245,8 +245,6 @@ void CGauss::SecondaryAttack()
 		if (pitch > 250)
 			pitch = 250;
 
-		// ALERT( at_console, "%d %d %d\n", m_fInAttack, m_iSoundState, pitch );
-
 		if (m_iSoundState == 0)
 			ALERT(at_console, "sound state %d\n", m_iSoundState);
 
@@ -256,7 +254,6 @@ void CGauss::SecondaryAttack()
 
 		m_pPlayer->m_iWeaponVolume = GAUSS_PRIMARY_CHARGE_VOLUME;
 
-		// m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
 		if (m_pPlayer->m_flStartCharge < gpGlobals->time - 10)
 		{
 			// Player charged up too long. Zap him.
@@ -297,7 +294,7 @@ void CGauss::StartFire()
 
 	UTIL_MakeVectors(m_pPlayer->pev->v_angle + m_pPlayer->pev->punchangle);
 	Vector vecAiming = gpGlobals->v_forward;
-	Vector vecSrc = m_pPlayer->GetGunPosition(); // + gpGlobals->v_up * -8 + gpGlobals->v_right * 8;
+	Vector vecSrc = m_pPlayer->GetGunPosition();
 
 	if (gpGlobals->time - m_pPlayer->m_flStartCharge > GetFullChargeTime())
 	{
@@ -320,8 +317,6 @@ void CGauss::StartFire()
 
 	if (m_fInAttack != 3)
 	{
-		//ALERT ( at_console, "Time:%f Damage:%f\n", gpGlobals->time - m_pPlayer->m_flStartCharge, flDamage );
-
 #ifndef CLIENT_DLL
 		float flZVel = m_pPlayer->pev->velocity.z;
 
@@ -373,20 +368,11 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 
 	SendStopEvent(false);
 
-
-	/*ALERT( at_console, "%f %f %f\n%f %f %f\n", 
-		vecSrc.x, vecSrc.y, vecSrc.z, 
-		vecDest.x, vecDest.y, vecDest.z );*/
-
-
-	//	ALERT( at_console, "%f %f\n", tr.flFraction, flMaxFrac );
-
 #ifndef CLIENT_DLL
 	while (flDamage > 10 && nMaxHits > 0)
 	{
 		nMaxHits--;
 
-		// ALERT( at_console, "." );
 		UTIL_TraceLine(vecSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr);
 
 		if (0 != tr.fAllSolid)
@@ -429,7 +415,6 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 
 			if (n < 0.5) // 60 degrees
 			{
-				// ALERT( at_console, "reflect %f\n", n );
 				// reflect
 				Vector r;
 
@@ -475,17 +460,15 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 								n = 1;
 							flDamage -= n;
 
-							// ALERT( at_console, "punch %f\n", n );
 							nTotal += 21;
 
 							// exit blast damage
-							//m_pPlayer->RadiusDamage( beam_tr.vecEndPos + vecDir * 8, pev, m_pPlayer->pev, flDamage, CLASS_NONE, DMG_BLAST );
 							float damage_radius;
 
 
 							if (g_pGameRules->IsMultiplayer())
 							{
-								damage_radius = flDamage * 1.75; // Old code == 2.5
+								damage_radius = flDamage * 1.75;
 							}
 							else
 							{
@@ -503,14 +486,11 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 					}
 					else
 					{
-						//ALERT( at_console, "blocked %f\n", n );
 						flDamage = 0;
 					}
 				}
 				else
 				{
-					//ALERT( at_console, "blocked solid\n" );
-
 					flDamage = 0;
 				}
 			}
@@ -522,7 +502,6 @@ void CGauss::Fire(Vector vecOrigSrc, Vector vecDir, float flDamage)
 		}
 	}
 #endif
-	// ALERT( at_console, "%d bytes\n", nTotal );
 }
 
 

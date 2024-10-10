@@ -458,7 +458,6 @@ void CBaseMonster::RunTask(Task_t* pTask)
 			{
 				// a bit of a hack. If a corpses' bbox is positioned such that being left solid so that it can be attacked will
 				// block the player on a slope or stairs, the corpse is made nonsolid.
-				//					pev->solid = SOLID_NOT;
 				UTIL_SetSize(pev, Vector(-4, -4, 0), Vector(4, 4, 1));
 			}
 			else // !!!HACKHACK - put monster in a thin, wide bounding box until we fix the solid type/bounding volume problem
@@ -525,7 +524,6 @@ void CBaseMonster::RunTask(Task_t* pTask)
 			if (m_fSequenceFinished)
 				ClearSchedule();
 			pev->framerate = 1.0;
-			//ALERT( at_aiconsole, "Script %s has begun for %s\n", STRING( m_pCine->m_iszPlay ), STRING(pev->classname) );
 		}
 		break;
 	}
@@ -741,8 +739,6 @@ void CBaseMonster::StartTask(Task_t* pTask)
 		{
 			// Find cover from self if no enemy available
 			pevCover = pev;
-			//				TaskFail();
-			//				return;
 		}
 		else
 			pevCover = m_hEnemy->pev;

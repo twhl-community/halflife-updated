@@ -551,8 +551,7 @@ void CBaseTrigger::InitTrigger()
 	pev->solid = SOLID_TRIGGER;
 	pev->movetype = MOVETYPE_NONE;
 	SET_MODEL(ENT(pev), STRING(pev->model)); // set size and link into world
-	if (CVAR_GET_FLOAT("showtriggers") == 0)
-		SetBits(pev->effects, EF_NODRAW);
+	SetBits(pev->effects, EF_NODRAW);
 }
 
 
@@ -1074,23 +1073,8 @@ void CTriggerMultiple::Spawn()
 	InitTrigger();
 
 	ASSERTSZ(pev->health == 0, "trigger_multiple with health");
-	//	UTIL_SetOrigin(pev, pev->origin);
-	//	SET_MODEL( ENT(pev), STRING(pev->model) );
-	//	if (pev->health > 0)
-	//		{
-	//		if (FBitSet(pev->spawnflags, SPAWNFLAG_NOTOUCH))
-	//			ALERT(at_error, "trigger_multiple spawn: health and notouch don't make sense");
-	//		pev->max_health = pev->health;
-	//UNDONE: where to get pfnDie from?
-	//		pev->pfnDie = multi_killed;
-	//		pev->takedamage = DAMAGE_YES;
-	//		pev->solid = SOLID_BBOX;
-	//		UTIL_SetOrigin(pev, pev->origin);  // make sure it links into the world
-	//		}
-	//	else
-	{
-		SetTouch(&CTriggerMultiple::MultiTouch);
-	}
+
+	SetTouch(&CTriggerMultiple::MultiTouch);
 }
 
 
@@ -1181,7 +1165,6 @@ void CBaseTrigger::ActivateMultiTrigger(CBaseEntity* pActivator)
 	if (!FStringNull(pev->message) && pActivator->IsPlayer())
 	{
 		UTIL_ShowMessage(STRING(pev->message), pActivator);
-		//		CLIENT_PRINTF( ENT( pActivator->pev ), print_center, STRING(pev->message) );
 	}
 
 	if (m_flWait > 0)
@@ -1203,12 +1186,6 @@ void CBaseTrigger::ActivateMultiTrigger(CBaseEntity* pActivator)
 // the wait time has passed, so set back up for another activation
 void CBaseTrigger::MultiWaitOver()
 {
-	//	if (pev->max_health)
-	//		{
-	//		pev->health		= pev->max_health;
-	//		pev->takedamage	= DAMAGE_YES;
-	//		pev->solid		= SOLID_BBOX;
-	//		}
 	SetThink(NULL);
 }
 
@@ -1438,7 +1415,6 @@ void CChangeLevel::Spawn()
 	InitTrigger();
 	if ((pev->spawnflags & SF_CHANGELEVEL_USEONLY) == 0)
 		SetTouch(&CChangeLevel::TouchChangeLevel);
-	//	ALERT( at_console, "TRANSITION: %s (%s)\n", m_szMapName, m_szLandmarkName );
 }
 
 
@@ -1454,8 +1430,8 @@ void CChangeLevel::ExecuteChangeLevel()
 }
 
 
-FILE_GLOBAL char st_szNextMap[cchMapNameMost];
-FILE_GLOBAL char st_szNextSpot[cchMapNameMost];
+static char st_szNextMap[cchMapNameMost];
+static char st_szNextSpot[cchMapNameMost];
 
 edict_t* CChangeLevel::FindLandmark(const char* pLandmarkName)
 {
@@ -1538,7 +1514,7 @@ void CChangeLevel::ChangeLevelNow(CBaseEntity* pActivator)
 		strcpy(st_szNextSpot, m_szLandmarkName);
 		gpGlobals->vecLandmarkOffset = VARS(pentLandmark)->origin;
 	}
-	//	ALERT( at_console, "Level touches %d levels\n", ChangeList( levels, 16 ) );
+
 	ALERT(at_console, "CHANGE LEVEL: %s %s\n", st_szNextMap, st_szNextSpot);
 	CHANGE_LEVEL(st_szNextMap, st_szNextSpot);
 }
@@ -1779,11 +1755,8 @@ void CLadder::Precache()
 	// Do all of this in here because we need to 'convert' old saved games
 	pev->solid = SOLID_NOT;
 	pev->skin = CONTENTS_LADDER;
-	if (CVAR_GET_FLOAT("showtriggers") == 0)
-	{
-		pev->rendermode = kRenderTransTexture;
-		pev->renderamt = 0;
-	}
+	pev->rendermode = kRenderTransTexture;
+	pev->renderamt = 0;
 	pev->effects &= ~EF_NODRAW;
 }
 
@@ -1862,7 +1835,6 @@ void CTriggerPush::Touch(CBaseEntity* pOther)
 			pevToucher->basevelocity = vecPush;
 
 			pevToucher->flags |= FL_BASEVELOCITY;
-			//			ALERT( at_console, "Vel %f, base %f\n", pevToucher->velocity.z, pevToucher->basevelocity.z );
 		}
 	}
 }

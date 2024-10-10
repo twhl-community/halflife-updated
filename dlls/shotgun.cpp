@@ -46,7 +46,7 @@ void CShotgun::Precache()
 	PRECACHE_MODEL("models/w_shotgun.mdl");
 	PRECACHE_MODEL("models/p_shotgun.mdl");
 
-	m_iShell = PRECACHE_MODEL("models/shotgunshell.mdl"); // shotgun shell
+	PRECACHE_MODEL("models/shotgunshell.mdl"); // shotgun shell
 
 	PRECACHE_SOUND("items/9mmclip1.wav");
 
@@ -55,9 +55,6 @@ void CShotgun::Precache()
 
 	PRECACHE_SOUND("weapons/reload1.wav"); // shotgun reload
 	PRECACHE_SOUND("weapons/reload3.wav"); // shotgun reload
-
-	//	PRECACHE_SOUND ("weapons/sshell1.wav");	// shotgun reload - played on client
-	//	PRECACHE_SOUND ("weapons/sshell3.wav");	// shotgun reload - played on client
 
 	PRECACHE_SOUND("weapons/357_cock1.wav"); // gun empty sound
 	PRECACHE_SOUND("weapons/scock1.wav");	 // cock gun
@@ -149,7 +146,6 @@ void CShotgun::PrimaryAttack()
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
-	//if (m_iClip != 0)
 	m_flPumpTime = gpGlobals->time + 0.5;
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(0.75);
@@ -223,7 +219,6 @@ void CShotgun::SecondaryAttack()
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
-	//if (m_iClip != 0)
 	m_flPumpTime = gpGlobals->time + 0.95;
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(1.5);
@@ -271,7 +266,6 @@ void CShotgun::Reload()
 
 		SendWeaponAnim(SHOTGUN_RELOAD);
 
-		m_flNextReload = UTIL_WeaponTimeBase() + 0.5;
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
 	}
 	else
@@ -289,16 +283,6 @@ void CShotgun::WeaponIdle()
 	ResetEmptySound();
 
 	m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
-
-	//Moved to ItemPostFrame
-	/*
-	if ( m_flPumpTime && m_flPumpTime < gpGlobals->time )
-	{
-		// play pumping sound
-		EMIT_SOUND_DYN(ENT(m_pPlayer->pev), CHAN_ITEM, "weapons/scock1.wav", 1, ATTN_NORM, 0, 95 + RANDOM_LONG(0,0x1f));
-		m_flPumpTime = 0;
-	}
-	*/
 
 	if (m_flTimeWeaponIdle < UTIL_WeaponTimeBase())
 	{
@@ -330,7 +314,7 @@ void CShotgun::WeaponIdle()
 			if (flRand <= 0.8)
 			{
 				iAnim = SHOTGUN_IDLE_DEEP;
-				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (60.0 / 12.0); // * RANDOM_LONG(2, 5);
+				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + (60.0 / 12.0);
 			}
 			else if (flRand <= 0.95)
 			{
