@@ -1671,8 +1671,3 @@ void EV_VehiclePitchAdjust(event_args_t* args)
 		gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_STATIC, sz, m_flVolume, ATTN_NORM, SND_CHANGE_PITCH, pitch);
 	}
 }
-
-bool EV_TFC_IsAllyTeam(int iTeam1, int iTeam2)
-{
-	return false;
-}

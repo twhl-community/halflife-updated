@@ -37,7 +37,6 @@ team_info_t g_TeamInfo[MAX_TEAMS + 1];
 int g_IsSpectator[MAX_PLAYERS_HUD + 1];
 
 bool HUD_IsGame(const char* game);
-bool EV_TFC_IsAllyTeam(int iTeam1, int iTeam2);
 
 // Scoreboard dimensions
 #define SBOARD_TITLE_SIZE_Y YRES(22)
@@ -777,8 +776,7 @@ void ScorePanel::FillGrid()
 					break;
 				case COLUMN_CLASS:
 					// No class for other team's members (unless allied or spectator)
-					if (gViewPort && EV_TFC_IsAllyTeam(g_iTeamNumber, g_PlayerExtraInfo[m_iSortedRows[row]].teamnumber))
-						bShowClass = true;
+
 					// Don't show classes if this client hasnt picked a team yet
 					if (g_iTeamNumber == 0)
 						bShowClass = false;
