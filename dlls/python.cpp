@@ -72,7 +72,7 @@ void CPython::Precache()
 	m_usFirePython = PRECACHE_EVENT(1, "events/python.sc");
 }
 
-bool CPython::Deploy()
+void CPython::Deploy()
 {
 #ifdef CLIENT_DLL
 	if (bIsMultiplayer())
@@ -88,7 +88,7 @@ bool CPython::Deploy()
 		pev->body = 0;
 	}
 
-	return DefaultDeploy("models/v_357.mdl", "models/p_357.mdl", PYTHON_DRAW, "python", pev->body);
+	DefaultDeploy("models/v_357.mdl", "models/p_357.mdl", PYTHON_DRAW, "python", pev->body);
 }
 
 

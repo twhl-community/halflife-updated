@@ -279,22 +279,10 @@ bool CHalfLifeMultiplay::IsCoOp()
 //=========================================================
 bool CHalfLifeMultiplay::FShouldSwitchWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon)
 {
-	if (!pWeapon->CanDeploy())
-	{
-		// that weapon can't deploy anyway.
-		return false;
-	}
-
-	if (!pPlayer->m_pActiveItem)
+	if (pPlayer->m_pActiveItem == nullptr)
 	{
 		// player doesn't have an active item!
 		return true;
-	}
-
-	if (!pPlayer->m_pActiveItem->CanHolster())
-	{
-		// can't put away the active item.
-		return false;
 	}
 
 	//Never switch
