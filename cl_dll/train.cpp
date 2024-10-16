@@ -58,8 +58,8 @@ bool CHudTrain::Draw(float fTime)
 		SPR_Set(m_hSprite, r, g, b);
 
 		// This should show up to the right and part way up the armor number
-		y = ScreenHeight - SPR_Height(m_hSprite, 0) - gHUD.m_iFontHeight;
-		x = ScreenWidth / 3 + SPR_Width(m_hSprite, 0) / 4;
+		y = gHUD.GetHeight() - SPR_Height(m_hSprite, 0) - gHUD.m_iFontHeight;
+		x = gHUD.GetWidth() / 3 + SPR_Width(m_hSprite, 0) / 4;
 
 		SPR_DrawAdditive(m_iPos - 1, x, y, NULL);
 	}

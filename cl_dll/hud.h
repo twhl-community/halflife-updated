@@ -607,6 +607,19 @@ public:
 	void AddHudElem(CHudBase* p);
 
 	float GetSensitivity();
+
+private:
+	cvar_t* m_pCvarScale;
+	bool m_bShouldScale;
+	int m_iWidth;
+	int m_iHeight;
+
+	void UpdateScalingInfo();
+
+public:
+	bool ShouldScale();
+	int GetWidth();
+	int GetHeight();
 };
 
 extern CHud gHUD;
