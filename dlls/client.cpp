@@ -1749,6 +1749,11 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 	if (!pl)
 		return 1;
 
+	for (i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		info[i].iuser4 = pl->m_rgAmmo[i];
+	}
+
 	// go through all of the weapons and make a list of the ones to pack
 	for (i = 0; i < MAX_ITEM_TYPES; i++)
 	{
@@ -1877,15 +1882,6 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 			cd->m_flNextAttack = pl->m_flNextAttack;
 			cd->fuser2 = pl->m_flNextAmmoBurn;
 			cd->fuser3 = pl->m_flAmmoStartCharge;
-			cd->vuser1.x = pl->ammo_9mm;
-			cd->vuser1.y = pl->ammo_357;
-			cd->vuser1.z = pl->ammo_argrens;
-			cd->ammo_nails = pl->ammo_bolts;
-			cd->ammo_shells = pl->ammo_buckshot;
-			cd->ammo_rockets = pl->ammo_rockets;
-			cd->ammo_cells = pl->ammo_uranium;
-			cd->vuser2.x = pl->ammo_hornets;
-
 
 			if (pl->m_pActiveItem)
 			{
@@ -1897,11 +1893,6 @@ void UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* 
 					gun->GetItemInfo(&II);
 
 					cd->m_iId = II.iId;
-
-					cd->vuser3.z = gun->m_iSecondaryAmmoType;
-					cd->vuser4.x = gun->m_iPrimaryAmmoType;
-					cd->vuser4.y = pl->m_rgAmmo[gun->m_iPrimaryAmmoType];
-					cd->vuser4.z = pl->m_rgAmmo[gun->m_iSecondaryAmmoType];
 
 					if (pl->m_pActiveItem->m_iId == WEAPON_RPG)
 					{

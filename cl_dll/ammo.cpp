@@ -35,6 +35,8 @@ WEAPON* gpLastSel;	 // Last weapon menu selection
 
 client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes, int iCount);
 
+void HUD_WeaponList(const int iId, const int iAmmoType, const int iAmmoType2);
+
 WeaponsResource gWR;
 
 int g_weaponselect = 0;
@@ -492,6 +494,11 @@ bool CHudAmmo::MsgFunc_AmmoX(const char* pszName, int iSize, void* pbuf)
 	int iIndex = READ_BYTE();
 	int iCount = READ_BYTE();
 
+	return Update_AmmoX(iIndex, iCount);
+}
+
+bool CHudAmmo::Update_AmmoX(const int iIndex, const int iCount)
+{
 	gWR.SetAmmo(iIndex, abs(iCount));
 
 	return true;
@@ -563,14 +570,19 @@ bool CHudAmmo::MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf)
 //
 bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 {
-	static Rect nullrc;
-	bool fOnTarget = false;
-
 	BEGIN_READ(pbuf, iSize);
 
 	int iState = READ_BYTE();
 	int iId = READ_CHAR();
 	int iClip = READ_CHAR();
+
+	return Update_CurWeapon(iState, iId, iClip);
+}
+
+bool CHudAmmo::Update_CurWeapon(const int iState, const int iId, const int iClip)
+{
+	static Rect nullrc;
+	bool fOnTarget = false;
 
 	// detect if we're also on target
 	if (iState > 1)
@@ -684,6 +696,9 @@ bool CHudAmmo::MsgFunc_WeaponList(const char* pszName, int iSize, void* pbuf)
 		return 0;
 
 	gWR.AddWeapon(&Weapon);
+
+	// Tell the predicted weapons which ammo types to use
+	HUD_WeaponList(Weapon.iId, Weapon.iAmmoType, Weapon.iAmmo2Type);
 
 	return true;
 }

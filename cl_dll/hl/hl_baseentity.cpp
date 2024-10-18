@@ -271,8 +271,6 @@ void CBasePlayer::ItemPreFrame() {}
 void CBasePlayer::ItemPostFrame() {}
 int CBasePlayer::AmmoInventory(int iAmmoIndex) { return -1; }
 int CBasePlayer::GetAmmoIndex(const char* psz) { return -1; }
-void CBasePlayer::SendAmmoUpdate() {}
-void CBasePlayer::UpdateClientData() {}
 bool CBasePlayer::FBecomeProne() { return true; }
 void CBasePlayer::BarnacleVictimBitten(entvars_t* pevBarnacle) {}
 void CBasePlayer::BarnacleVictimReleased() {}
@@ -321,7 +319,6 @@ void CBasePlayerItem::Holster() {}
 void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer) {}
 bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal) { return false; }
 void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer) {}
-bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer) { return false; }
 bool CBasePlayerWeapon::IsUseable() { return true; }
 int CBasePlayerWeapon::PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
 int CBasePlayerWeapon::SecondaryAmmoIndex() { return m_iSecondaryAmmoType; }
