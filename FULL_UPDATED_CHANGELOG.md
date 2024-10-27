@@ -297,6 +297,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Prevented game_zone_player from transitioning across levels to fix Mod_NumForName: not found issue [#241](https://github.com/twhl-community/halflife-updated/pull/241) (Thanks FreeSlave)
 * Fixed null dereference in game_score [#246](https://github.com/twhl-community/halflife-updated/pull/246) (Thanks FreeSlave)
 * Fixed null dereference of m_rawinput and mouse issues on Linux [#251](https://github.com/twhl-community/halflife-updated/pull/251) (Thanks a1batross)
+* Fixed `cl_bobtilt` CVAR not disabling view bob tilt [#254](https://github.com/twhl-community/halflife-updated/pull/254) (Thanks sabianroberts)
 
 ## Code cleanup
 

@@ -12,6 +12,7 @@
 * Fixed null dereference in game_score [#246](https://github.com/twhl-community/halflife-updated/pull/246) (Thanks FreeSlave)
 * Fixed null dereference of m_rawinput and mouse issues on Linux [#251](https://github.com/twhl-community/halflife-updated/pull/251) (Thanks a1batross)
 * Reverted "[HL25] Fixed geiger counter sound at range 800 units and higher" (halflife issue [#3856](https://github.com/ValveSoftware/halflife/issues/3856))
+* Fixed `cl_bobtilt` CVAR not disabling view bob tilt [#254](https://github.com/twhl-community/halflife-updated/pull/254) (Thanks sabianroberts)
 
 ### Features
 
