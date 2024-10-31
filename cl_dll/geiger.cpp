@@ -64,7 +64,7 @@ bool CHudGeiger::MsgFunc_Geiger(const char* pszName, int iSize, void* pbuf)
 bool CHudGeiger::Draw(float flTime)
 {
 	int pct;
-	float flvol;
+	float flvol = 0.0;
 	int rg[3];
 	int i;
 
