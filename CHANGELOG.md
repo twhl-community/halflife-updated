@@ -18,6 +18,10 @@
 
 * [HL25] Backported changes from October 2nd 2024 update
 
+### Code cleanup
+
+* Fixed duplicated Zombie melee activity check [#256](https://github.com/twhl-community/halflife-updated/pull/256) (Thanks josephfortune)
+
 ## Changes in V1.1.0
 
 ### Bug Fixes

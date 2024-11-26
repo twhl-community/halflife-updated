@@ -408,6 +408,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
     * Blue Shift [#114](https://github.com/twhl-community/halflife-updated/pull/114)
     * Deathmatch Classic and Threewave [#115](https://github.com/twhl-community/halflife-updated/pull/115)
 * Moved IsFacing function from barney.cpp to h_ai.cpp to help prevent linker errors when copy pasting source file
+* Fixed duplicated Zombie melee activity check [#256](https://github.com/twhl-community/halflife-updated/pull/256) (Thanks josephfortune)
 
 ## Project changes
 
