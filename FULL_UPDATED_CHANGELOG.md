@@ -409,6 +409,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
     * Deathmatch Classic and Threewave [#115](https://github.com/twhl-community/halflife-updated/pull/115)
 * Moved IsFacing function from barney.cpp to h_ai.cpp to help prevent linker errors when copy pasting source file
 * Fixed duplicated Zombie melee activity check [#256](https://github.com/twhl-community/halflife-updated/pull/256) (Thanks josephfortune)
+* Fixed `anglemod` function in `pm_math.cpp` which should fix view drifting issues on Linux [#226](https://github.com/twhl-community/halflife-updated/pull/226) (Thanks consolethinks)
 
 ## Project changes
 
