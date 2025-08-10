@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 rem Set this path to your mod directory. You can use environment variables to avoid hardcoding the path if your team members have different install locations.
 if NOT DEFINED HL_MOD_PATH (
 	echo hl mod path not defined >&2
-	exit /b 1
+	exit /b 0
 )
 
 set mod_directory=%HL_MOD_PATH%
