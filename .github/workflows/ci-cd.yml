@@ -11,7 +11,7 @@ jobs:
         compiler: [g++, clang++]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       
       - name: Install G++ Multilib, Clang++ & OpenGL library
         run: |
@@ -38,7 +38,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
