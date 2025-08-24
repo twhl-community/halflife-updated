@@ -101,9 +101,9 @@ bool CHgun::GetItemInfo(ItemInfo* p)
 }
 
 
-bool CHgun::Deploy()
+void CHgun::Deploy()
 {
-	return DefaultDeploy("models/v_hgun.mdl", "models/p_hgun.mdl", HGUN_UP, "hive");
+	DefaultDeploy("models/v_hgun.mdl", "models/p_hgun.mdl", HGUN_UP, "hive");
 }
 
 void CHgun::Holster()

@@ -70,9 +70,9 @@ bool CCrowbar::GetItemInfo(ItemInfo* p)
 
 
 
-bool CCrowbar::Deploy()
+void CCrowbar::Deploy()
 {
-	return DefaultDeploy("models/v_crowbar.mdl", "models/p_crowbar.mdl", CROWBAR_DRAW, "crowbar");
+	DefaultDeploy("models/v_crowbar.mdl", "models/p_crowbar.mdl", CROWBAR_DRAW, "crowbar");
 }
 
 void CCrowbar::Holster()
