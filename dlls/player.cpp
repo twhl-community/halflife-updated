@@ -3380,6 +3380,7 @@ static edict_t* GiveNamedItem_Common(entvars_t* pev, const char* pszName)
 		ALERT(at_console, "NULL Ent in GiveNamedItem!\n");
 		return nullptr;
 	}
+	VARS(pent)->effects |= EF_NODRAW;
 	VARS(pent)->origin = pev->origin;
 	pent->v.spawnflags |= SF_NORESPAWN;
 
