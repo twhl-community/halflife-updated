@@ -429,7 +429,6 @@ void HUD_InitClientWeapons()
 	// Fake functions
 	g_engfuncs.pfnPrecacheModel = stub_PrecacheModel;
 	g_engfuncs.pfnPrecacheSound = stub_PrecacheSound;
-	g_engfuncs.pfnPrecacheEvent = stub_PrecacheEvent;
 	g_engfuncs.pfnNameForFunction = stub_NameForFunction;
 	g_engfuncs.pfnSetModel = stub_SetModel;
 	g_engfuncs.pfnSetClientMaxspeed = HUD_SetMaxSpeed;
