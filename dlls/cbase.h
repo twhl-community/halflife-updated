@@ -378,6 +378,18 @@ public:
 	int m_fInAttack;
 
 	int m_fireState;
+
+	virtual void PlaybackEvent(
+		const unsigned short usEventIndex,
+		const float fparam1 = 0.0F,
+		const float fparam2 = 0.0F,
+		const int iparam1 = 0,
+		const int iparam2 = 0,
+		const int bparam1 = 0,
+		const int bparam2 = 0,
+		const int afFlags = 0,
+		const bool bSendPosition = false,
+		const float flDelay = 0.0F);
 };
 
 inline bool FNullEnt(CBaseEntity* ent) { return (ent == NULL) || FNullEnt(ent->edict()); }

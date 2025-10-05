@@ -356,6 +356,22 @@ public:
 
 	//True if the player is currently spawning.
 	bool m_bIsSpawning = false;
+
+	void PlaybackEvent(
+		const unsigned short usEventIndex,
+		const float fparam1 = 0.0F,
+		const float fparam2 = 0.0F,
+		const int iparam1 = 0,
+		const int iparam2 = 0,
+		const int bparam1 = 0,
+		const int bparam2 = 0,
+#if defined(CLIENT_WEAPONS)
+		const int afFlags = FEV_NOTHOST,
+#else
+		const int afFlags = 0,
+#endif
+		const bool bSendPosition = false,
+		const float flDelay = 0.0F) override;
 };
 
 inline void CBasePlayer::SetWeaponBit(int id)
