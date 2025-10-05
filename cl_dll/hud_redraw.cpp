@@ -33,7 +33,7 @@ extern bool g_iVisibleMouse;
 
 float HUD_GetFOV();
 
-extern cvar_t* sensitivity;
+extern float IN_GetMouseSensitivity();
 
 // Think
 void CHud::Think()
@@ -72,7 +72,7 @@ void CHud::Think()
 	else
 	{
 		// set a new sensitivity that is proportional to the change from the FOV default
-		m_flMouseSensitivity = sensitivity->value * ((float)newfov / (float)default_fov->value) * CVAR_GET_FLOAT("zoom_sensitivity_ratio");
+		m_flMouseSensitivity = IN_GetMouseSensitivity() * ((float)newfov / (float)V_max(default_fov->value, 90.0f)) * CVAR_GET_FLOAT("zoom_sensitivity_ratio");
 	}
 
 	// think about default fov

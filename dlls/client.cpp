@@ -23,9 +23,15 @@
 
 */
 
+#include <algorithm>
+#include <string>
+#include <vector>
+
 #include "extdll.h"
 #include "util.h"
+#include "filesystem_utils.h"
 #include "cbase.h"
+#include "com_model.h"
 #include "saverestore.h"
 #include "player.h"
 #include "spectator.h"
@@ -39,6 +45,7 @@
 #include "usercmd.h"
 #include "netadr.h"
 #include "pm_shared.h"
+#include "pm_defs.h"
 #include "UserMessages.h"
 
 DLL_GLOBAL unsigned int g_ulFrameCount;
@@ -597,6 +604,13 @@ void ClientCommand(edict_t* pEntity)
 		// max total length is 192 ...and we're adding a string below ("Unknown command: %s\n")
 		strncpy(command, pcmd, 127);
 		command[127] = '\0';
+		// First parse the name and remove any %'s
+		for (char* pApersand = command; pApersand != NULL && *pApersand != 0; pApersand++)
+		{
+			// Replace it with a space
+			if (*pApersand == '%')
+				*pApersand = ' ';
+		}
 
 		// tell the user they entered an unknown command
 		ClientPrint(&pEntity->v, HUD_PRINTCONSOLE, UTIL_VarArgs("Unknown command: %s\n", command));
@@ -772,6 +786,102 @@ void ParmsChangeLevel()
 		pSaveData->connectionCount = BuildChangeList(pSaveData->levelList, MAX_LEVEL_CONNECTIONS);
 }
 
+static std::vector<std::string> g_MapsToLoad;
+
+static void LoadNextMap()
+{
+	const std::string mapName = std::move(g_MapsToLoad.back());
+	g_MapsToLoad.pop_back();
+
+	pmove->Con_Printf("Loading map \"%s\" automatically (%d left)\n",
+		mapName.c_str(), static_cast<int>(g_MapsToLoad.size() + 1));
+
+	if (g_MapsToLoad.empty())
+	{
+		pmove->Con_Printf("Loading last map\n");
+		g_MapsToLoad.shrink_to_fit();
+	}
+
+	SERVER_COMMAND(UTIL_VarArgs("map \"%s\"\n", mapName.c_str()));
+}
+
+static void LoadAllMaps()
+{
+	if (!g_MapsToLoad.empty())
+	{
+		pmove->Con_Printf("Already loading all maps (%d remaining)\nUse sv_stop_loading_all_maps to stop\n",
+			static_cast<int>(g_MapsToLoad.size()));
+		return;
+	}
+
+	FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
+
+	const char* fileName = g_pFileSystem->FindFirst("maps/*.bsp", &handle);
+
+	if (fileName != nullptr)
+	{
+		do
+		{
+			std::string mapName = fileName;
+			mapName.resize(mapName.size() - 4);
+
+			if (std::find_if(g_MapsToLoad.begin(), g_MapsToLoad.end(), [=](const auto& candidate)
+					{ return 0 == stricmp(candidate.c_str(), mapName.c_str()); }) == g_MapsToLoad.end())
+			{
+				g_MapsToLoad.push_back(std::move(mapName));
+			}
+		} while ((fileName = g_pFileSystem->FindNext(handle)) != nullptr);
+
+		g_pFileSystem->FindClose(handle);
+
+		// Sort in reverse order so the first map in alphabetic order is loaded first.
+		std::sort(g_MapsToLoad.begin(), g_MapsToLoad.end(), [](const auto& lhs, const auto& rhs)
+			{ return rhs < lhs; });
+	}
+
+	if (!g_MapsToLoad.empty())
+	{
+		if (CMD_ARGC() == 2)
+		{
+			const char* firstMapToLoad = CMD_ARGV(1);
+
+			// Clear out all maps that would have been loaded before this one.
+			if (auto it = std::find(g_MapsToLoad.begin(), g_MapsToLoad.end(), firstMapToLoad);
+				it != g_MapsToLoad.end())
+			{
+				const std::size_t numberOfMapsToSkip = g_MapsToLoad.size() - (it - g_MapsToLoad.begin());
+
+				g_MapsToLoad.erase(it + 1, g_MapsToLoad.end());
+
+				pmove->Con_Printf("Skipping %d maps to start with \"%s\"\n",
+					static_cast<int>(numberOfMapsToSkip), g_MapsToLoad.back().c_str());
+			}
+			else
+			{
+				pmove->Con_Printf("Unknown map \"%s\", starting from beginning\n", firstMapToLoad);
+			}
+		}
+
+		pmove->Con_Printf("Loading %d maps one at a time to generate files\n", static_cast<int>(g_MapsToLoad.size()));
+
+		// Load the first map right now.
+		LoadNextMap();
+	}
+	else
+	{
+		pmove->Con_Printf("No maps to load\n");
+	}
+}
+
+void InitMapLoadingUtils()
+{
+	g_engfuncs.pfnAddServerCommand("sv_load_all_maps", &LoadAllMaps);
+	// Escape hatch in case the command is executed in error.
+	g_engfuncs.pfnAddServerCommand("sv_stop_loading_all_maps", []()
+		{ g_MapsToLoad.clear(); });
+}
+
+static bool g_LastAllowBunnyHoppingState = false;
 
 //
 // GLOBALS ASSUMED SET:  g_ulFrameCount
@@ -786,6 +896,32 @@ void StartFrame()
 
 	gpGlobals->teamplay = teamplay.value;
 	g_ulFrameCount++;
+
+	const bool allowBunnyHopping = sv_allowbunnyhopping.value != 0;
+
+	if (allowBunnyHopping != g_LastAllowBunnyHoppingState)
+	{
+		g_LastAllowBunnyHoppingState = allowBunnyHopping;
+
+		for (int i = 1; i <= gpGlobals->maxClients; ++i)
+		{
+			auto player = UTIL_PlayerByIndex(i);
+
+			if (!player)
+			{
+				continue;
+			}
+
+			g_engfuncs.pfnSetPhysicsKeyValue(player->edict(), "bj", UTIL_dtos1(allowBunnyHopping ? 1 : 0));
+		}
+	}
+
+	// If we're loading all maps then change maps after 3 seconds (time starts at 1)
+	// to give the game time to generate files.
+	if (!g_MapsToLoad.empty() && gpGlobals->time > 4)
+	{
+		LoadNextMap();
+	}
 }
 
 
@@ -860,6 +996,7 @@ void ClientPrecache()
 	PRECACHE_SOUND("debris/wood3.wav");
 
 	PRECACHE_SOUND("plats/train_use1.wav"); // use a train
+	PRECACHE_SOUND("plats/vehicle_ignition.wav");
 
 	PRECACHE_SOUND("buttons/spark5.wav"); // hit computer texture
 	PRECACHE_SOUND("buttons/spark6.wav");
@@ -1084,6 +1221,15 @@ we could also use the pas/ pvs that we set in SetupVisibility, if we wanted to. 
 */
 int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* host, int hostflags, int player, unsigned char* pSet)
 {
+	// Entities with an index greater than this will corrupt the client's heap because 
+	// the index is sent with only 11 bits of precision (2^11 == 2048).
+	// So we don't send them, just like having too many entities would result
+	// in the entity not being sent.
+	if (e >= MAX_EDICTS)
+	{
+		return 0;
+	}
+
 	int i;
 
 	auto entity = reinterpret_cast<CBaseEntity*>(GET_PRIVATE(ent));
@@ -1272,6 +1418,12 @@ int AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* ho
 		state->usehull = (ent->v.flags & FL_DUCKING) != 0 ? 1 : 0;
 		state->health = ent->v.health;
 	}
+
+	CBaseEntity* pEntity = static_cast<CBaseEntity*>(GET_PRIVATE(ent));
+	if (pEntity && pEntity->Classify() != CLASS_NONE && pEntity->Classify() != CLASS_MACHINE)
+		state->eflags |= EFLAG_FLESH_SOUND;
+	else
+		state->eflags &= ~EFLAG_FLESH_SOUND;
 
 	return 1;
 }
@@ -1621,12 +1773,12 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 						item->m_iId = II.iId;
 						item->m_iClip = gun->m_iClip;
 
-						item->m_flTimeWeaponIdle = V_max(gun->m_flTimeWeaponIdle, -0.001);
-						item->m_flNextPrimaryAttack = V_max(gun->m_flNextPrimaryAttack, -0.001);
-						item->m_flNextSecondaryAttack = V_max(gun->m_flNextSecondaryAttack, -0.001);
+						item->m_flTimeWeaponIdle = V_max(gun->m_flTimeWeaponIdle, -0.001f);
+						item->m_flNextPrimaryAttack = V_max(gun->m_flNextPrimaryAttack, -0.001f);
+						item->m_flNextSecondaryAttack = V_max(gun->m_flNextSecondaryAttack, -0.001f);
 						item->m_fInReload = static_cast<int>(gun->m_fInReload);
 						item->m_fInSpecialReload = gun->m_fInSpecialReload;
-						item->fuser1 = V_max(gun->pev->fuser1, -0.001);
+						item->fuser1 = V_max(gun->pev->fuser1, -0.001f);
 						item->fuser2 = gun->m_flStartThrow;
 						item->fuser3 = gun->m_flReleaseThrow;
 						item->iuser1 = gun->m_chargeReady;
@@ -1635,7 +1787,7 @@ int GetWeaponData(struct edict_s* player, struct weapon_data_s* info)
 
 						gun->GetWeaponData(*item);
 
-						//						item->m_flPumpTime				= V_max( gun->m_flPumpTime, -0.001 );
+						//						item->m_flPumpTime				= V_max( gun->m_flPumpTime, -0.001f );
 					}
 				}
 				pPlayerItem = pPlayerItem->m_pNext;

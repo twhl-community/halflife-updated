@@ -157,7 +157,7 @@ void CShotgun::PrimaryAttack()
 	if (m_iClip != 0)
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 5.0;
 	else
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.75;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1;
 	m_fInSpecialReload = 0;
 }
 

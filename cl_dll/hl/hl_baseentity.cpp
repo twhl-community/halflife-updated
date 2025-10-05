@@ -77,6 +77,10 @@ void ClientPrint(entvars_t* client, int msg_dest, const char* msg_name, const ch
 bool CBaseToggle::Restore(class CRestore&) { return true; }
 bool CBaseToggle::Save(class CSave&) { return true; }
 bool CBaseToggle::KeyValue(struct KeyValueData_s*) { return false; }
+void CBaseToggle::PlaySentence(const char* pszSentence, float duration, float volume, float attenuation) {}
+void CBaseToggle::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation) {}
+void CBaseToggle::PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener) {}
+void CBaseToggle::SentenceStop() {}
 
 // CGrenade Stubs
 void CGrenade::BounceSound() {}
@@ -196,9 +200,6 @@ bool CBaseMonster::FindLateralCover(const Vector& vecThreat, const Vector& vecVi
 Vector CBaseMonster::ShootAtEnemy(const Vector& shootOrigin) { return g_vecZero; }
 bool CBaseMonster::FacingIdeal() { return false; }
 bool CBaseMonster::FCanActiveIdle() { return false; }
-void CBaseMonster::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation) {}
-void CBaseMonster::PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener) {}
-void CBaseMonster::SentenceStop() {}
 void CBaseMonster::CorpseFallThink() {}
 void CBaseMonster::MonsterInitDead() {}
 bool CBaseMonster::BBoxFlat() { return true; }
@@ -321,8 +322,6 @@ void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer) {}
 bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal) { return false; }
 void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer) {}
 bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer) { return false; }
-bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry) { return true; }
-bool CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax) { return true; }
 bool CBasePlayerWeapon::IsUseable() { return true; }
 int CBasePlayerWeapon::PrimaryAmmoIndex() { return m_iPrimaryAmmoType; }
 int CBasePlayerWeapon::SecondaryAmmoIndex() { return m_iSecondaryAmmoType; }

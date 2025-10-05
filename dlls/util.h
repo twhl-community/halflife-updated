@@ -369,7 +369,7 @@ extern void UTIL_LogPrintf(const char* fmt, ...);
 // Sorta like FInViewCone, but for nonmonsters.
 extern float UTIL_DotPoints(const Vector& vecSrc, const Vector& vecCheck, const Vector& vecDir);
 
-extern void UTIL_StripToken(const char* pKey, char* pDest); // for redundant keynames
+extern void UTIL_StripToken(const char* pKey, char* pDest, int nLen); // for redundant keynames
 
 // Misc functions
 extern void SetMovedir(entvars_t* pev);
@@ -477,7 +477,7 @@ inline DLL_GLOBAL int g_Language;
 
 // sentence groups
 #define CBSENTENCENAME_MAX 16
-#define CVOXFILESENTENCEMAX 1536 // max number of sentences in game. NOTE: this must match \
+#define CVOXFILESENTENCEMAX 2048 // max number of sentences in game. NOTE: this must match \
 								 // CVOXFILESENTENCEMAX in engine\sound.h!!!
 
 extern char gszallsentencenames[CVOXFILESENTENCEMAX][CBSENTENCENAME_MAX];

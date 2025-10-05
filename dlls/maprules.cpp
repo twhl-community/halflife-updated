@@ -109,6 +109,7 @@ class CRuleBrushEntity : public CRuleEntity
 {
 public:
 	void Spawn() override;
+	int ObjectCaps() override { return CRuleEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 private:
 };
@@ -172,7 +173,7 @@ void CGameScore::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE use
 		return;
 
 	// Only players can use this
-	if (pActivator->IsPlayer())
+	if (pActivator && pActivator->IsPlayer())
 	{
 		if (AwardToTeam())
 		{
@@ -772,12 +773,25 @@ public:
 
 	inline bool UseOnly() { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) != 0; }
 
+	bool Save(CSave& save) override;
+	bool Restore(CRestore& restore) override;
+
+	static TYPEDESCRIPTION m_SaveData[];
+
 private:
 	void EquipPlayer(CBaseEntity* pPlayer);
 
 	string_t m_weaponNames[MAX_EQUIP];
 	int m_weaponCount[MAX_EQUIP];
 };
+
+TYPEDESCRIPTION CGamePlayerEquip::m_SaveData[] =
+	{
+		DEFINE_ARRAY(CGamePlayerEquip, m_weaponNames, FIELD_STRING, MAX_EQUIP),
+		DEFINE_ARRAY(CGamePlayerEquip, m_weaponCount, FIELD_INTEGER, MAX_EQUIP),
+};
+
+IMPLEMENT_SAVERESTORE(CGamePlayerEquip, CRulePointEntity);
 
 LINK_ENTITY_TO_CLASS(game_player_equip, CGamePlayerEquip);
 
@@ -795,7 +809,7 @@ bool CGamePlayerEquip::KeyValue(KeyValueData* pkvd)
 		{
 			char tmp[128];
 
-			UTIL_StripToken(pkvd->szKeyName, tmp);
+			UTIL_StripToken(pkvd->szKeyName, tmp, sizeof(tmp));
 
 			m_weaponNames[i] = ALLOC_STRING(tmp);
 			m_weaponCount[i] = atoi(pkvd->szValue);
@@ -821,15 +835,12 @@ void CGamePlayerEquip::Touch(CBaseEntity* pOther)
 
 void CGamePlayerEquip::EquipPlayer(CBaseEntity* pEntity)
 {
-	CBasePlayer* pPlayer = NULL;
-
-	if (pEntity->IsPlayer())
+	if (!pEntity || !pEntity->IsPlayer())
 	{
-		pPlayer = (CBasePlayer*)pEntity;
+		return;
 	}
 
-	if (!pPlayer)
-		return;
+	CBasePlayer* pPlayer = (CBasePlayer*)pEntity;
 
 	for (int i = 0; i < MAX_EQUIP; i++)
 	{

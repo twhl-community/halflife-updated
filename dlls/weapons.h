@@ -80,7 +80,7 @@ public:
 #define RPG_WEIGHT 20
 #define GAUSS_WEIGHT 20
 #define EGON_WEIGHT 20
-#define HORNETGUN_WEIGHT 10
+#define HORNETGUN_WEIGHT 15
 #define HANDGRENADE_WEIGHT 5
 #define SNARK_WEIGHT 5
 #define SATCHEL_WEIGHT -10
@@ -172,6 +172,7 @@ typedef enum
 #define ITEM_FLAG_NOAUTOSWITCHEMPTY 4
 #define ITEM_FLAG_LIMITINWORLD 8
 #define ITEM_FLAG_EXHAUSTIBLE 16 // A player can totally exhaust their ammo supply and lose this weapon
+#define ITEM_FLAG_NOAUTOSWITCHTO 32
 
 #define WEAPON_IS_ONTARGET 0x40
 
@@ -303,7 +304,7 @@ public:
 	virtual bool ExtractClipAmmo(CBasePlayerWeapon* pWeapon); // { return true; }			// Return true if you can add ammo to yourself when picked up
 
 	// generic "shared" ammo handlers
-	bool AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry);
+	bool AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, char* szName, int iMaxClip, int iMaxCarry);
 	bool AddSecondaryAmmo(int iCount, char* szName, int iMaxCarry);
 
 	void UpdateItemInfo() override {} // updates HUD state
@@ -831,9 +832,11 @@ public:
 	void EXPORT RocketTouch(CBaseEntity* pOther);
 	static CRpgRocket* CreateRpgRocket(Vector vecOrigin, Vector vecAngles, CBaseEntity* pOwner, CRpg* pLauncher);
 
+	CRpg* GetLauncher();
+
 	int m_iTrail;
 	float m_flIgniteTime;
-	EHANDLE m_pLauncher; // handle back to the launcher that fired me.
+	EHANDLE m_hLauncher; // handle back to the launcher that fired me.
 };
 
 #define GAUSS_PRIMARY_CHARGE_VOLUME 256 // how loud gauss is while charging
@@ -972,6 +975,7 @@ public:
 	void Fire(const Vector& vecOrigSrc, const Vector& vecDir);
 
 	bool HasAmmo();
+	bool CanHolster();
 
 	void UseAmmo(int count);
 
@@ -1012,6 +1016,12 @@ enum hgun_e
 class CHgun : public CBasePlayerWeapon
 {
 public:
+#ifndef CLIENT_DLL
+	bool Save(CSave& save) override;
+	bool Restore(CRestore& restore) override;
+	static TYPEDESCRIPTION m_SaveData[];
+#endif
+
 	void Spawn() override;
 	void Precache() override;
 	int iItemSlot() override { return 4; }
@@ -1121,6 +1131,7 @@ public:
 	void Holster() override;
 	void WeaponIdle() override;
 	void Throw();
+	void Detonate();
 
 	bool UseDecrement() override
 	{

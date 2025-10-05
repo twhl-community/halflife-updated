@@ -71,13 +71,14 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc16\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetFileName)""
-cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""</Command>
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delta.lst""</Command>
       <Message>Installing client files</Message>
     </PostBuildEvent>
     <PostBuildEvent />
@@ -103,13 +104,14 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).p
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc16\vgui.lib;wsock32.lib;..\..\lib\public\sdl2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
     </Link>
     <PostBuildEvent>
       <Command>cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetFileName)""
-cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""</Command>
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "cl_dlls" "$(TargetName).pdb""
+cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(SolutionDir)../../network" "" "delta.lst""</Command>
       <Message>Installing client files</Message>
     </PostBuildEvent>
     <PostBuildEvent />

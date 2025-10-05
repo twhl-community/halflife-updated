@@ -940,11 +940,15 @@ void CStudioModelRenderer::StudioSetupBones()
 
 		for (i = 0; i < m_pStudioHeader->numbones; i++)
 		{
-			if (0 == strcmp(pbones[i].name, "Bip01 Spine"))
+			auto bone = &pbones[i];
+
+			if (0 == strcmp(bone->name, "Bip01 Spine"))
 			{
 				copy = false;
 			}
-			else if (0 == strcmp(pbones[pbones[i].parent].name, "Bip01 Pelvis"))
+			else if (bone->parent >= 0 &&
+					 bone->parent < m_pStudioHeader->numbones &&
+					 0 == strcmp(pbones[bone->parent].name, "Bip01 Pelvis"))
 			{
 				copy = true;
 			}
@@ -959,13 +963,15 @@ void CStudioModelRenderer::StudioSetupBones()
 
 	for (i = 0; i < m_pStudioHeader->numbones; i++)
 	{
+		const int parent = pbones[i].parent;
+
 		QuaternionMatrix(q[i], bonematrix);
 
 		bonematrix[0][3] = pos[i][0];
 		bonematrix[1][3] = pos[i][1];
 		bonematrix[2][3] = pos[i][2];
 
-		if (pbones[i].parent == -1)
+		if (parent == -1)
 		{
 			if (0 != IEngineStudio.IsHardware())
 			{
@@ -984,10 +990,10 @@ void CStudioModelRenderer::StudioSetupBones()
 			// Apply client-side effects to the transformation matrix
 			StudioFxTransform(m_pCurrentEntity, (*m_pbonetransform)[i]);
 		}
-		else
+		else if (parent >= 0 && parent < m_pStudioHeader->numbones)
 		{
-			ConcatTransforms((*m_pbonetransform)[pbones[i].parent], bonematrix, (*m_pbonetransform)[i]);
-			ConcatTransforms((*m_plighttransform)[pbones[i].parent], bonematrix, (*m_plighttransform)[i]);
+			ConcatTransforms((*m_pbonetransform)[parent], bonematrix, (*m_pbonetransform)[i]);
+			ConcatTransforms((*m_plighttransform)[parent], bonematrix, (*m_plighttransform)[i]);
 		}
 	}
 }

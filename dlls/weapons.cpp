@@ -35,6 +35,8 @@
 
 #define TRACER_FREQ 4 // Tracers fire every fourth bullet
 
+extern bool IsBustingGame();
+extern bool IsPlayerBusting(CBaseEntity* pPlayer);
 
 //=========================================================
 // MaxAmmoCarry - pass in a name and this function will tell
@@ -444,6 +446,19 @@ void CBasePlayerItem::FallThink()
 
 		Materialize();
 	}
+	else if (m_pPlayer != NULL)
+	{
+		SetThink(NULL);
+	}
+
+	// This weapon is an egon, it has no owner and we're in busting mode, so just remove it when it hits the ground
+	if (IsBustingGame() && FNullEnt(pev->owner))
+	{
+		if (!strcmp("weapon_egon", STRING(pev->classname)))
+		{
+			UTIL_Remove(this);
+		}
+	}
 }
 
 //=========================================================
@@ -480,7 +495,7 @@ void CBasePlayerItem::AttemptToMaterialize()
 		return;
 	}
 
-	pev->nextthink = gpGlobals->time + time;
+	pev->nextthink = time;
 }
 
 //=========================================================
@@ -534,6 +549,9 @@ void CBasePlayerItem::DefaultTouch(CBaseEntity* pOther)
 {
 	// if it's not a player, ignore
 	if (!pOther->IsPlayer())
+		return;
+
+	if (IsPlayerBusting(pOther))
 		return;
 
 	CBasePlayer* pPlayer = (CBasePlayer*)pOther;
@@ -604,6 +622,7 @@ void CBasePlayerItem::AttachToPlayer(CBasePlayer* pPlayer)
 	pev->owner = pPlayer->edict();
 	pev->nextthink = gpGlobals->time + .1;
 	SetTouch(NULL);
+	SetThink(NULL); // Clear FallThink function so it can't run while attached to player.
 }
 
 // CALLED THROUGH the newly-touched weapon's instance. The existing player weapon is pOriginal
@@ -717,7 +736,7 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 	MESSAGE_END();
 }
 
-bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, int iMaxCarry)
+bool CBasePlayerWeapon::AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, char* szName, int iMaxClip, int iMaxCarry)
 {
 	int iIdAmmo;
 
@@ -743,7 +762,7 @@ bool CBasePlayerWeapon::AddPrimaryAmmo(int iCount, char* szName, int iMaxClip, i
 	if (iIdAmmo > 0)
 	{
 		m_iPrimaryAmmoType = iIdAmmo;
-		if (m_pPlayer->HasPlayerItem(this))
+		if (this != origin)
 		{
 			// play the "got ammo" sound only if we gave some ammo to a player that already had this gun.
 			// if the player is just getting this gun for the first time, DefaultTouch will play the "picked up gun" sound for us.
@@ -810,7 +829,7 @@ bool CBasePlayerWeapon::IsUseable()
 	}
 
 	// clip is empty (or nonexistant) and the player has no more ammo of this type.
-	return false;
+	return CanDeploy();
 }
 
 bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
@@ -944,7 +963,7 @@ bool CBasePlayerWeapon::ExtractAmmo(CBasePlayerWeapon* pWeapon)
 	{
 		// blindly call with m_iDefaultAmmo. It's either going to be a value or zero. If it is zero,
 		// we only get the ammo in the weapon's clip, which is what we want.
-		iReturn = pWeapon->AddPrimaryAmmo(m_iDefaultAmmo, (char*)pszAmmo1(), iMaxClip(), iMaxAmmo1());
+		iReturn = pWeapon->AddPrimaryAmmo(this, m_iDefaultAmmo, (char*)pszAmmo1(), iMaxClip(), iMaxAmmo1());
 		m_iDefaultAmmo = 0;
 	}
 
@@ -1012,7 +1031,7 @@ void CBasePlayerWeapon::DoRetireWeapon()
 //=========================================================================
 float CBasePlayerWeapon::GetNextAttackDelay(float delay)
 {
-	if (m_flLastFireTime == 0 || m_flNextPrimaryAttack <= -1.1)
+	if (m_flLastFireTime == 0 || m_flNextPrimaryAttack == -1)
 	{
 		// At this point, we are assuming that the client has stopped firing
 		// and we are going to reset our book keeping variables.
@@ -1392,7 +1411,7 @@ IMPLEMENT_SAVERESTORE(CRpg, CBasePlayerWeapon);
 TYPEDESCRIPTION CRpgRocket::m_SaveData[] =
 	{
 		DEFINE_FIELD(CRpgRocket, m_flIgniteTime, FIELD_TIME),
-		DEFINE_FIELD(CRpgRocket, m_pLauncher, FIELD_EHANDLE),
+		DEFINE_FIELD(CRpgRocket, m_hLauncher, FIELD_EHANDLE),
 };
 IMPLEMENT_SAVERESTORE(CRpgRocket, CGrenade);
 
@@ -1428,6 +1447,12 @@ TYPEDESCRIPTION CEgon::m_SaveData[] =
 		DEFINE_FIELD(CEgon, m_flAmmoUseTime, FIELD_TIME),
 };
 IMPLEMENT_SAVERESTORE(CEgon, CBasePlayerWeapon);
+
+TYPEDESCRIPTION CHgun::m_SaveData[] =
+	{
+		DEFINE_FIELD(CHgun, m_flRechargeTime, FIELD_TIME),
+};
+IMPLEMENT_SAVERESTORE(CHgun, CBasePlayerWeapon);
 
 TYPEDESCRIPTION CSatchel::m_SaveData[] =
 	{

@@ -209,7 +209,8 @@ void UTIL_StringToVector(float* pVector, const char* pString)
 	char *pstr, *pfront, tempString[128];
 	int j;
 
-	strcpy(tempString, pString);
+	strncpy(tempString, pString, sizeof(tempString));
+	tempString[sizeof(tempString) - 1] = '\0';
 	pstr = pfront = tempString;
 
 	for (j = 0; j < 3; j++)
@@ -651,10 +652,10 @@ bool CHudSpectator::Draw(float flTime)
 		// check if name would be in inset window
 		if (m_pip->value != INSET_OFF)
 		{
-			if (m_vPlayerPos[i][0] > XRES(m_OverviewData.insetWindowX) &&
-				m_vPlayerPos[i][1] > YRES(m_OverviewData.insetWindowY) &&
-				m_vPlayerPos[i][0] < XRES(m_OverviewData.insetWindowX + m_OverviewData.insetWindowWidth) &&
-				m_vPlayerPos[i][1] < YRES(m_OverviewData.insetWindowY + m_OverviewData.insetWindowHeight))
+			if (m_vPlayerPos[i][0] > XRES_HD(m_OverviewData.insetWindowX) &&
+				m_vPlayerPos[i][1] > YRES_HD(m_OverviewData.insetWindowY) &&
+				m_vPlayerPos[i][0] < XRES_HD(m_OverviewData.insetWindowX + m_OverviewData.insetWindowWidth) &&
+				m_vPlayerPos[i][1] < YRES_HD(m_OverviewData.insetWindowY + m_OverviewData.insetWindowHeight))
 				continue;
 		}
 
@@ -806,7 +807,7 @@ void CHudSpectator::DirectorMessage(int iSize, void* pbuf)
 		break;
 
 	case DRC_CMD_STUFFTEXT:
-		gEngfuncs.pfnFilteredClientCmd(READ_STRING());
+		EngineFilteredClientCmd(READ_STRING());
 		break;
 
 	case DRC_CMD_CAMPATH:

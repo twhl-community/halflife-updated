@@ -18,9 +18,9 @@ You will need to install the following dependencies before you can install the m
 1. Install the game you are downloading the updated mod of and run it once. Make sure to start a new game to ensure that all of the game assets have been downloaded and installed. The original game assets are required by the mods, and the singleplayer maps will be copied, converted and updated on installation.
 
 2. Download the latest version from the Releases page:
-* [Half-Life Updated](https://github.com/SamVanheer/halflife-updated/releases)
-* [Half-Life: Opposing Force Updated](https://github.com/SamVanheer/halflife-op4-updated/releases)
-* [Half-Life: Blue Shift Updated](https://github.com/SamVanheer/halflife-bs-updated/releases)
+* [Half-Life Updated](https://github.com/twhl-community/halflife-updated/releases)
+* [Half-Life: Opposing Force Updated](https://github.com/twhl-community/halflife-op4-updated/releases)
+* [Half-Life: Blue Shift Updated](https://github.com/twhl-community/halflife-bs-updated/releases)
 
 For the instructions below, replace `mod_name` and `original_game_name` with the following mod directory name and game name depending on which mod you are installing:
 | Mod | Mod directory name | Original game name |
@@ -43,7 +43,6 @@ path\to\Steam\steamapps\common\Half-Life>dotnet script halflife_updated/scripts/
 Installing content to mod directory "path\to\Steam\steamapps\common\Half-Life\halflife_updated".
 Installing Half-Life content...
 Copying maps from "path\to\Steam\steamapps\common\Half-Life\valve\maps" to "path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps"
-Node graph files in destination for maps being copied will be deleted.
 Copying map "c0a0.bsp"...
 Copying map "c0a0a.bsp"...
 Copying map "c0a0b.bsp"...
@@ -149,6 +148,192 @@ Copying map "t0a0c.bsp"...
 Copying map "t0a0d.bsp"...
 Copied 103 maps.
 Finished installing Half-Life content.
+Updating last modified time for node graphs
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c0a0e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a0e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a1f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a2d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a3d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4i.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4i.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4j.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4j.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4k.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c1a4k.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a1b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2b1.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2b1.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2b2.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2b2.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2g.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2g.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2h.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a2h.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a3d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4g.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a4g.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5g.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5g.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5w.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c2a5w.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a1b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2f.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c3a2f.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1c.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1c.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1d.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1e.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a1e.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2a.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2a.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2b.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a2b.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a3.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\c4a3.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\datacore.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\datacore.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\lambda_bunker.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\lambda_bunker.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\subtransit.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\subtransit.nrp
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\t0a0d.nod
+Updating path\to\Steam\steamapps\common\Half-Life\halflife_updated\maps\graphs\t0a0d.nrp
+Finishing updating node graphs
 ```
 </details>
 

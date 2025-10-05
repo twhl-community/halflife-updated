@@ -403,11 +403,11 @@ void CTalkMonster::StartTask(Task_t* pTask)
 
 			if (yaw < 0)
 			{
-				pev->ideal_yaw = V_min(yaw + 45, 0) + pev->angles.y;
+				pev->ideal_yaw = V_min(yaw + 45.0f, 0.0f) + pev->angles.y;
 			}
 			else
 			{
-				pev->ideal_yaw = V_max(yaw - 45, 0) + pev->angles.y;
+				pev->ideal_yaw = V_max(yaw - 45.0f, 0.0f) + pev->angles.y;
 			}
 		}
 		TaskComplete();
@@ -867,8 +867,12 @@ void CTalkMonster::Touch(CBaseEntity* pOther)
 		float speed = fabs(pOther->pev->velocity.x) + fabs(pOther->pev->velocity.y);
 		if (speed > 50)
 		{
-			SetConditions(bits_COND_CLIENT_PUSH);
-			MakeIdealYaw(pOther->pev->origin);
+			// From https://github.com/FreeSlave/halflife-updated/wiki/Fix-potential-incorrect-facing-in-scripted-sequence
+			if (m_pSchedule != NULL && (m_pSchedule->iInterruptMask & bits_COND_CLIENT_PUSH) != 0)
+			{
+				SetConditions(bits_COND_CLIENT_PUSH);
+				MakeIdealYaw(pOther->pev->origin);
+			}
 		}
 	}
 }
@@ -1174,7 +1178,7 @@ bool CTalkMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, f
 		{
 			CBaseEntity* pFriend = FindNearestFriend(false);
 
-			if (pFriend && pFriend->IsAlive())
+			if (pFriend && pFriend->IsAlive() && pFriend->pev->deadflag == DEAD_NO)
 			{
 				// only if not dead or dying!
 				CTalkMonster* pTalkMonster = (CTalkMonster*)pFriend;
@@ -1375,9 +1379,12 @@ void CTalkMonster::StartFollowing(CBaseEntity* pLeader)
 
 bool CTalkMonster::CanFollow()
 {
-	if (m_MonsterState == MONSTERSTATE_SCRIPT)
+	if (m_MonsterState == MONSTERSTATE_SCRIPT || m_IdealMonsterState == MONSTERSTATE_SCRIPT)
 	{
-		if (!m_pCine->CanInterrupt())
+		// It's possible for m_MonsterState to still be MONSTERSTATE_SCRIPT when the script has already ended.
+		// We'll treat a null pointer as an uninterruptable script and wait for the NPC to change states
+		// before allowing players to make them follow them again.
+		if (!m_pCine || !m_pCine->CanInterrupt())
 			return false;
 	}
 

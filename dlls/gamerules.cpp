@@ -53,6 +53,11 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 				continue;
 			}
 
+			if ((pCheck->iFlags() & ITEM_FLAG_NOAUTOSWITCHTO) != 0)
+			{
+				continue;
+			}
+
 			if (pCheck->iWeight() > -1 && pCheck->iWeight() == currentWeight)
 			{
 				// this weapon is from the same category.
@@ -373,7 +378,12 @@ CGameRules* InstallGameRules()
 	SERVER_COMMAND("exec game.cfg\n");
 	SERVER_EXECUTE();
 
-	if (0 == gpGlobals->deathmatch)
+	if (1 == sv_busters.value)
+	{
+		g_teamplay = false;
+		return new CMultiplayBusters;
+	}
+	else if (0 == gpGlobals->deathmatch)
 	{
 		// generic half-life
 		g_teamplay = false;

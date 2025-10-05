@@ -214,6 +214,7 @@ bool CHudHealth::Draw(float flTime)
 		SPR_DrawAdditive(0, x, y, &gHUD.GetSpriteRect(m_HUD_cross));
 
 		x = CrossWidth + HealthWidth / 2;
+		y += (int)(gHUD.m_iFontHeight * 0.2f);
 
 		//Reserve space for 3 digits by default, but allow it to expand
 		x += gHUD.GetHudNumberWidth(m_iHealth, 3, DHN_DRAWZERO);
@@ -310,14 +311,14 @@ bool CHudHealth::DrawPain(float flTime)
 	if (m_fAttackFront > 0.4)
 	{
 		GetPainColor(r, g, b);
-		shade = a * V_max(m_fAttackFront, 0.5);
+		shade = a * V_max(m_fAttackFront, 0.5f);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
 
 		x = ScreenWidth / 2 - SPR_Width(m_hSprite, 0) / 2;
 		y = ScreenHeight / 2 - SPR_Height(m_hSprite, 0) * 3;
 		SPR_DrawAdditive(0, x, y, NULL);
-		m_fAttackFront = V_max(0, m_fAttackFront - fFade);
+		m_fAttackFront = V_max(0.0f, m_fAttackFront - fFade);
 	}
 	else
 		m_fAttackFront = 0;
@@ -325,14 +326,14 @@ bool CHudHealth::DrawPain(float flTime)
 	if (m_fAttackRight > 0.4)
 	{
 		GetPainColor(r, g, b);
-		shade = a * V_max(m_fAttackRight, 0.5);
+		shade = a * V_max(m_fAttackRight, 0.5f);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
 
 		x = ScreenWidth / 2 + SPR_Width(m_hSprite, 1) * 2;
 		y = ScreenHeight / 2 - SPR_Height(m_hSprite, 1) / 2;
 		SPR_DrawAdditive(1, x, y, NULL);
-		m_fAttackRight = V_max(0, m_fAttackRight - fFade);
+		m_fAttackRight = V_max(0.0f, m_fAttackRight - fFade);
 	}
 	else
 		m_fAttackRight = 0;
@@ -340,14 +341,14 @@ bool CHudHealth::DrawPain(float flTime)
 	if (m_fAttackRear > 0.4)
 	{
 		GetPainColor(r, g, b);
-		shade = a * V_max(m_fAttackRear, 0.5);
+		shade = a * V_max(m_fAttackRear, 0.5f);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
 
 		x = ScreenWidth / 2 - SPR_Width(m_hSprite, 2) / 2;
 		y = ScreenHeight / 2 + SPR_Height(m_hSprite, 2) * 2;
 		SPR_DrawAdditive(2, x, y, NULL);
-		m_fAttackRear = V_max(0, m_fAttackRear - fFade);
+		m_fAttackRear = V_max(0.0f, m_fAttackRear - fFade);
 	}
 	else
 		m_fAttackRear = 0;
@@ -355,7 +356,7 @@ bool CHudHealth::DrawPain(float flTime)
 	if (m_fAttackLeft > 0.4)
 	{
 		GetPainColor(r, g, b);
-		shade = a * V_max(m_fAttackLeft, 0.5);
+		shade = a * V_max(m_fAttackLeft, 0.5f);
 		ScaleColors(r, g, b, shade);
 		SPR_Set(m_hSprite, r, g, b);
 
@@ -363,7 +364,7 @@ bool CHudHealth::DrawPain(float flTime)
 		y = ScreenHeight / 2 - SPR_Height(m_hSprite, 3) / 2;
 		SPR_DrawAdditive(3, x, y, NULL);
 
-		m_fAttackLeft = V_max(0, m_fAttackLeft - fFade);
+		m_fAttackLeft = V_max(0.0f, m_fAttackLeft - fFade);
 	}
 	else
 		m_fAttackLeft = 0;

@@ -11,7 +11,7 @@ jobs:
         compiler: [g++, clang++]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       
       - name: Install G++ Multilib, Clang++ & OpenGL library
         run: |
@@ -24,7 +24,7 @@ jobs:
           make COMPILER=${{ matrix.compiler }} CFG=release -j2
       
       - name: Deploy
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v4
         with:
           name: Linux-x86-${{ matrix.compiler }}
           path: |
@@ -38,10 +38,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
       
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x86
       
@@ -49,7 +49,7 @@ jobs:
         run: msbuild projects/vs2019/projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
       
       - name: Deploy
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v4
         with:
           name: Win32
           path: |

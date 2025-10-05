@@ -92,10 +92,10 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 {
 	if (m_iClip <= 0)
 	{
-		if (m_fFireOnEmpty)
+		//if (m_fFireOnEmpty)
 		{
 			PlayEmptySound();
-			m_flNextPrimaryAttack = GetNextAttackDelay(0.2);
+			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.2);
 		}
 
 		return;
@@ -161,13 +161,7 @@ void CGlock::Reload()
 	if (m_pPlayer->ammo_9mm <= 0)
 		return;
 
-	bool iResult;
-
-	if (m_iClip == 0)
-		iResult = DefaultReload(17, GLOCK_RELOAD, 1.5);
-	else
-		iResult = DefaultReload(17, GLOCK_RELOAD_NOT_EMPTY, 1.5);
-
+	bool iResult = DefaultReload(17, m_iClip > 0 ? GLOCK_RELOAD_NOT_EMPTY : GLOCK_RELOAD, 1.5);
 	if (iResult)
 	{
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);

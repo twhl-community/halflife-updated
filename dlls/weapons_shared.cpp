@@ -170,18 +170,18 @@ void CBasePlayerWeapon::ItemPostFrame()
 
 		m_fFireOnEmpty = false;
 
-#ifndef CLIENT_DLL
 		if (!IsUseable() && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))
 		{
+#ifndef CLIENT_DLL
 			// weapon isn't useable, switch.
 			if ((iFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY) == 0 && g_pGameRules->GetNextBestWeapon(m_pPlayer, this))
 			{
 				m_flNextPrimaryAttack = (UseDecrement() ? 0.0 : gpGlobals->time) + 0.3;
 				return;
 			}
+#endif
 		}
 		else
-#endif
 		{
 			// weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
 			if (m_iClip == 0 && (iFlags() & ITEM_FLAG_NOAUTORELOAD) == 0 && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))

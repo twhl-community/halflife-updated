@@ -24,6 +24,13 @@
 #include "gamerules.h"
 #include "UserMessages.h"
 
+#ifdef CLIENT_DLL
+#include "hud.h"
+#include "com_weapons.h"
+#else
+extern bool IsBustingGame();
+#endif
+
 #define EGON_SWITCH_NARROW_TIME 0.75 // Time it takes to switch fire modes
 #define EGON_SWITCH_WIDE_TIME 1.5
 
@@ -119,6 +126,11 @@ bool CEgon::HasAmmo()
 
 void CEgon::UseAmmo(int count)
 {
+#ifndef CLIENT_DLL
+	if (IsBustingGame())
+		return;
+#endif
+
 	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] >= count)
 		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= count;
 	else
@@ -402,7 +414,9 @@ void CEgon::CreateEffect()
 	m_pSprite->pev->scale = 1.0;
 	m_pSprite->SetTransparency(kRenderGlow, 255, 255, 255, 255, kRenderFxNoDissipation);
 	m_pSprite->pev->spawnflags |= SF_SPRITE_TEMPORARY;
-	m_pSprite->pev->flags |= FL_SKIPLOCALHOST;
+	// Josh: This sprite is not predicted on the client, so was missing
+	// for many years after it got broken in an update.
+	// m_pSprite->pev->flags |= FL_SKIPLOCALHOST;
 	m_pSprite->pev->owner = m_pPlayer->edict();
 
 	if (m_fireMode == FIRE_WIDE)
@@ -484,7 +498,17 @@ void CEgon::WeaponIdle()
 	m_deployed = true;
 }
 
+bool CEgon::CanHolster()
+{
+#ifndef CLIENT_DLL
+	if (IsBustingGame())
+	{
+		return false;
+	}
+#endif
 
+	return true;
+}
 
 void CEgon::EndAttack()
 {
@@ -497,6 +521,7 @@ void CEgon::EndAttack()
 		static_cast<int>(bMakeNoise), 0, 0, 0);
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
+
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = UTIL_WeaponTimeBase() + 0.5;
 
 	m_fireState = FIRE_OFF;

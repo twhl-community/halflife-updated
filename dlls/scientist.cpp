@@ -105,6 +105,8 @@ public:
 
 	void TalkInit();
 
+	char* GetScientistModel() const;
+
 	void Killed(entvars_t* pevAttacker, int iGib) override;
 
 	bool Save(CSave& save) override;
@@ -129,6 +131,17 @@ TYPEDESCRIPTION CScientist::m_SaveData[] =
 };
 
 IMPLEMENT_SAVERESTORE(CScientist, CTalkMonster);
+
+char* CScientist::GetScientistModel() const
+{
+	char* pszOverride = (char*)CVAR_GET_STRING("_sv_override_scientist_mdl");
+	if (pszOverride && strlen(pszOverride) > 5) // at least requires ".mdl"
+	{
+		return pszOverride;
+	}
+
+	return "models/scientist.mdl";
+}
 
 //=========================================================
 // AI Schedules Specific to this monster
@@ -461,14 +474,15 @@ void CScientist::StartTask(Task_t* pTask)
 	case TASK_SAY_FEAR:
 		// Marphy Fact FIles Fix - This speech check always fails during combat, so removing
 		//if ( FOkToSpeak() )
-		//{
-		Talk(2);
-		m_hTalkTarget = m_hEnemy;
-		if (m_hEnemy->IsPlayer())
-			PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
-		else
-			PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
-		//}
+		if (m_hEnemy)
+		{
+			Talk(2);
+			m_hTalkTarget = m_hEnemy;
+			if (m_hEnemy->IsPlayer())
+				PlaySentence("SC_PLFEAR", 5, VOL_NORM, ATTN_NORM);
+			else
+				PlaySentence("SC_FEAR", 5, VOL_NORM, ATTN_NORM);
+		}
 		TaskComplete();
 		break;
 
@@ -651,7 +665,7 @@ void CScientist::Spawn()
 
 	Precache();
 
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	SET_MODEL(ENT(pev), GetScientistModel());
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 
 	pev->solid = SOLID_SLIDEBOX;
@@ -682,7 +696,7 @@ void CScientist::Spawn()
 //=========================================================
 void CScientist::Precache()
 {
-	PRECACHE_MODEL("models/scientist.mdl");
+	PRECACHE_MODEL(GetScientistModel());
 	PRECACHE_SOUND("scientist/sci_pain1.wav");
 	PRECACHE_SOUND("scientist/sci_pain2.wav");
 	PRECACHE_SOUND("scientist/sci_pain3.wav");
@@ -1145,11 +1159,25 @@ public:
 	void Spawn() override;
 	int Classify() override { return CLASS_HUMAN_PASSIVE; }
 
+	// passed into Precache which is non-const
+	char* GetScientistModel() const;
+
 	bool KeyValue(KeyValueData* pkvd) override;
 	int m_iPose; // which sequence to display
 	static const char* m_szPoses[7];
 };
 const char* CDeadScientist::m_szPoses[] = {"lying_on_back", "lying_on_stomach", "dead_sitting", "dead_hang", "dead_table1", "dead_table2", "dead_table3"};
+
+char* CDeadScientist::GetScientistModel() const
+{
+	char* pszOverride = (char*)CVAR_GET_STRING("_sv_override_scientist_mdl");
+	if (pszOverride && strlen(pszOverride) > 5) // at least requires ".mdl"
+	{
+		return pszOverride;
+	}
+
+	return "models/scientist.mdl";
+}
 
 bool CDeadScientist::KeyValue(KeyValueData* pkvd)
 {
@@ -1168,8 +1196,8 @@ LINK_ENTITY_TO_CLASS(monster_scientist_dead, CDeadScientist);
 //
 void CDeadScientist::Spawn()
 {
-	PRECACHE_MODEL("models/scientist.mdl");
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	PRECACHE_MODEL(GetScientistModel());
+	SET_MODEL(ENT(pev), GetScientistModel());
 
 	pev->effects = 0;
 	pev->sequence = 0;
@@ -1250,8 +1278,8 @@ typedef enum
 //
 void CSittingScientist::Spawn()
 {
-	PRECACHE_MODEL("models/scientist.mdl");
-	SET_MODEL(ENT(pev), "models/scientist.mdl");
+	PRECACHE_MODEL(GetScientistModel());
+	SET_MODEL(ENT(pev), GetScientistModel());
 	Precache();
 	InitBoneControllers();
 

@@ -1,0 +1,22 @@
+# This script installs mod libraries to the HLDS directory if it has been specified.
+
+# Initialize variables defined by master CMakeLists file.
+set(MOD_NAME "@MOD_NAME@")
+set(HalfLife_HLDS_DIRECTORY "@HalfLife_HLDS_DIRECTORY@")
+
+# This variable is empty at execution time so copy the value at configure time.
+set(LIB_EXT @CMAKE_SHARED_LIBRARY_SUFFIX@)
+
+set(MOD_DIR ${HalfLife_HLDS_DIRECTORY}/${MOD_NAME})
+
+message(STATUS "Installing to dedicated server directory at ${MOD_DIR}")
+
+# These will copy every file in the cl_dlls and dlls directories, including anything not built by this project.
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_INSTALL_PREFIX}/cl_dlls" ${MOD_DIR}/cl_dlls)
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_INSTALL_PREFIX}/dlls" ${MOD_DIR}/dlls)
+
+# Add more commands here if you want to copy other files, or copy the entire mod directory
+# Prefer copy_if_different to avoid a lot of unnecessary copying
+
+# Copy delta.lst.
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_INSTALL_PREFIX}/delta.lst" ${MOD_DIR})

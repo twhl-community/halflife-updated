@@ -24,15 +24,54 @@
 */
 
 #include <cstddef>
+#include <ctime>
+#include <string>
 #include <vector>
 
 #include "Platform.h"
 #include "FileSystem.h"
 
+#ifdef WIN32
+constexpr char DefaultPathSeparatorChar = '\\';
+constexpr char AlternatePathSeparatorChar = '/';
+#else
+constexpr char DefaultPathSeparatorChar = '/';
+constexpr char AlternatePathSeparatorChar = '\\';
+#endif
+
 inline IFileSystem* g_pFileSystem = nullptr;
 
 bool FileSystem_LoadFileSystem();
 void FileSystem_FreeFileSystem();
+
+/**
+*	@brief Returns the mod directory name. Only valid to call after calling FileSystem_LoadFileSystem.
+*/
+const std::string& FileSystem_GetModDirectoryName();
+
+/**
+*	@brief Replaces occurrences of ::AlternatePathSeparatorChar with ::DefaultPathSeparatorChar.
+*/
+void FileSystem_FixSlashes(std::string& fileName);
+
+/**
+*	@brief Returns the last modification time of the given file.
+*	Filenames are relative to the game directory.
+*/
+time_t FileSystem_GetFileTime(const char* fileName);
+
+/**
+*	@brief Compares the file time of the given files located in the mod directory.
+*	@details Needed because IFileSystem::GetFileTime() does not provide a path ID parameter.
+*	@param filename1 First file to compare.
+*	@param filename2 Second file to compare.
+*	@param[out] iCompare Stores the result of the comparison.
+*		-@c 0 if equal
+*		-@c -1 if @p filename2 is newer than @p filename1
+*		-@c 1 if @p filename1 is newer than @p filename2
+*	@return @c true if filetimes were retrieved, false otherwise.
+*/
+bool FileSystem_CompareFileTime(const char* filename1, const char* filename2, int* iCompare);
 
 enum class FileContentFormat
 {
@@ -67,6 +106,12 @@ std::vector<std::byte> FileSystem_LoadFileIntoBuffer(const char* fileName, FileC
 *	@return True if the file was written, false if an error occurred.
 */
 bool FileSystem_WriteTextToFile(const char* fileName, const char* text, const char* pathID = nullptr);
+
+/**
+*	@brief Returns @c true if the current game directory is that of a Valve game.
+*	Any directory whose name starts with that of a Valve game's directory name is considered to be one, matching Steam's behavior.
+*/
+bool UTIL_IsValveGameDirectory();
 
 /**
 *	@brief Helper class to automatically close the file handle associated with a file.

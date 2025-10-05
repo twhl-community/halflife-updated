@@ -91,7 +91,11 @@ void CGrenade::Explode(TraceResult* pTrace, int bitsDamageType)
 
 	pev->owner = NULL; // can't traceline attack owner if this is set
 
-	RadiusDamage(pev, pevOwner, pev->dmg, CLASS_NONE, bitsDamageType);
+	// Counteract the + 1 in RadiusDamage.
+	Vector origin = pev->origin;
+	origin.z -= 1;
+
+	RadiusDamage(origin, pev, pevOwner, pev->dmg, CLASS_NONE, bitsDamageType);
 
 	if (RANDOM_FLOAT(0, 1) < 0.5)
 	{
@@ -268,6 +272,7 @@ void CGrenade::BounceTouch(CBaseEntity* pOther)
 		pev->velocity = pev->velocity * 0.8;
 
 		pev->sequence = RANDOM_LONG(1, 1);
+		ResetSequenceInfo();
 	}
 	else
 	{
@@ -278,7 +283,10 @@ void CGrenade::BounceTouch(CBaseEntity* pOther)
 	if (pev->framerate > 1.0)
 		pev->framerate = 1;
 	else if (pev->framerate < 0.5)
+	{
 		pev->framerate = 0;
+		pev->frame = 0;
+	}
 }
 
 
@@ -417,8 +425,10 @@ CGrenade* CGrenade::ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecV
 		pGrenade->pev->velocity = Vector(0, 0, 0);
 	}
 
+	SET_MODEL(ENT(pGrenade->pev), "models/w_grenade.mdl");
 	pGrenade->pev->sequence = RANDOM_LONG(3, 6);
 	pGrenade->pev->framerate = 1.0;
+	pGrenade->ResetSequenceInfo();
 
 	// Tumble through the air
 	// pGrenade->pev->avelocity.x = -400;
@@ -426,7 +436,6 @@ CGrenade* CGrenade::ShootTimed(entvars_t* pevOwner, Vector vecStart, Vector vecV
 	pGrenade->pev->gravity = 0.5;
 	pGrenade->pev->friction = 0.8;
 
-	SET_MODEL(ENT(pGrenade->pev), "models/w_grenade.mdl");
 	pGrenade->pev->dmg = 100;
 
 	return pGrenade;

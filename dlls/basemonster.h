@@ -193,16 +193,8 @@ public:
 	virtual void ScheduleChange() {}
 	// virtual bool CanPlaySequence() { return ((m_pCine == NULL) && (m_MonsterState == MONSTERSTATE_NONE || m_MonsterState == MONSTERSTATE_IDLE || m_IdealMonsterState == MONSTERSTATE_IDLE)); }
 	virtual bool CanPlaySequence(bool fDisregardState, int interruptLevel);
-	virtual bool CanPlaySentence(bool fDisregardState) { return IsAlive() && (m_MonsterState == MONSTERSTATE_SCRIPT || pev->deadflag == DEAD_NO); }
-	void PlaySentence(const char* pszSentence, float duration, float volume, float attenuation);
-
-protected:
-	virtual void PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation);
-
-public:
-	virtual void PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener);
-
-	virtual void SentenceStop();
+	virtual bool CanPlaySentence(bool fDisregardState) { return IsAllowedToSpeak(); }
+	virtual bool IsAllowedToSpeak() { return IsAlive() && (m_MonsterState == MONSTERSTATE_SCRIPT || pev->deadflag == DEAD_NO); }
 
 	Task_t* GetTask();
 	virtual MONSTERSTATE GetIdealState();

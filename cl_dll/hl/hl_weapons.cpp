@@ -659,6 +659,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	player.m_afButtonPressed = buttonsChanged & cmd->buttons;
 	// The ones not down are "released"
 	player.m_afButtonReleased = buttonsChanged & (~cmd->buttons);
+	player.pev->v_angle = cmd->viewangles;
+	player.pev->origin = from->client.origin;
 
 	// Set player variables that weapons code might check/alter
 	player.pev->button = cmd->buttons;
@@ -833,9 +835,9 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 			pto->m_fNextAimBonus = -1.0;
 		}
 
-		if (pto->m_flNextPrimaryAttack < -1.1)
+		if (pto->m_flNextPrimaryAttack < -1.0)
 		{
-			pto->m_flNextPrimaryAttack = -1.1;
+			pto->m_flNextPrimaryAttack = -1.0;
 		}
 
 		if (pto->m_flNextSecondaryAttack < -0.001)
@@ -926,4 +928,5 @@ void DLLEXPORT HUD_PostRunCmd(struct local_state_s* from, struct local_state_s* 
 
 	// All games can use FOV state
 	g_lastFOV = to->client.fov;
+	g_CurrentWeaponId = to->client.m_iId;
 }

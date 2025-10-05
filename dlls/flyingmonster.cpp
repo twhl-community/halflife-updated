@@ -84,12 +84,17 @@ void CFlyingMonster::Stop()
 }
 
 
-float CFlyingMonster::ChangeYaw(int speed)
+float CFlyingMonster::ChangeYaw(int yawSpeed)
 {
 	if (pev->movetype == MOVETYPE_FLY)
 	{
 		float diff = FlYawDiff();
 		float target = 0;
+
+		if (m_flLastZYawTime == 0.0f)
+		{
+			m_flLastZYawTime = gpGlobals->time - gpGlobals->frametime;
+		}
 
 		if (m_IdealActivity != GetStoppedActivity())
 		{
@@ -99,23 +104,17 @@ float CFlyingMonster::ChangeYaw(int speed)
 				target = -90;
 		}
 
-		if (m_flLastZYawTime == 0)
-		{
-			m_flLastZYawTime = gpGlobals->time - gpGlobals->frametime;
-		}
-
 		float delta = gpGlobals->time - m_flLastZYawTime;
-
 		m_flLastZYawTime = gpGlobals->time;
 
-		if (delta > 0.25)
-		{
-			delta = 0.25;
-		}
+		// Clamp delta like the engine does with frametime
+		if (delta > 0.25f)
+			delta = 0.25f;
 
-		pev->angles.z = UTIL_Approach(target, pev->angles.z, 220.0 * delta);
+		float speed = 220.0f * delta;
+		pev->angles.z = UTIL_Approach(target, pev->angles.z, 220.0 * speed);
 	}
-	return CBaseMonster::ChangeYaw(speed);
+	return CBaseMonster::ChangeYaw(yawSpeed);
 }
 
 

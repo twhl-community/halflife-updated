@@ -42,6 +42,7 @@ void Game_HookEvents()
 	gEngfuncs.pfnHookEvent("events/gauss.sc", EV_FireGauss);
 	gEngfuncs.pfnHookEvent("events/gaussspin.sc", EV_SpinGauss);
 	gEngfuncs.pfnHookEvent("events/train.sc", EV_TrainPitchAdjust);
+	gEngfuncs.pfnHookEvent("events/vehicle.sc", EV_VehiclePitchAdjust);
 	gEngfuncs.pfnHookEvent("events/crowbar.sc", EV_Crowbar);
 	gEngfuncs.pfnHookEvent("events/crossbow1.sc", EV_FireCrossbow);
 	gEngfuncs.pfnHookEvent("events/crossbow2.sc", EV_FireCrossbow2);

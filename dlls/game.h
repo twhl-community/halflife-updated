@@ -41,8 +41,13 @@ extern cvar_t allowmonsters;
 extern cvar_t allow_spectators;
 extern cvar_t mp_chattime;
 
+extern cvar_t sv_allowbunnyhopping;
+
+extern cvar_t sv_busters;
+
 // Engine Cvars
 inline cvar_t* g_psv_gravity;
 inline cvar_t* g_psv_aim;
+inline cvar_t* g_psv_allow_autoaim;
 inline cvar_t* g_footsteps;
 inline cvar_t* g_psv_cheats;

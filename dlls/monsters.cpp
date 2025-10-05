@@ -1980,7 +1980,7 @@ void CBaseMonster::MoveExecute(CBaseEntity* pTargetEnt, const Vector& vecDir, fl
 	while (flTotal > 0.001)
 	{
 		// don't walk more than 16 units or stairs stop working
-		flStep = V_min(16.0, flTotal);
+		flStep = V_min(16.0f, flTotal);
 		UTIL_MoveToOrigin(ENT(pev), m_Route[m_iRouteIndex].vecLocation, flStep, MOVE_NORMAL);
 		flTotal -= flStep;
 	}
@@ -2527,16 +2527,19 @@ float CBaseMonster::ChangeYaw(int yawSpeed)
 	ideal = pev->ideal_yaw;
 	if (current != ideal)
 	{
-		float delta = gpGlobals->time - m_flLastYawTime;
-
-		m_flLastYawTime = gpGlobals->time;
-
-		if (delta > 0.25)
+		if (m_flLastYawTime == 0.0f)
 		{
-			delta = 0.25;
+			m_flLastYawTime = gpGlobals->time - gpGlobals->frametime;
 		}
 
-		speed = yawSpeed * delta * 2;
+		float delta = gpGlobals->time - m_flLastYawTime;
+		m_flLastYawTime = gpGlobals->time;
+
+		// Clamp delta like the engine does with frametime
+		if (delta > 0.25)
+			delta = 0.25;
+
+		speed = (float)yawSpeed * delta * 2;
 		move = ideal - current;
 
 		if (ideal > current)
@@ -2889,7 +2892,7 @@ void CBaseMonster::ReportAIState()
 {
 	ALERT_TYPE level = at_console;
 
-	static const char* pStateNames[] = {"None", "Idle", "Combat", "Alert", "Hunt", "Prone", "Scripted", "Dead"};
+	static const char* pStateNames[] = {"None", "Idle", "Combat", "Alert", "Hunt", "Prone", "Scripted", "PlayDead", "Dead"};
 
 	ALERT(level, "%s: ", STRING(pev->classname));
 	if ((int)m_MonsterState < ARRAYSIZE(pStateNames))
@@ -3227,38 +3230,6 @@ bool CBaseMonster::FCanActiveIdle()
 	}
 	*/
 	return false;
-}
-
-
-void CBaseMonster::PlaySentence(const char* pszSentence, float duration, float volume, float attenuation)
-{
-	ASSERT(pszSentence != nullptr);
-
-	if (!pszSentence || !CanPlaySentence(true))
-	{
-		return;
-	}
-
-	PlaySentenceCore(pszSentence, duration, volume, attenuation);
-}
-
-void CBaseMonster::PlaySentenceCore(const char* pszSentence, float duration, float volume, float attenuation)
-{
-	if (pszSentence[0] == '!')
-		EMIT_SOUND_DYN(edict(), CHAN_VOICE, pszSentence, volume, attenuation, 0, PITCH_NORM);
-	else
-		SENTENCEG_PlayRndSz(edict(), pszSentence, volume, attenuation, 0, PITCH_NORM);
-}
-
-void CBaseMonster::PlayScriptedSentence(const char* pszSentence, float duration, float volume, float attenuation, bool bConcurrent, CBaseEntity* pListener)
-{
-	PlaySentence(pszSentence, duration, volume, attenuation);
-}
-
-
-void CBaseMonster::SentenceStop()
-{
-	EMIT_SOUND(edict(), CHAN_VOICE, "common/null.wav", 1.0, ATTN_IDLE);
 }
 
 
