@@ -118,11 +118,6 @@ int __MsgFunc_SetFOV(const char* pszName, int iSize, void* pbuf)
 	return static_cast<int>(gHUD.MsgFunc_SetFOV(pszName, iSize, pbuf));
 }
 
-int __MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf)
-{
-	return static_cast<int>(gHUD.MsgFunc_Concuss(pszName, iSize, pbuf));
-}
-
 int __MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf)
 {
 	return static_cast<int>(gHUD.MsgFunc_Weapons(pszName, iSize, pbuf));
@@ -139,15 +134,6 @@ void __CmdFunc_OpenCommandMenu()
 	if (gViewPort)
 	{
 		gViewPort->ShowCommandMenu(gViewPort->m_StandardMenu);
-	}
-}
-
-// TFC "special" command
-void __CmdFunc_InputPlayerSpecial()
-{
-	if (gViewPort)
-	{
-		gViewPort->InputPlayerSpecial();
 	}
 }
 
@@ -182,20 +168,6 @@ int __MsgFunc_TeamNames(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
-int __MsgFunc_Feign(const char* pszName, int iSize, void* pbuf)
-{
-	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_Feign(pszName, iSize, pbuf));
-	return 0;
-}
-
-int __MsgFunc_Detpack(const char* pszName, int iSize, void* pbuf)
-{
-	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_Detpack(pszName, iSize, pbuf));
-	return 0;
-}
-
 int __MsgFunc_VGUIMenu(const char* pszName, int iSize, void* pbuf)
 {
 	if (gViewPort)
@@ -207,13 +179,6 @@ int __MsgFunc_MOTD(const char* pszName, int iSize, void* pbuf)
 {
 	if (gViewPort)
 		return static_cast<int>(gViewPort->MsgFunc_MOTD(pszName, iSize, pbuf));
-	return 0;
-}
-
-int __MsgFunc_BuildSt(const char* pszName, int iSize, void* pbuf)
-{
-	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_BuildSt(pszName, iSize, pbuf));
 	return 0;
 }
 
@@ -259,20 +224,6 @@ int __MsgFunc_Spectator(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
-int __MsgFunc_SpecFade(const char* pszName, int iSize, void* pbuf)
-{
-	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_SpecFade(pszName, iSize, pbuf));
-	return 0;
-}
-
-int __MsgFunc_ResetFade(const char* pszName, int iSize, void* pbuf)
-{
-	if (gViewPort)
-		return static_cast<int>(gViewPort->MsgFunc_ResetFade(pszName, iSize, pbuf));
-	return 0;
-}
-
 int __MsgFunc_AllowSpec(const char* pszName, int iSize, void* pbuf)
 {
 	if (gViewPort)
@@ -289,21 +240,16 @@ void CHud::Init()
 	HOOK_MESSAGE(InitHUD);
 	HOOK_MESSAGE(ViewMode);
 	HOOK_MESSAGE(SetFOV);
-	HOOK_MESSAGE(Concuss);
 	HOOK_MESSAGE(Weapons);
 
 	// TFFree CommandMenu
 	HOOK_COMMAND("+commandmenu", OpenCommandMenu);
 	HOOK_COMMAND("-commandmenu", CloseCommandMenu);
 	HOOK_COMMAND("ForceCloseCommandMenu", ForceCloseCommandMenu);
-	HOOK_COMMAND("special", InputPlayerSpecial);
 
 	HOOK_MESSAGE(ValClass);
 	HOOK_MESSAGE(TeamNames);
-	HOOK_MESSAGE(Feign);
-	HOOK_MESSAGE(Detpack);
 	HOOK_MESSAGE(MOTD);
-	HOOK_MESSAGE(BuildSt);
 	HOOK_MESSAGE(RandomPC);
 	HOOK_MESSAGE(ServerName);
 	HOOK_MESSAGE(ScoreInfo);
@@ -313,15 +259,11 @@ void CHud::Init()
 	HOOK_MESSAGE(Spectator);
 	HOOK_MESSAGE(AllowSpec);
 
-	HOOK_MESSAGE(SpecFade);
-	HOOK_MESSAGE(ResetFade);
-
 	// VGUI Menus
 	HOOK_MESSAGE(VGUIMenu);
 
 	CVAR_CREATE("hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO); // controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE("hud_takesshots", "0", FCVAR_ARCHIVE);					   // controls whether or not to automatically take screenshots at the end of a round
-
 
 	m_iLogo = 0;
 	m_iFOV = 0;
