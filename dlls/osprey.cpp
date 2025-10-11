@@ -21,16 +21,6 @@
 #include "effects.h"
 #include "customentity.h"
 
-typedef struct
-{
-	int isValid;
-	EHANDLE hGrunt;
-	Vector vecOrigin;
-	Vector vecAngles;
-} t_ospreygrunt;
-
-
-
 #define SF_WAITFORTRIGGER 0x40
 
 
@@ -131,10 +121,6 @@ TYPEDESCRIPTION COsprey::m_SaveData[] =
 		DEFINE_ARRAY(COsprey, m_hGrunt, FIELD_EHANDLE, MAX_CARRY),
 		DEFINE_ARRAY(COsprey, m_vecOrigin, FIELD_POSITION_VECTOR, MAX_CARRY),
 		DEFINE_ARRAY(COsprey, m_hRepel, FIELD_EHANDLE, 4),
-
-		// DEFINE_FIELD( COsprey, m_iSoundState, FIELD_INTEGER ),
-		// DEFINE_FIELD( COsprey, m_iSpriteTexture, FIELD_INTEGER ),
-		// DEFINE_FIELD( COsprey, m_iPitch, FIELD_INTEGER ),
 
 		DEFINE_FIELD(COsprey, m_iDoLeftSmokePuff, FIELD_INTEGER),
 		DEFINE_FIELD(COsprey, m_iDoRightSmokePuff, FIELD_INTEGER),
@@ -313,13 +299,12 @@ CBaseMonster* COsprey::MakeGrunt(Vector vecSrc)
 			pBeam->SetThink(&CBeam::SUB_Remove);
 			pBeam->pev->nextthink = gpGlobals->time + -4096.0 * tr.flFraction / pGrunt->pev->velocity.z + 0.5;
 
-			// ALERT( at_console, "%d at %.0f %.0f %.0f\n", i, m_vecOrigin[i].x, m_vecOrigin[i].y, m_vecOrigin[i].z );
 			pGrunt->m_vecLastPosition = m_vecOrigin[i];
 			m_hGrunt[i] = pGrunt;
 			return pGrunt;
 		}
 	}
-	// ALERT( at_console, "none dead\n");
+
 	return NULL;
 }
 
@@ -441,7 +426,6 @@ void COsprey::Flight()
 
 	float m_flIdealtilt = (160 - flSpeed) / 10.0;
 
-	// ALERT( at_console, "%f %f\n", flSpeed, flIdealtilt );
 	if (m_flRotortilt < m_flIdealtilt)
 	{
 		m_flRotortilt += 0.5;
@@ -460,7 +444,6 @@ void COsprey::Flight()
 	if (m_iSoundState == 0)
 	{
 		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, "apache/ap_rotor4.wav", 1.0, 0.15, 0, 110);
-		// EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, "apache/ap_whine1.wav", 0.5, 0.2, 0, 110 );
 
 		m_iSoundState = SND_CHANGE_PITCH; // hack for going through level transitions
 	}
@@ -488,10 +471,8 @@ void COsprey::Flight()
 			{
 				m_iPitch = pitch;
 				EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, "apache/ap_rotor4.wav", 1.0, 0.15, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch);
-				// ALERT( at_console, "%.0f\n", pitch );
 			}
 		}
-		// EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, "apache/ap_whine1.wav", flVol, 0.2, SND_CHANGE_PITCH | SND_CHANGE_VOL, pitch);
 	}
 }
 
@@ -500,25 +481,6 @@ void COsprey::HitTouch(CBaseEntity* pOther)
 {
 	pev->nextthink = gpGlobals->time + 2.0;
 }
-
-
-/*
-int COsprey::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType )
-{
-	if (m_flRotortilt <= -90)
-	{
-		m_flRotortilt = 0;
-	}
-	else
-	{
-		m_flRotortilt -= 45;
-	}
-	SetBoneController( 0, m_flRotortilt );
-	return 0;
-}
-*/
-
-
 
 void COsprey::Killed(entvars_t* pevAttacker, int iGib)
 {
@@ -638,18 +600,6 @@ void COsprey::DyingThink()
 	{
 		Vector vecSpot = pev->origin + (pev->mins + pev->maxs) * 0.5;
 
-		/*
-		MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-			WRITE_BYTE( TE_EXPLOSION);		// This just makes a dynamic light now
-			WRITE_COORD( vecSpot.x );
-			WRITE_COORD( vecSpot.y );
-			WRITE_COORD( vecSpot.z + 512 );
-			WRITE_SHORT( m_iExplode );
-			WRITE_BYTE( 250 ); // scale * 10
-			WRITE_BYTE( 10  ); // framerate
-		MESSAGE_END();
-		*/
-
 		// gibs
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecSpot);
 		WRITE_BYTE(TE_SPRITE);
@@ -660,18 +610,6 @@ void COsprey::DyingThink()
 		WRITE_BYTE(250); // scale * 10
 		WRITE_BYTE(255); // brightness
 		MESSAGE_END();
-
-		/*
-		MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
-			WRITE_BYTE( TE_SMOKE );
-			WRITE_COORD( vecSpot.x );
-			WRITE_COORD( vecSpot.y );
-			WRITE_COORD( vecSpot.z + 300 );
-			WRITE_SHORT( g_sModelIndexSmoke );
-			WRITE_BYTE( 250 ); // scale * 10
-			WRITE_BYTE( 6  ); // framerate
-		MESSAGE_END();
-		*/
 
 		// blast circle
 		MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
@@ -801,8 +739,6 @@ bool COsprey::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float 
 
 void COsprey::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
-	// ALERT( at_console, "%d %.0f\n", ptr->iHitgroup, flDamage );
-
 	// only so much per engine
 	if (ptr->iHitgroup == 3)
 	{
@@ -825,7 +761,6 @@ void COsprey::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir,
 	// hit hard, hits cockpit, hits engines
 	if (flDamage > 50 || ptr->iHitgroup == 1 || ptr->iHitgroup == 2 || ptr->iHitgroup == 3)
 	{
-		// ALERT( at_console, "%.0f\n", flDamage );
 		AddMultiDamage(pevAttacker, this, flDamage, bitsDamageType);
 	}
 	else

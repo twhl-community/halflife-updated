@@ -158,8 +158,6 @@ void CLegacyCineMonster::Pain()
 
 void CLegacyCineMonster::CineThink()
 {
-	// DBG_CheckMonsterData(pev);
-
 	// Emit particles from origin (double check animator's placement of model)
 	// THIS is a test feature
 	//UTIL_ParticleEffect(pev->origin, g_vecZero, 255, 20);

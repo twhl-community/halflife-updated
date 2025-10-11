@@ -27,13 +27,10 @@
 #include "nodes.h"
 #include "doors.h"
 
-extern bool FEntIsVisible(entvars_t* pev, entvars_t* pevTarget);
-
 // Landmark class
 void CPointEntity::Spawn()
 {
 	pev->solid = SOLID_NOT;
-	//	UTIL_SetSize(pev, g_vecZero, g_vecZero);
 }
 
 
@@ -278,13 +275,6 @@ void CBaseDelay::SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float
 
 
 /*
-void CBaseDelay:: SUB_UseTargetsEntMethod()
-{
-	SUB_UseTargets(pev);
-}
-*/
-
-/*
 QuakeEd only writes a single float for angles (bad idea), so up and down are
 just constant angles.
 */
@@ -387,7 +377,6 @@ pev->origin traveling at flSpeed
 void CBaseToggle::LinearMove(Vector vecDest, float flSpeed)
 {
 	ASSERTSZ(flSpeed != 0, "LinearMove:  no speed is defined!");
-	//	ASSERTSZ(m_pfnCallWhenMoveDone != NULL, "LinearMove: no post-move function defined");
 
 	m_vecFinalDest = vecDest;
 
@@ -483,7 +472,6 @@ Just like LinearMove, but rotational.
 void CBaseToggle::AngularMove(Vector vecDestAngle, float flSpeed)
 {
 	ASSERTSZ(flSpeed != 0, "AngularMove:  no speed is defined!");
-	//	ASSERTSZ(m_pfnCallWhenMoveDone != NULL, "AngularMove: no post-move function defined");
 
 	m_vecFinalAngle = vecDestAngle;
 

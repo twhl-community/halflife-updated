@@ -281,11 +281,6 @@ void PM_ViewEntity()
 	int pcolor = 77;
 	float fup;
 
-#if 0
-	if ( !pm_showclip.value )
-		return;
-#endif
-
 	AngleVectors(pmove->angles, &forward, &right, &up); // Determine movement angles
 
 	VectorCopy(pmove->origin, origin);

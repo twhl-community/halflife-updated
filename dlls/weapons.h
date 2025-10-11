@@ -279,9 +279,6 @@ public:
 	int iWeight() { return ItemInfoArray[m_iId].iWeight; }
 	int iFlags() { return ItemInfoArray[m_iId].iFlags; }
 
-	// int		m_iIdPrimary;										// Unique Id for primary ammo
-	// int		m_iIdSecondary;										// Unique Id for secondary ammo
-
 	//Hack so deploy animations work when weapon prediction is enabled.
 	bool m_ForceSendAnimations = false;
 };
@@ -424,8 +421,6 @@ inline MULTIDAMAGE gMultiDamage;
 #define NORMAL_EXPLOSION_VOLUME 1024
 #define SMALL_EXPLOSION_VOLUME 512
 
-#define WEAPON_ACTIVITY_VOLUME 64
-
 #define VECTOR_CONE_1DEGREES Vector(0.00873, 0.00873, 0.00873)
 #define VECTOR_CONE_2DEGREES Vector(0.01745, 0.01745, 0.01745)
 #define VECTOR_CONE_3DEGREES Vector(0.02618, 0.02618, 0.02618)
@@ -515,9 +510,6 @@ public:
 	}
 
 private:
-	int m_iShell;
-
-
 	unsigned short m_usFireGlock1;
 	unsigned short m_usFireGlock2;
 };
@@ -629,9 +621,6 @@ public:
 	bool Deploy() override;
 	void Reload() override;
 	void WeaponIdle() override;
-	float m_flNextAnimTime;
-	int m_iShell;
-
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
@@ -728,10 +717,7 @@ public:
 	void Reload() override;
 	void WeaponIdle() override;
 	void ItemPostFrame() override;
-	int m_fInReload; //TODO: not used, remove
 	float m_flNextReload;
-	int m_iShell;
-
 	bool UseDecrement() override
 	{
 #if defined(CLIENT_WEAPONS)
@@ -992,15 +978,13 @@ public:
 #endif
 	}
 
-	unsigned short m_usEgonStop;
-
 private:
 	float m_shootTime;
 	EGON_FIREMODE m_fireMode;
 	float m_shakeTime;
-	bool m_deployed;
 
 	unsigned short m_usEgonFire;
+	unsigned short m_usEgonStop;
 };
 
 enum hgun_e
@@ -1035,7 +1019,6 @@ public:
 	void Holster() override;
 	void Reload() override;
 	void WeaponIdle() override;
-	float m_flNextAnimTime;
 
 	float m_flRechargeTime;
 

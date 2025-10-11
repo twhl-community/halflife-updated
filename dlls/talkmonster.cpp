@@ -35,10 +35,6 @@ TYPEDESCRIPTION CTalkMonster::m_SaveData[] =
 	{
 		DEFINE_FIELD(CTalkMonster, m_bitsSaid, FIELD_INTEGER),
 		DEFINE_FIELD(CTalkMonster, m_nSpeak, FIELD_INTEGER),
-
-		// Recalc'ed in Precache()
-		//	DEFINE_FIELD( CTalkMonster, m_voicePitch, FIELD_INTEGER ),
-		//	DEFINE_FIELD( CTalkMonster, m_szGrp, FIELD_??? ),
 		DEFINE_FIELD(CTalkMonster, m_useTime, FIELD_TIME),
 		DEFINE_FIELD(CTalkMonster, m_iszUse, FIELD_STRING),
 		DEFINE_FIELD(CTalkMonster, m_iszUnUse, FIELD_STRING),
@@ -165,7 +161,6 @@ Schedule_t slIdleHello[] =
 Task_t tlIdleStopShooting[] =
 	{
 		{TASK_TLK_STOPSHOOTING, (float)0}, // tell player to stop shooting friend
-										   // { TASK_TLK_EYECONTACT,		(float)0		},// look at the player
 };
 
 Schedule_t slIdleStopShooting[] =
@@ -269,9 +264,6 @@ Schedule_t slTlkIdleWatchClient[] =
 				bits_COND_PROVOKED,
 
 			bits_SOUND_COMBAT | // sound flags - change these, and you'll break the talking code.
-				//bits_SOUND_PLAYER		|
-				//bits_SOUND_WORLD		|
-
 				bits_SOUND_DANGER |
 				bits_SOUND_MEAT | // scents
 				bits_SOUND_CARCASS |
@@ -290,9 +282,6 @@ Schedule_t slTlkIdleWatchClient[] =
 				bits_COND_PROVOKED,
 
 			bits_SOUND_COMBAT | // sound flags - change these, and you'll break the talking code.
-				//bits_SOUND_PLAYER		|
-				//bits_SOUND_WORLD		|
-
 				bits_SOUND_DANGER |
 				bits_SOUND_MEAT | // scents
 				bits_SOUND_CARCASS |
@@ -546,7 +535,6 @@ void CTalkMonster::RunTask(Task_t* pTask)
 	case TASK_TLK_EYECONTACT:
 		if (!IsMoving() && IsTalking() && m_hTalkTarget != NULL)
 		{
-			// ALERT( at_console, "waiting %f\n", m_flStopTalkTime - gpGlobals->time );
 			IdleHeadTurn(m_hTalkTarget->pev->origin);
 		}
 		else
@@ -572,7 +560,6 @@ void CTalkMonster::RunTask(Task_t* pTask)
 	case TASK_WAIT_FOR_MOVEMENT:
 		if (IsTalking() && m_hTalkTarget != NULL)
 		{
-			// ALERT(at_console, "walking, talking\n");
 			IdleHeadTurn(m_hTalkTarget->pev->origin);
 		}
 		else
@@ -751,7 +738,6 @@ void CTalkMonster::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case SCRIPT_EVENT_SENTENCE: // Play a named sentence group
 		ShutUpFriends();
 		PlaySentence(pEvent->options, RANDOM_FLOAT(2.8, 3.4), VOL_NORM, ATTN_IDLE);
-		//ALERT(at_console, "script event speak\n");
 		break;
 
 	default:
@@ -1085,7 +1071,6 @@ bool CTalkMonster::FIdleSpeak()
 	if (pFriend && !(pFriend->IsMoving()) && (RANDOM_LONG(0, 99) < 75))
 	{
 		PlaySentence(szQuestionGroup, duration, VOL_NORM, ATTN_IDLE);
-		//SENTENCEG_PlayRndSz( ENT(pev), szQuestionGroup, 1.0, ATTN_IDLE, 0, pitch );
 
 		// force friend to answer
 		CTalkMonster* pTalkMonster = (CTalkMonster*)pFriend;
@@ -1100,7 +1085,6 @@ bool CTalkMonster::FIdleSpeak()
 	// otherwise, play an idle statement, try to face client when making a statement.
 	if (RANDOM_LONG(0, 1))
 	{
-		//SENTENCEG_PlayRndSz( ENT(pev), szIdleGroup, 1.0, ATTN_IDLE, 0, pitch );
 		CBaseEntity* pFriend = FindNearestFriend(true);
 
 		if (pFriend)
@@ -1206,7 +1190,6 @@ Schedule_t* CTalkMonster::GetScheduleOfType(int Type)
 	case SCHED_TARGET_FACE:
 		// speak during 'use'
 		if (RANDOM_LONG(0, 99) < 2)
-			//ALERT ( at_console, "target chase speak\n" );
 			return slIdleSpeakWait;
 		else
 			return slIdleStand;
@@ -1222,8 +1205,6 @@ Schedule_t* CTalkMonster::GetScheduleOfType(int Type)
 		// sustained light wounds?
 		if (!FBitSet(m_bitsSaid, bit_saidWoundLight) && (pev->health <= (pev->max_health * 0.75)))
 		{
-			//SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_WOUND], 1.0, ATTN_IDLE, 0, GetVoicePitch() );
-			//CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
 			PlaySentence(m_szGrp[TLK_WOUND], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE);
 			SetBits(m_bitsSaid, bit_saidWoundLight);
 			return slIdleStand;
@@ -1231,8 +1212,6 @@ Schedule_t* CTalkMonster::GetScheduleOfType(int Type)
 		// sustained heavy wounds?
 		else if (!FBitSet(m_bitsSaid, bit_saidWoundHeavy) && (pev->health <= (pev->max_health * 0.5)))
 		{
-			//SENTENCEG_PlayRndSz( ENT(pev), m_szGrp[TLK_MORTAL], 1.0, ATTN_IDLE, 0, GetVoicePitch() );
-			//CTalkMonster::g_talkWaitTime = gpGlobals->time + RANDOM_FLOAT(2.8, 3.2);
 			PlaySentence(m_szGrp[TLK_MORTAL], RANDOM_FLOAT(2.8, 3.2), VOL_NORM, ATTN_IDLE);
 			SetBits(m_bitsSaid, bit_saidWoundHeavy);
 			return slIdleStand;
@@ -1241,7 +1220,6 @@ Schedule_t* CTalkMonster::GetScheduleOfType(int Type)
 		// talk about world
 		if (FOkToSpeak() && RANDOM_LONG(0, m_nSpeak * 2) == 0)
 		{
-			//ALERT ( at_console, "standing idle speak\n" );
 			return slIdleSpeak;
 		}
 

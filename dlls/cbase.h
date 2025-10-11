@@ -32,7 +32,6 @@ CBaseEntity
 #define MAX_PATH_SIZE 10 // max number of nodes available for a path.
 
 // These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
-#define FCAP_CUSTOMSAVE 0x00000001
 #define FCAP_ACROSS_TRANSITION 0x00000002 // should transfer between transitions
 #define FCAP_MUST_SPAWN 0x00000004		  // Spawn after restore
 #define FCAP_DONT_SAVE 0x80000000		  // Don't save this
@@ -217,8 +216,6 @@ public:
 	virtual bool IsNetClient() { return false; }
 	virtual const char* TeamID() { return ""; }
 
-
-	//	virtual void	SetActivator( CBaseEntity *pActivator ) {}
 	virtual CBaseEntity* GetNextTarget();
 
 	// fundamental callbacks
@@ -613,8 +610,6 @@ protected:
 #define bits_CAP_MELEE_ATTACK1 (1 << 13) // can do a melee attack 1
 #define bits_CAP_MELEE_ATTACK2 (1 << 14) // can do a melee attack 2
 
-#define bits_CAP_FLY (1 << 15) // can fly, move all around
-
 #define bits_CAP_DOORS_GROUP (bits_CAP_USE | bits_CAP_AUTO_DOORS | bits_CAP_OPEN_DOORS)
 
 // when calling KILLED(), a value that governs gib behavior is expected to be
@@ -691,8 +686,6 @@ public:
 // Weapons
 //
 
-#define BAD_WEAPON 0x00007FFF
-
 //
 // Converts a entvars_t * to a class pointer
 // It will allocate the class and entity if necessary
@@ -745,8 +738,6 @@ env_sound_data
 env_sound_data
 push_trigger_data
 */
-
-#define TRACER_FREQ 4 // Tracers fire every 4 bullets
 
 // this moved here from world.cpp, to allow classes to be derived from it
 //=======================

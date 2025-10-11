@@ -262,8 +262,7 @@ LINK_ENTITY_TO_CLASS(func_monsterclip, CFuncMonsterClip);
 void CFuncMonsterClip::Spawn()
 {
 	CFuncWall::Spawn();
-	if (CVAR_GET_FLOAT("showtriggers") == 0)
-		pev->effects = EF_NODRAW;
+	pev->effects = EF_NODRAW;
 	pev->flags |= FL_MONSTERCLIP;
 }
 
@@ -422,10 +421,6 @@ void CFuncRotating::Spawn()
 	if (pev->speed <= 0)
 		pev->speed = 0;
 
-	// Removed this per level designers request.  -- JAY
-	//	if (pev->dmg == 0)
-	//		pev->dmg = 2;
-
 	// instant-use brush?
 	if (FBitSet(pev->spawnflags, SF_BRUSH_ROTATE_INSTANT))
 	{
@@ -561,9 +556,7 @@ void CFuncRotating::RampPitchVol(bool fUp)
 	// calc volume and pitch as % of final vol and pitch
 
 	fpct = vecCur / vecFinal;
-	//	if (fUp)
-	//		fvol = m_flVolume * (0.5 + fpct/2.0); // spinup volume ramps up from 50% max vol
-	//	else
+
 	fvol = m_flVolume * fpct; // slowdown volume ramps down to 0
 
 	fpitch = FANPITCHMIN + (FANPITCHMAX - FANPITCHMIN) * fpct;
@@ -666,8 +659,6 @@ void CFuncRotating::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, U
 		if (pev->avelocity != g_vecZero)
 		{
 			SetThink(&CFuncRotating::SpinDown);
-			//EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, (char *)STRING(pev->noiseStop),
-			//	m_flVolume, m_flAttenuation, 0, m_pitch);
 
 			pev->nextthink = pev->ltime + 0.1;
 		}
@@ -686,9 +677,6 @@ void CFuncRotating::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, U
 		{
 			// play stopping sound here
 			SetThink(&CFuncRotating::SpinDown);
-
-			// EMIT_SOUND_DYN(ENT(pev), CHAN_WEAPON, (char *)STRING(pev->noiseStop),
-			//	m_flVolume, m_flAttenuation, 0, m_pitch);
 
 			pev->nextthink = pev->ltime + 0.1;
 			// pev->avelocity = g_vecZero;
@@ -714,13 +702,6 @@ void CFuncRotating::Blocked(CBaseEntity* pOther)
 {
 	pOther->TakeDamage(pev, pev, pev->dmg, DMG_CRUSH);
 }
-
-
-
-
-
-
-//#endif
 
 
 class CPendulum : public CBaseEntity

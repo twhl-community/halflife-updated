@@ -283,7 +283,6 @@ void CNihilanth::Spawn()
 	pev->solid = SOLID_BBOX;
 
 	SET_MODEL(edict(), "models/nihilanth.mdl");
-	// UTIL_SetSize(pev, Vector( -300, -300, 0), Vector(300, 300, 512));
 	UTIL_SetSize(pev, Vector(-32, -32, 0), Vector(32, 32, 64));
 	UTIL_SetOrigin(pev, pev->origin);
 
@@ -559,7 +558,6 @@ void CNihilanth::CrashTouch(CBaseEntity* pOther)
 
 void CNihilanth::GibMonster()
 {
-	// EMIT_SOUND_DYN(edict(), CHAN_VOICE, "common/bodysplat.wav", 0.75, ATTN_NORM, 0, 200);
 }
 
 
@@ -608,7 +606,6 @@ void CNihilanth::ShootBalls()
 
 				GetAttachment(2, vecHand, vecAngle);
 				vecSrc = vecHand + pev->velocity * (m_flShootTime - gpGlobals->time);
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
 				vecDir = (m_posTarget - pev->origin).Normalize();
 				vecSrc = vecSrc + vecDir * (gpGlobals->time - m_flShootTime);
 				pEntity = (CNihilanthHVR*)Create("nihilanth_energy_ball", vecSrc, pev->angles, edict());
@@ -617,7 +614,6 @@ void CNihilanth::ShootBalls()
 
 				GetAttachment(3, vecHand, vecAngle);
 				vecSrc = vecHand + pev->velocity * (m_flShootTime - gpGlobals->time);
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
 				vecDir = (m_posTarget - pev->origin).Normalize();
 				vecSrc = vecSrc + vecDir * (gpGlobals->time - m_flShootTime);
 				pEntity = (CNihilanthHVR*)Create("nihilanth_energy_ball", vecSrc, pev->angles, edict());
@@ -857,8 +853,6 @@ void CNihilanth::HuntThink()
 		return;
 	}
 
-	// ALERT( at_console, "health %.0f\n", pev->health );
-
 	// if damaged, try to abosorb some spheres
 	if (pev->health < gSkillData.nihilanthHealth && AbsorbSphere())
 	{
@@ -868,7 +862,6 @@ void CNihilanth::HuntThink()
 	// get new sequence
 	if (m_fSequenceFinished)
 	{
-		// if (!m_fSequenceLoops)
 		pev->frame = 0;
 		NextActivity();
 		ResetSequenceInfo();
@@ -911,8 +904,6 @@ void CNihilanth::Flight()
 {
 	// estimate where I'll be facing in one seconds
 	UTIL_MakeAimVectors(pev->angles + m_avelocity);
-	// Vector vecEst1 = pev->origin + m_velocity + gpGlobals->v_up * m_flForce - Vector( 0, 0, 384 );
-	// float flSide = DotProduct( m_posDesired - vecEst1, gpGlobals->v_right );
 
 	float flSide = DotProduct(m_vecDesired, gpGlobals->v_right);
 
@@ -920,14 +911,14 @@ void CNihilanth::Flight()
 	{
 		if (m_avelocity.y < 180)
 		{
-			m_avelocity.y += 6; // 9 * (3.0/2.0);
+			m_avelocity.y += 6;
 		}
 	}
 	else
 	{
 		if (m_avelocity.y > -180)
 		{
-			m_avelocity.y -= 6; // 9 * (3.0/2.0);
+			m_avelocity.y -= 6;
 		}
 	}
 	m_avelocity.y *= 0.98;
@@ -970,8 +961,6 @@ void CNihilanth::Flight()
 
 	UTIL_SetOrigin(pev, pev->origin + m_velocity * 0.1);
 	pev->angles = pev->angles + m_avelocity * 0.1;
-
-	// ALERT( at_console, "%5.0f %5.0f : %4.0f : %3.0f : %2.0f\n", m_posDesired.z, pev->origin.z, m_velocity.z, m_avelocity.y, m_flForce );
 }
 
 
@@ -1272,7 +1261,6 @@ void CNihilanth::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecD
 		UTIL_BloodStream(ptr->vecEndPos, vecBlood, BloodColor(), flDamage + (100 - 100 * (pev->health / gSkillData.nihilanthHealth)));
 	}
 
-	// SpawnBlood(ptr->vecEndPos, BloodColor(), flDamage * 5.0);// a little surface blood.
 	AddMultiDamage(pevAttacker, this, flDamage, bitsDamageType);
 }
 
@@ -1338,9 +1326,6 @@ void CNihilanthHVR::CircleInit(CBaseEntity* pTarget)
 	pev->movetype = MOVETYPE_NOCLIP;
 	pev->solid = SOLID_NOT;
 
-	// SET_MODEL(edict(), "sprites/flare6.spr");
-	// pev->scale = 3.0;
-	// SET_MODEL(edict(), "sprites/xspark4.spr");
 	SET_MODEL(edict(), "sprites/muzzleflash3.spr");
 	pev->rendercolor.x = 255;
 	pev->rendercolor.y = 224;
@@ -1479,9 +1464,6 @@ void CNihilanthHVR::ZapThink()
 		pev->velocity = pev->velocity * 1.2;
 	}
 
-
-	// MovetoTarget( m_hEnemy->Center( ) );
-
 	if ((m_hEnemy->Center() - pev->origin).Length() < 256)
 	{
 		TraceResult tr;
@@ -1538,8 +1520,6 @@ void CNihilanthHVR::ZapThink()
 	WRITE_BYTE(10);	  // life * 10
 	WRITE_COORD(128); // decay
 	MESSAGE_END();
-
-	// Crawl( );
 }
 
 
@@ -1549,13 +1529,6 @@ void CNihilanthHVR::ZapTouch(CBaseEntity* pOther)
 
 	RadiusDamage(pev, pev, 50, CLASS_NONE, DMG_SHOCK);
 	pev->velocity = pev->velocity * 0;
-
-	/*
-	for (int i = 0; i < 10; i++)
-	{
-		Crawl( );
-	}
-	*/
 
 	SetTouch(NULL);
 	UTIL_Remove(this);
@@ -1752,12 +1725,10 @@ bool CNihilanthHVR::CircleTarget(Vector vecTarget)
 
 	if (d1 < 0 && d2 <= d1)
 	{
-		// ALERT( at_console, "too close\n");
 		m_vecIdeal = m_vecIdeal - (vecDest - vecSrc).Normalize() * 50;
 	}
 	else if (d1 > 0 && d2 >= d1)
 	{
-		// ALERT( at_console, "too far\n");
 		m_vecIdeal = m_vecIdeal + (vecDest - vecSrc).Normalize() * 50;
 	}
 	pev->avelocity.z = d1 * 20;
@@ -1768,10 +1739,7 @@ bool CNihilanthHVR::CircleTarget(Vector vecTarget)
 	}
 
 	m_vecIdeal = m_vecIdeal + Vector(RANDOM_FLOAT(-2, 2), RANDOM_FLOAT(-2, 2), RANDOM_FLOAT(-2, 2));
-	m_vecIdeal = Vector(m_vecIdeal.x, m_vecIdeal.y, 0).Normalize() * 200
-				 /* + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 32 */
-				 + Vector(0, 0, m_vecIdeal.z);
-	// m_vecIdeal = m_vecIdeal + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 2;
+	m_vecIdeal = Vector(m_vecIdeal.x, m_vecIdeal.y, 0).Normalize() * 200 + Vector(0, 0, m_vecIdeal.z);
 
 	// move up/down
 	d1 = vecTarget.z - pev->origin.z;
@@ -1782,7 +1750,6 @@ bool CNihilanthHVR::CircleTarget(Vector vecTarget)
 
 	pev->velocity = m_vecIdeal;
 
-	// ALERT( at_console, "%.0f %.0f %.0f\n", m_vecIdeal.x, m_vecIdeal.y, m_vecIdeal.z );
 	return fClose;
 }
 
