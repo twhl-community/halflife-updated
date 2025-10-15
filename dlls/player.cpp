@@ -3143,54 +3143,6 @@ bool CBasePlayer::Restore(CRestore& restore)
 	return status;
 }
 
-
-
-void CBasePlayer::SelectNextItem(int iItem)
-{
-	CBasePlayerItem* pItem;
-
-	pItem = m_rgpPlayerItems[iItem];
-
-	if (!pItem)
-		return;
-
-	if (pItem == m_pActiveItem)
-	{
-		// select the next one in the chain
-		pItem = m_pActiveItem->m_pNext;
-		if (!pItem)
-		{
-			return;
-		}
-
-		CBasePlayerItem* pLast;
-		pLast = pItem;
-		while (pLast->m_pNext)
-			pLast = pLast->m_pNext;
-
-		// relink chain
-		pLast->m_pNext = m_pActiveItem;
-		m_pActiveItem->m_pNext = NULL;
-		m_rgpPlayerItems[iItem] = pItem;
-	}
-
-	ResetAutoaim();
-
-	// FIX, this needs to queue them up and delay
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->Holster();
-	}
-
-	m_pActiveItem = pItem;
-
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->Deploy();
-		m_pActiveItem->UpdateItemInfo();
-	}
-}
-
 void CBasePlayer::SelectItem(const char* pstr)
 {
 	if (!pstr)
@@ -3216,29 +3168,7 @@ void CBasePlayer::SelectItem(const char* pstr)
 			break;
 	}
 
-	if (!pItem)
-		return;
-
-
-	if (pItem == m_pActiveItem)
-		return;
-
-	ResetAutoaim();
-
-	// FIX, this needs to queue them up and delay
-	if (m_pActiveItem)
-		m_pActiveItem->Holster();
-
-	m_pLastItem = m_pActiveItem;
-	m_pActiveItem = pItem;
-
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->m_ForceSendAnimations = true;
-		m_pActiveItem->Deploy();
-		m_pActiveItem->m_ForceSendAnimations = false;
-		m_pActiveItem->UpdateItemInfo();
-	}
+	SelectItem(pItem);
 }
 
 //==============================================
@@ -3257,10 +3187,6 @@ bool CBasePlayer::HasWeapons()
 	}
 
 	return false;
-}
-
-void CBasePlayer::SelectPrevItem(int iItem)
-{
 }
 
 
@@ -3827,7 +3753,7 @@ bool CBasePlayer::AddPlayerItem(CBasePlayerItem* pItem)
 		// should we switch to this item?
 		if (g_pGameRules->FShouldSwitchWeapon(this, pItem))
 		{
-			SwitchWeapon(pItem);
+			SelectItem(pItem);
 		}
 
 		return true;
@@ -4849,35 +4775,6 @@ bool CBasePlayer::HasPlayerItemFromID(int nID)
 	return false;
 }
 
-//=========================================================
-//
-//=========================================================
-bool CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
-{
-	if (pWeapon && !pWeapon->CanDeploy())
-	{
-		return false;
-	}
-
-	ResetAutoaim();
-
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->Holster();
-	}
-
-	m_pActiveItem = pWeapon;
-
-	if (pWeapon)
-	{
-		pWeapon->m_ForceSendAnimations = true;
-		pWeapon->Deploy();
-		pWeapon->m_ForceSendAnimations = false;
-	}
-
-	return true;
-}
-
 void CBasePlayer::EquipWeapon()
 {
 	if (m_pActiveItem)
@@ -4889,14 +4786,30 @@ void CBasePlayer::EquipWeapon()
 		}
 
 		//Have a weapon equipped, but not deployed.
-		if (m_pActiveItem->CanDeploy() && m_pActiveItem->Deploy())
+		const auto pWeapon = m_pActiveItem->GetWeaponPtr();
+
+		if (pWeapon != nullptr)
 		{
+			/* If it's a weapon, verify that it's usable. */
+			if (pWeapon->IsUseable())
+			{
+				m_pActiveItem->Deploy();
+				return;
+			}
+		}
+		/* If it's an item, just check if it can deploy. */
+		else if (m_pActiveItem->CanDeploy())
+		{
+			m_pActiveItem->Deploy();
 			return;
 		}
 	}
 
 	//No weapon equipped or couldn't deploy it, find a suitable alternative.
-	g_pGameRules->GetNextBestWeapon(this, m_pActiveItem, true);
+	if (!g_pGameRules->GetNextBestWeapon(this, m_pActiveItem, true))
+	{
+		SwitchWeapon(nullptr);
+	}
 }
 
 void CBasePlayer::SetPrefsFromUserinfo(char* infobuffer)
