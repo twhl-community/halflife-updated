@@ -53,6 +53,8 @@ void InitInput();
 void EV_HookEvents();
 void IN_Commands();
 
+void CL_DrawCrosshair();
+
 /*
 ================================
 HUD_GetHullBounds
@@ -207,6 +209,8 @@ redraw the HUD.
 int DLLEXPORT HUD_Redraw(float time, int intermission)
 {
 	//	RecClHudRedraw(time, intermission);
+
+	CL_DrawCrosshair();
 
 	gHUD.Redraw(time, 0 != intermission);
 
