@@ -440,7 +440,6 @@ public:
 		Attack();
 		return false;
 	}
-	//	void		HandleAnimEvent( MonsterEvent_t *pEvent );
 	void Attack() {}
 
 	static const char* pModelNames[];
@@ -484,7 +483,6 @@ CXenHull* CXenHull::CreateHull(CBaseEntity* source, const Vector& mins, const Ve
 	UTIL_SetSize(pHull->pev, mins, maxs);
 	pHull->pev->renderamt = 0;
 	pHull->pev->rendermode = kRenderTransTexture;
-	//	pHull->pev->effects = EF_NODRAW;
 
 	return pHull;
 }
@@ -574,16 +572,4 @@ void CXenSpore::Think()
 {
 	float flInterval = StudioFrameAdvance();
 	pev->nextthink = gpGlobals->time + 0.1;
-
-#if 0
-	DispatchAnimEvents( flInterval );
-
-	switch( GetActivity() )
-	{
-	default:
-	case ACT_IDLE:
-		break;
-
-	}
-#endif
 }

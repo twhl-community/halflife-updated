@@ -27,27 +27,10 @@ class CHealthKit : public CItem
 	void Spawn() override;
 	void Precache() override;
 	bool MyTouch(CBasePlayer* pPlayer) override;
-
-	/*
-	int		Save( CSave &save ) override; 
-	int		Restore( CRestore &restore ) override;
-	
-	static	TYPEDESCRIPTION m_SaveData[];
-*/
 };
 
 
 LINK_ENTITY_TO_CLASS(item_healthkit, CHealthKit);
-
-/*
-TYPEDESCRIPTION	CHealthKit::m_SaveData[] = 
-{
-
-};
-
-
-IMPLEMENT_SAVERESTORE( CHealthKit, CItem);
-*/
 
 void CHealthKit::Spawn()
 {

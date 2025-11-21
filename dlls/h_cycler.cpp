@@ -36,7 +36,6 @@ public:
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 	void Spawn() override;
 	void Think() override;
-	//void Pain( float flDamage );
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
 	// Don't treat as a live target
@@ -155,7 +154,6 @@ void CCycler::Think()
 	}
 	if (m_fSequenceFinished && !m_fSequenceLoops)
 	{
-		// ResetSequenceInfo();
 		// hack to avoid reloading model every frame
 		pev->animtime = gpGlobals->time;
 		pev->framerate = 1.0;
@@ -418,7 +416,6 @@ void CWreckage::Spawn()
 		PRECACHE_MODEL((char*)STRING(pev->model));
 		SET_MODEL(ENT(pev), STRING(pev->model));
 	}
-	// pev->scale = 5.0;
 
 	m_flStartTime = gpGlobals->time;
 }

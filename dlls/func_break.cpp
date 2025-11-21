@@ -101,7 +101,6 @@ bool CBreakable::KeyValue(KeyValueData* pkvd)
 	}
 	else if (FStrEq(pkvd->szKeyName, "shards"))
 	{
-		//			m_iShards = atof(pkvd->szValue);
 		return true;
 	}
 	else if (FStrEq(pkvd->szKeyName, "gibmodel"))
@@ -136,10 +135,6 @@ TYPEDESCRIPTION CBreakable::m_SaveData[] =
 	{
 		DEFINE_FIELD(CBreakable, m_Material, FIELD_INTEGER),
 		DEFINE_FIELD(CBreakable, m_Explosion, FIELD_INTEGER),
-
-		// Don't need to save/restore these because we precache after restore
-		//	DEFINE_FIELD( CBreakable, m_idShard, FIELD_INTEGER ),
-
 		DEFINE_FIELD(CBreakable, m_angle, FIELD_FLOAT),
 		DEFINE_FIELD(CBreakable, m_iszGibModel, FIELD_STRING),
 		DEFINE_FIELD(CBreakable, m_iszSpawnObject, FIELD_STRING),
@@ -370,9 +365,6 @@ void CBreakable::DamageSound()
 	const char* rgpsz[6];
 	int i;
 	int material = m_Material;
-
-	//	if (RANDOM_LONG(0,1))
-	//		return;
 
 	if (RANDOM_LONG(0, 2))
 		pitch = PITCH_NORM;
@@ -812,8 +804,6 @@ public:
 	void Move(CBaseEntity* pMover, bool push);
 	bool KeyValue(KeyValueData* pkvd) override;
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
-	void EXPORT StopSound();
-	//	virtual void	SetActivator( CBaseEntity *pActivator ) { m_pPusher = pActivator; }
 
 	int ObjectCaps() override { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_CONTINUOUS_USE; }
 	bool Save(CSave& save) override;
@@ -1030,23 +1020,12 @@ void CPushable::Move(CBaseEntity* pOther, bool push)
 			{
 				m_lastSound = RANDOM_LONG(0, 2);
 				EMIT_SOUND(ENT(pev), CHAN_WEAPON, m_soundNames[m_lastSound], 0.5, ATTN_NORM);
-				//			SetThink( StopSound );
-				//			pev->nextthink = pev->ltime + 0.1;
 			}
 			else
 				STOP_SOUND(ENT(pev), CHAN_WEAPON, m_soundNames[m_lastSound]);
 		}
 	}
 }
-
-#if 0
-void CPushable::StopSound()
-{
-	Vector dist = pev->oldorigin - pev->origin;
-	if ( dist.Length() <= 0 )
-		STOP_SOUND( ENT(pev), CHAN_WEAPON, m_soundNames[m_lastSound] );
-}
-#endif
 
 bool CPushable::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {

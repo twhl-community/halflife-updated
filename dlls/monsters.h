@@ -59,13 +59,6 @@
 #define SF_MONSTER_TURRET_STARTINACTIVE 64
 #define SF_MONSTER_WAIT_UNTIL_PROVOKED 64 // don't attack the player unless provoked
 
-
-
-// MoveToOrigin stuff
-#define MOVE_START_TURN_DIST 64 // when this far away from moveGoal, start turning to face next goal
-#define MOVE_STUCK_DIST 32		// if a monster can't step this far, it is stuck.
-
-
 // MoveToOrigin stuff
 #define MOVE_NORMAL 0 // normal move in the direction monster is facing
 #define MOVE_STRAFE 1 // moves in direction specified, no matter which way monster is facing
@@ -77,7 +70,6 @@ inline DLL_GLOBAL Vector g_vecAttackDir;
 *	Better solution:  Add as parameter to all Killed() functions.
 */
 inline entvars_t* g_pevLastInflictor = nullptr;
-inline DLL_GLOBAL bool g_fDrawLines = false;
 
 // spawn flags 256 and above are already taken by the engine
 extern void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist, int iMoveType);
@@ -85,10 +77,8 @@ extern void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist
 Vector VecCheckToss(entvars_t* pev, const Vector& vecSpot1, Vector vecSpot2, float flGravityAdj = 1.0);
 Vector VecCheckThrow(entvars_t* pev, const Vector& vecSpot1, Vector vecSpot2, float flSpeed, float flGravityAdj = 1.0);
 extern void EjectBrass(const Vector& vecOrigin, const Vector& vecVelocity, float rotation, int model, int soundtype);
-extern void ExplodeModel(const Vector& vecOrigin, float speed, int model, int count);
 extern bool IsFacing(entvars_t* pevTest, const Vector& reference);
 
-bool FBoxVisible(entvars_t* pevLooker, entvars_t* pevTarget);
 bool FBoxVisible(entvars_t* pevLooker, entvars_t* pevTarget, Vector& vecTargetOrigin, float flSize = 0.0);
 
 // monster to monster relationship types

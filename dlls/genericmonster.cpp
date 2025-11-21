@@ -56,16 +56,7 @@ int CGenericMonster::Classify()
 //=========================================================
 void CGenericMonster::SetYawSpeed()
 {
-	int ys;
-
-	switch (m_Activity)
-	{
-	case ACT_IDLE:
-	default:
-		ys = 90;
-	}
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 90;
 }
 
 //=========================================================
@@ -99,13 +90,6 @@ void CGenericMonster::Spawn()
 	Precache();
 
 	SET_MODEL(ENT(pev), STRING(pev->model));
-
-	/*
-	if ( FStrEq( STRING(pev->model), "models/player.mdl" ) )
-		UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
-	else
-		UTIL_SetSize(pev, VEC_HULL_MIN, VEC_HULL_MAX);
-*/
 
 	if (FStrEq(STRING(pev->model), "models/player.mdl") || FStrEq(STRING(pev->model), "models/holo.mdl"))
 		UTIL_SetSize(pev, VEC_HULL_MIN, VEC_HULL_MAX);

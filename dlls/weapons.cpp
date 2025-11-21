@@ -31,10 +31,6 @@
 #include "gamerules.h"
 #include "UserMessages.h"
 
-#define NOT_USED 255
-
-#define TRACER_FREQ 4 // Tracers fire every fourth bullet
-
 extern bool IsBustingGame();
 extern bool IsPlayerBusting(CBaseEntity* pPlayer);
 
@@ -199,23 +195,6 @@ void EjectBrass(const Vector& vecOrigin, const Vector& vecVelocity, float rotati
 }
 
 
-#if 0
-// UNDONE: This is no longer used?
-void ExplodeModel( const Vector &vecOrigin, float speed, int model, int count )
-{
-	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecOrigin );
-		WRITE_BYTE ( TE_EXPLODEMODEL );
-		WRITE_COORD( vecOrigin.x );
-		WRITE_COORD( vecOrigin.y );
-		WRITE_COORD( vecOrigin.z );
-		WRITE_COORD( speed );
-		WRITE_SHORT( model );
-		WRITE_SHORT( count );
-		WRITE_BYTE ( 15 );// 1.5 seconds
-	MESSAGE_END();
-}
-#endif
-
 // Precaches the weapon and queues the weapon info for sending to clients
 void UTIL_PrecacheOtherWeapon(const char* szClassname)
 {
@@ -365,10 +344,7 @@ TYPEDESCRIPTION CBasePlayerItem::m_SaveData[] =
 	{
 		DEFINE_FIELD(CBasePlayerItem, m_pPlayer, FIELD_CLASSPTR),
 		DEFINE_FIELD(CBasePlayerItem, m_pNext, FIELD_CLASSPTR),
-		//DEFINE_FIELD( CBasePlayerItem, m_fKnown, FIELD_INTEGER ),Reset to zero on load
 		DEFINE_FIELD(CBasePlayerItem, m_iId, FIELD_INTEGER),
-		// DEFINE_FIELD( CBasePlayerItem, m_iIdPrimary, FIELD_INTEGER ),
-		// DEFINE_FIELD( CBasePlayerItem, m_iIdSecondary, FIELD_INTEGER ),
 };
 IMPLEMENT_SAVERESTORE(CBasePlayerItem, CBaseAnimating);
 
@@ -388,8 +364,6 @@ TYPEDESCRIPTION CBasePlayerWeapon::m_SaveData[] =
 		DEFINE_FIELD(CBasePlayerWeapon, m_iSecondaryAmmoType, FIELD_INTEGER),
 		DEFINE_FIELD(CBasePlayerWeapon, m_iClip, FIELD_INTEGER),
 		DEFINE_FIELD(CBasePlayerWeapon, m_iDefaultAmmo, FIELD_INTEGER),
-		//	DEFINE_FIELD( CBasePlayerWeapon, m_iClientClip, FIELD_INTEGER )	 , reset to zero on load so hud gets updated correctly
-		//  DEFINE_FIELD( CBasePlayerWeapon, m_iClientWeaponState, FIELD_INTEGER ), reset to zero on load so hud gets updated correctly
 };
 
 IMPLEMENT_SAVERESTORE(CBasePlayerWeapon, CBasePlayerItem);
@@ -642,16 +616,6 @@ bool CBasePlayerWeapon::AddDuplicate(CBasePlayerItem* pOriginal)
 
 void CBasePlayerWeapon::AddToPlayer(CBasePlayer* pPlayer)
 {
-	/*
-	if ((iFlags() & ITEM_FLAG_EXHAUSTIBLE) != 0 && m_iDefaultAmmo == 0 && m_iClip <= 0)
-	{
-		//This is an exhaustible weapon that has no ammo left. Don't add it, queue it up for destruction instead.
-		SetThink(&CSatchel::DestroyItem);
-		pev->nextthink = gpGlobals->time + 0.1;
-		return false;
-	}
-	*/
-
 	CBasePlayerItem::AddToPlayer(pPlayer);
 
 	pPlayer->SetWeaponBit(m_iId);
@@ -756,8 +720,6 @@ bool CBasePlayerWeapon::AddPrimaryAmmo(CBasePlayerWeapon* origin, int iCount, ch
 	{
 		iIdAmmo = m_pPlayer->GiveAmmo(iCount, szName, iMaxCarry);
 	}
-
-	// m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] = iMaxCarry; // hack for testing
 
 	if (iIdAmmo > 0)
 	{
@@ -1015,7 +977,6 @@ void CBasePlayerWeapon::DoRetireWeapon()
 	// first, no viewmodel at all.
 	m_pPlayer->pev->viewmodel = iStringNull;
 	m_pPlayer->pev->weaponmodel = iStringNull;
-	//m_pPlayer->pev->viewmodelindex = NULL;
 
 	g_pGameRules->GetNextBestWeapon(m_pPlayer, this);
 
@@ -1051,9 +1012,7 @@ float CBasePlayerWeapon::GetNextAttackDelay(float delay)
 	// we need to remember what the m_flNextPrimaryAttack time is set to for each shot,
 	// store it as m_flPrevPrimaryAttack.
 	m_flPrevPrimaryAttack = flNextAttack - UTIL_WeaponTimeBase();
-	// 	char szMsg[256];
-	// 	snprintf( szMsg, sizeof(szMsg), "next attack time: %0.4f\n", gpGlobals->time + flNextAttack );
-	// 	OutputDebugString( szMsg );
+
 	return flNextAttack;
 }
 
@@ -1176,8 +1135,6 @@ void CWeaponBox::Touch(CBaseEntity* pOther)
 			// there's some ammo of this type.
 			pPlayer->GiveAmmo(m_rgAmmo[i], STRING(m_rgiszAmmo[i]), MaxAmmoCarry(m_rgiszAmmo[i]));
 
-			//ALERT ( at_console, "Gave %d rounds of %s\n", m_rgAmmo[i], STRING(m_rgiszAmmo[i]) );
-
 			// now empty the ammo from the weaponbox since we just gave it to the player
 			m_rgiszAmmo[i] = iStringNull;
 			m_rgAmmo[i] = 0;
@@ -1196,8 +1153,6 @@ void CWeaponBox::Touch(CBaseEntity* pOther)
 			// have at least one weapon in this slot
 			while (m_rgpPlayerItems[i])
 			{
-				//ALERT ( at_console, "trying to give %s\n", STRING( m_rgpPlayerItems[ i ]->pev->classname ) );
-
 				pItem = m_rgpPlayerItems[i];
 				m_rgpPlayerItems[i] = m_rgpPlayerItems[i]->m_pNext; // unlink this weapon from the box
 
@@ -1260,8 +1215,6 @@ bool CWeaponBox::PackWeapon(CBasePlayerItem* pWeapon)
 	pWeapon->SetTouch(NULL);
 	pWeapon->m_pPlayer = NULL;
 
-	//ALERT ( at_console, "packed %s\n", STRING(pWeapon->pev->classname) );
-
 	return true;
 }
 
@@ -1283,7 +1236,6 @@ bool CWeaponBox::PackAmmo(int iszName, int iCount)
 
 	if (iMaxCarry != -1 && iCount > 0)
 	{
-		//ALERT ( at_console, "Packed %d rounds of %s\n", iCount, STRING(iszName) );
 		GiveAmmo(iCount, STRING(iszName), iMaxCarry);
 		return true;
 	}
@@ -1389,14 +1341,7 @@ void CBasePlayerWeapon::PrintState()
 {
 	ALERT(at_console, "primary:  %f\n", m_flNextPrimaryAttack);
 	ALERT(at_console, "idle   :  %f\n", m_flTimeWeaponIdle);
-
-	//	ALERT( at_console, "nextrl :  %f\n", m_flNextReload );
-	//	ALERT( at_console, "nextpum:  %f\n", m_flPumpTime );
-
-	//	ALERT( at_console, "m_frt  :  %f\n", m_fReloadTime );
 	ALERT(at_console, "m_finre:  %i\n", static_cast<int>(m_fInReload));
-	//	ALERT( at_console, "m_finsr:  %i\n", m_fInSpecialReload );
-
 	ALERT(at_console, "m_iclip:  %i\n", m_iClip);
 }
 
@@ -1420,7 +1365,6 @@ TYPEDESCRIPTION CShotgun::m_SaveData[] =
 		DEFINE_FIELD(CShotgun, m_flNextReload, FIELD_TIME),
 		DEFINE_FIELD(CShotgun, m_fInSpecialReload, FIELD_INTEGER),
 		DEFINE_FIELD(CShotgun, m_flNextReload, FIELD_TIME),
-		// DEFINE_FIELD( CShotgun, m_iShell, FIELD_INTEGER ),
 		DEFINE_FIELD(CShotgun, m_flPumpTime, FIELD_TIME),
 };
 IMPLEMENT_SAVERESTORE(CShotgun, CBasePlayerWeapon);
@@ -1428,18 +1372,12 @@ IMPLEMENT_SAVERESTORE(CShotgun, CBasePlayerWeapon);
 TYPEDESCRIPTION CGauss::m_SaveData[] =
 	{
 		DEFINE_FIELD(CGauss, m_fInAttack, FIELD_INTEGER),
-		//	DEFINE_FIELD( CGauss, m_flStartCharge, FIELD_TIME ),
-		//	DEFINE_FIELD( CGauss, m_flPlayAftershock, FIELD_TIME ),
-		//	DEFINE_FIELD( CGauss, m_flNextAmmoBurn, FIELD_TIME ),
 		DEFINE_FIELD(CGauss, m_fPrimaryFire, FIELD_BOOLEAN),
 };
 IMPLEMENT_SAVERESTORE(CGauss, CBasePlayerWeapon);
 
 TYPEDESCRIPTION CEgon::m_SaveData[] =
 	{
-		//	DEFINE_FIELD( CEgon, m_pBeam, FIELD_CLASSPTR ),
-		//	DEFINE_FIELD( CEgon, m_pNoise, FIELD_CLASSPTR ),
-		//	DEFINE_FIELD( CEgon, m_pSprite, FIELD_CLASSPTR ),
 		DEFINE_FIELD(CEgon, m_shootTime, FIELD_TIME),
 		DEFINE_FIELD(CEgon, m_fireState, FIELD_INTEGER),
 		DEFINE_FIELD(CEgon, m_fireMode, FIELD_INTEGER),

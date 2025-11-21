@@ -21,8 +21,6 @@
 #include "effects.h"
 #include "gamerules.h"
 
-#define TRIPMINE_PRIMARY_VOLUME 450
-
 #ifndef CLIENT_DLL
 
 class CTripmineGrenade : public CGrenade
@@ -37,7 +35,6 @@ class CTripmineGrenade : public CGrenade
 
 	bool TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType) override;
 
-	void EXPORT WarningThink();
 	void EXPORT PowerupThink();
 	void EXPORT BeamBreakThink();
 	void EXPORT DelayDeathThink();
@@ -67,8 +64,6 @@ TYPEDESCRIPTION CTripmineGrenade::m_SaveData[] =
 		DEFINE_FIELD(CTripmineGrenade, m_vecEnd, FIELD_POSITION_VECTOR),
 		DEFINE_FIELD(CTripmineGrenade, m_flBeamLength, FIELD_FLOAT),
 		DEFINE_FIELD(CTripmineGrenade, m_hOwner, FIELD_EHANDLE),
-		//Don't save, recreate.
-		//DEFINE_FIELD(CTripmineGrenade, m_pBeam, FIELD_CLASSPTR),
 		DEFINE_FIELD(CTripmineGrenade, m_posOwner, FIELD_POSITION_VECTOR),
 		DEFINE_FIELD(CTripmineGrenade, m_angleOwner, FIELD_VECTOR),
 		DEFINE_FIELD(CTripmineGrenade, m_pRealOwner, FIELD_EDICT),
@@ -138,17 +133,6 @@ void CTripmineGrenade::Precache()
 }
 
 
-void CTripmineGrenade::WarningThink()
-{
-	// play warning sound
-	// EMIT_SOUND( ENT(pev), CHAN_VOICE, "buttons/Blip2.wav", 1.0, ATTN_NORM );
-
-	// set to power up
-	SetThink(&CTripmineGrenade::PowerupThink);
-	pev->nextthink = gpGlobals->time + 1.0;
-}
-
-
 void CTripmineGrenade::PowerupThink()
 {
 	TraceResult tr;
@@ -197,7 +181,6 @@ void CTripmineGrenade::PowerupThink()
 		pev->nextthink = gpGlobals->time + 0.1;
 		return;
 	}
-	// ALERT( at_console, "%d %.0f %.0f %0.f\n", pev->owner, m_pOwner->pev->origin.x, m_pOwner->pev->origin.y, m_pOwner->pev->origin.z );
 
 	if (gpGlobals->time > m_flPowerUp)
 	{
@@ -228,8 +211,6 @@ void CTripmineGrenade::MakeBeam()
 {
 	TraceResult tr;
 
-	// ALERT( at_console, "serverflags %f\n", gpGlobals->serverflags );
-
 	UTIL_TraceLine(pev->origin, m_vecEnd, dont_ignore_monsters, ENT(pev), &tr);
 
 	m_flBeamLength = tr.flFraction;
@@ -243,8 +224,6 @@ void CTripmineGrenade::MakeBeam()
 	m_pBeam = CBeam::BeamCreate(g_pModelNameLaser, 10);
 	//Mark as temporary so the beam will be recreated on save game load and level transitions.
 	m_pBeam->pev->spawnflags |= SF_BEAM_TEMPORARY;
-	//PointEntInit causes clients to use the position of whatever the previous entity to use this edict had until the server updates them.
-	//m_pBeam->PointEntInit(vecTmpEnd, entindex());
 	m_pBeam->PointsInit(pev->origin, vecTmpEnd);
 	m_pBeam->SetColor(0, 214, 198);
 	m_pBeam->SetScrollRate(255);
@@ -261,8 +240,6 @@ void CTripmineGrenade::BeamBreakThink()
 	// HACKHACK Set simple box using this really nice global!
 	gpGlobals->trace_flags = FTRACE_SIMPLEBOX;
 	UTIL_TraceLine(pev->origin, m_vecEnd, dont_ignore_monsters, ENT(pev), &tr);
-
-	// ALERT( at_console, "%f : %f\n", tr.flFraction, m_flBeamLength );
 
 	// respawn detect.
 	if (!m_pBeam)
@@ -315,7 +292,6 @@ bool CTripmineGrenade::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacke
 	if (gpGlobals->time < m_flPowerUp && flDamage < pev->health)
 	{
 		// disable
-		// Create( "weapon_tripmine", pev->origin + m_vecDir * 24, pev->angles );
 		SetThink(&CTripmineGrenade::SUB_Remove);
 		pev->nextthink = gpGlobals->time + 0.1;
 		KillBeam();
@@ -475,13 +451,6 @@ void CTripmine::PrimaryAttack()
 				return;
 			}
 		}
-		else
-		{
-			// ALERT( at_console, "no deploy\n" );
-		}
-	}
-	else
-	{
 	}
 
 	m_flNextPrimaryAttack = GetNextAttackDelay(0.3);

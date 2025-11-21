@@ -348,7 +348,6 @@ void CHornet::TrackTarget()
 			WRITE_COORD(pev->origin.y);
 			WRITE_COORD(pev->origin.z);
 			WRITE_SHORT(iHornetPuff); // model
-			// WRITE_BYTE( 0 );				// life * 10
 			WRITE_BYTE(2);	 // size * 10
 			WRITE_BYTE(128); // brightness
 			MESSAGE_END();
