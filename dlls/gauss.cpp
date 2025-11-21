@@ -95,10 +95,10 @@ bool CGauss::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-bool CGauss::Deploy()
+void CGauss::Deploy()
 {
 	m_pPlayer->m_flPlayAftershock = 0.0;
-	return DefaultDeploy("models/v_gauss.mdl", "models/p_gauss.mdl", GAUSS_DRAW, "gauss");
+	DefaultDeploy("models/v_gauss.mdl", "models/p_gauss.mdl", GAUSS_DRAW, "gauss");
 }
 
 void CGauss::Holster()

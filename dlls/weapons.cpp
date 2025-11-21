@@ -790,53 +790,8 @@ bool CBasePlayerWeapon::AddSecondaryAmmo(int iCount, char* szName, int iMax)
 	return iIdAmmo > 0 ? true : false;
 }
 
-//=========================================================
-// IsUseable - this function determines whether or not a
-// weapon is useable by the player in its current state.
-// (does it have ammo loaded? do I have any ammo for the
-// weapon?, etc)
-//=========================================================
-bool CBasePlayerWeapon::IsUseable()
+void CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
 {
-	if (m_iClip > 0)
-	{
-		return true;
-	}
-
-	//Player has unlimited ammo for this weapon or does not use magazines
-	if (iMaxAmmo1() == WEAPON_NOCLIP)
-	{
-		return true;
-	}
-
-	if (m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0)
-	{
-		return true;
-	}
-
-	if (pszAmmo2())
-	{
-		//Player has unlimited ammo for this weapon or does not use magazines
-		if (iMaxAmmo2() == WEAPON_NOCLIP)
-		{
-			return true;
-		}
-
-		if (m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()] > 0)
-		{
-			return true;
-		}
-	}
-
-	// clip is empty (or nonexistant) and the player has no more ammo of this type.
-	return CanDeploy();
-}
-
-bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
-{
-	if (!CanDeploy())
-		return false;
-
 	m_pPlayer->TabulateAmmo();
 	m_pPlayer->pev->viewmodel = MAKE_STRING(szViewModel);
 	m_pPlayer->pev->weaponmodel = MAKE_STRING(szWeaponModel);
@@ -846,8 +801,6 @@ bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWea
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.0;
 	m_flLastFireTime = 0.0;
-
-	return true;
 }
 
 bool CBasePlayerWeapon::PlayEmptySound()
@@ -1015,12 +968,9 @@ void CBasePlayerWeapon::DoRetireWeapon()
 	// first, no viewmodel at all.
 	m_pPlayer->pev->viewmodel = iStringNull;
 	m_pPlayer->pev->weaponmodel = iStringNull;
-	//m_pPlayer->pev->viewmodelindex = NULL;
-
-	g_pGameRules->GetNextBestWeapon(m_pPlayer, this);
 
 	//If we're still equipped and we couldn't switch to another weapon, dequip this one
-	if (CanHolster() && m_pPlayer->m_pActiveItem == this)
+	if (!g_pGameRules->GetNextBestWeapon(m_pPlayer, this))
 	{
 		m_pPlayer->SwitchWeapon(nullptr);
 	}

@@ -45,6 +45,48 @@ void AddAmmoNameToAmmoRegistry(const char* szAmmoname, const char* weaponName)
 	ammoType.WeaponName = weaponName;
 }
 
+//=========================================================
+// IsUseable - this function determines whether or not a
+// weapon is useable by the player in its current state.
+// (does it have ammo loaded? do I have any ammo for the
+// weapon?, etc)
+//=========================================================
+bool CBasePlayerWeapon::IsUseable()
+{
+	if (m_iClip > 0)
+	{
+		return true;
+	}
+
+	//Player has unlimited ammo for this weapon or does not use magazines
+	if (iMaxAmmo1() == WEAPON_NOCLIP)
+	{
+		return true;
+	}
+
+	if (m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0)
+	{
+		return true;
+	}
+
+	if (pszAmmo2())
+	{
+		//Player has unlimited ammo for this weapon or does not use magazines
+		if (iMaxAmmo2() == WEAPON_NOCLIP)
+		{
+			return true;
+		}
+
+		if (m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()] > 0)
+		{
+			return true;
+		}
+	}
+
+	// clip is empty (or nonexistant) and the player has no more ammo of this type.
+	return CanDeploy();
+}
+
 bool CBasePlayerWeapon::CanDeploy()
 {
 	bool bHasAmmo = false;
@@ -202,41 +244,76 @@ void CBasePlayerWeapon::ItemPostFrame()
 	}
 }
 
-void CBasePlayer::SelectLastItem()
+bool CBasePlayer::CanSelectItem(CBasePlayerItem* pItem)
 {
-	if (!m_pLastItem)
+	/* Cannot select the active item, nor nothing at all. */
+	if (pItem == m_pActiveItem || pItem == nullptr)
 	{
-		return;
+		return false;
 	}
 
-	if (m_pActiveItem && !m_pActiveItem->CanHolster())
+	/* Cannot select a new item if the active item cannot be holstered. */
+	if (m_pActiveItem != nullptr && !m_pActiveItem->CanHolster())
 	{
-		return;
+		return false;
 	}
 
+	const auto pWeapon = pItem->GetWeaponPtr();
+
+	if (pWeapon != nullptr)
+	{
+		/* If it's a weapon, verify that it's usable. */
+		if (!pWeapon->IsUseable())
+		{
+			return false;
+		}
+	}
+	/* If it's an item, just check if it can deploy. */
+	else if (!pItem->CanDeploy())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+bool CBasePlayer::SelectItem(CBasePlayerItem* pItem)
+{
+	if (!CanSelectItem(pItem))
+	{
+		return false;
+	}
+
+	SwitchWeapon(pItem);
+
+	return true;
+}
+
+void CBasePlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
+{
 	ResetAutoaim();
 
-	// FIX, this needs to queue them up and delay
-	if (m_pActiveItem)
+	if (m_pActiveItem != nullptr)
+	{
 		m_pActiveItem->Holster();
-
-	CBasePlayerItem* pTemp = m_pActiveItem;
-	m_pActiveItem = m_pLastItem;
-	m_pLastItem = pTemp;
-
-	auto weapon = m_pActiveItem->GetWeaponPtr();
-
-	if (weapon)
-	{
-		weapon->m_ForceSendAnimations = true;
 	}
 
-	m_pActiveItem->Deploy();
+	m_pLastItem = m_pActiveItem;
 
-	if (weapon)
+	m_pActiveItem = pWeapon;
+
+	if (pWeapon != nullptr)
 	{
-		weapon->m_ForceSendAnimations = false;
-	}
+		pWeapon->m_ForceSendAnimations = true;
+		pWeapon->Deploy();
+		pWeapon->m_ForceSendAnimations = false;
 
-	m_pActiveItem->UpdateItemInfo();
+		pWeapon->UpdateItemInfo();
+	}
+}
+
+void CBasePlayer::SelectLastItem()
+{
+	SelectItem(m_pLastItem);
 }

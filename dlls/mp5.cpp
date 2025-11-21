@@ -88,9 +88,9 @@ bool CMP5::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-bool CMP5::Deploy()
+void CMP5::Deploy()
 {
-	return DefaultDeploy("models/v_9mmAR.mdl", "models/p_9mmAR.mdl", MP5_DEPLOY, "mp5");
+	DefaultDeploy("models/v_9mmAR.mdl", "models/p_9mmAR.mdl", MP5_DEPLOY, "mp5");
 }
 
 
