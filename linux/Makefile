@@ -21,6 +21,12 @@ PUBLIC_SRC_DIR=$(SOURCE_DIR)/public
 
 BUILD_OBJ_DIR=$(BUILD_DIR)/obj
 
+ifeq ($(strip $(HL_MOD_PATH)),)
+$(warning HL_MOD_PATH is empty or not set)
+endif
+
+MOD_PATH=${HL_MOD_PATH}
+
 ARCH=i386
 ELF-GC-DYNSTR=./elf-gc-dynstr
 
@@ -34,9 +40,9 @@ CPP_LIB:=-L$(shell g++ -m32 -print-file-name=libstdc++.so | xargs dirname) -lstd
 ARCH_CFLAGS=-march=pentium-m -mfpmath=387 -mno-sse
 
 ifeq "$(CFG)" "release"
-	ARCH_CFLAGS+=-O3 
+	ARCH_CFLAGS+=-O3
 else
-	ARCH_CFLAGS+=-gdwarf-2 -g2 
+	ARCH_CFLAGS+=-gdwarf-2 -g2
 endif
 
 BASE_CFLAGS=-std=c++17 -fpermissive -fno-strict-aliasing -fno-exceptions -fexpensive-optimizations -Werror=return-type -w
@@ -92,3 +98,22 @@ hl: build_dir
 
 clean:
 	-rm -rf $(BUILD_OBJ_DIR)
+
+ifneq ($(strip $(MOD_PATH)),)
+DLL_DIRECTORY=$(MOD_PATH)/dlls
+CL_DIRECTORY=$(MOD_PATH)/cl_dlls
+PARENT_DIR := $(shell dirname $(CURDIR))/mod_data
+
+copy_mod_data:
+	-rsync -a --prune-empty-dirs $(PARENT_DIR)/* $(MOD_PATH)/
+
+setup_mod:
+	-mkdir -p $(DLL_DIRECTORY);
+	-mkdir -p $(CL_DIRECTORY);
+
+copydlls_to_mod:
+	-cp $(BUILD_DIR)/hl.so $(DLL_DIRECTORY)
+	-cp $(BUILD_DIR)/client.so $(CL_DIRECTORY)
+
+build_mod: clean all setup_mod copydlls_to_mod copy_mod_data
+endif
