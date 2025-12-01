@@ -25,7 +25,6 @@ void HUD_PlaybackEvent(int flags, const struct edict_s* pInvoker, unsigned short
 void HUD_SetMaxSpeed(const struct edict_s* ed, float speed);
 int stub_PrecacheModel(const char* s);
 int stub_PrecacheSound(const char* s);
-unsigned short stub_PrecacheEvent(int type, const char* s);
 const char* stub_NameForFunction(uint32 function);
 void stub_SetModel(struct edict_s* e, const char* m);
 

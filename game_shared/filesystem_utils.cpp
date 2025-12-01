@@ -342,3 +342,32 @@ bool UTIL_IsValveGameDirectory()
 
 	return false;
 }
+
+bool UTIL_CheckEventScript(const char* const szEventScript)
+{
+	if (g_pFileSystem->FileExists(szEventScript))
+	{
+		return true;
+	}
+
+#ifdef CLIENT_DLL
+	gEngfuncs.Con_DPrintf("creating %s\n", szEventScript);
+#else
+	ALERT(at_console, "creating %s\n", szEventScript);
+#endif
+
+	FSFile eventScript {szEventScript, "w", "GAMECONFIG"};
+
+	if (eventScript.IsOpen())
+	{
+		return true;
+	}
+
+#ifdef CLIENT_DLL
+	gEngfuncs.Con_DPrintf("failed to create %s\n", szEventScript);
+#else
+	ALERT(at_console, "failed to create %s\n", szEventScript);
+#endif
+
+	return false;
+}
