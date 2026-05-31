@@ -3,53 +3,75 @@ name: CI/CD
 on: [push, pull_request]
 
 jobs:
-  linux:
-    name: Linux-x86
+  linux_native:
+    name: Linux i386 - Native
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [g++, clang++]
+        compiler: [clang++, g++]
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
-      
-      - name: Install G++ Multilib, Clang++ & OpenGL library
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Setup
         run: |
-          sudo apt update
-          sudo apt install -y g++-multilib clang libgl1-mesa-dev
-      
+          sudo dpkg --add-architecture i386 && sudo apt-get update
+          if [[ "${{ matrix.compiler }}" == "clang++" ]]; then
+            sudo apt-get install -y clang g++-multilib libgl-dev:i386
+          elif [[ "${{ matrix.compiler }}" == "g++" ]]; then
+            sudo apt-get install -y g++-multilib libgl-dev:i386
+          fi
+
       - name: Build
         run: |
           cd linux
-          make COMPILER=${{ matrix.compiler }} CFG=release -j2
-      
+          make CFG=release COMPILER=${{ matrix.compiler }} -j2
+
       - name: Deploy
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: Linux-x86-${{ matrix.compiler }}
+          name: Linux-i386-native-${{ matrix.compiler }}
           path: |
             linux/release/client.so
             linux/release/client.so.dbg
             linux/release/hl.so
             linux/release/hl.so.dbg
-      
+  linux_steamrt_scout:
+    name: Linux i386 - Steam Runtime v1 (scout)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Build
+        run: docker run --rm -v ${{ github.workspace }}:/src -w /src registry.gitlab.steamos.cloud/steamrt/scout/sdk/i386:latest sh -c 'cd /src/linux && make CFG=release COMPILER=g++-9 -j2'
+
+      - name: Deploy
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: Linux-i386-steamrt-scout
+          path: |
+            linux/release/client.so
+            linux/release/client.so.dbg
+            linux/release/hl.so
+            linux/release/hl.so.dbg
   win32:
     name: Win32
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
-      
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
       - name: Add MSBuild to PATH
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
         with:
           msbuild-architecture: x86
-      
+
       - name: Build
-        run: msbuild projects/vs2019/projects.sln -t:rebuild -property:Configuration=Release -maxcpucount:2
-      
+        run: MSBuild -maxCpuCount:2 -property:Configuration=Release -target:Rebuild projects/vs2019/projects.sln
+
       - name: Deploy
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: Win32
           path: |
@@ -57,4 +79,3 @@ jobs:
             projects/vs2019/Release/hl_cdll/client.pdb
             projects/vs2019/Release/hldll/hl.dll
             projects/vs2019/Release/hldll/hl.pdb
-      
