@@ -158,7 +158,7 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 
 void CGlock::Reload()
 {
-	if (m_pPlayer->ammo_9mm <= 0)
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		return;
 
 	bool iResult = DefaultReload(17, m_iClip > 0 ? GLOCK_RELOAD_NOT_EMPTY : GLOCK_RELOAD, 1.5);

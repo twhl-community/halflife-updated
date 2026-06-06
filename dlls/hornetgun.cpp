@@ -123,7 +123,7 @@ void CHgun::PrimaryAttack()
 {
 	Reload();
 
-	if (m_pPlayer->ammo_hornets <= 0)
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 	{
 		return;
 	}
@@ -177,7 +177,7 @@ void CHgun::SecondaryAttack()
 {
 	Reload();
 
-	if (m_pPlayer->ammo_hornets <= 0)
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 	{
 		return;
 	}

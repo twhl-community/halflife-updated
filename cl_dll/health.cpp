@@ -99,15 +99,20 @@ bool CHudHealth::MsgFunc_Health(const char* pszName, int iSize, void* pbuf)
 {
 	// TODO: update local health data
 	BEGIN_READ(pbuf, iSize);
-	int x = READ_SHORT();
+	int iHealth = READ_SHORT();
 
+	return Update_Health(iHealth);
+}
+
+bool CHudHealth::Update_Health(const int iHealth)
+{
 	m_iFlags |= HUD_ACTIVE;
 
 	// Only update the fade if we've changed health
-	if (x != m_iHealth)
+	if (iHealth != m_iHealth)
 	{
 		m_fFade = FADE_TIME;
-		m_iHealth = x;
+		m_iHealth = iHealth;
 	}
 
 	return true;

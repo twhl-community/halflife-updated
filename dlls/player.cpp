@@ -1087,14 +1087,6 @@ all the ammo we have into the ammo vars.
 */
 void CBasePlayer::TabulateAmmo()
 {
-	ammo_9mm = AmmoInventory(GetAmmoIndex("9mm"));
-	ammo_357 = AmmoInventory(GetAmmoIndex("357"));
-	ammo_argrens = AmmoInventory(GetAmmoIndex("ARgrenades"));
-	ammo_bolts = AmmoInventory(GetAmmoIndex("bolts"));
-	ammo_buckshot = AmmoInventory(GetAmmoIndex("buckshot"));
-	ammo_rockets = AmmoInventory(GetAmmoIndex("rockets"));
-	ammo_uranium = AmmoInventory(GetAmmoIndex("uranium"));
-	ammo_hornets = AmmoInventory(GetAmmoIndex("Hornets"));
 }
 
 
@@ -3009,7 +3001,6 @@ void CBasePlayer::Spawn()
 	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
 	{
 		m_rgAmmo[i] = 0;
-		m_rgAmmoLast[i] = 0; // client ammo values also have to be reset  (the death hud clear messages does on the client side)
 	}
 
 	m_lastx = m_lasty = 0;
@@ -3017,6 +3008,11 @@ void CBasePlayer::Spawn()
 	m_flNextChatTime = gpGlobals->time;
 
 	g_pGameRules->PlayerSpawn(this);
+
+	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		m_rgAmmoLast[i] = -1;
+	}
 }
 
 
@@ -4075,6 +4071,10 @@ void CBasePlayer::UpdateClientData()
 {
 	const bool fullHUDInitRequired = m_fInitHUD != false;
 
+#if defined(CLIENT_WEAPONS)
+	const bool updateData = fullHUDInitRequired || m_bRestored || !ENGINE_CANSKIP(edict());
+#endif
+
 	if (m_fInitHUD)
 	{
 		m_fInitHUD = false;
@@ -4114,7 +4114,11 @@ void CBasePlayer::UpdateClientData()
 		m_iClientHideHUD = m_iHideHUD;
 	}
 
-	if (m_iFOV != m_iClientFOV)
+	if (
+#if defined(CLIENT_WEAPONS)
+		updateData && 
+#endif
+		m_iFOV != m_iClientFOV)
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgSetFOV, NULL, pev);
 		WRITE_BYTE(m_iFOV);
@@ -4133,7 +4137,11 @@ void CBasePlayer::UpdateClientData()
 		gDisplayTitle = false;
 	}
 
-	if (pev->health != m_iClientHealth)
+	if (
+#if defined(CLIENT_WEAPONS)
+		updateData && 
+#endif
+		pev->health != m_iClientHealth)
 	{
 		int iHealth = std::clamp<float>(pev->health, 0.f, (float)(std::numeric_limits<short>::max())); // make sure that no negative health values are sent
 		if (pev->health > 0.0f && pev->health <= 1.0f)
@@ -4316,30 +4324,35 @@ void CBasePlayer::UpdateClientData()
 	}
 
 
-	SendAmmoUpdate();
-
-	// Update all the items
-	for (int i = 0; i < MAX_ITEM_TYPES; i++)
+#if defined(CLIENT_WEAPONS)
+	if (updateData)
+#endif
 	{
-		if (m_rgpPlayerItems[i]) // each item updates it's successors
-			m_rgpPlayerItems[i]->UpdateClientData(this);
-	}
+		SendAmmoUpdate();
 
-	//Active item is becoming null, or we're sending all HUD state to client
-	//Only if we're not in Observer mode, which uses the target player's weapon
-	if (pev->iuser1 == OBS_NONE && !m_pActiveItem && ((m_pClientActiveItem != m_pActiveItem) || fullHUDInitRequired))
-	{
-		//Tell ammo hud that we have no weapon selected
-		MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, NULL, pev);
-		WRITE_BYTE(0);
-		WRITE_BYTE(0);
-		WRITE_BYTE(0);
-		MESSAGE_END();
-	}
+		// Update all the items
+		for (int i = 0; i < MAX_ITEM_TYPES; i++)
+		{
+			if (m_rgpPlayerItems[i]) // each item updates it's successors
+				m_rgpPlayerItems[i]->UpdateClientData(this);
+		}
 
-	// Cache and client weapon change
-	m_pClientActiveItem = m_pActiveItem;
-	m_iClientFOV = m_iFOV;
+		//Active item is becoming null, or we're sending all HUD state to client
+		//Only if we're not in Observer mode, which uses the target player's weapon
+		if (pev->iuser1 == OBS_NONE && !m_pActiveItem && ((m_pClientActiveItem != m_pActiveItem) || fullHUDInitRequired))
+		{
+			//Tell ammo hud that we have no weapon selected
+			MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, NULL, pev);
+			WRITE_BYTE(0);
+			WRITE_BYTE(0);
+			WRITE_BYTE(0);
+			MESSAGE_END();
+		}
+
+		// Cache and client weapon change
+		m_pClientActiveItem = m_pActiveItem;
+		m_iClientFOV = m_iFOV;
+	}
 
 	// Update Status Bar
 	if (m_flNextSBarUpdateTime < gpGlobals->time)
