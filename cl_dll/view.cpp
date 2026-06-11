@@ -66,6 +66,8 @@ extern cvar_t* cl_bobtilt;
 #define CAM_MODE_RELAX 1
 #define CAM_MODE_FOCUS 2
 
+ref_params_t gRefParams;
+
 Vector v_origin, v_angles, v_cl_angles, v_sim_org, v_lastAngles;
 float v_frametime, v_lastDistance;
 float v_cameraRelaxAngle = 5.0f;
@@ -1644,6 +1646,8 @@ void DLLEXPORT V_CalcRefdef(struct ref_params_s* pparams)
 		V_CalcNormalRefdef(pparams);
 	}
 
+	gRefParams = *pparams;
+
 	/*
 // Example of how to overlay the whole screen with red at 50 % alpha
 #define SF_TEST
@@ -1757,10 +1761,10 @@ void V_Move(int mx, int my)
 	Vector farpoint;
 	pmtrace_t tr;
 
-	fov = CalcFov(in_fov, (float)ScreenWidth, (float)ScreenHeight);
+	fov = CalcFov(in_fov, (float)gHUD.GetWidth(), (float)gHUD.GetHeight());
 
-	c_x = (float)ScreenWidth / 2.0;
-	c_y = (float)ScreenHeight / 2.0;
+	c_x = (float)gHUD.GetWidth() / 2.0;
+	c_y = (float)gHUD.GetHeight() / 2.0;
 
 	dx = (float)mx - c_x;
 	dy = (float)my - c_y;

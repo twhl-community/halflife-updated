@@ -33,7 +33,7 @@ extern float* GetClientColor(int clientIndex);
 #define MAX_CHARS_PER_LINE 256 /* it can be less than this, depending on char size */
 
 // allow 20 pixels on either side of the text
-#define MAX_LINE_WIDTH (ScreenWidth - 40)
+#define MAX_LINE_WIDTH (gHUD.GetWidth() - 40)
 #define LINE_START 10
 static float SCROLL_SPEED = 5;
 
@@ -241,7 +241,7 @@ void CHudSayText::SayTextPrint(const char* pszBuf, int iBufSize, int clientIndex
 	m_iFlags |= HUD_ACTIVE;
 	PlaySound("misc/talk.wav", 1);
 
-	Y_START = ScreenHeight - 60 - (line_height * (MAX_LINES + 2));
+	Y_START = gHUD.GetHeight() - 60 - (line_height * (MAX_LINES + 2));
 }
 
 void CHudSayText::EnsureTextFitsInOneLineAndWrapIfHaveTo(int line)

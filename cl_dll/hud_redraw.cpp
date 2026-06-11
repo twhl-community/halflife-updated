@@ -170,7 +170,7 @@ bool CHud::Redraw(float flTime, bool intermission)
 		SPR_Set(m_hsprLogo, 250, 250, 250);
 
 		x = SPR_Width(m_hsprLogo, 0);
-		x = ScreenWidth - x;
+		x = gHUD.GetWidth() - x;
 		y = SPR_Height(m_hsprLogo, 0) / 2;
 
 		// Draw the logo at 20 fps
@@ -215,7 +215,7 @@ void ScaleColors(int& r, int& g, int& b, int a)
 
 int CHud::DrawHudString(int xpos, int ypos, int iMaxX, const char* szIt, int r, int g, int b)
 {
-	return xpos + gEngfuncs.pfnDrawString(xpos, ypos, szIt, r, g, b);
+	return DrawString(xpos, ypos, szIt, r, g, b);
 }
 
 int CHud::DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r, int g, int b)
@@ -228,7 +228,7 @@ int CHud::DrawHudNumberString(int xpos, int ypos, int iMinX, int iNumber, int r,
 // draws a string from right to left (right-aligned)
 int CHud::DrawHudStringReverse(int xpos, int ypos, int iMinX, const char* szString, int r, int g, int b)
 {
-	return xpos - gEngfuncs.pfnDrawStringReverse(xpos, ypos, szString, r, g, b);
+	return DrawStringReverse(xpos, ypos, szString, r, g, b);
 }
 
 int CHud::DrawHudNumber(int x, int y, int iFlags, int iNumber, int r, int g, int b)
