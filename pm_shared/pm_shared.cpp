@@ -2570,15 +2570,6 @@ void PM_Jump()
 		return;
 	}
 
-	const bool tfc = atoi(pmove->PM_Info_ValueForKey(pmove->physinfo, "tfc")) == 1;
-
-	// Spy that's feigning death cannot jump
-	if (tfc &&
-		(pmove->deadflag == (DEAD_DISCARDBODY + 1)))
-	{
-		return;
-	}
-
 	// See if we are waterjumping.  If so, decrement count and return.
 	if (0 != pmove->waterjumptime)
 	{
@@ -2648,14 +2639,7 @@ void PM_Jump()
 	// Don't play jump sounds while frozen.
 	if ((pmove->flags & FL_FROZEN) == 0)
 	{
-		if (tfc)
-		{
-			pmove->PM_PlaySound(CHAN_BODY, "player/plyrjmp8.wav", 0.5, ATTN_NORM, 0, PITCH_NORM);
-		}
-		else
-		{
-			PM_PlayStepSound(PM_MapTextureTypeStepType(pmove->chtexturetype), 1.0);
-		}
+		PM_PlayStepSound(PM_MapTextureTypeStepType(pmove->chtexturetype), 1.0);
 	}
 
 	// See if user can super long jump?
@@ -2796,13 +2780,6 @@ void PM_CheckFalling()
 		}
 		else if (pmove->flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED / 2)
 		{
-			const bool tfc = atoi(pmove->PM_Info_ValueForKey(pmove->physinfo, "tfc")) == 1;
-
-			if (tfc)
-			{
-				pmove->PM_PlaySound(CHAN_VOICE, "player/pl_fallpain3.wav", 1, ATTN_NORM, 0, PITCH_NORM);
-			}
-
 			fvol = 0.85;
 		}
 		else if (pmove->flFallVelocity < PLAYER_MIN_BOUNCE_SPEED)

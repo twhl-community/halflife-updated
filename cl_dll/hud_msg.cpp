@@ -50,9 +50,6 @@ bool CHud::MsgFunc_ResetHUD(const char* pszName, int iSize, void* pbuf)
 	// reset sensitivity
 	m_flMouseSensitivity = 0;
 
-	// reset concussion effect
-	m_iConcussionEffect = 0;
-
 	return true;
 }
 
@@ -127,21 +124,6 @@ bool CHud::MsgFunc_Damage(const char* pszName, int iSize, void* pbuf)
 
 	// TODO: kick viewangles,  show damage visually
 
-	return true;
-}
-
-bool CHud::MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf)
-{
-	BEGIN_READ(pbuf, iSize);
-	m_iConcussionEffect = READ_BYTE();
-	if (0 != m_iConcussionEffect)
-	{
-		int r, g, b;
-		UnpackRGB(r, g, b, RGB_YELLOWISH);
-		this->m_StatusIcons.EnableIcon("dmg_concuss", r, g, b);
-	}
-	else
-		this->m_StatusIcons.DisableIcon("dmg_concuss");
 	return true;
 }
 
