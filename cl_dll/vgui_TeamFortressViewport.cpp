@@ -683,11 +683,6 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 	// First, read in the localisation strings
 
-	// Detpack strings
-	gHUD.m_TextMessage.LocaliseTextString("#DetpackSet_For5Seconds", m_sDetpackStrings[0], MAX_BUTTON_SIZE);
-	gHUD.m_TextMessage.LocaliseTextString("#DetpackSet_For20Seconds", m_sDetpackStrings[1], MAX_BUTTON_SIZE);
-	gHUD.m_TextMessage.LocaliseTextString("#DetpackSet_For50Seconds", m_sDetpackStrings[2], MAX_BUTTON_SIZE);
-
 	// Now start parsing the menu structure
 	m_pCurrentCommandMenu = m_pCommandMenus[newIndex];
 	char szLastButtonText[32] = "file start";
@@ -880,23 +875,6 @@ int TeamFortressViewport::CreateCommandMenu(const char* menuFile, bool direction
 
 	m_iInitialized = true;
 	return newIndex;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Creates all the class choices under a spy's disguise menus, and
-//			maps a command to them
-// Output : CCommandMenu
-//-----------------------------------------------------------------------------
-CCommandMenu* TeamFortressViewport::CreateDisguiseSubmenu(CommandButton* pButton, CCommandMenu* pParentMenu, const char* commandText, int iYOffset, int iXOffset)
-{
-	// create the submenu, under which the class choices will be listed
-	CCommandMenu* pMenu = CreateSubMenu(pButton, pParentMenu, iYOffset, iXOffset);
-	m_pCommandMenus[m_iNumMenus] = pMenu;
-	m_iNumMenus++;
-
-	// create the class choice buttons
-
-	return pMenu;
 }
 
 //-----------------------------------------------------------------------------
@@ -1093,21 +1071,6 @@ void TeamFortressViewport::HideScoreBoard()
 		GetClientVoiceMgr()->StopSquelchMode();
 
 		UpdateCursorState();
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Activate's the player special ability
-//			called when the player hits their "special" key
-//-----------------------------------------------------------------------------
-void TeamFortressViewport::InputPlayerSpecial()
-{
-	if (!m_iInitialized)
-		return;
-
-	{
-		// if it's any other class, just send the command down to the server
-		EngineClientCmd("_special");
 	}
 }
 
@@ -1915,43 +1878,11 @@ bool TeamFortressViewport::MsgFunc_TeamNames(const char* pszName, int iSize, voi
 		// Set the team name buttons
 		if (m_pTeamButtons[i])
 			m_pTeamButtons[i]->setText(m_sTeamNames[teamNum]);
-
-		// range check this value...m_pDisguiseButtons[5];
-		if (teamNum < 5)
-		{
-			// Set the disguise buttons
-			if (m_pDisguiseButtons[teamNum])
-				m_pDisguiseButtons[teamNum]->setText(m_sTeamNames[teamNum]);
-		}
 	}
 
 	// Update the Team Menu
 	if (m_pTeamMenu)
 		m_pTeamMenu->Update();
-
-	return true;
-}
-
-bool TeamFortressViewport::MsgFunc_Feign(const char* pszName, int iSize, void* pbuf)
-{
-	BEGIN_READ(pbuf, iSize);
-
-	m_iIsFeigning = READ_BYTE() != 0;
-
-	// Force the menu to update
-	UpdateCommandMenu(m_StandardMenu);
-
-	return true;
-}
-
-bool TeamFortressViewport::MsgFunc_Detpack(const char* pszName, int iSize, void* pbuf)
-{
-	BEGIN_READ(pbuf, iSize);
-
-	m_iIsSettingDetpack = READ_BYTE();
-
-	// Force the menu to update
-	UpdateCommandMenu(m_StandardMenu);
 
 	return true;
 }
@@ -1994,18 +1925,6 @@ bool TeamFortressViewport::MsgFunc_MOTD(const char* pszName, int iSize, void* pb
 	{
 		ShowVGUIMenu(MENU_INTRO);
 	}
-
-	return true;
-}
-
-bool TeamFortressViewport::MsgFunc_BuildSt(const char* pszName, int iSize, void* pbuf)
-{
-	BEGIN_READ(pbuf, iSize);
-
-	m_iBuildState = READ_SHORT();
-
-	// Force the menu to update
-	UpdateCommandMenu(m_StandardMenu);
 
 	return true;
 }
@@ -2139,21 +2058,6 @@ bool TeamFortressViewport::MsgFunc_AllowSpec(const char* pszName, int iSize, voi
 	// If the team menu is up, update it too
 	if (m_pTeamMenu)
 		m_pTeamMenu->Update();
-
-	return true;
-}
-
-
-// used to reset the player's screen immediately
-bool TeamFortressViewport::MsgFunc_ResetFade(const char* pszName, int iSize, void* pbuf)
-{
-
-	return true;
-}
-
-// used to fade a player's screen out/in when they're spectating someone who is teleported
-bool TeamFortressViewport::MsgFunc_SpecFade(const char* pszName, int iSize, void* pbuf)
-{
 
 	return true;
 }

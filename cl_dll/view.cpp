@@ -98,8 +98,6 @@ cvar_t v_iyaw_level = {"v_iyaw_level", "0.3", 0, 0.3};
 cvar_t v_iroll_level = {"v_iroll_level", "0.1", 0, 0.1};
 cvar_t v_ipitch_level = {"v_ipitch_level", "0.3", 0, 0.3};
 
-float v_idlescale; // used by TFC for concussion grenade effect
-
 //=============================================================================
 /*
 void V_NormalizeAngles( Vector& angles )
@@ -358,7 +356,7 @@ void V_DriftPitch(struct ref_params_s* pparams)
 V_CalcGunAngle
 ==================
 */
-void V_CalcGunAngle(struct ref_params_s* pparams)
+void V_CalcGunAngle(struct ref_params_s* pparams, const float flIdleScale = 0.0F)
 {
 	cl_entity_t* viewent;
 
@@ -368,11 +366,15 @@ void V_CalcGunAngle(struct ref_params_s* pparams)
 
 	viewent->angles[YAW] = pparams->viewangles[YAW] + pparams->crosshairangle[YAW];
 	viewent->angles[PITCH] = -pparams->viewangles[PITCH] + pparams->crosshairangle[PITCH] * 0.25;
-	viewent->angles[ROLL] -= v_idlescale * sin(pparams->time * v_iroll_cycle.value) * v_iroll_level.value;
 
-	// don't apply all of the v_ipitch to prevent normally unseen parts of viewmodel from coming into view.
-	viewent->angles[PITCH] -= v_idlescale * sin(pparams->time * v_ipitch_cycle.value) * (v_ipitch_level.value * 0.5);
-	viewent->angles[YAW] -= v_idlescale * sin(pparams->time * v_iyaw_cycle.value) * v_iyaw_level.value;
+	if (flIdleScale != 0.0F)
+	{
+		viewent->angles[ROLL] -= flIdleScale * sin(pparams->time * v_iroll_cycle.value) * v_iroll_level.value;
+
+		// don't apply all of the v_ipitch to prevent normally unseen parts of viewmodel from coming into view.
+		viewent->angles[PITCH] -= flIdleScale * sin(pparams->time * v_ipitch_cycle.value) * (v_ipitch_level.value * 0.5);
+		viewent->angles[YAW] -= flIdleScale * sin(pparams->time * v_iyaw_cycle.value) * v_iyaw_level.value;
+	}
 }
 
 /*
@@ -382,11 +384,14 @@ V_AddIdle
 Idle swaying
 ==============
 */
-void V_AddIdle(struct ref_params_s* pparams)
+void V_AddIdle(struct ref_params_s* pparams, const float flIdleScale = 0.0F)
 {
-	pparams->viewangles[ROLL] += v_idlescale * sin(pparams->time * v_iroll_cycle.value) * v_iroll_level.value;
-	pparams->viewangles[PITCH] += v_idlescale * sin(pparams->time * v_ipitch_cycle.value) * v_ipitch_level.value;
-	pparams->viewangles[YAW] += v_idlescale * sin(pparams->time * v_iyaw_cycle.value) * v_iyaw_level.value;
+	if (flIdleScale != 0.0F)
+	{
+		pparams->viewangles[ROLL] += flIdleScale * sin(pparams->time * v_iroll_cycle.value) * v_iroll_level.value;
+		pparams->viewangles[PITCH] += flIdleScale * sin(pparams->time * v_ipitch_cycle.value) * v_ipitch_level.value;
+		pparams->viewangles[YAW] += flIdleScale * sin(pparams->time * v_iyaw_cycle.value) * v_iyaw_level.value;
+	}
 }
 
 
@@ -429,7 +434,6 @@ V_CalcIntermissionRefdef
 void V_CalcIntermissionRefdef(struct ref_params_s* pparams)
 {
 	cl_entity_t *ent, *view;
-	float old;
 
 	// ent is the player model ( visible when out of body )
 	ent = gEngfuncs.GetLocalPlayer();
@@ -443,10 +447,7 @@ void V_CalcIntermissionRefdef(struct ref_params_s* pparams)
 	view->model = NULL;
 
 	// allways idle in intermission
-	old = v_idlescale;
-	v_idlescale = 1;
-
-	V_AddIdle(pparams);
+	V_AddIdle(pparams, 1.0F);
 
 	if (0 != gEngfuncs.IsSpectateOnly())
 	{
@@ -454,8 +455,6 @@ void V_CalcIntermissionRefdef(struct ref_params_s* pparams)
 		VectorCopy(gHUD.m_Spectator.m_cameraOrigin, pparams->vieworg);
 		VectorCopy(gHUD.m_Spectator.m_cameraAngles, pparams->viewangles);
 	}
-
-	v_idlescale = old;
 
 	v_cl_angles = pparams->cl_viewangles;
 	v_origin = pparams->vieworg;

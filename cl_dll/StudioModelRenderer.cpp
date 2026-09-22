@@ -21,15 +21,7 @@
 #include "StudioModelRenderer.h"
 #include "GameStudioModelRenderer.h"
 
-extern cvar_t* tfc_newmodels;
-
 extern extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1];
-
-// team colors for old TFC models
-#define TEAM1_COLOR 150
-#define TEAM2_COLOR 250
-#define TEAM3_COLOR 45
-#define TEAM4_COLOR 100
 
 int m_nPlayerGaitSequences[MAX_PLAYERS];
 

@@ -24,7 +24,6 @@
 // custom scheme handling
 #include "vgui_SchemeManager.h"
 
-#define TF_DEFS_ONLY
 #define PC_LASTCLASS 10
 #define PC_UNDEFINED 0
 #define MENU_DEFAULT				1
@@ -44,7 +43,6 @@ class SpectatorPanel;
 class CCommandMenu;
 class CommandLabel;
 class CommandButton;
-class BuildButton;
 class ClassButton;
 class CMenuPanel;
 class DragNDropPanel;
@@ -517,24 +515,16 @@ private:
 
 	//  Command Menu Team buttons
 	CommandButton *m_pTeamButtons[6];
-	CommandButton *m_pDisguiseButtons[5];
-	BuildButton   *m_pBuildButtons[3];
-	BuildButton   *m_pBuildActiveButtons[3];
 
 	bool		m_iAllowSpectators;
 
 	// Data for specific sections of the Command Menu
 	int			m_iValidClasses[5];
-	bool		m_iIsFeigning;
-	int			m_iIsSettingDetpack;
 	int			m_iNumberOfTeams;
-	int			m_iBuildState;
 	bool		m_iRandomPC;
 	char		m_sTeamNames[5][MAX_TEAMNAME_SIZE];
 
 	// Localisation strings
-	char		m_sDetpackStrings[3][MAX_BUTTON_SIZE];
-
 	char		m_sMapName[64];
 
 	// helper function to update the player menu entries
@@ -547,7 +537,6 @@ public:
 	int		CreateCommandMenu( const char * menuFile, bool direction, int yOffset, bool flatDesign, float flButtonSizeX, float flButtonSizeY, int xOffset );
 	void	CreateScoreBoard( void );
 	CommandButton * CreateCustomButton( char *pButtonText, char * pButtonName, int  iYOffset );
-	CCommandMenu *	CreateDisguiseSubmenu( CommandButton *pButton, CCommandMenu *pParentMenu, const char *commandText, int iYOffset, int iXOffset = 0 );
 
 	void UpdateCursorState( void );
 	void UpdateCommandMenu(int menuIndex);
@@ -556,7 +545,6 @@ public:
 	void UpdateSpectatorPanel( void );
 
 	bool KeyInput( bool down, int keynum, const char *pszCurrentBinding );
-	void InputPlayerSpecial( void );
 	void GetAllPlayersInfo( void );
 	void DeathMsg( int killer, int victim );
 
@@ -583,9 +571,6 @@ public:
 	// Data Handlers
 	int GetValidClasses(int iTeam) { return m_iValidClasses[iTeam]; };
 	int GetNumberOfTeams() { return m_iNumberOfTeams; };
-	bool GetIsFeigning() { return m_iIsFeigning; };
-	int GetIsSettingDetpack() { return m_iIsSettingDetpack; };
-	int GetBuildState() { return m_iBuildState; };
 	bool IsRandomPC() { return m_iRandomPC; };
 	char *GetTeamName( int iTeam ) { return m_sTeamNames[iTeam]; };
 	bool GetAllowSpectators() { return m_iAllowSpectators; };
@@ -593,11 +578,8 @@ public:
 	// Message Handlers
 	bool MsgFunc_ValClass(const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_TeamNames(const char *pszName, int iSize, void *pbuf );
-	bool MsgFunc_Feign(const char *pszName, int iSize, void *pbuf );
-	bool MsgFunc_Detpack(const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_VGUIMenu(const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_MOTD( const char *pszName, int iSize, void *pbuf );
-	bool MsgFunc_BuildSt( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_RandomPC( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_ServerName( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf );
@@ -605,8 +587,6 @@ public:
 	bool MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf );
-	bool MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf );	
-	bool MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf );	
 
 	// Input
 	bool SlotInput( int iSlot );
@@ -1008,26 +988,6 @@ public:
 	}
 };
 
-class FeignButton : public CommandButton
-{
-private:
-	bool m_iFeignState;
-public:
-	FeignButton( bool iState, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall)
-	{
-		m_iFeignState = iState;
-	}
-
-	virtual bool IsNotValid()
-	{
-		// Only visible for spies
-
-		if (m_iFeignState == gViewPort->GetIsFeigning())
-			return false;
-		return true;
-	}
-};
-
 class SpectateButton : public CommandButton
 {
 public:
@@ -1042,90 +1002,6 @@ public:
 			return false;
 
 		return true;
-	}
-};
-
-#define		DISGUISE_TEAM1		(1<<0)
-#define		DISGUISE_TEAM2		(1<<1)
-#define		DISGUISE_TEAM3		(1<<2)
-#define		DISGUISE_TEAM4		(1<<3)
-
-class DisguiseButton : public CommandButton
-{
-private:
-	int m_iValidTeamsBits;
-	int m_iThisTeam;
-public:
-	DisguiseButton( int iValidTeamNumsBits, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall,false )
-	{
-		m_iValidTeamsBits = iValidTeamNumsBits;
-	}
-
-	virtual bool IsNotValid()
-	{
-
-		// if it's not tied to a specific team, then always show (for spies)
-		if ( !m_iValidTeamsBits )
-			return false;
-
-		// if we're tied to a team make sure we can change to that team
-		int iTmp = 1 << (gViewPort->GetNumberOfTeams() - 1);
-		if ( m_iValidTeamsBits & iTmp )
-			return false;
-		return true;
-	}
-};
-
-class DetpackButton : public CommandButton
-{
-private:
-	int	m_iDetpackState;
-public:
-	DetpackButton( int iState, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall)
-	{
-		m_iDetpackState = iState;
-	}
-
-	virtual bool IsNotValid()
-	{
-
-		if (m_iDetpackState == gViewPort->GetIsSettingDetpack())
-			return false;
-
-		return true;
-	}
-};
-
-extern int iBuildingCosts[];
-#define BUILDSTATE_HASBUILDING		(1<<0)		// Data is building ID (1 = Dispenser, 2 = Sentry, 3 = Entry Teleporter, 4 = Exit Teleporter)
-#define BUILDSTATE_BUILDING			(1<<1)
-#define BUILDSTATE_BASE				(1<<2)
-#define BUILDSTATE_CANBUILD			(1<<3)		// Data is building ID (1 = Dispenser, 2 = Sentry, 3 = Entry Teleporter, 4 = Exit Teleporter)
-
-class BuildButton : public CommandButton
-{
-private:
-	int	m_iBuildState;
-	int m_iBuildData;
-
-public:
-	enum Buildings
-	{
-		DISPENSER = 0,
-		SENTRYGUN = 1,
-		ENTRY_TELEPORTER = 2,
-		EXIT_TELEPORTER = 3
-	};
-
-	BuildButton( int iState, int iData, const char* text,int x,int y,int wide,int tall ) : CommandButton( text,x,y,wide,tall)
-	{
-		m_iBuildState = iState;
-		m_iBuildData = iData;
-	}
-
-	virtual bool IsNotValid()
-	{
-		return false;
 	}
 };
 

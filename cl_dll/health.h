@@ -17,20 +17,18 @@
 
 #define DMG_IMAGE_LIFE 2 // seconds that image is up
 
-#define DMG_IMAGE_POISON 0
-#define DMG_IMAGE_ACID 1
-#define DMG_IMAGE_COLD 2
-#define DMG_IMAGE_DROWN 3
-#define DMG_IMAGE_BURN 4
-#define DMG_IMAGE_NERVE 5
-#define DMG_IMAGE_RAD 6
-#define DMG_IMAGE_SHOCK 7
-//tf defines
-#define DMG_IMAGE_CALTROP 8
-#define DMG_IMAGE_TRANQ 9
-#define DMG_IMAGE_CONCUSS 10
-#define DMG_IMAGE_HALLUC 11
-#define NUM_DMG_TYPES 12
+enum
+{
+	DMG_IMAGE_POISON = 0,
+	DMG_IMAGE_ACID,
+	DMG_IMAGE_COLD,
+	DMG_IMAGE_DROWN,
+	DMG_IMAGE_BURN,
+	DMG_IMAGE_NERVE,
+	DMG_IMAGE_RAD,
+	DMG_IMAGE_SHOCK,
+	NUM_DMG_TYPES,
+};
 // instant damage
 
 typedef struct
