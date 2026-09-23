@@ -118,7 +118,7 @@ static inline const char* ParseEscapeToken(const char* token)
 		break;
 
 	case 'R':
-		menu_x = ScreenWidth / 2;
+		menu_x = gHUD.GetWidth() / 2;
 		menu_ralign = true;
 		break;
 	}
@@ -162,7 +162,7 @@ bool CHudMenu::Draw(float flTime)
 	int nFontHeight = V_max(12, screenInfo.iCharHeight);
 
 	// center it
-	int y = (ScreenHeight/2) - ((nlc/2)* nFontHeight) - (3 * nFontHeight + nFontHeight / 3); // make sure it is above the say text
+	int y = (gHUD.GetHeight()/2) - ((nlc/2)* nFontHeight) - (3 * nFontHeight + nFontHeight / 3); // make sure it is above the say text
 
 	menu_r = 255;
 	menu_g = 255;

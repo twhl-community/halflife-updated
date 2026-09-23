@@ -112,11 +112,11 @@ bool CHudBattery::Draw(float flTime)
 
 	int iOffset = (m_prc1->bottom - m_prc1->top) / 6;
 
-	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
+	y = gHUD.GetHeight() - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
 
 	int width = (m_prc1->right - m_prc1->left);
 
-	// this used to just be ScreenWidth/5 (4 on Updated) but that caused real issues at higher resolutions. Instead, base it on the width of this sprite.
+	// this used to just be gHUD.GetWidth()/5 (4 on Updated) but that caused real issues at higher resolutions. Instead, base it on the width of this sprite.
 	x = 3 * width;
 
 	// make sure we have the right sprite handles

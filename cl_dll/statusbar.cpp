@@ -184,7 +184,7 @@ bool CHudStatusBar::Draw(float fTime)
 		m_bReparseString = false;
 	}
 
-	int Y_START = ScreenHeight - 52;
+	int Y_START = gHUD.GetHeight() - 52;
 
 	// Draw the status bar lines
 	for (int i = 0; i < MAX_STATUSBAR_LINES; i++)
@@ -198,8 +198,8 @@ bool CHudStatusBar::Draw(float fTime)
 		// let user set status ID bar centering
 		if ((i == STATUSBAR_ID_LINE) && 0 != CVAR_GET_FLOAT("hud_centerid"))
 		{
-			x = V_max(0, V_max(2, (ScreenWidth - TextWidth)) / 2);
-			y = (ScreenHeight / 2) + (TextHeight * CVAR_GET_FLOAT("hud_centerid"));
+			x = V_max(0, V_max(2, (gHUD.GetWidth() - TextWidth)) / 2);
+			y = (gHUD.GetHeight() / 2) + (TextHeight * CVAR_GET_FLOAT("hud_centerid"));
 		}
 
 		if (m_pflNameColors[i])

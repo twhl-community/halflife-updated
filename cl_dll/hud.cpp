@@ -30,6 +30,11 @@
 #include "demo_api.h"
 #include "vgui_ScorePanel.h"
 
+#include "com_model.h"
+#include "r_studioint.h"
+
+extern engine_studio_api_t IEngineStudio;
+
 hud_player_info_t g_PlayerInfoList[MAX_PLAYERS_HUD + 1];	// player info from the engine
 extra_player_info_t g_PlayerExtraInfo[MAX_PLAYERS_HUD + 1]; // additional player info sent directly to the client dll
 
@@ -64,7 +69,7 @@ public:
 
 	int GetAckIconHeight() override
 	{
-		return ScreenHeight - gHUD.m_iFontHeight * 3 - 6;
+		return gHUD.GetHeight() - gHUD.m_iFontHeight * 3 - 6;
 	}
 
 	bool CanShowSpeakerLabels() override
@@ -86,6 +91,7 @@ cvar_t* cl_rollangle = nullptr;
 cvar_t* cl_rollspeed = nullptr;
 cvar_t* cl_bobtilt = nullptr;
 cvar_t* r_decals = nullptr;
+cvar_t* crosshair = nullptr;
 
 void ShutdownInput();
 
@@ -336,6 +342,8 @@ void CHud::Init()
 	cl_rollspeed = CVAR_CREATE("cl_rollspeed", "200", FCVAR_ARCHIVE);
 	cl_bobtilt = CVAR_CREATE("cl_bobtilt", "0", FCVAR_ARCHIVE);
 	r_decals = gEngfuncs.pfnGetCvarPointer("r_decals");
+	m_pCvarScale = CVAR_CREATE("hud_scale", "1", FCVAR_ARCHIVE);
+	crosshair = gEngfuncs.pfnGetCvarPointer("crosshair");
 
 	m_pSpriteList = NULL;
 
@@ -423,6 +431,15 @@ void CHud::VidInit()
 	m_scrinfo.iSize = sizeof(m_scrinfo);
 	GetScreenInfo(&m_scrinfo);
 
+	m_bShouldScale = false;
+
+	if (m_pCvarScale->value != 0.0F)
+	{
+		m_bShouldScale = IEngineStudio.IsHardware() && ScreenWidth > 640;
+	}
+
+	UpdateScalingInfo();
+
 	// ----------
 	// Load Sprites
 	// ---------
@@ -431,11 +448,11 @@ void CHud::VidInit()
 	m_hsprLogo = 0;
 	m_hsprCursor = 0;
 
-	if (ScreenWidth > 2560 && ScreenHeight > 1600)
+	if (GetWidth() > 2560 && GetHeight() > 1600)
 		m_iRes = 2560;
-	else if (ScreenWidth >= 1280 && ScreenHeight > 720)
+	else if (GetWidth() >= 1280 && GetHeight() > 720)
 		m_iRes = 1280;
-	else if (ScreenWidth >= 640)
+	else if (GetWidth() >= 640)
 		m_iRes = 640;
 	else
 		m_iRes = 320;
@@ -706,4 +723,19 @@ void CHud::AddHudElem(CHudBase* phudelem)
 float CHud::GetSensitivity()
 {
 	return m_flMouseSensitivity;
+}
+
+bool CHud::ShouldScale()
+{
+	return m_bShouldScale;
+}
+
+int CHud::GetWidth()
+{
+	return m_iWidth;
+}
+
+int CHud::GetHeight()
+{
+	return m_iHeight;
 }
