@@ -416,14 +416,15 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-bool CRpg::Deploy()
+void CRpg::Deploy()
 {
 	if (m_iClip == 0)
 	{
-		return DefaultDeploy("models/v_rpg.mdl", "models/p_rpg.mdl", RPG_DRAW_UL, "rpg");
+		DefaultDeploy("models/v_rpg.mdl", "models/p_rpg.mdl", RPG_DRAW_UL, "rpg");
+		return;
 	}
 
-	return DefaultDeploy("models/v_rpg.mdl", "models/p_rpg.mdl", RPG_DRAW1, "rpg");
+	DefaultDeploy("models/v_rpg.mdl", "models/p_rpg.mdl", RPG_DRAW1, "rpg");
 }
 
 

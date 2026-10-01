@@ -409,10 +409,10 @@ bool CTripmine::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-bool CTripmine::Deploy()
+void CTripmine::Deploy()
 {
 	pev->body = 0;
-	return DefaultDeploy("models/v_tripmine.mdl", "models/p_tripmine.mdl", TRIPMINE_DRAW, "trip");
+	DefaultDeploy("models/v_tripmine.mdl", "models/p_tripmine.mdl", TRIPMINE_DRAW, "trip");
 }
 
 
