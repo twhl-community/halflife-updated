@@ -27,12 +27,8 @@
 //
 // Player PHYSICS FLAGS bits
 //
-#define PFLAG_ONLADDER (1 << 0)
-#define PFLAG_ONSWING (1 << 0)
 #define PFLAG_ONTRAIN (1 << 1)
 #define PFLAG_ONBARNACLE (1 << 2)
-#define PFLAG_DUCKING (1 << 3)	// In the process of ducking, but totally squatted yet
-#define PFLAG_USING (1 << 4)	// Using a continuous entity
 #define PFLAG_OBSERVER (1 << 5) // player is locked in stationary cam mode. Spectators can move, observers can't.
 
 //
@@ -42,9 +38,6 @@
 //This is Half-Life player entity
 //-----------------------------------------------------
 #define CSUITPLAYLIST 4 // max of 4 suit sentences queued up at any time
-
-#define SUIT_GROUP true
-#define SUIT_SENTENCE false
 
 #define SUIT_REPEAT_OK 0
 #define SUIT_NEXT_IN_30SEC 30
@@ -232,7 +225,6 @@ public:
 
 	bool Save(CSave& save) override;
 	bool Restore(CRestore& restore) override;
-	void RenewItems();
 	void PackDeadPlayerItems();
 	void RemoveAllItems(bool removeSuit);
 	bool SwitchWeapon(CBasePlayerItem* pWeapon);
@@ -285,7 +277,6 @@ public:
 	bool HasNamedPlayerItem(const char* pszItemName);
 	bool HasPlayerItemFromID(int nID);
 	bool HasWeapons(); // do I have ANY weapons?
-	void SelectPrevItem(int iItem);
 	void SelectNextItem(int iItem);
 	void SelectLastItem();
 	void SelectItem(const char* pstr);
@@ -398,5 +389,4 @@ inline bool giPrecacheGrunt = false;
 *	@brief Display the game title if this key is set
 */
 inline DLL_GLOBAL bool gDisplayTitle = false;
-inline DLL_GLOBAL unsigned int g_ulModelIndexPlayer = 0;
 inline DLL_GLOBAL CBaseEntity* g_pLastSpawn = nullptr;

@@ -405,12 +405,10 @@ Vector UTIL_VecToAngles(const Vector& vec)
 	return Vector(rgflVecOut);
 }
 
-//	float UTIL_MoveToOrigin( edict_t *pent, const Vector vecGoal, float flDist, int iMoveType )
 void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist, int iMoveType)
 {
 	float rgfl[3];
 	vecGoal.CopyToArray(rgfl);
-	//		return MOVE_TO_ORIGIN ( pent, rgfl, flDist, iMoveType );
 	MOVE_TO_ORIGIN(pent, rgfl, flDist, iMoveType);
 }
 
@@ -1917,12 +1915,6 @@ void CSave::WriteString(const char* pname, const int* stringId, int count)
 	short token = (short)TokenHash(STRING(*stringId));
 	WriteShort(pname, &token, 1);
 #else
-#if 0
-	if ( count != 1 )
-		ALERT( at_error, "No string arrays!\n" );
-	WriteString( pname, (char *)STRING(*stringId) );
-#endif
-
 	size = 0;
 	for (i = 0; i < count; i++)
 		size += strlen(STRING(stringId[i])) + 1;
@@ -2397,12 +2389,6 @@ int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCoun
 					}
 				}
 			}
-#if 0
-			else
-			{
-				ALERT( at_console, "Skipping global field %s\n", pName );
-			}
-#endif
 			return fieldNumber;
 		}
 	}

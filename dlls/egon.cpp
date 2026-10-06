@@ -73,7 +73,6 @@ void CEgon::Precache()
 
 bool CEgon::Deploy()
 {
-	m_deployed = false;
 	m_fireState = FIRE_OFF;
 	return DefaultDeploy("models/v_egon.mdl", "models/p_egon.mdl", EGON_DRAW, "egon");
 }
@@ -226,8 +225,6 @@ void CEgon::Fire(const Vector& vecOrigSrc, const Vector& vecDir)
 
 	pentIgnore = m_pPlayer->edict();
 	Vector tmpSrc = vecOrigSrc + gpGlobals->v_up * -8 + gpGlobals->v_right * 3;
-
-	// ALERT( at_console, "." );
 
 	UTIL_TraceLine(vecOrigSrc, vecDest, dont_ignore_monsters, pentIgnore, &tr);
 
@@ -495,7 +492,6 @@ void CEgon::WeaponIdle()
 	}
 
 	SendWeaponAnim(iAnim);
-	m_deployed = true;
 }
 
 bool CEgon::CanHolster()

@@ -70,8 +70,6 @@ void CBasePlayer::Observer_FindNextPlayer(bool bReverse)
 		// Move to the target
 		UTIL_SetOrigin(pev, m_hObserverTarget->pev->origin);
 
-		// ALERT( at_console, "Now Tracking %s\n", STRING( m_hObserverTarget->pev->netname ) );
-
 		// Store the target in pev so the physics DLL can get to it
 		if (pev->iuser1 != OBS_ROAMING)
 			pev->iuser2 = ENTINDEX(m_hObserverTarget->edict());
@@ -110,7 +108,7 @@ void CBasePlayer::Observer_HandleButtons()
 	}
 
 	// Attack moves to the next player
-	if ((m_afButtonPressed & IN_ATTACK) != 0) //&& pev->iuser1 != OBS_ROAMING )
+	if ((m_afButtonPressed & IN_ATTACK) != 0)
 	{
 		Observer_FindNextPlayer(false);
 
@@ -118,7 +116,7 @@ void CBasePlayer::Observer_HandleButtons()
 	}
 
 	// Attack2 moves to the prev player
-	if ((m_afButtonPressed & IN_ATTACK2) != 0) // && pev->iuser1 != OBS_ROAMING )
+	if ((m_afButtonPressed & IN_ATTACK2) != 0)
 	{
 		Observer_FindNextPlayer(true);
 

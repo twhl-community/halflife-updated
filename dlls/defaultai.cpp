@@ -879,7 +879,6 @@ Task_t tlTakeCoverFromEnemy[] =
 		{TASK_RUN_PATH, (float)0},
 		{TASK_WAIT_FOR_MOVEMENT, (float)0},
 		{TASK_REMEMBER, (float)bits_MEMORY_INCOVER},
-		//	{ TASK_TURN_LEFT,				(float)179					},
 		{TASK_FACE_ENEMY, (float)0},
 		{TASK_WAIT, (float)1},
 };
@@ -970,7 +969,6 @@ Schedule_t* CBaseMonster::ScheduleInList(const char* pName, Schedule_t** pList, 
 //=========================================================
 Schedule_t* CBaseMonster::GetScheduleOfType(int Type)
 {
-	//	ALERT ( at_console, "Sched Type:%d\n", Type );
 	switch (Type)
 	{
 	// This is the schedule for scripted sequences AND scripted AI

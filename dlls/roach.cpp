@@ -106,11 +106,7 @@ void CRoach::Touch(CBaseEntity* pOther)
 //=========================================================
 void CRoach::SetYawSpeed()
 {
-	int ys;
-
-	ys = 120;
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 120;
 }
 
 //=========================================================
@@ -220,7 +216,6 @@ void CRoach::MonsterThink()
 			if (HasConditions(bits_COND_SEE_FEAR))
 			{
 				// if see something scary
-				//ALERT ( at_aiconsole, "Scared\n" );
 				Eat(30 + (RANDOM_LONG(0, 14))); // roach will ignore food for 30 to 45 seconds
 				PickNewDest(ROACH_SCARED_BY_ENT);
 				SetActivity(ACT_WALK);
@@ -228,7 +223,6 @@ void CRoach::MonsterThink()
 			else if (RANDOM_LONG(0, 149) == 1)
 			{
 				// if roach doesn't see anything, there's still a chance that it will move. (boredom)
-				//ALERT ( at_aiconsole, "Bored\n" );
 				PickNewDest(ROACH_BORED);
 				SetActivity(ACT_WALK);
 
@@ -251,7 +245,6 @@ void CRoach::MonsterThink()
 			if (GETENTITYILLUM(ENT(pev)) > m_flLastLightLevel)
 			{
 				// someone turned on lights!
-				//ALERT ( at_console, "Lights!\n" );
 				PickNewDest(ROACH_SCARED_BY_LIGHT);
 				SetActivity(ACT_WALK);
 			}
@@ -427,7 +420,7 @@ void CRoach::Look(int iDistance)
 		// only consider ents that can be damaged. !!!temporarily only considering other monsters and clients
 		if (pSightEnt->IsPlayer() || FBitSet(pSightEnt->pev->flags, FL_MONSTER))
 		{
-			if (/*FVisible( pSightEnt ) &&*/ !FBitSet(pSightEnt->pev->flags, FL_NOTARGET) && pSightEnt->pev->health > 0)
+			if (!FBitSet(pSightEnt->pev->flags, FL_NOTARGET) && pSightEnt->pev->health > 0)
 			{
 				// NULL the Link pointer for each ent added to the link list. If other ents follow, the will overwrite
 				// this value. If this ent happens to be the last, the list will be properly terminated.
@@ -453,7 +446,3 @@ void CRoach::Look(int iDistance)
 	}
 	SetConditions(iSighted);
 }
-
-//=========================================================
-// AI Schedules Specific to this monster
-//=========================================================

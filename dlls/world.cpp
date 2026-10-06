@@ -244,9 +244,6 @@ void CopyToBodyQue(entvars_t* pev)
 	pevHead->renderamt = ENTINDEX(ENT(pev));
 
 	pevHead->effects = pev->effects | EF_NOINTERP;
-	//pevHead->goalstarttime = pev->goalstarttime;
-	//pevHead->goalframe	= pev->goalframe;
-	//pevHead->goalendtime = pev->goalendtime ;
 
 	pevHead->sequence = pev->sequence;
 	pevHead->animtime = pev->animtime;
@@ -291,7 +288,6 @@ globalentity_t* CGlobalState::Find(string_t globalname)
 
 
 // This is available all the time now on impulse 104, remove later
-//#ifdef _DEBUG
 void CGlobalState::DumpGlobals()
 {
 	static const char* estates[] = {"Off", "On", "Dead"};
@@ -305,7 +301,6 @@ void CGlobalState::DumpGlobals()
 		pTest = pTest->pNext;
 	}
 }
-//#endif
 
 
 void CGlobalState::EntityAdd(string_t globalname, string_t mapName, GLOBALESTATE state)
@@ -528,7 +523,6 @@ void CWorld::Precache()
 	//!!!UNDONE why is there so much Spawn code in the Precache function? I'll just keep it here
 
 	///!!!LATER - do we want a sound ent in deathmatch? (sjb)
-	//pSoundEnt = CBaseEntity::Create( "soundent", g_vecZero, g_vecZero, edict() );
 	pSoundEnt = GetClassPtr((CSoundEnt*)NULL);
 	pSoundEnt->Spawn();
 

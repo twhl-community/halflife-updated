@@ -156,14 +156,12 @@ public:
 	inline int GetTexture() { return pev->modelindex; }
 	inline int GetWidth() { return pev->scale; }
 	inline int GetNoise() { return pev->body; }
-	// inline void GetColor( int r, int g, int b ) { pev->rendercolor.x = r; pev->rendercolor.y = g; pev->rendercolor.z = b; }
 	inline int GetBrightness() { return pev->renderamt; }
 	inline int GetFrame() { return pev->frame; }
 	inline int GetScrollRate() { return pev->animtime; }
 
 	// Call after you change start/end positions
 	void RelinkBeam();
-	//	void		SetObjectCollisionBox();
 
 	void DoSparks(const Vector& start, const Vector& end);
 	CBaseEntity* RandomTargetname(const char* szName);

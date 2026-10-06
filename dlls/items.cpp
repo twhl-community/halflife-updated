@@ -244,7 +244,6 @@ class CItemBattery : public CItem
 
 			sprintf(szcharge, "!HEV_%1dP", pct);
 
-			//EMIT_SOUND_SUIT(ENT(pev), szcharge);
 			pPlayer->SetSuitUpdate(szcharge, false, SUIT_NEXT_IN_30SEC);
 			return true;
 		}

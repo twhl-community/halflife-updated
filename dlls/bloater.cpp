@@ -66,17 +66,7 @@ int CBloater::Classify()
 //=========================================================
 void CBloater::SetYawSpeed()
 {
-	int ys;
-
-	ys = 120;
-
-#if 0
-	switch ( m_Activity )
-	{
-	}
-#endif
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 120;
 }
 
 bool CBloater::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)

@@ -17,11 +17,8 @@
 
 #include "scriptevent.h"
 
-#define SF_SCRIPT_WAITTILLSEEN 1
-#define SF_SCRIPT_EXITAGITATED 2
 #define SF_SCRIPT_REPEATABLE 4
 #define SF_SCRIPT_LEAVECORPSE 8
-//#define SF_SCRIPT_INTERPOLATE		16 // don't use, old bug
 #define SF_SCRIPT_NOINTERRUPT 32
 #define SF_SCRIPT_OVERRIDESTATE 64
 #define SF_SCRIPT_NOSCRIPTMOVEMENT 128
@@ -89,7 +86,6 @@ public:
 	int m_saved_movetype;
 	int m_saved_solid;
 	int m_saved_effects;
-	//	Vector m_vecOrigOrigin;
 	bool m_interruptable;
 };
 

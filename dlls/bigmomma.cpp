@@ -166,9 +166,6 @@ int gSpitSprite, gSpitDebrisSprite;
 Vector VecCheckSplatToss(entvars_t* pev, const Vector& vecSpot1, Vector vecSpot2, float maxHeight);
 void MortarSpray(const Vector& position, const Vector& direction, int spriteModel, int count);
 
-
-// UNDONE:
-//
 #define BIG_CHILDCLASS "monster_babycrab"
 
 class CBigMomma : public CBaseMonster
@@ -388,14 +385,6 @@ const char* CBigMomma::pFootSounds[] =
 
 bool CBigMomma::KeyValue(KeyValueData* pkvd)
 {
-#if 0
-	if (FStrEq(pkvd->szKeyName, "volume"))
-	{
-		m_volume = atof(pkvd->szValue);
-		return true;
-	}
-
-#endif
 	return CBaseMonster::KeyValue(pkvd);
 }
 

@@ -284,40 +284,9 @@ void CMortar::MortarExplode()
 	int pitch = RANDOM_LONG(95,124);
 	EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "weapons/mortarhit.wav", 1.0, 0.55, 0, pitch);
 
-	// ForceSound( SNDRADIUS_MP5, bits_SOUND_COMBAT );
-
-	// ExplodeModel( pev->origin, 400, g_sModelIndexShrapnel, 30 );
-
 	RadiusDamage ( pev, VARS(pev->owner), pev->dmg, CLASS_NONE, DMG_BLAST );
-
-	/*
-	if ( RANDOM_FLOAT ( 0 , 1 ) < 0.5 )
-	{
-		UTIL_DecalTrace( pTrace, DECAL_SCORCH1 );
-	}
-	else
-	{
-		UTIL_DecalTrace( pTrace, DECAL_SCORCH2 );
-	}
-	*/
 
 	SetThink( &CMortar::SUB_Remove );
 	pev->nextthink = gpGlobals->time + 0.1;
 #endif
 }
-
-
-#if 0
-void CMortar::ShootTimed( EVARS *pevOwner, Vector vecStart, float time )
-{
-	CMortar *pMortar = GetClassPtr( (CMortar *)NULL );
-	pMortar->Spawn();
-
-	TraceResult tr;
-	UTIL_TraceLine( vecStart, vecStart + Vector( 0, 0, -1 ) * 4096, ignore_monsters, ENT(pMortar->pev), &tr );
-
-	pMortar->pev->nextthink = gpGlobals->time + time;
-
-	UTIL_SetOrigin( pMortar->pev, tr.vecEndPos );
-}
-#endif

@@ -319,7 +319,6 @@ void CBarnacle::BarnacleThink()
 		}
 	}
 
-	// ALERT( at_console, "tounge %f\n", m_flAltitude + m_flTongueAdj );
 	SetBoneController(0, -(m_flAltitude + m_flTongueAdj));
 	StudioFrameAdvance(0.1);
 }

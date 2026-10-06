@@ -121,17 +121,7 @@ int CZombie::Classify()
 //=========================================================
 void CZombie::SetYawSpeed()
 {
-	int ys;
-
-	ys = 120;
-
-#if 0
-	switch ( m_Activity )
-	{
-	}
-#endif
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 120;
 }
 
 bool CZombie::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
@@ -195,7 +185,6 @@ void CZombie::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case ZOMBIE_AE_ATTACK_RIGHT:
 	{
 		// do stuff for this event.
-		//		ALERT( at_console, "Slash right!\n" );
 		CBaseEntity* pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash, DMG_SLASH);
 		if (pHurt)
 		{
@@ -219,7 +208,6 @@ void CZombie::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case ZOMBIE_AE_ATTACK_LEFT:
 	{
 		// do stuff for this event.
-		//		ALERT( at_console, "Slash left!\n" );
 		CBaseEntity* pHurt = CheckTraceHullAttack(70, gSkillData.zombieDmgOneSlash, DMG_SLASH);
 		if (pHurt)
 		{
