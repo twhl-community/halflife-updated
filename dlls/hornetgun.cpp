@@ -143,16 +143,7 @@ void CHgun::PrimaryAttack()
 	m_pPlayer->m_iWeaponVolume = QUIET_GUN_VOLUME;
 	m_pPlayer->m_iWeaponFlash = DIM_GUN_FLASH;
 
-	int flags;
-#if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
-#else
-	flags = 0;
-#endif
-
-	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usHornetFire, 0.0, g_vecZero, g_vecZero, 0.0, 0.0, 0, 0, 0, 0);
-
-
+	m_pPlayer->PlaybackEvent(m_usHornetFire);
 
 	// player "shoot" animation
 	m_pPlayer->SetAnimation(PLAYER_ATTACK1);
@@ -234,15 +225,7 @@ void CHgun::SecondaryAttack()
 	m_flRechargeTime = gpGlobals->time + GetRechargeTime();
 #endif
 
-	int flags;
-#if defined(CLIENT_WEAPONS)
-	flags = FEV_NOTHOST;
-#else
-	flags = 0;
-#endif
-
-	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usHornetFire, 0.0, g_vecZero, g_vecZero, 0.0, 0.0, 0, 0, 0, 0);
-
+	m_pPlayer->PlaybackEvent(m_usHornetFire);
 
 	m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType]--;
 	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
