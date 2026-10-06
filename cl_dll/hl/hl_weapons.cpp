@@ -30,6 +30,10 @@
 #include "../com_weapons.h"
 #include "../demo.h"
 
+#include "hud.h"
+
+#include <algorithm>
+
 extern int g_iUser1;
 
 // Pool of client side entities/entvars_t
@@ -64,6 +68,8 @@ CHandGrenade g_HandGren;
 CSatchel g_Satchel;
 CTripmine g_Tripmine;
 CSqueak g_Snark;
+
+void HUD_InitClientWeapons();
 
 
 /*
@@ -116,13 +122,15 @@ void HUD_PrepEntity(CBaseEntity* pEntity, CBasePlayer* pWeaponOwner)
 
 	if (pWeaponOwner)
 	{
+		CBasePlayerWeapon* const pWeapon = (CBasePlayerWeapon*)pEntity;
+
 		ItemInfo info;
 
 		memset(&info, 0, sizeof(info));
 
-		((CBasePlayerWeapon*)pEntity)->m_pPlayer = pWeaponOwner;
+		pWeapon->m_pPlayer = pWeaponOwner;
 
-		((CBasePlayerWeapon*)pEntity)->GetItemInfo(&info);
+		pWeapon->GetItemInfo(&info);
 
 		CBasePlayerItem::ItemInfoArray[info.iId] = info;
 
@@ -138,8 +146,28 @@ void HUD_PrepEntity(CBaseEntity* pEntity, CBasePlayer* pWeaponOwner)
 			AddAmmoNameToAmmoRegistry(info.pszAmmo2, weaponName);
 		}
 
-		g_pWpns[info.iId] = (CBasePlayerWeapon*)pEntity;
+		// Add to the list before extracting ammo so weapon ownership checks work properly.
+		pWeapon->m_pNext = pWeaponOwner->m_rgpPlayerItems[info.iSlot];
+		pWeaponOwner->m_rgpPlayerItems[info.iSlot] = pWeapon;
+
+		g_pWpns[info.iId] = pWeapon;
 	}
+}
+
+void HUD_WeaponList(const int iId, const int iAmmoType, const int iAmmoType2)
+{
+	// This may be called prior to the first weapon prediction frame
+	HUD_InitClientWeapons();
+
+	const auto pWeapon = g_pWpns[iId];
+
+	if (pWeapon == nullptr)
+	{
+		return;
+	}
+
+	pWeapon->m_iPrimaryAmmoType = iAmmoType;
+	pWeapon->m_iSecondaryAmmoType = iAmmoType2;
 }
 
 /*
@@ -218,6 +246,57 @@ void CBasePlayerWeapon::SendWeaponAnim(int iAnim, int body)
 	m_pPlayer->pev->weaponanim = iAnim;
 
 	HUD_SendWeaponAnim(iAnim, body, false);
+}
+
+bool CBasePlayerWeapon::UpdateClientData(CBasePlayer* pPlayer)
+{
+	bool bSend = false;
+	int state = 0;
+	if (pPlayer->m_pActiveItem == this)
+	{
+		if (pPlayer->m_fOnTarget)
+			state = WEAPON_IS_ONTARGET;
+		else
+			state = 1;
+	}
+
+	// Forcing send of all data!
+	if (!pPlayer->m_fWeapon)
+	{
+		bSend = true;
+	}
+
+	// This is the current or last weapon, so the state will need to be updated
+	if (this == pPlayer->m_pActiveItem ||
+		this == pPlayer->m_pClientActiveItem)
+	{
+		if (pPlayer->m_pActiveItem != pPlayer->m_pClientActiveItem)
+		{
+			bSend = true;
+		}
+	}
+
+	// If the ammo, state, or fov has changed, update the weapon
+	if (m_iClip != m_iClientClip ||
+		state != m_iClientWeaponState ||
+		pPlayer->m_iFOV != pPlayer->m_iClientFOV)
+	{
+		bSend = true;
+	}
+
+	if (bSend)
+	{
+		gHUD.m_Ammo.Update_CurWeapon(state, m_iId, m_iClip);
+
+		m_iClientClip = m_iClip;
+		m_iClientWeaponState = state;
+		pPlayer->m_fWeapon = true;
+	}
+
+	if (m_pNext)
+		m_pNext->UpdateClientData(pPlayer);
+
+	return true;
 }
 
 /*
@@ -312,10 +391,106 @@ CBasePlayer::Spawn
 */
 void CBasePlayer::Spawn()
 {
+	m_iClientFOV = -1; // make sure fov reset is sent
+
+	m_iClientHealth = -1;
+	m_iClientBattery = -1;
+	m_pClientActiveItem = nullptr;
+	m_fWeapon = false;
+
+	// reset all ammo values to 0
+	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		m_rgAmmoLast[i] = -1; // client ammo values also have to be reset
+	}
+
+	for (int i = 0; i < MAX_WEAPONS; i++)
+	{
+		const auto pWeapon = g_pWpns[i];
+
+		if (pWeapon != nullptr)
+		{
+			pWeapon->m_iClientClip = 0;
+			pWeapon->m_iClientWeaponState = 0;
+		}
+	}
+
 	if (m_pActiveItem)
 		m_pActiveItem->Deploy();
 
 	g_irunninggausspred = false;
+}
+
+void CBasePlayer::SendAmmoUpdate()
+{
+	for (int i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		InternalSendSingleAmmoUpdate(i);
+	}
+}
+
+void CBasePlayer::SendSingleAmmoUpdate(int ammoIndex)
+{
+	if (ammoIndex < 0 || ammoIndex >= MAX_AMMO_SLOTS)
+	{
+		return;
+	}
+
+	InternalSendSingleAmmoUpdate(ammoIndex);
+}
+
+void CBasePlayer::InternalSendSingleAmmoUpdate(int ammoIndex)
+{
+	if (m_rgAmmo[ammoIndex] != m_rgAmmoLast[ammoIndex])
+	{
+		m_rgAmmoLast[ammoIndex] = m_rgAmmo[ammoIndex];
+
+		// send "Ammo" update message
+		gHUD.m_Ammo.Update_AmmoX(ammoIndex, m_rgAmmo[ammoIndex]);
+	}
+}
+
+void CBasePlayer::UpdateClientData()
+{
+	if (m_iFOV != m_iClientFOV)
+	{
+		gHUD.Update_SetFOV(m_iFOV);
+
+		// cache FOV change at end of function, so weapon updates can see that FOV has changed
+	}
+
+	if (pev->health != m_iClientHealth)
+	{
+		int iHealth = std::clamp<float>(pev->health, 0.f, (float)(std::numeric_limits<short>::max())); // make sure that no negative health values are sent
+		if (pev->health > 0.0f && pev->health <= 1.0f)
+			iHealth = 1;
+
+		// send "health" update message
+		gHUD.m_Health.Update_Health(iHealth);
+
+		m_iClientHealth = pev->health;
+	}
+
+	SendAmmoUpdate();
+
+	// Update all the items
+	for (int i = 0; i < MAX_ITEM_TYPES; i++)
+	{
+		if (m_rgpPlayerItems[i]) // each item updates it's successors
+			m_rgpPlayerItems[i]->UpdateClientData(this);
+	}
+
+	//Active item is becoming null, or we're sending all HUD state to client
+	//Only if we're not in Observer mode, which uses the target player's weapon
+	if (!m_pActiveItem && m_pClientActiveItem != m_pActiveItem)
+	{
+		//Tell ammo hud that we have no weapon selected
+		gHUD.m_Ammo.Update_CurWeapon(0, 0, 0);
+	}
+
+	// Cache and client weapon change
+	m_pClientActiveItem = m_pActiveItem;
+	m_iClientFOV = m_iFOV;
 }
 
 /*
@@ -609,10 +784,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		lasthealth = to->client.health;
 	}
 
-	// We are not predicting the current weapon, just bow out here.
-	if (!pWeapon)
-		return;
-
 	for (i = 0; i < MAX_WEAPONS; i++)
 	{
 		pCurrent = g_pWpns[i];
@@ -637,12 +808,13 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		pCurrent->m_fInAttack = pfrom->iuser2;
 		pCurrent->m_fireState = pfrom->iuser3;
 
-		pCurrent->m_iSecondaryAmmoType = (int)from->client.vuser3[2];
-		pCurrent->m_iPrimaryAmmoType = (int)from->client.vuser4[0];
-		player.m_rgAmmo[pCurrent->m_iPrimaryAmmoType] = (int)from->client.vuser4[1];
-		player.m_rgAmmo[pCurrent->m_iSecondaryAmmoType] = (int)from->client.vuser4[2];
-
 		pCurrent->SetWeaponData(*pfrom);
+	}
+
+	// Stores all our ammo info, so the client side weapons can use them.
+	for (i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		player.m_rgAmmo[i] = from->weapondata[i].iuser4;
 	}
 
 	// For random weapon events, use this seed to seed random # generator
@@ -668,6 +840,7 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	player.pev->velocity = from->client.velocity;
 	player.pev->flags = from->client.flags;
 
+	player.pev->health = from->client.health;
 	player.pev->deadflag = from->client.deadflag;
 	player.pev->waterlevel = from->client.waterlevel;
 	player.pev->maxspeed = from->client.maxspeed;
@@ -678,37 +851,33 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	player.m_flNextAmmoBurn = from->client.fuser2;
 	player.m_flAmmoStartCharge = from->client.fuser3;
 
-	//Stores all our ammo info, so the client side weapons can use them.
-	player.ammo_9mm = (int)from->client.vuser1[0];
-	player.ammo_357 = (int)from->client.vuser1[1];
-	player.ammo_argrens = (int)from->client.vuser1[2];
-	player.ammo_bolts = (int)from->client.ammo_nails; //is an int anyways...
-	player.ammo_buckshot = (int)from->client.ammo_shells;
-	player.ammo_uranium = (int)from->client.ammo_cells;
-	player.ammo_hornets = (int)from->client.vuser2[0];
-	player.ammo_rockets = (int)from->client.ammo_rockets;
-
-
 	// Point to current weapon object
 	if (WEAPON_NONE != from->client.m_iId)
 	{
 		player.m_pActiveItem = g_pWpns[from->client.m_iId];
 	}
-
-	if (player.m_pActiveItem->m_iId == WEAPON_RPG)
+	else
 	{
-		((CRpg*)player.m_pActiveItem)->m_fSpotActive = static_cast<bool>(from->client.vuser2[1]);
-		((CRpg*)player.m_pActiveItem)->m_cActiveRockets = (int)from->client.vuser2[2];
+		player.m_pActiveItem = nullptr;
 	}
 
-	// Don't go firing anything if we have died or are spectating
-	// Or if we don't have a weapon model deployed
-	if ((player.pev->deadflag != (DEAD_DISCARDBODY + 1)) &&
-		!CL_IsDead() && 0 != player.pev->viewmodel && 0 == g_iUser1)
+	if (player.m_pActiveItem != nullptr)
 	{
-		if (player.m_flNextAttack <= 0)
+		if (player.m_pActiveItem->m_iId == WEAPON_RPG)
 		{
-			pWeapon->ItemPostFrame();
+			((CRpg*)player.m_pActiveItem)->m_fSpotActive = static_cast<bool>(from->client.vuser2[1]);
+			((CRpg*)player.m_pActiveItem)->m_cActiveRockets = (int)from->client.vuser2[2];
+		}
+
+		// Don't go firing anything if we have died or are spectating
+		// Or if we don't have a weapon model deployed
+		if ((player.pev->deadflag != (DEAD_DISCARDBODY + 1)) &&
+			!CL_IsDead() && 0 != player.pev->viewmodel && 0 == g_iUser1)
+		{
+			if (player.m_flNextAttack <= 0)
+			{
+				pWeapon->ItemPostFrame();
+			}
 		}
 	}
 
@@ -753,31 +922,25 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	to->client.maxspeed = player.pev->maxspeed;
 
 	//HL Weapons
-	to->client.vuser1[0] = player.ammo_9mm;
-	to->client.vuser1[1] = player.ammo_357;
-	to->client.vuser1[2] = player.ammo_argrens;
 
-	to->client.ammo_nails = player.ammo_bolts;
-	to->client.ammo_shells = player.ammo_buckshot;
-	to->client.ammo_cells = player.ammo_uranium;
-	to->client.vuser2[0] = player.ammo_hornets;
-	to->client.ammo_rockets = player.ammo_rockets;
-
-	if (player.m_pActiveItem->m_iId == WEAPON_RPG)
+	if (player.m_pActiveItem != nullptr)
 	{
-		to->client.vuser2[1] = static_cast<float>(((CRpg*)player.m_pActiveItem)->m_fSpotActive);
-		to->client.vuser2[2] = ((CRpg*)player.m_pActiveItem)->m_cActiveRockets;
-	}
+		if (player.m_pActiveItem->m_iId == WEAPON_RPG)
+		{
+			to->client.vuser2[1] = static_cast<float>(((CRpg*)player.m_pActiveItem)->m_fSpotActive);
+			to->client.vuser2[2] = ((CRpg*)player.m_pActiveItem)->m_cActiveRockets;
+		}
 
-	// Make sure that weapon animation matches what the game .dll is telling us
-	//  over the wire ( fixes some animation glitches )
-	if (g_runfuncs && (HUD_GetWeaponAnim() != to->client.weaponanim))
-	{
-		//Make sure the 357 has the right body
-		g_Python.pev->body = bIsMultiplayer() ? 1 : 0;
+		// Make sure that weapon animation matches what the game .dll is telling us
+		//  over the wire ( fixes some animation glitches )
+		if (g_runfuncs && (HUD_GetWeaponAnim() != to->client.weaponanim))
+		{
+			//Make sure the 357 has the right body
+			g_Python.pev->body = bIsMultiplayer() ? 1 : 0;
 
-		// Force a fixed anim down to viewmodel
-		HUD_SendWeaponAnim(to->client.weaponanim, pWeapon->pev->body, true);
+			// Force a fixed anim down to viewmodel
+			HUD_SendWeaponAnim(to->client.weaponanim, pWeapon->pev->body, true);
+		}
 	}
 
 	for (i = 0; i < MAX_WEAPONS; i++)
@@ -813,11 +976,6 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		pto->m_flNextSecondaryAttack -= cmd->msec / 1000.0;
 		pto->m_flTimeWeaponIdle -= cmd->msec / 1000.0;
 		pto->fuser1 -= cmd->msec / 1000.0;
-
-		to->client.vuser3[2] = pCurrent->m_iSecondaryAmmoType;
-		to->client.vuser4[0] = pCurrent->m_iPrimaryAmmoType;
-		to->client.vuser4[1] = player.m_rgAmmo[pCurrent->m_iPrimaryAmmoType];
-		to->client.vuser4[2] = player.m_rgAmmo[pCurrent->m_iSecondaryAmmoType];
 
 		pCurrent->DecrementTimers();
 
@@ -861,6 +1019,11 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		}
 	}
 
+	for (i = 0; i < MAX_AMMO_SLOTS; i++)
+	{
+		to->weapondata[i].iuser4 = player.m_rgAmmo[i];
+	}
+
 	// m_flNextAttack is now part of the weapons, but is part of the player instead
 	to->client.m_flNextAttack -= cmd->msec / 1000.0;
 	if (to->client.m_flNextAttack < -0.001)
@@ -879,6 +1042,9 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	{
 		to->client.fuser3 = -0.001;
 	}
+
+	// Check if new client data (for HUD and view control) needs to be updated
+	player.UpdateClientData();
 
 	// Store off the last position from the predicted state.
 	HUD_SetLastOrg();
