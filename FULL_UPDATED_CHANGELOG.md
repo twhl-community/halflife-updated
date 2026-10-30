@@ -174,6 +174,7 @@ Fixes for bugs introduced in beta builds are not included in this list.
 * Fixed scientist voice pitch [#156](https://github.com/twhl-community/halflife-updated/pull/156)
 * Fixed Human Grunts dropping weapons again if the game is saved and loaded while the grunt is dying (Thanks Oxofemple.)
 * Fixed Scientists crashing when speaking fear dialogue when enemy has been removed
+* Fixed ichthyosaur bumping into the walls sometimes [#277](https://github.com/twhl-community/halflife-updated/pull/277) (Thanks FreeSlave)
 
 ## User Interface
 
