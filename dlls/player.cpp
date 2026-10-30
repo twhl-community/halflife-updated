@@ -3031,7 +3031,6 @@ void CBasePlayer::Precache()
 	m_flgeigerRange = 1000;
 	m_igeigerRangePrev = 1000;
 
-	m_bitsDamageType = 0;
 	m_bitsHUDDamage = -1;
 
 	m_iClientBattery = -1;
