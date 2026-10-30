@@ -210,7 +210,8 @@ void CMiniMem::Reset()
 {
 	_visibleParticles = 0;
 
-	for (auto particle : _particles)
+	auto particles = _particles;
+	for (auto particle : particles)
 	{
 		particle->Die();
 		delete particle;
