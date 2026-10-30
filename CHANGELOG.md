@@ -14,6 +14,7 @@
 * Reverted "[HL25] Fixed geiger counter sound at range 800 units and higher" (halflife issue [#3856](https://github.com/ValveSoftware/halflife/issues/3856))
 * Fixed `cl_bobtilt` CVAR not disabling view bob tilt [#254](https://github.com/twhl-community/halflife-updated/pull/254) (Thanks sabianroberts)
 * Fixed `anglemod` function in `pm_math.cpp` which should fix view drifting issues on Linux [#226](https://github.com/twhl-community/halflife-updated/pull/226) (Thanks consolethinks)
+* Fixed grenades not dealing damage underwater when they're on the floor [#279](https://github.com/twhl-community/halflife-updated/pull/279) (Thanks FreeSlave)
 * Fixed ichthyosaur bumping into the walls sometimes [#277](https://github.com/twhl-community/halflife-updated/pull/277) (Thanks FreeSlave)
 
 ### Features
