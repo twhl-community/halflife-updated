@@ -47,7 +47,7 @@ BASE_CFLAGS+=-DNDEBUG -DPOSIX -D_POSIX -DLINUX -D_LINUX -DGNUC -DNO_MALLOC_OVERR
 # fno-gnu-unique is needed to disable a compiler optimization that prevents dlclose from unloading mod dlls,
 # causing them to retain state and crash when the engine tries to access memory in an invalid way
 # See https://gcc.gnu.org/onlinedocs/gcc/Code-Gen-Options.html#index-fno-gnu-unique for more information about this flag
-ifeq "$(COMPILER)" "g++"
+ifneq ($(filter g++ g++-%,$(COMPILER)),)
 	BASE_CFLAGS+=-flifetime-dse=1 -fno-gnu-unique
 endif
 
