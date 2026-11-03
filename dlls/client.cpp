@@ -805,18 +805,27 @@ static void LoadNextMap()
 	SERVER_COMMAND(UTIL_VarArgs("map \"%s\"\n", mapName.c_str()));
 }
 
-static void LoadAllMaps()
+// If modOnly is set to false all maps from the base game plus the mod will be
+// loaded. If set to true, only the maps present in the mod maps directory will
+// be loaded.
+static void LoadMaps(bool modOnly)
 {
 	if (!g_MapsToLoad.empty())
 	{
-		pmove->Con_Printf("Already loading all maps (%d remaining)\nUse sv_stop_loading_all_maps to stop\n",
+		pmove->Con_Printf("Already loading maps (%d remaining)\nUse sv_stop_loading_maps to stop\n",
 			static_cast<int>(g_MapsToLoad.size()));
 		return;
 	}
 
 	FileFindHandle_t handle = FILESYSTEM_INVALID_FIND_HANDLE;
 
-	const char* fileName = g_pFileSystem->FindFirst("maps/*.bsp", &handle);
+	const char* fileName = nullptr;
+	if (modOnly) {
+		auto dir = std::string(FileSystem_GetModDirectoryName()) + "/maps/*.bsp";
+		fileName = g_pFileSystem->FindFirst(dir.c_str(), &handle);
+	} else {
+		fileName = g_pFileSystem->FindFirst("maps/*.bsp", &handle);
+	}
 
 	if (fileName != nullptr)
 	{
@@ -873,11 +882,23 @@ static void LoadAllMaps()
 	}
 }
 
+static void LoadModMaps()
+{
+	LoadMaps(true);
+}
+
+static void LoadAllMaps()
+{
+	LoadMaps(false);
+}
+
 void InitMapLoadingUtils()
 {
+	g_engfuncs.pfnAddServerCommand("sv_load_mod_maps", &LoadModMaps);
 	g_engfuncs.pfnAddServerCommand("sv_load_all_maps", &LoadAllMaps);
+
 	// Escape hatch in case the command is executed in error.
-	g_engfuncs.pfnAddServerCommand("sv_stop_loading_all_maps", []()
+	g_engfuncs.pfnAddServerCommand("sv_stop_loading_maps", []()
 		{ g_MapsToLoad.clear(); });
 }
 
