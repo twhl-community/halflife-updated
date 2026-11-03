@@ -73,11 +73,11 @@ void WeaponsResource::LoadWeaponSprites(WEAPON* pWeapon)
 {
 	int i, iRes;
 
-	if (ScreenWidth > 2560 && ScreenHeight > 1600)
+	if (gHUD.GetWidth() > 2560 && gHUD.GetHeight() > 1600)
 		iRes = 2560;
-	else if (ScreenWidth >= 1280 && ScreenHeight > 720)
+	else if (gHUD.GetWidth() >= 1280 && gHUD.GetHeight() > 720)
 		iRes = 1280;
-	else if (ScreenWidth >= 640)
+	else if (gHUD.GetWidth() >= 640)
 		iRes = 640;
 	else
 		iRes = 320;
@@ -329,11 +329,11 @@ bool CHudAmmo::VidInit()
 
 	int nScale = 1;
 
-	if (ScreenWidth > 2560 && ScreenHeight > 1600)
+	if (gHUD.GetWidth() > 2560 && gHUD.GetHeight() > 1600)
 		nScale = 4;
-	else if (ScreenWidth >= 1280 && ScreenHeight > 720)
+	else if (gHUD.GetWidth() >= 1280 && gHUD.GetHeight() > 720)
 		nScale = 3;
-	else if (ScreenWidth >= 640)
+	else if (gHUD.GetWidth() >= 640)
 		nScale = 2;
 
 	giABWidth = 10 * nScale;
@@ -894,7 +894,7 @@ bool CHudAmmo::Draw(float flTime)
 
 	ScaleColors(r, g, b, a);
 
-	y = ScreenHeight - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
+	y = gHUD.GetHeight() - gHUD.m_iFontHeight - gHUD.m_iFontHeight / 2;
 	y += (int)(gHUD.m_iFontHeight * 0.2f);
 
 	// Does weapon have any ammo at all?
@@ -906,7 +906,7 @@ bool CHudAmmo::Draw(float flTime)
 		{
 			// room for the number and the '|' and the current ammo
 
-			x = ScreenWidth - (8 * AmmoWidth) - iIconWidth;
+			x = gHUD.GetWidth() - (8 * AmmoWidth) - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, pw->iClip, r, g, b);
 
 			Rect rc;
@@ -933,7 +933,7 @@ bool CHudAmmo::Draw(float flTime)
 		else
 		{
 			// SPR_Draw a bullets only line
-			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
+			x = gHUD.GetWidth() - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
 		}
 
@@ -952,7 +952,7 @@ bool CHudAmmo::Draw(float flTime)
 		if ((pw->iAmmo2Type != 0) && (gWR.CountAmmo(pw->iAmmo2Type) > 0))
 		{
 			y -= gHUD.m_iFontHeight + gHUD.m_iFontHeight / 4;
-			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
+			x = gHUD.GetWidth() - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmo2Type), r, g, b);
 
 			// Draw the ammo Icon
