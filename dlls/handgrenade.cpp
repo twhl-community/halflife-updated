@@ -66,10 +66,10 @@ bool CHandGrenade::GetItemInfo(ItemInfo* p)
 }
 
 
-bool CHandGrenade::Deploy()
+void CHandGrenade::Deploy()
 {
 	m_flReleaseThrow = -1;
-	return DefaultDeploy("models/v_grenade.mdl", "models/p_grenade.mdl", HANDGRENADE_DRAW, "crowbar");
+	DefaultDeploy("models/v_grenade.mdl", "models/p_grenade.mdl", HANDGRENADE_DRAW, "crowbar");
 }
 
 bool CHandGrenade::CanHolster()

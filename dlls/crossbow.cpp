@@ -267,11 +267,14 @@ bool CCrossbow::GetItemInfo(ItemInfo* p)
 }
 
 
-bool CCrossbow::Deploy()
+void CCrossbow::Deploy()
 {
 	if (0 != m_iClip)
-		return DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW1, "bow");
-	return DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW2, "bow");
+	{
+		DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW1, "bow");
+		return;
+	}
+	DefaultDeploy("models/v_crossbow.mdl", "models/p_crossbow.mdl", CROSSBOW_DRAW2, "bow");
 }
 
 void CCrossbow::Holster()

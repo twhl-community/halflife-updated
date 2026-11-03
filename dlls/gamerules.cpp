@@ -61,12 +61,9 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 			if (pCheck->iWeight() > -1 && pCheck->iWeight() == currentWeight)
 			{
 				// this weapon is from the same category.
-				if (pCheck->CanDeploy())
+				if (pPlayer->CanSelectItem(pCheck))
 				{
-					if (pPlayer->SwitchWeapon(pCheck))
-					{
-						return pCheck;
-					}
+					return pCheck;
 				}
 			}
 			else if (pCheck->iWeight() > iBestWeight)
@@ -75,7 +72,7 @@ CBasePlayerItem* CGameRules::FindNextBestWeapon(CBasePlayer* pPlayer, CBasePlaye
 				// we keep updating the 'best' weapon just in case we can't find a weapon of the same weight
 				// that the player was using. This will end up leaving the player with his heaviest-weighted
 				// weapon.
-				if (pCheck->CanDeploy())
+				if (pPlayer->CanSelectItem(pCheck))
 				{
 					// if this weapon is useable, flag it as the best
 					iBestWeight = pCheck->iWeight();

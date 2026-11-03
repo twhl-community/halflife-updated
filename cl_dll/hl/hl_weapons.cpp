@@ -160,11 +160,8 @@ CBasePlayerWeapon:: DefaultDeploy
 
 =====================
 */
-bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
+void CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body)
 {
-	if (!CanDeploy())
-		return false;
-
 	gEngfuncs.CL_LoadModel(szViewModel, &m_pPlayer->pev->viewmodel);
 
 	SendWeaponAnim(iAnim, body);
@@ -172,7 +169,6 @@ bool CBasePlayerWeapon::DefaultDeploy(const char* szViewModel, const char* szWea
 	g_irunninggausspred = false;
 	m_pPlayer->m_flNextAttack = 0.5;
 	m_flTimeWeaponIdle = 1.0;
-	return true;
 }
 
 /*
@@ -254,39 +250,6 @@ Vector CBaseEntity::FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector
 	}
 
 	return Vector(x * vecSpread.x, y * vecSpread.y, 0.0);
-}
-
-/*
-=====================
-CBasePlayer::SelectItem
-
-  Switch weapons
-=====================
-*/
-void CBasePlayer::SelectItem(const char* pstr)
-{
-	if (!pstr)
-		return;
-
-	CBasePlayerItem* pItem = NULL;
-
-	if (!pItem)
-		return;
-
-
-	if (pItem == m_pActiveItem)
-		return;
-
-	if (m_pActiveItem)
-		m_pActiveItem->Holster();
-
-	m_pLastItem = m_pActiveItem;
-	m_pActiveItem = pItem;
-
-	if (m_pActiveItem)
-	{
-		m_pActiveItem->Deploy();
-	}
 }
 
 /*
@@ -721,25 +684,10 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		// Switched to a different weapon?
 		if (from->weapondata[cmd->weaponselect].m_iId == cmd->weaponselect)
 		{
-			CBasePlayerWeapon* pNew = g_pWpns[cmd->weaponselect];
-			if (pNew && (pNew != pWeapon))
-			{
-				// Put away old weapon
-				if (player.m_pActiveItem)
-					player.m_pActiveItem->Holster();
+			// Update weapon id so we can predict things correctly.
+			player.SelectItem(g_pWpns[cmd->weaponselect]);
 
-				player.m_pLastItem = player.m_pActiveItem;
-				player.m_pActiveItem = pNew;
-
-				// Deploy new weapon
-				if (player.m_pActiveItem)
-				{
-					player.m_pActiveItem->Deploy();
-				}
-
-				// Update weapon id so we can predict things correctly.
-				to->client.m_iId = cmd->weaponselect;
-			}
+			to->client.m_iId = player.m_pActiveItem != nullptr ? player.m_pActiveItem->m_iId : WEAPON_NONE;
 		}
 	}
 
