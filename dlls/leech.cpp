@@ -61,14 +61,6 @@
 #define LEECH_FRAMETIME 0.1
 
 
-
-#define DEBUG_BEAMS 0
-
-#if DEBUG_BEAMS
-#include "effects.h"
-#endif
-
-
 class CLeech : public CBaseMonster
 {
 public:
@@ -134,11 +126,6 @@ private:
 	float m_zTime;
 	float m_stateTime;
 	float m_attackSoundTime;
-
-#if DEBUG_BEAMS
-	CBeam* m_pb;
-	CBeam* m_pt;
-#endif
 };
 
 
@@ -185,7 +172,6 @@ void CLeech::Spawn()
 	// Just for fun
 	//	SET_MODEL(ENT(pev), "models/icky.mdl");
 
-	//	UTIL_SetSize( pev, g_vecZero, g_vecZero );
 	UTIL_SetSize(pev, Vector(-1, -1, 0), Vector(1, 1, 2));
 	// Don't push the minz down too much or the water check will fail because this entity is really point-sized
 	pev->solid = SOLID_SLIDEBOX;
@@ -292,7 +278,6 @@ void CLeech::AlertSound()
 
 void CLeech::Precache()
 {
-	//PRECACHE_MODEL("models/icky.mdl");
 	PRECACHE_MODEL("models/leech.mdl");
 
 	PRECACHE_SOUND_ARRAY(pAttackSounds);
@@ -369,7 +354,6 @@ float CLeech::ObstacleDistance(CBaseEntity* pTarget)
 	Vector vecTest;
 
 	// use VELOCITY, not angles, not all boids point the direction they are flying
-	//Vector vecDir = UTIL_VecToAngles( pev->velocity );
 	MakeVectors();
 
 	// check for obstacle ahead
@@ -379,8 +363,6 @@ float CLeech::ObstacleDistance(CBaseEntity* pTarget)
 	if (0 != tr.fStartSolid)
 	{
 		pev->speed = -LEECH_SWIM_SPEED * 0.5;
-		//		ALERT( at_console, "Stuck from (%f %f %f) to (%f %f %f)\n", pev->oldorigin.x, pev->oldorigin.y, pev->oldorigin.z, pev->origin.x, pev->origin.y, pev->origin.z );
-		//		UTIL_SetOrigin( pev, pev->oldorigin );
 	}
 
 	if (tr.flFraction != 1.0)
@@ -526,27 +508,6 @@ void CLeech::UpdateMotion()
 	}
 	float flInterval = StudioFrameAdvance();
 	DispatchAnimEvents(flInterval);
-
-#if DEBUG_BEAMS
-	if (!m_pb)
-		m_pb = CBeam::BeamCreate("sprites/laserbeam.spr", 5);
-	if (!m_pt)
-		m_pt = CBeam::BeamCreate("sprites/laserbeam.spr", 5);
-	m_pb->PointsInit(pev->origin, pev->origin + gpGlobals->v_forward * LEECH_CHECK_DIST);
-	m_pt->PointsInit(pev->origin, pev->origin - gpGlobals->v_right * (pev->avelocity.y * 0.25));
-	if (m_fPathBlocked)
-	{
-		float color = m_obstacle * 30;
-		if (m_obstacle == 1.0)
-			color = 0;
-		if (color > 255)
-			color = 255;
-		m_pb->SetColor(255, (int)color, (int)color);
-	}
-	else
-		m_pb->SetColor(255, 255, 0);
-	m_pt->SetColor(0, 0, 255);
-#endif
 }
 
 
@@ -687,7 +648,6 @@ void CLeech::Killed(entvars_t* pevAttacker, int iGib)
 	Vector vecSplatDir;
 	TraceResult tr;
 
-	//ALERT(at_aiconsole, "Leech: killed\n");
 	// tell owner ( if any ) that we're dead.This is mostly for MonsterMaker functionality.
 	CBaseEntity* pOwner = CBaseEntity::Instance(pev->owner);
 	if (pOwner)

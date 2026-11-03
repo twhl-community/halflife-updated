@@ -71,7 +71,6 @@ public:
 	Schedule_t* GetSchedule() override;
 	Schedule_t* GetScheduleOfType(int Type) override;
 	bool CheckMeleeAttack1(float flDot, float flDist) override; // jump
-	// bool CheckMeleeAttack2 ( float flDot, float flDist ) override;
 	bool CheckRangeAttack1(float flDot, float flDist) override; // shoot
 	bool CheckRangeAttack2(float flDot, float flDist) override; // throw grenade
 	void StartTask(Task_t* pTask) override;
@@ -257,7 +256,6 @@ void CHAssassin::HandleAnimEvent(MonsterEvent_t* pEvent)
 	break;
 	case ASSASSIN_AE_JUMP:
 	{
-		// ALERT( at_console, "jumping");
 		UTIL_MakeAimVectors(pev->angles);
 		pev->movetype = MOVETYPE_TOSS;
 		pev->flags &= ~FL_ONGROUND;
@@ -329,7 +327,6 @@ Task_t tlAssassinFail[] =
 		{TASK_STOP_MOVING, 0},
 		{TASK_SET_ACTIVITY, (float)ACT_IDLE},
 		{TASK_WAIT_FACE_ENEMY, (float)2},
-		// { TASK_WAIT_PVS,			(float)0		},
 		{TASK_SET_SCHEDULE, (float)SCHED_CHASE_ENEMY},
 };
 
@@ -505,7 +502,6 @@ Schedule_t slAssassinHunt[] =
 		{tlAssassinHunt,
 			ARRAYSIZE(tlAssassinHunt),
 			bits_COND_NEW_ENEMY |
-				// bits_COND_SEE_ENEMY			|
 				bits_COND_CAN_RANGE_ATTACK1 |
 				bits_COND_HEAR_SOUND,
 
@@ -540,7 +536,6 @@ Schedule_t slAssassinJump[] =
 Task_t tlAssassinJumpAttack[] =
 	{
 		{TASK_SET_FAIL_SCHEDULE, (float)SCHED_ASSASSIN_JUMP_LAND},
-		// { TASK_SET_ACTIVITY,		(float)ACT_FLY	},
 		{TASK_ASSASSIN_FALL_TO_GROUND, (float)0},
 };
 
@@ -561,7 +556,6 @@ Schedule_t slAssassinJumpAttack[] =
 Task_t tlAssassinJumpLand[] =
 	{
 		{TASK_SET_FAIL_SCHEDULE, (float)SCHED_ASSASSIN_EXPOSED},
-		// { TASK_SET_FAIL_SCHEDULE,		(float)SCHED_MELEE_ATTACK1	},
 		{TASK_SET_ACTIVITY, (float)ACT_IDLE},
 		{TASK_REMEMBER, (float)bits_MEMORY_BADJUMP},
 		{TASK_FIND_NODE_COVER_FROM_ENEMY, (float)0},
@@ -633,7 +627,7 @@ bool CHAssassin::CheckMeleeAttack1(float flDot, float flDist)
 //=========================================================
 bool CHAssassin::CheckRangeAttack1(float flDot, float flDist)
 {
-	if (!HasConditions(bits_COND_ENEMY_OCCLUDED) && flDist > 64 && flDist <= 2048 /* && flDot >= 0.5 */ /* && NoFriendlyFire() */)
+	if (!HasConditions(bits_COND_ENEMY_OCCLUDED) && flDist > 64 && flDist <= 2048)
 	{
 		TraceResult tr;
 
@@ -666,7 +660,7 @@ bool CHAssassin::CheckRangeAttack2(float flDot, float flDist)
 	if (m_iFrustration <= 2)
 		return false;
 
-	if (m_flNextGrenadeCheck < gpGlobals->time && !HasConditions(bits_COND_ENEMY_OCCLUDED) && flDist <= 512 /* && flDot >= 0.5 */ /* && NoFriendlyFire() */)
+	if (m_flNextGrenadeCheck < gpGlobals->time && !HasConditions(bits_COND_ENEMY_OCCLUDED) && flDist <= 512)
 	{
 		Vector vecToss = VecCheckThrow(pev, GetGunPosition(), m_hEnemy->Center(), flDist, 0.5); // use dist as speed to get there in 1 second
 
@@ -801,7 +795,6 @@ void CHAssassin::RunTask(Task_t* pTask)
 		}
 		if ((pev->flags & FL_ONGROUND) != 0)
 		{
-			// ALERT( at_console, "on ground\n");
 			TaskComplete();
 		}
 		break;
@@ -856,14 +849,12 @@ Schedule_t* CHAssassin::GetSchedule()
 		{
 			if ((pev->flags & FL_ONGROUND) != 0)
 			{
-				// ALERT( at_console, "landed\n");
 				// just landed
 				pev->movetype = MOVETYPE_STEP;
 				return GetScheduleOfType(SCHED_ASSASSIN_JUMP_LAND);
 			}
 			else
 			{
-				// ALERT( at_console, "jump\n");
 				// jump or jump/shoot
 				if (m_MonsterState == MONSTERSTATE_COMBAT)
 					return GetScheduleOfType(SCHED_ASSASSIN_JUMP);
@@ -896,21 +887,18 @@ Schedule_t* CHAssassin::GetSchedule()
 		// jump player!
 		if (HasConditions(bits_COND_CAN_MELEE_ATTACK1))
 		{
-			// ALERT( at_console, "melee attack 1\n");
 			return GetScheduleOfType(SCHED_MELEE_ATTACK1);
 		}
 
 		// throw grenade
 		if (HasConditions(bits_COND_CAN_RANGE_ATTACK2))
 		{
-			// ALERT( at_console, "range attack 2\n");
 			return GetScheduleOfType(SCHED_RANGE_ATTACK2);
 		}
 
 		// spotted
 		if (HasConditions(bits_COND_SEE_ENEMY) && HasConditions(bits_COND_ENEMY_FACING_ME))
 		{
-			// ALERT( at_console, "exposed\n");
 			m_iFrustration++;
 			return GetScheduleOfType(SCHED_ASSASSIN_EXPOSED);
 		}
@@ -918,25 +906,21 @@ Schedule_t* CHAssassin::GetSchedule()
 		// can attack
 		if (HasConditions(bits_COND_CAN_RANGE_ATTACK1))
 		{
-			// ALERT( at_console, "range attack 1\n");
 			m_iFrustration = 0;
 			return GetScheduleOfType(SCHED_RANGE_ATTACK1);
 		}
 
 		if (HasConditions(bits_COND_SEE_ENEMY))
 		{
-			// ALERT( at_console, "face\n");
 			return GetScheduleOfType(SCHED_COMBAT_FACE);
 		}
 
 		// new enemy
 		if (HasConditions(bits_COND_NEW_ENEMY))
 		{
-			// ALERT( at_console, "take cover\n");
 			return GetScheduleOfType(SCHED_TAKE_COVER_FROM_ENEMY);
 		}
 
-		// ALERT( at_console, "stand\n");
 		return GetScheduleOfType(SCHED_ALERT_STAND);
 	}
 	break;
@@ -949,7 +933,6 @@ Schedule_t* CHAssassin::GetSchedule()
 //=========================================================
 Schedule_t* CHAssassin::GetScheduleOfType(int Type)
 {
-	// ALERT( at_console, "%d\n", m_iFrustration );
 	switch (Type)
 	{
 	case SCHED_TAKE_COVER_FROM_ENEMY:

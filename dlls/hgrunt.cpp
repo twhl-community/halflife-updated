@@ -191,15 +191,12 @@ TYPEDESCRIPTION CHGrunt::m_SaveData[] =
 	{
 		DEFINE_FIELD(CHGrunt, m_flNextGrenadeCheck, FIELD_TIME),
 		DEFINE_FIELD(CHGrunt, m_flNextPainTime, FIELD_TIME),
-		//	DEFINE_FIELD( CHGrunt, m_flLastEnemySightTime, FIELD_TIME ), // don't save, go to zero
 		DEFINE_FIELD(CHGrunt, m_vecTossVelocity, FIELD_VECTOR),
 		DEFINE_FIELD(CHGrunt, m_fThrowGrenade, FIELD_BOOLEAN),
 		DEFINE_FIELD(CHGrunt, m_fStanding, FIELD_BOOLEAN),
 		DEFINE_FIELD(CHGrunt, m_fFirstEncounter, FIELD_BOOLEAN),
 		DEFINE_FIELD(CHGrunt, m_cClipSize, FIELD_INTEGER),
 		DEFINE_FIELD(CHGrunt, m_voicePitch, FIELD_INTEGER),
-		//  DEFINE_FIELD( CShotgun, m_iBrassShell, FIELD_INTEGER ),
-		//  DEFINE_FIELD( CShotgun, m_iShotgunShell, FIELD_INTEGER ),
 		DEFINE_FIELD(CHGrunt, m_iSentence, FIELD_INTEGER),
 };
 
@@ -340,10 +337,6 @@ bool CHGrunt::FOkToSpeak()
 			return false;
 		}
 	}
-
-	// if player is not in pvs, don't speak
-	//	if (FNullEnt(FIND_CLIENT_IN_PVS(edict())))
-	//		return false;
 
 	return true;
 }
@@ -513,9 +506,6 @@ bool CHGrunt::CheckRangeAttack2(float flDot, float flDist)
 			// toss it to where you last saw them
 			vecTarget = m_vecEnemyLKP;
 		}
-		// vecTarget = m_vecEnemyLKP + (m_hEnemy->BodyTarget( pev->origin ) - m_hEnemy->pev->origin);
-		// estimate position
-		// vecTarget = vecTarget + m_hEnemy->pev->velocity * 2;
 	}
 	else
 	{
@@ -882,7 +872,7 @@ void CHGrunt::HandleAnimEvent(MonsterEvent_t* pEvent)
 	case HGRUNT_AE_GREN_TOSS:
 	{
 		UTIL_MakeVectors(pev->angles);
-		// CGrenade::ShootTimed( pev, pev->origin + gpGlobals->v_forward * 34 + Vector (0, 0, 32), m_vecTossVelocity, 3.5 );
+
 		CGrenade::ShootTimed(pev, GetGunPosition(), m_vecTossVelocity, 3.5);
 
 		m_fThrowGrenade = false;
@@ -1005,8 +995,6 @@ void CHGrunt::Spawn()
 	{
 		// initialize to original values
 		pev->weapons = HGRUNT_9MMAR | HGRUNT_HANDGRENADE;
-		// pev->weapons = HGRUNT_SHOTGUN;
-		// pev->weapons = HGRUNT_9MMAR | HGRUNT_GRENADELAUNCHER;
 	}
 
 	if (FBitSet(pev->weapons, HGRUNT_SHOTGUN))
@@ -1980,12 +1968,6 @@ Schedule_t* CHGrunt::GetSchedule()
 				}
 				return GetScheduleOfType(SCHED_TAKE_COVER_FROM_BEST_SOUND);
 			}
-			/*
-			if (!HasConditions( bits_COND_SEE_ENEMY ) && ( pSound->m_iType & (bits_SOUND_PLAYER | bits_SOUND_COMBAT) ))
-			{
-				MakeIdealYaw( pSound->m_vecOrigin );
-			}
-			*/
 		}
 	}
 	switch (m_MonsterState)
@@ -2020,7 +2002,7 @@ Schedule_t* CHGrunt::GetSchedule()
 					// schedule where the leader plays a handsign anim
 					// that gives us enough time to hear a short sentence or spoken command
 					// before he starts pluggin away.
-					if (FOkToSpeak()) // && RANDOM_LONG(0,1))
+					if (FOkToSpeak())
 					{
 						if ((m_hEnemy != NULL) && m_hEnemy->IsPlayer())
 							// player
@@ -2068,11 +2050,9 @@ Schedule_t* CHGrunt::GetSchedule()
 				// only try to take cover if we actually have an enemy!
 
 				//!!!KELLY - this grunt was hit and is going to run to cover.
-				if (FOkToSpeak()) // && RANDOM_LONG(0,1))
+				if (FOkToSpeak())
 				{
-					//SENTENCEG_PlayRndSz( ENT(pev), "HG_COVER", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 					m_iSentence = HGRUNT_SENT_COVER;
-					//JustSpoke();
 				}
 				return GetScheduleOfType(SCHED_TAKE_COVER_FROM_ENEMY);
 			}
@@ -2141,11 +2121,9 @@ Schedule_t* CHGrunt::GetSchedule()
 			{
 				//!!!KELLY - grunt cannot see the enemy and has just decided to
 				// charge the enemy's position.
-				if (FOkToSpeak()) // && RANDOM_LONG(0,1))
+				if (FOkToSpeak())
 				{
-					//SENTENCEG_PlayRndSz( ENT(pev), "HG_CHARGE", HGRUNT_SENTENCE_VOLUME, GRUNT_ATTN, 0, m_voicePitch);
 					m_iSentence = HGRUNT_SENT_CHARGE;
-					//JustSpoke();
 				}
 
 				return GetScheduleOfType(SCHED_GRUNT_ESTABLISH_LINE_OF_FIRE);
@@ -2363,17 +2341,12 @@ void CHGruntRepel::RepelUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_T
 {
 	TraceResult tr;
 	UTIL_TraceLine(pev->origin, pev->origin + Vector(0, 0, -4096.0), dont_ignore_monsters, ENT(pev), &tr);
-	/*
-	if ( tr.pHit && Instance( tr.pHit )->pev->solid != SOLID_BSP) 
-		return NULL;
-	*/
 
 	CBaseEntity* pEntity = Create("monster_human_grunt", pev->origin, pev->angles);
 	CBaseMonster* pGrunt = pEntity->MyMonsterPointer();
 	pGrunt->pev->movetype = MOVETYPE_FLY;
 	pGrunt->pev->velocity = Vector(0, 0, RANDOM_FLOAT(-196, -128));
 	pGrunt->SetActivity(ACT_GLIDE);
-	// UNDONE: position?
 	pGrunt->m_vecLastPosition = tr.vecEndPos;
 
 	CBeam* pBeam = CBeam::BeamCreate("sprites/rope.spr", 10);

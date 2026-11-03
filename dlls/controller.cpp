@@ -165,17 +165,7 @@ int CController::Classify()
 //=========================================================
 void CController::SetYawSpeed()
 {
-	int ys;
-
-	ys = 120;
-
-#if 0
-	switch ( m_Activity )
-	{
-	}
-#endif
-
-	pev->yaw_speed = ys;
+	pev->yaw_speed = 120;
 }
 
 bool CController::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
@@ -190,12 +180,6 @@ bool CController::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, fl
 void CController::Killed(entvars_t* pevAttacker, int iGib)
 {
 	// shut off balls
-	/*
-	m_iBall[0] = 0;
-	m_iBallTime[0] = gpGlobals->time + 4.0;
-	m_iBall[1] = 0;
-	m_iBallTime[1] = gpGlobals->time + 4.0;
-	*/
 
 	// fade balls
 	if (m_pBall[0])
@@ -563,8 +547,6 @@ Vector Intersect(Vector vecSrc, Vector vecDst, Vector vecMove, float flSpeed)
 			t = t1;
 	}
 
-	// ALERT( at_console, "Intersect %f\n", t );
-
 	if (t < 0.1)
 		t = 0.1;
 	if (t > 10.0)
@@ -730,19 +712,6 @@ Schedule_t* CController::GetSchedule()
 		break;
 
 	case MONSTERSTATE_COMBAT:
-	{
-		Vector vecTmp = Intersect(Vector(0, 0, 0), Vector(100, 4, 7), Vector(2, 10, -3), 20.0);
-
-		// dead enemy
-		if (HasConditions(bits_COND_LIGHT_DAMAGE))
-		{
-			// m_iFrustration++;
-		}
-		if (HasConditions(bits_COND_HEAVY_DAMAGE))
-		{
-			// m_iFrustration++;
-		}
-	}
 	break;
 	}
 
@@ -755,7 +724,6 @@ Schedule_t* CController::GetSchedule()
 //=========================================================
 Schedule_t* CController::GetScheduleOfType(int Type)
 {
-	// ALERT( at_console, "%d\n", m_iFrustration );
 	switch (Type)
 	{
 	case SCHED_CHASE_ENEMY:
@@ -876,8 +844,6 @@ void CController::RunAI()
 }
 
 
-extern void DrawRoute(entvars_t* pev, WayPoint_t* m_Route, int m_iRouteIndex, int r, int g, int b);
-
 void CController::Stop()
 {
 	m_IdealActivity = GetStoppedActivity();
@@ -906,22 +872,6 @@ void CController::Move(float flInterval)
 	if (m_flMoveWaitFinished > gpGlobals->time)
 		return;
 
-// Debug, test movement code
-#if 0
-//	if ( CVAR_GET_FLOAT("stopmove" ) != 0 )
-	{
-		if ( m_movementGoal == MOVEGOAL_ENEMY )
-			RouteSimplify( m_hEnemy );
-		else
-			RouteSimplify( m_hTargetEnt );
-		FRefreshRoute();
-		return;
-	}
-#else
-// Debug, draw the route
-//	DrawRoute( pev, m_Route, m_iRouteIndex, 0, 0, 255 );
-#endif
-
 	// if the monster is moving directly towards an entity (enemy for instance), we'll set this pointer
 	// to that entity for the CheckLocalMove and Triangulate functions.
 	pTargetEnt = NULL;
@@ -929,8 +879,6 @@ void CController::Move(float flInterval)
 	if (m_flGroundSpeed == 0)
 	{
 		m_flGroundSpeed = 100;
-		// TaskFail( );
-		// return;
 	}
 
 	flMoveDist = m_flGroundSpeed * flInterval;
@@ -940,9 +888,6 @@ void CController::Move(float flInterval)
 		// local move to waypoint.
 		vecDir = (m_Route[m_iRouteIndex].vecLocation - pev->origin).Normalize();
 		flWaypointDist = (m_Route[m_iRouteIndex].vecLocation - pev->origin).Length();
-
-		// MakeIdealYaw ( m_Route[ m_iRouteIndex ].vecLocation );
-		// ChangeYaw ( pev->yaw_speed );
 
 		// if the waypoint is closer than CheckDist, CheckDist is the dist to waypoint
 		if (flWaypointDist < DIST_TO_CHECK)
@@ -987,7 +932,6 @@ void CController::Move(float flInterval)
 				{
 					// Wait for a second
 					m_flMoveWaitFinished = gpGlobals->time + m_moveWaitTime;
-					//				ALERT( at_aiconsole, "Move %s!!!\n", STRING( pBlocker->pev->classname ) );
 					return;
 				}
 			}
@@ -1012,7 +956,6 @@ void CController::Move(float flInterval)
 					{
 						TaskFail();
 						ALERT(at_aiconsole, "Failed to move!\n");
-						//ALERT( at_aiconsole, "%f, %f, %f\n", pev->origin.z, (pev->origin + (vecDir * flCheckDist)).z, m_Route[m_iRouteIndex].vecLocation.z );
 					}
 					return;
 				}
@@ -1024,7 +967,6 @@ void CController::Move(float flInterval)
 		{
 			MoveExecute(pTargetEnt, vecDir, flCheckDist / m_flGroundSpeed);
 
-			// ALERT( at_console, "%.02f\n", flInterval );
 			AdvanceRoute(flWaypointDist);
 			flMoveDist -= flCheckDist;
 		}
@@ -1084,15 +1026,11 @@ int CController::CheckLocalMove(const Vector& vecStart, const Vector& vecEnd, CB
 
 	UTIL_TraceHull(vecStart + Vector(0, 0, 32), vecEnd + Vector(0, 0, 32), dont_ignore_monsters, large_hull, edict(), &tr);
 
-	// ALERT( at_console, "%.0f %.0f %.0f : ", vecStart.x, vecStart.y, vecStart.z );
-	// ALERT( at_console, "%.0f %.0f %.0f\n", vecEnd.x, vecEnd.y, vecEnd.z );
-
 	if (pflDist)
 	{
 		*pflDist = ((tr.vecEndPos - Vector(0, 0, 32)) - vecStart).Length(); // get the distance.
 	}
 
-	// ALERT( at_console, "check %d %d %f\n", tr.fStartSolid, tr.fAllSolid, tr.flFraction );
 	if (0 != tr.fStartSolid || tr.flFraction < 1.0)
 	{
 		if (pTarget && pTarget->edict() == gpGlobals->trace_ent)
@@ -1108,11 +1046,6 @@ void CController::MoveExecute(CBaseEntity* pTargetEnt, const Vector& vecDir, flo
 {
 	if (m_IdealActivity != m_movementActivity)
 		m_IdealActivity = m_movementActivity;
-
-	// ALERT( at_console, "move %.4f %.4f %.4f : %f\n", vecDir.x, vecDir.y, vecDir.z, flInterval );
-
-	// float flTotal = m_flGroundSpeed * pev->framerate * flInterval;
-	// UTIL_MoveToOrigin ( ENT(pev), m_Route[ m_iRouteIndex ].vecLocation, flTotal, MOVE_STRAFE );
 
 	m_velocity = m_velocity * 0.8 + m_flGroundSpeed * vecDir * 0.2;
 
@@ -1251,8 +1184,6 @@ void CControllerHeadBall::HuntThink()
 		SetThink(&CControllerHeadBall::DieThink);
 		pev->nextthink = gpGlobals->time + 0.3;
 	}
-
-	// Crawl( );
 }
 
 
@@ -1367,8 +1298,6 @@ void CControllerZapBall::Spawn()
 void CControllerZapBall::Precache()
 {
 	PRECACHE_MODEL("sprites/xspark4.spr");
-	// PRECACHE_SOUND("debris/zap4.wav");
-	// PRECACHE_SOUND("weapons/electro4.wav");
 }
 
 

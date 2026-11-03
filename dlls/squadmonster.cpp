@@ -32,7 +32,6 @@ TYPEDESCRIPTION CSquadMonster::m_SaveData[] =
 		DEFINE_FIELD(CSquadMonster, m_hSquadLeader, FIELD_EHANDLE),
 		DEFINE_ARRAY(CSquadMonster, m_hSquadMember, FIELD_EHANDLE, MAX_SQUAD_MEMBERS - 1),
 
-		// DEFINE_FIELD( CSquadMonster, m_afSquadSlots, FIELD_INTEGER ), // these need to be reset after transitions!
 		DEFINE_FIELD(CSquadMonster, m_fEnemyEluded, FIELD_BOOLEAN),
 		DEFINE_FIELD(CSquadMonster, m_flLastEnemySightTime, FIELD_TIME),
 
@@ -88,7 +87,6 @@ bool CSquadMonster::OccupySlot(int iDesiredSlots)
 				// No, use this bit
 				pSquadLeader->m_afSquadSlots |= iMask;
 				m_iMySlot = iMask;
-				//				ALERT ( at_aiconsole, "Took slot %d - %d\n", i, m_hSquadLeader->m_afSquadSlots );
 				return true;
 			}
 		}
@@ -104,7 +102,6 @@ void CSquadMonster::VacateSlot()
 {
 	if (m_iMySlot != bits_NO_SLOT && InSquad())
 	{
-		//		ALERT ( at_aiconsole, "Vacated Slot %d - %d\n", m_iMySlot, m_hSquadLeader->m_afSquadSlots );
 		MySquadLeader()->m_afSquadSlots &= ~m_iMySlot;
 		m_iMySlot = bits_NO_SLOT;
 	}
@@ -475,8 +472,6 @@ bool CSquadMonster::NoFriendlyFire()
 		return false;
 	}
 
-	//UTIL_MakeVectors ( pev->angles );
-
 	vecLeftSide = pev->origin - (gpGlobals->v_right * (pev->size.x * 1.5));
 	vecRightSide = pev->origin + (gpGlobals->v_right * (pev->size.x * 1.5));
 	v_left = gpGlobals->v_right * -1;
@@ -484,12 +479,6 @@ bool CSquadMonster::NoFriendlyFire()
 	leftPlane.InitializePlane(gpGlobals->v_right, vecLeftSide);
 	rightPlane.InitializePlane(v_left, vecRightSide);
 	backPlane.InitializePlane(gpGlobals->v_forward, pev->origin);
-
-	/*
-	ALERT ( at_console, "LeftPlane: %f %f %f : %f\n", leftPlane.m_vecNormal.x, leftPlane.m_vecNormal.y, leftPlane.m_vecNormal.z, leftPlane.m_flDist );
-	ALERT ( at_console, "RightPlane: %f %f %f : %f\n", rightPlane.m_vecNormal.x, rightPlane.m_vecNormal.y, rightPlane.m_vecNormal.z, rightPlane.m_flDist );
-	ALERT ( at_console, "BackPlane: %f %f %f : %f\n", backPlane.m_vecNormal.x, backPlane.m_vecNormal.y, backPlane.m_vecNormal.z, backPlane.m_flDist );
-*/
 
 	CSquadMonster* pSquadLeader = MySquadLeader();
 	for (int i = 0; i < MAX_SQUAD_MEMBERS; i++)

@@ -409,8 +409,6 @@ int FindTransition(void* pmodel, int iEndingAnim, int iGoalAnim, int* piDir)
 
 	int iEndNode;
 
-	// ALERT( at_console, "from %d to %d: ", pEndNode->iEndNode, pGoalNode->iStartNode );
-
 	if (*piDir > 0)
 	{
 		iEndNode = pseqdesc[iEndingAnim].exitnode;

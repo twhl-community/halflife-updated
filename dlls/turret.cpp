@@ -76,12 +76,6 @@ public:
 	virtual void EXPORT SpinDownCall() { m_iSpin = false; }
 	virtual void EXPORT SpinUpCall() { m_iSpin = true; }
 
-	// void SpinDown();
-	// float EXPORT SpinDownCall() { return SpinDown(); }
-
-	// virtual float SpinDown() { return 0;}
-	// virtual float Retire() { return 0;}
-
 	void EXPORT Deploy();
 	void EXPORT Retire();
 
@@ -265,7 +259,6 @@ void CBaseTurret::Spawn()
 	SetBoneController(0, 0);
 	SetBoneController(1, 0);
 	m_flFieldOfView = VIEW_FIELD_FULL;
-	// m_flSightRange = TURRET_RANGE;
 }
 
 
@@ -277,7 +270,6 @@ void CBaseTurret::Precache()
 	PRECACHE_SOUND("turret/tu_die.wav");
 	PRECACHE_SOUND("turret/tu_die2.wav");
 	PRECACHE_SOUND("turret/tu_die3.wav");
-	// PRECACHE_SOUND ("turret/tu_retract.wav"); // just use deploy sound to save memory
 	PRECACHE_SOUND("turret/tu_deploy.wav");
 	PRECACHE_SOUND("turret/tu_spinup.wav");
 	PRECACHE_SOUND("turret/tu_spindown.wav");
@@ -529,13 +521,7 @@ void CBaseTurret::ActiveThink()
 
 	UTIL_MakeAimVectors(m_vecCurAngles);
 
-	/*
-	ALERT( at_console, "%.0f %.0f : %.2f %.2f %.2f\n", 
-		m_vecCurAngles.x, m_vecCurAngles.y,
-		gpGlobals->v_forward.x, gpGlobals->v_forward.y, gpGlobals->v_forward.z );
-	*/
-
-	Vector vecLOS = vecDirToEnemy; //vecMid - m_vecLastSight;
+	Vector vecLOS = vecDirToEnemy;
 	vecLOS = vecLOS.Normalize();
 
 	// Is the Gun looking at the target
@@ -576,8 +562,6 @@ void CBaseTurret::ActiveThink()
 		if (vec.y < 0)
 			vec.y += 360;
 
-		//ALERT(at_console, "[%.2f]", vec.x);
-
 		if (vec.x < -180)
 			vec.x += 360;
 
@@ -601,8 +585,6 @@ void CBaseTurret::ActiveThink()
 			else if (vec.x > -m_iMinPitch)
 				vec.x = -m_iMinPitch;
 		}
-
-		// ALERT(at_console, "->[%.2f]\n", vec.x);
 
 		m_vecGoalAngles.y = vec.y;
 		m_vecGoalAngles.x = vec.x;
@@ -817,7 +799,6 @@ void CBaseTurret::SetTurretAnim(TURRET_ANIM anim)
 			pev->framerate = 1.0;
 			break;
 		}
-		//ALERT(at_console, "Turret anim #%d\n", anim);
 	}
 }
 
@@ -1113,7 +1094,6 @@ bool CBaseTurret::MoveTurret()
 		if (flDist < (0.05 * m_iBaseTurnRate))
 			m_vecCurAngles.y = m_vecGoalAngles.y;
 
-		//ALERT(at_console, "%.2f -> %.2f\n", m_vecCurAngles.y, y);
 		if (m_iOrientation == 0)
 			SetBoneController(0, m_vecCurAngles.y - pev->angles.y);
 		else
@@ -1124,8 +1104,6 @@ bool CBaseTurret::MoveTurret()
 	if (!state)
 		m_fTurnRate = m_iBaseTurnRate;
 
-	//ALERT(at_console, "(%.2f, %.2f)->(%.2f, %.2f)\n", m_vecCurAngles.x,
-	//	m_vecCurAngles.y, m_vecGoalAngles.x, m_vecGoalAngles.y);
 	return state;
 }
 

@@ -60,8 +60,6 @@ TYPEDESCRIPTION CBubbling::m_SaveData[] =
 		DEFINE_FIELD(CBubbling, m_density, FIELD_INTEGER),
 		DEFINE_FIELD(CBubbling, m_frequency, FIELD_INTEGER),
 		DEFINE_FIELD(CBubbling, m_state, FIELD_BOOLEAN),
-		// Let spawn restore this!
-		//	DEFINE_FIELD( CBubbling, m_bubbleModel, FIELD_INTEGER ),
 };
 
 IMPLEMENT_SAVERESTORE(CBubbling, CBaseEntity);
@@ -307,20 +305,6 @@ void CBeam::RelinkBeam()
 	UTIL_SetOrigin(pev, pev->origin);
 }
 
-#if 0
-void CBeam::SetObjectCollisionBox()
-{
-	const Vector &startPos = GetStartPos(), &endPos = GetEndPos();
-
-	pev->absmin.x = V_min( startPos.x, endPos.x );
-	pev->absmin.y = V_min( startPos.y, endPos.y );
-	pev->absmin.z = V_min( startPos.z, endPos.z );
-	pev->absmax.x = V_max( startPos.x, endPos.x );
-	pev->absmax.y = V_max( startPos.y, endPos.y );
-	pev->absmax.z = V_max( startPos.z, endPos.z );
-}
-#endif
-
 
 void CBeam::TriggerTouch(CBaseEntity* pOther)
 {
@@ -415,23 +399,6 @@ public:
 
 LINK_ENTITY_TO_CLASS(env_lightning, CLightning);
 LINK_ENTITY_TO_CLASS(env_beam, CLightning);
-
-// UNDONE: Jay -- This is only a test
-#if _DEBUG
-class CTripBeam : public CLightning
-{
-	void Spawn() override;
-};
-LINK_ENTITY_TO_CLASS(trip_beam, CTripBeam);
-
-void CTripBeam::Spawn()
-{
-	CLightning::Spawn();
-	SetTouch(&CBeam::TriggerTouch);
-	pev->solid = SOLID_TRIGGER;
-	RelinkBeam();
-}
-#endif
 
 
 
@@ -1611,7 +1578,6 @@ class CTestEffect : public CBaseDelay
 public:
 	void Spawn() override;
 	void Precache() override;
-	// void	KeyValue( KeyValueData *pkvd ) override;
 	void EXPORT TestThink();
 	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) override;
 
@@ -1858,9 +1824,6 @@ LINK_ENTITY_TO_CLASS(env_shake, CShake);
 // NOTE: UTIL_ScreenShake() will only shake players who are on the ground
 
 #define SF_SHAKE_EVERYONE 0x0001 // Don't check radius
-// UNDONE: These don't work yet
-#define SF_SHAKE_DISRUPT 0x0002 // Disrupt controls
-#define SF_SHAKE_INAIR 0x0004	// Shake players in air
 
 void CShake::Spawn()
 {
@@ -2182,9 +2145,6 @@ void CEnvBeverage::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE u
 
 	pev->frags = 1;
 	pev->health--;
-
-	//SetThink (SUB_Remove);
-	//pev->nextthink = gpGlobals->time;
 }
 
 void CEnvBeverage::Spawn()

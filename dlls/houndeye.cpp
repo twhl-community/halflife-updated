@@ -29,7 +29,6 @@
 
 // houndeye does 20 points of damage spread over a sphere 384 units in diameter, and each additional
 // squad member increases the BASE damage by 110%, per the spec.
-#define HOUNDEYE_MAX_SQUAD_SIZE 4
 #define HOUNDEYE_MAX_ATTACK_RADIUS 384
 #define HOUNDEYE_SQUAD_BONUS (float)1.1
 
@@ -661,8 +660,6 @@ void CHoundeye::SonicAttack()
 					}
 				}
 
-				//ALERT ( at_aiconsole, "Damage: %f\n", flAdjustedDamage );
-
 				if (flAdjustedDamage > 0)
 				{
 					pEntity->TakeDamage(pev, pev, flAdjustedDamage, DMG_SONIC | DMG_ALWAYSGIB);
@@ -962,8 +959,6 @@ Task_t tlHoundSleep[] =
 		{TASK_HOUND_FALL_ASLEEP, (float)0},
 		{TASK_WAIT_RANDOM, (float)25},
 		{TASK_HOUND_CLOSE_EYE, (float)0},
-		//{ TASK_WAIT,				(float)10				},
-		//{ TASK_WAIT_RANDOM,			(float)10				},
 };
 
 Schedule_t slHoundSleep[] =
@@ -1190,14 +1185,6 @@ Schedule_t* CHoundeye::GetScheduleOfType(int Type)
 	case SCHED_RANGE_ATTACK1:
 	{
 		return &slHoundRangeAttack[0];
-		/*
-			if ( InSquad() )
-			{
-				return &slHoundRangeAttack[ RANDOM_LONG( 0, 1 ) ];
-			}
-
-			return &slHoundRangeAttack[ 1 ];
-*/
 	}
 	case SCHED_SPECIAL_ATTACK1:
 	{
