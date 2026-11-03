@@ -276,6 +276,8 @@ void CShotgun::Reload()
 	}
 	else
 	{
+		if (m_flNextPrimaryAttack > UTIL_WeaponTimeBase())
+			return;
 		// Add them to the clip
 		m_iClip += 1;
 		m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] -= 1;
