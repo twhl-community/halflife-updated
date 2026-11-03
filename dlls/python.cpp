@@ -189,7 +189,7 @@ void CPython::PrimaryAttack()
 
 void CPython::Reload()
 {
-	if (m_pPlayer->ammo_357 <= 0)
+	if (m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		return;
 
 	if (m_pPlayer->m_iFOV != 0)

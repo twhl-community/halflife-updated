@@ -111,6 +111,8 @@ public:
 	bool MsgFunc_WeapPickup(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_ItemPickup(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf);
+	bool Update_CurWeapon(const int iState, const int iId, const int iClip);
+	bool Update_AmmoX(const int iIndex, const int iCount);
 
 	void SlotInput(int iSlot);
 	void UserCmd_Slot1();
@@ -592,6 +594,7 @@ public:
 	bool MsgFunc_SetFOV(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_Concuss(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf);
+	bool Update_SetFOV(const int iFOV);
 
 	// Screen information
 	SCREENINFO m_scrinfo;
