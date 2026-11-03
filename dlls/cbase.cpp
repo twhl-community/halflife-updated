@@ -792,6 +792,42 @@ int CBaseEntity::DamageDecal(int bitsDamageType)
 }
 
 
+void CBaseEntity::PlaybackEvent(
+	const unsigned short usEventIndex,
+	const float fparam1,
+	const float fparam2,
+	const int iparam1,
+	const int iparam2,
+	const int bparam1,
+	const int bparam2,
+	const int afFlags,
+	const bool bSendPosition,
+	const float flDelay)
+{
+	const float* origin = g_vecZero;
+	const float* angles = g_vecZero;
+
+	if (bSendPosition)
+	{
+		origin = pev->origin;
+		angles = pev->angles;
+	}
+
+	g_engfuncs.pfnPlaybackEvent(
+		afFlags,
+		edict(),
+		usEventIndex,
+		flDelay,
+		origin,
+		angles,
+		fparam1,
+		fparam2,
+		iparam1,
+		iparam2,
+		bparam1,
+		bparam2);
+}
+
 
 // NOTE: szName must be a pointer to constant memory, e.g. "monster_class" because the entity
 // will keep a pointer to it after this call.
