@@ -444,14 +444,9 @@ void IN_SpeedUp() { KeyUp(&in_speed); }
 void IN_StrafeDown() { KeyDown(&in_strafe); }
 void IN_StrafeUp() { KeyUp(&in_strafe); }
 
-// needs capture by hud/vgui also
-extern void __CmdFunc_InputPlayerSpecial();
-
 void IN_Attack2Down()
 {
 	KeyDown(&in_attack2);
-
-
 	gHUD.m_Spectator.HandleButtonsDown(IN_ATTACK2);
 }
 

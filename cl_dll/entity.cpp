@@ -325,26 +325,19 @@ void DLLEXPORT HUD_StudioEvent(const struct mstudioevent_s* event, const struct 
 {
 	//	RecClStudioEvent(event, entity);
 
-	bool iMuzzleFlash = true;
-
-
 	switch (event->event)
 	{
 	case 5001:
-		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[0], atoi(event->options));
+		gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[0], atoi(event->options));
 		break;
 	case 5011:
-		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[1], atoi(event->options));
+		gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[1], atoi(event->options));
 		break;
 	case 5021:
-		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[2], atoi(event->options));
+		gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[2], atoi(event->options));
 		break;
 	case 5031:
-		if (iMuzzleFlash)
-			gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[3], atoi(event->options));
+		gEngfuncs.pEfxAPI->R_MuzzleFlash((float*)&entity->attachment[3], atoi(event->options));
 		break;
 	case 5002:
 		gEngfuncs.pEfxAPI->R_SparkEffect((float*)&entity->attachment[0], atoi(event->options), -100, 100);

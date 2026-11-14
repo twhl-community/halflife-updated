@@ -24,7 +24,6 @@
 int CL_ButtonBits(bool);
 void CL_ResetButtonBits(int bits);
 
-extern float v_idlescale;
 float in_fov;
 extern void HUD_SetCmdBits(int bits);
 
@@ -42,8 +41,6 @@ bool CHud::UpdateClientData(client_data_t* cdata, float time)
 	Think();
 
 	cdata->fov = m_iFOV;
-
-	v_idlescale = m_iConcussionEffect;
 
 	CL_ResetButtonBits(m_iKeyBits);
 
