@@ -173,6 +173,45 @@ char* ConvertCRtoNL(char* str)
 	return str;
 }
 
+// The message text is used as a printf format string, and servers put player controlled text in it
+// (player names, reasons...), only keep "%s" (up to 4, the parameters) and "%%", any other '%' is escaped
+// so it's printed as is instead of reading or writing memory ("%n", "%x", too many "%s"...)
+static void SanitizeFormatString(char* format, int size)
+{
+	char result[1024];
+	int length = 0;
+	int strings = 0;
+
+	for (const char* c = format; *c && length < static_cast<int>(sizeof(result)) - 3; ++c)
+	{
+		if (*c != '%')
+		{
+			result[length++] = *c;
+			continue;
+		}
+
+		if (c[1] == '%')
+		{
+			++c;
+		}
+		else if (c[1] == 's' && strings < 4)
+		{
+			result[length++] = '%';
+			result[length++] = 's';
+			++strings;
+			++c;
+			continue;
+		}
+
+		result[length++] = '%';
+		result[length++] = '%';
+	}
+
+	result[length] = '\0';
+
+	safe_strcpy(format, result, size);
+}
+
 // Message handler for text messages
 // displays a string, looking them up from the titles.txt file, which can be localised
 // parameters:
@@ -195,6 +234,7 @@ bool CHudTextMessage::MsgFunc_TextMsg(const char* pszName, int iSize, void* pbuf
 	static char szBuf[6][MSG_BUF_SIZE];
 	const char* msg_text = LookupString(READ_STRING(), &msg_dest);
 	msg_text = safe_strcpy(szBuf[0], msg_text, MSG_BUF_SIZE);
+	SanitizeFormatString(szBuf[0], MSG_BUF_SIZE);
 
 	// keep reading strings and using C format strings for subsituting the strings into the localised text string
 	const char* tempsstr1 = LookupString(READ_STRING());
